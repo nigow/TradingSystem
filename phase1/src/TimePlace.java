@@ -19,7 +19,7 @@ public class TimePlace {
      * @param time The time of this meetup.
      * @param place The location of this meetup.
      */
-    TimePlace (int id, LocalDateTime time, String place) {
+    public TimePlace(int id, LocalDateTime time, String place) {
         this.id = id;
         this.place = place;
         this.time = time;
