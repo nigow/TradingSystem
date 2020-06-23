@@ -1,3 +1,4 @@
+package entities;
 /** Represents an item
  * @Author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */

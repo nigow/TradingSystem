@@ -1,3 +1,4 @@
+import entities.Role;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
