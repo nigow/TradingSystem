@@ -17,6 +17,7 @@ public class TimePlace {
     private String place;
 
     /**
+     * Creates a TimePlace object based on an ID, the time of the meetup, and the location of the meetup.
      * @param id The ID of this meetup.
      * @param time The time of this meetup.
      * @param place The location of this meetup.
@@ -28,6 +29,7 @@ public class TimePlace {
     }
 
     /**
+     * Returns the ID of this meetup.
      * @return The ID of this meetup.
      */
     public int getId() {
@@ -35,6 +37,7 @@ public class TimePlace {
     }
 
     /**
+     * Returns the location of this meetup.
      * @return The location of this meetup.
      */
     public String getPlace() {
@@ -42,6 +45,7 @@ public class TimePlace {
     }
 
     /**
+     * Returns the time of this meetup.
      * @return The time of this meetup.
      */
     public LocalDateTime getTime() {
@@ -49,6 +53,7 @@ public class TimePlace {
     }
 
     /**
+     * Sets the location of this meetup.
      * @param place The location of this meetup.
      */
     public void setPlace(String place) {
@@ -56,6 +61,7 @@ public class TimePlace {
     }
 
     /**
+     * Sets the time of this meetup.
      * @param time The time of this meetup.
      */
     public void setTime(LocalDateTime time) {
@@ -63,6 +69,7 @@ public class TimePlace {
     }
 
     /**
+     * Creates a string representation of this meetup.
      * @return A string representation of this meetup.
      */
     public String toString() {
