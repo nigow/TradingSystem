@@ -4,7 +4,7 @@ public class TimePlace {
     /**
      * The ID of this meetup.
      */
-    private int id;
+    final private int id;
     /**
      * The time of this meetup.
      */
