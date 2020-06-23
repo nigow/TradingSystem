@@ -31,6 +31,10 @@ public class Item {
     /**
      * Creates a new item with the given itemID, name, description, and ownerUsername.
      * isApproved is set to false by default (items have to be manually approved by an admin).
+     * @param itemID
+     * @param name
+     * @param description
+     * @param ownerUsername
      */
     public Item(int itemID, String name, String description, String ownerUsername) {
         this.itemID = itemID;
@@ -80,9 +84,8 @@ public class Item {
         return ownerUsername;
     }
 
-
     /**
-     * Set the name of this time.
+     * Set the name of this item.
      * @param name (new name of item)
      */
     public void setName(String name) {
@@ -90,7 +93,7 @@ public class Item {
     }
 
     /**
-     * Get the description of this item.
+     * Set the description of this item.
      * @param description (new description)
      */
     public void setDescription(String description) {
