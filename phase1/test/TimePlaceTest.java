@@ -1,3 +1,4 @@
+import entities.TimePlace;
 import org.junit.*;
 import java.time.LocalDateTime;
 import java.sql.Time;
