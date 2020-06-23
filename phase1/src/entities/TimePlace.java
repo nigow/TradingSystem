@@ -2,6 +2,10 @@ package entities;
 
 import java.time.*;
 
+/**
+ * Represents the time and place of a meetup.
+ * @author Maryam
+ */
 public class TimePlace {
     /**
      * The ID of this meetup.

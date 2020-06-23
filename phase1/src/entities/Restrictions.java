@@ -1,5 +1,9 @@
 package entities;
 
+/**
+ * Represents restrictions for a user's trades.
+ * @author Maryam
+ */
 public class Restrictions {
     /**
      * Number of items a user has to lend more than borrow to be able to make a trade.
