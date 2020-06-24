@@ -1,5 +1,9 @@
 package entities;
 
+/**
+ * Different Permissions an account can have
+ * @author Michael
+ */
 public enum Permissions {
     LOGIN,
     FREEZE,

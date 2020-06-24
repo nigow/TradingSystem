@@ -1,8 +1,6 @@
 import entities.TimePlace;
-import org.junit.*;
 import junit.framework.TestCase;
 import java.time.LocalDateTime;
-import java.sql.Time;
 
 public class TimePlaceTest extends TestCase{
 

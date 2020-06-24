@@ -1,8 +1,6 @@
 package entities;
 
-import java.security.Permission;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Stores permissions for a specific Role entity.
