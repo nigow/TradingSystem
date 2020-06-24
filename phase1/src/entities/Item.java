@@ -1,5 +1,6 @@
 package entities;
 import java.util.ArrayList;
+import java.util.List;
 /** Represents an item
  * @Author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
@@ -37,7 +38,7 @@ public class Item {
     /**
      * The accountIDs of users with this item in their wishlist
      */
-    private ArrayList<Integer> accountsWithItemInWishlist;
+    private List<Integer> accountsWithItemInWishlist;
 
     /**
      * Creates a new item with the given itemID, name, description, and ownerUsername.
@@ -106,7 +107,7 @@ public class Item {
      * Get the list of accountIDs of users with this item in their wishlist
      * @return accountsWithItemInWishlist
      */
-    public ArrayList<Integer> getAccountsWithItemInWishlist() {
+    public List<Integer> getAccountsWithItemInWishlist() {
         return accountsWithItemInWishlist;
     }
 

@@ -3,6 +3,7 @@ package entities;
  * @Author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 import java.util.ArrayList;
+import java.util.List;
 
 public class Account {
 
@@ -19,12 +20,12 @@ public class Account {
     /**
      * The user's wishlist (stores itemID of the items)
      */
-    private ArrayList<Integer> wishlist;
+    private List<Integer> wishlist;
 
     /**
      * The list of roles of the user
      */
-    private ArrayList<Roles> rolesID;
+    private List<Roles> rolesID;
 
     /**
      * The unique identifier of this account (cannot be changed)
@@ -74,7 +75,7 @@ public class Account {
      * Get the wishlist of this account
      * @return wishlist
      */
-    public ArrayList<Integer> getWishlist() {
+    public List<Integer> getWishlist() {
         return wishlist;
     }
 
@@ -91,7 +92,7 @@ public class Account {
      * Get the rolesID of all the roles that this account belongs to
      * @return rolesID
      */
-    public ArrayList<Roles> getRolesID() {
+    public List<Roles> getRolesID() {
         return rolesID;
     }
 
