@@ -1,9 +1,12 @@
 package entities;
 
+import java.security.Permission;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Stores permissions for a specific Role entity.
+ * @author Michael
  */
 public class Role {
 
@@ -14,13 +17,13 @@ public class Role {
     /**
      * A list of permissions for this role.
      */
-    private final List<String> permissions;
+    private final ArrayList<Permissions> permissions;
 
     /**
      * @param id The Role's id.
      * @param permissions The permissions for this role.
      */
-    public Role(String id, List<String> permissions) {
+    public Role(String id, ArrayList<Permissions> permissions) {
         this.id = id;
         this.permissions = permissions;
     }
@@ -29,7 +32,7 @@ public class Role {
      * @param action The action a user is interested in performed.
      * @return Whether the user can return this action.
      */
-    public boolean contains(String action) {
+    public boolean contains(Permissions action) {
         return permissions.contains(action);
     }
 

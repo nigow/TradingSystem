@@ -1,8 +1,8 @@
 import entities.Role;
 import junit.framework.TestCase;
 
+import entities.Permissions;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RoleTest extends TestCase {
 
@@ -11,11 +11,11 @@ public class RoleTest extends TestCase {
     }
 
     public void testContains() {
-        List<String> permissions = new ArrayList<>();
-        permissions.add("login");
+        ArrayList<Permissions> permissions = new ArrayList<>();
+        permissions.add(Permissions.LOGIN);
         Role account = new Role("account", permissions);
-        TestCase.assertFalse(account.contains("fly"));
-        TestCase.assertTrue(account.contains("login"));
+        TestCase.assertFalse(account.contains(Permissions.ADD_ADMIN));
+        TestCase.assertTrue(account.contains(Permissions.LOGIN));
     }
 
     public void testGetId() {
