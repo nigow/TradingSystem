@@ -35,21 +35,10 @@ public class Trade {
      * List of IDs of items the second person is trading away.
      */
     private ArrayList<Integer> itemTwoID;
-
-    /**
-     * Different possible statuses of a trade.
-     */
-    enum Status {
-        REJECTED,
-        UNCONFIRMED,
-        CONFIRMED,
-        COMPLETED
-    }
-
     /**
      * The status of this transaction (i.e. if it's rejected, unconfirmed, confirmed, or completed)
      */
-    private Status status;
+    private TradeStatus status;
     /**
      * Keeps track of the last person who suggested a meetup.
      */
