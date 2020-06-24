@@ -1,5 +1,6 @@
 package entities;
 import java.util.ArrayList;
+import java.util.List;
 /** Represents an item
  * @Author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
@@ -30,9 +31,14 @@ public class Item {
     private String ownerUsername;
 
     /**
+     * The ID of the owner of this item
+     */
+    private int ownerID;
+
+    /**
      * The accountIDs of users with this item in their wishlist
      */
-    private ArrayList<Integer> accountsWithItemInWishlist;
+    private List<Integer> accountsWithItemInWishlist;
 
     /**
      * Creates a new item with the given itemID, name, description, and ownerUsername.
@@ -43,12 +49,13 @@ public class Item {
      * @param description
      * @param ownerUsername
      */
-    public Item(int itemID, String name, String description, String ownerUsername) {
+    public Item(int itemID, String name, String description, String ownerUsername, int ownerID) {
         this.itemID = itemID;
         this.name = name;
         this.description= description;
         this.isApproved = false;
         this.ownerUsername = ownerUsername;
+        this.ownerID = ownerID;
         this.accountsWithItemInWishlist = new ArrayList<Integer>();
     }
 
@@ -92,11 +99,15 @@ public class Item {
         return ownerUsername;
     }
 
+    public int getOwnerID() {
+        return ownerID;
+    }
+
     /**
      * Get the list of accountIDs of users with this item in their wishlist
      * @return accountsWithItemInWishlist
      */
-    public ArrayList<Integer> getAccountsWithItemInWishlist() {
+    public List<Integer> getAccountsWithItemInWishlist() {
         return accountsWithItemInWishlist;
     }
 
@@ -117,11 +128,17 @@ public class Item {
     }
 
     /**
-     * Set the approval status of this item.
-     * @param approved
+     * Set the approval status of this item to true.
      */
-    public void setApproved(boolean approved) {
-        isApproved = approved;
+    public void approve() {
+        isApproved = true;
+    }
+
+    /**
+     * Set the approval status of this item to false
+     */
+    public void disapprove() {
+        isApproved = false;
     }
 
     /**
@@ -130,6 +147,14 @@ public class Item {
      */
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
+    }
+
+    /**
+     * Set the owner's ID of this item
+     * @param ownerID (new owner's ID)
+     */
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
     }
 
     /**
@@ -143,9 +168,10 @@ public class Item {
     /**
      * Remove given accountID from the accountsWithItemInWishlist list
      * @param accountID
+     * @return true if the accountID has been removed
      */
-    public void removeFromAccountsWithItemsInWishlist(int accountID) {
-        accountsWithItemInWishlist.remove(Integer.valueOf(accountID));
+    public boolean removeFromAccountsWithItemsInWishlist(int accountID) {
+       return accountsWithItemInWishlist.remove(Integer.valueOf(accountID));
     }
 
     /**
@@ -154,10 +180,10 @@ public class Item {
     @Override
     public String toString() {
         return String.format("Item name: %1$s\n" +
-                "ID: %1$d\n" +
-                "Description: %2$s\n" +
-                "Approval status: %3$s\n" +
-                "Name of owner: %4$s", name, itemID, description, String.valueOf(isApproved), ownerUsername);
+                "ID: %2$s\n" +
+                "Description: %3$s\n" +
+                "Approval status: %4$s\n" +
+                "Name of owner: %5$s", name, String.valueOf(itemID), description, String.valueOf(isApproved), ownerUsername);
     }
 
 }
