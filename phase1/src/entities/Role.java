@@ -11,7 +11,7 @@ public class Role {
     /**
      * The ID of this role
      */
-    private final String id;
+    private final Roles id;
     /**
      * A list of permissions for this role.
      */
@@ -21,7 +21,7 @@ public class Role {
      * @param id The Role's id.
      * @param permissions The permissions for this role.
      */
-    public Role(String id, ArrayList<Permissions> permissions) {
+    public Role(Roles id, ArrayList<Permissions> permissions) {
         this.id = id;
         this.permissions = permissions;
     }
@@ -38,7 +38,7 @@ public class Role {
     /**
      * @return The Role's id.
      */
-    public String getId() {
+    public Roles getId() {
         return id;
     }
 }
