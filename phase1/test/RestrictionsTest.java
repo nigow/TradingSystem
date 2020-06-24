@@ -16,7 +16,7 @@ public class RestrictionsTest extends TestCase {
     public void testGetMaxIncompleteTrade() {
         Restrictions initial = new Restrictions(1, 2);
         TestCase.assertEquals(initial.getMaxIncompleteTrade(), 2);
-        TestCase.assertFalse("Test", initial.getLendMoreThanBorrow() == 1);
+        TestCase.assertFalse("Test", initial.getMaxIncompleteTrade() == 1);
     }
     public void testSetLendMoreThanBorrow() {
         Restrictions initial = new Restrictions(1, 2);
