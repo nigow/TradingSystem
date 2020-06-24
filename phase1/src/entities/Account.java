@@ -22,9 +22,9 @@ public class Account {
     private ArrayList<Integer> wishlist;
 
     /**
-     * The ID of the role that this user is
+     * The list of roles of the user
      */
-    private String rolesID;
+    private ArrayList<Roles> rolesID;
 
     /**
      * The unique identifier of this account (cannot be changed)
@@ -38,7 +38,7 @@ public class Account {
      * @param password
      * @param rolesID
      */
-    public Account(String username, String password, String rolesID, int accountID) {
+    public Account(String username, String password, ArrayList<Roles> rolesID, int accountID) {
         this.username = username;
         this.password = password;
         this.wishlist = new ArrayList<Integer>();
@@ -78,21 +78,6 @@ public class Account {
         return wishlist;
     }
 
-    /**
-     * Get the roleID of this account
-     * @return rolesID
-     */
-    public String getRolesID() {
-        return rolesID;
-    }
-
-    /**
-     * Set the roleID of this account
-     * @param rolesID
-     */
-    public void setRolesID(String rolesID) {
-        this.rolesID = rolesID;
-    }
 
     /**
      * Get the accountID of this account
@@ -101,6 +86,32 @@ public class Account {
     public int getAccountID() {
         return accountID;
     }
+
+    /**
+     * Get the rolesID of all the roles that this account belongs to
+     * @return rolesID
+     */
+    public ArrayList<Roles> getRolesID() {
+        return rolesID;
+    }
+
+    /**
+     * Set the roleID of this account
+     * @param roleID
+     */
+    public void addRole(Roles roleID) {
+        rolesID.add(roleID);
+    }
+
+    /**
+     * Remove given roleID from user's list of rolesID
+     * @param roleID
+     * @return true if the role has been removed
+     */
+    public boolean removeRole(Roles roleID) {
+        return rolesID.remove(roleID);
+    }
+
 
     /**
      * Adds an item to the end of the wishlist
@@ -113,7 +124,7 @@ public class Account {
     /**
      * Remove an item from the wishlist.
      * @param itemID
-     * @return true if the item has been removed, and false if the item doesn't exist in the wishlist.
+     * @return true if the item has been removed
      */
     public boolean removeFromWishList(int itemID) {
         return wishlist.remove(Integer.valueOf(itemID));
@@ -122,7 +133,7 @@ public class Account {
     @Override
     public String toString() {
         return String.format("Account name: %1$s\n" +
-                "ID: %1$d\n" +
-                "Role: %2$s", username, accountID, rolesID);
+                "ID: %2$s\n" +
+                "Role: %3$s", username, String.valueOf(accountID), rolesID.toString());
     }
 }
