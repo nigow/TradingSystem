@@ -17,14 +17,19 @@ public class Account {
     private String password;
 
     /**
-     * The user's wishlist
+     * The user's wishlist (stores itemID of the items)
      */
-    private ArrayList<Item> wishlist;
+    private ArrayList<Integer> wishlist;
 
     /**
      * The ID of the role that this user is
      */
-    private int rolesID;
+    private String rolesID;
+
+    /**
+     * The unique identifier of this account (cannot be changed)
+     */
+    private final int accountID;
 
     /**
      * Creates a new account with the given username, password, and rolesID.
@@ -33,11 +38,12 @@ public class Account {
      * @param password
      * @param rolesID
      */
-    public Account(String username, String password, int rolesID) {
+    public Account(String username, String password, String rolesID, int accountID) {
         this.username = username;
         this.password = password;
-        this.wishlist = new ArrayList<Item>();
+        this.wishlist = new ArrayList<Integer>();
         this.rolesID = rolesID;
+        this.accountID = accountID;
     }
 
     /**
@@ -68,7 +74,7 @@ public class Account {
      * Get the wishlist of this account
      * @return wishlist
      */
-    public ArrayList<Item> getWishlist() {
+    public ArrayList<Integer> getWishlist() {
         return wishlist;
     }
 
@@ -76,7 +82,7 @@ public class Account {
      * Get the roleID of this account
      * @return rolesID
      */
-    public int getRolesID() {
+    public String getRolesID() {
         return rolesID;
     }
 
@@ -84,19 +90,39 @@ public class Account {
      * Set the roleID of this account
      * @param rolesID
      */
-    public void setRolesID(int rolesID) {
+    public void setRolesID(String rolesID) {
         this.rolesID = rolesID;
     }
 
     /**
-     * Adds an item to the end of the wishlist
-     * @param item
+     * Get the accountID of this account
+     * @return accountID
      */
-    public void addToWishlist(Item item) {
-        wishlist.add(item);
+    public int getAccountID() {
+        return accountID;
     }
 
-    public void removeFromWishList(Item item) {
+    /**
+     * Adds an item to the end of the wishlist
+     * @param itemID
+     */
+    public void addToWishlist(int itemID) {
+        wishlist.add(itemID);
+    }
 
+    /**
+     * Remove an item from the wishlist.
+     * @param itemID
+     * @return true if the item has been removed, and false if the item doesn't exist in the wishlist.
+     */
+    public boolean removeFromWishList(int itemID) {
+        return wishlist.remove(Integer.valueOf(itemID));
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Account name: %1$s\n" +
+                "ID: %1$d\n" +
+                "Role: %2$s", username, accountID, rolesID);
     }
 }

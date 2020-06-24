@@ -1,10 +1,11 @@
 package entities;
+import java.util.ArrayList;
 /** Represents an item
  * @Author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Item {
     /**
-     * The unique identifier of this item.
+     * The unique identifier of this item. (cannot be changed)
       */
     private final int itemID;
 
@@ -29,8 +30,14 @@ public class Item {
     private String ownerUsername;
 
     /**
+     * The accountIDs of users with this item in their wishlist
+     */
+    private ArrayList<Integer> accountsWithItemInWishlist;
+
+    /**
      * Creates a new item with the given itemID, name, description, and ownerUsername.
      * isApproved is set to false by default (items have to be manually approved by an admin).
+     * accountsWithItemInWishlist is empty by default until an account adds the item to their wishlist
      * @param itemID
      * @param name
      * @param description
@@ -42,6 +49,7 @@ public class Item {
         this.description= description;
         this.isApproved = false;
         this.ownerUsername = ownerUsername;
+        this.accountsWithItemInWishlist = new ArrayList<Integer>();
     }
 
     /**
@@ -85,6 +93,14 @@ public class Item {
     }
 
     /**
+     * Get the list of accountIDs of users with this item in their wishlist
+     * @return accountsWithItemInWishlist
+     */
+    public ArrayList<Integer> getAccountsWithItemInWishlist() {
+        return accountsWithItemInWishlist;
+    }
+
+    /**
      * Set the name of this item.
      * @param name (new name of item)
      */
@@ -114,6 +130,22 @@ public class Item {
      */
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
+    }
+
+    /**
+     * Add an accountID to accountsWithItemInWishlist
+     * @param accountID
+     */
+    public void addToAccountsWithItemsInWishlist(int accountID) {
+        accountsWithItemInWishlist.add(accountID);
+    }
+
+    /**
+     * Remove given accountID from the accountsWithItemInWishlist list
+     * @param accountID
+     */
+    public void removeFromAccountsWithItemsInWishlist(int accountID) {
+        accountsWithItemInWishlist.remove(Integer.valueOf(accountID));
     }
 
     /**
