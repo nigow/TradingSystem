@@ -9,6 +9,7 @@ public class Restrictions {
      * Number of items a user has to lend more than borrow to be able to make a trade.
      */
     private int lendMoreThanBorrow;
+
     /**
      * Maximum number of incomplete trades before a user's account is frozen.
      */

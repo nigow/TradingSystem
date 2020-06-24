@@ -11,10 +11,12 @@ public class TimePlace {
      * The ID of this meetup.
      */
     private final int id;
+
     /**
      * The time of this meetup.
      */
     private LocalDateTime time;
+
     /**
      * The location of this meetup.
      */
@@ -74,9 +76,14 @@ public class TimePlace {
 
     /**
      * Creates a string representation of this meetup.
-     * @return A string representation of this meetup.
+     * @return A string representation of a TimePlace object.
      */
+    @Override
     public String toString() {
-        return "id: " + id + ", time: " + time.toString() + ", place: " + place;
+        return "TimePlace{" +
+                "id=" + id +
+                ", time=" + time +
+                ", place='" + place + '\'' +
+                '}';
     }
 }
