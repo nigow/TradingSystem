@@ -34,6 +34,6 @@ public interface ItemsGateway {
      * Return an ID that does not belong to any item at the time the method is called.
      * @return An unused ID.
      */
-    int generateValidId();
+    int generateValidId() throws IOException;
 
 }
