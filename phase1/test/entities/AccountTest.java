@@ -14,7 +14,13 @@ public class AccountTest extends TestCase {
         roles.add(Roles.TRADER);
         roles.add(Roles.ADMIN);
         Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList wishlist = new ArrayList<Integer>();
+        wishlist.add(1);
+        wishlist.add(2);
+        Account userOverload = new Account("Ethan", "1234", (ArrayList<Integer>) wishlist.clone(), (ArrayList<Roles>) roles.clone(), 1);
     }
+
+
 
     public void testGetUsername() {
         ArrayList roles = new ArrayList<Roles>();

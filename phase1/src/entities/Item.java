@@ -2,7 +2,7 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 /** Represents an item
- * @Author Ethan Lam follow him on instagram @ethannomiddlenamelam
+ * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Item {
     /**
@@ -26,11 +26,6 @@ public class Item {
     private boolean isApproved;
 
     /**
-     * The username of the owner of this item.
-     */
-    private String ownerUsername;
-
-    /**
      * The ID of the owner of this item
      */
     private int ownerID;
@@ -38,25 +33,23 @@ public class Item {
     /**
      * The accountIDs of users with this item in their wishlist
      */
-    private List<Integer> accountsWithItemInWishlist;
+    private final List<Integer> accountsWithItemInWishlist;
 
     /**
-     * Creates a new item with the given itemID, name, description, and ownerUsername.
+     * Creates a new item with the given itemID, name, description, and ownerID.
      * isApproved is set to false by default (items have to be manually approved by an admin).
      * accountsWithItemInWishlist is empty by default until an account adds the item to their wishlist
-     * @param itemID
-     * @param name
-     * @param description
-     * @param ownerUsername
+     * @param itemID The ID of the item
+     * @param name The name of the item
+     * @param description The description of the item
      */
-    public Item(int itemID, String name, String description, String ownerUsername, int ownerID) {
+    public Item(int itemID, String name, String description, int ownerID) {
         this.itemID = itemID;
         this.name = name;
         this.description= description;
         this.isApproved = false;
-        this.ownerUsername = ownerUsername;
         this.ownerID = ownerID;
-        this.accountsWithItemInWishlist = new ArrayList<Integer>();
+        this.accountsWithItemInWishlist = new ArrayList<>();
     }
 
     /**
@@ -89,14 +82,6 @@ public class Item {
      */
     public boolean isApproved() {
         return isApproved;
-    }
-
-    /**
-     * Get the name of the owner of this item.
-     * @return ownerUsername
-     */
-    public String getOwnerUsername() {
-        return ownerUsername;
     }
 
     public int getOwnerID() {
@@ -142,14 +127,6 @@ public class Item {
     }
 
     /**
-     * Set the owner's username of this item.
-     * @param ownerUsername (new owner's username)
-     */
-    public void setOwnerUsername(String ownerUsername) {
-        this.ownerUsername = ownerUsername;
-    }
-
-    /**
      * Set the owner's ID of this item
      * @param ownerID (new owner's ID)
      */
@@ -159,7 +136,7 @@ public class Item {
 
     /**
      * Add an accountID to accountsWithItemInWishlist
-     * @param accountID
+     * @param accountID the ID of the account added
      */
     public void addToAccountsWithItemsInWishlist(int accountID) {
         accountsWithItemInWishlist.add(accountID);
@@ -167,7 +144,7 @@ public class Item {
 
     /**
      * Remove given accountID from the accountsWithItemInWishlist list
-     * @param accountID
+     * @param accountID the ID of the account that should be removed
      * @return true if the accountID has been removed
      */
     public boolean removeFromAccountsWithItemsInWishlist(int accountID) {
@@ -183,7 +160,7 @@ public class Item {
                 "ID: %2$s\n" +
                 "Description: %3$s\n" +
                 "Approval status: %4$s\n" +
-                "Name of owner: %5$s", name, String.valueOf(itemID), description, String.valueOf(isApproved), ownerUsername);
+                "ID of owner: %5$s", name, itemID, description, isApproved, ownerID);
     }
 
 }

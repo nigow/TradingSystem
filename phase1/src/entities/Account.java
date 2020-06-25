@@ -1,10 +1,10 @@
+
 package entities;
-/** Represents an item
- * @Author Ethan Lam follow him on instagram @ethannomiddlenamelam
- */
 import java.util.ArrayList;
 import java.util.List;
-
+/** Represents an item
+ * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
+ */
 public class Account {
 
     /**
@@ -25,7 +25,7 @@ public class Account {
     /**
      * The list of roles of the user
      */
-    private List<Roles> rolesID;
+    private final List<Roles> rolesID;
 
     /**
      * The unique identifier of this account (cannot be changed)
@@ -35,16 +35,31 @@ public class Account {
     /**
      * Creates a new account with the given username, password, and rolesID.
      * The wishlist is initialized as an empty Arraylist.
-     * @param username
-     * @param password
-     * @param rolesID
+     * @param username the name of this account
+     * @param password the password for this account
+     * @param rolesID the roles of this account
+     * @param accountID the id of this account
      */
     public Account(String username, String password, ArrayList<Roles> rolesID, int accountID) {
         this.username = username;
         this.password = password;
-        this.wishlist = new ArrayList<Integer>();
+        this.wishlist = new ArrayList<>();
         this.rolesID = rolesID;
         this.accountID = accountID;
+    }
+
+    /**
+     * An overloaded constructor
+     * Creates a new account with the given username, password, wishlist, and rolesID.
+     * @param username the name of this account
+     * @param password the password for this account
+     * @param wishlist the wishlist that this account should be initialized with
+     * @param rolesID the roles for this account
+     * @param accountID the ID of this account
+     */
+    public Account(String username, String password, ArrayList<Integer> wishlist, ArrayList<Roles> rolesID, int accountID) {
+        this(username, password, rolesID, accountID);
+        this.wishlist = wishlist;
     }
 
     /**
@@ -65,7 +80,7 @@ public class Account {
 
     /**
      * Set a new password
-     * @param password
+     * @param password The new passoword that'll be assigned to this account
      */
     public void setPassword(String password) {
         this.password = password;
@@ -98,7 +113,7 @@ public class Account {
 
     /**
      * Set the roleID of this account
-     * @param roleID
+     * @param roleID The new roleID that'll be added to this account
      */
     public void addRole(Roles roleID) {
         rolesID.add(roleID);
@@ -106,7 +121,7 @@ public class Account {
 
     /**
      * Remove given roleID from user's list of rolesID
-     * @param roleID
+     * @param roleID the roleID that should be removed from this account
      * @return true if the role has been removed
      */
     public boolean removeRole(Roles roleID) {
@@ -116,7 +131,7 @@ public class Account {
 
     /**
      * Adds an item to the end of the wishlist
-     * @param itemID
+     * @param itemID The ID of the item to be added to this wishlist
      */
     public void addToWishlist(int itemID) {
         wishlist.add(itemID);
@@ -124,7 +139,7 @@ public class Account {
 
     /**
      * Remove an item from the wishlist.
-     * @param itemID
+     * @param itemID The ID of the item to be removed from this wishlist
      * @return true if the item has been removed
      */
     public boolean removeFromWishList(int itemID) {
@@ -135,6 +150,6 @@ public class Account {
     public String toString() {
         return String.format("Account name: %1$s\n" +
                 "ID: %2$s\n" +
-                "Role: %3$s", username, String.valueOf(accountID), rolesID.toString());
+                "Role: %3$s", username, accountID, rolesID.toString());
     }
 }
