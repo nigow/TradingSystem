@@ -15,5 +15,6 @@ public enum Permissions {
     BORROW,
     BROWSE_INVENTORY,
     CHANGE_RESTRICTIONS,
-    ADD_ADMIN
+    ADD_ADMIN,
+    REQUEST_UNFREEZE
 }
