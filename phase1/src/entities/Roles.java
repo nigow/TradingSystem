@@ -7,5 +7,7 @@ package entities;
 public enum Roles {
     ADMIN,
     TRADER,
-    BASIC
+    BASIC,
+    FROZEN,
+    PENDING
 }
