@@ -54,15 +54,22 @@ public class CSVAccountGateway implements AccountGateway {
 
         } catch (FileNotFoundException e) {
 
-            List<Roles> roleIds = new ArrayList<Roles>(){{
-                add(Roles.BASIC);
-                add(Roles.TRADER);
-                add(Roles.ADMIN);
-            }};
+            if (!csvFile.isFile()) { // file doesn't exist (therefore obviously can't be accessed)
 
-            Account initialAdmin = new Account("admin", "12345", roleIds, generateValidId());
+                List<Roles> roleIds = new ArrayList<Roles>(){{
+                    add(Roles.BASIC);
+                    add(Roles.TRADER);
+                    add(Roles.ADMIN);
+                }};
 
-            if (!updateAccount(initialAdmin)) throw new IOException("Unable to access account storage.");
+                Account initialAdmin = new Account("admin", "12345", roleIds, generateValidId());
+                updateAccount(initialAdmin);
+
+            } else { // file can't be accessed due to other causes
+
+                throw new IOException("Account storage inaccessible");
+
+            }
 
         }
 
