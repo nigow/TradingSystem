@@ -26,8 +26,9 @@ public interface AccountGateway {
     /**
      * Given an account, save its information to persistent storage.
      * @param account Account being saved.
+     * @return Whether the persistent storage was successfully updated or not.
      */
-    void updateAccount(Account account);
+    boolean updateAccount(Account account);
 
     /**
      * Retrieve every account in the system.

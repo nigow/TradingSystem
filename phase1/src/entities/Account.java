@@ -40,7 +40,7 @@ public class Account {
      * @param rolesID the roles of this account
      * @param accountID the id of this account
      */
-    public Account(String username, String password, ArrayList<Roles> rolesID, int accountID) {
+    public Account(String username, String password, List<Roles> rolesID, int accountID) {
         this.username = username;
         this.password = password;
         this.wishlist = new ArrayList<>();
@@ -57,9 +57,9 @@ public class Account {
      * @param rolesID the roles for this account
      * @param accountID the ID of this account
      */
-    public Account(String username, String password, ArrayList<Integer> wishlist, ArrayList<Roles> rolesID, int accountID) {
+    public Account(String username, String password, List<Integer> wishlist, List<Roles> rolesID, int accountID) {
         this(username, password, rolesID, accountID);
-        this.wishlist = wishlist;
+        this.wishlist.addAll(wishlist);
     }
 
     /**
