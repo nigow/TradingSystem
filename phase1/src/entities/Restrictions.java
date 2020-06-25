@@ -16,14 +16,22 @@ public class Restrictions {
     private int maxIncompleteTrade;
 
     /**
-     * Creates Restrictions based on number of items a user has to lend more than borrow to be able to trade, and the
-     * maximum number of incomplete trades before an account is frozen.
+     * Maximum number of trades a user can have in one week.
+     */
+    private int maxWeeklyTrade;
+
+    /**
+     * Creates Restrictions based on number of items a user has to lend more than borrow to be able to trade, the
+     * maximum number of incomplete trades before an account is frozen, and the maximum number of trades a user
+     * can have in one week.
      * @param lendMoreThanBorrow Number of items a user has to lend more than borrow to be able to make a trade.
      * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen.
+     * @param maxWeeklyTrade Maximum number of trades a user can have in one week.
      */
-    public Restrictions(int lendMoreThanBorrow, int maxIncompleteTrade) {
+    public Restrictions(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade) {
         this.lendMoreThanBorrow = lendMoreThanBorrow;
         this.maxIncompleteTrade = maxIncompleteTrade;
+        this.maxWeeklyTrade = maxWeeklyTrade;
     }
 
     /**
@@ -56,5 +64,21 @@ public class Restrictions {
      */
     public void setMaxIncompleteTrade(int maxIncompleteTrade) {
         this.maxIncompleteTrade = maxIncompleteTrade;
+    }
+
+    /**
+     * Returns the maximum number of trades a user can have in one week.
+     * @return Maximum number of trades a user can have in one week.
+     */
+    public int getMaxWeeklyTrade() {
+        return maxWeeklyTrade;
+    }
+
+    /**
+     * Changes the maximum number of trades a user can have in one week.
+     * @param maxWeeklyTrade Maximum number of trades a user can have in one week.
+     */
+    public void setMaxWeeklyTrade(int maxWeeklyTrade) {
+        this.maxWeeklyTrade = maxWeeklyTrade;
     }
 }

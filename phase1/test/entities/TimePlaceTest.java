@@ -48,6 +48,6 @@ public class TimePlaceTest extends TestCase{
     public void testToString() {
         LocalDateTime date = LocalDateTime.of(2018, 2, 13, 15, 56);
         TimePlace initial = new TimePlace(1, date, "UTM");
-        TestCase.assertEquals(initial.toString(), "id: 1, time: 2018-02-13T15:56, place: UTM");
+        TestCase.assertEquals(initial.toString(), "TimePlace{id=1, time=2018-02-13T15:56, place='UTM'}");
     }
 }
