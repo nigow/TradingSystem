@@ -1,3 +1,5 @@
+package entities;
+
 import entities.TimePlace;
 import junit.framework.TestCase;
 import java.time.LocalDateTime;

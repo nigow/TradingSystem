@@ -1,3 +1,5 @@
+package entities;
+
 import entities.Restrictions;
 import junit.framework.TestCase;
 

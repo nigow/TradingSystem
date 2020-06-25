@@ -1,3 +1,5 @@
+package entities;
+
 import entities.Account;
 import entities.Roles;
 import junit.framework.TestCase;

@@ -1,3 +1,5 @@
+package entities;
+
 import entities.Item;
 import junit.framework.TestCase;
 
