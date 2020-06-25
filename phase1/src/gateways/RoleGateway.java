@@ -1,6 +1,7 @@
 package gateways;
 
 import entities.Role;
+import entities.Roles;
 
 /**
  * A gateway for interacting with the persistent storage of roles.
@@ -12,6 +13,6 @@ public interface RoleGateway {
      * @param id ID of desired role.
      * @return Role possessing the given ID (null if an invalid ID was given).
      */
-    Role findById(String id);
+    Role findById(Roles id);
 
 }
