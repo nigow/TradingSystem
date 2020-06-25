@@ -5,7 +5,7 @@ import entities.Account;
 import java.util.List;
 
 /**
- * A gateway for interacting with the persistent storage for accounts.
+ * A gateway for interacting with the persistent storage of accounts.
  */
 public interface AccountGateway {
 
