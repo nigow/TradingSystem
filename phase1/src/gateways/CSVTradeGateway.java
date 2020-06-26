@@ -2,10 +2,7 @@ package gateways;
 
 import entities.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -33,7 +30,7 @@ public class CSVTradeGateway implements TradeGateway {
 
     }}; // must be ordered to ensure each header is written into the correct column
 
-    private final Map<Integer, String> trades;
+    private final Map<Integer, String> trades = new HashMap<>();
 
     /**
      * Create a trade gateway that uses csv files as persistent storage.
@@ -41,48 +38,68 @@ public class CSVTradeGateway implements TradeGateway {
      * @throws IOException If the given csv file cannot be accessed.
      */
     public CSVTradeGateway(String csvPath) throws IOException {
+
         csvFile = new File(csvPath);
-        trades = new HashMap<>();
 
-        try {
-            Scanner fileReader = new Scanner(csvFile);
+        if (csvFile.length() == 0) { // according to internal docs this handles the directory case
 
-            fileReader.nextLine(); // skip the header
+            save();
 
-            while (fileReader.hasNext()) {
+        } else {
 
-                String[] row = fileReader.nextLine().split(",");
+            BufferedReader reader = new BufferedReader(new FileReader(csvFile));
+            reader.readLine(); // skip header
 
-                Integer tradeId = Integer.valueOf(row[headers.get("account_id")]);
+            String row;
+            while ((row = reader.readLine()) != null) {
 
-                trades.put(tradeId, String.join(",", row));
+                String[] col = row.split(",");
+                Integer tradeId = Integer.valueOf(col[headers.get("trade_id")]);
+                trades.put(tradeId, row);
 
             }
 
-            fileReader.close();
-
-
-        } catch (FileNotFoundException e) {
-
-            // todo: file handling behaviour could be improved if I figure out a way to test file system problems
-            save();
+            reader.close();
 
         }
+
     }
 
     private void save() throws IOException {
 
-        FileWriter fileWriter = new FileWriter(csvFile); // create nonexistent file or overwrite outdated file
-        fileWriter.write(String.join(",", headers.keySet()));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
+        writer.write(String.join(",", headers.keySet()));
+        writer.newLine();
 
         for (String line : trades.values()) {
 
-            fileWriter.write(line);
+            writer.write(line);
+            writer.newLine();
 
         }
 
-        fileWriter.close();
+        writer.close();
 
+    }
+
+    private String generateRow(Trade trade, TimePlace timePlace) {
+
+        String[] col = {
+                String.valueOf(trade.getId()),
+                String.valueOf(trade.getTraderOneID()),
+                String.valueOf(trade.getTraderTwoID()),
+                trade.getItemOneID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
+                trade.getItemTwoID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
+                timePlace.getTime().truncatedTo(ChronoUnit.MINUTES) + " " + timePlace.getPlace(),
+                String.valueOf(trade.getEditedCounter()),
+                String.valueOf(trade.getLastEditorID()),
+                String.valueOf(trade.getStatus())
+        };
+
+        if (trade.getItemTwoID().isEmpty()) col[headers.get("trader_one_items")] = " ";
+        if (trade.getItemTwoID().isEmpty()) col[headers.get("trader_two_items")] = " ";
+
+        return String.join(",", col);
     }
 
     /**
@@ -92,16 +109,16 @@ public class CSVTradeGateway implements TradeGateway {
     public Trade findTradeById(int id) {
         if (trades.containsKey(id)) {
 
-            String[] row = trades.get(id).split(",");
+            String[] col = trades.get(id).split(",");
 
-            int traderOneId = Integer.parseInt(row[headers.get("trader_one_id")]);
-            int traderTwoId = Integer.parseInt(row[headers.get("trader_two_id")]);
-            List<Integer> traderOneItems = Arrays.stream(row[headers.get("trader_one_items")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
-            List<Integer> traderTwoItems = Arrays.stream(row[headers.get("trader_two_items")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
-            int editCounter = Integer.parseInt(row[headers.get("edit_counter")]);
-            int lastEditorId = Integer.parseInt(row[headers.get("last_editor_id")]);
-            TradeStatus status = TradeStatus.valueOf(row[headers.get("status")]);
-            boolean isPermanent = Boolean.parseBoolean(row[headers.get("is_permanent")]);
+            int traderOneId = Integer.parseInt(col[headers.get("trader_one_id")]);
+            int traderTwoId = Integer.parseInt(col[headers.get("trader_two_id")]);
+            List<Integer> traderOneItems = Arrays.stream(col[headers.get("trader_one_items")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
+            List<Integer> traderTwoItems = Arrays.stream(col[headers.get("trader_two_items")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
+            int editCounter = Integer.parseInt(col[headers.get("edit_counter")]);
+            int lastEditorId = Integer.parseInt(col[headers.get("last_editor_id")]);
+            TradeStatus status = TradeStatus.valueOf(col[headers.get("status")]);
+            boolean isPermanent = Boolean.parseBoolean(col[headers.get("is_permanent")]);
 
             Trade trade = new Trade(id, id, isPermanent, traderOneId, traderTwoId, traderOneItems, traderTwoItems, editCounter);
             trade.setLastEditorID(lastEditorId);
@@ -130,22 +147,7 @@ public class CSVTradeGateway implements TradeGateway {
 
         String backup = trades.get(trade.getId());
 
-        String[] row = {
-                String.valueOf(trade.getId()),
-                String.valueOf(trade.getTraderOneID()),
-                String.valueOf(trade.getTraderTwoID()),
-                trade.getItemOneID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
-                trade.getItemTwoID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
-                timePlace.getTime().truncatedTo(ChronoUnit.MINUTES) + " " + timePlace.getPlace(),
-                String.valueOf(trade.getEditedCounter()),
-                String.valueOf(trade.getLastEditorID()),
-                String.valueOf(trade.getStatus())
-        };
-
-        if (trade.getItemTwoID().isEmpty()) row[headers.get("trader_one_items")] = " ";
-        if (trade.getItemTwoID().isEmpty()) row[headers.get("trader_two_items")] = " ";
-
-        trades.put(trade.getId(), String.join(",", row));
+        trades.put(trade.getId(), generateRow(trade, timePlace));
         try {
 
             save();
