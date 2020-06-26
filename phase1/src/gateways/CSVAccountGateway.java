@@ -24,7 +24,7 @@ public class CSVAccountGateway implements AccountGateway {
 
     }}; // must be ordered to ensure each header is written into the correct column
 
-    private final Map<Integer, String> accounts;
+    private final Map<Integer, String> accounts = new HashMap<>();
 
     /**
      * Create an account gateway that uses csv files as persistent storage.
@@ -32,44 +32,37 @@ public class CSVAccountGateway implements AccountGateway {
      * @throws IOException If the given csv file cannot be accessed.
      */
     public CSVAccountGateway(String csvPath) throws IOException {
+
         csvFile = new File(csvPath);
 
-        accounts = new HashMap<>();
-        try {
+        if (csvFile.length() == 0) { // according to internal docs this handles the directory case
 
-            Scanner fileReader = new Scanner(csvFile);
-            fileReader.nextLine(); // skip the header
+            List<Roles> roleIds = new ArrayList<Roles>(){{
+                add(Roles.BASIC);
+                add(Roles.TRADER);
+                add(Roles.ADMIN);
+            }};
 
-            while (fileReader.hasNext()) {
+            Account initialAdmin = new Account("admin", "12345", roleIds, generateValidId());
 
-                String[] row = fileReader.nextLine().split(",");
+            accounts.put(initialAdmin.getAccountID(), generateRow(initialAdmin));
+            save();
 
-                Integer accountId = Integer.valueOf(row[headers.get("account_id")]);
+        } else {
 
-                accounts.put(accountId, String.join(",", row));
+            BufferedReader reader = new BufferedReader(new FileReader(csvFile));
+            reader.readLine(); // skip header
 
-            }
+            String row;
+            while ((row = reader.readLine()) != null) {
 
-            fileReader.close();
-
-        } catch (FileNotFoundException e) {
-
-            if (!csvFile.isFile()) { // file doesn't exist (therefore obviously can't be accessed)
-
-                List<Roles> roleIds = new ArrayList<Roles>(){{
-                    add(Roles.BASIC);
-                    add(Roles.TRADER);
-                    add(Roles.ADMIN);
-                }};
-
-                Account initialAdmin = new Account("admin", "12345", roleIds, generateValidId());
-                updateAccount(initialAdmin);
-
-            } else { // file can't be accessed due to other causes
-
-                throw new IOException("Account storage inaccessible");
+                String[] col = row.split(",");
+                Integer accountId = Integer.valueOf(col[headers.get("account_id")]);
+                accounts.put(accountId, row);
 
             }
+
+            reader.close();
 
         }
 
@@ -77,17 +70,35 @@ public class CSVAccountGateway implements AccountGateway {
 
     private void save() throws IOException {
 
-        FileWriter fileWriter = new FileWriter(csvFile); // create nonexistent file or overwrite outdated file
-        fileWriter.write(String.join(",", headers.keySet()));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
+        writer.write(String.join(",", headers.keySet()));
+        writer.newLine();
 
         for (String line : accounts.values()) {
 
-            fileWriter.write(line);
+            writer.write(line);
+            writer.newLine();
 
         }
 
-        fileWriter.close();
+        writer.close();
 
+    }
+
+    private String generateRow(Account account) {
+
+        String[] col = {
+                String.valueOf(account.getAccountID()),
+                account.getUsername(),
+                account.getPassword(),
+                account.getWishlist().stream().map(String::valueOf).collect(Collectors.joining(" ")),
+                account.getRolesID().stream().map(String::valueOf).collect(Collectors.joining(" "))
+        };
+
+        if (account.getWishlist().isEmpty()) col[headers.get("wishlist")] = " ";
+        if (account.getRolesID().isEmpty()) col[headers.get("role_ids")] = " ";
+
+        return String.join(",", col);
     }
 
     /**
@@ -98,13 +109,13 @@ public class CSVAccountGateway implements AccountGateway {
 
         if (accounts.containsKey(id)) {
 
-            String[] row = accounts.get(id).split(",");
+            String[] col = accounts.get(id).split(",");
 
-            String username = row[headers.get("username")];
-            String password = row[headers.get("password")];
+            String username = col[headers.get("username")];
+            String password = col[headers.get("password")];
 
-            List<Integer> wishlist = Arrays.stream(row[headers.get("wishlist")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
-            List<Roles> roleIds = Arrays.stream(row[headers.get("role_ids")].split(" ")).map(Roles::valueOf).collect(Collectors.toList());
+            List<Integer> wishlist = Arrays.stream(col[headers.get("wishlist")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
+            List<Roles> roleIds = Arrays.stream(col[headers.get("role_ids")].split(" ")).map(Roles::valueOf).collect(Collectors.toList());
 
             return new Account(username, password, wishlist, roleIds, id);
         }
@@ -134,18 +145,8 @@ public class CSVAccountGateway implements AccountGateway {
 
         String backup = accounts.get(account.getAccountID());
 
-        String[] row = {
-                String.valueOf(account.getAccountID()),
-                account.getUsername(),
-                account.getPassword(),
-                account.getWishlist().stream().map(String::valueOf).collect(Collectors.joining(" ")),
-                account.getRolesID().stream().map(String::valueOf).collect(Collectors.joining(" "))
-        };
+        accounts.put(account.getAccountID(), generateRow(account));
 
-        if (account.getWishlist().isEmpty()) row[headers.get("wishlist")] = " ";
-        if (account.getRolesID().isEmpty()) row[headers.get("role_ids")] = " ";
-
-        accounts.put(account.getAccountID(), String.join(",", row));
         try {
 
             save();
