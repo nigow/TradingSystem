@@ -153,7 +153,7 @@ public class CSVAccountGateway implements AccountGateway {
 
         } catch (IOException e) {
 
-            accounts.put(account.getAccountID(), backup);
+            if (backup != null) accounts.put(account.getAccountID(), backup);
             return false;
 
         }

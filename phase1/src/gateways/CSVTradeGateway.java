@@ -154,7 +154,7 @@ public class CSVTradeGateway implements TradeGateway {
 
         } catch (IOException e) {
 
-            trades.put(trade.getId(), backup);
+            if (backup != null) trades.put(trade.getId(), backup);
             return false;
 
         }
