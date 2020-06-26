@@ -4,6 +4,7 @@ import entities.Account;
 import gateways.AccountGateway;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the manager that creates an account or takes in an account and edits the wishlist.
@@ -22,25 +23,54 @@ public class AccountManager {
     private AccountGateway accountGateway;
 
     /**
-     * Constructs an instance of a new Account using username and password and stores it using accountGateway
+     * Constructs an instance of AccountManager and stores accountGateway
      * @param accountGateway Gateway used to interact with persistent storage of accounts
-     * @param username Username of the new account
-     * @param password Password of the new account
      */
-    public AccountManager(AccountGateway accountGateway, String username, String password){
+    public AccountManager(AccountGateway accountGateway){
         this.accountGateway = accountGateway;
-        currAccount = new Account(username, password, new ArrayList<>(), accountGateway.generateValidId());
-        this.accountGateway.updateAccount(currAccount);
     }
 
     /**
-     * Finds an existing account by username using accountGateway
-     * @param accountGateway Gateway used to interact with persistent storage of accounts
+     * Creates a new Account using username and password and stores it using accountGateway
      * @param username Username of account to find
+     * @param password Password of the new account
+     * @return true if account is successfully created and false if username is taken already
      */
-    public AccountManager(AccountGateway accountGateway, String username){
-        this.accountGateway = accountGateway;
-        currAccount = this.accountGateway.findByUsername(username);
+    public boolean createAccount(String username, String password){
+        if (this.accountGateway.findByUsername(username).getUsername() == null){
+            currAccount = new Account(username, password, new ArrayList<>(), accountGateway.generateValidId());
+            this.accountGateway.updateAccount(currAccount);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Finds the account with the username and assigns it to currAccount
+     * @param username Unique identifier of the account
+     * @return true if currAccount is successfully set and false if no account is found with username
+     */
+    public boolean setCurrAccount(String username){
+        Account account = this.accountGateway.findByUsername(username);
+        if (account != null){
+            currAccount = account;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Finds the account with the accountID and assigns it to currAccount
+     * @param accountID Unique identifier of the account
+     * @return true if currAccount is successfully set and false if no account is found with accountID
+     */
+    public boolean setCurrAccount(int accountID){
+        Account account = this.accountGateway.findById(accountID);
+        if (account != null){
+            currAccount = account;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -66,5 +96,29 @@ public class AccountManager {
      */
     public Account getCurrAccount(){
         return currAccount;
+    }
+
+    /**
+     * Updates in persistent storage the account corresponding to the username
+     * @param username Username of the account to update
+     */
+    public void updateAccount(String username){
+        accountGateway.updateAccount(accountGateway.findByUsername(username));
+    }
+
+    /**
+     * Updates in persistent storage the account corresponding to the accountID
+     * @param accountID Unique identifier of the account
+     */
+    public void updateAccount(int accountID){
+        accountGateway.updateAccount(accountGateway.findById(accountID));
+    }
+
+    /**
+     * Retrieves all accounts stored in the system
+     * @return List of all accounts
+     */
+    public List<Account> getAccountsList(){
+        return accountGateway.getAllAccounts();
     }
 }
