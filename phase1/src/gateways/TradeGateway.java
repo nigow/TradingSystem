@@ -28,8 +28,9 @@ public interface TradeGateway {
      * Given a trade and the time + place it's taking place at, save its information to persistent storage.
      * @param trade Trade being saved.
      * @param timePlace Time + place trade is happening at.
+     * @return Whether trade's persistent storage was successfully updated or not.
      */
-    void updateTrade(Trade trade, TimePlace timePlace);
+    boolean updateTrade(Trade trade, TimePlace timePlace);
 
     /**
      * Retrieve every trade in the system.

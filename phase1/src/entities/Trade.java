@@ -69,7 +69,7 @@ public class Trade {
      * @param itemTwoID List of IDs of items the second person is trading away.
      */
     public Trade(int id, int timePlaceID, boolean isPermanent, int traderOneID, int traderTwoID,
-                 List<Integer> itemOneID, List<Integer> itemTwoID) {
+                 List<Integer> itemOneID, List<Integer> itemTwoID, int editedCounter) {
         this.id = id;
         this.timePlaceID = timePlaceID;
         this.isPermanent = isPermanent;
@@ -78,7 +78,7 @@ public class Trade {
         this.itemOneID = itemOneID;
         this.itemTwoID = itemTwoID;
         status = TradeStatus.UNCONFIRMED;
-        editedCounter = 0;
+        this.editedCounter = editedCounter;
         lastEditorID = traderOneID;
     }
 
