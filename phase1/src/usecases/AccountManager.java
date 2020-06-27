@@ -31,6 +31,16 @@ public class AccountManager {
     }
 
     /**
+     * Constructs an instance of AccountManager and stores accountGateway
+     * @param accountGateway Gateway used to interact with persistent storage of accounts
+     * @param account Account that current account is being set to
+     */
+    public AccountManager(AccountGateway accountGateway, Account account){
+        this.accountGateway = accountGateway;
+        currAccount = account;
+    }
+
+    /**
      * Creates a new Account using username and password and stores it using accountGateway
      * @param username Username of account to find
      * @param password Password of the new account
@@ -46,12 +56,29 @@ public class AccountManager {
     }
 
     /**
-     * Finds the account with the username and assigns it to currAccount
-     * @param username Unique identifier of the account
-     * @return true if currAccount is successfully set and false if no account is found with username
+     * Gets the account corresponding to the accountID provided
+     * @param accountID Unique identifier of account
+     * @return account corresponding to the accountID
      */
-    public boolean setCurrAccount(String username){
-        Account account = accountGateway.findByUsername(username);
+    public Account getAccountfromID(int accountID){
+        return accountGateway.findById(accountID);
+    }
+
+    /**
+     * Gets the account corresponding to the username provided
+     * @param username Username of an account
+     * @return account corresponding to the username
+     */
+    public Account getAccountfromUsername(String username){
+        return accountGateway.findByUsername(username);
+    }
+
+    /**
+     * Assigns he given account to currAccount
+     * @param account Account of user being set
+     * @return Whether the current account is successfully set or not
+     */
+    public boolean setCurrAccount(Account account){
         if (account != null){
             currAccount = account;
             return true;
@@ -60,17 +87,11 @@ public class AccountManager {
     }
 
     /**
-     * Finds the account with the accountID and assigns it to currAccount
-     * @param accountID Unique identifier of the account
-     * @return true if currAccount is successfully set and false if no account is found with accountID
+     * Gets the current Account being modified
+     * @return the current account
      */
-    public boolean setCurrAccount(int accountID){
-        Account account = accountGateway.findById(accountID);
-        if (account != null){
-            currAccount = account;
-            return true;
-        }
-        return false;
+    public Account getCurrAccount(){
+        return currAccount;
     }
 
     /**
@@ -95,27 +116,12 @@ public class AccountManager {
         }
     }
 
-    /** Gets the current Account being modified
-     * @return the current account
-     */
-    public Account getCurrAccount(){
-        return currAccount;
-    }
-
     /**
-     * Updates in persistent storage the account corresponding to the username
-     * @param username Username of the account to update
+     * Updates in persistent storage the account corresponding to the account
+     * @param account Account of user to update
      */
-    public void updateAccount(String username){
-        accountGateway.updateAccount(accountGateway.findByUsername(username));
-    }
-
-    /**
-     * Updates in persistent storage the account corresponding to the accountID
-     * @param accountID Unique identifier of the account
-     */
-    public void updateAccount(int accountID){
-        accountGateway.updateAccount(accountGateway.findById(accountID));
+    public void updateAccount(Account account){
+        accountGateway.updateAccount(account);
     }
 
     /**
@@ -125,4 +131,5 @@ public class AccountManager {
     public List<Account> getAccountsList(){
         return accountGateway.getAllAccounts();
     }
+
 }
