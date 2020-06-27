@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Represents the manager responsible for dealing with frozen accounts and managing restrictions
+ * @author Andrew
  */
 public class FreezingUtility {
 
@@ -35,6 +36,7 @@ public class FreezingUtility {
     /**
      * Gets a list of accounts that have broken restrictions and are to be frozen
      * @param accountManager Manager for accounts used to retrieve all accounts
+     * @param authManager Manager for roles and permissions
      * @return a list of accounts to freeze
      */
     public List<Account> getAccountstoFreeze(AccountManager accountManager, AuthManager authManager){
@@ -51,6 +53,7 @@ public class FreezingUtility {
     /**
      * Gets a list of accounts that have been frozen and have requested to be unfrozen
      * @param accountManager Manager for accounts used to retrieve all accounts
+     * @param authManager Manager for roles and permissions
      * @return a list of accounts to freeze
      */
     public List<Account> getAccountstoUnfreeze(AccountManager accountManager, AuthManager authManager){
