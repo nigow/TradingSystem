@@ -8,16 +8,20 @@ import java.util.ArrayList;
 */
 public interface HomePresenter {
     /**
-     * displays possible actions and returns index of chosen action
+     * displays possible actions
+     * @param HomeOptions possible actions user can choose from
+     * @return index of chosen action
      */
     public int displayHomeOptions(ArrayList<String> HomeOptions);
     /**
-     * returns a string array containing the entered username, then password of an account
+     * log user in
+     * @return username and password inputted
      */
     public String[] logIn();
 
     /**
-     * returns a string containing the desired username and password for a new account
+     * creates account with given information
+     * @return username and password they would like to use for account
      */
     public String[] newAccount();
 }

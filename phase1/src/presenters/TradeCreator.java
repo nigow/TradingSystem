@@ -8,12 +8,15 @@ import java.util.ArrayList;
  */
 public interface TradeCreator {
     /**
-     * displays possible actions and returns index of chosen action
+     * displays possible actions
+     * @param tradeCreatorOptions possible actions user can choose from
+     * @return index of chosen action
      */
     public int displayTradeCreatorOptions(ArrayList<String> tradeCreatorOptions);
 
     /**
-     * returns the suggested time and then place in a string
+     * suggest a time and place for trade
+     * @return time and place user suggested
      */
     public String[] suggestTimePlace();
 

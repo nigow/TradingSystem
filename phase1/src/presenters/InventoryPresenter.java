@@ -8,33 +8,40 @@ import java.util.ArrayList;
  */
 public interface InventoryPresenter {
     /**
-     * displays possible actions and returns index of chosen action
+     * displays possible actions
+     * @param InventoryOptions possible actions user can choose from
+     * @return index of chosen action
      */
     public int displayInventoryOptions(ArrayList<String> InventoryOptions);
 
     /**
      * displays inventory
+     * @param inventory list of inventory item
      */
     public void displayInventory(ArrayList<String> inventory);
 
     /**
-     * displays possible actions and returns index of chosen action
+     * add to wishlist
+     * @return indexes of items that user would like to add to the wishlist
      */
 
     public ArrayList<String> addToWishlist();
 
     /**
-     * returns the index of the item to be removed from the inventory
+     * remove from inventory
+     * @return indexes of item that user would like removed from inventory
      */
     public int removeFromInventory();
 
     /**
      * displays pending items
+     * @param pendingItem list of items pending to be added to the inventory
      */
     public void displayPending(ArrayList<String> pendingItem);
 
     /**
-     * returns indexes of items in the pending list to be approved
+     * approve chosen items
+     * @return indexes of item that can be approved
      */
     public ArrayList<Integer> approveItem();
 

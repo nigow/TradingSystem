@@ -8,22 +8,27 @@ import java.util.ArrayList;
  */
 public interface WishlistPresenter {
     /**
-     * displays possible actions and returns index of chosen action
+     * displays possible actions
+     * @param WishlistOptions possible actions user can choose from
+     * @return index of chosen action
      */
     public int displayWishlistOptions(ArrayList<String> WishlistOptions);
 
     /**
      * displays user's wishlist
+     * @param wishlist items on wishlist
      */
     public void displayWishlist(ArrayList<String> wishlist);
 
     /**
-     * returns index of item that user wants to use to start trade
+     * start new trade
+     * @return index of item which the trade wants to be started with
      */
     public int startTrade();
 
     /**
-     * returns index of item that user wants to remove from wishlist
+     * remove item from wishlist
+     * @return index of item which user wants to remove
      */
     public int removeFromWishlist();
 

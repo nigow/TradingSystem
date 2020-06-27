@@ -8,26 +8,32 @@ import java.util.ArrayList;
  */
 public interface FreezingPresenter {
     /**
-     * displays possible actions and returns index of chosen action
+     * displays possible actions
+     * @param freezingOptions possible actions user can choose from
+     * @return index of chosen item
      */
     public int displayFreezingOptions(ArrayList<String> freezingOptions);
     /**
      * displays list of users that should be frozen
+     * @param possibleUsers list of usernames that should be frozen
      */
     public void displayPossibleFreeze(ArrayList<String> possibleUsers);
 
     /**
      * displays list of users that requests to be unfrozen
+     * @param possibleUsers list of usernames that have requested to be unfrozen
      */
     public void displayPossibleUnfreeze(ArrayList<String> possibleUsers);
 
     /**
-     * returns indexes of users to freeze
+     * freezes chosen users
+     * @return indexes of users to freeze
      */
     public ArrayList<Integer> freeze();
 
     /**
-     * returns indexes of users to unfreeze
+     * unfreezes chosen users
+     * @return indexes of suers to unfreeze
      */
     public ArrayList<Integer> unfreeze();
 

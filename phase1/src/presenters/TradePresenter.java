@@ -8,23 +8,33 @@ import java.util.ArrayList;
  */
 public interface TradePresenter {
     /**
-     * displays possible actions and returns index of chosen action
+     * displays possible actions
+     * @param tradeOptions possible actions user can choose from
+     * @return index of chosen action
      */
     public int displayTradeOptions(ArrayList<String> tradeOptions);
 
     /**
      * displays user's ongoing trades
+     * @param trades list of ongoing trades
      */
-    public void displayTrades(String[] tradeInfo);
+    public void displayTrades(ArrayList<String> trades);
+    /**
+     * select trade to edit
+     * @return index of selected trade
+     */
+    public int selectTrade();
 
     /**
-     * displays edited trade information
+     * edit trade
+     * @return information for edited trade
      */
     public String[] editTrade();
 
     /**
      * displays user's 3 most recent traded items and
      * most frequent trading partners
+     * @param recentInfo user's information on trades
      */
     public void displayRecentInfo(String[] recentInfo);
 
