@@ -6,33 +6,33 @@ package presenters;
  */
 public interface InventoryPresenter {
 
-    public void displayInventory();
     /**
      * displays inventory
      */
+    public void displayInventory();
 
-    public String[] addToWishlist();
     /**
      * using the index of an item, return the item's information for the wishlist
      */
+    public String[] addToWishlist();
 
-    public int removeFromInventory();
     /**
      * returns the index of the item to be removed from the inventory
      */
+    public int removeFromInventory();
 
-    public void displayPending();
     /**
      * displays pending items
      */
+    public void displayPending();
 
-    public int[] approveItem();
     /**
      * returns indexes of items in the pending list to be approved
      */
+    public int[] approveItem();
 
-    public void returnToMenu();
     /**
      * returns user to main menu
      */
+    public void returnToMenu();
 }

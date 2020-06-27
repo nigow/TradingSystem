@@ -6,13 +6,13 @@ package presenters;
  */
 public interface TradeCreator {
 
-    public String[] suggestTimePlace();
     /**
      * returns the suggested time and then place in a string
      */
+    public String[] suggestTimePlace();
 
-    public void returnToMenu();
     /**
      * returns user to main menu
      */
+    public void returnToMenu();
 }
