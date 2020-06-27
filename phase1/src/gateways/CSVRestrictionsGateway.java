@@ -4,6 +4,9 @@ import entities.Restrictions;
 
 import java.io.*;
 
+/**
+ * A restriction gateway that uses csv files as persistent storage.
+ */
 public class CSVRestrictionsGateway implements RestrictionsGateway{
 
     /**

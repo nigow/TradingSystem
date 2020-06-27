@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+/**
+ * A role gateway that uses csv files as persistent storage.
+ */
 public class CSVRoleGateway implements RoleGateway{
     /**
      * A HashMap read from the CSV file that maps Roles against list of permissions
@@ -57,8 +60,8 @@ public class CSVRoleGateway implements RoleGateway{
     public Role findById(Roles id) {
         if(map.containsKey(id)){
             return new Role(id, map.get(id));
-        }else{
-            return null;
         }
+        return null;
+
     }
 }
