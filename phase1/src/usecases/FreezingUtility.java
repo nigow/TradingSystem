@@ -2,6 +2,7 @@ package usecases;
 
 import entities.Account;
 import entities.Restrictions;
+import entities.Roles;
 import gateways.RestrictionsGateway;
 
 import java.util.ArrayList;
@@ -33,35 +34,53 @@ public class FreezingUtility {
 
     /**
      * Gets a list of accounts that have broken restrictions and are to be frozen
-     * @param accountManager Gateway used to interact with persistent storage of accounts
+     * @param accountManager Manager for accounts used to retrieve all accounts
      * @return a list of accounts to freeze
      */
-    public List<Account> getAccountstofreeze(AccountManager accountManager){
+    public List<Account> getAccountstoFreeze(AccountManager accountManager, AuthManager authManager){
         // LET ME KNOW if you think an instance of AccountManager should be stored, or handled differently than being passed as parameter
-        return new ArrayList<>();
+        List<Account> accountstoFreeze = new ArrayList<>();
+        for (Account account: accountManager.getAccountsList()){
+            if (authManager.canbeFrozen(account)){
+                accountstoFreeze.add(account);
+            }
+        }
+        return accountstoFreeze;
     }
 
     /**
      * Gets a list of accounts that have been frozen and have requested to be unfrozen
-     * @param accountManager Gateway used to interact with persistent storage of accounts
+     * @param accountManager Manager for accounts used to retrieve all accounts
      * @return a list of accounts to freeze
      */
-    public List<Account> getAccountstoUnfreeze(AccountManager accountManager){
-        return new ArrayList<>();
+    public List<Account> getAccountstoUnfreeze(AccountManager accountManager, AuthManager authManager){
+        List<Account> accountstoUnfreeze = new ArrayList<>();
+        for (Account account: accountManager.getAccountsList()){
+            if (authManager.isPending(account)){
+                accountstoUnfreeze.add(account);
+            }
+        }
+        return accountstoUnfreeze;
     }
 
     /**
      * Freezes an account by changing the role of the current account from TRADER to FROZEN
+     * @param authManager Manager for roles and permissions
+     * @param account Account to freeze
      */
-    public void freezeAccount(){
-
+    public void freezeAccount(AuthManager authManager, Account account){
+        authManager.removeRolebyID(account, Roles.TRADER);
+        authManager.addRolebyID(account, Roles.FROZEN);
     }
 
     /**
-     * Unfreezes an account by changing the role of the current account from PENDING to TRADER
+     * Unfreezes an account that requested to be unfrozen by changing the role of the current account from PENDING to TRADER
+     * @param authManager Manager for roles and permissions
+     * @param account Account to unfreeze
      */
-    public void unfreezeAccount(){
-
+    public void unfreezeAccount(AuthManager authManager, Account account){
+        authManager.removeRolebyID(account, Roles.PENDING);
+        authManager.addRolebyID(account, Roles.FROZEN);
     }
 
     /**
