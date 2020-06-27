@@ -4,13 +4,21 @@ import usecases.AccountManager;
 
 import java.io.IOException;
 
+/**
+ * Configures the application.
+ * @author Michael
+ */
 public class ManualConfig {
     private AccountManager accountManager;
 
+    /**
+     * Creates ManualConfig and initializes the required usecases.
+     */
     public ManualConfig() {
         try {
             // TODO: Replace csvPath with wherever we store the information.
-            CSVAccountGateway csvAccountGateway = new CSVAccountGateway("");
+            String filePath = System.getProperty("user.dir") + "/out/Files/accounts.csv";
+            CSVAccountGateway csvAccountGateway = new CSVAccountGateway(filePath);
             this.accountManager = new AccountManager(csvAccountGateway);
         }
         catch (IOException e) {
@@ -18,7 +26,9 @@ public class ManualConfig {
         }
 
     }
-
+    /**
+     * @return an instance of accountManager usecase.
+     */
     public AccountManager getAccountManager() {
         return accountManager;
     }
