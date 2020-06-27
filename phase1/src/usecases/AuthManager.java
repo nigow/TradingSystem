@@ -32,11 +32,6 @@ public class AuthManager {
     private RoleGateway roleGateway;
 
     /**
-     * The account currently logged in where its permissions are also managed
-     */
-    private Account currAccount;
-
-    /**
      * Constructs an instance of AccountManager and stores accountGateway, restrictionsGateway and roleGateway
      * @param restrictionsGateway Gateway used to interact with persistent storage of restrictions
      * @param roleGateway Gateway used to interact with persistent storage of roles
@@ -55,95 +50,127 @@ public class AuthManager {
      * @return Whether the login is successful or not
      */
     public boolean authenticateLogin(String username, String password){
-        // WIP (Just showing that this method sets currAccount and needs to be called before other methods)
-
-        currAccount = accountGateway.findByUsername(username);
+        // WIP
         return true;
     }
 
     /**
-     * Adds a role to current account by roleID
+     * Adds a role to the account by roleID
+     * @param account Account to add the role to
      * @param roleID Unique identifier of role
      */
     // Note to controller people: Default rolesIDs are BASIC and TRADER
     // Admin roleIDs are ADMIN, BASIC, TRADER
-    public void addRolebyID(Roles roleID){
-        currAccount.addRole(roleID);
-        accountGateway.updateAccount(currAccount);
+    public void addRolebyID(Account account, Roles roleID){
+        account.addRole(roleID);
+        accountGateway.updateAccount(account);
     }
 
     /**
-     * Adds a list of roles to current account by roleIDs
+     * Adds a list of roles to the account by roleIDs
+     * @param account Account to add the list of roles to
      * @param roleIDs List of unique identifiers of roles
      */
-    public void addRolesbyIDs(List<Roles> roleIDs){
+    public void addRolesbyIDs(Account account, List<Roles> roleIDs){
         for (Roles roleID: roleIDs){
-            currAccount.addRole(roleID);
+            account.addRole(roleID);
         }
-        accountGateway.updateAccount(currAccount);
+        accountGateway.updateAccount(account);
     }
 
     /**
-     * Remove a role from current account by roleID
+     * Remove a role from the account by roleID
+     * @param account Account to remove the role from
      * @param roleID Unique identifier of role
      */
-    public void removeRolebyID(Roles roleID){
-        currAccount.removeRole(roleID);
-        accountGateway.updateAccount(currAccount);
+    public void removeRolebyID(Account account, Roles roleID){
+        account.removeRole(roleID);
+        accountGateway.updateAccount(account);
     }
 
     /**
-     * Removes a list of roles from current account by roleIDs
+     * Removes a list of roles from the account by roleIDs
+     * @param account Account to remove the list of roles from
      * @param roleIDs List of unique identifiers of roles
      */
-    public void removeRolesbyIDs(List<Roles> roleIDs){
+    public void removeRolesbyIDs(Account account, List<Roles> roleIDs){
         for (Roles roleID: roleIDs){
-            currAccount.removeRole(roleID);
+            account.removeRole(roleID);
         }
-        accountGateway.updateAccount(currAccount);
+        accountGateway.updateAccount(account);
     }
 
     /**
-     * Determines whether the current account can borrow items
-     * @return Whether the current account can borrow items
+     * Determines whether a given account account can borrow items
+     * @param account Account that is checked if it can borrow items
+     * @return Whether the account can borrow items
      */
-    public boolean canBorrow(){
+    public boolean canBorrow(Account account){
         //WIP
         return true;
     }
 
     /**
-     * Determines whether the current account can lend items
-     * @return Whether the current account can lend items
+     * Determines whether a given account account can lend items
+     * @param account Account that is checked if it can lend items
+     * @return Whether the account can lend items
      */
-    public boolean canLend(){
+    public boolean canLend(Account account){
         // WIP
         return true;
     }
 
     /**
-     * Determines whether the current account can perform administer actions
-     * @return Whether the current account and perform administer actions
+     * Determines whether a given account is an administer account
+     * @param account Account that is checked if it has admin permissions
+     * @return Whether the account is an admin or not
      */
-    public boolean canAdminister(){
-        //LET ME KNOW IF YOU THINK WE SHOULD LET EVERY INDIVIDUAL PERMISSION HAVE A canDoSomething() METHOD
-        //CURRENTLY IT IS JUST FOR KEY ACTIONS THAT MAY INCLUDE 1 OR MORE PERMISSIONS
+    public boolean isAdmin(Account account){
         return true;
     }
 
     /**
-     * Checks if the current account has already requested to unfreeze or is not frozen
-     * @return Whether an current account can request to unfreeze their account
+     * Determines whether a given account is frozen
+     * @param account Account that is checked if it is frozen
+     * @return Whether the account is frozen or not
      */
-    public boolean canRequestUnfreeze(){
-        // WIP
+    public boolean isFrozen(Account account){
+        return true;
+    }
+
+    /**
+     * Determines whether a given account has requested to be unfrozen
+     * @param account Account that is checked to see if it has requested to be unfrozen
+     * @return Whether the account has requested to be unfrozen or not
+     */
+    public boolean isPending(Account account){
+        return true;
+    }
+
+    /**
+     * Determines whether a given account should be frozen
+     * @param account Account that is checked if it can be frozen
+     * @return Whether the account can be frozen or not
+     */
+    public boolean canbeFrozen(Account account){
+        return true;
+    }
+
+    /**
+     * Checks if a given account has already requested to unfreeze or is not frozen
+     * @param account Account that is checked if it can request to be unfrozen
+     * @return Whether the account can request to unfreeze their account
+     */
+    public boolean canRequestUnfreeze(Account account){
+        // Might remove this method/make it private and have it be used in requestUnfreeze()
         return true;
     }
 
     /**
      * Determines whether the current account can request to unfreeze and changes the role of the account from FROZEN to PENDING if it can
+     * @param account Account to request unfreeze
      */
-    public void requestUnfreeze(){
+    public void requestUnfreeze(Account account){
         //if (canRequestUnfreeze()) do something
             // WIP (gives PENDING Role)
     }
