@@ -1,19 +1,27 @@
 package presenters;
 
+import java.util.ArrayList;
+
 /**
  * interface for the inventory that can create changes to the wishlist
  * @author Catherine
  */
 public interface InventoryPresenter {
     /**
-     * displays inventory
+     * displays possible actions and returns index of chosen action
      */
-    public void displayInventory();
+    public int displayInventoryOptions(ArrayList<String> InventoryOptions);
 
     /**
-     * using the index of an item, return the item's information for the wishlist
+     * displays inventory
      */
-    public String[] addToWishlist();
+    public void displayInventory(ArrayList<String> inventory);
+
+    /**
+     * displays possible actions and returns index of chosen action
+     */
+
+    public ArrayList<String> addToWishlist();
 
     /**
      * returns the index of the item to be removed from the inventory
@@ -23,12 +31,12 @@ public interface InventoryPresenter {
     /**
      * displays pending items
      */
-    public void displayPending();
+    public void displayPending(ArrayList<String> pendingItem);
 
     /**
      * returns indexes of items in the pending list to be approved
      */
-    public int[] approveItem();
+    public ArrayList<Integer> approveItem();
 
     /**
      * returns user to main menu

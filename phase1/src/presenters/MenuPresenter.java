@@ -6,12 +6,7 @@ package presenters;
  */
 public interface MenuPresenter {
     /**
-     * displays all possible actions for the user
+     * displays all possible actions for the user and returns number for chosen action
      */
-    public void displayMenu();
-
-    /**
-     * returns index of user's chosen action using the number designated to each action
-     */
-    public int menu();
+    public int displayMenu();
 }

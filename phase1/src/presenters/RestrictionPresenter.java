@@ -1,20 +1,31 @@
 package presenters;
 
+import java.util.ArrayList;
+
 /**
  * interface allowing administrator to manage restrictions
  * @author Catherine
  */
 public interface RestrictionPresenter {
     /**
-     * displays current restrictions
+     * displays possible actions and returns index of chosen action
      */
-    public void displayRestrictions();
+    public int displayRestrictionOptions(String[] restrictionOptions);
 
     /**
-     * takes the number of a type of restriction, asks user for new
-     * value then updaes with list of ints of updated values
+     * displays current value for the restriction and returns updated value
      */
-    public int[] changeRestriction();
+    public int changeLendMoreThanBorrow(int lendMoreThanBorrow);
+
+    /**
+     * displays current value for the restriction and returns updated value
+     */
+    public int changeMaxIncompleteTrades(int maxIncompleteTrades);
+
+    /**
+     * displays current value for the restriction and returns updated value
+     */
+    public int changeMaxWeeklyTrades(int weeklyTrades);
 
     /**
      * returns user to main menu

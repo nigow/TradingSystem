@@ -1,14 +1,21 @@
 package presenters;
 
+import java.util.ArrayList;
+
 /**
  * interface for managing the wishlist and starting trades
  * @author Catherine
  */
 public interface WishlistPresenter {
     /**
+     * displays possible actions and returns index of chosen action
+     */
+    public int displayWishlistOptions(ArrayList<String> WishlistOptions);
+
+    /**
      * displays user's wishlist
      */
-    public void displayWishlist();
+    public void displayWishlist(ArrayList<String> wishlist);
 
     /**
      * returns index of item that user wants to use to start trade
