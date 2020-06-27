@@ -144,10 +144,7 @@ public class AuthManager {
      * Determines whether the current account can request to unfreeze and changes the role of the account from FROZEN to PENDING if it can
      */
     public void requestUnfreeze(){
-        if (canRequestUnfreeze()){
+        //if (canRequestUnfreeze()) do something
             // WIP (gives PENDING Role)
-            ;
-        }
     }
-
 }
