@@ -5,7 +5,6 @@ package presenters;
  * @author Catherine
  */
 public interface WishlistPresenter {
-
     /**
      * displays user's wishlist
      */

@@ -5,7 +5,6 @@ package presenters;
  * @author Catherine
  */
 public interface TradeCreator {
-
     /**
      * returns the suggested time and then place in a string
      */

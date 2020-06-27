@@ -5,7 +5,6 @@ package presenters;
  * @author Catherine
  */
 public interface RestrictionPresenter {
-
     /**
      * displays current restrictions
      */

@@ -5,7 +5,6 @@ package presenters;
  * @author Catherine
  */
 public interface FreezingPresenter {
-
     /**
      * displays list of users that should be frozen
      */

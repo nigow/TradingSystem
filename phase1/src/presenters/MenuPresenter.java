@@ -2,9 +2,9 @@ package presenters;
 
 /**
  * interface that shows possible actions
+ * @author Catherine
  */
 public interface MenuPresenter {
-
     /**
      * displays all possible actions for the user
      */

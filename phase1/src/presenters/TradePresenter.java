@@ -5,7 +5,6 @@ package presenters;
  * @author Catherine
  */
 public interface TradePresenter {
-
     /**
      * displays user's ongoing trades
      */
