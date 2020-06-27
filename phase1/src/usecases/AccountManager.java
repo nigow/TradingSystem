@@ -13,7 +13,7 @@ import java.util.List;
 public class AccountManager {
 
     /**
-     * The account being edited
+     * The current account being edited
      */
     private Account currAccount;
 
@@ -37,7 +37,7 @@ public class AccountManager {
      * @return true if account is successfully created and false if username is taken already
      */
     public boolean createAccount(String username, String password){
-        if (this.accountGateway.findByUsername(username).getUsername() == null){
+        if (accountGateway.findByUsername(username).getUsername() == null){
             currAccount = new Account(username, password, new ArrayList<>(), accountGateway.generateValidId());
             this.accountGateway.updateAccount(currAccount);
             return true;
@@ -51,7 +51,7 @@ public class AccountManager {
      * @return true if currAccount is successfully set and false if no account is found with username
      */
     public boolean setCurrAccount(String username){
-        Account account = this.accountGateway.findByUsername(username);
+        Account account = accountGateway.findByUsername(username);
         if (account != null){
             currAccount = account;
             return true;
@@ -65,7 +65,7 @@ public class AccountManager {
      * @return true if currAccount is successfully set and false if no account is found with accountID
      */
     public boolean setCurrAccount(int accountID){
-        Account account = this.accountGateway.findById(accountID);
+        Account account = accountGateway.findById(accountID);
         if (account != null){
             currAccount = account;
             return true;
@@ -78,8 +78,10 @@ public class AccountManager {
      * @param itemID Unique identifier of the item
      */
     public void addItemtoWishlist(int itemID){
-        currAccount.addToWishlist(itemID);
-        accountGateway.updateAccount(currAccount);
+        if (currAccount != null){
+            currAccount.addToWishlist(itemID);
+            accountGateway.updateAccount(currAccount);
+        }
     }
 
     /**
@@ -87,8 +89,10 @@ public class AccountManager {
      * @param itemID Unique identifier of the item
      */
     public void removeItemfromWishlist(int itemID){
-        currAccount.removeFromWishList(itemID);
-        accountGateway.updateAccount(currAccount);
+        if (currAccount != null){
+            currAccount.removeFromWishList(itemID);
+            accountGateway.updateAccount(currAccount);
+        }
     }
 
     /** Gets the current Account being modified
