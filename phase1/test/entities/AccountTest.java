@@ -1,7 +1,7 @@
 package entities;
 
 import entities.Account;
-import entities.Roles;
+import entities.Permissions;
 import junit.framework.TestCase;
 
 import java.lang.reflect.Array;
@@ -9,110 +9,148 @@ import java.util.ArrayList;
 
 public class AccountTest extends TestCase {
     public void testCreation() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+        
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         ArrayList wishlist = new ArrayList<Integer>();
         wishlist.add(1);
         wishlist.add(2);
-        Account userOverload = new Account("Ethan", "1234", (ArrayList<Integer>) wishlist.clone(), (ArrayList<Roles>) roles.clone(), 1);
+        Account userOverload = new Account("Ethan", "1234", (ArrayList<Integer>) wishlist.clone(), (ArrayList<Permissions>) permissions.clone(), 1);
     }
 
 
 
     public void testGetUsername() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         TestCase.assertEquals(user.getUsername(), "Ethan");
     }
 
     public void testGetPassword() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+        
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         TestCase.assertEquals(user.getPassword(), "1234");
     }
 
     public void testSetPassword() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+        
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         user.setPassword("4321");
         TestCase.assertEquals(user.getPassword(), "4321");
     }
 
     public void testGetWishList() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+        
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         ArrayList lst = new ArrayList<Integer>();
         TestCase.assertEquals(user.getWishlist(), lst);
     }
 
-    public void testGetRolesID() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
-        TestCase.assertEquals(user.getRolesID(), roles);
+    public void testGetPermissions() {
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+        
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
+        TestCase.assertEquals(user.getPermissions(), permissions);
     }
 
     public void testGetOwnerID() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+        
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         TestCase.assertEquals(user.getAccountID(), 1);
     }
 
-    public void testAddRole() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
-        user.addRole(Roles.TRADER);
-        roles.add(Roles.TRADER);
-        TestCase.assertEquals(user.getRolesID(), roles);
+    public void testAddPermission() {
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
+        user.addPermission(Permissions.FREEZE);
+        permissions.add(Permissions.FREEZE);
+        TestCase.assertEquals(user.getPermissions(), permissions);
     }
 
-    public void testRemoveRole() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
-        TestCase.assertTrue(user.removeRole(Roles.TRADER));
-        roles.remove(Roles.TRADER);
-        TestCase.assertEquals(user.getRolesID(), roles);
+    public void testRemovePermission() {
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
+        TestCase.assertTrue(user.removePermission(Permissions.LOGIN));
+        permissions.remove(Permissions.LOGIN);
+        TestCase.assertEquals(user.getPermissions(), permissions);
     }
 
-    public void testRemoveNotInRolesList() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
-        user.removeRole(Roles.ADMIN);
-        TestCase.assertEquals(user.getRolesID(), roles);
+    public void testRemoveNotInPermissionsList() {
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
+        user.removePermission(Permissions.CREATE_ITEM);
+        TestCase.assertEquals(user.getPermissions(), permissions);
     }
 
     public void testAddToWishlist() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.FREEZE);
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         ArrayList lst = new ArrayList<Integer>();
         lst.add(1);
         lst.add(2);
@@ -122,11 +160,16 @@ public class AccountTest extends TestCase {
     }
 
     public void testRemoveFromWishlist() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+
+Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         ArrayList lst = new ArrayList<Integer>();
         lst.add(1);
         user.addToWishlist(1);
@@ -136,11 +179,16 @@ public class AccountTest extends TestCase {
     }
 
     public void testRemoveNotInWishlist() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        roles.add(Roles.ADMIN);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.CREATE_ITEM);
+        permissions.add(Permissions.CONFIRM_ITEM);
+        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.BORROW);
+        permissions.add(Permissions.BROWSE_INVENTORY);
+        permissions.add(Permissions.REQUEST_UNFREEZE);
+
+Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
         ArrayList lst = new ArrayList<Integer>();
         lst.add(1);
         user.addToWishlist(1);
@@ -149,10 +197,10 @@ public class AccountTest extends TestCase {
     }
 
     public void testToString() {
-        ArrayList roles = new ArrayList<Roles>();
-        roles.add(Roles.BASIC);
-        roles.add(Roles.TRADER);
-        Account user = new Account("Ethan", "1234", (ArrayList<Roles>) roles.clone(), 1);
-        TestCase.assertEquals(user.toString(), "Account name: Ethan\nID: 1\nRole: [BASIC, TRADER]");
+        ArrayList permissions = new ArrayList<Permissions>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.FREEZE);
+        Account user = new Account("Ethan", "1234", (ArrayList<Permissions>) permissions.clone(), 1);
+        TestCase.assertEquals(user.toString(), "Account name: Ethan\nID: 1\nPermission: [BASIC, TRADER]");
     }
 }

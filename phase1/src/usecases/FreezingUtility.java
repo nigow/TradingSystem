@@ -2,7 +2,6 @@ package usecases;
 
 import entities.Account;
 import entities.Restrictions;
-import entities.Roles;
 import gateways.RestrictionsGateway;
 
 import java.util.ArrayList;

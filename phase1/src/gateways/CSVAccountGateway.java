@@ -1,7 +1,6 @@
 package gateways;
 
 import entities.Account;
-import entities.Roles;
 
 import java.io.*;
 import java.util.*;

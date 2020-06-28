@@ -1,10 +1,7 @@
 package entities;
 
-import entities.Role;
-import entities.Roles;
 import junit.framework.TestCase;
 
-import entities.Permissions;
 import java.util.ArrayList;
 
 public class RoleTest extends TestCase {

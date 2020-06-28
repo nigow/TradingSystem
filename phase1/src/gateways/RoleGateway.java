@@ -1,8 +1,5 @@
 package gateways;
 
-import entities.Role;
-import entities.Roles;
-
 /**
  * A gateway for interacting with the persistent storage of roles.
  */

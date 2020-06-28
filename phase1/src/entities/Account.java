@@ -20,12 +20,12 @@ public class Account {
     /**
      * The user's wishlist (stores itemID of the items)
      */
-    private List<Integer> wishlist;
+    private final List<Integer> wishlist;
 
     /**
-     * The list of roles of the user
+     * The list of permissions of the user
      */
-    private final List<Roles> rolesID;
+    private final List<Permissions> permissions;
 
     /**
      * The unique identifier of this account (cannot be changed)
@@ -37,14 +37,14 @@ public class Account {
      * The wishlist is initialized as an empty Arraylist.
      * @param username the name of this account
      * @param password the password for this account
-     * @param rolesID the roles of this account
+     * @param permissions what this account is allowed to do
      * @param accountID the id of this account
      */
-    public Account(String username, String password, List<Roles> rolesID, int accountID) {
+    public Account(String username, String password, List<Permissions> permissions, int accountID) {
         this.username = username;
         this.password = password;
         this.wishlist = new ArrayList<>();
-        this.rolesID = rolesID;
+        this.permissions = permissions;
         this.accountID = accountID;
     }
 
@@ -54,11 +54,11 @@ public class Account {
      * @param username the name of this account
      * @param password the password for this account
      * @param wishlist the wishlist that this account should be initialized with
-     * @param rolesID the roles for this account
+     * @param permissions what this account is allowed to do
      * @param accountID the ID of this account
      */
-    public Account(String username, String password, List<Integer> wishlist, List<Roles> rolesID, int accountID) {
-        this(username, password, rolesID, accountID);
+    public Account(String username, String password, List<Integer> wishlist, List<Permissions> permissions, int accountID) {
+        this(username, password, permissions, accountID);
         this.wishlist.addAll(wishlist);
     }
 
@@ -104,28 +104,28 @@ public class Account {
     }
 
     /**
-     * Get the rolesID of all the roles that this account belongs to
-     * @return rolesID
+     * Get all permissions that this account has
+     * @return permissions
      */
-    public List<Roles> getRolesID() {
-        return rolesID;
+    public List<Permissions> getPermissions() {
+        return permissions;
     }
 
     /**
-     * Set the roleID of this account
-     * @param roleID The new roleID that'll be added to this account
+     * Add a permission to the list of permissions
+     * @param permission The new permission that'll be added to this account
      */
-    public void addRole(Roles roleID) {
-        rolesID.add(roleID);
+    public void addPermission(Permissions permission) {
+        permissions.add(permission);
     }
 
     /**
-     * Remove given roleID from user's list of rolesID
-     * @param roleID the roleID that should be removed from this account
-     * @return true if the role has been removed
+     * Remove given permission from user's list of permissions
+     * @param permission the permission that should be removed from this account
+     * @return true if the permission has been removed
      */
-    public boolean removeRole(Roles roleID) {
-        return rolesID.remove(roleID);
+    public boolean removePermission(Permissions permission) {
+        return permissions.remove(permission);
     }
 
 
@@ -150,6 +150,6 @@ public class Account {
     public String toString() {
         return String.format("Account name: %1$s\n" +
                 "ID: %2$s\n" +
-                "Role: %3$s", username, accountID, rolesID.toString());
+                "Permissions: %3$s", username, accountID, permissions.toString());
     }
 }

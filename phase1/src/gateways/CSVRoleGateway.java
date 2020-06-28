@@ -1,8 +1,6 @@
 package gateways;
 
 import entities.Permissions;
-import entities.Role;
-import entities.Roles;
 
 import java.io.BufferedReader;
 import java.io.File;
