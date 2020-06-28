@@ -47,7 +47,7 @@ public class AccountManager {
      * @return true if account is successfully created and false if username is taken already
      */
     public boolean createAccount(String username, String password){
-        if (accountGateway.findByUsername(username).getUsername() == null){
+        if (accountGateway.findByUsername(username) == null){
             currAccount = new Account(username, password, new ArrayList<>(), accountGateway.generateValidId());
             this.accountGateway.updateAccount(currAccount);
             return true;
@@ -60,7 +60,7 @@ public class AccountManager {
      * @param accountID Unique identifier of account
      * @return account corresponding to the accountID
      */
-    public Account getAccountfromID(int accountID){
+    public Account getAccountFromID(int accountID){
         return accountGateway.findById(accountID);
     }
 
@@ -69,7 +69,7 @@ public class AccountManager {
      * @param username Username of an account
      * @return account corresponding to the username
      */
-    public Account getAccountfromUsername(String username){
+    public Account getAccountFromUsername(String username){
         return accountGateway.findByUsername(username);
     }
 
@@ -98,7 +98,7 @@ public class AccountManager {
      * Adds an itemID to the current account's wishlist
      * @param itemID Unique identifier of the item
      */
-    public void addItemtoWishlist(int itemID){
+    public void addItemToWishlist(int itemID){
         if (currAccount != null){
             currAccount.addToWishlist(itemID);
             accountGateway.updateAccount(currAccount);
@@ -109,7 +109,7 @@ public class AccountManager {
      * Removes an itemID from the current account's wishlist
      * @param itemID Unique identifier of the item
      */
-    public void removeItemfromWishlist(int itemID){
+    public void removeItemFromWishlist(int itemID){
         if (currAccount != null){
             currAccount.removeFromWishList(itemID);
             accountGateway.updateAccount(currAccount);
