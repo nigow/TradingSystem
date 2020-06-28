@@ -1,6 +1,7 @@
 package gateways;
 
 import entities.Account;
+import entities.Permissions;
 
 import java.io.*;
 import java.util.*;
@@ -19,7 +20,7 @@ public class CSVAccountGateway implements AccountGateway {
         put("username", 1);
         put("password", 2);
         put("wishlist", 3);
-        put("role_ids", 4);
+        put("permissions", 4);
 
     }}; // must be ordered to ensure each header is written into the correct column
 
@@ -36,6 +37,7 @@ public class CSVAccountGateway implements AccountGateway {
 
         if (csvFile.length() == 0) { // according to internal docs this handles the directory case
 
+            /* this is getting migrated out
             List<Roles> roleIds = new ArrayList<Roles>(){{
                 add(Roles.BASIC);
                 add(Roles.TRADER);
@@ -45,6 +47,8 @@ public class CSVAccountGateway implements AccountGateway {
             Account initialAdmin = new Account("admin", "12345", roleIds, generateValidId());
 
             accounts.put(initialAdmin.getAccountID(), generateRow(initialAdmin));
+            */
+
             save();
 
         } else {
@@ -91,11 +95,11 @@ public class CSVAccountGateway implements AccountGateway {
                 account.getUsername(),
                 account.getPassword(),
                 account.getWishlist().stream().map(String::valueOf).collect(Collectors.joining(" ")),
-                account.getRolesID().stream().map(String::valueOf).collect(Collectors.joining(" "))
+                account.getPermissions().stream().map(String::valueOf).collect(Collectors.joining(" "))
         };
 
         if (account.getWishlist().isEmpty()) col[headers.get("wishlist")] = " ";
-        if (account.getRolesID().isEmpty()) col[headers.get("role_ids")] = " ";
+        if (account.getPermissions().isEmpty()) col[headers.get("permissions")] = " ";
 
         return String.join(",", col);
     }
@@ -114,9 +118,9 @@ public class CSVAccountGateway implements AccountGateway {
             String password = col[headers.get("password")];
 
             List<Integer> wishlist = Arrays.stream(col[headers.get("wishlist")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
-            List<Roles> roleIds = Arrays.stream(col[headers.get("role_ids")].split(" ")).map(Roles::valueOf).collect(Collectors.toList());
+            List<Permissions> permissions = Arrays.stream(col[headers.get("role_ids")].split(" ")).map(Permissions::valueOf).collect(Collectors.toList());
 
-            return new Account(username, password, wishlist, roleIds, id);
+            return new Account(username, password, wishlist, permissions, id);
         }
 
         return null;
