@@ -41,7 +41,7 @@ public class ItemManager {
     }
 
     /**
-     * Constructor for ItemManager with an already created item to edit
+     * Constructor for ItemManager with an existing item to edit and ItemsGateway
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      * @param item The item to be edited
      */
@@ -51,7 +51,7 @@ public class ItemManager {
     }
 
     /**
-     * Basic Constructor for ItemManager
+     * Basic Constructor for ItemManager which stores an ItemsGateway
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
     public ItemManager(ItemsGateway itemsGateway) {
