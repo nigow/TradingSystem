@@ -1,10 +1,12 @@
 package usecases;
 
 import entities.Account;
+import entities.Permissions;
 import entities.Restrictions;
 import gateways.RestrictionsGateway;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,54 +37,57 @@ public class FreezingUtility {
     /**
      * Gets a list of accounts that have broken restrictions and are to be frozen
      * @param accountManager Manager for accounts used to retrieve all accounts
-     * @param authManager Manager for roles and permissions
+     * @param authManager Manager for permissions and authorizing actions
      * @return a list of accounts to freeze
      */
     public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager){
         // LET ME KNOW if you think an instance of AccountManager should be stored, or handled differently than being passed as parameter
-        List<Account> accountstoFreeze = new ArrayList<>();
+        List<Account> accountsToFreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
             if (authManager.canbeFrozen(account)){
-                accountstoFreeze.add(account);
+                accountsToFreeze.add(account);
             }
         }
-        return accountstoFreeze;
+        return accountsToFreeze;
     }
 
     /**
      * Gets a list of accounts that have been frozen and have requested to be unfrozen
      * @param accountManager Manager for accounts used to retrieve all accounts
-     * @param authManager Manager for roles and permissions
+     * @param authManager Manager for permissions and authorizing actions
      * @return a list of accounts to freeze
      */
     public List<Account> getAccountsToUnfreeze(AccountManager accountManager, AuthManager authManager){
-        List<Account> accountstoUnfreeze = new ArrayList<>();
+        List<Account> accountsToUnfreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
             if (authManager.isPending(account)){
-                accountstoUnfreeze.add(account);
+                accountsToUnfreeze.add(account);
             }
         }
-        return accountstoUnfreeze;
+        return accountsToUnfreeze;
     }
 
     /**
-     * Freezes an account by changing the role of the current account from TRADER to FROZEN
-     * @param authManager Manager for roles and permissions
+     * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen
+     * @param authManager Manager for permissions and authorizing actions
      * @param account Account to freeze
      */
     public void freezeAccount(AuthManager authManager, Account account){
-        authManager.removeRoleByID(account, Roles.TRADER);
-        authManager.addRoleByID(account, Roles.FROZEN);
+        if (authManager.canbeFrozen(account)){
+            authManager.removePermissionByID(account, Permissions.BORROW);
+            authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
+        }
     }
 
     /**
-     * Unfreezes an account that requested to be unfrozen by changing the role of the current account from PENDING to TRADER
-     * @param authManager Manager for roles and permissions
+     * Unfreezes an account that requested to be unfrozen by adding the ability to borrow
+     * @param authManager Manager for permissions and authorizing actions
      * @param account Account to unfreeze
      */
     public void unfreezeAccount(AuthManager authManager, Account account){
-        authManager.removeRoleByID(account, Roles.PENDING);
-        authManager.addRoleByID(account, Roles.FROZEN);
+        if (authManager.isPending(account)){
+            authManager.addPermissionByID(account, Permissions.BORROW);
+        }
     }
 
     /**
