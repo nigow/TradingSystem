@@ -39,7 +39,7 @@ public class FreezingUtility {
      * @param authManager Manager for roles and permissions
      * @return a list of accounts to freeze
      */
-    public List<Account> getAccountstoFreeze(AccountManager accountManager, AuthManager authManager){
+    public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager){
         // LET ME KNOW if you think an instance of AccountManager should be stored, or handled differently than being passed as parameter
         List<Account> accountstoFreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
@@ -56,7 +56,7 @@ public class FreezingUtility {
      * @param authManager Manager for roles and permissions
      * @return a list of accounts to freeze
      */
-    public List<Account> getAccountstoUnfreeze(AccountManager accountManager, AuthManager authManager){
+    public List<Account> getAccountsToUnfreeze(AccountManager accountManager, AuthManager authManager){
         List<Account> accountstoUnfreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
             if (authManager.isPending(account)){
@@ -72,8 +72,8 @@ public class FreezingUtility {
      * @param account Account to freeze
      */
     public void freezeAccount(AuthManager authManager, Account account){
-        authManager.removeRolebyID(account, Roles.TRADER);
-        authManager.addRolebyID(account, Roles.FROZEN);
+        authManager.removeRoleByID(account, Roles.TRADER);
+        authManager.addRoleByID(account, Roles.FROZEN);
     }
 
     /**
@@ -82,8 +82,8 @@ public class FreezingUtility {
      * @param account Account to unfreeze
      */
     public void unfreezeAccount(AuthManager authManager, Account account){
-        authManager.removeRolebyID(account, Roles.PENDING);
-        authManager.addRolebyID(account, Roles.FROZEN);
+        authManager.removeRoleByID(account, Roles.PENDING);
+        authManager.addRoleByID(account, Roles.FROZEN);
     }
 
     /**

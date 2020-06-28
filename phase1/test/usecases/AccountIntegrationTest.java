@@ -47,14 +47,14 @@ public class AccountIntegrationTest extends TestCase {
         accountManager = setUpAccount();
         assertNotNull(accountManager);
         // Adding both item ids
-        accountManager.addItemtoWishlist(1234);
-        accountManager.addItemtoWishlist(1236);
+        accountManager.addItemToWishlist(1234);
+        accountManager.addItemToWishlist(1236);
         assertTrue(accountManager.getCurrAccount().getWishlist().contains(1234));
         assertFalse(accountManager.getCurrAccount().getWishlist().contains(1235));
         assertTrue(accountManager.getCurrAccount().getWishlist().contains(1236));
-        accountManager.removeItemfromWishlist(1234);
+        accountManager.removeItemFromWishlist(1234);
         assertFalse(accountManager.getCurrAccount().getWishlist().contains(1234));
-        accountManager.removeItemfromWishlist(1236);
+        accountManager.removeItemFromWishlist(1236);
         assertFalse(accountManager.getCurrAccount().getWishlist().contains(1236));
     }
 
@@ -75,7 +75,7 @@ public class AccountIntegrationTest extends TestCase {
      */
     public void testAccountGetter() {
         accountManager = setUpAccount();
-        assertEquals(accountManager.getAccountfromUsername("admin"), accountManager.getAccountfromID(0));
+        assertEquals(accountManager.getAccountFromUsername("admin"), accountManager.getAccountFromID(0));
     }
 
     /**
@@ -86,9 +86,9 @@ public class AccountIntegrationTest extends TestCase {
         Account second = new Account("second", "1678", new ArrayList<>(), 1);
         accountGateway.updateAccount(second);
         accountManager.setCurrAccount(second);
-        assertEquals(accountManager.getAccountfromID(1), second);
-        accountManager.addItemtoWishlist(23);
-        assertTrue(accountManager.getAccountfromID(1).getWishlist().contains(23));
+        assertEquals(accountManager.getAccountFromID(1), second);
+        accountManager.addItemToWishlist(23);
+        assertTrue(accountManager.getAccountFromID(1).getWishlist().contains(23));
     }
 
 

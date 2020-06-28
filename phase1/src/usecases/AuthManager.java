@@ -61,7 +61,7 @@ public class AuthManager {
      */
     // Note to controller people: Default rolesIDs are BASIC and TRADER
     // Admin roleIDs are ADMIN, BASIC, TRADER
-    public void addRolebyID(Account account, Roles roleID){
+    public void addRoleByID(Account account, Roles roleID){
         account.addRole(roleID);
         accountGateway.updateAccount(account);
     }
@@ -71,7 +71,7 @@ public class AuthManager {
      * @param account Account to add the list of roles to
      * @param roleIDs List of unique identifiers of roles
      */
-    public void addRolesbyIDs(Account account, List<Roles> roleIDs){
+    public void addRolesByIDs(Account account, List<Roles> roleIDs){
         for (Roles roleID: roleIDs){
             account.addRole(roleID);
         }
@@ -83,7 +83,7 @@ public class AuthManager {
      * @param account Account to remove the role from
      * @param roleID Unique identifier of role
      */
-    public void removeRolebyID(Account account, Roles roleID){
+    public void removeRoleByID(Account account, Roles roleID){
         account.removeRole(roleID);
         accountGateway.updateAccount(account);
     }
@@ -93,7 +93,7 @@ public class AuthManager {
      * @param account Account to remove the list of roles from
      * @param roleIDs List of unique identifiers of roles
      */
-    public void removeRolesbyIDs(Account account, List<Roles> roleIDs){
+    public void removeRolesByIDs(Account account, List<Roles> roleIDs){
         for (Roles roleID: roleIDs){
             account.removeRole(roleID);
         }
