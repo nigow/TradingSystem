@@ -1,10 +1,12 @@
 package usecases;
 
 import entities.Account;
+import entities.Permissions;
 import gateways.AccountGateway;
 import gateways.RestrictionsGateway;
-import gateways.RoleGateway;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,20 +26,13 @@ public class AuthManager {
     private RestrictionsGateway restrictionsGateway;
 
     /**
-     * The role gateway dealing with the storage of roles
-     */
-    private RoleGateway roleGateway;
-
-    /**
      * Constructs an instance of AccountManager and stores accountGateway, restrictionsGateway and roleGateway
-     * @param restrictionsGateway Gateway used to interact with persistent storage of restrictions
-     * @param roleGateway Gateway used to interact with persistent storage of roles
      * @param accountGateway Gateway used to interact with persistent storage of accounts
+     * @param restrictionsGateway Gateway used to interact with persistent storage of restrictions
      */
-    public AuthManager(AccountGateway accountGateway, RestrictionsGateway restrictionsGateway, RoleGateway roleGateway){
+    public AuthManager(AccountGateway accountGateway, RestrictionsGateway restrictionsGateway){
         this.accountGateway = accountGateway;
         this.restrictionsGateway = restrictionsGateway;
-        this.roleGateway = roleGateway;
     }
 
     /**
@@ -47,52 +42,54 @@ public class AuthManager {
      * @return Whether the login is successful or not
      */
     public boolean authenticateLogin(String username, String password){
-        // WIP
-        return true;
+        Account storedAccount = accountGateway.findByUsername(username);
+        if(storedAccount != null && storedAccount.getPassword().equals(password)){
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Adds a role to the account by roleID
-     * @param account Account to add the role to
-     * @param roleID Unique identifier of role
+     * Adds a permission to the account by permissionID
+     * @param account Account to add the permission to
+     * @param permissionID Unique identifier of permission
      */
-    // Note to controller people: Default rolesIDs are BASIC and TRADER
-    // Admin roleIDs are ADMIN, BASIC, TRADER
-    public void addRoleByID(Account account, Roles roleID){
-        account.addRole(roleID);
+
+    public void addPermissionByID(Account account, Permissions permissionID){
+        account.addPermission(permissionID);
         accountGateway.updateAccount(account);
     }
 
     /**
-     * Adds a list of roles to the account by roleIDs
-     * @param account Account to add the list of roles to
-     * @param roleIDs List of unique identifiers of roles
+     * Adds a list of permissions to the account by permissionIDs
+     * @param account Account to add the list of permissions to
+     * @param permissionIDs List of unique identifiers of permissions
      */
-    public void addRolesByIDs(Account account, List<Roles> roleIDs){
-        for (Roles roleID: roleIDs){
-            account.addRole(roleID);
+    public void addPermissionsByIDs(Account account, List<Permissions> permissionIDs){
+        for (Permissions permissionID: permissionIDs){
+            account.addPermission(permissionID);
         }
         accountGateway.updateAccount(account);
     }
 
     /**
-     * Remove a role from the account by roleID
-     * @param account Account to remove the role from
-     * @param roleID Unique identifier of role
+     * Remove a permission from the account by permissionID
+     * @param account Account to remove the permission from
+     * @param permissionID Unique identifier of permission
      */
-    public void removeRoleByID(Account account, Roles roleID){
-        account.removeRole(roleID);
+    public void removePermissionByID(Account account, Permissions permissionID){
+        account.removePermission(permissionID);
         accountGateway.updateAccount(account);
     }
 
     /**
-     * Removes a list of roles from the account by roleIDs
-     * @param account Account to remove the list of roles from
-     * @param roleIDs List of unique identifiers of roles
+     * Removes a list of permissions from the account by permissionsIDs
+     * @param account Account to remove the list of permissions from
+     * @param permissionIDs List of unique identifiers of permissions
      */
-    public void removeRolesByIDs(Account account, List<Roles> roleIDs){
-        for (Roles roleID: roleIDs){
-            account.removeRole(roleID);
+    public void removePermissionsByIDs(Account account, List<Permissions> permissionIDs){
+        for (Permissions permissionID: permissionIDs){
+            account.removePermission(permissionID);
         }
         accountGateway.updateAccount(account);
     }
@@ -103,8 +100,7 @@ public class AuthManager {
      * @return Whether the account can borrow items
      */
     public boolean canBorrow(Account account){
-        //WIP
-        return true;
+        return account.getPermissions().contains(Permissions.BORROW);
     }
 
     /**
@@ -113,8 +109,7 @@ public class AuthManager {
      * @return Whether the account can lend items
      */
     public boolean canLend(Account account){
-        // WIP
-        return true;
+        return account.getPermissions().contains(Permissions.LEND);
     }
 
     /**
@@ -122,8 +117,12 @@ public class AuthManager {
      * @param account Account that is checked if it has admin permissions
      * @return Whether the account is an admin or not
      */
+    // Would be better to check for each individual permission, but I'm waiting to see how we want to deal with Roles
     public boolean isAdmin(Account account){
-        return true;
+        List<Permissions> adminPerms = new ArrayList<>(Arrays.asList(
+                Permissions.ADD_ADMIN, Permissions.CHANGE_RESTRICTIONS,
+                Permissions.CONFIRM_ITEM, Permissions.FREEZE, Permissions.UNFREEZE));
+        return account.getPermissions().containsAll(adminPerms);
     }
 
     /**
@@ -132,7 +131,7 @@ public class AuthManager {
      * @return Whether the account is frozen or not
      */
     public boolean isFrozen(Account account){
-        return true;
+        return !account.getPermissions().contains(Permissions.BORROW);
     }
 
     /**
@@ -141,7 +140,7 @@ public class AuthManager {
      * @return Whether the account has requested to be unfrozen or not
      */
     public boolean isPending(Account account){
-        return true;
+        return !account.getPermissions().contains(Permissions.BORROW) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
 
     /**
@@ -150,25 +149,24 @@ public class AuthManager {
      * @return Whether the account can be frozen or not
      */
     public boolean canbeFrozen(Account account){
+        if (isAdmin(account)){
+            //Need TradeUtility for this part
+            return false;
+        }
         return true;
     }
 
     /**
-     * Checks if a given account has already requested to unfreeze or is not frozen
-     * @param account Account that is checked if it can request to be unfrozen
-     * @return Whether the account can request to unfreeze their account
+     * Determines whether a given account can request to unfreeze and requests to unfreeze if it can
+     * @param account Account to request to be unfrozen
+     * @return Whether the account can request to unfreeze or not
      */
-    public boolean canRequestUnfreeze(Account account){
-        // Might remove this method/make it private and have it be used in requestUnfreeze()
-        return true;
-    }
-
-    /**
-     * Determines whether the current account can request to unfreeze and changes the role of the account from FROZEN to PENDING if it can
-     * @param account Account to request unfreeze
-     */
-    public void requestUnfreeze(Account account){
-        //if (canRequestUnfreeze()) do something
-            // WIP (gives PENDING Role)
+    public boolean requestUnfreeze(Account account){
+        if (isFrozen(account) && !isPending(account)){
+            account.removePermission(Permissions.REQUEST_UNFREEZE);
+            accountGateway.updateAccount(account);
+            return true;
+        }
+        return false;
     }
 }
