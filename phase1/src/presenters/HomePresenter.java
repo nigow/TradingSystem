@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public interface HomePresenter {
     /**
      * displays possible actions
-     * @param HomeOptions possible actions user can choose from
+     * @param homeOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public int displayHomeOptions(ArrayList<String> HomeOptions);
+    public String displayHomeOptions(ArrayList<String> homeOptions);
     /**
      * log user in
      * @return username and password inputted

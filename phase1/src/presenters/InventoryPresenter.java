@@ -12,7 +12,7 @@ public interface InventoryPresenter {
      * @param InventoryOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public int displayInventoryOptions(ArrayList<String> InventoryOptions);
+    public String displayInventoryOptions(ArrayList<String> InventoryOptions);
 
     /**
      * displays inventory
@@ -25,13 +25,13 @@ public interface InventoryPresenter {
      * @return indexes of items that user would like to add to the wishlist
      */
 
-    public ArrayList<String> addToWishlist();
+    public String addToWishlist();
 
     /**
      * remove from inventory
      * @return indexes of item that user would like removed from inventory
      */
-    public int removeFromInventory();
+    public String removeFromInventory();
 
     /**
      * displays pending items
@@ -43,7 +43,7 @@ public interface InventoryPresenter {
      * approve chosen items
      * @return indexes of item that can be approved
      */
-    public ArrayList<Integer> approveItem();
+    public String approveItem();
 
     /**
      * returns user to main menu

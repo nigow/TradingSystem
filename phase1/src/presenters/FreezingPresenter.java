@@ -12,7 +12,7 @@ public interface FreezingPresenter {
      * @param freezingOptions possible actions user can choose from
      * @return index of chosen item
      */
-    public int displayFreezingOptions(ArrayList<String> freezingOptions);
+    public String displayFreezingOptions(ArrayList<String> freezingOptions);
     /**
      * displays list of users that should be frozen
      * @param possibleUsers list of usernames that should be frozen
@@ -29,13 +29,13 @@ public interface FreezingPresenter {
      * freezes chosen users
      * @return indexes of users to freeze
      */
-    public ArrayList<Integer> freeze();
+    public String freeze();
 
     /**
      * unfreezes chosen users
      * @return indexes of suers to unfreeze
      */
-    public ArrayList<Integer> unfreeze();
+    public String unfreeze();
 
     /**
      * returns user to main menu

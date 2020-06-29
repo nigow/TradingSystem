@@ -12,7 +12,7 @@ public interface TradeCreator {
      * @param tradeCreatorOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public int displayTradeCreatorOptions(ArrayList<String> tradeCreatorOptions);
+    public String displayTradeCreatorOptions(ArrayList<String> tradeCreatorOptions);
 
     /**
      * suggest a time and place for trade

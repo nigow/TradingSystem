@@ -12,7 +12,7 @@ public interface WishlistPresenter {
      * @param WishlistOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public int displayWishlistOptions(ArrayList<String> WishlistOptions);
+    public String displayWishlistOptions(ArrayList<String> WishlistOptions);
 
     /**
      * displays user's wishlist
@@ -24,13 +24,13 @@ public interface WishlistPresenter {
      * start new trade
      * @return index of item which the trade wants to be started with
      */
-    public int startTrade();
+    public String startTrade();
 
     /**
      * remove item from wishlist
      * @return index of item which user wants to remove
      */
-    public int removeFromWishlist();
+    public String removeFromWishlist();
 
     /**
      * returns user to main menu

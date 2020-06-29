@@ -12,7 +12,7 @@ public interface TradePresenter {
      * @param tradeOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public int displayTradeOptions(ArrayList<String> tradeOptions);
+    public String displayTradeOptions(ArrayList<String> tradeOptions);
 
     /**
      * displays user's ongoing trades
@@ -23,7 +23,7 @@ public interface TradePresenter {
      * select trade to edit
      * @return index of selected trade
      */
-    public int selectTrade();
+    public String selectTrade();
 
     /**
      * edit trade
