@@ -79,6 +79,8 @@ public class AccountIntegrationTest extends TestCase {
         assertEquals(accountManager.getAccountsList().size(), 1);
         accountManager.createAccount("😊", "12345");
         assertEquals(accountManager.getAccountsList().size(), 1);
+        accountManager.createAccount("BobtheCoder", "123,456");
+        assertEquals(accountManager.getAccountsList().size(), 1);
         StringBuilder password = new StringBuilder();
         StringBuilder username = new StringBuilder();
         for(char c = 0; c < 128; c++) {
@@ -86,10 +88,11 @@ public class AccountIntegrationTest extends TestCase {
             if (ascii.toString().matches("^[a-zA-Z0-9_]*$")) {
                 username.append(ascii);
             }
-            if (ascii.toString().matches("^[ -~]*$")){
+            if (ascii.toString().matches("^[ -~]*$") && !ascii.equals(',')){
                 password.append(ascii);
             }
         }
+        System.out.println(password.toString());
         accountManager.createAccount(username.toString(), password.toString());
         assertEquals(accountManager.getAccountsList().size(), 2);
 
@@ -115,4 +118,5 @@ public class AccountIntegrationTest extends TestCase {
         accountManager.addItemToWishlist(23);
         assertTrue(accountManager.getAccountFromID(1).getWishlist().contains(23));
     }
+
 }

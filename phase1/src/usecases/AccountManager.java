@@ -42,12 +42,12 @@ public class AccountManager {
 
     /**
      * Creates a new Account using username and password by determining if characters used are valid and stores it using accountGateway
-     * @param username Username of account to find
+     * @param username Username of the new account
      * @param password Password of the new account
      * @return true if account is successfully created and false if username is taken already or invalid characters where used
      */
     public boolean createAccount(String username, String password){
-        if(!username.matches("^[a-zA-Z0-9_]*$") || !password.matches("^[ -~]*$"))
+        if(!username.matches("^[a-zA-Z0-9_]*$") || !password.matches("^[ -~]*$") || password.contains(","))
             return false;
         if (accountGateway.findByUsername(username) == null){
             currAccount = new Account(username, password, new ArrayList<>(), accountGateway.generateValidId());
