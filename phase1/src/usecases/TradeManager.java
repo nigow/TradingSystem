@@ -60,7 +60,7 @@ public class TradeManager {
      * @param itemOneID A list of items trader one is offering
      * @param itemTwoID A list of items trader two is offering
      */
-    public void createTrade(LocalDateTime time, String place, Boolean isPermanent,
+    public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             int traderOneID, int traderTwoID, List<Integer> itemOneID,
                             List<Integer> itemTwoID) {
         int id = tradeGateway.generateValidId();

@@ -130,6 +130,9 @@ public class CSVTradeGateway implements TradeGateway {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TimePlace findTimePlaceById(int id) {
 
@@ -142,6 +145,9 @@ public class CSVTradeGateway implements TradeGateway {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean updateTrade(Trade trade, TimePlace timePlace) {
 
@@ -163,6 +169,9 @@ public class CSVTradeGateway implements TradeGateway {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Trade> getAllTrades() {
         List<Trade> allTrades = new ArrayList<>();

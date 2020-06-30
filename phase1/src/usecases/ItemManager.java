@@ -66,7 +66,7 @@ public class ItemManager {
      * @param itemId The id of the item to be removed
      */
     public void removeItem(int itemId){
-
+        // todo: Need a remove item method in itemsGateway
     }
 
     /**
