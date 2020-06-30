@@ -6,7 +6,7 @@ import java.time.*;
  * Represents the time and place of a meetup.
  * @author Maryam
  */
-public class TimePlace {
+public class TimePlace implements Comparable<TimePlace> {
     /**
      * The ID of this meetup.
      */
@@ -85,5 +85,16 @@ public class TimePlace {
                 ", time=" + time +
                 ", place='" + place + '\'' +
                 '}';
+    }
+
+    /**
+     * Compares two TimePlace objects by their date.
+     * An object with a later date is considered 'smaller'.
+     * @param other A TimePlace object.
+     * @return -1 if this TimePlace has a more recent date, 1 if the other has a more recent date, 0 otherwise.
+     */
+    @Override
+    public int compareTo(TimePlace other) {
+        return -1 * time.compareTo(other.time);
     }
 }

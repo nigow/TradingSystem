@@ -38,13 +38,13 @@ public class AuthController {
     /**
      * Initializes AuthController based on information from ManualConfig and creates
      * instances of HomePresenter and MenuFacade.
+     * @param mc An instance of ManualConfig
      */
-    public AuthController() {
-        ManualConfig mc = new ManualConfig();
+    public AuthController(ManualConfig mc) {
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
         homePresenter = new ConsoleHomePresenter();
-        menuFacade = new MenuFacade();
+        menuFacade = new MenuFacade(mc);
     }
 
     /**
@@ -72,11 +72,11 @@ public class AuthController {
         String[] accountInfo = homePresenter.logIn();
         if (authManager.authenticateLogin(accountInfo[0], accountInfo[1])) {
             Account account = accountManager.getAccountFromUsername(accountInfo[0]);
-            menuFacade.run(account.getPermissions());
+            menuFacade.run(account.getPermissions()); // TODO change this
         } else {
             homePresenter.invalidInput();
             logIn();
-        }
+        } // TODO add logic for if an account is banned
     }
 
     /**
@@ -84,13 +84,12 @@ public class AuthController {
      */
     private void createAccount() {
         String[] accountInfo = homePresenter.newAccount();
-        if (accountManager.createAccount(accountInfo[0], accountInfo[1])) {
+        if (accountManager.createAccount(accountInfo[0], accountInfo[1])) { // TODO this should not be used
             Account account = accountManager.getAccountFromUsername(accountInfo[0]);
-            menuFacade.run(account.getPermissions());
+            menuFacade.run(account.getPermissions()); // TODO change this
         } else {
             homePresenter.invalidInput();
             createAccount();
         }
     }
-
 }

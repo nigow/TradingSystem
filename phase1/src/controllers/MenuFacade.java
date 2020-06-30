@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Permissions;
+import gateways.ManualConfig;
 
 import java.util.List;
 
@@ -9,6 +10,10 @@ import java.util.List;
  * @author Maryam
  */
 public class MenuFacade {
+    public MenuFacade(ManualConfig mc) {
+
+    }
+
     public void run(List<Permissions> permissions) {
 
     }
