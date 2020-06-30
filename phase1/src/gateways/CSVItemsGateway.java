@@ -1,10 +1,7 @@
 package gateways;
 import entities.Item;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * An item gateway that uses csv files as persistent storage.
@@ -19,7 +16,7 @@ public class CSVItemsGateway implements ItemsGateway {
     /**
      * The HashMap that maps the item ID against the item object
      */
-    private HashMap<Integer, Item> itemMap;
+    private Map<Integer, Item> itemMap;
 
     /**
      * Constructor for CSVItemsGateway that sets the filepath of the csv file
