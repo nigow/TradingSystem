@@ -34,12 +34,13 @@ public class Trade {
 
     /**
      * List of IDs of items the first person is trading away.
-     * Empty list if this is a one-way trade.
+     * Can be an empty list.
      */
     private final List<Integer> itemOneID;
 
     /**
      * List of IDs of items the second person is trading away.
+     * Can be an empty list.
      */
     private final List<Integer> itemTwoID;
 
