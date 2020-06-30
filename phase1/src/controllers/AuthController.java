@@ -60,7 +60,7 @@ public class AuthController {
         } else if (action.equals("1")) {
             createAccount();
         } else {
-            // TODO show error page, waiting on presenter
+            homePresenter.invalidInput();
             run();
         }
     }
@@ -74,7 +74,7 @@ public class AuthController {
             Account account = accountManager.getAccountFromUsername(accountInfo[0]);
             menuFacade.run(account.getPermissions());
         } else {
-            // TODO show error page, waiting on presenter
+            homePresenter.invalidInput();
             logIn();
         }
     }
@@ -88,7 +88,7 @@ public class AuthController {
             Account account = accountManager.getAccountFromUsername(accountInfo[0]);
             menuFacade.run(account.getPermissions());
         } else {
-            // TODO show error page, waiting on presenter
+            homePresenter.invalidInput();
             createAccount();
         }
     }
