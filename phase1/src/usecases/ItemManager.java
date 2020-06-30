@@ -1,6 +1,5 @@
 package usecases;
 
-import java.io.IOException;
 import java.util.List;
 import entities.Item;
 import gateways.ItemsGateway;
@@ -28,16 +27,8 @@ public class ItemManager {
      */
     public ItemManager(ItemsGateway itemsGateway, String name, String description, int ownerId) {
         this.itemsGateway = itemsGateway;
-        try {
-            item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.itemsGateway.updateItem(item);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
+        this.itemsGateway.updateItem(item);
     }
 
     /**
@@ -66,16 +57,8 @@ public class ItemManager {
      * @param ownerId The id of the owner of the item
      */
     public void createItem(String name, String description, int ownerId) {
-        try {
-            item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.itemsGateway.updateItem(item);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
+        this.itemsGateway.updateItem(item);
     }
 
     /**
@@ -92,11 +75,7 @@ public class ItemManager {
      */
     public void updateOwner(int ownerId){
         item.setOwnerID(ownerId);
-        try {
-            itemsGateway.updateItem(item);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        itemsGateway.updateItem(item);
     }
 
     /**
@@ -110,11 +89,7 @@ public class ItemManager {
         else {
             item.disapprove();
         }
-        try {
-            itemsGateway.updateItem(item);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        itemsGateway.updateItem(item);
     }
 
     /**
@@ -122,13 +97,7 @@ public class ItemManager {
      * @return List of all items
      */
     public List<Item> getAllItems() {
-        List<Item> allItems = null;
-        try {
-            allItems = itemsGateway.getAllItems();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return allItems;
+        return itemsGateway.getAllItems();
     }
 
 }
