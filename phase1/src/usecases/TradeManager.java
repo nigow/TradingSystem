@@ -43,9 +43,10 @@ public class TradeManager {
      * @param tradeGateway The gateway for dealing with the persistent storage of trades
      * @param trade An object representing a transaction between 2 users
      */
-    public TradeManager(TradeGateway tradeGateway, Trade trade) {
+    public TradeManager(TradeGateway tradeGateway, Trade trade, TimePlace timePlace) {
         this.tradeGateway = tradeGateway;
         this.trade = trade;
+        this.timePlace = timePlace;
     }
 
 
@@ -115,6 +116,13 @@ public class TradeManager {
         return trade.getStatus();
     }
 
+    public Trade getTrade() {
+        return trade;
+    }
+
+    public TradeGateway getTradeGateway() {
+        return tradeGateway;
+    }
     /**
      * Retrieves a list of all trades in persistent storage
      * @return List of all trades
