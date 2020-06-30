@@ -158,11 +158,10 @@ public class CSVItemsGateway implements ItemsGateway {
      * {@inheritDoc}
      */
     @Override
-    public Item findById(int id) throws IOException{
+    public Item findById(int id){
         //check if the ID exists
         if(itemMap.containsKey(id)){
             return itemMap.get(id);
-
         }
         return null;
     }
@@ -171,7 +170,7 @@ public class CSVItemsGateway implements ItemsGateway {
      * {@inheritDoc}
      */
     @Override
-    public void updateItem(Item item) throws IOException{
+    public void updateItem(Item item){
         itemMap.put(item.getItemID(), item);
         save();
     }
@@ -180,7 +179,7 @@ public class CSVItemsGateway implements ItemsGateway {
      * {@inheritDoc}
      */
     @Override
-    public List<Item> getAllItems() throws IOException{
+    public List<Item> getAllItems(){
         List<Item> allItems = new ArrayList<>();
         for(Item item: itemMap.values()){
             allItems.add(item);
@@ -196,7 +195,7 @@ public class CSVItemsGateway implements ItemsGateway {
     @Override
     public int generateValidId(){
         //A unique ID is defined as the current size of the books + 1
-        if (itemMap.size() == 0) return 1;
+        if (itemMap.size() == 0) return 0;
         return Collections.max(itemMap.keySet()) + 1;
 
     }

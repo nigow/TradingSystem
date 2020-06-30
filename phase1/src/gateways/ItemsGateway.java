@@ -16,24 +16,24 @@ public interface ItemsGateway {
      * @param id ID of desired item.
      * @return Item possessing the given ID (null if an invalid ID was given).
      */
-    Item findById(int id) throws IOException;
+    Item findById(int id);
 
     /**
      * Given an item, save its information to persistent storage.
      * @param item Item being saved.
      */
-    void updateItem(Item item) throws IOException;
+    void updateItem(Item item);
 
     /**
      * Retrieve every item in the system.
      * @return List of every item in the system.
      */
-    List<Item> getAllItems() throws IOException;
+    List<Item> getAllItems();
 
     /**
      * Return an ID that does not belong to any item at the time the method is called.
      * @return An unused ID.
      */
-    int generateValidId() throws IOException;
+    int generateValidId();
 
 }
