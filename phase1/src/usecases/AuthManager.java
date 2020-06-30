@@ -5,8 +5,6 @@ import entities.Permissions;
 import gateways.AccountGateway;
 import gateways.RestrictionsGateway;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,54 +51,85 @@ public class AuthManager {
      * Adds a permission to the account by permissionID
      * @param account Account to add the permission to
      * @param permissionID Unique identifier of permission
+     * @return Whether the permission is successfully added or not
      */
 
-    public void addPermissionByID(Account account, Permissions permissionID){
+    public boolean addPermissionByID(Account account, Permissions permissionID){
         account.addPermission(permissionID);
-        accountGateway.updateAccount(account);
+        return accountGateway.updateAccount(account);
     }
 
     /**
      * Adds a list of permissions to the account by permissionIDs
      * @param account Account to add the list of permissions to
      * @param permissionIDs List of unique identifiers of permissions
+     * @return Whether the permissions are successfully added or not
      */
-    public void addPermissionsByIDs(Account account, List<Permissions> permissionIDs){
+    public boolean addPermissionsByIDs(Account account, List<Permissions> permissionIDs){
         for (Permissions permissionID: permissionIDs){
             account.addPermission(permissionID);
         }
-        accountGateway.updateAccount(account);
+        return accountGateway.updateAccount(account);
     }
 
     /**
      * Remove a permission from the account by permissionID
      * @param account Account to remove the permission from
      * @param permissionID Unique identifier of permission
+     * @return Whether the permission is successfully removed or not
      */
-    public void removePermissionByID(Account account, Permissions permissionID){
+    public boolean removePermissionByID(Account account, Permissions permissionID){
         account.removePermission(permissionID);
-        accountGateway.updateAccount(account);
+        return accountGateway.updateAccount(account);
     }
 
     /**
      * Removes a list of permissions from the account by permissionsIDs
      * @param account Account to remove the list of permissions from
      * @param permissionIDs List of unique identifiers of permissions
+     * @return Whether permissions are successfully removed or not
      */
-    public void removePermissionsByIDs(Account account, List<Permissions> permissionIDs){
+    public boolean removePermissionsByIDs(Account account, List<Permissions> permissionIDs){
         for (Permissions permissionID: permissionIDs){
             account.removePermission(permissionID);
         }
-        accountGateway.updateAccount(account);
+        return accountGateway.updateAccount(account);
     }
 
     /**
-     * Gets a list of permissions of the given account
-     * @param account Account get permissions from
-     * @return List of permissions that account has
+     * Determines whether a given account account can login
+     * @param account Account that is checked it see if it can login
+     * @return Whether the account can login or not
      */
-    public List<Permissions> getPermissions(Account account){
-        return account.getPermissions();
+    public boolean canLogin(Account account){
+        return account.getPermissions().contains(Permissions.LOGIN);
+    }
+
+    /**
+     * Determines whether a given account can add to wishlist
+     * @param account Account that is checked it see if it can add to wishlist
+     * @return Whether the account can add to wishlist or not
+     */
+    public boolean canAddToWishlist(Account account){
+        return account.getPermissions().contains(Permissions.ADD_TO_WISHLIST);
+    }
+
+    /**
+     * Determines whether a given account can create items
+     * @param account Account that is checked it see if it can create items
+     * @return Whether the account can create items or not
+     */
+    public boolean canCreateItem(Account account){
+        return account.getPermissions().contains(Permissions.CREATE_ITEM);
+    }
+
+    /**
+     * Determines if account can browse the inventory
+     * @param account Account that is checked it see if it can browse the inventory
+     * @return Whether the account can browse the inventory
+     */
+    public boolean canBrowseInventory(Account account){
+        return account.getPermissions().contains(Permissions.BROWSE_INVENTORY);
     }
 
     /**
@@ -122,16 +151,39 @@ public class AuthManager {
     }
 
     /**
-     * Determines whether a given account is an administer account
-     * @param account Account that is checked if it has admin permissions
-     * @return Whether the account is an admin or not
+     * Determines whether a given account account can change trading restrictions
+     * @param account Account that is checked it see if it can change restrictions
+     * @return Whether the account can change restrictions
      */
-    // Would be better to check for each individual permission, but I'm waiting to see how we want to deal with Roles
-    public boolean isAdmin(Account account){
-        List<Permissions> adminPerms = new ArrayList<>(Arrays.asList(
-                Permissions.ADD_ADMIN, Permissions.CHANGE_RESTRICTIONS,
-                Permissions.CONFIRM_ITEM, Permissions.FREEZE, Permissions.UNFREEZE));
-        return account.getPermissions().containsAll(adminPerms);
+    public boolean canChangeRestrictions(Account account){
+        return account.getPermissions().contains(Permissions.CHANGE_RESTRICTIONS);
+    }
+
+    /**
+     * Determines whether a given account account can confirm that an item can be added
+     * @param account Account that is checked it see if it can confirm items
+     * @return Whether the account can confirm items
+     */
+    public boolean canConfirmItem(Account account){
+        return account.getPermissions().contains(Permissions.CONFIRM_ITEM);
+    }
+
+    /**
+     * Determines whether a given account account can freeze other accounts
+     * @param account Account that is checked it see if it can freeze other accounts
+     * @return Whether the account can freeze other accounts
+     */
+    public boolean canFreeze(Account account){
+        return account.getPermissions().contains(Permissions.FREEZE);
+    }
+
+    /**
+     * Determines whether a given account account can unfreeze other accounts
+     * @param account Account that is checked it see if it can unfreeze other accounts
+     * @return Whether the account can unfreeze other accounts
+     */
+    public boolean canUnfreeze(Account account){
+        return account.getPermissions().contains(Permissions.UNFREEZE);
     }
 
     /**
@@ -149,7 +201,7 @@ public class AuthManager {
      * @return Whether the account has requested to be unfrozen or not
      */
     public boolean isPending(Account account){
-        return !account.getPermissions().contains(Permissions.BORROW) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
+        return isFrozen(account) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
 
     /**
@@ -158,7 +210,7 @@ public class AuthManager {
      * @return Whether the account can be frozen or not
      */
     public boolean canbeFrozen(Account account){
-        if (isAdmin(account)){
+        if (canUnfreeze(account)){
             //Need TradeUtility for this part
             return false;
         }

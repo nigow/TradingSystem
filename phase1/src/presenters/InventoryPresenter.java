@@ -34,6 +34,11 @@ public interface InventoryPresenter {
     public String removeFromInventory();
 
     /**
+     * delete item (must be their own item)
+     * @return index of item that they wish to delete
+     */
+
+    /**
      * displays pending items
      * @param pendingItem list of items pending to be added to the inventory
      */
@@ -50,8 +55,4 @@ public interface InventoryPresenter {
      */
     public void invalidInput();
 
-    /**
-     * returns user to main menu
-     */
-    public void returnToMenu();
 }
