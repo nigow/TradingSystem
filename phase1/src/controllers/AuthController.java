@@ -5,7 +5,6 @@ import presenters.ConsoleHomePresenter;
 import presenters.HomePresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
-import entities.Account;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,12 +70,12 @@ public class AuthController {
     private void logIn() {
         String[] accountInfo = homePresenter.logIn();
         if (authManager.authenticateLogin(accountInfo[0], accountInfo[1])) {
-            Account account = accountManager.getAccountFromUsername(accountInfo[0]);
-            menuFacade.run(account.getPermissions()); // TODO change this
+            menuFacade.run();
         } else {
             homePresenter.invalidInput();
             logIn();
-        } // TODO add logic for if an account is banned
+        }
+        // TODO option for going back to previous menu
     }
 
     /**
@@ -84,12 +83,12 @@ public class AuthController {
      */
     private void createAccount() {
         String[] accountInfo = homePresenter.newAccount();
-        if (accountManager.createAccount(accountInfo[0], accountInfo[1])) { // TODO this should not be used
-            Account account = accountManager.getAccountFromUsername(accountInfo[0]);
-            menuFacade.run(account.getPermissions()); // TODO change this
+        if (accountManager.createStandardAccount(accountInfo[0], accountInfo[1])) {
+            menuFacade.run();
         } else {
             homePresenter.invalidInput();
             createAccount();
         }
+        // TODO option for going back to previous menu
     }
 }

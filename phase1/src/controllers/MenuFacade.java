@@ -10,11 +10,18 @@ import java.util.List;
  * @author Maryam
  */
 public class MenuFacade {
+    /**
+     * Initializes MenuFacade based on information from ManualConfig and creates instances of // TODO
+     * @param mc An instance of ManualConfig
+     */
     public MenuFacade(ManualConfig mc) {
-
+        // TODO start writing run to figure out what we need here
     }
 
-    public void run(List<Permissions> permissions) {
-
+    /**
+     * Calls the presenter with options for the user based on their permission.
+     */
+    public void run() {
+        // TODO change how permissions are handled
     }
 }
