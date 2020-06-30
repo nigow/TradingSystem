@@ -9,10 +9,10 @@ import java.util.List;
 public interface WishlistPresenter {
     /**
      * displays possible actions
-     * @param WishlistOptions possible actions user can choose from
+     * @param wishlistOptions possible actions user can choose from
      * @return index of chosen action
      */
-    String displayWishlistOptions(List<String> WishlistOptions);
+    String displayWishlistOptions(List<String> wishlistOptions);
 
     /**
      * displays user's wishlist

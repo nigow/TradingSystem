@@ -6,9 +6,11 @@ import java.util.Scanner;
 
 public class ConsoleWishlistPresenter implements WishlistPresenter {
     @Override
-    public String displayWishlistOptions(List<String> WishlistOptions) {
-        for (String action: WishlistOptions) {
-            System.out.println(action);
+    public String displayWishlistOptions(List<String> wishlistOptions) {
+        for (int i = 0; i < wishlistOptions.size(); i++) {
+
+            System.out.println(i + ". " + wishlistOptions.get(i));
+
         }
         Scanner input = new Scanner(System.in);
         System.out.print("Select action: ");
@@ -17,8 +19,10 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
 
     @Override
     public void displayWishlist(List<String> wishlist) {
-        for (String itemStr : wishlist) {
-            System.out.println(itemStr);
+        for (int i = 0; i < wishlist.size(); i++) {
+
+            System.out.println(i + ". " + wishlist.get(i));
+
         }
     }
 

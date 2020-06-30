@@ -27,12 +27,16 @@ public class WishlistController {
         wishlistPresenter = new ConsoleWishlistPresenter();
         actions = new LinkedHashMap<String, Runnable>(){{
 
-            put("0. Start trade.", () -> startTrade());
-            put("1. Remove item from wishlist.", () -> removeFromWishlist());
-            put("2. Back.", () -> {});
+            put("Start trade.", () -> startTrade());
+            put("Remove item from wishlist.", () -> removeFromWishlist());
+            put("Back.", () -> {});
 
         }};
 
+    }
+
+    private boolean isNum(String input) {
+        return Pattern.matches("^[0-9]+$", input);
     }
 
     public void run() {
@@ -44,7 +48,7 @@ public class WishlistController {
             List<String> options = new ArrayList<>(actions.keySet());
             input = wishlistPresenter.displayWishlistOptions(options);
 
-            if (Pattern.matches("^[0-9]+$", input)) {
+            if (isNum(input)) {
 
                 int action = Integer.parseInt(input);
                 if (action < actions.size()) {
@@ -65,7 +69,7 @@ public class WishlistController {
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String input = wishlistPresenter.startTrade();
-        if (Pattern.matches("^[0-9]+$", input)) {
+        if (isNum(input)) {
 
             List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
             int index = Integer.parseInt(input);
@@ -86,7 +90,7 @@ public class WishlistController {
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String input = wishlistPresenter.removeFromWishlist();
-        if (Pattern.matches("^[0-9]+$", input)) {
+        if (isNum(input)) {
 
             List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
             int index = Integer.parseInt(input);
