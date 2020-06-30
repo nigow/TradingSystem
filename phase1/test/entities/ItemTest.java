@@ -1,6 +1,5 @@
 package entities;
 
-import entities.Item;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -72,7 +71,7 @@ public class ItemTest extends TestCase{
         Item item = new Item(1, "Harry Potter", "a book", 2);
         item.addToAccountsWithItemsInWishlist(3);
         item.addToAccountsWithItemsInWishlist(14);
-        ArrayList lst = new ArrayList<Integer>();
+        ArrayList<Integer> lst = new ArrayList<>();
         lst.add(3);
         lst.add(14);
         TestCase.assertEquals(item.getAccountsWithItemInWishlist(), lst);
@@ -83,7 +82,7 @@ public class ItemTest extends TestCase{
         item.addToAccountsWithItemsInWishlist(3);
         item.addToAccountsWithItemsInWishlist(14);
         TestCase.assertTrue(item.removeFromAccountsWithItemsInWishlist(14));
-        ArrayList lst = new ArrayList<Integer>();
+        ArrayList<Integer> lst = new ArrayList<>();
         lst.add(3);
         TestCase.assertEquals(item.getAccountsWithItemInWishlist(), lst);
     }
@@ -93,7 +92,7 @@ public class ItemTest extends TestCase{
         item.addToAccountsWithItemsInWishlist(3);
         item.addToAccountsWithItemsInWishlist(14);
         item.removeFromAccountsWithItemsInWishlist(15);
-        ArrayList lst = new ArrayList<Integer>();
+        ArrayList<Integer> lst = new ArrayList<>();
         lst.add(3);
         lst.add(14);
         TestCase.assertEquals(item.getAccountsWithItemInWishlist(), lst);

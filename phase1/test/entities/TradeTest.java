@@ -1,7 +1,5 @@
 package entities;
 
-import entities.Trade;
-import entities.TradeStatus;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
