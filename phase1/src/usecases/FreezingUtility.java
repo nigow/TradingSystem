@@ -6,7 +6,6 @@ import entities.Restrictions;
 import gateways.RestrictionsGateway;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -71,23 +70,29 @@ public class FreezingUtility {
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen
      * @param authManager Manager for permissions and authorizing actions
      * @param account Account to freeze
+     * @return Whether the given account is successfully frozen or not
      */
-    public void freezeAccount(AuthManager authManager, Account account){
+    public boolean freezeAccount(AuthManager authManager, Account account){
         if (authManager.canbeFrozen(account)){
-            authManager.removePermissionByID(account, Permissions.BORROW);
-            authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
+            account.removePermission(Permissions.BORROW);
+            account.addPermission(Permissions.REQUEST_UNFREEZE);
+            return authManager.removePermissionByID(account, Permissions.BORROW)
+                    && authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
         }
+        return false;
     }
 
     /**
      * Unfreezes an account that requested to be unfrozen by adding the ability to borrow
      * @param authManager Manager for permissions and authorizing actions
      * @param account Account to unfreeze
+     * @return Whether the given account is successfully unfrozen or not
      */
-    public void unfreezeAccount(AuthManager authManager, Account account){
+    public boolean unfreezeAccount(AuthManager authManager, Account account){
         if (authManager.isPending(account)){
-            authManager.addPermissionByID(account, Permissions.BORROW);
+            return authManager.addPermissionByID(account, Permissions.BORROW);
         }
+        return false;
     }
 
     /**

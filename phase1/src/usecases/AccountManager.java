@@ -3,7 +3,6 @@ package usecases;
 import entities.Account;
 import gateways.AccountGateway;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -129,23 +128,27 @@ public class AccountManager {
     /**
      * Adds an itemID to the current account's wishlist
      * @param itemID Unique identifier of the item
+     * @return Whether an item is successfully added to wishlist or not
      */
-    public void addItemToWishlist(int itemID){
+    public boolean addItemToWishlist(int itemID){
         if (currAccount != null){
             currAccount.addToWishlist(itemID);
-            accountGateway.updateAccount(currAccount);
+            return accountGateway.updateAccount(currAccount);
         }
+        return false;
     }
 
     /**
      * Removes an itemID from the current account's wishlist
      * @param itemID Unique identifier of the item
+     * @return Whether an item is successfully removed from wishlist or not
      */
-    public void removeItemFromWishlist(int itemID){
+    public boolean removeItemFromWishlist(int itemID){
         if (currAccount != null){
             currAccount.removeFromWishList(itemID);
-            accountGateway.updateAccount(currAccount);
+            return accountGateway.updateAccount(currAccount);
         }
+        return false;
     }
 
     /**
