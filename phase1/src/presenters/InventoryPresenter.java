@@ -1,6 +1,6 @@
 package presenters;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * interface for the inventory that can create changes to the wishlist
@@ -12,13 +12,13 @@ public interface InventoryPresenter {
      * @param InventoryOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public String displayInventoryOptions(ArrayList<String> InventoryOptions);
+    public String displayInventoryOptions(List<String> InventoryOptions);
 
     /**
      * displays inventory
      * @param inventory list of inventory item
      */
-    public void displayInventory(ArrayList<String> inventory);
+    public void displayInventory(List<String> inventory);
 
     /**
      * add to wishlist
@@ -37,13 +37,18 @@ public interface InventoryPresenter {
      * displays pending items
      * @param pendingItem list of items pending to be added to the inventory
      */
-    public void displayPending(ArrayList<String> pendingItem);
+    public void displayPending(List<String> pendingItem);
 
     /**
      * approve chosen items
      * @return indexes of item that can be approved
      */
     public String approveItem();
+
+    /**
+     * tells user that their input was invalid
+     */
+    public void invalidInput();
 
     /**
      * returns user to main menu

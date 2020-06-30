@@ -1,6 +1,6 @@
 package presenters;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * interface to manage a user's trade
@@ -12,13 +12,13 @@ public interface TradePresenter {
      * @param tradeOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public String displayTradeOptions(ArrayList<String> tradeOptions);
+    public String displayTradeOptions(List<String> tradeOptions);
 
     /**
      * displays user's ongoing trades
      * @param trades list of ongoing trades
      */
-    public void displayTrades(ArrayList<String> trades);
+    public void displayTrades(List<String> trades);
     /**
      * select trade to edit
      * @return index of selected trade
@@ -36,7 +36,12 @@ public interface TradePresenter {
      * most frequent trading partners
      * @param recentInfo user's information on trades
      */
-    public void displayRecentInfo(String[] recentInfo);
+    public void displayRecentInfo(List<String> recentInfo);
+
+    /**
+     * tells user that their input was invalid
+     */
+    public void invalidInput();
 
     /**
      * returns user to main menu
