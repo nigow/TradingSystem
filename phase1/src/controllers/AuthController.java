@@ -32,9 +32,6 @@ public class AuthController {
         List<String> options = new ArrayList<>();
         options.add("Login");
         options.add("Create an Account");
-        List<String> valid_input = new ArrayList<>();
-        valid_input.add("0");
-        valid_input.add("1");
         String action = homePresenter.displayHomeOptions(options);
         if (action.equals("0")) {
             logIn();
