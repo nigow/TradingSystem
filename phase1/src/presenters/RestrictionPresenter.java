@@ -1,6 +1,6 @@
 package presenters;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * interface allowing administrator to manage restrictions
@@ -12,7 +12,7 @@ public interface RestrictionPresenter {
      * @param restrictionOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public String displayRestrictionOptions(String[] restrictionOptions);
+    public String displayRestrictionOptions(List<String> restrictionOptions);
 
     /**
      * displays current value for the restriction
@@ -36,6 +36,11 @@ public interface RestrictionPresenter {
      * @return updated restriction value
      */
     public String changeMaxWeeklyTrades(int weeklyTrades);
+
+    /**
+     * tells user that their input was invalid
+     */
+    public void invalidInput();
 
     /**
      * returns user to main menu

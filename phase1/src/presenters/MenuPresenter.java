@@ -1,6 +1,6 @@
 package presenters;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * interface that shows possible actions
@@ -12,5 +12,10 @@ public interface MenuPresenter {
      * @param menuOptions possible actions
      * @return index of chosen action
      */
-    public String displayMenu(ArrayList<String> menuOptions);
+    public String displayMenu(List<String> menuOptions);
+
+    /**
+     * tells user that their input was invalid
+     */
+    public void invalidInput();
 }

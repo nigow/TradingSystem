@@ -1,6 +1,5 @@
 package presenters;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +31,11 @@ public interface WishlistPresenter {
      * @return index of item which user wants to remove
      */
     String removeFromWishlist();
+
+    /**
+     * tells user that their input was invalid
+     */
+    public void invalidInput();
 
     /**
      * returns user to main menu

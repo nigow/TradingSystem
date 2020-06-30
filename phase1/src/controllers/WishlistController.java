@@ -46,7 +46,11 @@ public class WishlistController {
             if (Pattern.matches("^[0-9]+$", input)) {
 
                 int action = Integer.parseInt(input);
-                if (action < actions.size()) actions.values().toArray(new Runnable[0])[action].run();
+                if (action < actions.size()) {
+                    actions.values().toArray(new Runnable[0])[action].run();
+                } else {
+                    wishlistPresenter.invalidInput();
+                }
 
             }
 
@@ -79,6 +83,8 @@ public class WishlistController {
 
             if (index < wishlistIds.size()) {
                 // todo: waiting for TradeCreator
+            } else {
+                wishlistPresenter.invalidInput();
             }
         }
 
@@ -108,7 +114,11 @@ public class WishlistController {
             List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
             int index = Integer.parseInt(input);
 
-            if (index < wishlistIds.size()) accountManager.removeItemFromWishlist(wishlistIds.get(index));
+            if (index < wishlistIds.size()) {
+                accountManager.removeItemFromWishlist(wishlistIds.get(index));
+            } else {
+                wishlistPresenter.invalidInput();
+            }
         }
     }
 

@@ -1,9 +1,8 @@
 package presenters;
 
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.List;
 
 /**
  * presenter that allows user to create new account or log in
@@ -14,7 +13,7 @@ public class ConsoleHomePresenter implements HomePresenter {
      * {@inheritDoc}
      */
     @Override
-    public String displayHomeOptions(ArrayList<String> homeOptions) {
+    public String displayHomeOptions(List<String> homeOptions) {
         Scanner input = new Scanner(System.in);
         System.out.println("Which action would you like to do?");
         for (int i = 0; i < homeOptions.size(); i++) {
@@ -47,5 +46,13 @@ public class ConsoleHomePresenter implements HomePresenter {
         System.out.println("Enter your desired password:");
         newAccount[1] = input.nextLine();
         return newAccount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void invalidInput() {
+        System.out.println("Your input was invalid. Please try again.");
     }
 }
