@@ -1,6 +1,7 @@
 package presenters;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * interface for managing the wishlist and starting trades
@@ -12,28 +13,28 @@ public interface WishlistPresenter {
      * @param WishlistOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public String displayWishlistOptions(ArrayList<String> WishlistOptions);
+    String displayWishlistOptions(List<String> WishlistOptions);
 
     /**
      * displays user's wishlist
      * @param wishlist items on wishlist
      */
-    public void displayWishlist(ArrayList<String> wishlist);
+    void displayWishlist(List<String> wishlist);
 
     /**
      * start new trade
      * @return index of item which the trade wants to be started with
      */
-    public String startTrade();
+    String startTrade();
 
     /**
      * remove item from wishlist
      * @return index of item which user wants to remove
      */
-    public String removeFromWishlist();
+    String removeFromWishlist();
 
     /**
      * returns user to main menu
      */
-    public void returnToMenu();
+    void returnToMenu();
 }
