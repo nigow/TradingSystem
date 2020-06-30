@@ -41,17 +41,46 @@ public class AccountManager {
     }
 
     /**
-     * Creates a new Account using username and password by determining if characters used are valid and stores it using accountGateway
+     * Creates a new standard trading account using username and password by determining if characters used are valid
      * @param username Username of the new account
      * @param password Password of the new account
      * @return true if account is successfully created and false if username is taken already or invalid characters where used
      */
-    public boolean createAccount(String username, String password){
-        if(!username.matches("^[a-zA-Z0-9_]*$") || !password.matches("^[ -~]*$") || password.contains(","))
+    public boolean createStandardAccount(String username, String password){
+        if (validateAccountRegister(username, password)){
+            AccountFactory accountFactory = new AccountFactory(accountGateway);
+            Account createdAccount = accountFactory.createStandardAccount(username, password);
+            if (accountGateway.updateAccount(createdAccount)){
+                currAccount = createdAccount;
+                return true;
+            }
             return false;
-        if (accountGateway.findByUsername(username) == null){
-            currAccount = new Account(username, password, new ArrayList<>(), accountGateway.generateValidId());
-            this.accountGateway.updateAccount(currAccount);
+        }
+        return false;
+    }
+
+    /**
+     * Creates a new administrator account with permissions to trade using username and password by determining if characters used are valid
+     * @param username Username of the new account
+     * @param password Password of the new account
+     * @return true if account is successfully created and false if username is taken already or invalid characters where used
+     */
+    public boolean createAdminAccount(String username, String password){
+        if (validateAccountRegister(username, password)){
+            AccountFactory accountFactory = new AccountFactory(accountGateway);
+            Account createdAccount = accountFactory.createAdminAccount(username, password);
+            if (accountGateway.updateAccount(createdAccount)){
+                currAccount = createdAccount;
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    private boolean validateAccountRegister(String username, String password) {
+        if(username.matches("^[a-zA-Z0-9_]*$") && password.matches("^[ -~]*$")
+                && !password.contains(",") && accountGateway.findByUsername(username) == null){
             return true;
         }
         return false;
@@ -71,16 +100,17 @@ public class AccountManager {
      * @param username Username of an account
      * @return account corresponding to the username
      */
-    public Account getAccountFromUsername(String username){
+    private Account getAccountFromUsername(String username){
         return accountGateway.findByUsername(username);
     }
 
     /**
-     * Assigns he given account to currAccount
-     * @param account Account of user being set
+     * Assigns the given username corresponding to an account to currAccount
+     * @param username Username of Account being set
      * @return Whether the current account is successfully set or not
      */
-    public boolean setCurrAccount(Account account){
+    public boolean setCurrAccount(String username){
+        Account account = getAccountFromUsername(username);
         if (account != null){
             currAccount = account;
             return true;
@@ -121,9 +151,10 @@ public class AccountManager {
     /**
      * Updates in persistent storage the account corresponding to the account
      * @param account Account of user to update
+     * @return Whether account is successfully updated or not
      */
-    public void updateAccount(Account account){
-        accountGateway.updateAccount(account);
+    public boolean updateAccount(Account account){
+        return accountGateway.updateAccount(account);
     }
 
     /**

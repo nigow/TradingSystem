@@ -29,7 +29,7 @@ public class AuthManagerIntegrationTest extends TestCase {
 
         accountManager = new AccountManager(accountGateway);
 
-        accountManager.createAccount("Kento_Hinode", "Sorry but I love Emilia");
+        accountManager.createStandardAccount("Kento_Hinode", "Sorry but I love Emilia");
         accountManager.updateAccount(accountManager.getCurrAccount());
         assertEquals(accountManager.getAccountsList().size(), 2);
 

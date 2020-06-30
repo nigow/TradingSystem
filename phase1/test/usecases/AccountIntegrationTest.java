@@ -26,7 +26,7 @@ public class AccountIntegrationTest extends TestCase {
         accountGateway = new InMemoryAccountGateway(h);
 
         accountManager = new AccountManager(accountGateway);
-        assertTrue(accountManager.setCurrAccount(accountGateway.findById(0)));
+        assertTrue(accountManager.setCurrAccount("admin"));
         return accountManager;
 
     }
@@ -66,7 +66,7 @@ public class AccountIntegrationTest extends TestCase {
         assertEquals(accountManager.getAccountsList().size(), 1);
         assertEquals(accountManager.getAccountsList().get(0).getUsername(), "admin");
         assertEquals(accountManager.getAccountsList().get(0).getAccountID(), 0);
-        accountManager.createAccount("bob", "12345");
+        accountManager.createStandardAccount("bob", "12345");
         assertEquals(accountManager.getAccountsList().size(), 2);
     }
 
@@ -79,11 +79,11 @@ public class AccountIntegrationTest extends TestCase {
         assertEquals(accountManager.getAccountsList().size(), 1);
         assertEquals(accountManager.getAccountsList().get(0).getUsername(), "admin");
         assertEquals(accountManager.getAccountsList().get(0).getAccountID(), 0);
-        accountManager.createAccount("みお", "12345");
+        accountManager.createStandardAccount("みお", "12345");
         assertEquals(accountManager.getAccountsList().size(), 1);
-        accountManager.createAccount("😊", "12345");
+        accountManager.createAdminAccount("😊", "12345");
         assertEquals(accountManager.getAccountsList().size(), 1);
-        accountManager.createAccount("BobtheCoder", "123,456");
+        accountManager.createStandardAccount("BobtheCoder", "123,456");
         assertEquals(accountManager.getAccountsList().size(), 1);
         StringBuilder password = new StringBuilder();
         StringBuilder username = new StringBuilder();
@@ -97,7 +97,7 @@ public class AccountIntegrationTest extends TestCase {
             }
         }
         System.out.println(password.toString());
-        accountManager.createAccount(username.toString(), password.toString());
+        accountManager.createAdminAccount(username.toString(), password.toString());
         assertEquals(accountManager.getAccountsList().size(), 2);
 
     }
@@ -107,7 +107,7 @@ public class AccountIntegrationTest extends TestCase {
      */
     public void testAccountGetter() {
         accountManager = setUpAccount();
-        assertEquals(accountManager.getAccountFromUsername("admin"), accountManager.getAccountFromID(0));
+        assertEquals(accountManager.getCurrAccount(), accountManager.getAccountFromID(0));
     }
 
     /**
@@ -117,7 +117,7 @@ public class AccountIntegrationTest extends TestCase {
         accountManager = setUpAccount();
         Account second = new Account("second", "1678", new ArrayList<>(), 1);
         accountGateway.updateAccount(second);
-        accountManager.setCurrAccount(second);
+        accountManager.setCurrAccount("second");
         assertEquals(accountManager.getAccountFromID(1), second);
         accountManager.addItemToWishlist(23);
         assertTrue(accountManager.getAccountFromID(1).getWishlist().contains(23));
