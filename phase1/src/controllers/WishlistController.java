@@ -5,6 +5,7 @@ import presenters.ConsoleWishlistPresenter;
 import presenters.WishlistPresenter;
 import usecases.AccountManager;
 import usecases.ItemManager;
+import usecases.WishlistUtility;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,11 +18,11 @@ public class WishlistController {
     private WishlistPresenter wishlistPresenter;
     private AccountManager accountManager;
     private Map<String, Runnable> actions;
-    private ItemManager itemManager;
+    private WishlistUtility wishlistUtility;
 
-    public WishlistController(AccountManager accountManager, ItemManager itemManager) {
+    public WishlistController(AccountManager accountManager, WishlistUtility wishlistUtility) {
         this.accountManager = accountManager;
-        this.itemManager = itemManager;
+        this.wishlistUtility = wishlistUtility;
 
         wishlistPresenter = new ConsoleWishlistPresenter();
         actions = new LinkedHashMap<String, Runnable>(){{
@@ -60,19 +61,7 @@ public class WishlistController {
 
     private void startTrade() {
 
-        // this is placeholder for something that will be a use case soon
-        List<String> wishlistInfo = new ArrayList<>();
-
-        for (Item item : itemManager.getAllItems()) {
-
-            if (accountManager.getCurrAccount().getWishlist().contains(item.getItemID())) {
-
-                wishlistInfo.add(item.toString());
-
-            }
-
-        }
-
+        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccount().getAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String input = wishlistPresenter.startTrade();
@@ -83,6 +72,8 @@ public class WishlistController {
 
             if (index < wishlistIds.size()) {
                 // todo: waiting for TradeCreator
+            } else {
+                wishlistPresenter.invalidInput();
             }
         }
 
@@ -91,19 +82,7 @@ public class WishlistController {
 
     private void removeFromWishlist() {
 
-        // this is placeholder for something that will be a use case soon
-        List<String> wishlistInfo = new ArrayList<>();
-
-        for (Item item : itemManager.getAllItems()) {
-
-            if (accountManager.getCurrAccount().getWishlist().contains(item.getItemID())) {
-
-                wishlistInfo.add(item.toString());
-
-            }
-
-        }
-
+        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccount().getAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String input = wishlistPresenter.removeFromWishlist();
@@ -112,7 +91,11 @@ public class WishlistController {
             List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
             int index = Integer.parseInt(input);
 
-            if (index < wishlistIds.size()) accountManager.removeItemFromWishlist(wishlistIds.get(index));
+            if (index < wishlistIds.size()) {
+                accountManager.removeItemFromWishlist(wishlistIds.get(index));
+            } else {
+                wishlistPresenter.invalidInput();
+            }
         }
     }
 

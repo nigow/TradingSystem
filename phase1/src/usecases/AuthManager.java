@@ -95,6 +95,15 @@ public class AuthManager {
     }
 
     /**
+     * Gets a list of permissions of the given account
+     * @param account Account get permissions from
+     * @return List of permissions that account has
+     */
+    public List<Permissions> getPermissions(Account account){
+        return account.getPermissions();
+    }
+
+    /**
      * Determines whether a given account account can borrow items
      * @param account Account that is checked if it can borrow items
      * @return Whether the account can borrow items

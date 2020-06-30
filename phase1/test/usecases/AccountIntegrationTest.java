@@ -70,7 +70,11 @@ public class AccountIntegrationTest extends TestCase {
         assertEquals(accountManager.getAccountsList().size(), 2);
     }
 
-    public void testCreatingInvalidAccount(){
+
+    /**
+     * Verifies that invalid accounts aren't created and valid ones are
+     */
+    public void testCreatingValidAccount(){
         accountManager = setUpAccount();
         assertEquals(accountManager.getAccountsList().size(), 1);
         assertEquals(accountManager.getAccountsList().get(0).getUsername(), "admin");

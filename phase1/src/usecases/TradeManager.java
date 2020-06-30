@@ -43,9 +43,10 @@ public class TradeManager {
      * @param tradeGateway The gateway for dealing with the persistent storage of trades
      * @param trade An object representing a transaction between 2 users
      */
-    public TradeManager(TradeGateway tradeGateway, Trade trade) {
+    public TradeManager(TradeGateway tradeGateway, Trade trade, TimePlace timePlace) {
         this.tradeGateway = tradeGateway;
         this.trade = trade;
+        this.timePlace = timePlace;
     }
 
 
@@ -59,7 +60,7 @@ public class TradeManager {
      * @param itemOneID A list of items trader one is offering
      * @param itemTwoID A list of items trader two is offering
      */
-    public void createTrade(LocalDateTime time, String place, Boolean isPermanent,
+    public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             int traderOneID, int traderTwoID, List<Integer> itemOneID,
                             List<Integer> itemTwoID) {
         int id = tradeGateway.generateValidId();
@@ -115,6 +116,13 @@ public class TradeManager {
         return trade.getStatus();
     }
 
+    public Trade getTrade() {
+        return trade;
+    }
+
+    public TradeGateway getTradeGateway() {
+        return tradeGateway;
+    }
     /**
      * Retrieves a list of all trades in persistent storage
      * @return List of all trades

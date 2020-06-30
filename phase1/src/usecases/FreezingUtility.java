@@ -104,6 +104,9 @@ public class FreezingUtility {
      * @param maxIncompleteTrade Max number of incomplete trades
      */
     public void setMaxIncompleteTrade(int maxIncompleteTrade){
+        if (maxIncompleteTrade <= 0){
+            throw new IllegalArgumentException("Value cannot be negative or 0");
+        }
         restrictions.setMaxIncompleteTrade(maxIncompleteTrade);
         restrictionsGateway.updateRestrictions(restrictions);
     }
@@ -113,6 +116,9 @@ public class FreezingUtility {
      * @param maxWeeklyTrade Max number of weekly trades
      */
     public void setMaxWeeklyTrade(int maxWeeklyTrade){
+        if (maxWeeklyTrade <= 0){
+            throw new IllegalArgumentException("Value cannot be negative or 0");
+        }
         restrictions.setMaxWeeklyTrade(maxWeeklyTrade);
         restrictionsGateway.updateRestrictions(restrictions);
     }
