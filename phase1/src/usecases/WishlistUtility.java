@@ -3,11 +3,8 @@ package usecases;
 import entities.Account;
 import entities.Item;
 import gateways.AccountGateway;
-import gateways.CSVAccountGateway;
-import gateways.CSVItemsGateway;
 import gateways.ItemsGateway;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,9 +63,9 @@ public class WishlistUtility {
      * String representation of all wishlist items for a specific account
      * @return String representation of all wishlist items
      */
-    public String wishlistToString(int id){
-        String rep = "";
-        for(Item item: wishlistItems(id)) rep += item.toString();
+    public List<String> wishlistToString(int id){
+        List<String> rep = new ArrayList<>();
+        for(Item item: wishlistItems(id)) rep.add(item.toString());
         return rep;
     }
 
