@@ -46,7 +46,11 @@ public class WishlistController {
             if (Pattern.matches("^[0-9]+$", input)) {
 
                 int action = Integer.parseInt(input);
-                if (action < actions.size()) actions.values().toArray(new Runnable[0])[action].run();
+                if (action < actions.size()) {
+                    actions.values().toArray(new Runnable[0])[action].run();
+                } else {
+                    wishlistPresenter.invalidInput();
+                }
 
             }
 
