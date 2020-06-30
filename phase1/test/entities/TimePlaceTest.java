@@ -1,13 +1,12 @@
 package entities;
 
-import entities.TimePlace;
 import junit.framework.TestCase;
 import java.time.LocalDateTime;
 
 public class TimePlaceTest extends TestCase{
 
     public void testTimePlaceExists() {
-        TimePlace initial = new TimePlace(1, LocalDateTime.now(), "UTM");
+        new TimePlace(1, LocalDateTime.now(), "UTM");
     }
 
     public void testGetId() {
