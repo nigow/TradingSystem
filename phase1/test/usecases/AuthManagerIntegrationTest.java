@@ -55,19 +55,20 @@ public class AuthManagerIntegrationTest extends TestCase {
     public void testChangingPermissions(){
         authManager = setUpAuthentication();
         Account account1 = accountManager.getCurrAccount();
-        authManager.addPermissionByID(account1, Permissions.LOGIN);
-        assertEquals(Arrays.asList(Permissions.LOGIN), authManager.getPermissions(account1));
-
-        authManager.addPermissionsByIDs(account1, Arrays.asList(
-                Permissions.BORROW, Permissions.LEND, Permissions.CREATE_ITEM, Permissions.ADD_TO_WISHLIST));
-        assertEquals(account1.getPermissions(), authManager.getPermissions(account1));
-
-        authManager.removePermissionByID(account1, Permissions.BORROW);
-        assertEquals(account1.getPermissions(), authManager.getPermissions(account1));
-
-        authManager.removePermissionsByIDs(account1, (Arrays.asList(
-                Permissions.LEND, Permissions.CREATE_ITEM, Permissions.ADD_TO_WISHLIST)));
-        assertEquals(Arrays.asList(Permissions.LOGIN), authManager.getPermissions(account1));
+        assertFalse(account1.getPermissions().contains(Permissions.CONFIRM_ITEM));
+        authManager.addPermissionByID(account1, Permissions.CONFIRM_ITEM);
+        assertTrue(account1.getPermissions().contains(Permissions.CONFIRM_ITEM));
+//
+//        authManager.addPermissionsByIDs(account1, Arrays.asList(
+//                Permissions.BORROW, Permissions.LEND, Permissions.CREATE_ITEM, Permissions.ADD_TO_WISHLIST));
+//        assertEquals(account1.getPermissions(), authManager.getPermissions(account1));
+//
+//        authManager.removePermissionByID(account1, Permissions.BORROW);
+//        assertEquals(account1.getPermissions(), authManager.getPermissions(account1));
+//
+//        authManager.removePermissionsByIDs(account1, (Arrays.asList(
+//                Permissions.LEND, Permissions.CREATE_ITEM, Permissions.ADD_TO_WISHLIST)));
+//        assertEquals(Arrays.asList(Permissions.LOGIN), authManager.getPermissions(account1));
     }
 
 
