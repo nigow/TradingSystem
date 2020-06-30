@@ -76,7 +76,7 @@ public class AuthController {
         } else {
             homePresenter.invalidInput();
             logIn();
-        }
+        } // TODO add logic for if an account is banned
     }
 
     /**
@@ -92,5 +92,4 @@ public class AuthController {
             createAccount();
         }
     }
-
 }
