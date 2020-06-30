@@ -2,7 +2,6 @@ package gateways;
 
 import entities.Item;
 
-import java.io.IOException;
 import java.util.*;
 
 public class InMemoryItemGateway implements ItemsGateway{

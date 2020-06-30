@@ -3,7 +3,6 @@ package gateways;
 import entities.TimePlace;
 import entities.Trade;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTradeGateway implements TradeGateway{
