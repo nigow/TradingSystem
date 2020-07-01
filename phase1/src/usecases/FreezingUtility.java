@@ -40,11 +40,26 @@ public class FreezingUtility {
      * @return a list of accounts to freeze
      */
     public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager){
-        // LET ME KNOW if you think an instance of AccountManager should be stored, or handled differently than being passed as parameter
         List<Account> accountsToFreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
             if (authManager.canbeFrozen(account)){
                 accountsToFreeze.add(account);
+            }
+        }
+        return accountsToFreeze;
+    }
+
+    /**
+     * Gets a list of account usernames that have broken restrictions and are to be frozen
+     * @param accountManager Manager for accounts used to retrieve all accounts
+     * @param authManager Manager for permissions and authorizing actions
+     * @return a list of account usernames to freeze
+     */
+    public List<String> getUsernamesToFreeze(AccountManager accountManager, AuthManager authManager){
+        List<String> accountsToFreeze = new ArrayList<>();
+        for (Account account: accountManager.getAccountsList()){
+            if (authManager.canbeFrozen(account)){
+                accountsToFreeze.add(account.getUsername());
             }
         }
         return accountsToFreeze;
@@ -61,6 +76,22 @@ public class FreezingUtility {
         for (Account account: accountManager.getAccountsList()){
             if (authManager.isPending(account)){
                 accountsToUnfreeze.add(account);
+            }
+        }
+        return accountsToUnfreeze;
+    }
+
+    /**
+     * Gets a list of account usernames that have been frozen and have requested to be unfrozen
+     * @param accountManager Manager for accounts used to retrieve all accounts
+     * @param authManager Manager for permissions and authorizing actions
+     * @return a list of account usernames to freeze
+     */
+    public List<String> getUsernamesToUnfreeze(AccountManager accountManager, AuthManager authManager){
+        List<String> accountsToUnfreeze = new ArrayList<>();
+        for (Account account: accountManager.getAccountsList()){
+            if (authManager.isPending(account)){
+                accountsToUnfreeze.add(account.getUsername());
             }
         }
         return accountsToUnfreeze;
