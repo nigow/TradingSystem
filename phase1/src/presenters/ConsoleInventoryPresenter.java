@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * A presenter for the inventory page
  * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  */
 public class ConsoleInventoryPresenter implements InventoryPresenter {
