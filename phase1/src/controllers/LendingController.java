@@ -15,7 +15,7 @@ public class LendingController {
     private final AccountManager accountManager;
     private final ItemManager itemManager;
 
-    public LendingController(AccountManager accountManager, ItemManager itemManager, int userId){
+    public LendingController(AccountManager accountManager, ItemManager itemManager){
         this.lendingPresenter = new ConsoleLendingPresenter();
         this.accountManager = accountManager;
         this.itemManager = itemManager;
