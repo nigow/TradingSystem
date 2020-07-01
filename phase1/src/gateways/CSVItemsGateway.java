@@ -66,7 +66,7 @@ public class CSVItemsGateway implements ItemsGateway {
     /**
      * Helper method that writes the csv file according to the itemMap.
      */
-    private void save(){
+    private boolean save(){
         try{
             //erase the entire file content
             new FileWriter(filepath, false).close();
@@ -83,9 +83,11 @@ public class CSVItemsGateway implements ItemsGateway {
 
             fw.flush();
             fw.close();
+            return true;
 
         }catch(IOException e){
             System.out.println("Wrong filepath");
+            return false;
         }
     }
 
@@ -167,9 +169,9 @@ public class CSVItemsGateway implements ItemsGateway {
      * {@inheritDoc}
      */
     @Override
-    public void updateItem(Item item){
+    public boolean updateItem(Item item){
         itemMap.put(item.getItemID(), item);
-        save();
+        return save();
     }
 
     /**
@@ -195,5 +197,17 @@ public class CSVItemsGateway implements ItemsGateway {
         if (itemMap.size() == 0) return 0;
         return Collections.max(itemMap.keySet()) + 1;
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean deleteItem(Item item){
+        if (itemMap.containsKey(item.getItemID())){
+            itemMap.remove(item.getItemID());
+            return save();
+        }
+        return false;
     }
 }

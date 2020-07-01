@@ -21,7 +21,7 @@ public interface ItemsGateway {
      * Given an item, save its information to persistent storage.
      * @param item Item being saved.
      */
-    void updateItem(Item item);
+    boolean updateItem(Item item);
 
     /**
      * Retrieve every item in the system.
@@ -35,4 +35,10 @@ public interface ItemsGateway {
      */
     int generateValidId();
 
+    /**
+     * Given an item, delete the item and persist the updated info.
+     * @param item Item being saved.
+     * @return true if the item is deleted.
+     */
+    boolean deleteItem(Item item);
 }
