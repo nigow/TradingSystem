@@ -15,22 +15,9 @@ public class CSVTradeGateway implements TradeGateway {
 
     private final File csvFile;
 
-    private final LinkedHashMap<String, Integer> headers = new LinkedHashMap<String, Integer>() {{
+    private final LinkedHashMap<String, Integer> headers;
 
-        put("trade_id", 0);
-        put("trader_one_id", 1);
-        put("trader_two_id", 2);
-        put("trader_one_items", 3);
-        put("trader_two_items", 4);
-        put("timeplace", 5);
-        put("edit_counter", 6);
-        put("last_editor_id", 7);
-        put("status", 8);
-        put("is_permanent", 9);
-
-    }}; // must be ordered to ensure each header is written into the correct column
-
-    private final Map<Integer, String> trades = new HashMap<>();
+    private final Map<Integer, String> trades;
 
     /**
      * Create a trade gateway that uses csv files as persistent storage.
@@ -40,6 +27,21 @@ public class CSVTradeGateway implements TradeGateway {
     public CSVTradeGateway(String csvPath) throws IOException {
 
         csvFile = new File(csvPath);
+
+        headers = new LinkedHashMap<>();
+
+        headers.put("trade_id", 0);
+        headers.put("trader_one_id", 1);
+        headers.put("trader_two_id", 2);
+        headers.put("trader_one_items", 3);
+        headers.put("trader_two_items", 4);
+        headers.put("timeplace", 5);
+        headers.put("edit_counter", 6);
+        headers.put("last_editor_id", 7);
+        headers.put("status", 8);
+        headers.put("is_permanent", 9);
+
+        trades = new HashMap<>();
 
         if (csvFile.length() == 0) { // according to internal docs this handles the directory case
 

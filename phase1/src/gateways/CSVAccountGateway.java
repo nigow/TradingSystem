@@ -14,17 +14,9 @@ public class CSVAccountGateway implements AccountGateway {
 
     private final File csvFile;
 
-    private final LinkedHashMap<String, Integer> headers = new LinkedHashMap<String, Integer>() {{
+    private final Map<String, Integer> headers;
 
-        put("account_id", 0);
-        put("username", 1);
-        put("password", 2);
-        put("wishlist", 3);
-        put("permissions", 4);
-
-    }}; // must be ordered to ensure each header is written into the correct column
-
-    private final Map<Integer, String> accounts = new HashMap<>();
+    private final Map<Integer, String> accounts;
 
     /**
      * Create an account gateway that uses csv files as persistent storage.
@@ -34,6 +26,15 @@ public class CSVAccountGateway implements AccountGateway {
     public CSVAccountGateway(String csvPath) throws IOException {
 
         csvFile = new File(csvPath);
+        headers = new LinkedHashMap<>();
+
+        headers.put("account_id", 0);
+        headers.put("username", 1);
+        headers.put("password", 2);
+        headers.put("wishlist", 3);
+        headers.put("permissions", 4);
+
+        accounts = new HashMap<>();
 
         if (csvFile.length() == 0) { // according to internal docs this handles the directory case
 

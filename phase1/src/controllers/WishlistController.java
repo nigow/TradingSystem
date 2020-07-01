@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Item;
+import gateways.ManualConfig;
 import presenters.ConsoleWishlistPresenter;
 import presenters.WishlistPresenter;
 import usecases.AccountManager;
@@ -20,18 +21,16 @@ public class WishlistController {
     private Map<String, Runnable> actions;
     private WishlistUtility wishlistUtility;
 
-    public WishlistController(AccountManager accountManager, WishlistUtility wishlistUtility) {
-        this.accountManager = accountManager;
-        this.wishlistUtility = wishlistUtility;
+    public WishlistController(ManualConfig manualConfig) {
+        this.accountManager = manualConfig.getAccountManager();
+        this.wishlistUtility = manualConfig.getWishlistUtility();
 
         wishlistPresenter = new ConsoleWishlistPresenter();
-        actions = new LinkedHashMap<String, Runnable>(){{
+        actions = new LinkedHashMap<>();
 
-            put("Start trade.", () -> startTrade());
-            put("Remove item from wishlist.", () -> removeFromWishlist());
-            put("Back.", () -> {});
-
-        }};
+        actions.put("Start trade.", this::startTrade);
+        actions.put("Remove item from wishlist.", this::removeFromWishlist);
+        actions.put("Back.", () -> {});
 
     }
 
