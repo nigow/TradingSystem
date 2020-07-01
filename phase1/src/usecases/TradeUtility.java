@@ -23,7 +23,7 @@ public class TradeUtility {
     private final TradeManager tradeManager;
 
     /**
-     * The account which info about it is retrieve
+     * The account which info on its trades are being retrieved
      */
     private final Account account;
 

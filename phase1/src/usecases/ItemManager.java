@@ -62,7 +62,7 @@ public class ItemManager {
     }
 
     /**
-     * Sets the item to be edited
+     * Sets the item to be edited in ItemManager
      * @param item Item being set
      * @return If the item was successfully set
      */
