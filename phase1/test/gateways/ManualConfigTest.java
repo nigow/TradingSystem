@@ -29,4 +29,10 @@ public class ManualConfigTest extends TestCase {
         assertNotNull(mc.getTradeManager());
     }
 
+    public void testWishlistUtilityCreation() {
+        ManualConfig mc = new ManualConfig();
+        assertNotNull(mc.getWishlistUtility());
+    }
+
+
 }

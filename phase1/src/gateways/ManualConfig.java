@@ -14,6 +14,7 @@ public class ManualConfig {
     private final ItemManager itemManager;
     private final FreezingUtility freezingUtility;
     private TradeManager tradeManager;
+    private WishlistUtility wishlistUtility;
 
     /**
      * Creates ManualConfig and initializes the required usecases.
@@ -23,6 +24,8 @@ public class ManualConfig {
         CSVRestrictionsGateway csvRestrictionsGateway =
                 new CSVRestrictionsGateway(filePath + "restrictions.csv");
         freezingUtility = new FreezingUtility(csvRestrictionsGateway);
+        CSVItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
+        itemManager = new ItemManager(csvItemsGateway);
 
 
         try {
@@ -30,8 +33,9 @@ public class ManualConfig {
             CSVAccountGateway csvAccountGateway =
                     new CSVAccountGateway(filePath + "accounts.csv");
 
-            this.accountManager = new AccountManager(csvAccountGateway);
+            accountManager = new AccountManager(csvAccountGateway);
             authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
+            wishlistUtility = new WishlistUtility(csvAccountGateway, csvItemsGateway);
         }
         catch (IOException e) {
             System.out.println("File not found");
@@ -44,11 +48,6 @@ public class ManualConfig {
         catch (IOException e) {
             System.out.println("File not found");
         }
-
-
-        CSVItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
-        itemManager = new ItemManager(csvItemsGateway);
-
 
     }
     /**
@@ -84,6 +83,10 @@ public class ManualConfig {
      */
     public TradeManager getTradeManager() {
         return tradeManager;
+    }
+
+    public WishlistUtility getWishlistUtility() {
+        return wishlistUtility;
     }
 
 
