@@ -132,34 +132,37 @@ public class FreezingUtility {
     /**
      * Updates the restriction of the amount of items needed to be lent before borrowing
      * @param lendMoreThanBorrow Amount of items needed to be lent before borrowing
+     * @return Whether the restriction is properly set
      */
-    public void setLendMoreThanBorrow(int lendMoreThanBorrow){
+    public boolean setLendMoreThanBorrow(int lendMoreThanBorrow){
         restrictions.setLendMoreThanBorrow(lendMoreThanBorrow);
-        restrictionsGateway.updateRestrictions(restrictions);
+        return restrictionsGateway.updateRestrictions(restrictions);
     }
 
     /**
      * Updates the restriction of the max number of incomplete trades before an account is frozen
      * @param maxIncompleteTrade Max number of incomplete trades
+     * @return Whether the restriction is properly set
      */
-    public void setMaxIncompleteTrade(int maxIncompleteTrade){
+    public boolean setMaxIncompleteTrade(int maxIncompleteTrade){
         if (maxIncompleteTrade <= 0){
             throw new IllegalArgumentException("Value cannot be negative or 0");
         }
         restrictions.setMaxIncompleteTrade(maxIncompleteTrade);
-        restrictionsGateway.updateRestrictions(restrictions);
+        return restrictionsGateway.updateRestrictions(restrictions);
     }
 
     /**
      * Updates the restriction of the max number of weekly trades before an account is frozen
      * @param maxWeeklyTrade Max number of weekly trades
+     * @return Whether the restriction is properly set
      */
-    public void setMaxWeeklyTrade(int maxWeeklyTrade){
+    public boolean setMaxWeeklyTrade(int maxWeeklyTrade){
         if (maxWeeklyTrade <= 0){
             throw new IllegalArgumentException("Value cannot be negative or 0");
         }
         restrictions.setMaxWeeklyTrade(maxWeeklyTrade);
-        restrictionsGateway.updateRestrictions(restrictions);
+        return restrictionsGateway.updateRestrictions(restrictions);
     }
 
     /**
