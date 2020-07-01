@@ -156,11 +156,7 @@ public class Item {
      */
     @Override
     public String toString() {
-        return String.format("Item name: %1$s\n" +
-                "ID: %2$s\n" +
-                "Description: %3$s\n" +
-                "Approval status: %4$s\n" +
-                "ID of owner: %5$s", name, itemID, description, isApproved, ownerID);
+        return String.format("%1$s: %2$s", name, description);
     }
 
 }
