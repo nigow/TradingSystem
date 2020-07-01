@@ -50,7 +50,7 @@ public class WishlistController {
             if (isNum(input)) {
 
                 int action = Integer.parseInt(input);
-                if (action < actions.size()) {
+                if (action < actions.size() - 1) {
                     actions.values().toArray(new Runnable[0])[action].run();
                 } else {
                     wishlistPresenter.invalidInput();
