@@ -1,11 +1,13 @@
 package usecases;
 
+import entities.Item;
 import entities.TimePlace;
 import entities.Trade;
 import entities.TradeStatus;
 import gateways.TradeGateway;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -127,8 +129,20 @@ public class TradeManager {
      * Retrieves a list of all trades in persistent storage
      * @return List of all trades
      */
-    public List<Trade> getAllItems() {
+    public List<Trade> getAllTrades() {
         return tradeGateway.getAllTrades();
+    }
+
+    /**
+     * Retrieves all trades stored in persistent storage in string format
+     * @return List of trades in string format
+     */
+    public List<String> getAllTradesString() {
+        List<String> StringTrade = new ArrayList<>();
+        for (Trade trade : getAllTrades()) {
+            StringTrade.add(trade.toString());
+        }
+        return StringTrade;
     }
 
 }

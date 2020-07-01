@@ -1,5 +1,6 @@
 package usecases;
 
+import java.util.ArrayList;
 import java.util.List;
 import entities.Item;
 import gateways.ItemsGateway;
@@ -111,6 +112,18 @@ public class ItemManager {
      */
     public List<Item> getAllItems() {
         return itemsGateway.getAllItems();
+    }
+
+    /**
+     * Retrieves all items stored in persistent storage in string format
+     * @return List of all items in string format
+     */
+    public List<String> getAllItemsString() {
+        List<String> StringItems = new ArrayList<>();
+        for (Item item : getAllItems()) {
+            StringItems.add(item.toString());
+        }
+        return StringItems;
     }
 
 }

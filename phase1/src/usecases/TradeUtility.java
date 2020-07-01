@@ -35,7 +35,7 @@ public class TradeUtility {
 
     public List<Trade> getAllTradesAccount() {
         List<Trade> accountTrades = new ArrayList<>();
-        for (Trade trade : tradeManager.getAllItems()) {
+        for (Trade trade : tradeManager.getAllTrades()) {
             if (trade.getTraderOneID() == account.getAccountID()) {
                 accountTrades.add(trade);
             }
@@ -48,7 +48,7 @@ public class TradeUtility {
 
     public List<String> getAllTradesAccountString() {
         List<String> accountTrades = new ArrayList<>();
-        for (Trade trade : tradeManager.getAllItems()) {
+        for (Trade trade : tradeManager.getAllTrades()) {
             if (trade.getTraderOneID() == account.getAccountID()) {
                 accountTrades.add(trade.toString());
             }
