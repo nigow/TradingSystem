@@ -62,6 +62,19 @@ public class ItemManager {
     }
 
     /**
+     * Sets the item to be edited
+     * @param item Item being set
+     * @return If the item was successfully set
+     */
+    public boolean setItem(Item item) {
+        if (item != null) {
+            this.item = item;
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Need a remove item method in itemsGateway first
      * @param itemId The id of the item to be removed
      */

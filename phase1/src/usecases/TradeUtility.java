@@ -8,9 +8,23 @@ import entities.TradeStatus;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Utility class for trades to access certain types of trades for an account
+ * @author Isaac
+ */
+
 public class TradeUtility {
+
     private final AccountManager accountManager;
+
+    /**
+     * Manager responsible for creating and editing trades
+     */
     private final TradeManager tradeManager;
+
+    /**
+     * The account which info about it is retrieve
+     */
     private final Account account;
 
     public TradeUtility(AccountManager accountManager, TradeManager tradeManager) {
@@ -45,68 +59,65 @@ public class TradeUtility {
         return accountTrades;
     }
 
-    /**
-    public List<Integer> getTopThreePartners() {
-        Hashtable tradeFrequency = new Hashtable();
+
+    public List<Integer> getTopThreePartnersIds() {
+        Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderOneID()) {
-                if (tradeFrequency.containsKey(trade.getTraderTwoID())){
-
-                }
-                else  {
-                    tradeFrequency.put(trade.getTraderTwoID(), 1);
-                }
+                tradeFrequency.compute(trade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
             }
             else {
-
+                tradeFrequency.compute(trade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
             }
         }
+        SortedMap<Integer, Integer> sortedFrequency = new TreeMap<>(Collections.reverseOrder());
+        for (Map.Entry<Integer, Integer> entry : tradeFrequency.entrySet()) {
+            sortedFrequency.put(entry.getValue(), entry.getKey());
+        }
+        List<Integer> tradeIds = new ArrayList<>();
+        int count = 0;
+        for (Map.Entry<Integer, Integer> entry : sortedFrequency.entrySet()) {
+            if (count >= 3) break;
+            tradeIds.add(entry.getValue());
+            count++;
+        }
+        return tradeIds;
     }
 
-    public List<Integer> getRecentOneWay() {
-        List<Trade> AllOneWay = new ArrayList<>();
+    public List<Trade> getRecentOneWay() {
+        List<TimePlace> AllOneWay = new ArrayList<>();
+        List<Trade> AllOneWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (!trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
-                AllOneWay.add(trade);
+            if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty() ||
+                    trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+                AllOneWay.add(timePlace);
             }
         }
         Collections.sort(AllOneWay);
+        for (int i = 0; i < 3; i++) {
+            Trade trade = tradeManager.getTradeGateway().findTradeById(AllOneWay.get(i).getId());
+            AllOneWayTrades.add(trade);
+        }
+        return AllOneWayTrades;
     }
 
     public List<Trade> getRecentTwoWay() {
-        List<Trade> AllTwoWay = new ArrayList<>();
+        List<TimePlace> AllTwoWay = new ArrayList<>();
+        List<Trade> AllTwoWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (account.getAccountID() == trade.getTraderTwoID()) {
-                if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
-                    timesBorrowed++;
-                }
-            } else {
-                if (trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
-                    timesBorrowed++;
-                }
+            if (!trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+                AllTwoWay.add(timePlace);
             }
         }
-        LocalDateTime first = LocalDateTime.MIN, second = LocalDateTime.MIN, third = LocalDateTime.MIN;
-        if (getAllTradesAccount().size() <= 3) {
-            return getAllTradesAccount();
+        Collections.sort(AllTwoWay);
+        for (int i = 0; i < 3; i++) {
+            Trade trade = tradeManager.getTradeGateway().findTradeById(AllTwoWay.get(i).getId());
+            AllTwoWayTrades.add(trade);
         }
-        for (Trade trade : getAllTradesAccount()) {
-            TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
-            if (timePlace.getTime().isAfter(first)) {
-                third = second;
-                second = first;
-                first = timePlace.getTime();
-            }
-            else if (timePlace.getTime().isAfter(second)) {
-                third = second;
-                second = timePlace.getTime();
-            }
-            else if (timePlace.getTime().isAfter(third)) {
-                third = timePlace.getTime();
-            }
-        }
+        return AllTwoWayTrades;
     }
-    */
 
     public Integer getNumWeeklyTrades() {
         Integer weeklyTrades = 0;
