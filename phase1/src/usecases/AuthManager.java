@@ -2,6 +2,7 @@ package usecases;
 
 import entities.Account;
 import entities.Permissions;
+import entities.Restrictions;
 import gateways.AccountGateway;
 import gateways.RestrictionsGateway;
 
@@ -207,14 +208,15 @@ public class AuthManager {
     /**
      * Determines whether a given account should be frozen
      * @param account Account that is checked if it can be frozen
+     * @param tradeUtility Utility for getting trade information
      * @return Whether the account can be frozen or not
      */
-    public boolean canbeFrozen(Account account){
-        if (canUnfreeze(account)){
-            //Need TradeUtility for this part
-            return false;
-        }
-        return true;
+    public boolean canbeFrozen(TradeUtility tradeUtility, Account account){
+        Restrictions restrictions = restrictionsGateway.getRestrictions();
+        boolean lendedMoreThanBorrowed = tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
+        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() <= restrictions.getMaxWeeklyTrade();
+        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
+        return !(canUnfreeze(account) || (lendedMoreThanBorrowed && withinWeeklyLimit && withinMaxIncompleteTrades));
     }
 
     /**
