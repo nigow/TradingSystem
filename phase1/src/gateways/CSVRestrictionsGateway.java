@@ -71,7 +71,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
      * {@inheritDoc}
      */
     @Override
-    public void updateRestrictions(Restrictions restrictions) {
+    public boolean updateRestrictions(Restrictions restrictions) {
         try {
             this.currentRestriction = restrictions;
 
@@ -87,11 +87,13 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
             fw.write(first_row + newLine);
             fw.flush();
             fw.close();
+            return true;
 
         }catch(IOException e){
             System.out.println("No such file exists");
 
         }
+        return false;
     }
 
 }

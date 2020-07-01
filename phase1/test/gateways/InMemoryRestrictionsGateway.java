@@ -16,8 +16,9 @@ public class InMemoryRestrictionsGateway implements RestrictionsGateway{
     }
 
     @Override
-    public void updateRestrictions(Restrictions restrictions) {
+    public boolean updateRestrictions(Restrictions restrictions) {
         this.currentRestriction = restrictions;
+        return true;
     }
 
 }

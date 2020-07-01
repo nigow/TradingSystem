@@ -194,7 +194,7 @@ public class CSVItemsGateway implements ItemsGateway {
     @Override
     public int generateValidId(){
         //A unique ID is defined as the current size of the books + 1
-        if (itemMap.size() == 0) return 0;
+        if (itemMap.size() == 0) return 1;
         return Collections.max(itemMap.keySet()) + 1;
 
     }
