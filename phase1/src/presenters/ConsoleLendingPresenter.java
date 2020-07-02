@@ -19,7 +19,7 @@ public class ConsoleLendingPresenter implements LendingPresenter {
 
     @Override
     public String selectAccount() {
-        System.out.println("Select an account to initiate a trade with:");
+        System.out.println("Select an account to initiate a trade with (-1 to return to menu):");
         Scanner input = new Scanner(System.in);
 
         return input.next();
@@ -27,17 +27,9 @@ public class ConsoleLendingPresenter implements LendingPresenter {
 
     @Override
     public String selectItem() {
-        System.out.println("Select an item you are lending: ");
+        System.out.println("Select an item you are lending (-1 to return to menu): ");
         Scanner input = new Scanner(System.in);
         return input.next();
-    }
-
-    @Override
-    public String startTrade(Account toAccount, Item tradingItem) {
-        //TODO          === Call TradeCreator ===
-        //Assumption: TradeCreator class requires an account to trade to and item to trade.
-        //Maybe strings are more appropriate.
-        return null;
     }
 
     @Override
@@ -53,6 +45,8 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         System.out.println("Your input was invalid. Please try again with a valid number listed");
     }
 
-
-
+    @Override
+    public void abort() {
+        System.out.println("Abort");
+    }
 }

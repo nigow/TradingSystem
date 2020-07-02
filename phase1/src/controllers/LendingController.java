@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Account;
 import entities.Item;
+import gateways.ManualConfig;
 import presenters.ConsoleLendingPresenter;
 import presenters.LendingPresenter;
 import usecases.AccountManager;
@@ -14,28 +15,39 @@ public class LendingController {
     private final LendingPresenter lendingPresenter;
     private final AccountManager accountManager;
     private final ItemManager itemManager;
+    private final ManualConfig manualConfig;
 
-    public LendingController(AccountManager accountManager, ItemManager itemManager){
+    public LendingController(ManualConfig manualConfig){
+        this.manualConfig = manualConfig;
         this.lendingPresenter = new ConsoleLendingPresenter();
-        this.accountManager = accountManager;
-        this.itemManager = itemManager;
+        this.accountManager = manualConfig.getAccountManager();
+        this.itemManager = manualConfig.getItemManager();
     }
 
-    private Account chooseAccount(){
+    private int chooseAccount(){
         List<Account> allAccounts = accountManager.getAccountsList();
         lendingPresenter.displayAccounts(allAccounts);
-        int index;
-        try{
-            index = Integer.parseInt(lendingPresenter.selectAccount());
-            if(index < allAccounts.size()) return allAccounts.get(index);
+        int index = -2;
+        while(index == -2){
+            try{
+                index = Integer.parseInt(lendingPresenter.selectAccount());
+                if(index < allAccounts.size() && index > 0) index = allAccounts.get(index - 1).getAccountID();
+                if (index == -1){
+                    lendingPresenter.abort();
+                    return -1;
+                }
+            }
+            catch(NumberFormatException e){
+                //pass
+            }
+            lendingPresenter.invalidInput();
         }
-        catch(NumberFormatException e){
-        }
-        return null;
+
+        return index;
     }
 
 
-    private Item chooseItem(){
+    private int chooseItem(){
         List<Item> myItems = new ArrayList<>();
         int userId = accountManager.getCurrAccount().getAccountID();
 
@@ -43,32 +55,34 @@ public class LendingController {
             if(item.getOwnerID() == userId && item.isApproved()) myItems.add(item);
         }
         lendingPresenter.displayInventory(myItems);
-        int index;
-        try{
-            index = Integer.parseInt(lendingPresenter.selectItem());
-            if(index < myItems.size()) return myItems.get(index);
+        int index = -2;
+        while(index == -2){
+            try{
+                index = Integer.parseInt(lendingPresenter.selectItem());
+                if(index < myItems.size() && index > 0) index = myItems.get(index - 1).getItemID();
+                if (index == -1){
+                    lendingPresenter.abort();
+                    return -1;
+                }
+            }
+            catch(NumberFormatException e){
+                //pass
+            }
+            lendingPresenter.invalidInput();
         }
-        catch(NumberFormatException e){}
-        return null;
+
+        return index;
     }
 
     public void run(){ //Todo: what if user changed their mind and decided not to trade in the middle?
-        boolean validInput = false;
-        Account toAccount;
-        Item tradingItem;
-        while(!validInput){
-            toAccount = chooseAccount();
-            tradingItem = chooseItem();
-            if (toAccount != null && tradingItem != null){
-                validInput = true;
-                lendingPresenter.startTrade(toAccount, tradingItem);
+        int toAccountId = chooseAccount();
+        if (toAccountId == -1) return;
+        int tradingItemId = chooseItem();
+        if(tradingItemId == -1) return;
 
-            }else{
-                lendingPresenter.invalidInput();
-            }
-        }
-        //lendingPresenter.returnToMenu();
-
+        TradeCreatorController startTrade;
+        startTrade = new TradeCreatorController(manualConfig, toAccountId, tradingItemId);
+        startTrade.run();
     }
 
 }

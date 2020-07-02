@@ -39,6 +39,8 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
         return input.next();
     }
 
+
+
     @Override
     public void invalidInput() {
         System.out.println("Invalid input, try again.");

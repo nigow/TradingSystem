@@ -84,13 +84,13 @@ public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account
-     * @param account the account which the items are retrieved for
+     * @param accountId the account id which the items are retrieved for
      * @return List of items for account
      */
-    public List<Item> getInventoryOfAccount(Account account) {
+    public List<Item> getInventoryOfAccount(int accountId) {
         List<Item> Items = new ArrayList<>();
         for (Item item : itemManager.getAllItems()) {
-            if (item.getOwnerID() == account.getAccountID()) {
+            if (item.getOwnerID() == accountId) {
                 Items.add(item);
             }
         }
@@ -99,13 +99,13 @@ public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account in string format
-     * @param account the account which the items are retrieved for
+     * @param accountId the account id which the items are retrieved for
      * @return List of items for account in string format
      */
-    public List<String> getInventoryOfAccountString(Account account) {
+    public List<String> getInventoryOfAccountString(int accountId) {
         List<String> Items = new ArrayList<>();
         for (Item item : itemManager.getAllItems()) {
-            if (item.getOwnerID() == account.getAccountID()) {
+            if (item.getOwnerID() == accountId) {
                 Items.add(item.toString());
             }
         }
