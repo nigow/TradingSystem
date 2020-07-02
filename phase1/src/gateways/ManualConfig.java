@@ -1,13 +1,8 @@
 package gateways;
 
-import entities.Account;
-import entities.Permissions;
 import usecases.*;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Configures the application.
@@ -16,17 +11,31 @@ import java.util.List;
 public class ManualConfig {
     private AccountManager accountManager;
     private AuthManager authManager;
-    private final ItemManager itemManager;
-    private final FreezingUtility freezingUtility;
+    private ItemManager itemManager;
+    private FreezingUtility freezingUtility;
     private TradeManager tradeManager;
     private WishlistUtility wishlistUtility;
     private ItemUtility itemUtility;
 
     /**
-     * Creates ManualConfig and initializes the required usecases.
+     * Creates ManualConfig and initializes the required usecases
+     * using existing CSV file.
      */
     public ManualConfig() {
         String filePath = System.getProperty("user.dir") + "/out/Files/";
+        constructorHelper(filePath);
+    }
+
+    /**
+     * Creates ManualConfig and initializes the required usecases
+     * using a csv file that can be set mannually.
+     * @param filePath file path to the folder containing csv files
+     */
+    public ManualConfig(String filePath){
+        constructorHelper(filePath);
+    }
+
+    private void constructorHelper(String filePath){
         RestrictionsGateway csvRestrictionsGateway =
                 new CSVRestrictionsGateway(filePath + "restrictions.csv");
         freezingUtility = new FreezingUtility(csvRestrictionsGateway);
@@ -46,8 +55,6 @@ public class ManualConfig {
 
         TradeGateway csvTradeGateway = setUpTradeGateway(filePath + "trades.csv");
         tradeManager = new TradeManager(csvTradeGateway);
-
-
     }
 
     private AccountGateway setUpAccountGateway(String filePath) {
