@@ -24,9 +24,4 @@ public interface TradeCreator {
      * tells user that their input was invalid
      */
     public void invalidInput();
-
-    /**
-     * returns user to main menu
-     */
-    public void returnToMenu();
 }
