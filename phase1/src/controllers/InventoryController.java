@@ -42,6 +42,7 @@ public class InventoryController {
         if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
             actions.put("View items awaiting approval", this::displayPendingItems);
         }
+        actions.put("Return to main menu", () -> {});
     }
 
     private boolean isNum(String input) {
