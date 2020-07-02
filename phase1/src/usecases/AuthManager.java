@@ -193,7 +193,7 @@ public class AuthManager {
      * @return Whether the account is frozen or not
      */
     public boolean isFrozen(Account account){
-        return !account.getPermissions().contains(Permissions.BORROW);
+        return !canLend(account) && !canBorrow(account);
     }
 
     /**
@@ -207,16 +207,26 @@ public class AuthManager {
 
     /**
      * Determines whether a given account should be frozen
-     * @param account Account that is checked if it can be frozen
      * @param tradeUtility Utility for getting trade information
+     * @param account Account that is checked if it can be frozen
      * @return Whether the account can be frozen or not
      */
     public boolean canbeFrozen(TradeUtility tradeUtility, Account account){
         Restrictions restrictions = restrictionsGateway.getRestrictions();
         boolean lendedMoreThanBorrowed = tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() <= restrictions.getMaxWeeklyTrade();
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
-        return !(canUnfreeze(account) || (lendedMoreThanBorrowed && withinWeeklyLimit && withinMaxIncompleteTrades));
+        return !(canUnfreeze(account) || (lendedMoreThanBorrowed && withinMaxIncompleteTrades));
+    }
+
+    /**
+     * Determines whether a given account can trade
+     * @param tradeUtility Utility for getting trade information
+     * @param account Account that is checked if it can be frozen
+     * @return Whether account can trade or not
+     */
+    public boolean canTrade(TradeUtility tradeUtility, Account account){
+        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() <= restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
+        return !isFrozen(account) && withinWeeklyLimit;
     }
 
     /**

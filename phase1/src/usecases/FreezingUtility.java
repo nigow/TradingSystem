@@ -6,6 +6,7 @@ import entities.Restrictions;
 import gateways.RestrictionsGateway;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -108,9 +109,7 @@ public class FreezingUtility {
      */
     public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account){
         if (authManager.canbeFrozen(tradeUtility, account)){
-            account.removePermission(Permissions.BORROW);
-            account.addPermission(Permissions.REQUEST_UNFREEZE);
-            return authManager.removePermissionByID(account, Permissions.BORROW)
+            return authManager.removePermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)))
                     && authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
         }
         return false;
@@ -124,7 +123,7 @@ public class FreezingUtility {
      */
     public boolean unfreezeAccount(AuthManager authManager, Account account){
         if (authManager.isPending(account)){
-            return authManager.addPermissionByID(account, Permissions.BORROW);
+            return authManager.addPermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)));
         }
         return false;
     }
