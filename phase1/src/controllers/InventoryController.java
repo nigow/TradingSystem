@@ -53,18 +53,24 @@ public class InventoryController {
     public InventoryController(ManualConfig manualConfig) {
         this.itemManager = manualConfig.getItemManager();
         this.accountManager = manualConfig.getAccountManager();
+        this.itemUtility = manualConfig.getItemUtility();
+
         this.inventoryPresenter = new ConsoleInventoryPresenter();
-        this.itemUtility = new ItemUtility(this.itemManager);
+
         AuthManager authManager = manualConfig.getAuthManager();
 
         this.actions = new LinkedHashMap<>();
+
         if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
             actions.put("Add to wishlist", this::addToWishlist);
         }
+
         actions.put("Remove your item from inventory", this::removeFromInventory);
+
         if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
             actions.put("View items awaiting approval", this::approveItems);
         }
+
         actions.put("Return to main menu", () -> {});
     }
 
@@ -89,14 +95,18 @@ public class InventoryController {
         do {
             displayInventory();
             option = inventoryPresenter.displayInventoryOptions(menu);
+
             if (isNum(option)) {
                 int action = Integer.parseInt(option);
+
                 if (action < actions.size()) {
                     actions.values().toArray(new Runnable[0])[action].run();
+
                 } else {
                     inventoryPresenter.invalidInput("That number does not correspond to an item");
                 }
             }
+
         } while(!option.equals(String.valueOf(menu.size() - 1)));
 
     }
@@ -115,13 +125,18 @@ public class InventoryController {
      */
     public void addToWishlist() {
         String option = inventoryPresenter.addToWishlist();
+
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
+
             if (ind < itemManager.getAllItems().size()) {
                 accountManager.addItemToWishlist(itemManager.getAllItems().get(ind).getItemID());
+
             } else {
                 inventoryPresenter.invalidInput("That number does not correspond to an item");
+
             }
+
         } else {
             inventoryPresenter.invalidInput();
         }
@@ -135,15 +150,19 @@ public class InventoryController {
         String option = inventoryPresenter.removeFromInventory();
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
+
             if (ind < itemManager.getAllItems().size()) {
                 if (itemManager.getAllItems().get(ind).getOwnerID() == accountManager.getCurrAccount().getAccountID()) {
                     itemManager.removeItem(itemManager.getAllItems().get(ind).getItemID());
+
                 } else {
                     inventoryPresenter.invalidInput("You cannot remove an item that does not belong to you");
+
                 }
             } else {
                 inventoryPresenter.invalidInput("That number does not correspond to an item");
             }
+
         } else {
             inventoryPresenter.invalidInput();
         }
@@ -156,13 +175,17 @@ public class InventoryController {
         List<String> all_disapproved = itemUtility.getDisapprovedString();
         inventoryPresenter.displayPending(all_disapproved);
         String option = inventoryPresenter.approveItem();
+
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
+
             if (ind < all_disapproved.size()) {
                 itemManager.setItem(itemManager.getAllItems().get(ind));
                 itemManager.updateApproval(true);
+
             } else {
                 inventoryPresenter.invalidInput("That number does not correspond to an item");
+
             }
         } else {
             inventoryPresenter.invalidInput();
