@@ -13,34 +13,9 @@ import gateways.ItemsGateway;
 public class ItemManager {
 
     /**
-     * The current item being edited
-     */
-    private Item item;
-
-    /**
      * The gateway which deals with items
      */
     private final ItemsGateway itemsGateway;
-
-    /**
-     * Constructor for ItemManager to create and edit an item
-     * @param itemsGateway The gateway for interacting with the persistent storage of items
-     */
-    public ItemManager(ItemsGateway itemsGateway, String name, String description, int ownerId) {
-        this.itemsGateway = itemsGateway;
-        item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
-        this.itemsGateway.updateItem(item);
-    }
-
-    /**
-     * Constructor for ItemManager with an existing item to edit and ItemsGateway
-     * @param itemsGateway The gateway for interacting with the persistent storage of items
-     * @param item The item to be edited
-     */
-    public ItemManager(ItemsGateway itemsGateway, Item item) {
-        this.itemsGateway = itemsGateway;
-        this.item = item;
-    }
 
     /**
      * Basic Constructor for ItemManager which stores an ItemsGateway
@@ -58,36 +33,29 @@ public class ItemManager {
      * @param ownerId The id of the owner of the item
      */
     public void createItem(String name, String description, int ownerId) {
-        item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
+        Item item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
         this.itemsGateway.updateItem(item);
     }
 
     /**
-     * Sets the item to be edited in ItemManager
-     * @param item Item being set
-     * @return If the item was successfully set
+     * Deletes an item in the system and returns if item was successfully deleted
+     * @param item The item to be deleted
+     * @return If the deletion was successful
      */
-    public boolean setItem(Item item) {
-        if (item != null) {
-            this.item = item;
-            return true;
+    public boolean removeItem(Item item){
+        boolean result = false;
+        if (getAllItems().contains(item)) {
+            itemsGateway.deleteItem(item);
+            result = true;
         }
-        return false;
-    }
-
-    /**
-     * Need a remove item method in itemsGateway first
-     * @param itemId The id of the item to be removed
-     */
-    public void removeItem(int itemId){
-        // todo: Need a remove item method in itemsGateway
+        return result;
     }
 
     /**
      * Update the owner of the item
      * @param ownerId the id of the item's new owner
      */
-    public void updateOwner(int ownerId){
+    public void updateOwner(Item item, int ownerId){
         item.setOwnerID(ownerId);
         itemsGateway.updateItem(item);
     }
@@ -96,7 +64,7 @@ public class ItemManager {
      * Update the approval status of the item
      * @param approval The new approval status of the item
      */
-    public void updateApproval(boolean approval){
+    public void updateApproval(Item item, boolean approval){
         if (approval){
             item.approve();
         }
