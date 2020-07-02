@@ -4,7 +4,7 @@ import gateways.ManualConfig;
 import presenters.ConsoleTradePresenter;
 import presenters.TradePresenter;
 
-// TODO: variable and method javadoc
+// TODO: 1. variable and method javadoc 2. code >_<
 
 /**
  * Controller that deals with user's past trades and making changes to them.

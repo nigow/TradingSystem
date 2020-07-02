@@ -27,7 +27,7 @@ public class MenuFacade {
 
     private AccountManager accountManager;
 
-    // TODO: waiting on the following classes to be fixed/created
+    // TODO: 1. waiting on the following classes to be fixed/created 2. javadoc
 
 //    private FreezingController freezingController;
     private InventoryController inventoryController;
