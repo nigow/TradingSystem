@@ -55,4 +55,10 @@ public interface InventoryPresenter {
      */
     public void invalidInput();
 
+    /**
+     * sends a customizable message to the user
+     * @param message the message that will be printed to the user
+     */
+    public void invalidInput(String message);
+
 }
