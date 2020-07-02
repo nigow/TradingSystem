@@ -1,11 +1,18 @@
 package controllers;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import gateways.ManualConfig;
 import presenters.InventoryPresenter;
 import presenters.ConsoleInventoryPresenter;
+import usecases.AuthManager;
 import usecases.ItemManager;
 import usecases.AccountManager;
-import entities.Item;
+import usecases.ItemUtility;
 
 /**
  * Controller that deals with the inventory
@@ -13,33 +20,106 @@ import entities.Item;
  */
 public class InventoryController {
 
-    InventoryPresenter inventoryPresenter;
-    ItemManager itemManager;
-    AccountManager accountManager;
+    private InventoryPresenter inventoryPresenter;
+    private ItemManager itemManager;
+    private AuthManager authManager;
+    private AccountManager accountManager;
+    private ItemUtility itemUtility;
+    private Map<String, Runnable> actions;
 
-    public InventoryController(ItemManager itemManager, AccountManager accountManager) {
-        this.itemManager = itemManager;
-        this.accountManager = accountManager;
+    public InventoryController(ManualConfig manualConfig) {
+        this.itemManager = manualConfig.getItemManager();
+        this.accountManager = manualConfig.getAccountManager();
+        this.authManager = manualConfig.getAuthManager();
         this.inventoryPresenter = new ConsoleInventoryPresenter();
-    }
+        this.itemUtility = new ItemUtility(this.itemManager);
 
-    public void run() {
-        List<String> menu = new ArrayList<>();
-        menu.add("Display inventory");
-        menu.add("Add to wishlist");
-        menu.add("Remove from inventory");
-        menu.add("Display pending items");
-        menu.add("Approve a pending item");
-        // TODO: how to make admin options secret?
-        String option = inventoryPresenter.displayInventoryOptions(menu);
-        if (option.equals("0")) {
-            displayInventory();
+        this.actions = new LinkedHashMap<>();
+        if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
+            actions.put("Add to wishlist", this::addToWishlist);
+        }
+        actions.put("Remove your item from inventory", this::removeFromInventory);
+        if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
+            actions.put("View items awaiting approval", this::displayPendingItems);
         }
     }
 
-    public void displayInventory() {
-        List<Item> allItems = itemManager.getAllItems();
-        //TODO: is allItems supposed to be a list of Strings or Items?
+    private boolean isNum(String input) {
+        return Pattern.matches("^[0-9]+$", input);
     }
-    //TODO: talk to tairi and hai yang about how to add to wishlist
+
+    public void run() {
+
+        String option;
+        List<String> menu = new ArrayList<>(actions.keySet());
+
+        do {
+            displayInventory();
+            option = inventoryPresenter.displayInventoryOptions(menu);
+            if (isNum(option)) {
+                int action = Integer.parseInt(option);
+                if (action < actions.size()) {
+                    actions.values().toArray(new Runnable[0])[action].run();
+                } else {
+                    inventoryPresenter.invalidInput("That number does not correspond to an item");
+                }
+            }
+        } while(!option.equals(String.valueOf(menu.size() - 1)));
+
+    }
+
+    public void displayInventory() {
+        List<String> allItems = itemManager.getAllItemsString();
+        this.inventoryPresenter.displayInventory(allItems);
+    }
+
+    public void addToWishlist() {
+        String option = inventoryPresenter.addToWishlist();
+        if (isNum(option)) {
+            int ind = Integer.parseInt(option);
+            if (ind < itemManager.getAllItems().size()) {
+                accountManager.addItemToWishlist(itemManager.getAllItems().get(ind).getItemID());
+            } else {
+                inventoryPresenter.invalidInput("That number does not correspond to an item");
+            }
+        } else {
+            inventoryPresenter.invalidInput();
+        }
+    }
+
+    public void removeFromInventory() throws NumberFormatException, IndexOutOfBoundsException {
+        String option = inventoryPresenter.removeFromInventory();
+        if (isNum(option)) {
+            int ind = Integer.parseInt(option);
+            if (ind < itemManager.getAllItems().size()) {
+                if (itemManager.getAllItems().get(ind).getOwnerID() == accountManager.getCurrAccount().getAccountID()) {
+                    itemManager.removeItem(itemManager.getAllItems().get(ind).getItemID());
+                } else {
+                    inventoryPresenter.invalidInput("You cannot remove an item that does not belong to you");
+                }
+            } else {
+                inventoryPresenter.invalidInput("That number does not correspond to an item");
+            }
+        } else {
+            inventoryPresenter.invalidInput();
+        }
+    }
+
+    public void displayPendingItems() {
+        List<String> all_disapproved = itemUtility.getDisapprovedString();
+        inventoryPresenter.displayPending(all_disapproved);
+        String option = inventoryPresenter.approveItem();
+        if (isNum(option)) {
+            int ind = Integer.parseInt(option);
+            if (ind < all_disapproved.size()) {
+                //TODO: approve item (wait for Use case to update with approving item change)
+            } else {
+                inventoryPresenter.invalidInput("That number does not correspond to an item");
+            }
+        } else {
+            inventoryPresenter.invalidInput();
+        }
+    }
+
+
 }

@@ -37,7 +37,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String addToWishlist() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the index of the item you want to add to your wishlist: ");
+        System.out.println("Enter the number of the item you want to add to your wishlist: ");
         return input.nextLine();
     }
 
@@ -77,4 +77,13 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void invalidInput(String message) {
+        System.out.println(message);
+    }
+
 }
