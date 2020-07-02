@@ -20,22 +20,28 @@ public class WishlistController {
     private AccountManager accountManager;
     private Map<String, Runnable> actions;
     private WishlistUtility wishlistUtility;
+    private ManualConfig manualConfig;
+    private ItemManager itemManager;
+
+    private ControllerHelper controllerHelper;
 
     public WishlistController(ManualConfig manualConfig) {
+
+        this.manualConfig = manualConfig;
+
         this.accountManager = manualConfig.getAccountManager();
         this.wishlistUtility = manualConfig.getWishlistUtility();
+        this.itemManager = manualConfig.getItemManager();
 
         wishlistPresenter = new ConsoleWishlistPresenter();
         actions = new LinkedHashMap<>();
 
-        actions.put("Start trade.", this::startTrade);
+        actions.put("Start trade.", this::startTrade); // todo: check if user has perms to do this, if not hide it
         actions.put("Remove item from wishlist.", this::removeFromWishlist);
         actions.put("Back.", () -> {});
 
-    }
+        controllerHelper = new ControllerHelper();
 
-    private boolean isNum(String input) {
-        return Pattern.matches("^[0-9]+$", input);
     }
 
     public void run() {
@@ -47,7 +53,7 @@ public class WishlistController {
             List<String> options = new ArrayList<>(actions.keySet());
             input = wishlistPresenter.displayWishlistOptions(options);
 
-            if (isNum(input)) {
+            if (controllerHelper.isNum(input)) {
 
                 int action = Integer.parseInt(input);
                 if (action < actions.size()) {
@@ -68,13 +74,15 @@ public class WishlistController {
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String input = wishlistPresenter.startTrade();
-        if (isNum(input)) {
+        if (controllerHelper.isNum(input)) {
 
             List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
             int index = Integer.parseInt(input);
 
+            // todo: move improved input validation loop from TradeCreatorController to here
             if (index < wishlistIds.size()) {
-                // todo: waiting for TradeCreator
+                int itemId = wishlistIds.get(Integer.parseInt(input));
+                new TradeCreatorController(manualConfig, itemManager.getItemById(itemId).getOwnerID(), itemId).run();
             } else {
                 wishlistPresenter.invalidInput();
             }
@@ -89,7 +97,7 @@ public class WishlistController {
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String input = wishlistPresenter.removeFromWishlist();
-        if (isNum(input)) {
+        if (controllerHelper.isNum(input)) {
 
             List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
             int index = Integer.parseInt(input);
