@@ -28,15 +28,17 @@ public interface InventoryPresenter {
     public String addToWishlist();
 
     /**
+     * create an item
+     * @return the Name and Description of the Item the user wishes to create
+     */
+    public List<String> createItem();
+
+    /**
      * remove from inventory
      * @return indexes of item that user would like removed from inventory
      */
     public String removeFromInventory();
 
-    /**
-     * delete item (must be their own item)
-     * @return index of item that they wish to delete
-     */
 
     /**
      * displays pending items
@@ -59,6 +61,6 @@ public interface InventoryPresenter {
      * sends a customizable message to the user
      * @param message the message that will be printed to the user
      */
-    public void invalidInput(String message);
+    public void customMessage(String message);
 
 }

@@ -1,4 +1,5 @@
 package presenters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,6 +45,24 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     /**
      * {@inheritDoc}
      */
+    public List<String> createItem() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the name of the item you wish to add");
+        String name = input.nextLine();
+        System.out.println("Enter the description of the item you wish to add");
+        String description = input.nextLine();
+        System.out.println(name + ": " + description +"\nIs this correct? (if so, type 'yes')");
+        String yes = input.nextLine();
+        List<String> inputs = new ArrayList<>();
+        inputs.add(name);
+        inputs.add(description);
+        inputs.add(yes);
+        return inputs;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String removeFromInventory() {
         Scanner input = new Scanner(System.in);
@@ -82,7 +101,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void invalidInput(String message) {
+    public void customMessage(String message) {
         System.out.println(message);
     }
 

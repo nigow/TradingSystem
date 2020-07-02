@@ -81,6 +81,9 @@ public class InventoryController {
         if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
             actions.put("Add to wishlist", this::addToWishlist);
         }
+        if (authManager.canCreateItem(accountManager.getCurrAccount())) {
+            actions.put("Create a new item", this::createItem);
+        }
         actions.put("Remove your item from inventory", this::removeFromInventory);
         if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
             actions.put("View items awaiting approval", this::approveItems);
@@ -100,7 +103,7 @@ public class InventoryController {
                     actions.values().toArray(new Runnable[0])[action].run();
 
                 } else {
-                    inventoryPresenter.invalidInput("That number does not correspond to an item");
+                    inventoryPresenter.customMessage("That number does not correspond to an item");
                 }
             }
 
@@ -117,6 +120,20 @@ public class InventoryController {
     }
 
     /**
+     * Runs create item in inventoryPresenter, calls itemManager to add an item to our inventory
+     */
+    public void createItem() {
+        List<String> inputs = inventoryPresenter.createItem();
+        if (inputs.get(2) ==  "yes") {
+            itemManager.createItem(inputs.get(0), inputs.get(1), accountManager.getCurrAccount().getAccountID());
+            inventoryPresenter.customMessage("Item added!");
+        } else {
+            inventoryPresenter.customMessage("Item was not added.");
+        }
+
+    }
+
+    /**
      * Runs the addToWishlist method in InventoryPresenter,
      * and uses accountManager and itemManager to actually add the user's chosen item to their wishlist
      */
@@ -130,8 +147,7 @@ public class InventoryController {
                 accountManager.addItemToWishlist(itemManager.getAllItems().get(ind).getItemID());
 
             } else {
-                inventoryPresenter.invalidInput("That number does not correspond to an item");
-
+                inventoryPresenter.customMessage("That number does not correspond to an item");
             }
 
         } else {
@@ -153,11 +169,11 @@ public class InventoryController {
                     itemManager.removeItem(itemManager.getAllItems().get(ind));
 
                 } else {
-                    inventoryPresenter.invalidInput("You cannot remove an item that does not belong to you");
+                    inventoryPresenter.customMessage("You cannot remove an item that does not belong to you");
 
                 }
             } else {
-                inventoryPresenter.invalidInput("That number does not correspond to an item");
+                inventoryPresenter.customMessage("That number does not correspond to an item");
             }
 
         } else {
@@ -180,7 +196,7 @@ public class InventoryController {
                 itemManager.updateApproval(itemManager.getAllItems().get(ind), true);
 
             } else {
-                inventoryPresenter.invalidInput("That number does not correspond to an item");
+                inventoryPresenter.customMessage("That number does not correspond to an item");
 
             }
         } else {
