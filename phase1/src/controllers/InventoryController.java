@@ -153,7 +153,7 @@ public class InventoryController {
 
             if (ind < itemManager.getAllItems().size()) {
                 if (itemManager.getAllItems().get(ind).getOwnerID() == accountManager.getCurrAccount().getAccountID()) {
-                    itemManager.removeItem(itemManager.getAllItems().get(ind).getItemID());
+                    itemManager.removeItem(itemManager.getAllItems().get(ind));
 
                 } else {
                     inventoryPresenter.invalidInput("You cannot remove an item that does not belong to you");
@@ -180,8 +180,10 @@ public class InventoryController {
             int ind = Integer.parseInt(option);
 
             if (ind < all_disapproved.size()) {
-                itemManager.setItem(itemManager.getAllItems().get(ind));
-                itemManager.updateApproval(true);
+//                itemManager.setItem(itemManager.getAllItems().get(ind));
+//                itemManager.updateApproval(true);
+                // TODO: i changed this ^^ make sure it's not a dumb change -maryam
+                itemManager.updateApproval(itemManager.getAllItems().get(ind), true);
 
             } else {
                 inventoryPresenter.invalidInput("That number does not correspond to an item");

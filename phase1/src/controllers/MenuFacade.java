@@ -3,6 +3,7 @@ package controllers;
 import gateways.ManualConfig;
 import presenters.ConsoleMenuPresenter;
 import presenters.MenuPresenter;
+import usecases.AccountManager;
 import usecases.AuthManager;
 
 import java.util.ArrayList;
@@ -24,6 +25,19 @@ public class MenuFacade {
      */
     private MenuPresenter menuPresenter;
 
+    private AccountManager accountManager;
+
+    // TODO: waiting on the following classes to be fixed/created
+
+//    private FreezingController freezingController;
+    private InventoryController inventoryController;
+//    private LendingController lendingController;
+    private TradeController tradeController;
+    private WishlistController wishlistController;
+//    private RestrictionsController restrictionsController;
+//    private AppealController appealController;
+//    private AdminCreatorController adminCreatorController;
+
     /**
      * Initializes MenuFacade based on information from ManualConfig and creates instances of
      * AuthManager and necessary controllers.
@@ -31,48 +45,76 @@ public class MenuFacade {
      */
     public MenuFacade(ManualConfig mc) {
         authManager = mc.getAuthManager();
+        accountManager = mc.getAccountManager();
+
         menuPresenter = new ConsoleMenuPresenter();
+
+//        freezingController = new FreezingController(mc);
+        inventoryController = new InventoryController(mc);
+//        lendingController = new LendingController(mc);
+        tradeController = new TradeController(mc);
+        wishlistController = new WishlistController(mc);
+//        restrictionsController = new RestrictionController(mc);
+//        appealController = new AppealController(mc);
+//        adminCreatorController = new AdminCreatorController(mc);
     }
 
     /**
      * Calls the presenter with options for the user based on their permission and executes the action.
      */
     public void run() {
-        List<String> options = new ArrayList<>();
-        List<Runnable> method = new ArrayList<>();
+        while (true) {
+            List<String> options = new ArrayList<>();
+            List<Runnable> method = new ArrayList<>();
 
-        /*
-        add options and which controller 'run' should be called based on that
-        LOGIN,
-        FREEZE,
-        UNFREEZE,
-        CREATE_ITEM,
-        CONFIRM_ITEM,
-        ADD_TO_WISHLIST,
-        LEND,
-        BORROW,
-        BROWSE_INVENTORY,
-        CHANGE_RESTRICTIONS,
-        ADD_ADMIN,
-        REQUEST_UNFREEZE
-        */
+            options.add("Manage your existing trades");
+            method.add(tradeController::run);
 
-        // TODO waiting on all controllers
+            options.add("Browse the inventory");
+            method.add(inventoryController::run);
 
-        method.add(() -> {});
+            options.add("Manage your wishlist");
+            method.add(wishlistController::run);
 
-        String action = menuPresenter.displayMenu(options);
-        try {
-            int i = Integer.parseInt(action);
-            if (0 <= i && i < method.size()) {
-                method.get(i).run();
-            } else {
-                menuPresenter.invalidInput();
-                run();
+            if (authManager.canLend(accountManager.getCurrAccount())) {
+                options.add("Initiate a trade with a specific account");
+//                method.add(lendingController::run);
             }
-        } catch (NumberFormatException e) {
-            menuPresenter.invalidInput();
-            run();
+
+            if (authManager.canChangeRestrictions(accountManager.getCurrAccount())) {
+                options.add("Modify the restriction values of the program");
+//                method.add(restrictionsController::run);
+            }
+
+            if (authManager.canFreeze(accountManager.getCurrAccount()) && authManager.canUnfreeze(accountManager.getCurrAccount())) {
+                options.add("Manage the frozen accounts");
+//                method.add(freezingController::run);
+            }
+
+            if (authManager.canAddAdmin(accountManager.getCurrAccount())) {
+                options.add("Add an admin account");
+//                method.add(adminCreatorController::run);
+            }
+
+            if (authManager.isFrozen(accountManager.getCurrAccount())) {
+                options.add("Request to be unfrozen");
+//                method.add(appealController::run);
+            }
+
+            options.add("Logout");
+
+            String action = menuPresenter.displayMenu(options);
+            try {
+                int i = Integer.parseInt(action);
+                if (0 <= i && i < method.size())
+                    method.get(i).run();
+                else if (i == method.size())
+                    return; // TODO: how should we actually log out? rn it just goes back to previous menu
+                else
+                    menuPresenter.invalidInput();
+            } catch (NumberFormatException e) {
+                menuPresenter.invalidInput();
+            }
         }
     }
 }

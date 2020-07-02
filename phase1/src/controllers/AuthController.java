@@ -50,17 +50,21 @@ public class AuthController {
      * Calls the presenter with options for the user to login or create an account.
      */
     public void run() {
-        List<String> options = new ArrayList<>();
-        options.add("Login");
-        options.add("Create an Account");
-        String action = homePresenter.displayHomeOptions(options);
-        if (action.equals("0")) {
-            logIn();
-        } else if (action.equals("1")) {
-            createAccount();
-        } else {
-            homePresenter.invalidInput();
-            run();
+        while (true) {
+            List<String> options = new ArrayList<>();
+            options.add("Login");
+            options.add("Create an account");
+            options.add("Quit");
+            String action = homePresenter.displayHomeOptions(options);
+            if (action.equals("0")) {
+                logIn();
+            } else if (action.equals("1")) {
+                createAccount();
+            } else if (action.equals("2")) {
+                return;
+            } else {
+                homePresenter.invalidInput();
+            }
         }
     }
 
