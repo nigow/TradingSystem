@@ -50,8 +50,4 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
         System.out.println("Your input was invalid. Please try again.");
     }
 
-    @Override
-    public void returnToMenu() {
-
-    }
 }

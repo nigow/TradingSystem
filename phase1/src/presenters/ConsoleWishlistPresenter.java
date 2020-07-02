@@ -1,6 +1,5 @@
 package presenters;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,10 +42,5 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
     @Override
     public void invalidInput() {
         System.out.println("Invalid input, try again.");
-    }
-
-    @Override
-    public void returnToMenu() {
-
     }
 }
