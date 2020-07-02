@@ -1,5 +1,6 @@
 package usecases;
 
+import entities.Account;
 import entities.Item;
 
 import java.util.ArrayList;
@@ -81,4 +82,33 @@ public class ItemUtility {
         return disapprovedItems;
     }
 
+    /**
+     * Retrieves all items for a certain account
+     * @param account the account which the items are retrieved for
+     * @return List of items for account
+     */
+    public List<Item> getInventoryOfAccount(Account account) {
+        List<Item> Items = new ArrayList<>();
+        for (Item item : itemManager.getAllItems()) {
+            if (item.getOwnerID() == account.getAccountID()) {
+                Items.add(item);
+            }
+        }
+        return Items;
+    }
+
+    /**
+     * Retrieves all items for a certain account in string format
+     * @param account the account which the items are retrieved for
+     * @return List of items for account in string format
+     */
+    public List<String> getInventoryOfAccountString(Account account) {
+        List<String> Items = new ArrayList<>();
+        for (Item item : itemManager.getAllItems()) {
+            if (item.getOwnerID() == account.getAccountID()) {
+                Items.add(item.toString());
+            }
+        }
+        return Items;
+    }
 }
