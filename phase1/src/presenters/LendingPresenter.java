@@ -10,6 +10,6 @@ public interface LendingPresenter {
     void displayInventory(List<Item> inventory);
     String selectAccount();
     String selectItem();
-    String startTrade(Account toAccount, Item tradingItem);
     void invalidInput();
+    void abort();
 }
