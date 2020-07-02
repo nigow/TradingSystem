@@ -20,19 +20,42 @@ import usecases.ItemUtility;
  */
 public class InventoryController {
 
-    private InventoryPresenter inventoryPresenter;
-    private ItemManager itemManager;
-    private AuthManager authManager;
-    private AccountManager accountManager;
-    private ItemUtility itemUtility;
-    private Map<String, Runnable> actions;
+    /**
+     * The presenter counterpart to this class
+     */
+    private final InventoryPresenter inventoryPresenter;
 
+    /**
+     * An instance of ItemManager to access items
+     */
+    private final ItemManager itemManager;
+
+    /**
+     * An instance of AccountManager to access accounts
+     */
+    private final AccountManager accountManager;
+
+    /**
+     * An instance of ItemUtility to utilize items
+     */
+    private final ItemUtility itemUtility;
+
+    /**
+     * Maps from string to the function that picking the string should run
+     */
+    private final Map<String, Runnable> actions;
+
+    /**
+     * Constructor to initialize all the instances, from ManualConfig,
+     * and add options to actions depending on the user's permissions
+     * @param manualConfig the configuration for the program
+     */
     public InventoryController(ManualConfig manualConfig) {
         this.itemManager = manualConfig.getItemManager();
         this.accountManager = manualConfig.getAccountManager();
-        this.authManager = manualConfig.getAuthManager();
         this.inventoryPresenter = new ConsoleInventoryPresenter();
         this.itemUtility = new ItemUtility(this.itemManager);
+        AuthManager authManager = manualConfig.getAuthManager();
 
         this.actions = new LinkedHashMap<>();
         if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
@@ -40,15 +63,24 @@ public class InventoryController {
         }
         actions.put("Remove your item from inventory", this::removeFromInventory);
         if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
-            actions.put("View items awaiting approval", this::displayPendingItems);
+            actions.put("View items awaiting approval", this::approveItems);
         }
         actions.put("Return to main menu", () -> {});
     }
 
+    /**
+     * Helper function to tell if a String is only numeric
+     * @param input the string to check
+     * @return true if String is numeric, false otherwise
+     */
     private boolean isNum(String input) {
         return Pattern.matches("^[0-9]+$", input);
     }
 
+
+    /**
+     * Runs the main menu of the program
+     */
     public void run() {
 
         String option;
@@ -69,11 +101,18 @@ public class InventoryController {
 
     }
 
+    /**
+     * Runs the displayInventory method in InventoryPresenter, passing in all the items
+     */
     public void displayInventory() {
         List<String> allItems = itemManager.getAllItemsString();
         this.inventoryPresenter.displayInventory(allItems);
     }
 
+    /**
+     * Runs the addToWishlist method in InventoryPresenter,
+     * and uses accountManager and itemManager to actually add the user's chosen item to their wishlist
+     */
     public void addToWishlist() {
         String option = inventoryPresenter.addToWishlist();
         if (isNum(option)) {
@@ -88,7 +127,11 @@ public class InventoryController {
         }
     }
 
-    public void removeFromInventory() throws NumberFormatException, IndexOutOfBoundsException {
+    /**
+     * Runs the removeFromInventory method in InventoryPresenter, checks if a user actually owns the item they want to
+     * remove, and if so, uses accountManager and itemManager to remove the item from the inventory
+     */
+    public void removeFromInventory() {
         String option = inventoryPresenter.removeFromInventory();
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
@@ -106,7 +149,10 @@ public class InventoryController {
         }
     }
 
-    public void displayPendingItems() {
+    /**
+     * Runs the displayPendingItems and approveItem method in InventoryPresenter, uses itemManager to approve an item
+     */
+    public void approveItems() {
         List<String> all_disapproved = itemUtility.getDisapprovedString();
         inventoryPresenter.displayPending(all_disapproved);
         String option = inventoryPresenter.approveItem();
