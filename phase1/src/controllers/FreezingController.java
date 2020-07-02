@@ -81,6 +81,26 @@ public class FreezingController {
     }
 
     public void unfreeze() {
-
+        List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);
+        List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
+        freezingPresenter.displayPossibleUnfreeze(usernames);
+        String chosenUsers;
+        boolean isValidInput = false;
+        while (!isValidInput) {
+            isValidInput = true;
+            chosenUsers = freezingPresenter.unfreeze();
+            String[] listOfChosenUsers = chosenUsers.split(",");
+            for (String i: listOfChosenUsers) {
+                try{
+                    freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.valueOf(i)));
+                }
+                catch (NumberFormatException E) {
+                    isValidInput = false;
+                }
+                catch (IndexOutOfBoundsException F) {
+                    isValidInput = false;
+                }
+            }
+        }
     }
 }
