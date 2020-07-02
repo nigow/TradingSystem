@@ -53,11 +53,4 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         System.out.println("Your input was invalid. Please try again with a valid number listed");
     }
 
-    @Override
-    public void returnToMenu() {
-        System.out.println("You'll return back to the main menu");
-    }
-
-
-
 }

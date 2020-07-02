@@ -44,9 +44,4 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
     public void invalidInput() {
         System.out.println("Invalid input, try again.");
     }
-
-    @Override
-    public void returnToMenu() {
-
-    }
 }
