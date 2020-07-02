@@ -161,6 +161,15 @@ public class AuthManager {
     }
 
     /**
+     * Determines whether a given account can add administrator accounts
+     * @param account Account that is checked it see if it can add administrator accounts
+     * @return Whether the account can add administrator accounts
+     */
+    public boolean canAddAdmin(Account account){
+        return account.getPermissions().contains(Permissions.ADD_ADMIN);
+    }
+
+    /**
      * Determines whether a given account account can confirm that an item can be added
      * @param account Account that is checked it see if it can confirm items
      * @return Whether the account can confirm items
