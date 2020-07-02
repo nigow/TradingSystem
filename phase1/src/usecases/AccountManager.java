@@ -30,16 +30,6 @@ public class AccountManager {
     }
 
     /**
-     * Constructs an instance of AccountManager and stores accountGateway
-     * @param accountGateway Gateway used to interact with persistent storage of accounts
-     * @param account Account that current account is being set to
-     */
-    public AccountManager(AccountGateway accountGateway, Account account){
-        this.accountGateway = accountGateway;
-        currAccount = account;
-    }
-
-    /**
      * Creates a new standard trading account using username and password by determining if characters used are valid
      * @param username Username of the new account
      * @param password Password of the new account
