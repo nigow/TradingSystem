@@ -73,9 +73,8 @@ public class AuthController {
             menuFacade.run();
         } else {
             homePresenter.invalidInput();
-            logIn();
+            // logIn(); TODO: this is commented out until we implement a good 'back' option
         }
-        // TODO option for going back to previous menu
     }
 
     /**
@@ -87,8 +86,7 @@ public class AuthController {
             menuFacade.run();
         } else {
             homePresenter.invalidInput();
-            createAccount();
+            // createAccount(); TODO: this is commented out until we implement a good 'back' option
         }
-        // TODO option for going back to previous menu
     }
 }
