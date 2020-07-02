@@ -32,11 +32,22 @@ public interface TradePresenter {
     public String[] editTrade();
 
     /**
-     * displays user's 3 most recent traded items and
-     * most frequent trading partners
-     * @param recentInfo user's information on trades
+     * displays user's 3 most recent traded items in a one way trade
+     * @param recentOneWayTrade user's recent items in a one way trades
      */
-    public void displayRecentInfo(List<String> recentInfo);
+    public void displayRecentOneWayTrade(List<String> recentOneWayTrade);
+
+    /**
+     * displays user's 3 most recent traded items in a two way trade
+     * @param recentTwoWayTrade user's recent items in a two way trades
+     */
+    public void displayRecentTwoWayTrade(List<String> recentTwoWayTrade);
+
+    /**
+     * displays user's 3 most frequent trading partners
+     * @param frequentPartners user's 3 most frequent trading partners
+     */
+    public void displayFrequentPartners(List<String> frequentPartners);
 
     /**
      * tells user that their input was invalid

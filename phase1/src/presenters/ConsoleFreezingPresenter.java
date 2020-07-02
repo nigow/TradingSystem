@@ -49,5 +49,5 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
     }
-    
+
 }

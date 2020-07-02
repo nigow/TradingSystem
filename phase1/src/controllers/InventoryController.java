@@ -113,7 +113,8 @@ public class InventoryController {
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
             if (ind < all_disapproved.size()) {
-                //TODO: approve item (wait for Use case to update with approving item change)
+                itemManager.setItem(itemManager.getAllItems().get(ind));
+                itemManager.updateApproval(true);
             } else {
                 inventoryPresenter.invalidInput("That number does not correspond to an item");
             }

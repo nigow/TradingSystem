@@ -53,4 +53,6 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         System.out.println("Your input was invalid. Please try again with a valid number listed");
     }
 
+
+
 }
