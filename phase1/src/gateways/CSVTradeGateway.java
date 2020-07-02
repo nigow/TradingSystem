@@ -92,10 +92,12 @@ public class CSVTradeGateway implements TradeGateway {
                 String.valueOf(trade.getTraderTwoID()),
                 trade.getItemOneID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
                 trade.getItemTwoID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
-                timePlace.getTime().truncatedTo(ChronoUnit.MINUTES) + " " + timePlace.getPlace(),
+                //timePlace.getTime().truncatedTo(ChronoUnit.MINUTES) + " " + timePlace.getPlace(),
+                timePlace.getTime() + " " + timePlace.getPlace(),
                 String.valueOf(trade.getEditedCounter()),
                 String.valueOf(trade.getLastEditorID()),
-                String.valueOf(trade.getStatus())
+                String.valueOf(trade.getStatus()),
+                String.valueOf(trade.isPermanent())
         };
 
         if (trade.getItemTwoID().isEmpty()) col[headers.get("trader_one_items")] = " ";

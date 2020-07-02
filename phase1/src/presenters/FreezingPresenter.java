@@ -42,8 +42,4 @@ public interface FreezingPresenter {
      */
     public void invalidInput();
 
-    /**
-     * returns user to main menu
-     */
-    public void returnToMenu();
 }

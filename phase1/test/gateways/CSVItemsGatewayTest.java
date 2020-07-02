@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CSVItemsGatewayTest {
 
@@ -56,7 +57,10 @@ public class CSVItemsGatewayTest {
         Item item = new Item(1,"Test","Hoge",114514);
         gateway.updateItem(item);
 
-        ItemsGateway inMemory = new InMemoryItemGateway(new HashMap<>(){{
+        Map<Integer, Item> items = new HashMap<>();
+        items.put(item.getItemID(), item);
+
+        ItemsGateway inMemory = new InMemoryItemGateway(new HashMap<Integer, Item>(){{
             put(item.getItemID(), item);
         }});
 

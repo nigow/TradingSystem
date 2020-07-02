@@ -12,5 +12,4 @@ public interface LendingPresenter {
     String selectItem();
     String startTrade(Account toAccount, Item tradingItem);
     void invalidInput();
-    void returnToMenu();
 }
