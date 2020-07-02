@@ -52,6 +52,15 @@ public class ItemManager {
     }
 
     /**
+     * Get the item with the id entered
+     * @param ItemId Id of the item
+     * @return The item with the entered Id
+     */
+    public Item getItemById(int ItemId) {
+        return itemsGateway.findById(ItemId);
+    }
+
+    /**
      * Update the owner of the item
      * @param ownerId the id of the item's new owner
      */
