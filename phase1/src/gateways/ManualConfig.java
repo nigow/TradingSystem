@@ -1,8 +1,13 @@
 package gateways;
 
+import entities.Account;
+import entities.Permissions;
 import usecases.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Configures the application.
@@ -30,28 +35,43 @@ public class ManualConfig {
         itemUtility = new ItemUtility(itemManager);
 
 
-        try {
-            // TODO: Replace csvPath with wherever we store the information.
-            AccountGateway csvAccountGateway =
-                    new CSVAccountGateway(filePath + "accounts.csv");
+        AccountGateway csvAccountGateway = setUpAccountGateway(filePath + "accounts.csv");
+        accountManager = new AccountManager(csvAccountGateway);
+        if (accountManager.getAccountsList().size() == 0)  {
+            accountManager.createAdminAccount("admin", "12345");
+        }
+        authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
+        wishlistUtility = new WishlistUtility(csvAccountGateway, csvItemsGateway);
 
-            accountManager = new AccountManager(csvAccountGateway);
-            authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
-            wishlistUtility = new WishlistUtility(csvAccountGateway, csvItemsGateway);
-        }
-        catch (IOException e) {
-            System.out.println("File not found");
-        }
 
-        try {
-            TradeGateway csvTradeGateway = new CSVTradeGateway(filePath + "items.csv");
-            tradeManager = new TradeManager(csvTradeGateway);
-        }
-        catch (IOException e) {
-            System.out.println("File not found");
-        }
+        TradeGateway csvTradeGateway = setUpTradeGateway(filePath + "trades.csv");
+        tradeManager = new TradeManager(csvTradeGateway);
+
 
     }
+
+    private AccountGateway setUpAccountGateway(String filePath) {
+        try {
+            return new CSVAccountGateway(filePath);
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found");
+            return null;
+        }
+    }
+
+    private TradeGateway setUpTradeGateway(String filePath) {
+        try {
+            return new CSVTradeGateway(filePath);
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found");
+            return null;
+        }
+    }
+
     /**
      * @return an instance of AccountManager use case.
      */
@@ -87,10 +107,16 @@ public class ManualConfig {
         return tradeManager;
     }
 
+    /**
+     * @return An instance of WishlistUtility use case.
+     */
     public WishlistUtility getWishlistUtility() {
         return wishlistUtility;
     }
 
+    /**
+     * @return An instance of ItemUtility use case
+     */
     public ItemUtility getItemUtility() {
         return itemUtility;
     }
