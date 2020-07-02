@@ -40,6 +40,7 @@ public class WishlistController {
         wishlistPresenter = new ConsoleWishlistPresenter();
         actions = new LinkedHashMap<>();
 
+        // todo: need a way to call authManager.canTrade(...) but no access to tradeutil atm
         if (authManager.canBorrow(accountManager.getCurrAccount()))
             actions.put("Start trade.", this::startTrade);
 
