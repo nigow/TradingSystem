@@ -15,22 +15,24 @@ public class ManualConfig {
     private final FreezingUtility freezingUtility;
     private TradeManager tradeManager;
     private WishlistUtility wishlistUtility;
+    private ItemUtility itemUtility;
 
     /**
      * Creates ManualConfig and initializes the required usecases.
      */
     public ManualConfig() {
         String filePath = System.getProperty("user.dir") + "/out/Files/";
-        CSVRestrictionsGateway csvRestrictionsGateway =
+        RestrictionsGateway csvRestrictionsGateway =
                 new CSVRestrictionsGateway(filePath + "restrictions.csv");
         freezingUtility = new FreezingUtility(csvRestrictionsGateway);
-        CSVItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
+        ItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
         itemManager = new ItemManager(csvItemsGateway);
+        itemUtility = new ItemUtility(itemManager);
 
 
         try {
             // TODO: Replace csvPath with wherever we store the information.
-            CSVAccountGateway csvAccountGateway =
+            AccountGateway csvAccountGateway =
                     new CSVAccountGateway(filePath + "accounts.csv");
 
             accountManager = new AccountManager(csvAccountGateway);
@@ -42,7 +44,7 @@ public class ManualConfig {
         }
 
         try {
-            CSVTradeGateway csvTradeGateway = new CSVTradeGateway(filePath + "items.csv");
+            TradeGateway csvTradeGateway = new CSVTradeGateway(filePath + "items.csv");
             tradeManager = new TradeManager(csvTradeGateway);
         }
         catch (IOException e) {
@@ -89,5 +91,8 @@ public class ManualConfig {
         return wishlistUtility;
     }
 
+    public ItemUtility getItemUtility() {
+        return itemUtility;
+    }
 
 }

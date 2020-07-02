@@ -34,5 +34,10 @@ public class ManualConfigTest extends TestCase {
         assertNotNull(mc.getWishlistUtility());
     }
 
+    public void testGetItemUtility() {
+        ManualConfig mc = new ManualConfig();
+        assertNotNull(mc.getItemUtility());
+    }
+
 
 }

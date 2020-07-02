@@ -67,7 +67,7 @@ public class LendingController {
                 lendingPresenter.invalidInput();
             }
         }
-        lendingPresenter.returnToMenu();
+        //lendingPresenter.returnToMenu();
 
     }
 
