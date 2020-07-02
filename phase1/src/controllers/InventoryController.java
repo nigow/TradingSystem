@@ -124,7 +124,7 @@ public class InventoryController {
      */
     public void createItem() {
         List<String> inputs = inventoryPresenter.createItem();
-        if (inputs.get(2) ==  "yes") {
+        if (inputs.get(2).equals("yes")) {
             itemManager.createItem(inputs.get(0), inputs.get(1), accountManager.getCurrAccount().getAccountID());
             inventoryPresenter.customMessage("Item added!");
         } else {
