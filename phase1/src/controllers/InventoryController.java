@@ -41,9 +41,9 @@ public class InventoryController {
     private final ItemUtility itemUtility;
 
     /**
-     * Maps from string to the function that picking the string should run
+     * An instance of AuthManager to check permissions
      */
-    private final Map<String, Runnable> actions;
+    private final AuthManager authManager;
 
     /**
      * Constructor to initialize all the instances, from ManualConfig,
@@ -57,21 +57,7 @@ public class InventoryController {
 
         this.inventoryPresenter = new ConsoleInventoryPresenter();
 
-        AuthManager authManager = manualConfig.getAuthManager();
-
-        this.actions = new LinkedHashMap<>();
-
-        if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
-            actions.put("Add to wishlist", this::addToWishlist);
-        }
-
-        actions.put("Remove your item from inventory", this::removeFromInventory);
-
-        if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
-            actions.put("View items awaiting approval", this::approveItems);
-        }
-
-        actions.put("Return to main menu", () -> {});
+        this.authManager = manualConfig.getAuthManager();
     }
 
     /**
@@ -90,6 +76,17 @@ public class InventoryController {
     public void run() {
 
         String option;
+        Map<String, Runnable> actions = new LinkedHashMap<>();
+
+        if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
+            actions.put("Add to wishlist", this::addToWishlist);
+        }
+        actions.put("Remove your item from inventory", this::removeFromInventory);
+        if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
+            actions.put("View items awaiting approval", this::approveItems);
+        }
+        actions.put("Return to main menu", () -> {});
+
         List<String> menu = new ArrayList<>(actions.keySet());
 
         do {
@@ -180,9 +177,6 @@ public class InventoryController {
             int ind = Integer.parseInt(option);
 
             if (ind < all_disapproved.size()) {
-//                itemManager.setItem(itemManager.getAllItems().get(ind));
-//                itemManager.updateApproval(true);
-                // TODO: i changed this ^^ make sure it's not a dumb change -maryam
                 itemManager.updateApproval(itemManager.getAllItems().get(ind), true);
 
             } else {
