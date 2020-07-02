@@ -6,7 +6,7 @@ import java.util.List;
  * interface for suggesting a time and place for a new trade
  * @author Catherine
  */
-public interface TradeCreator {
+public interface TradeCreatorPresenter {
     /**
      * displays possible actions
      * @param tradeCreatorOptions possible actions user can choose from
