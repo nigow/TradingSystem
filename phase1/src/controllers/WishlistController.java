@@ -5,6 +5,7 @@ import gateways.ManualConfig;
 import presenters.ConsoleWishlistPresenter;
 import presenters.WishlistPresenter;
 import usecases.AccountManager;
+import usecases.AuthManager;
 import usecases.ItemManager;
 import usecases.WishlistUtility;
 
@@ -16,12 +17,14 @@ import java.util.regex.Pattern;
 
 public class WishlistController {
 
+    private Map<String, Runnable> actions;
+
+    private ManualConfig manualConfig;
     private WishlistPresenter wishlistPresenter;
     private AccountManager accountManager;
-    private Map<String, Runnable> actions;
     private WishlistUtility wishlistUtility;
-    private ManualConfig manualConfig;
     private ItemManager itemManager;
+    private AuthManager authManager;
 
     private ControllerHelper controllerHelper;
 
@@ -32,11 +35,14 @@ public class WishlistController {
         this.accountManager = manualConfig.getAccountManager();
         this.wishlistUtility = manualConfig.getWishlistUtility();
         this.itemManager = manualConfig.getItemManager();
+        this.authManager = manualConfig.getAuthManager();
 
         wishlistPresenter = new ConsoleWishlistPresenter();
         actions = new LinkedHashMap<>();
 
-        actions.put("Start trade.", this::startTrade); // todo: check if user has perms to do this, if not hide it
+        if (authManager.canBorrow(accountManager.getCurrAccount()))
+            actions.put("Start trade.", this::startTrade);
+
         actions.put("Remove item from wishlist.", this::removeFromWishlist);
         actions.put("Back.", () -> {});
 
@@ -64,7 +70,7 @@ public class WishlistController {
 
             }
 
-        } while (!input.equals("2"));
+        } while (!input.equals(String.valueOf(actions.size() - 1)));
 
     }
 
