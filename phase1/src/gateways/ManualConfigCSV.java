@@ -16,6 +16,7 @@ public class ManualConfigCSV implements ManualConfig {
     private TradeManager tradeManager;
     private WishlistUtility wishlistUtility;
     private ItemUtility itemUtility;
+    private TradeUtility tradeUtility;
 
     /**
      * Creates ManualConfig and initializes the required usecases
@@ -57,6 +58,7 @@ public class ManualConfigCSV implements ManualConfig {
         TradeGateway csvTradeGateway =
                 new CSVTradeGateway(filePath + "trades.csv");
         tradeManager = new TradeManager(csvTradeGateway);
+        tradeUtility = new TradeUtility(tradeManager);
     }
 
     /**
@@ -102,10 +104,16 @@ public class ManualConfigCSV implements ManualConfig {
     }
 
     /**
-     * @return An instance of ItemUtility use case
+     * @return An instance of ItemUtility use case.
      */
     public ItemUtility getItemUtility() {
         return itemUtility;
     }
 
+    /**
+     * @return An instance of TradeUtility use case.
+     */
+    public TradeUtility getTradeUtility() {
+        return tradeUtility;
+    }
 }

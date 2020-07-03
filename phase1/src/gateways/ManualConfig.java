@@ -39,8 +39,13 @@ public interface ManualConfig {
     WishlistUtility getWishlistUtility();
 
     /**
-     * @return An instance of ItemUtility use case
+     * @return An instance of ItemUtility use case.
      */
     ItemUtility getItemUtility();
+
+    /**
+     * @return An instance of TradeUtility use case.
+     */
+    TradeUtility getTradeUtility();
 
 }
