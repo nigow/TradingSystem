@@ -40,7 +40,7 @@ public class ManualConfigCSV implements ManualConfig {
     private void initializeUseCases(String filePath) throws IOException{
 
         File dir = new File(filePath);
-        if (!dir.mkdirs()) throw new IOException();
+        if (!dir.isDirectory() && !dir.mkdirs()) throw new IOException();
 
         RestrictionsGateway csvRestrictionsGateway =
                 new CSVRestrictionsGateway(filePath + "restrictions.csv");
