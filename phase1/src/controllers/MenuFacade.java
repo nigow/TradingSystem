@@ -38,6 +38,8 @@ public class MenuFacade {
     private AppealController appealController;
 //    private AdminCreatorController adminCreatorController;
 
+    private ControllerHelper helper;
+
     /**
      * Initializes MenuFacade based on information from ManualConfig and creates instances of
      * AuthManager and necessary controllers.
@@ -48,6 +50,7 @@ public class MenuFacade {
         accountManager = mc.getAccountManager();
 
         menuPresenter = new ConsoleMenuPresenter();
+        helper = new ControllerHelper();
 
         freezingController = new FreezingController(mc);
         inventoryController = new InventoryController(mc);
@@ -105,13 +108,12 @@ public class MenuFacade {
 
             String action = menuPresenter.displayMenu(options);
 
-            ControllerHelper helper = new ControllerHelper();
             if (helper.isNum(action)) {
                 int i = Integer.parseInt(action);
                 if (0 <= i && i < method.size())
                     method.get(i).run();
                 else if (i == method.size())
-                    return; // TODO: how should we actually log out? rn it just goes back to previous menu
+                    return;
                 else
                     menuPresenter.invalidInput();
             } else
