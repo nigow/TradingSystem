@@ -4,7 +4,6 @@ import entities.*;
 import gateways.*;
 import junit.framework.TestCase;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
