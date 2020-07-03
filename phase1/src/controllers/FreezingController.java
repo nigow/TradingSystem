@@ -26,13 +26,13 @@ public class FreezingController {
 
     private TradeUtility tradeUtility;
 
-    public FreezingController(ManualConfig mc, TradeUtility tradeUtility) {
+    public FreezingController(ManualConfig mc) {
         this.mc = mc;
+        tradeUtility = mc.getTradeUtility();
         freezingPresenter = new ConsoleFreezingPresenter();
         freezingUtility = mc.getFreezingUtility();
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
-        this.tradeUtility = tradeUtility;
     }
 
     public void run() {
