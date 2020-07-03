@@ -13,6 +13,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller for the wishlist screen.
+ */
 public class WishlistController {
 
     private ManualConfig manualConfig;
@@ -24,6 +27,10 @@ public class WishlistController {
 
     private ControllerHelper controllerHelper;
 
+    /**
+     * Create a controller for the wishlist screen.
+     * @param manualConfig Repository of use cases.
+     */
     public WishlistController(ManualConfig manualConfig) {
 
         this.manualConfig = manualConfig;
@@ -39,6 +46,9 @@ public class WishlistController {
 
     }
 
+    /**
+     * Run the controller and allow it to take over current screen.
+     */
     public void run() {
 
         Map<String, Runnable> actions = generateActions();

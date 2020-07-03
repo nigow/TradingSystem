@@ -1,18 +1,18 @@
 package controllers;
 
-import entities.Trade;
 import gateways.ManualConfig;
 import presenters.ConsoleTradeCreatorPresenter;
 import presenters.TradeCreatorPresenter;
 import usecases.*;
 
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Controller for the trade creation screen.
+ */
 public class TradeCreatorController {
 
 
@@ -27,6 +27,12 @@ public class TradeCreatorController {
 
     private ControllerHelper controllerHelper;
 
+    /**
+     * Create a controller for the trade creation screen.
+     * @param manualConfig Repository of use cases.
+     * @param peerId Id of account trade is being conducted with.
+     * @param itemId Id of item being offered or asked for.
+     */
     public TradeCreatorController(ManualConfig manualConfig, int peerId, int itemId) {
         this.tradeManager = manualConfig.getTradeManager();
         this.accountManager = manualConfig.getAccountManager();
@@ -41,6 +47,9 @@ public class TradeCreatorController {
 
     }
 
+    /**
+     * Run the controller and allow it to take over current screen.
+     */
     public void run() {
 
         int traderOneId = accountManager.getCurrAccount().getAccountID();
