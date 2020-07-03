@@ -2,7 +2,6 @@ package controllers;
 
 import entities.Account;
 import gateways.ManualConfig;
-import presenters.ConsoleFreezingPresenter;
 import presenters.FreezingPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -28,10 +27,10 @@ public class FreezingController {
 
     private ControllerHelper controllerHelper;
 
-    public FreezingController(ManualConfig mc) {
+    public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {
         this.mc = mc;
         tradeUtility = mc.getTradeUtility();
-        freezingPresenter = new ConsoleFreezingPresenter();
+        this.freezingPresenter = freezingPresenter;
         freezingUtility = mc.getFreezingUtility();
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
@@ -80,6 +79,9 @@ public class FreezingController {
                     freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(i)));
                 }
             }
+            if (!isValidInput) {
+                freezingPresenter.invalidInput();
+            }
         }
     }
 
@@ -103,6 +105,9 @@ public class FreezingController {
                 else {
                     freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(i)));
                 }
+            }
+            if (!isValidInput) {
+                freezingPresenter.invalidInput();
             }
         }
     }
