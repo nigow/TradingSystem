@@ -69,8 +69,9 @@ public class WishlistController {
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
 
-        // todo: need a way to call authManager.canTrade(...) but no access to tradeutil atm
-        if (authManager.canBorrow(accountManager.getCurrAccount()))
+        if (authManager.canBorrow(accountManager.getCurrAccount()) &&
+                authManager.canTrade(manualConfig.getTradeUtility(), accountManager.getCurrAccount()))
+
             actions.put("Start trade.", this::startTrade);
 
         actions.put("Remove item from wishlist.", this::removeFromWishlist);
