@@ -121,6 +121,7 @@ public class AccountIntegrationTest extends TestCase {
         assertEquals(accountManager.getAccountFromID(1), second);
         accountManager.addItemToWishlist(23);
         assertTrue(accountManager.getAccountFromID(1).getWishlist().contains(23));
+        assertFalse(accountManager.setCurrAccount("Minami"));
     }
 
 }
