@@ -72,7 +72,7 @@ public class CSVAccountGatewayTest {
 
         AccountGateway ag = new CSVAccountGateway(tempPath);
 
-        assertEquals(ag.generateValidId(), 1);
+        assertEquals(ag.generateValidId(), 0);
 
     }
 }
