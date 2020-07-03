@@ -38,18 +38,6 @@ public class CSVAccountGateway implements AccountGateway {
 
         if (csvFile.length() == 0) { // according to internal docs this handles the directory case
 
-            /* this is getting migrated out
-            List<Roles> roleIds = new ArrayList<Roles>(){{
-                add(Roles.BASIC);
-                add(Roles.TRADER);
-                add(Roles.ADMIN);
-            }};
-
-            Account initialAdmin = new Account("admin", "12345", roleIds, generateValidId());
-
-            accounts.put(initialAdmin.getAccountID(), generateRow(initialAdmin));
-            */
-
             save();
 
         } else {
