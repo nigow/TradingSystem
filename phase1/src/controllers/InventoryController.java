@@ -48,19 +48,16 @@ public class InventoryController {
     /**
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
-     * @param itemManager an instance of ItemManager
-     * @param accountManager an instance of AccountManager.
-     * @param itemUtility an instance of ItemUtility
-     * @param authManager an instance of AuthManager
+     * @param manualConfig the configuration for the program
      */
-    public InventoryController(ItemManager itemManager, AccountManager accountManager, ItemUtility itemUtility, AuthManager authManager) {
-        this.itemManager = itemManager;
-        this.accountManager = accountManager;
-        this.itemUtility = itemUtility;
+    public InventoryController(ManualConfig manualConfig, InventoryPresenter inventoryPresenter) {
+        this.itemManager = manualConfig.getItemManager();
+        this.accountManager = manualConfig.getAccountManager();
+        this.itemUtility = manualConfig.getItemUtility();
 
-        this.inventoryPresenter = new ConsoleInventoryPresenter();
+        this.inventoryPresenter = inventoryPresenter;
 
-        this.authManager = authManager;
+        this.authManager = manualConfig.getAuthManager();
     }
 
     /**
