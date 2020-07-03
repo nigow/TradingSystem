@@ -18,7 +18,7 @@ public class ItemManager {
     private final ItemsGateway itemsGateway;
 
     /**
-     * Basic Constructor for ItemManager which stores an ItemsGateway
+     * Constructor for ItemManager which stores an ItemsGateway
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
     public ItemManager(ItemsGateway itemsGateway) {
@@ -62,7 +62,8 @@ public class ItemManager {
 
     /**
      * Update the owner of the item
-     * @param ownerId the id of the item's new owner
+     * @param item the item being updated
+     * @param ownerId the new owner of the item
      */
     public void updateOwner(Item item, int ownerId){
         item.setOwnerID(ownerId);
@@ -71,7 +72,8 @@ public class ItemManager {
 
     /**
      * Update the approval status of the item
-     * @param approval The new approval status of the item
+     * @param item the item being updated
+     * @param approval the new approval status of the item
      */
     public void updateApproval(Item item, boolean approval){
         if (approval){
