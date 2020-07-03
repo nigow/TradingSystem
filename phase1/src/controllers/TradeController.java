@@ -11,7 +11,7 @@ import presenters.TradePresenter;
  * @author Maryam
  */
 public class TradeController {
-    private TradePresenter tradePresenter;
+    private final TradePresenter tradePresenter;
 
     public TradeController(ManualConfig mc) {
         tradePresenter = new ConsoleTradePresenter();

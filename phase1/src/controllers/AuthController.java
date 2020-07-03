@@ -18,22 +18,22 @@ public class AuthController {
     /**
      * An instance of HomePresenter to present options.
      */
-    private HomePresenter homePresenter;
+    private final HomePresenter homePresenter;
 
     /**
-     * An instance of AccountManager to create an account or get information about an accout.
+     * An instance of AccountManager to create an account or get information about an account.
      */
-    private AccountManager accountManager;
+    private final AccountManager accountManager;
 
     /**
      * An instance of AuthManager to check login information or permissions.
      */
-    private AuthManager authManager;
+    private final AuthManager authManager;
 
     /**
      * An instance of MenuFacade to be called according to a user's permissions.
      */
-    private MenuFacade menuFacade;
+    private final MenuFacade menuFacade;
 
     /**
      * Initializes AuthController based on information from ManualConfig and creates

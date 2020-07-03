@@ -18,27 +18,27 @@ public class MenuFacade {
     /**
      * An instance of AuthManager to access a user's permissions.
      */
-    private AuthManager authManager;
+    private final AuthManager authManager;
 
     /**
      * An instance of MenuPresenter to display options.
      */
-    private MenuPresenter menuPresenter;
+    private final MenuPresenter menuPresenter;
 
-    private AccountManager accountManager;
+    private final AccountManager accountManager;
 
     // TODO: 1. waiting on the following classes to be fixed/created 2. javadoc
 
-    private FreezingController freezingController;
-    private InventoryController inventoryController;
-    private LendingController lendingController;
-    private TradeController tradeController;
-    private WishlistController wishlistController;
+    private final FreezingController freezingController;
+    private final InventoryController inventoryController;
+    private final LendingController lendingController;
+    private final TradeController tradeController;
+    private final WishlistController wishlistController;
 //    private RestrictionsController restrictionsController;
-    private AppealController appealController;
+    private final AppealController appealController;
 //    private AdminCreatorController adminCreatorController;
 
-    private ControllerHelper helper;
+    private final ControllerHelper helper;
 
     /**
      * Initializes MenuFacade based on information from ManualConfig and creates instances of
@@ -58,7 +58,7 @@ public class MenuFacade {
         tradeController = new TradeController(mc);
         wishlistController = new WishlistController(mc);
 //        restrictionsController = new RestrictionController(mc);
-//        appealController = new AppealController(mc);
+        appealController = new AppealController(); // fix with 'mc' as input
 //        adminCreatorController = new AdminCreatorController(mc);
     }
 
