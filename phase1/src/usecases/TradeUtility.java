@@ -22,15 +22,20 @@ public class TradeUtility {
     /**
      * The account which info on its trades are being retrieved
      */
-    private final Account account;
+    private Account account;
 
     /**
      * Constructor for TradeUtility which stores an account and TradeManager
-     * @param account A user account
      * @param tradeManager Manager for creating and editing trades
      */
-    public TradeUtility(Account account, TradeManager tradeManager) {
+    public TradeUtility(TradeManager tradeManager) {
         this.tradeManager = tradeManager;
+    }
+
+    /** Sets the current account to be edited
+     * @param account the current account to be edited
+     */
+    public void setAccount(Account account) {
         this.account = account;
     }
 
