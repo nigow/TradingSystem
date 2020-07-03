@@ -91,4 +91,12 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
         System.out.print("Is this trade permanent (y/n): ");
         return input.next();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void successMessage() {
+        System.out.println("Trade creation successful.");
+    }
 }

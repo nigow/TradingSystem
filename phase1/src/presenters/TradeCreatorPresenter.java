@@ -55,4 +55,9 @@ public interface TradeCreatorPresenter {
      * @return Whether the trade should be permanent.
      */
     String getIsPerm();
+
+    /**
+     * Print message upon successful trade creation.
+     */
+    void successMessage();
 }
