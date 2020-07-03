@@ -35,5 +35,5 @@ public interface WishlistPresenter {
     /**
      * tells user that their input was invalid
      */
-    public void invalidInput();
+    void invalidInput();
 }
