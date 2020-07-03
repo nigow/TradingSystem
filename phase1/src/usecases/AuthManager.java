@@ -42,10 +42,10 @@ public class AuthManager {
      */
     public boolean authenticateLogin(String username, String password){
         Account storedAccount = accountGateway.findByUsername(username);
-        if(storedAccount != null && storedAccount.getPassword().equals(password)){
-            return true;
+        if(storedAccount == null){
+            return false;
         }
-        return false;
+        return storedAccount.getPassword().equals(password);
     }
 
     /**
@@ -224,7 +224,7 @@ public class AuthManager {
         Restrictions restrictions = restrictionsGateway.getRestrictions();
         boolean lendedMoreThanBorrowed = tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
-        return !(canUnfreeze(account) || (lendedMoreThanBorrowed && withinMaxIncompleteTrades));
+        return !canUnfreeze(account) && !isFrozen(account) && (!lendedMoreThanBorrowed || !withinMaxIncompleteTrades);
     }
 
     /**
@@ -234,7 +234,7 @@ public class AuthManager {
      * @return Whether account can trade or not
      */
     public boolean canTrade(TradeUtility tradeUtility, Account account){
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() <= restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
+        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
         return !isFrozen(account) && withinWeeklyLimit;
     }
 

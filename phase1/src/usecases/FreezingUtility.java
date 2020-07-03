@@ -144,7 +144,7 @@ public class FreezingUtility {
      * @return Whether the restriction is properly set
      */
     public boolean setMaxIncompleteTrade(int maxIncompleteTrade){
-        if (maxIncompleteTrade <= 0){
+        if (maxIncompleteTrade < 0){
             throw new IllegalArgumentException("Value cannot be negative or 0");
         }
         restrictions.setMaxIncompleteTrade(maxIncompleteTrade);

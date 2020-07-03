@@ -33,7 +33,7 @@ public class AccountFactory {
     public Account createStandardAccount(String username, String password) {
         List<Permissions> permsToAdd = new ArrayList<>(Arrays.asList(
                 Permissions.LOGIN, Permissions.BORROW, Permissions.LEND,
-                Permissions.ADD_TO_WISHLIST, Permissions.CREATE_ITEM));
+                Permissions.ADD_TO_WISHLIST, Permissions.CREATE_ITEM, Permissions.BROWSE_INVENTORY));
         return new Account(username, password, permsToAdd, accountGateway.generateValidId());
     }
 
