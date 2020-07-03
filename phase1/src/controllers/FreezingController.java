@@ -8,6 +8,7 @@ import usecases.AccountManager;
 import usecases.AuthManager;
 import usecases.FreezingUtility;
 import usecases.TradeUtility;
+import controllers.ControllerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +27,16 @@ public class FreezingController {
 
     private TradeUtility tradeUtility;
 
-    public FreezingController(ManualConfig mc) {
+    private ControllerHelper controllerHelper;
+
+    public FreezingController(ManualConfig mc, ControllerHelper controllerHelper) {
         this.mc = mc;
         tradeUtility = mc.getTradeUtility();
         freezingPresenter = new ConsoleFreezingPresenter();
         freezingUtility = mc.getFreezingUtility();
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
+        this.controllerHelper = controllerHelper;
     }
 
     public void run() {
@@ -67,11 +71,14 @@ public class FreezingController {
             chosenUsers = freezingPresenter.freeze();
             String[] listOfChosenUsers = chosenUsers.split(",");
             for (String i: listOfChosenUsers) {
-                try{
-                    freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(i)));
-                }
-                catch (NumberFormatException | IndexOutOfBoundsException E) {
+                if (!controllerHelper.isNum(i)) {
                     isValidInput = false;
+                }
+                else if (Integer.parseInt(i) >= accounts.size()) {
+                    isValidInput = false;
+                }
+                else {
+                    freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(i)));
                 }
             }
         }
@@ -88,11 +95,14 @@ public class FreezingController {
             chosenUsers = freezingPresenter.unfreeze();
             String[] listOfChosenUsers = chosenUsers.split(",");
             for (String i: listOfChosenUsers) {
-                try{
-                    freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(i)));
-                }
-                catch (NumberFormatException | IndexOutOfBoundsException E) {
+                if (!controllerHelper.isNum(i)) {
                     isValidInput = false;
+                }
+                else if (Integer.parseInt(i) >= accounts.size()) {
+                    isValidInput = false;
+                }
+                else {
+                    freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(i)));
                 }
             }
         }
