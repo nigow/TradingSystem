@@ -216,6 +216,7 @@ public class InventoryController {
      */
     public void approveItems() {
 
+        displayPending();
         String option = inventoryPresenter.approveItem();
 
         if (isNum(option)) {
