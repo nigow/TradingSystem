@@ -2,6 +2,7 @@ package controllers;
 
 import gateways.ManualConfig;
 import presenters.ConsoleWishlistPresenter;
+import presenters.TradeCreatorPresenter;
 import presenters.WishlistPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -18,8 +19,10 @@ import java.util.Map;
  */
 public class WishlistController {
 
-    private ManualConfig manualConfig;
     private WishlistPresenter wishlistPresenter;
+    private TradeCreatorPresenter tradeCreatorPresenter;
+
+    private ManualConfig manualConfig;
     private AccountManager accountManager;
     private WishlistUtility wishlistUtility;
     private ItemManager itemManager;
@@ -31,7 +34,8 @@ public class WishlistController {
      * Create a controller for the wishlist screen.
      * @param manualConfig Repository of use cases.
      */
-    public WishlistController(ManualConfig manualConfig) {
+    public WishlistController(WishlistPresenter wishlistPresenter, TradeCreatorPresenter tradeCreatorPresenter,
+                              ManualConfig manualConfig) {
 
         this.manualConfig = manualConfig;
 
@@ -40,7 +44,8 @@ public class WishlistController {
         this.itemManager = manualConfig.getItemManager();
         this.authManager = manualConfig.getAuthManager();
 
-        wishlistPresenter = new ConsoleWishlistPresenter();
+        this.wishlistPresenter = wishlistPresenter;
+        this.tradeCreatorPresenter = tradeCreatorPresenter;
 
         controllerHelper = new ControllerHelper();
 
@@ -107,7 +112,8 @@ public class WishlistController {
         List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
-        new TradeCreatorController(manualConfig, itemManager.getItemById(itemId).getOwnerID(), itemId).run();
+        new TradeCreatorController(tradeCreatorPresenter,
+                manualConfig, itemManager.getItemById(itemId).getOwnerID(), itemId).run();
 
     }
 

@@ -33,12 +33,13 @@ public class TradeCreatorController {
      * @param peerId Id of account trade is being conducted with.
      * @param itemId Id of item being offered or asked for.
      */
-    public TradeCreatorController(ManualConfig manualConfig, int peerId, int itemId) {
+    public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
+                                  ManualConfig manualConfig, int peerId, int itemId) {
+
         this.tradeManager = manualConfig.getTradeManager();
         this.accountManager = manualConfig.getAccountManager();
         this.itemUtility = manualConfig.getItemUtility();
-        this.tradeCreatorPresenter = new ConsoleTradeCreatorPresenter();
-
+        this.tradeCreatorPresenter = tradeCreatorPresenter;
 
         this.peerId = peerId;
         this.itemId = itemId;
