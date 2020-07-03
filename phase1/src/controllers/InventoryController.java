@@ -125,8 +125,12 @@ public class InventoryController {
     public void createItem() {
         List<String> inputs = inventoryPresenter.createItem();
         if (inputs.get(2).equals("yes")) {
-            itemManager.createItem(inputs.get(0), inputs.get(1), accountManager.getCurrAccount().getAccountID());
-            inventoryPresenter.customMessage("Item added!");
+            if (inputs.get(0).contains(",") || inputs.get(1).contains(",")) {
+                inventoryPresenter.customMessage("Please do not include commas in your name or description. Item was not added");
+            } else {
+                itemManager.createItem(inputs.get(0), inputs.get(1), accountManager.getCurrAccount().getAccountID());
+                inventoryPresenter.customMessage("Item added!");
+            }
         } else {
             inventoryPresenter.customMessage("Item was not added.");
         }
