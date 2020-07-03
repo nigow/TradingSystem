@@ -78,6 +78,9 @@ public class InventoryController {
         String option;
         Map<String, Runnable> actions = new LinkedHashMap<>();
 
+        actions.put("View all items", this::displayFullInventory);
+        actions.put("View your items", this::displayYourInventory);
+        actions.put("View all items available for trading", this::displayOthersInventory);
         if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
             actions.put("Add to wishlist", this::addToWishlist);
         }
@@ -86,14 +89,15 @@ public class InventoryController {
         }
         actions.put("Remove your item from inventory", this::removeFromInventory);
         if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
-            actions.put("View items awaiting approval", this::approveItems);
+            actions.put("View items awaiting approval", this::displayPending);
+            actions.put("Approve an item awaiting approval", this::approveItems);
         }
         actions.put("Return to main menu", () -> {});
 
         List<String> menu = new ArrayList<>(actions.keySet());
 
         do {
-            displayInventory();
+            displayFullInventory();
             option = inventoryPresenter.displayInventoryOptions(menu);
 
             if (isNum(option)) {
@@ -114,11 +118,38 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all the items
      */
-    public void displayInventory() {
+    public void displayFullInventory() {
+        this.inventoryPresenter.customMessage("All Items:");
         List<String> allItems = itemManager.getAllItemsString();
         this.inventoryPresenter.displayInventory(allItems);
     }
 
+    /**
+     * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
+     */
+    public void displayYourInventory() {
+        this.inventoryPresenter.customMessage("Your items:");
+        List<String> allYourItems = itemUtility.getInventoryOfAccountString(accountManager.getCurrAccount().getAccountID());
+        this.inventoryPresenter.displayInventory(allYourItems);
+    }
+
+    /**
+     * Runs the displayInventory method in InventoryPresenter, passing in all items except for the ones belonging to the user
+     */
+    public void displayOthersInventory() {
+        this.inventoryPresenter.customMessage("Items available for trading: ");
+        List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccount().getAccountID());
+        this.inventoryPresenter.displayInventory(othersItems);
+    }
+
+    /**
+     * Runs the displayInventory method in InventoryPresenter, passing in all the items awaiting approval
+     */
+    public void displayPending() {
+        inventoryPresenter.customMessage("Items awaiting approval:");
+        List<String> all_disapproved = itemUtility.getDisapprovedString();
+        inventoryPresenter.displayInventory(all_disapproved);
+    }
     /**
      * Runs create item in inventoryPresenter, calls itemManager to add an item to our inventory
      */
@@ -142,13 +173,13 @@ public class InventoryController {
      * and uses accountManager and itemManager to actually add the user's chosen item to their wishlist
      */
     public void addToWishlist() {
+        displayOthersInventory();
         String option = inventoryPresenter.addToWishlist();
-
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
 
-            if (ind < itemManager.getAllItems().size()) {
-                accountManager.addItemToWishlist(itemManager.getAllItems().get(ind).getItemID());
+            if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).size()) {
+                accountManager.addItemToWishlist(itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).get(ind).getItemID());
 
             } else {
                 inventoryPresenter.customMessage("That number does not correspond to an item");
@@ -164,18 +195,13 @@ public class InventoryController {
      * remove, and if so, uses accountManager and itemManager to remove the item from the inventory
      */
     public void removeFromInventory() {
+        displayYourInventory();
         String option = inventoryPresenter.removeFromInventory();
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
 
-            if (ind < itemManager.getAllItems().size()) {
-                if (itemManager.getAllItems().get(ind).getOwnerID() == accountManager.getCurrAccount().getAccountID()) {
-                    itemManager.removeItem(itemManager.getAllItems().get(ind));
-
-                } else {
-                    inventoryPresenter.customMessage("You cannot remove an item that does not belong to you");
-
-                }
+            if (ind < itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).size()) {
+                itemManager.removeItem(itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).get(ind));
             } else {
                 inventoryPresenter.customMessage("That number does not correspond to an item");
             }
@@ -189,15 +215,14 @@ public class InventoryController {
      * Runs the displayPendingItems and approveItem method in InventoryPresenter, uses itemManager to approve an item
      */
     public void approveItems() {
-        List<String> all_disapproved = itemUtility.getDisapprovedString();
-        inventoryPresenter.displayPending(all_disapproved);
+
         String option = inventoryPresenter.approveItem();
 
         if (isNum(option)) {
             int ind = Integer.parseInt(option);
 
-            if (ind < all_disapproved.size()) {
-                itemManager.updateApproval(itemManager.getAllItems().get(ind), true);
+            if (ind < itemUtility.getDisapprovedString().size()) {
+                itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);
 
             } else {
                 inventoryPresenter.customMessage("That number does not correspond to an item");

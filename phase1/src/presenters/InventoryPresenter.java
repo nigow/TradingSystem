@@ -41,12 +41,6 @@ public interface InventoryPresenter {
 
 
     /**
-     * displays pending items
-     * @param pendingItem list of items pending to be added to the inventory
-     */
-    public void displayPending(List<String> pendingItem);
-
-    /**
      * approve chosen items
      * @return indexes of item that can be approved
      */

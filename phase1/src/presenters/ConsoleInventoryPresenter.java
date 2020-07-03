@@ -26,9 +26,8 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
      */
     @Override
     public void displayInventory(List<String> inventory) {
-        System.out.println("Items in inventory:");
-        for (String s : inventory) {
-            System.out.println(s);
+        for (int i = 0; i < inventory.size(); i++) {
+            System.out.println(i + " " + inventory.get(i));
         }
     }
 
@@ -68,16 +67,6 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the number of the item you wish to remove: ");
         return input.nextLine();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void displayPending(List<String> pendingItem) {
-        System.out.println("Items currently waiting for approval to be added: ");
-        for (String s : pendingItem) {
-            System.out.println(s);
-        }
     }
 
     /**
