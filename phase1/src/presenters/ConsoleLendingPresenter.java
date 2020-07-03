@@ -10,10 +10,11 @@ import java.util.Scanner;
 public class ConsoleLendingPresenter implements LendingPresenter {
     @Override
     public void displayAccounts(List<Account> allAccounts) {
-        int count = 0;
         System.out.println("Thank you for choosing to lend an item, select an account you wish to lend an item to:");
-        for(Account account: allAccounts){
-            System.out.println(String.valueOf(count) + ". " + account.getUsername());
+        for (int i = 0; i < allAccounts.size(); i++) {
+
+            System.out.println(i + ". " + allAccounts.get(i).getUsername());
+
         }
     }
 
@@ -34,10 +35,13 @@ public class ConsoleLendingPresenter implements LendingPresenter {
 
     @Override
     public void displayInventory(List<Item> inventory) {
-        int count = 0;
         System.out.println("Here are your items. Which item would you like to offer?");
-        for(Item item: inventory)
-            System.out.println(String.valueOf(count) + ". " + item.getName() + " Description: " + item.getDescription());
+        for (int i = 0; i < inventory.size(); i++) {
+
+            System.out.println(i + ". " + inventory.get(i).getName() + "Description: "
+                    + inventory.get(i).getDescription());
+
+        }
     }
 
     @Override
