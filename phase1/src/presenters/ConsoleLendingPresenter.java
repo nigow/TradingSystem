@@ -7,7 +7,15 @@ import entities.Item;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Presenter to provide lending services on CUI
+ * @author Tairi
+ */
 public class ConsoleLendingPresenter implements LendingPresenter {
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void displayAccounts(List<Account> allAccounts) {
         System.out.println("Thank you for choosing to lend an item, select an account you wish to lend an item to:");
@@ -18,6 +26,9 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String selectAccount() {
         System.out.println("Select an account to initiate a trade with (-1 to return to menu):");
@@ -26,6 +37,9 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         return input.next();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String selectItem() {
         System.out.println("Select an item you are lending (-1 to return to menu): ");
@@ -33,6 +47,9 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         return input.next();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void displayInventory(List<Item> inventory) {
         System.out.println("Here are your items. Which item would you like to offer?");
@@ -44,11 +61,17 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again with a valid number listed");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void abort() {
         System.out.println("Abort");

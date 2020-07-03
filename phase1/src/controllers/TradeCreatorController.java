@@ -22,25 +22,29 @@ public class TradeCreatorController {
 
     private TradeCreatorPresenter tradeCreatorPresenter;
 
-    private int peerId;
+    private int traderOneId;
+    private int traderTwoId;
     private int itemId;
 
     private ControllerHelper controllerHelper;
 
     /**
      * Create a controller for the trade creation screen.
+     * @param tradeCreatorPresenter A presenter for this controller.
      * @param manualConfig Repository of use cases.
      * @param peerId Id of account trade is being conducted with.
      * @param itemId Id of item being offered or asked for.
      */
-    public TradeCreatorController(ManualConfig manualConfig, int peerId, int itemId) {
+    public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
+                                  ManualConfig manualConfig, int peerId, int itemId) {
+
         this.tradeManager = manualConfig.getTradeManager();
         this.accountManager = manualConfig.getAccountManager();
         this.itemUtility = manualConfig.getItemUtility();
-        this.tradeCreatorPresenter = new ConsoleTradeCreatorPresenter();
+        this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-
-        this.peerId = peerId;
+        this.traderOneId = accountManager.getCurrAccount().getAccountID();
+        this.traderTwoId = peerId;
         this.itemId = itemId;
 
         controllerHelper = new ControllerHelper();
@@ -52,8 +56,6 @@ public class TradeCreatorController {
      */
     public void run() {
 
-        int traderOneId = accountManager.getCurrAccount().getAccountID();
-        int traderTwoId = peerId;
         List<Integer> traderOneItems = new ArrayList<>();
         List<Integer> traderTwoItems = new ArrayList<>();
 
@@ -68,38 +70,13 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isBool(twoWayTrade)) {
 
-            if (twoWayTrade.equals("-1")) return;
+            if (controllerHelper.isExitStr(twoWayTrade)) return;
             tradeCreatorPresenter.invalidInput();
             twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
 
         }
 
-        if (twoWayTrade.equals("y")) {
-
-            String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getAccountFromID(peerId).getUsername() :
-                    accountManager.getCurrAccount().getUsername();
-
-            List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getInventoryOfAccountString(traderOneId) :
-                    itemUtility.getInventoryOfAccountString(traderTwoId);
-
-            tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
-            String oppositeItemIndex = tradeCreatorPresenter.getItem();
-
-            while (!controllerHelper.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
-
-                if (oppositeItemIndex.equals("-1")) return;
-                tradeCreatorPresenter.invalidInput();
-                oppositeItemIndex = tradeCreatorPresenter.getItem();
-
-            }
-
-            if (traderOneItems.isEmpty()) {
-                traderOneItems.add(itemUtility.getInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
-            } else {
-                traderTwoItems.add(itemUtility.getInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
-            }
-
-        }
+        if (twoWayTrade.equals("y")) setUpTwoWayTrade(traderOneItems, traderTwoItems);
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
@@ -107,7 +84,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isDate(date)) {
 
-            if (date.equals("-1")) return;
+            if (controllerHelper.isExitStr(date)) return;
             tradeCreatorPresenter.invalidInput();
             date = tradeCreatorPresenter.getDate();
 
@@ -117,7 +94,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isTime(time)) {
 
-            if (time.equals("-1")) return;
+            if (controllerHelper.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
             time = tradeCreatorPresenter.getDate();
 
@@ -127,7 +104,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isBool(isPerm)) {
 
-            if (time.equals("-1")) return;
+            if (controllerHelper.isExitStr(isPerm)) return;
             tradeCreatorPresenter.invalidInput();
             isPerm = tradeCreatorPresenter.getIsPerm();
 
@@ -135,6 +112,34 @@ public class TradeCreatorController {
 
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, isPerm.equals("y"),
                                  traderOneId, traderTwoId, traderOneItems, traderTwoItems);
+        tradeCreatorPresenter.successMessage();
+
+    }
+
+    private void setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
+
+        String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getAccountFromID(traderTwoId).getUsername() :
+                accountManager.getCurrAccount().getUsername();
+
+        List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getInventoryOfAccountString(traderOneId) :
+                itemUtility.getInventoryOfAccountString(traderTwoId);
+
+        tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
+        String oppositeItemIndex = tradeCreatorPresenter.getItem();
+
+        while (!controllerHelper.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
+
+            if (controllerHelper.isExitStr(oppositeItemIndex)) return;
+            tradeCreatorPresenter.invalidInput();
+            oppositeItemIndex = tradeCreatorPresenter.getItem();
+
+        }
+
+        if (traderOneItems.isEmpty()) {
+            traderOneItems.add(itemUtility.getInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+        } else {
+            traderTwoItems.add(itemUtility.getInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+        }
 
     }
 

@@ -3,7 +3,23 @@ package presenters;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Console presenter for {@link controllers.WishlistController}.
+ */
 public class ConsoleWishlistPresenter implements WishlistPresenter {
+
+    private Scanner input;
+
+    /**
+     * Create a console presenter for {@link controllers.WishlistController}.
+     */
+    public ConsoleWishlistPresenter() {
+        input = new Scanner(System.in);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String displayWishlistOptions(List<String> wishlistOptions) {
         for (int i = 0; i < wishlistOptions.size(); i++) {
@@ -11,11 +27,13 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
             System.out.println(i + ". " + wishlistOptions.get(i));
 
         }
-        Scanner input = new Scanner(System.in);
         System.out.print("Select action: ");
         return input.next();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void displayWishlist(List<String> wishlist) {
         for (int i = 0; i < wishlist.size(); i++) {
@@ -25,22 +43,27 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String startTrade() {
-        Scanner input = new Scanner(System.in);
         System.out.print("Select desired item (index): ");
         return input.next();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String removeFromWishlist() {
-        Scanner input = new Scanner(System.in);
         System.out.print("Select item to remove (index): ");
         return input.next();
     }
 
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void invalidInput() {
         System.out.println("Invalid input, try again.");

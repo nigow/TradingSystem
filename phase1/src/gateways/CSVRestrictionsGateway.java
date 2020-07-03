@@ -6,6 +6,7 @@ import java.io.*;
 
 /**
  * A restriction gateway that uses csv files as persistent storage.
+ * @author Tairi
  */
 public class CSVRestrictionsGateway implements RestrictionsGateway{
 

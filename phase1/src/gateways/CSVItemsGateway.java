@@ -5,6 +5,7 @@ import java.util.*;
 
 /**
  * An item gateway that uses csv files as persistent storage.
+ * @author Tairi
  */
 public class CSVItemsGateway implements ItemsGateway {
 
