@@ -32,6 +32,10 @@ public class InMemoryManualConfig implements ManualConfig {
         this.itemUtility = new ItemUtility(itemManager);
         this.tradeUtility = new TradeUtility(tradeManager);
 
+        if (accountManager.getAccountsList().size() == 0)  {
+            accountManager.createAdminAccount("admin", "12345");
+        }
+
     }
 
 
@@ -74,4 +78,5 @@ public class InMemoryManualConfig implements ManualConfig {
     public TradeUtility getTradeUtility() {
         return this.tradeUtility;
     }
+
 }
