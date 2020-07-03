@@ -43,10 +43,10 @@ public class FreezingController {
         while (!isValidInput) {
             isValidInput = true;
             String action = freezingPresenter.displayFreezingOptions(freezingActions);
-            if (action == "0") {
+            if (action.equals("0")) {
                 freeze();
             }
-            else if (action == "1") {
+            else if (action.equals("1")) {
                 unfreeze();
             }
             else {
@@ -68,12 +68,9 @@ public class FreezingController {
             String[] listOfChosenUsers = chosenUsers.split(",");
             for (String i: listOfChosenUsers) {
                 try{
-                    freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.valueOf(i)));
+                    freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(i)));
                 }
-                catch (NumberFormatException E) {
-                    isValidInput = false;
-                }
-                catch (IndexOutOfBoundsException F) {
+                catch (NumberFormatException | IndexOutOfBoundsException E) {
                     isValidInput = false;
                 }
             }
@@ -92,12 +89,9 @@ public class FreezingController {
             String[] listOfChosenUsers = chosenUsers.split(",");
             for (String i: listOfChosenUsers) {
                 try{
-                    freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.valueOf(i)));
+                    freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(i)));
                 }
-                catch (NumberFormatException E) {
-                    isValidInput = false;
-                }
-                catch (IndexOutOfBoundsException F) {
+                catch (NumberFormatException | IndexOutOfBoundsException E) {
                     isValidInput = false;
                 }
             }
