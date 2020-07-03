@@ -84,5 +84,16 @@ public class ManualConfigCSVTest extends TestCase {
 
     }
 
+    public void testGetTradeUtility() {
+        try {
+            ManualConfigCSV mc = new ManualConfigCSV();
+            assertNotNull(mc.getTradeUtility());
+        }
+        catch (IOException ignored) {
+            fail();
+        }
+
+    }
+
 
 }
