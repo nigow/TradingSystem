@@ -35,25 +35,22 @@ public class AuthController {
      */
     private MenuFacade menuFacade;
 
-    private ManualConfig manualConfig;
-
     /**
      * Initializes AuthController based on information from ManualConfig and creates
      * instances of HomePresenter and MenuFacade.
      * @param mc An instance of ManualConfig
      */
     public AuthController(ManualConfig mc) {
-        manualConfig = mc;
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
         homePresenter = new ConsoleHomePresenter();
+        menuFacade = new MenuFacade(mc);
     }
 
     /**
      * Calls the presenter with options for the user to login or create an account.
      */
     public void run() {
-        System.out.println("we are here");
         while (true) {
             List<String> options = new ArrayList<>();
             options.add("Login");
@@ -78,7 +75,7 @@ public class AuthController {
     private void logIn() {
         String[] accountInfo = homePresenter.logIn();
         if (authManager.authenticateLogin(accountInfo[0], accountInfo[1])) {
-            menuFacade = new MenuFacade(manualConfig); // TODO: bad practice?? shouldn't be a problem until the user logs out
+            accountManager.setCurrAccount(accountInfo[0]);
             menuFacade.run();
         } else {
             homePresenter.invalidInput();
@@ -92,7 +89,6 @@ public class AuthController {
     private void createAccount() {
         String[] accountInfo = homePresenter.newAccount();
         if (accountManager.createStandardAccount(accountInfo[0], accountInfo[1])) {
-            menuFacade = new MenuFacade(manualConfig); // TODO: bad practice?? shouldn't be a problem until the user logs out
             menuFacade.run();
         } else {
             homePresenter.invalidInput();

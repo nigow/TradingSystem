@@ -31,7 +31,7 @@ public class MenuFacade {
 
 //    private FreezingController freezingController;
     private InventoryController inventoryController;
-//    private LendingController lendingController;
+    private LendingController lendingController;
     private TradeController tradeController;
     private WishlistController wishlistController;
 //    private RestrictionsController restrictionsController;
@@ -51,7 +51,7 @@ public class MenuFacade {
 
 //        freezingController = new FreezingController(mc);
         inventoryController = new InventoryController(mc);
-//        lendingController = new LendingController(mc);
+        lendingController = new LendingController(mc);
         tradeController = new TradeController(mc);
         wishlistController = new WishlistController(mc);
 //        restrictionsController = new RestrictionController(mc);
@@ -78,26 +78,26 @@ public class MenuFacade {
 
             if (authManager.canLend(accountManager.getCurrAccount())) {
                 options.add("Initiate a trade with a specific account");
-//                method.add(lendingController::run);
+                method.add(lendingController::run);
             }
 
             if (authManager.canChangeRestrictions(accountManager.getCurrAccount())) {
-                options.add("Modify the restriction values of the program");
+//                options.add("Modify the restriction values of the program");
 //                method.add(restrictionsController::run);
             }
 
             if (authManager.canFreeze(accountManager.getCurrAccount()) && authManager.canUnfreeze(accountManager.getCurrAccount())) {
-                options.add("Manage the frozen accounts");
+//                options.add("Manage the frozen accounts");
 //                method.add(freezingController::run);
             }
 
             if (authManager.canAddAdmin(accountManager.getCurrAccount())) {
-                options.add("Add an admin account");
+//                options.add("Add an admin account");
 //                method.add(adminCreatorController::run);
             }
 
             if (authManager.isFrozen(accountManager.getCurrAccount())) {
-                options.add("Request to be unfrozen");
+//                options.add("Request to be unfrozen");
 //                method.add(appealController::run);
             }
 
