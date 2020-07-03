@@ -76,7 +76,7 @@ public class TradeCreatorController {
             tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
             String oppositeItemIndex = tradeCreatorPresenter.getItem();
 
-            while (!controllerHelper.isNum(oppositeItemIndex) && Integer.parseInt(oppositeItemIndex) < inventory.size()) {
+            while (!controllerHelper.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
 
                 if (oppositeItemIndex.equals("-1")) return;
                 tradeCreatorPresenter.invalidInput();

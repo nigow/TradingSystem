@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.Item;
 import gateways.ManualConfig;
 import presenters.ConsoleWishlistPresenter;
 import presenters.WishlistPresenter;
@@ -13,11 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class WishlistController {
-
-    private Map<String, Runnable> actions;
 
     private ManualConfig manualConfig;
     private WishlistPresenter wishlistPresenter;
@@ -38,20 +34,14 @@ public class WishlistController {
         this.authManager = manualConfig.getAuthManager();
 
         wishlistPresenter = new ConsoleWishlistPresenter();
-        actions = new LinkedHashMap<>();
-
-        // todo: need a way to call authManager.canTrade(...) but no access to tradeutil atm
-        if (authManager.canBorrow(accountManager.getCurrAccount()))
-            actions.put("Start trade.", this::startTrade);
-
-        actions.put("Remove item from wishlist.", this::removeFromWishlist);
-        actions.put("Back.", () -> {});
 
         controllerHelper = new ControllerHelper();
 
     }
 
     public void run() {
+
+        Map<String, Runnable> actions = generateActions();
 
         String input;
 
@@ -75,26 +65,38 @@ public class WishlistController {
 
     }
 
+    private Map<String, Runnable> generateActions() {
+
+        Map<String, Runnable> actions = new LinkedHashMap<>();
+
+        // todo: need a way to call authManager.canTrade(...) but no access to tradeutil atm
+        if (authManager.canBorrow(accountManager.getCurrAccount()))
+            actions.put("Start trade.", this::startTrade);
+
+        actions.put("Remove item from wishlist.", this::removeFromWishlist);
+        actions.put("Back.", () -> {});
+        return actions;
+    }
+
     private void startTrade() {
 
         List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccount().getAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
 
-        String input = wishlistPresenter.startTrade();
-        if (controllerHelper.isNum(input)) {
+        String itemIndex = wishlistPresenter.startTrade();
 
-            List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
-            int index = Integer.parseInt(input);
+        while (!controllerHelper.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
 
-            // todo: move improved input validation loop from TradeCreatorController to here
-            if (index < wishlistIds.size()) {
-                int itemId = wishlistIds.get(Integer.parseInt(input));
-                new TradeCreatorController(manualConfig, itemManager.getItemById(itemId).getOwnerID(), itemId).run();
-            } else {
-                wishlistPresenter.invalidInput();
-            }
+            if (itemIndex.equals("-1")) return;
+            wishlistPresenter.invalidInput();
+            itemIndex = wishlistPresenter.startTrade();
+
         }
 
+        List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
+        int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
+
+        new TradeCreatorController(manualConfig, itemManager.getItemById(itemId).getOwnerID(), itemId).run();
 
     }
 
@@ -103,18 +105,19 @@ public class WishlistController {
         List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccount().getAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
 
-        String input = wishlistPresenter.removeFromWishlist();
-        if (controllerHelper.isNum(input)) {
+        String itemIndex = wishlistPresenter.removeFromWishlist();
 
-            List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
-            int index = Integer.parseInt(input);
+        while (!controllerHelper.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
 
-            if (index < wishlistIds.size()) {
-                accountManager.removeItemFromWishlist(wishlistIds.get(index));
-            } else {
-                wishlistPresenter.invalidInput();
-            }
+            if (itemIndex.equals("-1")) return;
+            wishlistPresenter.invalidInput();
+            itemIndex = wishlistPresenter.removeFromWishlist();
+
         }
+
+        List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
+        accountManager.removeItemFromWishlist(wishlistIds.get(Integer.parseInt(itemIndex)));
+
     }
 
 }
