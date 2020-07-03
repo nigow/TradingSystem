@@ -47,9 +47,9 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
      */
     public List<String> createItem() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the name of the item you wish to add: ");
+        System.out.print("Enter the name of the item you wish to add (no commas): ");
         String name = input.nextLine();
-        System.out.print("Enter the description of the item you wish to add: ");
+        System.out.print("Enter the description of the item you wish to add (no commas): ");
         String description = input.nextLine();
         System.out.print(name + ": " + description +"\nIs this correct? (if so, type 'yes'): ");
         String yes = input.nextLine();
