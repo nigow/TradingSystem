@@ -40,11 +40,12 @@ public class AuthController {
      * instances of HomePresenter and MenuFacade.
      * @param mc An instance of ManualConfig
      */
-    public AuthController(ManualConfig mc) {
+    public AuthController(ManualConfig mc, HomePresenter homePresenter,
+                          MenuFacade menuFacade) {
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
-        homePresenter = new ConsoleHomePresenter();
-        menuFacade = new MenuFacade(mc);
+        this.menuFacade = menuFacade;
+        this.homePresenter = homePresenter;
     }
 
     /**

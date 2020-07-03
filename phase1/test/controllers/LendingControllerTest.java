@@ -32,7 +32,8 @@ public class LendingControllerTest {
        manualConfig = new InMemoryManualConfig();
        accountManager = manualConfig.getAccountManager();
        itemManager = manualConfig.getItemManager();
-       lendingController = new LendingController(manualConfig);
+       // TODO: This needs to be changed
+       // lendingController = new LendingController(manualConfig);
     }
 
 

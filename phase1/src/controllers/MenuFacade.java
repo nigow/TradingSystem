@@ -45,18 +45,22 @@ public class MenuFacade {
      * AuthManager and necessary controllers.
      * @param mc An instance of ManualConfig
      */
-    public MenuFacade(ManualConfig mc) {
+    public MenuFacade(ManualConfig mc, FreezingController freezingController,
+                      InventoryController inventoryController,
+                      WishlistController wishlistController,
+                      LendingController lendingController,
+                      MenuPresenter menuPresenter) {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
 
-        menuPresenter = new ConsoleMenuPresenter();
+        this.menuPresenter = menuPresenter;
         helper = new ControllerHelper();
 
-        freezingController = new FreezingController(mc);
-        inventoryController = new InventoryController(mc);
-        lendingController = new LendingController(mc);
+        this.freezingController = freezingController;
+        this.inventoryController = inventoryController;
+        this.lendingController = lendingController;
         tradeController = new TradeController(mc);
-        wishlistController = new WishlistController(mc);
+        this.wishlistController = wishlistController;
 //        restrictionsController = new RestrictionController(mc);
         appealController = new AppealController(); // fix with 'mc' as input
 //        adminCreatorController = new AdminCreatorController(mc);
