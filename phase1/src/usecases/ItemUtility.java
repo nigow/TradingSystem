@@ -111,4 +111,34 @@ public class ItemUtility {
         }
         return Items;
     }
+
+    /**
+     * Retrieves all items not in a certain account
+     * @param accountId the account id which the items are not retrieved from
+     * @return List of all items not in a certain account
+     */
+    public List<Item> getNotInAccount(int accountId) {
+        List<Item> Items = new ArrayList<>();
+        for (Item item : itemManager.getAllItems()) {
+            if (item.getOwnerID() != accountId) {
+                Items.add(item);
+            }
+        }
+        return Items;
+    }
+
+    /**
+     * Retrieves all items not in a certain account in string format
+     * @param accountId the account id which the items are not retrieved from
+     * @return List of all items not in a certain account string format
+     */
+    public List<String> getNotInAccountString(int accountId) {
+        List<String> Items = new ArrayList<>();
+        for (Item item : itemManager.getAllItems()) {
+            if (item.getOwnerID() != accountId) {
+                Items.add(item.toString());
+            }
+        }
+        return Items;
+    }
 }
