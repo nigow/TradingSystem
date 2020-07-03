@@ -28,14 +28,14 @@ public class FreezingController {
 
     private ControllerHelper controllerHelper;
 
-    public FreezingController(ManualConfig mc, ControllerHelper controllerHelper) {
+    public FreezingController(ManualConfig mc) {
         this.mc = mc;
         tradeUtility = mc.getTradeUtility();
         freezingPresenter = new ConsoleFreezingPresenter();
         freezingUtility = mc.getFreezingUtility();
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
-        this.controllerHelper = controllerHelper;
+        controllerHelper =  new ControllerHelper();
     }
 
     public void run() {
