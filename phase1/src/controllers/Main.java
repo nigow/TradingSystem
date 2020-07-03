@@ -2,6 +2,7 @@ package controllers;
 
 /**
  * Contains the main method that starts the program.
+ * @author Maryam
  */
 public class Main {
     /**

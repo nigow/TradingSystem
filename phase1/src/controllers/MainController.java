@@ -7,6 +7,7 @@ import java.io.IOException;
 
 /**
  * A class that initiates the home page.
+ * @author Maryam
  */
 public class MainController {
     /**
@@ -21,6 +22,5 @@ public class MainController {
         catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

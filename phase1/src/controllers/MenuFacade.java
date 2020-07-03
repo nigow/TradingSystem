@@ -29,13 +29,13 @@ public class MenuFacade {
 
     // TODO: 1. waiting on the following classes to be fixed/created 2. javadoc
 
-//    private FreezingController freezingController;
+    private FreezingController freezingController;
     private InventoryController inventoryController;
     private LendingController lendingController;
     private TradeController tradeController;
     private WishlistController wishlistController;
 //    private RestrictionsController restrictionsController;
-//    private AppealController appealController;
+    private AppealController appealController;
 //    private AdminCreatorController adminCreatorController;
 
     /**
@@ -49,7 +49,7 @@ public class MenuFacade {
 
         menuPresenter = new ConsoleMenuPresenter();
 
-//        freezingController = new FreezingController(mc);
+        freezingController = new FreezingController(mc);
         inventoryController = new InventoryController(mc);
         lendingController = new LendingController(mc);
         tradeController = new TradeController(mc);
@@ -87,8 +87,8 @@ public class MenuFacade {
             }
 
             if (authManager.canFreeze(accountManager.getCurrAccount()) && authManager.canUnfreeze(accountManager.getCurrAccount())) {
-//                options.add("Manage the frozen accounts");
-//                method.add(freezingController::run);
+                options.add("Manage the frozen accounts");
+                method.add(freezingController::run);
             }
 
             if (authManager.canAddAdmin(accountManager.getCurrAccount())) {
@@ -104,7 +104,9 @@ public class MenuFacade {
             options.add("Logout");
 
             String action = menuPresenter.displayMenu(options);
-            try {
+
+            ControllerHelper helper = new ControllerHelper();
+            if (helper.isNum(action)) {
                 int i = Integer.parseInt(action);
                 if (0 <= i && i < method.size())
                     method.get(i).run();
@@ -112,9 +114,8 @@ public class MenuFacade {
                     return; // TODO: how should we actually log out? rn it just goes back to previous menu
                 else
                     menuPresenter.invalidInput();
-            } catch (NumberFormatException e) {
+            } else
                 menuPresenter.invalidInput();
-            }
         }
     }
 }
