@@ -22,7 +22,8 @@ public class TradeCreatorController {
 
     private TradeCreatorPresenter tradeCreatorPresenter;
 
-    private int peerId;
+    private int traderOneId;
+    private int traderTwoId;
     private int itemId;
 
     private ControllerHelper controllerHelper;
@@ -41,7 +42,8 @@ public class TradeCreatorController {
         this.itemUtility = manualConfig.getItemUtility();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-        this.peerId = peerId;
+        this.traderOneId = accountManager.getCurrAccount().getAccountID();
+        this.traderTwoId = peerId;
         this.itemId = itemId;
 
         controllerHelper = new ControllerHelper();
@@ -53,8 +55,6 @@ public class TradeCreatorController {
      */
     public void run() {
 
-        int traderOneId = accountManager.getCurrAccount().getAccountID();
-        int traderTwoId = peerId;
         List<Integer> traderOneItems = new ArrayList<>();
         List<Integer> traderTwoItems = new ArrayList<>();
 
@@ -75,32 +75,7 @@ public class TradeCreatorController {
 
         }
 
-        if (twoWayTrade.equals("y")) {
-
-            String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getAccountFromID(peerId).getUsername() :
-                    accountManager.getCurrAccount().getUsername();
-
-            List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getInventoryOfAccountString(traderOneId) :
-                    itemUtility.getInventoryOfAccountString(traderTwoId);
-
-            tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
-            String oppositeItemIndex = tradeCreatorPresenter.getItem();
-
-            while (!controllerHelper.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
-
-                if (oppositeItemIndex.equals("-1")) return;
-                tradeCreatorPresenter.invalidInput();
-                oppositeItemIndex = tradeCreatorPresenter.getItem();
-
-            }
-
-            if (traderOneItems.isEmpty()) {
-                traderOneItems.add(itemUtility.getInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
-            } else {
-                traderTwoItems.add(itemUtility.getInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
-            }
-
-        }
+        if (twoWayTrade.equals("y")) setUpTwoWayTrade(traderOneItems, traderTwoItems);
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
@@ -136,6 +111,33 @@ public class TradeCreatorController {
 
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, isPerm.equals("y"),
                                  traderOneId, traderTwoId, traderOneItems, traderTwoItems);
+
+    }
+
+    private void setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
+
+        String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getAccountFromID(traderTwoId).getUsername() :
+                accountManager.getCurrAccount().getUsername();
+
+        List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getInventoryOfAccountString(traderOneId) :
+                itemUtility.getInventoryOfAccountString(traderTwoId);
+
+        tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
+        String oppositeItemIndex = tradeCreatorPresenter.getItem();
+
+        while (!controllerHelper.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
+
+            if (oppositeItemIndex.equals("-1")) return;
+            tradeCreatorPresenter.invalidInput();
+            oppositeItemIndex = tradeCreatorPresenter.getItem();
+
+        }
+
+        if (traderOneItems.isEmpty()) {
+            traderOneItems.add(itemUtility.getInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+        } else {
+            traderTwoItems.add(itemUtility.getInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+        }
 
     }
 
