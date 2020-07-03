@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Class containing useful services for wishlists on presenters and controllers
+ * @author Tairi
  */
 public class WishlistUtility {
     /**
