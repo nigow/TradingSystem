@@ -28,7 +28,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     public void displayInventory(List<String> inventory) {
         System.out.println("Items in inventory:");
         for (String s : inventory) {
-            System.out.print(s);
+            System.out.println(s);
         }
     }
 
@@ -38,7 +38,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String addToWishlist() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the number of the item you want to add to your wishlist: ");
+        System.out.print("Enter the number of the item you want to add to your wishlist: ");
         return input.nextLine();
     }
 
@@ -47,11 +47,11 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
      */
     public List<String> createItem() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the name of the item you wish to add");
+        System.out.print("Enter the name of the item you wish to add: ");
         String name = input.nextLine();
-        System.out.println("Enter the description of the item you wish to add");
+        System.out.print("Enter the description of the item you wish to add: ");
         String description = input.nextLine();
-        System.out.println(name + ": " + description +"\nIs this correct? (if so, type 'yes')");
+        System.out.print(name + ": " + description +"\nIs this correct? (if so, type 'yes'): ");
         String yes = input.nextLine();
         List<String> inputs = new ArrayList<>();
         inputs.add(name);
@@ -66,7 +66,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String removeFromInventory() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the number of the item you wish to remove: ");
+        System.out.print("Enter the number of the item you wish to remove: ");
         return input.nextLine();
     }
 
@@ -85,7 +85,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
      */
     public String approveItem() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the number of the item you wish to approve: ");
+        System.out.print("Enter the number of the item you wish to approve: ");
         return input.nextLine();
     }
 
