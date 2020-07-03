@@ -53,4 +53,15 @@ public class ControllerHelper {
 
     }
 
+    /**
+     * Check if a string is the program standard exit string (-1).
+     * @param input Input string.
+     * @return Whether given string is the program standard exit string (-1).
+     */
+    public boolean isExitStr(String input) {
+
+        return input.equals("-1");
+
+    }
+
 }

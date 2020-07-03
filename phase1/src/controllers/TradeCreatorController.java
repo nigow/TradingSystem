@@ -70,7 +70,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isBool(twoWayTrade)) {
 
-            if (twoWayTrade.equals("-1")) return;
+            if (controllerHelper.isExitStr(twoWayTrade)) return;
             tradeCreatorPresenter.invalidInput();
             twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
 
@@ -84,7 +84,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isDate(date)) {
 
-            if (date.equals("-1")) return;
+            if (controllerHelper.isExitStr(date)) return;
             tradeCreatorPresenter.invalidInput();
             date = tradeCreatorPresenter.getDate();
 
@@ -94,7 +94,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isTime(time)) {
 
-            if (time.equals("-1")) return;
+            if (controllerHelper.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
             time = tradeCreatorPresenter.getDate();
 
@@ -104,7 +104,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isBool(isPerm)) {
 
-            if (time.equals("-1")) return;
+            if (controllerHelper.isExitStr(isPerm)) return;
             tradeCreatorPresenter.invalidInput();
             isPerm = tradeCreatorPresenter.getIsPerm();
 
@@ -128,7 +128,7 @@ public class TradeCreatorController {
 
         while (!controllerHelper.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
 
-            if (oppositeItemIndex.equals("-1")) return;
+            if (controllerHelper.isExitStr(oppositeItemIndex)) return;
             tradeCreatorPresenter.invalidInput();
             oppositeItemIndex = tradeCreatorPresenter.getItem();
 

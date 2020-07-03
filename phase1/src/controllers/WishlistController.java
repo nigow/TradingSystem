@@ -105,7 +105,7 @@ public class WishlistController {
 
         while (!controllerHelper.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
 
-            if (itemIndex.equals("-1")) return;
+            if (controllerHelper.isExitStr(itemIndex)) return;
             wishlistPresenter.invalidInput();
             itemIndex = wishlistPresenter.startTrade();
 
@@ -128,7 +128,7 @@ public class WishlistController {
 
         while (!controllerHelper.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
 
-            if (itemIndex.equals("-1")) return;
+            if (controllerHelper.isExitStr(itemIndex)) return;
             wishlistPresenter.invalidInput();
             itemIndex = wishlistPresenter.removeFromWishlist();
 
