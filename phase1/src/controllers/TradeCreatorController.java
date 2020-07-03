@@ -30,6 +30,7 @@ public class TradeCreatorController {
 
     /**
      * Create a controller for the trade creation screen.
+     * @param tradeCreatorPresenter A presenter for this controller.
      * @param manualConfig Repository of use cases.
      * @param peerId Id of account trade is being conducted with.
      * @param itemId Id of item being offered or asked for.

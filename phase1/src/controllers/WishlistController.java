@@ -32,6 +32,8 @@ public class WishlistController {
 
     /**
      * Create a controller for the wishlist screen.
+     * @param wishlistPresenter A presenter for this controller.
+     * @param tradeCreatorPresenter A presenter for {@link controllers.TradeCreatorController}.
      * @param manualConfig Repository of use cases.
      */
     public WishlistController(WishlistPresenter wishlistPresenter, TradeCreatorPresenter tradeCreatorPresenter,
