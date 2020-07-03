@@ -9,6 +9,7 @@ import usecases.AccountManager;
 import usecases.ItemManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LendingController {
@@ -26,21 +27,34 @@ public class LendingController {
 
     private int chooseAccount(){
         List<Account> allAccounts = accountManager.getAccountsList();
+        Iterator iterator = allAccounts.iterator();
+        while(iterator.hasNext()){
+            Account account = (Account)iterator.next();
+            if(account.getAccountID() == accountManager.getCurrAccount().getAccountID()){
+                iterator.remove();
+            }
+        }
+
         lendingPresenter.displayAccounts(allAccounts);
+
         int index = -2;
-        while(index == -2){
+        while(index <= -2){
             try{
                 index = Integer.parseInt(lendingPresenter.selectAccount());
-                if(index < allAccounts.size() && index > 0) index = allAccounts.get(index - 1).getAccountID();
-                if (index == -1){
-                    lendingPresenter.abort();
-                    return -1;
-                }
+
             }
             catch(NumberFormatException e){
-                //pass
+
             }
-            lendingPresenter.invalidInput();
+            if(index < allAccounts.size() && index >= 0){
+                index = allAccounts.get(index).getAccountID();
+            }
+            else if (index == -1){
+                lendingPresenter.abort();
+                return -1;
+            }else{
+                lendingPresenter.invalidInput();
+            }
         }
 
         return index;
@@ -56,19 +70,21 @@ public class LendingController {
         }
         lendingPresenter.displayInventory(myItems);
         int index = -2;
-        while(index == -2){
+        while(index <= -2){
             try{
                 index = Integer.parseInt(lendingPresenter.selectItem());
-                if(index < myItems.size() && index > 0) index = myItems.get(index - 1).getItemID();
-                if (index == -1){
-                    lendingPresenter.abort();
-                    return -1;
-                }
             }
             catch(NumberFormatException e){
                 //pass
             }
-            lendingPresenter.invalidInput();
+            if(index < myItems.size() && index >= 0) index = myItems.get(index).getItemID();
+            else if (index == -1){
+                lendingPresenter.abort();
+                return -1;
+            }else{
+                lendingPresenter.invalidInput();
+            }
+
         }
 
         return index;
