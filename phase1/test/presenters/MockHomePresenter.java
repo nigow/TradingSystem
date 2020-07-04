@@ -4,10 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MockHomePresenter implements HomePresenter {
+    private String[] actions;
+    private int counter;
+
+    public MockHomePresenter() {
+        // Attempting to login with an invalid account
+        actions = new String[]{"1", "2"};
+
+    }
 
     @Override
     public String displayHomeOptions(List<String> homeOptions) {
-        return "0";
+        return actions[counter++];
     }
 
     @Override

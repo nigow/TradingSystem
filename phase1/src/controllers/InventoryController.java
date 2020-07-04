@@ -52,6 +52,7 @@ public class InventoryController {
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
      * @param manualConfig the configuration for the program
+     * @param inventoryPresenter the presenter for displaying the inventory
      */
     public InventoryController(ManualConfig manualConfig, InventoryPresenter inventoryPresenter) {
         this.itemManager = manualConfig.getItemManager();

@@ -86,6 +86,7 @@ public class WishlistController {
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
 
+        //TODO just a note that canTrade() checks that an account isn't frozen(which checks if account can lend and borrow so the canBorrow() may be removed as it is redundant
         if (authManager.canBorrow(accountManager.getCurrAccount()) &&
                 authManager.canTrade(manualConfig.getTradeUtility(), accountManager.getCurrAccount()))
 
@@ -111,7 +112,7 @@ public class WishlistController {
 
         }
 
-        List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
+        List<Integer> wishlistIds = accountManager.getCurrWishlist();
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
         new TradeCreatorController(tradeCreatorPresenter,
@@ -134,7 +135,7 @@ public class WishlistController {
 
         }
 
-        List<Integer> wishlistIds = accountManager.getCurrAccount().getWishlist();
+        List<Integer> wishlistIds = accountManager.getCurrWishlist();
         accountManager.removeItemFromWishlist(wishlistIds.get(Integer.parseInt(itemIndex)));
 
     }
