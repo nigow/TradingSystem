@@ -119,7 +119,7 @@ public class ItemUtility {
      */
     public List<Item> getNotInAccount(int accountId) {
         List<Item> Items = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : getApproved()) {
             if (item.getOwnerID() != accountId) {
                 Items.add(item);
             }
@@ -134,7 +134,7 @@ public class ItemUtility {
      */
     public List<String> getNotInAccountString(int accountId) {
         List<String> Items = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : getApproved()) {
             if (item.getOwnerID() != accountId) {
                 Items.add(item.toString());
             }
