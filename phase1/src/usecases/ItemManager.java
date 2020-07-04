@@ -61,6 +61,33 @@ public class ItemManager {
     }
 
     /**
+     * Gets the Id of an item
+     * @param item the item which information is being returned about
+     * @return the Id of an item
+     */
+    public int getItemId(Item item) {
+        return item.getItemID();
+    }
+
+    /**
+     * Gets the approval status of the item
+     * @param item the item which information is being returned about
+     * @return the approval status of the item
+     */
+    public boolean isApproved(Item item) {
+        return item.isApproved();
+    }
+
+    /**
+     * Gets the Id of the owner of the item
+     * @param item the item which information is being returned about
+     * @return the Id of the owner of the item
+     */
+    public int getOwnerId(Item item) {
+        return item.getOwnerID();
+    }
+
+    /**
      * Update the owner of the item
      * @param item the item being updated
      * @param ownerId the new owner of the item
