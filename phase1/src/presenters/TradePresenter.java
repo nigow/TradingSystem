@@ -53,4 +53,15 @@ public interface TradePresenter {
      * tells user that their input was invalid
      */
     void invalidInput();
+
+    /**
+     * presents the user with a custom message
+     */
+    void showMessage(String message);
+
+    /**
+     * presents the user with the option to say yes or no
+     * @return user's input y/n
+     */
+    String yesOrNo();
 }

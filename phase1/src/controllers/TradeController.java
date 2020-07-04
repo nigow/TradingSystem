@@ -2,13 +2,17 @@ package controllers;
 
 import entities.Account;
 import entities.Trade;
+import entities.TradeStatus;
 import gateways.ManualConfig;
 import presenters.ConsoleTradePresenter;
 import presenters.TradePresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
+import usecases.TradeManager;
 import usecases.TradeUtility;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,7 @@ public class TradeController {
     private final AuthManager authManager;
     private final AccountManager accountManager;
     private final TradeUtility tradeUtility;
+    private final TradeManager tradeManager;
     private final ControllerHelper helper;
 
     public TradeController(ManualConfig mc, TradePresenter tradePresenter) {
@@ -30,6 +35,7 @@ public class TradeController {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
         tradeUtility = mc.getTradeUtility();
+        tradeManager = mc.getTradeManager();
         helper = new ControllerHelper();
     }
 
@@ -76,13 +82,55 @@ public class TradeController {
         tradePresenter.displayTrades(tradeUtility.getAllTradesAccountString()); // TODO: only show non-rejected trades
     }
 
+    // TODO make helpers to make this less ugly
     private void selectAndChangeTrade() {
         String index = tradePresenter.selectTrade();
         if (helper.isNum(index)) {
             int ind = Integer.parseInt(index);
             List<Trade> trades = tradeUtility.getAllTradesAccount();
             if (0 <= ind && ind < trades.size()) {
-                changeTrade(trades.get(ind));
+                Trade trade = trades.get(ind);
+                TradeStatus tradeStatus = trade.getStatus(); // TODO dont access entities getter
+                if (tradeStatus == TradeStatus.REJECTED) {
+                    tradePresenter.showMessage("You already rejected this trade.");
+                } else if (tradeStatus == TradeStatus.UNCONFIRMED) {
+                    List<String> options = new ArrayList<>();
+                    options.add("Reject or cancel this trade");
+                    boolean canEdit = true;
+                    if (canEdit) {
+                        options.add("Confirm the time and location for this trade");
+                        options.add("Edit the time and location for this trade");
+                    }
+                    String action = tradePresenter.displayTradeOptions(options);
+                    if (helper.isNum(action)) {
+                        int action_ind = Integer.parseInt(action);
+                        if (0 <= action_ind && action_ind < options.size()) {
+                            if (action_ind == 0) {
+                                trade.setStatus(TradeStatus.REJECTED); // TODO dont access entities setter
+                            } else if (action_ind == 1) {
+                                trade.setStatus(TradeStatus.CONFIRMED); // TODO dont access entities setter
+                            } else if (action_ind == 2) {
+                                changeTrade(trade);
+                            }
+                        } else
+                            tradePresenter.invalidInput();
+                    } else
+                        tradePresenter.invalidInput();
+                } else if (tradeStatus == TradeStatus.CONFIRMED) {
+                    tradePresenter.showMessage("You have confirmed the meetup for this trade. " +
+                            "Has this trade been completed?");
+                    String ans = tradePresenter.yesOrNo();
+                    if (ans.equals("y")) {
+                        tradePresenter.showMessage("You have marked this trade as complete.");
+                        // TODO call method to mark this trade as complete from this end
+                    } else if (ans.equals("n"))
+                        tradePresenter.showMessage("Okay.");
+                    else
+                        tradePresenter.invalidInput();
+
+                } else if (tradeStatus == TradeStatus.COMPLETED) {
+                    tradePresenter.showMessage("This trade has already been completed.");
+                }
             } else if (ind == -1)
                 return;
             else
@@ -91,15 +139,14 @@ public class TradeController {
             tradePresenter.invalidInput();
     }
 
-    private void changeTrade(Trade t) {
-        List<String> options = new ArrayList<>();
-
-        // TODO
-        options.add("Cancel or reject this trade"); // if the trade is not completed
-        options.add("Confirm the time and location of this trade"); // if the trade is unconfirmed and it's not this user's turn
-        options.add("Confirm that this trade occurred"); // if the trade is confirmed
-        options.add("Offer a new time and location for this trade"); // if it's this user's turn
-        options.add("Reverse this trade"); // if it is a reversible trade
+    private void changeTrade(Trade trade) {
+        String[] newInfo = tradePresenter.editTradeTimePlace();
+        // TODO set trade in trade manager
+        if (helper.isDate(newInfo[1]) && helper.isTime(newInfo[2])) {
+            tradeManager.editTimePlace(LocalDateTime.parse(newInfo[1] + " " + newInfo[2], DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm")),
+                    newInfo[0], accountManager.getCurrAccount().getAccountID()); // TODO dont use entity getters
+        } else
+            tradePresenter.invalidInput();
     }
 
     // TODO: only take completed trades into account for the next three methods
