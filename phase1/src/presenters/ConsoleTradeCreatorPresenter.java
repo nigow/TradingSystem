@@ -30,7 +30,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
      */
     @Override
     public String getTwoWayTrade() {
-        System.out.print("Would you like to make this a two way trade (true/false): ");
+        System.out.print("Would you like to make this a two way trade (y/n): ");
         return input.next();
     }
 
