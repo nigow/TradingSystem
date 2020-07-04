@@ -26,10 +26,10 @@ public interface TradePresenter {
     String selectTrade();
 
     /**
-     * edit trade
-     * @return information for edited trade
+     * edit trade's meetup
+     * @return information for trade's new meetup
      */
-    String[] editTrade();
+    String[] editTradeTimePlace();
 
     /**
      * displays user's 3 most recent traded items in a one way trade

@@ -39,7 +39,7 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public String selectTrade() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the index of the trade you want to suggest a new meeting for: ");
+        System.out.println("Enter the index of the trade you want to change (-1 to return): ");
         return input.nextLine();
     }
 
@@ -47,7 +47,7 @@ public class ConsoleTradePresenter implements TradePresenter {
      * {@inheritDoc}
      */
     @Override
-    public String[] editTrade() {
+    public String[] editTradeTimePlace() {
         Scanner input = new Scanner(System.in);
         System.out.println("Suggest a new location for the meeting: ");
         String[] s = new String[2];

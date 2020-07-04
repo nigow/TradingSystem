@@ -36,7 +36,7 @@ public class MenuFacade {
     private final WishlistController wishlistController;
 //    private RestrictionsController restrictionsController;
     private final AppealController appealController;
-//    private AdminCreatorController adminCreatorController;
+    private AdminCreator adminCreator;
 
     private final ControllerHelper helper;
 
@@ -50,21 +50,24 @@ public class MenuFacade {
                       WishlistController wishlistController,
                       LendingController lendingController,
                       AppealController appealController,
+                      TradeController tradeController,
+                      AdminCreator adminCreator,
                       MenuPresenter menuPresenter) {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
 
         this.menuPresenter = menuPresenter;
+
         helper = new ControllerHelper();
 
         this.freezingController = freezingController;
         this.inventoryController = inventoryController;
         this.lendingController = lendingController;
-        tradeController = new TradeController(mc);
+        this.tradeController = tradeController;
         this.wishlistController = wishlistController;
 //        restrictionsController = new RestrictionController(mc);
         this.appealController = appealController;
-//        adminCreatorController = new AdminCreatorController(mc);
+        this.adminCreator = adminCreator;
     }
 
     /**
@@ -100,13 +103,13 @@ public class MenuFacade {
             }
 
             if (authManager.canAddAdmin(accountManager.getCurrAccount())) {
-//                options.add("Add an admin account");
-//                method.add(adminCreatorController::run);
+                options.add("Add an admin account");
+                method.add(adminCreator::run);
             }
 
             if (authManager.isFrozen(accountManager.getCurrAccount())) {
-//                options.add("Request to be unfrozen");
-//                method.add(appealController::run);
+                options.add("Request to be unfrozen");
+                method.add(appealController::run);
             }
 
             options.add("Logout");
