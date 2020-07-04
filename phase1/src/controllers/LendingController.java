@@ -3,8 +3,8 @@ package controllers;
 import entities.Account;
 import entities.Item;
 import gateways.ManualConfig;
-import presenters.ConsoleTradeCreatorPresenter;
 import presenters.LendingPresenter;
+import presenters.TradeCreatorPresenter;
 import usecases.AccountManager;
 import usecases.ItemManager;
 
@@ -37,16 +37,22 @@ public class LendingController {
      */
     private final ManualConfig manualConfig;
 
+    /**
+     * A controller that initiates trades
+     */
+    private final TradeCreatorPresenter tradeCreatorPresenter;
+
 
     /**
      * Initialize the use cases and presenter
      * @param manualConfig collection of gateways
      */
-    public LendingController(LendingPresenter lendingPresenter, ManualConfig manualConfig){
+    public LendingController(LendingPresenter lendingPresenter, ManualConfig manualConfig, TradeCreatorPresenter tradeCreatorPresenter){
         this.manualConfig = manualConfig;
         this.lendingPresenter = lendingPresenter;
         this.accountManager = manualConfig.getAccountManager();
         this.itemManager = manualConfig.getItemManager();
+        this.tradeCreatorPresenter = tradeCreatorPresenter;
     }
 
     /**
@@ -157,7 +163,7 @@ public class LendingController {
         if(tradingItemId == -1) return;
 
         TradeCreatorController startTrade;
-        startTrade = new TradeCreatorController(new ConsoleTradeCreatorPresenter(), manualConfig, toAccountId, tradingItemId);
+        startTrade = new TradeCreatorController(tradeCreatorPresenter, manualConfig, toAccountId, tradingItemId);
         startTrade.run();
     }
 

@@ -37,7 +37,7 @@ public class MainController {
 
         // TODO: LendingController should be called with TradeCreatorPresenter.
         lendingController = new LendingController(new ConsoleLendingPresenter(),
-                manualConfig);
+                manualConfig, new ConsoleTradeCreatorPresenter());
         // TODO: FreezingController should have a presenter as input.
         freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
 
