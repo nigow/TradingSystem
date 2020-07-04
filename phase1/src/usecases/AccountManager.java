@@ -100,6 +100,13 @@ public class AccountManager {
     }
 
     /**
+     * @return The current account id.
+     */
+    public int getCurrAccountID() {
+        return currAccount.getAccountID();
+    }
+
+    /**
      * Assigns the given username corresponding to an account to currAccount
      * @param username Username of Account being set
      * @return Whether the current account is successfully set or not
@@ -163,5 +170,7 @@ public class AccountManager {
     public List<Account> getAccountsList(){
         return accountGateway.getAllAccounts();
     }
+
+
 
 }
