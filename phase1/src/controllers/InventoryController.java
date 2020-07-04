@@ -89,7 +89,6 @@ public class InventoryController {
         List<String> menu = new ArrayList<>(actions.keySet());
 
         do {
-            displayFullInventory();
             option = inventoryPresenter.displayInventoryOptions(menu);
 
             if (controllerHelper.isNum(option)) {
@@ -196,9 +195,9 @@ public class InventoryController {
      */
     void addToWishlist() {
         displayOthersInventory();
-        String option = inventoryPresenter.addToWishlist();
         boolean isValid = false;
         while (!isValid) {
+            String option = inventoryPresenter.addToWishlist();
             if (controllerHelper.isExitStr(option)) {
                 isValid = true;
             } else if (controllerHelper.isNum(option)) {
@@ -222,9 +221,9 @@ public class InventoryController {
      */
     void removeFromInventory() {
         displayYourInventory();
-        String option = inventoryPresenter.removeFromInventory();
         boolean isValid = false;
         while (!isValid) {
+            String option = inventoryPresenter.removeFromInventory();
             if (controllerHelper.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
@@ -246,9 +245,9 @@ public class InventoryController {
      */
     void approveItems() {
         displayPending();
-        String option = inventoryPresenter.approveItem();
         boolean isValid = false;
         while (!isValid) {
+            String option = inventoryPresenter.approveItem();
             if (controllerHelper.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getDisapprovedString().size()) {
