@@ -87,9 +87,9 @@ public class ItemUtility {
      * @param accountId the account id which the items are retrieved for
      * @return List of items for account
      */
-    public List<Item> getInventoryOfAccount(int accountId) {
+    public List<Item> getApprovedInventoryOfAccount(int accountId) {
         List<Item> Items = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : getApproved()) {
             if (item.getOwnerID() == accountId) {
                 Items.add(item);
             }
@@ -102,9 +102,39 @@ public class ItemUtility {
      * @param accountId the account id which the items are retrieved for
      * @return List of items for account in string format
      */
-    public List<String> getInventoryOfAccountString(int accountId) {
+    public List<String> getApprovedInventoryOfAccountString(int accountId) {
         List<String> Items = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : getApproved()) {
+            if (item.getOwnerID() == accountId) {
+                Items.add(item.toString());
+            }
+        }
+        return Items;
+    }
+
+    /**
+     * Retrieves all items for a certain account
+     * @param accountId the account id which the items are retrieved for
+     * @return List of items for account
+     */
+    public List<Item> getDisprovedInventoryOfAccount(int accountId) {
+        List<Item> Items = new ArrayList<>();
+        for (Item item : getDisapproved()) {
+            if (item.getOwnerID() == accountId) {
+                Items.add(item);
+            }
+        }
+        return Items;
+    }
+
+    /**
+     * Retrieves all items for a certain account in string format
+     * @param accountId the account id which the items are retrieved for
+     * @return List of items for account in string format
+     */
+    public List<String> getDisprovedInventoryOfAccountString(int accountId) {
+        List<String> Items = new ArrayList<>();
+        for (Item item : getDisapproved()) {
             if (item.getOwnerID() == accountId) {
                 Items.add(item.toString());
             }
