@@ -84,7 +84,7 @@ public class AccountManager {
     /**
      * Gets the account corresponding to the accountID provided
      * @param accountID Unique identifier of account
-     * @return account corresponding to the accountID
+     * @return Account corresponding to the accountID
      */
     public Account getAccountFromID(int accountID){
         return accountGateway.findById(accountID);
@@ -93,17 +93,19 @@ public class AccountManager {
     /**
      * Gets the account corresponding to the username provided
      * @param username Username of an account
-     * @return account corresponding to the username
+     * @return Account corresponding to the username
      */
     private Account getAccountFromUsername(String username){
         return accountGateway.findByUsername(username);
     }
 
     /**
-     * @return The current account id.
+     * Gets the username of an account corresponding to the given unique identifier
+     * @param accountID Unique identifier of account
+     * @return Username corresponding to the unique identifier of an account
      */
-    public int getCurrAccountID() {
-        return currAccount.getAccountID();
+    public String getUsernameFromID(int accountID){
+        return accountGateway.findById(accountID).getUsername();
     }
 
     /**
@@ -121,11 +123,27 @@ public class AccountManager {
     }
 
     /**
-     * Gets the current Account being modified
-     * @return the current account
+     * Gets the current account being modified
+     * @return The current account
      */
     public Account getCurrAccount(){
         return currAccount;
+    }
+
+    /**
+     * Gets the current account's unique identifier
+     * @return The current account id
+     */
+    public int getCurrAccountID() {
+        return currAccount.getAccountID();
+    }
+
+    /**
+     * Gets the current account's username
+     * @return The current account username
+     */
+    public String getCurrAccountUsername(){
+        return currAccount.getUsername();
     }
 
     /**
@@ -152,6 +170,14 @@ public class AccountManager {
             return accountGateway.updateAccount(currAccount);
         }
         return false;
+    }
+
+    /**
+     * Gets the wishlist of item ids for the current account
+     * @return Wishlist of the current account
+     */
+    public List<Integer> getCurrWishlist(){
+        return currAccount.getWishlist();
     }
 
     /**
