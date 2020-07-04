@@ -89,15 +89,14 @@ public class TradeController {
             int ind = Integer.parseInt(index);
             List<Trade> trades = tradeUtility.getAllTradesAccount();
             if (0 <= ind && ind < trades.size()) {
-                Trade trade = trades.get(ind);
-                TradeStatus tradeStatus = trade.getStatus(); // TODO dont access entities getter
-                if (tradeStatus == TradeStatus.REJECTED) {
+                tradeManager.setTrade(trades.get(ind));
+                // TODO set trade in trade manager
+                if (tradeManager.isRejected()) {
                     tradePresenter.showMessage("You already rejected this trade.");
-                } else if (tradeStatus == TradeStatus.UNCONFIRMED) {
+                } else if (tradeManager.isUnconfirmed()) {
                     List<String> options = new ArrayList<>();
                     options.add("Reject or cancel this trade");
-                    boolean canEdit = true;
-                    if (canEdit) {
+                    if (tradeManager.isEditTurn(accountManager.getCurrAccount())) {
                         options.add("Confirm the time and location for this trade");
                         options.add("Edit the time and location for this trade");
                     }
@@ -106,17 +105,17 @@ public class TradeController {
                         int action_ind = Integer.parseInt(action);
                         if (0 <= action_ind && action_ind < options.size()) {
                             if (action_ind == 0) {
-                                trade.setStatus(TradeStatus.REJECTED); // TODO dont access entities setter
+                                tradeManager.updateStatus(TradeStatus.REJECTED);
                             } else if (action_ind == 1) {
-                                trade.setStatus(TradeStatus.CONFIRMED); // TODO dont access entities setter
+                                tradeManager.updateStatus(TradeStatus.CONFIRMED);
                             } else if (action_ind == 2) {
-                                changeTrade(trade);
+                                changeTrade();
                             }
                         } else
                             tradePresenter.invalidInput();
                     } else
                         tradePresenter.invalidInput();
-                } else if (tradeStatus == TradeStatus.CONFIRMED) {
+                } else if (tradeManager.isConfirmed()) {
                     tradePresenter.showMessage("You have confirmed the meetup for this trade. " +
                             "Has this trade been completed?");
                     String ans = tradePresenter.yesOrNo();
@@ -128,7 +127,7 @@ public class TradeController {
                     else
                         tradePresenter.invalidInput();
 
-                } else if (tradeStatus == TradeStatus.COMPLETED) {
+                } else if (tradeManager.isCompleted()) {
                     tradePresenter.showMessage("This trade has already been completed.");
                 }
             } else if (ind == -1)
@@ -139,12 +138,11 @@ public class TradeController {
             tradePresenter.invalidInput();
     }
 
-    private void changeTrade(Trade trade) {
+    private void changeTrade() {
         String[] newInfo = tradePresenter.editTradeTimePlace();
-        // TODO set trade in trade manager
         if (helper.isDate(newInfo[1]) && helper.isTime(newInfo[2])) {
             tradeManager.editTimePlace(LocalDateTime.parse(newInfo[1] + " " + newInfo[2], DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm")),
-                    newInfo[0], accountManager.getCurrAccount().getAccountID()); // TODO dont use entity getters
+                    newInfo[0], accountManager.getCurrAccountID());
         } else
             tradePresenter.invalidInput();
     }
