@@ -34,14 +34,14 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
     @Override
     public String freeze() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the indexes of the users you'd like to freeze, separated by a comma:");
+        System.out.println("Enter the index of the user you'd like to freeze:");
         return input.nextLine();
     }
 
     @Override
     public String unfreeze() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the indexes of the users you'd like to unfreeze, separated by a comma:");
+        System.out.println("Enter the index of the user you'd like to unfreeze:");
         return input.nextLine();
     }
 

@@ -180,7 +180,7 @@ public class InventoryController {
 
             if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).size()) {
                 accountManager.addItemToWishlist(itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).get(ind).getItemID());
-
+                inventoryPresenter.customMessage("Item successfully added to your wishlist!");
             } else {
                 inventoryPresenter.customMessage("That number does not correspond to an item");
             }
