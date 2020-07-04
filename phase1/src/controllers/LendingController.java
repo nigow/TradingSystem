@@ -66,7 +66,7 @@ public class LendingController {
         Iterator iterator = allAccounts.iterator();
         while(iterator.hasNext()){
             Account account = (Account)iterator.next();
-            if(account.getAccountID() == accountManager.getCurrAccount().getAccountID()){
+            if(account.getAccountID() == accountManager.getCurrAccountID()){
                 iterator.remove();
             }
         }
@@ -112,7 +112,7 @@ public class LendingController {
      */
     private int chooseItem(){
         List<Item> myItems = new ArrayList<>();
-        int userId = accountManager.getCurrAccount().getAccountID();
+        int userId = accountManager.getCurrAccountID();
 
 
         //list only tradable items
