@@ -59,6 +59,10 @@ public class Trade {
      */
     private int editedCounter;
 
+    // TODO javadoc
+    private boolean traderOneCompleted;
+    private boolean traderTwoCompleted;
+
     /**
      * Creates a Trade object based on input. The status is set to unconfirmed.
      * @param id The ID of this trade.
@@ -81,6 +85,8 @@ public class Trade {
         status = TradeStatus.UNCONFIRMED;
         this.editedCounter = editedCounter;
         lastEditorID = traderOneID;
+        traderOneCompleted = false;
+        traderTwoCompleted = false;
     }
 
     /**
@@ -202,6 +208,7 @@ public class Trade {
         editedCounter++;
     }
 
+    // TODO wherever this toString is used, use the better use case version
     /**
      * Creates a string representation of this trade.
      * @return A string representation of a Trade object.
@@ -221,4 +228,29 @@ public class Trade {
                 ", editedCounter=" + editedCounter +
                 '}';
     }
+
+    // TODO java doc
+
+    public boolean isTraderOneCompleted() {
+        return traderOneCompleted;
+    }
+
+    public void setTraderOneCompleted(boolean traderOneCompleted) {
+        this.traderOneCompleted = traderOneCompleted;
+        if (this.traderOneCompleted && this.traderTwoCompleted) {
+            this.status = TradeStatus.COMPLETED;
+        }
+    }
+
+    public boolean isTraderTwoCompleted() {
+        return traderTwoCompleted;
+    }
+
+    public void setTraderTwoCompleted(boolean traderTwoCompleted) {
+        this.traderTwoCompleted = traderTwoCompleted;
+        if (this.traderOneCompleted && this.traderTwoCompleted) {
+            this.status = TradeStatus.COMPLETED;
+        }
+    }
+
 }

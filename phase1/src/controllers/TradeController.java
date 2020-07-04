@@ -95,7 +95,6 @@ public class TradeController {
         List<String> options = new ArrayList<>();
 
         // TODO
-
         options.add("Cancel or reject this trade"); // if the trade is not completed
         options.add("Confirm the time and location of this trade"); // if the trade is unconfirmed and it's not this user's turn
         options.add("Confirm that this trade occurred"); // if the trade is confirmed
