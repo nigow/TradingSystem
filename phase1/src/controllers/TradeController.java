@@ -122,7 +122,7 @@ public class TradeController {
                     String ans = tradePresenter.yesOrNo();
                     if (ans.equals("y")) {
                         tradePresenter.showMessage("You have marked this trade as complete.");
-                        // TODO call method to mark this trade as complete from this end
+                        tradeManager.updateCompletion(accountManager.getCurrAccountID());
                     } else if (ans.equals("n"))
                         tradePresenter.showMessage("Okay.");
                     else

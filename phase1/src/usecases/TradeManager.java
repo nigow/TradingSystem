@@ -200,7 +200,8 @@ public class TradeManager {
         return StringTrade;
     }
 
-    // TODO java doc and implementation  -maryam
+    // TODO addmjava doc. add implementation to tradeAsString  -maryam
+
     public String tradeAsString() {
         String ans = "";
         return ans;
@@ -208,6 +209,13 @@ public class TradeManager {
 
     public boolean isPermanent() {
         return trade.isPermanent();
+    }
+
+    public void updateCompletion(int accountID) {
+        if (accountID == trade.getTraderOneID())
+            trade.setTraderOneCompleted(true);
+        else if (accountID == trade.getTraderTwoID())
+            trade.setTraderTwoCompleted(true);
     }
 
 }
