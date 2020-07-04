@@ -127,6 +127,7 @@ public class TradeManager {
      */
     public void setTrade(Trade trade) {
         this.trade = trade;
+        timePlace = tradeGateway.findTimePlaceById(trade.getId());
     }
 
     /**
@@ -188,6 +189,12 @@ public class TradeManager {
             StringTrade.add(trade.toString());
         }
         return StringTrade;
+    }
+
+    // TODO java doc
+    public String tradeAsString() {
+        String ans = "";
+        return ans;
     }
 
 }

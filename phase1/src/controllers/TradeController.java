@@ -1,10 +1,8 @@
 package controllers;
 
-import entities.Account;
 import entities.Trade;
 import entities.TradeStatus;
 import gateways.ManualConfig;
-import presenters.ConsoleTradePresenter;
 import presenters.TradePresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
