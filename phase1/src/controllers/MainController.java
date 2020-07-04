@@ -34,6 +34,8 @@ public class MainController {
                 new ConsoleInventoryPresenter());
         wishlistController = new WishlistController(new ConsoleWishlistPresenter(),
                 new ConsoleTradeCreatorPresenter(), manualConfig);
+        appealController = new AppealController(manualConfig,
+                new ConsoleAppealPresenter());
 
         // TODO: LendingController should be called with TradeCreatorPresenter.
         lendingController = new LendingController(new ConsoleLendingPresenter(),
@@ -44,7 +46,7 @@ public class MainController {
         // TODO: Not all controllers are sent in for completion reasons.
         menuFacade = new MenuFacade(manualConfig, freezingController,
                 inventoryController, wishlistController, lendingController,
-                new ConsoleMenuPresenter());
+                appealController, new ConsoleMenuPresenter());
 
         authController = new AuthController(manualConfig,
                     new ConsoleHomePresenter(), menuFacade);

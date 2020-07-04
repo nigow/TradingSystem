@@ -49,6 +49,7 @@ public class MenuFacade {
                       InventoryController inventoryController,
                       WishlistController wishlistController,
                       LendingController lendingController,
+                      AppealController appealController,
                       MenuPresenter menuPresenter) {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
@@ -62,7 +63,7 @@ public class MenuFacade {
         tradeController = new TradeController(mc);
         this.wishlistController = wishlistController;
 //        restrictionsController = new RestrictionController(mc);
-        appealController = new AppealController(); // fix with 'mc' as input
+        this.appealController = appealController;
 //        adminCreatorController = new AdminCreatorController(mc);
     }
 

@@ -1,6 +1,5 @@
 package controllers;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import entities.Account;
 import gateways.ManualConfig;
 import presenters.FreezingPresenter;
