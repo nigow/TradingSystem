@@ -60,6 +60,7 @@ public class TradeCreatorController {
         List<Integer> traderTwoItems = new ArrayList<>();
 
         // this is a sketchy way of determining whether the trade started as a lend or borrow
+        //TODO determine if this way ^ should be used and if so: add searchWishlistByID() method to accountManager
         if (accountManager.getCurrAccount().getWishlist().contains(itemId)) {
             traderTwoItems.add(itemId);
         } else {
@@ -118,8 +119,8 @@ public class TradeCreatorController {
 
     private void setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
 
-        String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getAccountFromID(traderTwoId).getUsername() :
-                accountManager.getCurrAccount().getUsername();
+        String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getUsernameFromID(traderTwoId) :
+                accountManager.getCurrAccountUsername();
 
         List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getInventoryOfAccountString(traderOneId) :
                 itemUtility.getInventoryOfAccountString(traderTwoId);
