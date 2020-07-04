@@ -171,6 +171,9 @@ public class AccountManager {
         return accountGateway.getAllAccounts();
     }
 
-
+    // TODO javadoc  -maryam
+    public String getAccountStringFromID(int accountID) {
+        return accountGateway.findById(accountID).toString();
+    }
 
 }

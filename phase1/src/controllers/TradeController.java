@@ -88,7 +88,6 @@ public class TradeController {
             List<Trade> trades = tradeUtility.getAllTradesAccount();
             if (0 <= ind && ind < trades.size()) {
                 tradeManager.setTrade(trades.get(ind));
-                // TODO set trade in trade manager
                 if (tradeManager.isRejected()) {
                     tradePresenter.showMessage("You already rejected this trade.");
                 } else if (tradeManager.isUnconfirmed()) {
@@ -152,7 +151,8 @@ public class TradeController {
     private void recentTwoWayTrades() {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getRecentTwoWay()) {
-            trades.add(t.toString());
+            tradeManager.setTrade(t);
+            trades.add(tradeManager.tradeAsString());
         }
         tradePresenter.displayRecentTwoWayTrade(trades);
     }
@@ -160,7 +160,8 @@ public class TradeController {
     private void recentOneWayTrades() {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getRecentOneWay()) {
-            trades.add(t.toString());
+            tradeManager.setTrade(t);
+            trades.add(tradeManager.tradeAsString());
         }
         tradePresenter.displayRecentOneWayTrade(trades);
     }
@@ -168,7 +169,7 @@ public class TradeController {
     private void frequentPartners() {
         List<String> partners = new ArrayList<>();
         for (int id : tradeUtility.getTopThreePartnersIds()) {
-            partners.add(accountManager.getAccountFromID(id).toString());
+            partners.add(accountManager.getAccountStringFromID(id));
         }
         tradePresenter.displayFrequentPartners(partners);
     }
