@@ -40,6 +40,8 @@ public class CSVTradeGateway implements TradeGateway {
         headers.put("last_editor_id", 7);
         headers.put("status", 8);
         headers.put("is_permanent", 9);
+        headers.put("trader_one_confirmed", 10);
+        headers.put("trader_two_confirmed", 11);
 
         trades = new HashMap<>();
 
@@ -97,7 +99,9 @@ public class CSVTradeGateway implements TradeGateway {
                 String.valueOf(trade.getEditedCounter()),
                 String.valueOf(trade.getLastEditorID()),
                 String.valueOf(trade.getStatus()),
-                String.valueOf(trade.isPermanent())
+                String.valueOf(trade.isPermanent()),
+                String.valueOf(trade.isTraderOneCompleted()),
+                String.valueOf(trade.isTraderTwoCompleted())
         };
 
         if (trade.getItemTwoID().isEmpty()) col[headers.get("trader_one_items")] = " ";
@@ -123,10 +127,14 @@ public class CSVTradeGateway implements TradeGateway {
             int lastEditorId = Integer.parseInt(col[headers.get("last_editor_id")]);
             TradeStatus status = TradeStatus.valueOf(col[headers.get("status")]);
             boolean isPermanent = Boolean.parseBoolean(col[headers.get("is_permanent")]);
+            boolean traderOneConfirmed = Boolean.parseBoolean(col[headers.get("trader_one_confirmed")]);
+            boolean traderTwoConfirmed = Boolean.parseBoolean(col[headers.get("trader_two_confirmed")]);
 
             Trade trade = new Trade(id, id, isPermanent, traderOneId, traderTwoId, traderOneItems, traderTwoItems, editCounter);
             trade.setLastEditorID(lastEditorId);
             trade.setStatus(status);
+            trade.setTraderOneCompleted(traderOneConfirmed);
+            trade.setTraderTwoCompleted(traderTwoConfirmed);
 
             return trade;
         }
