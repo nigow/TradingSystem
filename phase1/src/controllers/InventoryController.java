@@ -70,7 +70,7 @@ public class InventoryController {
         String option;
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
-        actions.put("View all items", this::displayFullInventory);
+        actions.put("View all approved items", this::displayFullInventory);
         actions.put("View your items", this::displayYourInventory);
         actions.put("View all items available for trading", this::displayOthersInventory);
         if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
@@ -111,7 +111,7 @@ public class InventoryController {
      */
     void displayFullInventory() {
         this.inventoryPresenter.customMessage("All Items:");
-        List<String> allItems = itemManager.getAllItemsString();
+        List<String> allItems = itemUtility.getApprovedString();
         this.inventoryPresenter.displayInventory(allItems);
     }
 

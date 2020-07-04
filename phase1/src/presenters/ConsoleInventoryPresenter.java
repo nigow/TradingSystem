@@ -37,7 +37,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String addToWishlist() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the number of the item you want to add to your wishlist: ");
+        System.out.print("Enter the number of the item you want to add to your wishlist, or -1 to go back: ");
         return input.nextLine();
     }
 
@@ -47,7 +47,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String askName() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the name of the item you wish to add (no commas): ");
+        System.out.print("Enter the name of the item you wish to add, or -1 to go back (no commas): ");
         return input.nextLine();
     }
 
@@ -57,7 +57,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String askDescription() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the description of the item you wish to add (no commas): ");
+        System.out.print("Enter the description of the item you wish to add, or -1 to go back (no commas): ");
         return input.nextLine();
     }
 
@@ -67,7 +67,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String confirmItem(String name, String description) {
         Scanner input = new Scanner(System.in);
-        System.out.print(name + ": " + description +"\nIs this correct? (y/n) :");
+        System.out.print(name + ": " + description +"\nIs this correct? (y/n/-1 to go back) :");
         return input.nextLine();
     }
 
@@ -78,7 +78,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String removeFromInventory() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the number of the item you wish to remove: ");
+        System.out.print("Enter the number of the item you wish to remove, or -1 to go back: ");
         return input.nextLine();
     }
 
@@ -88,7 +88,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String approveItem() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the number of the item you wish to approve: ");
+        System.out.print("Enter the number of the item you wish to approve, or -1 to go back: ");
         return input.nextLine();
     }
 
