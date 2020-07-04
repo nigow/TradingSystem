@@ -18,8 +18,8 @@ public class AppealController {
     public AppealController(ManualConfig mc, AppealPresenter appealPresenter) {
         this.mc = mc;
         authManager = mc.getAuthManager();
-        this.appealPresenter = appealPresenter;
         accountManager = mc.getAccountManager();
+        this.appealPresenter = appealPresenter;
     }
 
     public void run() {

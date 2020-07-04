@@ -35,6 +35,7 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
     public String freeze() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the index of the user you'd like to freeze:");
+        System.out.println("Enter -1 to go back.");
         return input.nextLine();
     }
 
@@ -42,6 +43,7 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
     public String unfreeze() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the index of the user you'd like to unfreeze:");
+        System.out.println("Enter -1 to go back.");
         return input.nextLine();
     }
 

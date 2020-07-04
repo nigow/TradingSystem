@@ -11,6 +11,10 @@ import usecases.TradeUtility;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * controller for handling freezing
+ * @author Catherine
+ */
 public class FreezingController {
 
     private ManualConfig mc;
@@ -62,7 +66,7 @@ public class FreezingController {
         }
     }
 
-    public void freeze() {
+    protected void freeze() {
         List<Account> accounts = freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility);
         List<String> usernames = freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility);
         freezingPresenter.displayPossibleFreeze(usernames);
@@ -71,7 +75,10 @@ public class FreezingController {
         while (!isValidInput) {
             isValidInput = true;
             chosenUser = freezingPresenter.freeze();
-            if (!controllerHelper.isNum(chosenUser)) {
+            if (chosenUser.equals("-1")) {
+                run();
+            }
+            else if (!controllerHelper.isNum(chosenUser)) {
                 isValidInput = false;
                 freezingPresenter.invalidInput();
             }
@@ -85,7 +92,7 @@ public class FreezingController {
         }
     }
 
-    public void unfreeze() {
+    protected void unfreeze() {
         List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);
         List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
         freezingPresenter.displayPossibleUnfreeze(usernames);
@@ -94,7 +101,10 @@ public class FreezingController {
         while (!isValidInput) {
             isValidInput = true;
             chosenUser = freezingPresenter.unfreeze();
-            if (!controllerHelper.isNum(chosenUser)) {
+            if (chosenUser.equals("-1")) {
+                run();
+            }
+            else if (!controllerHelper.isNum(chosenUser)) {
                 isValidInput = false;
                 freezingPresenter.invalidInput();
             }
