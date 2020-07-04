@@ -113,7 +113,7 @@ public class LendingControllerTest {
         accountManager.setCurrAccount(admin.getUsername());
         lendingController.run();
 
-        assert(tradeManager.getAllTrades().get(0).getItemOneID().get(0) == item.getItemID());
+        assert(tradeManager.getAllTrades().get(0).getItemOneIDs().get(0) == item.getItemID());
 
     }
 

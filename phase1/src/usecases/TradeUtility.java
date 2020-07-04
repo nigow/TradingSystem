@@ -117,12 +117,12 @@ public class TradeUtility {
             if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
             if (trade.getTraderOneID() == account.getAccountID()) {
-                if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
+                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
                     TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                     AllOneWay.add(timePlace);
                 }
             } else if (trade.getTraderTwoID() == account.getAccountID()) {
-                if (trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                     TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                     AllOneWay.add(timePlace);
                 }
@@ -163,7 +163,7 @@ public class TradeUtility {
                 continue;
             // i added this  -maryam
 
-            if (!trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+            if (!trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                 AllTwoWay.add(timePlace);
             }
@@ -221,11 +221,11 @@ public class TradeUtility {
         Integer timesBorrowed = 0;
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderTwoID()) {
-                if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
+                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
                     timesBorrowed++;
                 }
             } else {
-                if (trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                     timesBorrowed++;
                 }
             }
@@ -241,11 +241,11 @@ public class TradeUtility {
         Integer timesLent = 0;
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderTwoID()) {
-                if (trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                     timesLent++;
                 }
             } else {
-                if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
+                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
                     timesLent++;
                 }
             }

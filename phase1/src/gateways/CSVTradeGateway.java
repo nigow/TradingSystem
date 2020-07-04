@@ -92,8 +92,8 @@ public class CSVTradeGateway implements TradeGateway {
                 String.valueOf(trade.getId()),
                 String.valueOf(trade.getTraderOneID()),
                 String.valueOf(trade.getTraderTwoID()),
-                trade.getItemOneID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
-                trade.getItemTwoID().stream().map(String::valueOf).collect(Collectors.joining(" ")),
+                trade.getItemOneIDs().stream().map(String::valueOf).collect(Collectors.joining(" ")),
+                trade.getItemTwoIDs().stream().map(String::valueOf).collect(Collectors.joining(" ")),
                 //timePlace.getTime().truncatedTo(ChronoUnit.MINUTES) + " " + timePlace.getPlace(),
                 timePlace.getTime() + " " + timePlace.getPlace(),
                 String.valueOf(trade.getEditedCounter()),
@@ -104,8 +104,8 @@ public class CSVTradeGateway implements TradeGateway {
                 String.valueOf(trade.isTraderTwoCompleted())
         };
 
-        if (trade.getItemTwoID().isEmpty()) col[headers.get("trader_one_items")] = " ";
-        if (trade.getItemTwoID().isEmpty()) col[headers.get("trader_two_items")] = " ";
+        if (trade.getItemTwoIDs().isEmpty()) col[headers.get("trader_one_items")] = " ";
+        if (trade.getItemTwoIDs().isEmpty()) col[headers.get("trader_two_items")] = " ";
 
         return String.join(",", col);
     }
