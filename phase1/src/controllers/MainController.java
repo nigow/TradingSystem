@@ -39,7 +39,7 @@ public class MainController {
         lendingController = new LendingController(new ConsoleLendingPresenter(),
                 manualConfig);
         // TODO: FreezingController should have a presenter as input.
-        freezingController = new FreezingController(manualConfig);
+        freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
 
         // TODO: Not all controllers are sent in for completion reasons.
         menuFacade = new MenuFacade(manualConfig, freezingController,
