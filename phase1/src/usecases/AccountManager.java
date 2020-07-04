@@ -171,7 +171,12 @@ public class AccountManager {
         return accountGateway.getAllAccounts();
     }
 
-    // TODO javadoc  -maryam
+
+    /**
+     * Retrieves a formatted string of an account from the given accountID
+     * @param accountID Unique identifier of account
+     * @return Formatted String of account
+     */
     public String getAccountStringFromID(int accountID) {
         return accountGateway.findById(accountID).toString();
     }
