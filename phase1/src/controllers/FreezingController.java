@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import entities.Account;
 import gateways.ManualConfig;
 import presenters.FreezingPresenter;
@@ -41,6 +42,7 @@ public class FreezingController {
         List<String> freezingActions = new ArrayList<>();
         freezingActions.add("Freeze users");
         freezingActions.add("Unfreeze users");
+        freezingActions.add("Return to home");
         boolean isValidInput = false;
         while (!isValidInput) {
             isValidInput = true;
@@ -50,6 +52,9 @@ public class FreezingController {
             }
             else if (action.equals("1")) {
                 unfreeze();
+            }
+            else if (action.equals("2")) {
+                //TODO return to home
             }
             else {
                 freezingPresenter.invalidInput();
@@ -62,25 +67,21 @@ public class FreezingController {
         List<Account> accounts = freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility);
         List<String> usernames = freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility);
         freezingPresenter.displayPossibleFreeze(usernames);
-        String chosenUsers;
+        String chosenUser;
         boolean isValidInput = false;
         while (!isValidInput) {
             isValidInput = true;
-            chosenUsers = freezingPresenter.freeze();
-            String[] listOfChosenUsers = chosenUsers.split(",");
-            for (String i: listOfChosenUsers) {
-                if (!controllerHelper.isNum(i)) {
-                    isValidInput = false;
-                }
-                else if (Integer.parseInt(i) >= accounts.size()) {
-                    isValidInput = false;
-                }
-                else {
-                    freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(i)));
-                }
-            }
-            if (!isValidInput) {
+            chosenUser = freezingPresenter.freeze();
+            if (!controllerHelper.isNum(chosenUser)) {
+                isValidInput = false;
                 freezingPresenter.invalidInput();
+            }
+            else if (Integer.parseInt(chosenUser) >= accounts.size()) {
+                isValidInput = false;
+                freezingPresenter.invalidInput();
+            }
+            else {
+                freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(chosenUser)));
             }
         }
     }
@@ -89,25 +90,21 @@ public class FreezingController {
         List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);
         List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
         freezingPresenter.displayPossibleUnfreeze(usernames);
-        String chosenUsers;
+        String chosenUser;
         boolean isValidInput = false;
         while (!isValidInput) {
             isValidInput = true;
-            chosenUsers = freezingPresenter.unfreeze();
-            String[] listOfChosenUsers = chosenUsers.split(",");
-            for (String i: listOfChosenUsers) {
-                if (!controllerHelper.isNum(i)) {
-                    isValidInput = false;
-                }
-                else if (Integer.parseInt(i) >= accounts.size()) {
-                    isValidInput = false;
-                }
-                else {
-                    freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(i)));
-                }
-            }
-            if (!isValidInput) {
+            chosenUser = freezingPresenter.unfreeze();
+            if (!controllerHelper.isNum(chosenUser)) {
+                isValidInput = false;
                 freezingPresenter.invalidInput();
+            }
+            else if (Integer.parseInt(chosenUser) >= accounts.size()) {
+                isValidInput = false;
+                freezingPresenter.invalidInput();
+            }
+            else {
+                freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(chosenUser)));
             }
         }
     }
