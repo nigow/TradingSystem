@@ -4,11 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import gateways.ManualConfig;
 import presenters.InventoryPresenter;
-import presenters.ConsoleInventoryPresenter;
 import usecases.AuthManager;
 import usecases.ItemManager;
 import usecases.AccountManager;
@@ -46,6 +44,11 @@ public class InventoryController {
     private final AuthManager authManager;
 
     /**
+     * An instance of ControllerHelper for helper methods
+     */
+    private final ControllerHelper controllerHelper;
+
+    /**
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
      * @param manualConfig the configuration for the program
@@ -54,19 +57,9 @@ public class InventoryController {
         this.itemManager = manualConfig.getItemManager();
         this.accountManager = manualConfig.getAccountManager();
         this.itemUtility = manualConfig.getItemUtility();
-
         this.inventoryPresenter = inventoryPresenter;
-
         this.authManager = manualConfig.getAuthManager();
-    }
-
-    /**
-     * Helper function to tell if a String is only numeric
-     * @param input the string to check
-     * @return true if String is numeric, false otherwise
-     */
-    private boolean isNum(String input) {
-        return Pattern.matches("^[0-9]+$", input);
+        this.controllerHelper = new ControllerHelper();
     }
 
 
@@ -74,10 +67,9 @@ public class InventoryController {
      * Runs the main menu of the program
      */
     public void run() {
-
         String option;
-        Map<String, Runnable> actions = new LinkedHashMap<>();
 
+        Map<String, Runnable> actions = new LinkedHashMap<>();
         actions.put("View all items", this::displayFullInventory);
         actions.put("View your items", this::displayYourInventory);
         actions.put("View all items available for trading", this::displayOthersInventory);
@@ -100,7 +92,7 @@ public class InventoryController {
             displayFullInventory();
             option = inventoryPresenter.displayInventoryOptions(menu);
 
-            if (isNum(option)) {
+            if (controllerHelper.isNum(option)) {
                 int action = Integer.parseInt(option);
 
                 if (action < actions.size()) {
@@ -118,7 +110,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all the items
      */
-    public void displayFullInventory() {
+    void displayFullInventory() {
         this.inventoryPresenter.customMessage("All Items:");
         List<String> allItems = itemManager.getAllItemsString();
         this.inventoryPresenter.displayInventory(allItems);
@@ -127,7 +119,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
-    public void displayYourInventory() {
+    void displayYourInventory() {
         this.inventoryPresenter.customMessage("Your items:");
         List<String> allYourItems = itemUtility.getInventoryOfAccountString(accountManager.getCurrAccount().getAccountID());
         this.inventoryPresenter.displayInventory(allYourItems);
@@ -136,7 +128,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items except for the ones belonging to the user
      */
-    public void displayOthersInventory() {
+    void displayOthersInventory() {
         this.inventoryPresenter.customMessage("Items available for trading: ");
         List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccount().getAccountID());
         this.inventoryPresenter.displayInventory(othersItems);
@@ -145,94 +137,130 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all the items awaiting approval
      */
-    public void displayPending() {
+    void displayPending() {
         inventoryPresenter.customMessage("Items awaiting approval:");
         List<String> all_disapproved = itemUtility.getDisapprovedString();
         inventoryPresenter.displayInventory(all_disapproved);
     }
     /**
-     * Runs create item in inventoryPresenter, calls itemManager to add an item to our inventory
+     * Runs the createItem submenu
      */
-    public void createItem() {
-        List<String> inputs = inventoryPresenter.createItem();
-        if (inputs.get(2).equals("yes")) {
-            if (inputs.get(0).contains(",") || inputs.get(1).contains(",")) {
-                inventoryPresenter.customMessage("Please do not include commas in your name or description. Item was not added");
-            } else {
-                itemManager.createItem(inputs.get(0), inputs.get(1), accountManager.getCurrAccount().getAccountID());
-                inventoryPresenter.customMessage("Item added!");
-            }
-        } else {
-            inventoryPresenter.customMessage("Item was not added.");
-        }
+    void createItem() {
+        boolean confirmedItem = false;
+        boolean nameGiven = false;
+        boolean descriptionGiven = false;
+        boolean exit = false;
+        String name = "";
+        String description = "";
 
+        while (!confirmedItem && !exit) {
+            if (!nameGiven) {
+                name = inventoryPresenter.askName();
+                if (controllerHelper.isExitStr(name)) {
+                    exit = true;
+                } else if (name.contains(",")) {
+                    inventoryPresenter.customMessage("You cannot have a comma in your item name");
+                } else {
+                    nameGiven = true;
+                }
+            } else if (!descriptionGiven) {
+                description = inventoryPresenter.askDescription();
+                if (controllerHelper.isExitStr(description)) {
+                    exit = true;
+                } else if (description.contains(",")) {
+                    inventoryPresenter.customMessage("You cannot have a comma in your item description");
+                } else {
+                    descriptionGiven = true;
+                }
+            } else {
+                String confirm = inventoryPresenter.confirmItem(name, description);
+                if (controllerHelper.isExitStr(confirm)) {
+                    exit = true;
+                } else if (confirm.equals("n")) {
+                    inventoryPresenter.customMessage("Item not added.");
+                    nameGiven = false;
+                    descriptionGiven = false;
+                } else if (confirm.equals("y")) {
+                    itemManager.createItem(name, description, accountManager.getCurrAccount().getAccountID());
+                    inventoryPresenter.customMessage("Item successfully added!");
+                    confirmedItem = true;
+                } else {
+                    inventoryPresenter.invalidInput();
+                }
+            }
+        }
     }
 
     /**
-     * Runs the addToWishlist method in InventoryPresenter,
-     * and uses accountManager and itemManager to actually add the user's chosen item to their wishlist
+     * Runs the add to wishlist submenu
      */
-    public void addToWishlist() {
+    void addToWishlist() {
         displayOthersInventory();
         String option = inventoryPresenter.addToWishlist();
-        if (isNum(option)) {
-            int ind = Integer.parseInt(option);
-
-            if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).size()) {
-                accountManager.addItemToWishlist(itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).get(ind).getItemID());
-                inventoryPresenter.customMessage("Item successfully added to your wishlist!");
+        boolean isValid = false;
+        while (!isValid) {
+            if (controllerHelper.isExitStr(option)) {
+                isValid = true;
+            } else if (controllerHelper.isNum(option)) {
+                int ind = Integer.parseInt(option);
+                if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).size()) {
+                    accountManager.addItemToWishlist(itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).get(ind).getItemID());
+                    inventoryPresenter.customMessage("Item successfully added to your wishlist!");
+                    isValid = true;
+                } else {
+                    inventoryPresenter.customMessage("That number does not correspond to an item");
+                }
             } else {
-                inventoryPresenter.customMessage("That number does not correspond to an item");
+                inventoryPresenter.invalidInput();
             }
-
-        } else {
-            inventoryPresenter.invalidInput();
         }
+
     }
 
     /**
-     * Runs the removeFromInventory method in InventoryPresenter, checks if a user actually owns the item they want to
-     * remove, and if so, uses accountManager and itemManager to remove the item from the inventory
+     * Runs the removeFromInventory submenu
      */
-    public void removeFromInventory() {
+    void removeFromInventory() {
         displayYourInventory();
         String option = inventoryPresenter.removeFromInventory();
-        if (isNum(option)) {
-            int ind = Integer.parseInt(option);
+        boolean isValid = false;
+        while (!isValid) {
+            if (controllerHelper.isNum(option)) {
+                int ind = Integer.parseInt(option);
+                if (ind < itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).size()) {
+                    itemManager.removeItem(itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).get(ind));
+                    isValid = true;
+                    inventoryPresenter.customMessage("Item successfully removed!");
+                } else {
+                    inventoryPresenter.customMessage("That number does not correspond to an item");
+                }
 
-            if (ind < itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).size()) {
-                itemManager.removeItem(itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).get(ind));
             } else {
-                inventoryPresenter.customMessage("That number does not correspond to an item");
+                inventoryPresenter.invalidInput();
             }
-
-        } else {
-            inventoryPresenter.invalidInput();
         }
     }
 
     /**
-     * Runs the displayPendingItems and approveItem method in InventoryPresenter, uses itemManager to approve an item
+     * Runs the approve item submenu
      */
-    public void approveItems() {
-
+    void approveItems() {
         displayPending();
         String option = inventoryPresenter.approveItem();
-
-        if (isNum(option)) {
-            int ind = Integer.parseInt(option);
-
-            if (ind < itemUtility.getDisapprovedString().size()) {
-                itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);
-
+        boolean isValid = false;
+        while (!isValid) {
+            if (controllerHelper.isNum(option)) {
+                int ind = Integer.parseInt(option);
+                if (ind < itemUtility.getDisapprovedString().size()) {
+                    itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);
+                    isValid = true;
+                    inventoryPresenter.customMessage("Item successfully approved!");
+                } else {
+                    inventoryPresenter.customMessage("That number does not correspond to an item");
+                }
             } else {
-                inventoryPresenter.customMessage("That number does not correspond to an item");
-
+                inventoryPresenter.invalidInput();
             }
-        } else {
-            inventoryPresenter.invalidInput();
         }
     }
-
-
 }

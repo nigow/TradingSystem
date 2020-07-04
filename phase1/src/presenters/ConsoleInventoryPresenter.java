@@ -44,20 +44,33 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     /**
      * {@inheritDoc}
      */
-    public List<String> createItem() {
+    @Override
+    public String askName() {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the name of the item you wish to add (no commas): ");
-        String name = input.nextLine();
-        System.out.print("Enter the description of the item you wish to add (no commas): ");
-        String description = input.nextLine();
-        System.out.print(name + ": " + description +"\nIs this correct? (if so, type 'yes'): ");
-        String yes = input.nextLine();
-        List<String> inputs = new ArrayList<>();
-        inputs.add(name);
-        inputs.add(description);
-        inputs.add(yes);
-        return inputs;
+        return input.nextLine();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String askDescription() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the description of the item you wish to add (no commas): ");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String confirmItem(String name, String description) {
+        Scanner input = new Scanner(System.in);
+        System.out.print(name + ": " + description +"\nIs this correct? (y/n) :");
+        return input.nextLine();
+    }
+
 
     /**
      * {@inheritDoc}
@@ -72,6 +85,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String approveItem() {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the number of the item you wish to approve: ");
@@ -84,6 +98,14 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void abortMessage() {
+        System.out.println("Action successfully cancelled");
     }
 
     /**

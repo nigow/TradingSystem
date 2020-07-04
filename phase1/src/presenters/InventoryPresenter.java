@@ -28,10 +28,24 @@ public interface InventoryPresenter {
     public String addToWishlist();
 
     /**
-     * create an item
-     * @return the Name and Description of the Item the user wishes to create
+     * ask user what they want to name their item
+     * @return the Name of the Item the user wishes to create
      */
-    public List<String> createItem();
+    public String askName();
+
+    /**
+     * ask user for their item's description
+     * @return the Description of the Item the user wishes to create
+     */
+    public String askDescription();
+
+    /**
+     * ask user to confirm their item
+     * @param name The name that the user has given
+     * @param description the description that the user has given
+     * @return the Description of the Item the user wishes to create
+     */
+    public String confirmItem(String name, String description);
 
     /**
      * remove from inventory
@@ -50,6 +64,11 @@ public interface InventoryPresenter {
      * tells user that their input was invalid
      */
     public void invalidInput();
+
+    /**
+     * tells user that they've successfuly aborted their choice
+     */
+    public void abortMessage();
 
     /**
      * sends a customizable message to the user
