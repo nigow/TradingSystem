@@ -121,7 +121,7 @@ public class InventoryController {
      */
     void displayYourInventory() {
         this.inventoryPresenter.customMessage("Your items:");
-        List<String> allYourItems = itemUtility.getInventoryOfAccountString(accountManager.getCurrAccount().getAccountID());
+        List<String> allYourItems = itemUtility.getInventoryOfAccountString(accountManager.getCurrAccountID());
         this.inventoryPresenter.displayInventory(allYourItems);
     }
 
@@ -130,7 +130,7 @@ public class InventoryController {
      */
     void displayOthersInventory() {
         this.inventoryPresenter.customMessage("Items available for trading: ");
-        List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccount().getAccountID());
+        List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccountID());
         this.inventoryPresenter.displayInventory(othersItems);
     }
 
@@ -181,7 +181,7 @@ public class InventoryController {
                     nameGiven = false;
                     descriptionGiven = false;
                 } else if (confirm.equals("y")) {
-                    itemManager.createItem(name, description, accountManager.getCurrAccount().getAccountID());
+                    itemManager.createItem(name, description, accountManager.getCurrAccountID());
                     inventoryPresenter.customMessage("Item successfully added!");
                     confirmedItem = true;
                 } else {
@@ -203,8 +203,8 @@ public class InventoryController {
                 isValid = true;
             } else if (controllerHelper.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).size()) {
-                    accountManager.addItemToWishlist(itemUtility.getNotInAccount(accountManager.getCurrAccount().getAccountID()).get(ind).getItemID());
+                if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID()).size()) {
+                    accountManager.addItemToWishlist(itemUtility.getNotInAccount(accountManager.getCurrAccountID()).get(ind).getItemID());
                     inventoryPresenter.customMessage("Item successfully added to your wishlist!");
                     isValid = true;
                 } else {
@@ -227,8 +227,8 @@ public class InventoryController {
         while (!isValid) {
             if (controllerHelper.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).size()) {
-                    itemManager.removeItem(itemUtility.getInventoryOfAccount(accountManager.getCurrAccount().getAccountID()).get(ind));
+                if (ind < itemUtility.getInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
+                    itemManager.removeItem(itemUtility.getInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
                     isValid = true;
                     inventoryPresenter.customMessage("Item successfully removed!");
                 } else {
