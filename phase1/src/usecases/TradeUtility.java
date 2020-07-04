@@ -79,6 +79,7 @@ public class TradeUtility {
      * adjusted
      */
     public List<Integer> getTopThreePartnersIds() {
+        // TODO only count completed trades  -maryam
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderOneID()) {

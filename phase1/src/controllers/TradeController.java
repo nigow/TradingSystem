@@ -106,6 +106,9 @@ public class TradeController {
                                 tradeManager.updateStatus(TradeStatus.REJECTED);
                             } else if (action_ind == 1) {
                                 tradeManager.updateStatus(TradeStatus.CONFIRMED);
+                                if (!tradeManager.isPermanent()) {
+                                    tradeManager.reverseTrade();
+                                }
                             } else if (action_ind == 2) {
                                 changeTrade();
                             }

@@ -69,6 +69,15 @@ public class TradeManager {
         tradeGateway.updateTrade(trade, timePlace);
     }
 
+    // TODO java doc  -maryam
+    public void reverseTrade() {
+        int id = tradeGateway.generateValidId();
+        this.timePlace = new TimePlace(id, timePlace.getTime().plusDays(30), timePlace.getPlace());
+        this.trade = new Trade(id, id, true, trade.getTraderOneID(),
+                trade.getTraderTwoID(), trade.getItemTwoID(), trade.getItemOneID(), 0);
+        tradeGateway.updateTrade(this.trade, this.timePlace);
+    }
+
     /**
      * Need delete trade method in trade gateway
      */
@@ -191,10 +200,14 @@ public class TradeManager {
         return StringTrade;
     }
 
-    // TODO java doc
+    // TODO java doc and implementation  -maryam
     public String tradeAsString() {
         String ans = "";
         return ans;
+    }
+
+    public boolean isPermanent() {
+        return trade.isPermanent();
     }
 
 }
