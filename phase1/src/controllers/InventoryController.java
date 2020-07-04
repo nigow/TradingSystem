@@ -72,7 +72,8 @@ public class InventoryController {
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
         actions.put("View all approved items", this::displayFullInventory);
-        actions.put("View your items", this::displayYourInventory);
+        actions.put("View your approved items", this::displayYourInventory);
+        actions.put("View your pending items", this::displayYourPending);
         actions.put("View all items available for trading", this::displayOthersInventory);
         if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
             actions.put("Add to wishlist", this::addToWishlist);
@@ -120,8 +121,17 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
     void displayYourInventory() {
-        this.inventoryPresenter.customMessage("Your items:");
-        List<String> allYourItems = itemUtility.getInventoryOfAccountString(accountManager.getCurrAccountID());
+        this.inventoryPresenter.customMessage("Your approved items:");
+        List<String> allYourItems = itemUtility.getApprovedInventoryOfAccountString(accountManager.getCurrAccountID());
+        this.inventoryPresenter.displayInventory(allYourItems);
+    }
+
+    /**
+     * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
+     */
+    void displayYourPending() {
+        this.inventoryPresenter.customMessage("Your pending items:");
+        List<String> allYourItems = itemUtility.getDisprovedInventoryOfAccountString(accountManager.getCurrAccountID());
         this.inventoryPresenter.displayInventory(allYourItems);
     }
 
@@ -227,8 +237,8 @@ public class InventoryController {
             String option = inventoryPresenter.removeFromInventory();
             if (controllerHelper.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
-                    itemManager.removeItem(itemUtility.getInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
+                    itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
                     isValid = true;
                     inventoryPresenter.customMessage("Item successfully removed!");
                 } else {
