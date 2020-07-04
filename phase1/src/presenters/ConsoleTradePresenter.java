@@ -39,7 +39,7 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public String selectTrade() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the index of the trade you want to suggest a new meeting for: ");
+        System.out.println("Enter the index of the trade you want to change (-1 to return): ");
         return input.nextLine();
     }
 
@@ -47,13 +47,15 @@ public class ConsoleTradePresenter implements TradePresenter {
      * {@inheritDoc}
      */
     @Override
-    public String[] editTrade() {
+    public String[] editTradeTimePlace() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Suggest a new location for the meeting: ");
-        String[] s = new String[2];
+        System.out.print("Suggest a new location for the meeting: ");
+        String[] s = new String[3];
         s[0] = input.nextLine();
-        System.out.println("Suggest a new time for the meeting: ");
+        System.out.print("Suggest a new date for the meeting yyyy-mm-dd: ");
         s[1] = input.nextLine();
+        System.out.print("Suggest a new time for the meeting hh-mm: ");
+        s[2] = input.nextLine();
         return s;
     }
 
@@ -96,5 +98,23 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String yesOrNo() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("y/n: ");
+        return input.nextLine();
     }
 }

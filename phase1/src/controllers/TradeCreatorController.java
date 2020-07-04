@@ -43,7 +43,7 @@ public class TradeCreatorController {
         this.itemUtility = manualConfig.getItemUtility();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-        this.traderOneId = accountManager.getCurrAccount().getAccountID();
+        this.traderOneId = accountManager.getCurrAccountID();
         this.traderTwoId = peerId;
         this.itemId = itemId;
 

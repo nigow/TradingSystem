@@ -38,8 +38,8 @@ public class CSVTradeGatewayTest {
         assertTrue(tg.findTradeById(id).isPermanent());
         assertEquals(tg.findTradeById(id).getTraderOneID(), 0);
         assertEquals(tg.findTradeById(id).getTraderTwoID(), 1);
-        assertEquals(tg.findTradeById(id).getItemOneID(), new ArrayList<>(Arrays.asList(0)));
-        assertEquals(tg.findTradeById(id).getItemTwoID(), new ArrayList<>(Arrays.asList(1)));
+        assertEquals(tg.findTradeById(id).getItemOneIDs(), new ArrayList<>(Arrays.asList(0)));
+        assertEquals(tg.findTradeById(id).getItemTwoIDs(), new ArrayList<>(Arrays.asList(1)));
         assertEquals(tg.findTradeById(id).getEditedCounter(), 0);
 
     }

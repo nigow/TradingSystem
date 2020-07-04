@@ -26,10 +26,10 @@ public interface TradePresenter {
     String selectTrade();
 
     /**
-     * edit trade
-     * @return information for edited trade
+     * edit trade's meetup
+     * @return information for trade's new meetup
      */
-    String[] editTrade();
+    String[] editTradeTimePlace();
 
     /**
      * displays user's 3 most recent traded items in a one way trade
@@ -53,4 +53,15 @@ public interface TradePresenter {
      * tells user that their input was invalid
      */
     void invalidInput();
+
+    /**
+     * presents the user with a custom message
+     */
+    void showMessage(String message);
+
+    /**
+     * presents the user with the option to say yes or no
+     * @return user's input y/n
+     */
+    String yesOrNo();
 }

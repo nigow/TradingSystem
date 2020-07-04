@@ -98,7 +98,7 @@ public class WishlistController {
 
     private void startTrade() {
 
-        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccount().getAccountID());
+        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String itemIndex = wishlistPresenter.startTrade();
@@ -121,7 +121,7 @@ public class WishlistController {
 
     private void removeFromWishlist() {
 
-        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccount().getAccountID());
+        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
 
         String itemIndex = wishlistPresenter.removeFromWishlist();

@@ -79,6 +79,7 @@ public class TradeUtility {
      * adjusted
      */
     public List<Integer> getTopThreePartnersIds() {
+        // TODO only count confirmed trades  -maryam
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderOneID()) {
@@ -112,11 +113,29 @@ public class TradeUtility {
         List<TimePlace> AllOneWay = new ArrayList<>();
         List<Trade> AllOneWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
+
+            if (trade.getStatus() != TradeStatus.CONFIRMED)
+                continue;
+            if (trade.getTraderOneID() == account.getAccountID()) {
+                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
+                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+                    AllOneWay.add(timePlace);
+                }
+            } else if (trade.getTraderTwoID() == account.getAccountID()) {
+                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
+                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+                    AllOneWay.add(timePlace);
+                }
+            }
+            // i changed this  -maryam
+
+            /*
             if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty() ||
                     trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                 AllOneWay.add(timePlace);
             }
+             */
         }
         Collections.sort(AllOneWay);
         int count = 0;
@@ -139,7 +158,12 @@ public class TradeUtility {
         List<TimePlace> AllTwoWay = new ArrayList<>();
         List<Trade> AllTwoWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (!trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+
+            if (trade.getStatus() != TradeStatus.CONFIRMED)
+                continue;
+            // i added this  -maryam
+
+            if (!trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                 AllTwoWay.add(timePlace);
             }
@@ -179,12 +203,13 @@ public class TradeUtility {
      */
     public Integer getTimesIncomplete() {
         Integer timesIncomplete = 0;
-        TradeStatus status = TradeStatus.REJECTED;
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus().equals(status)) {
+            LocalDateTime tradeTime = tradeManager.getTradeGateway().findTimePlaceById(trade.getId()).getTime();
+            if (tradeTime.isBefore(LocalDateTime.now()) && !trade.getStatus().equals(TradeStatus.COMPLETED)) {
                 timesIncomplete++;
             }
         }
+        // i changed this  -maryam
         return timesIncomplete;
     }
 
@@ -196,11 +221,11 @@ public class TradeUtility {
         Integer timesBorrowed = 0;
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderTwoID()) {
-                if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
+                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
                     timesBorrowed++;
                 }
             } else {
-                if (trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                     timesBorrowed++;
                 }
             }
@@ -216,11 +241,11 @@ public class TradeUtility {
         Integer timesLent = 0;
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderTwoID()) {
-                if (trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                     timesLent++;
                 }
             } else {
-                if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
+                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
                     timesLent++;
                 }
             }

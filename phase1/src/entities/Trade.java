@@ -36,13 +36,13 @@ public class Trade {
      * List of IDs of items the first person is trading away.
      * Can be an empty list.
      */
-    private final List<Integer> itemOneID;
+    private final List<Integer> itemOneIDs;
 
     /**
      * List of IDs of items the second person is trading away.
      * Can be an empty list.
      */
-    private final List<Integer> itemTwoID;
+    private final List<Integer> itemTwoIDs;
 
     /**
      * The status of this trade. (i.e. if it's rejected, unconfirmed, confirmed, or completed)
@@ -59,6 +59,10 @@ public class Trade {
      */
     private int editedCounter;
 
+    // TODO javadoc
+    private boolean traderOneCompleted;
+    private boolean traderTwoCompleted;
+
     /**
      * Creates a Trade object based on input. The status is set to unconfirmed.
      * @param id The ID of this trade.
@@ -66,21 +70,23 @@ public class Trade {
      * @param isPermanent Whether this is a permanent or temporary trade.
      * @param traderOneID The ID of the Account of the first person in this trade.
      * @param traderTwoID The ID of the Account of the second person in this trade.
-     * @param itemOneID List of IDs of items the first person is trading away.
-     * @param itemTwoID List of IDs of items the second person is trading away.
+     * @param itemOneIDs List of IDs of items the first person is trading away.
+     * @param itemTwoIDs List of IDs of items the second person is trading away.
      */
     public Trade(int id, int timePlaceID, boolean isPermanent, int traderOneID, int traderTwoID,
-                 List<Integer> itemOneID, List<Integer> itemTwoID, int editedCounter) {
+                 List<Integer> itemOneIDs, List<Integer> itemTwoIDs, int editedCounter) {
         this.id = id;
         this.timePlaceID = timePlaceID;
         this.isPermanent = isPermanent;
         this.traderOneID = traderOneID;
         this.traderTwoID = traderTwoID;
-        this.itemOneID = itemOneID;
-        this.itemTwoID = itemTwoID;
+        this.itemOneIDs = itemOneIDs;
+        this.itemTwoIDs = itemTwoIDs;
         status = TradeStatus.UNCONFIRMED;
         this.editedCounter = editedCounter;
         lastEditorID = traderOneID;
+        traderOneCompleted = false;
+        traderTwoCompleted = false;
     }
 
     /**
@@ -127,16 +133,16 @@ public class Trade {
      * Returns the list of IDs of items the first person is trading away.
      * @return List of IDs of items the first person is trading away.
      */
-    public List<Integer> getItemOneID() {
-        return itemOneID;
+    public List<Integer> getItemOneIDs() {
+        return itemOneIDs;
     }
 
     /**
      * Returns the list of IDs of items the second person is trading away.
      * @return List of IDs of items the second person is trading away.
      */
-    public List<Integer> getItemTwoID() {
-        return itemTwoID;
+    public List<Integer> getItemTwoIDs() {
+        return itemTwoIDs;
     }
 
     /**
@@ -202,6 +208,7 @@ public class Trade {
         editedCounter++;
     }
 
+    // TODO wherever this toString is used, use the better use case version
     /**
      * Creates a string representation of this trade.
      * @return A string representation of a Trade object.
@@ -214,11 +221,36 @@ public class Trade {
                 ", isPermanent=" + isPermanent +
                 ", traderOneID=" + traderOneID +
                 ", traderTwoID=" + traderTwoID +
-                ", itemOneID=" + itemOneID +
-                ", itemTwoID=" + itemTwoID +
+                ", itemOneIDs=" + itemOneIDs +
+                ", itemTwoIDs=" + itemTwoIDs +
                 ", status=" + status +
                 ", lastEditorID=" + lastEditorID +
                 ", editedCounter=" + editedCounter +
                 '}';
     }
+
+    // TODO java doc
+
+    public boolean isTraderOneCompleted() {
+        return traderOneCompleted;
+    }
+
+    public void setTraderOneCompleted(boolean traderOneCompleted) {
+        this.traderOneCompleted = traderOneCompleted;
+        if (this.traderOneCompleted && this.traderTwoCompleted) {
+            this.status = TradeStatus.COMPLETED;
+        }
+    }
+
+    public boolean isTraderTwoCompleted() {
+        return traderTwoCompleted;
+    }
+
+    public void setTraderTwoCompleted(boolean traderTwoCompleted) {
+        this.traderTwoCompleted = traderTwoCompleted;
+        if (this.traderOneCompleted && this.traderTwoCompleted) {
+            this.status = TradeStatus.COMPLETED;
+        }
+    }
+
 }

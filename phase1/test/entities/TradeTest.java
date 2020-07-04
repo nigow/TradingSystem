@@ -58,7 +58,7 @@ public class TradeTest extends TestCase {
         c.add(1);
         c.add(2);
         Trade initial = new Trade(1, 3, true, 4, 5, a, b, 0);
-        TestCase.assertEquals(initial.getItemOneID(), c);
+        TestCase.assertEquals(initial.getItemOneIDs(), c);
     }
 
     public void testGetItemTwoID() {
@@ -70,7 +70,7 @@ public class TradeTest extends TestCase {
         List<Integer> c = new ArrayList<>();
         c.add(3);
         Trade initial = new Trade(1, 3, true, 4, 5, a, b, 0);
-        TestCase.assertEquals(initial.getItemTwoID(), c);
+        TestCase.assertEquals(initial.getItemTwoIDs(), c);
     }
 
     public void testGetStatus() {

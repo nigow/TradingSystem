@@ -1,9 +1,6 @@
 package usecases;
 
-import entities.Item;
-import entities.TimePlace;
-import entities.Trade;
-import entities.TradeStatus;
+import entities.*;
 import gateways.TradeGateway;
 
 import java.time.LocalDateTime;
@@ -73,6 +70,17 @@ public class TradeManager {
     }
 
     /**
+     * Initiates a reverse trade
+     */
+    public void reverseTrade() {
+        int id = tradeGateway.generateValidId();
+        this.timePlace = new TimePlace(id, timePlace.getTime().plusDays(30), timePlace.getPlace());
+        this.trade = new Trade(id, id, true, trade.getTraderOneID(),
+                trade.getTraderTwoID(), trade.getItemTwoIDs(), trade.getItemOneIDs(), 0);
+        tradeGateway.updateTrade(this.trade, this.timePlace);
+    }
+
+    /**
      * Need delete trade method in trade gateway
      */
     public void deleteTrade() {
@@ -118,8 +126,55 @@ public class TradeManager {
         return trade.getStatus();
     }
 
+    /**
+     * @return The current trade.
+     */
     public Trade getTrade() {
         return trade;
+    }
+
+    /**
+     * @param trade The current trade.
+     */
+    public void setTrade(Trade trade) {
+        this.trade = trade;
+        timePlace = tradeGateway.findTimePlaceById(trade.getId());
+    }
+
+    /**
+     * @return Whether the trade is rejected
+     */
+    public boolean isRejected() {
+        return trade.getStatus().equals(TradeStatus.REJECTED);
+    }
+
+    /**
+     * @return Whether trade is confirmed
+     */
+    public boolean isConfirmed() {
+        return trade.getStatus().equals(TradeStatus.CONFIRMED);
+    }
+
+    /**
+     * @return Whether trade is unconfirmed
+     */
+    public boolean isUnconfirmed() {
+        return trade.getStatus().equals(TradeStatus.CONFIRMED);
+    }
+
+    /**
+     * @return Whether trade is completed.
+     */
+    public boolean isCompleted() {
+        return trade.getStatus().equals(TradeStatus.COMPLETED);
+    }
+
+    /**
+     * @param account The account checked
+     * @return Whether it's the account's turn to edit.
+     */
+    public boolean isEditTurn(Account account) {
+        return account.getAccountID() != trade.getLastEditorID();
     }
 
     public TradeGateway getTradeGateway() {
@@ -133,6 +188,8 @@ public class TradeManager {
         return tradeGateway.getAllTrades();
     }
 
+
+
     /**
      * Retrieves all trades stored in persistent storage in string format
      * @return List of trades in string format
@@ -143,6 +200,54 @@ public class TradeManager {
             StringTrade.add(trade.toString());
         }
         return StringTrade;
+    }
+
+    // TODO add implementation to tradeAsString  -maryam
+
+    /**
+     * @param accountManager: An accountManager instance
+     * @return A friendly user representation of a string.
+     */
+    public String tradeAsString(AccountManager accountManager) {
+        String ans = "";
+        String username1 = accountManager.getAccountFromID(
+                trade.getTraderOneID()).getUsername();
+        String username2 = accountManager.getAccountFromID(
+                trade.getTraderTwoID()).getUsername();
+
+        if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
+            ans += "Type: Two-way ";
+            ans += "Account 1: " + username1 + " Account 2: " + username2;
+        }
+        else {
+            ans += "Type: One-way ";
+            if (trade.getItemOneIDs().size() > 0) {
+                ans += "Borrower: " + username1 + " Lender: " + username2;
+            }
+            else {
+                ans += "Borrower: " + username2 + " Lender " + username1;
+            }
+
+        }
+        ans += "Status: " + trade.getStatus().toString();
+        ans += "Type: ";
+        ans += trade.isPermanent() ? "Permanent": "Temporary";
+        ans += "Location: " + timePlace.getPlace();
+        ans += "Time: " + timePlace.getTime();
+
+
+        return ans;
+    }
+
+    public boolean isPermanent() {
+        return trade.isPermanent();
+    }
+
+    public void updateCompletion(int accountID) {
+        if (accountID == trade.getTraderOneID())
+            trade.setTraderOneCompleted(true);
+        else if (accountID == trade.getTraderTwoID())
+            trade.setTraderTwoCompleted(true);
     }
 
 }

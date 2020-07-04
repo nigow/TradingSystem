@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.Trade;
 import gateways.ManualConfig;
 import gateways.ManualConfigCSV;
 import presenters.*;
@@ -21,6 +22,7 @@ public class MainController {
     LendingController lendingController;
     MenuFacade menuFacade;
     WishlistController wishlistController;
+    TradeController tradeController;
 
     public MainController() {
         try {
@@ -34,17 +36,23 @@ public class MainController {
                 new ConsoleInventoryPresenter());
         wishlistController = new WishlistController(new ConsoleWishlistPresenter(),
                 new ConsoleTradeCreatorPresenter(), manualConfig);
+        appealController = new AppealController(manualConfig,
+                new ConsoleAppealPresenter());
 
         // TODO: LendingController should be called with TradeCreatorPresenter.
         lendingController = new LendingController(new ConsoleLendingPresenter(),
-                manualConfig);
+                manualConfig, new ConsoleTradeCreatorPresenter());
         // TODO: FreezingController should have a presenter as input.
         freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
+
+        tradeController = new TradeController(manualConfig, new ConsoleTradePresenter());
+
+        adminCreator = new AdminCreator(manualConfig, new ConsoleAdminPresenter());
 
         // TODO: Not all controllers are sent in for completion reasons.
         menuFacade = new MenuFacade(manualConfig, freezingController,
                 inventoryController, wishlistController, lendingController,
-                new ConsoleMenuPresenter());
+                appealController, tradeController, adminCreator, new ConsoleMenuPresenter());
 
         authController = new AuthController(manualConfig,
                     new ConsoleHomePresenter(), menuFacade);
