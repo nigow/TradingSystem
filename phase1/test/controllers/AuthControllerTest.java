@@ -2,29 +2,35 @@ package controllers;
 
 import gateways.InMemoryManualConfig;
 import gateways.ManualConfig;
-import junit.framework.TestCase;
-import presenters.ConsoleFreezingPresenter;
-import presenters.MockHomePresenter;
+import org.junit.Test;
 import presenters.MockHomePresenter;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.fail;
 
-public class AuthControllerTest extends TestCase {
+public class AuthControllerTest {
     private AuthController authController;
     private ManualConfig manualConfig;
 
     public AuthControllerTest() {
         manualConfig = new InMemoryManualConfig();
-        AuthController authController = new AuthController(manualConfig, new MockHomePresenter(), null);
-
+        authController = new AuthController(manualConfig, new MockHomePresenter(), null);
 
     }
 
-    public void testValidLogin() {
-        manualConfig.getAccountManager().createStandardAccount("testUsername",
-                "testPassword");
-        authController.run();
-    }
+    /**
+     * Verifies that it is impossible to create an with an already existing username.
+     */
+    @Test(timeout = 50)
+    public void testInvalidCreation() {
+        try {
+            manualConfig.getAccountManager().createStandardAccount("testUsername",
+                    "testPassword");
+            authController.run();
+        }
+        // NullPointerException should only occur if MenuFacade is called, which should not be the case here.
+        catch (NullPointerException e) {
+            fail();
+        }
 
+    }
 }
