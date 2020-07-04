@@ -152,7 +152,7 @@ public class TradeController {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getRecentTwoWay()) {
             tradeManager.setTrade(t);
-            trades.add(tradeManager.tradeAsString());
+            trades.add(tradeManager.tradeAsString(accountManager));
         }
         tradePresenter.displayRecentTwoWayTrade(trades);
     }
@@ -161,7 +161,7 @@ public class TradeController {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getRecentOneWay()) {
             tradeManager.setTrade(t);
-            trades.add(tradeManager.tradeAsString());
+            trades.add(tradeManager.tradeAsString(accountManager));
         }
         tradePresenter.displayRecentOneWayTrade(trades);
     }

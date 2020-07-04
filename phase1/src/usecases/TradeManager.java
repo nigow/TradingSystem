@@ -69,12 +69,14 @@ public class TradeManager {
         tradeGateway.updateTrade(trade, timePlace);
     }
 
-    // TODO java doc  -maryam
+    /**
+     * Initiates a reverse trade
+     */
     public void reverseTrade() {
         int id = tradeGateway.generateValidId();
         this.timePlace = new TimePlace(id, timePlace.getTime().plusDays(30), timePlace.getPlace());
         this.trade = new Trade(id, id, true, trade.getTraderOneID(),
-                trade.getTraderTwoID(), trade.getItemTwoID(), trade.getItemOneID(), 0);
+                trade.getTraderTwoID(), trade.getItemTwoIDs(), trade.getItemOneIDs(), 0);
         tradeGateway.updateTrade(this.trade, this.timePlace);
     }
 
@@ -200,10 +202,40 @@ public class TradeManager {
         return StringTrade;
     }
 
-    // TODO addmjava doc. add implementation to tradeAsString  -maryam
+    // TODO add implementation to tradeAsString  -maryam
 
-    public String tradeAsString() {
+    /**
+     * @param accountManager: An accountManager instance
+     * @return A friendly user representation of a string.
+     */
+    public String tradeAsString(AccountManager accountManager) {
         String ans = "";
+        String username1 = accountManager.getAccountFromID(
+                trade.getTraderOneID()).getUsername();
+        String username2 = accountManager.getAccountFromID(
+                trade.getTraderTwoID()).getUsername();
+
+        if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
+            ans += "Type: Two-way ";
+            ans += "Account 1: " + username1 + " Account 2: " + username2;
+        }
+        else {
+            ans += "Type: One-way ";
+            if (trade.getItemOneIDs().size() > 0) {
+                ans += "Borrower: " + username1 + " Lender: " + username2;
+            }
+            else {
+                ans += "Borrower: " + username2 + " Lender " + username1;
+            }
+
+        }
+        ans += "Status: " + trade.getStatus().toString();
+        ans += "Type: ";
+        ans += trade.isPermanent() ? "Permanent": "Temporary";
+        ans += "Location: " + timePlace.getPlace();
+        ans += "Time: " + timePlace.getTime();
+
+
         return ans;
     }
 
