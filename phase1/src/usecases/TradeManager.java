@@ -1,9 +1,6 @@
 package usecases;
 
-import entities.Item;
-import entities.TimePlace;
-import entities.Trade;
-import entities.TradeStatus;
+import entities.*;
 import gateways.TradeGateway;
 
 import java.time.LocalDateTime;
@@ -118,8 +115,54 @@ public class TradeManager {
         return trade.getStatus();
     }
 
+    /**
+     * @return The current trade.
+     */
     public Trade getTrade() {
         return trade;
+    }
+
+    /**
+     * @param trade The current trade.
+     */
+    public void setTrade(Trade trade) {
+        this.trade = trade;
+    }
+
+    /**
+     * @return Whether the trade is rejected
+     */
+    public boolean isRejected() {
+        return trade.getStatus().equals(TradeStatus.REJECTED);
+    }
+
+    /**
+     * @return Whether trade is confirmed
+     */
+    public boolean isConfirmed() {
+        return trade.getStatus().equals(TradeStatus.CONFIRMED);
+    }
+
+    /**
+     * @return Whether trade is unconfirmed
+     */
+    public boolean isUnconfirmed() {
+        return trade.getStatus().equals(TradeStatus.CONFIRMED);
+    }
+
+    /**
+     * @return Whether trade is completed.
+     */
+    public boolean isCompleted() {
+        return trade.getStatus().equals(TradeStatus.COMPLETED);
+    }
+
+    /**
+     * @param account The account checked
+     * @return Whether it's the account's turn to edit.
+     */
+    public boolean isEditTurn(Account account) {
+        return account.getAccountID() != trade.getLastEditorID();
     }
 
     public TradeGateway getTradeGateway() {
@@ -132,6 +175,8 @@ public class TradeManager {
     public List<Trade> getAllTrades() {
         return tradeGateway.getAllTrades();
     }
+
+
 
     /**
      * Retrieves all trades stored in persistent storage in string format
