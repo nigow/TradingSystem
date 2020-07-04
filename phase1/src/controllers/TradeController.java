@@ -26,7 +26,7 @@ public class TradeController {
     private final AccountManager accountManager;
     private final TradeUtility tradeUtility;
     private final TradeManager tradeManager;
-    private final ControllerHelper helper;
+    private final ControllerInputValidator controllerInputValidator;
 
     public TradeController(ManualConfig mc, TradePresenter tradePresenter) {
         this.tradePresenter = tradePresenter;
@@ -34,7 +34,7 @@ public class TradeController {
         accountManager = mc.getAccountManager();
         tradeUtility = mc.getTradeUtility();
         tradeManager = mc.getTradeManager();
-        helper = new ControllerHelper();
+        controllerInputValidator = new ControllerInputValidator();
     }
 
     public void run() {
@@ -63,7 +63,7 @@ public class TradeController {
 
             String action = tradePresenter.displayTradeOptions(options);
 
-            if (helper.isNum(action)) {
+            if (controllerInputValidator.isNum(action)) {
                 int i = Integer.parseInt(action);
                 if (0 <= i && i < methods.size())
                     methods.get(i).run();
@@ -83,7 +83,7 @@ public class TradeController {
     // TODO make helpers to make this less ugly
     private void selectAndChangeTrade() {
         String index = tradePresenter.selectTrade();
-        if (helper.isNum(index)) {
+        if (controllerInputValidator.isNum(index)) {
             int ind = Integer.parseInt(index);
             List<Trade> trades = tradeUtility.getAllTradesAccount();
             if (0 <= ind && ind < trades.size()) {
@@ -98,7 +98,7 @@ public class TradeController {
                         options.add("Edit the time and location for this trade");
                     }
                     String action = tradePresenter.displayTradeOptions(options);
-                    if (helper.isNum(action)) {
+                    if (controllerInputValidator.isNum(action)) {
                         int action_ind = Integer.parseInt(action);
                         if (0 <= action_ind && action_ind < options.size()) {
                             if (action_ind == 0) {
@@ -140,7 +140,7 @@ public class TradeController {
 
     private void changeTrade() {
         String[] newInfo = tradePresenter.editTradeTimePlace();
-        if (helper.isDate(newInfo[1]) && helper.isTime(newInfo[2])) {
+        if (controllerInputValidator.isDate(newInfo[1]) && controllerInputValidator.isTime(newInfo[2])) {
             tradeManager.editTimePlace(LocalDateTime.parse(newInfo[1] + " " + newInfo[2], DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm")),
                     newInfo[0], accountManager.getCurrAccountID());
         } else

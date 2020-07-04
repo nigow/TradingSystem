@@ -18,7 +18,7 @@ public class AuthControllerTest {
     }
 
     /**
-     * Verifies that it is impossible to create an with an already existing username.
+     * Verifies that it is impossible to create an account with an already existing username.
      */
     @Test(timeout = 50)
     public void testInvalidCreation() {

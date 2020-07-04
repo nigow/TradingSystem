@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * Class containing helper methods for verifying input.
  */
-public class ControllerHelper {
+public class ControllerInputValidator {
 
     /**
      * Check if a string is a non-negative integer.

@@ -1,12 +1,10 @@
 package controllers;
 
 import gateways.ManualConfig;
-import presenters.ConsoleHomePresenter;
 import presenters.HomePresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 

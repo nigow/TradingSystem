@@ -28,7 +28,7 @@ public class WishlistController {
     private ItemManager itemManager;
     private AuthManager authManager;
 
-    private ControllerHelper controllerHelper;
+    private ControllerInputValidator controllerInputValidator;
 
     /**
      * Create a controller for the wishlist screen.
@@ -49,7 +49,7 @@ public class WishlistController {
         this.wishlistPresenter = wishlistPresenter;
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-        controllerHelper = new ControllerHelper();
+        controllerInputValidator = new ControllerInputValidator();
 
     }
 
@@ -67,7 +67,7 @@ public class WishlistController {
             List<String> options = new ArrayList<>(actions.keySet());
             input = wishlistPresenter.displayWishlistOptions(options);
 
-            if (controllerHelper.isNum(input)) {
+            if (controllerInputValidator.isNum(input)) {
 
                 int action = Integer.parseInt(input);
                 if (action < actions.size()) {
@@ -104,9 +104,9 @@ public class WishlistController {
 
         String itemIndex = wishlistPresenter.startTrade();
 
-        while (!controllerHelper.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
+        while (!controllerInputValidator.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
 
-            if (controllerHelper.isExitStr(itemIndex)) return;
+            if (controllerInputValidator.isExitStr(itemIndex)) return;
             wishlistPresenter.invalidInput();
             itemIndex = wishlistPresenter.startTrade();
 
@@ -127,9 +127,9 @@ public class WishlistController {
 
         String itemIndex = wishlistPresenter.removeFromWishlist();
 
-        while (!controllerHelper.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
+        while (!controllerInputValidator.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistInfo.size()) {
 
-            if (controllerHelper.isExitStr(itemIndex)) return;
+            if (controllerInputValidator.isExitStr(itemIndex)) return;
             wishlistPresenter.invalidInput();
             itemIndex = wishlistPresenter.removeFromWishlist();
 

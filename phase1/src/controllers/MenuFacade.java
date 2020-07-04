@@ -38,7 +38,7 @@ public class MenuFacade {
     private final AppealController appealController;
     private AdminCreator adminCreator;
 
-    private final ControllerHelper helper;
+    private final ControllerInputValidator helper;
 
     /**
      * Initializes MenuFacade based on information from ManualConfig and creates instances of
@@ -58,7 +58,7 @@ public class MenuFacade {
 
         this.menuPresenter = menuPresenter;
 
-        helper = new ControllerHelper();
+        helper = new ControllerInputValidator();
 
         this.freezingController = freezingController;
         this.inventoryController = inventoryController;

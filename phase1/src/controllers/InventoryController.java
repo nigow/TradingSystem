@@ -46,7 +46,7 @@ public class InventoryController {
     /**
      * An instance of ControllerHelper for helper methods
      */
-    private final ControllerHelper controllerHelper;
+    private final ControllerInputValidator controllerInputValidator;
 
     /**
      * Constructor to initialize all the instances, from ManualConfig,
@@ -60,7 +60,7 @@ public class InventoryController {
         this.itemUtility = manualConfig.getItemUtility();
         this.inventoryPresenter = inventoryPresenter;
         this.authManager = manualConfig.getAuthManager();
-        this.controllerHelper = new ControllerHelper();
+        this.controllerInputValidator = new ControllerInputValidator();
     }
 
 
@@ -93,7 +93,7 @@ public class InventoryController {
         do {
             option = inventoryPresenter.displayInventoryOptions(menu);
 
-            if (controllerHelper.isNum(option)) {
+            if (controllerInputValidator.isNum(option)) {
                 int action = Integer.parseInt(option);
 
                 if (action < actions.size()) {
@@ -166,7 +166,7 @@ public class InventoryController {
         while (!confirmedItem && !exit) {
             if (!nameGiven) {
                 name = inventoryPresenter.askName();
-                if (controllerHelper.isExitStr(name)) {
+                if (controllerInputValidator.isExitStr(name)) {
                     exit = true;
                 } else if (name.contains(",")) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item name");
@@ -175,7 +175,7 @@ public class InventoryController {
                 }
             } else if (!descriptionGiven) {
                 description = inventoryPresenter.askDescription();
-                if (controllerHelper.isExitStr(description)) {
+                if (controllerInputValidator.isExitStr(description)) {
                     exit = true;
                 } else if (description.contains(",")) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item description");
@@ -184,7 +184,7 @@ public class InventoryController {
                 }
             } else {
                 String confirm = inventoryPresenter.confirmItem(name, description);
-                if (controllerHelper.isExitStr(confirm)) {
+                if (controllerInputValidator.isExitStr(confirm)) {
                     exit = true;
                 } else if (confirm.equals("n")) {
                     inventoryPresenter.customMessage("Item not added.");
@@ -209,9 +209,9 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.addToWishlist();
-            if (controllerHelper.isExitStr(option)) {
+            if (controllerInputValidator.isExitStr(option)) {
                 isValid = true;
-            } else if (controllerHelper.isNum(option)) {
+            } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID()).size()) {
                     accountManager.addItemToWishlist(itemUtility.getNotInAccount(accountManager.getCurrAccountID()).get(ind).getItemID());
@@ -235,7 +235,7 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.removeFromInventory();
-            if (controllerHelper.isNum(option)) {
+            if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
                     itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
@@ -259,7 +259,7 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.approveItem();
-            if (controllerHelper.isNum(option)) {
+            if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getDisapprovedString().size()) {
                     itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);

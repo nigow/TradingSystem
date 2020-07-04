@@ -26,7 +26,7 @@ public class TradeCreatorController {
     private int traderTwoId;
     private int itemId;
 
-    private ControllerHelper controllerHelper;
+    private ControllerInputValidator controllerInputValidator;
 
     /**
      * Create a controller for the trade creation screen.
@@ -47,7 +47,7 @@ public class TradeCreatorController {
         this.traderTwoId = peerId;
         this.itemId = itemId;
 
-        controllerHelper = new ControllerHelper();
+        controllerInputValidator = new ControllerInputValidator();
 
     }
 
@@ -69,9 +69,9 @@ public class TradeCreatorController {
 
         String twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
 
-        while (!controllerHelper.isBool(twoWayTrade)) {
+        while (!controllerInputValidator.isBool(twoWayTrade)) {
 
-            if (controllerHelper.isExitStr(twoWayTrade)) return;
+            if (controllerInputValidator.isExitStr(twoWayTrade)) return;
             tradeCreatorPresenter.invalidInput();
             twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
 
@@ -83,9 +83,9 @@ public class TradeCreatorController {
 
         String date = tradeCreatorPresenter.getDate();
 
-        while (!controllerHelper.isDate(date)) {
+        while (!controllerInputValidator.isDate(date)) {
 
-            if (controllerHelper.isExitStr(date)) return;
+            if (controllerInputValidator.isExitStr(date)) return;
             tradeCreatorPresenter.invalidInput();
             date = tradeCreatorPresenter.getDate();
 
@@ -93,9 +93,9 @@ public class TradeCreatorController {
 
         String time = tradeCreatorPresenter.getTime();
 
-        while (!controllerHelper.isTime(time)) {
+        while (!controllerInputValidator.isTime(time)) {
 
-            if (controllerHelper.isExitStr(time)) return;
+            if (controllerInputValidator.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
             time = tradeCreatorPresenter.getDate();
 
@@ -103,9 +103,9 @@ public class TradeCreatorController {
 
         String isPerm = tradeCreatorPresenter.getIsPerm();
 
-        while (!controllerHelper.isBool(isPerm)) {
+        while (!controllerInputValidator.isBool(isPerm)) {
 
-            if (controllerHelper.isExitStr(isPerm)) return;
+            if (controllerInputValidator.isExitStr(isPerm)) return;
             tradeCreatorPresenter.invalidInput();
             isPerm = tradeCreatorPresenter.getIsPerm();
 
@@ -122,24 +122,24 @@ public class TradeCreatorController {
         String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getUsernameFromID(traderTwoId) :
                 accountManager.getCurrAccountUsername();
 
-        List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getInventoryOfAccountString(traderOneId) :
-                itemUtility.getInventoryOfAccountString(traderTwoId);
+        List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getApprovedInventoryOfAccountString(traderOneId) :
+                itemUtility.getApprovedInventoryOfAccountString(traderTwoId);
 
         tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
         String oppositeItemIndex = tradeCreatorPresenter.getItem();
 
-        while (!controllerHelper.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
+        while (!controllerInputValidator.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
 
-            if (controllerHelper.isExitStr(oppositeItemIndex)) return;
+            if (controllerInputValidator.isExitStr(oppositeItemIndex)) return;
             tradeCreatorPresenter.invalidInput();
             oppositeItemIndex = tradeCreatorPresenter.getItem();
 
         }
 
         if (traderOneItems.isEmpty()) {
-            traderOneItems.add(itemUtility.getInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+            traderOneItems.add(itemUtility.getApprovedInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
         } else {
-            traderTwoItems.add(itemUtility.getInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+            traderTwoItems.add(itemUtility.getApprovedInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
         }
 
     }

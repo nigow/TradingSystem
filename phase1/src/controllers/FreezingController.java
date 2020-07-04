@@ -29,7 +29,7 @@ public class FreezingController {
 
     private TradeUtility tradeUtility;
 
-    private ControllerHelper controllerHelper;
+    private ControllerInputValidator controllerInputValidator;
 
     public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {
         this.mc = mc;
@@ -38,7 +38,7 @@ public class FreezingController {
         freezingUtility = mc.getFreezingUtility();
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
-        controllerHelper =  new ControllerHelper();
+        controllerInputValidator =  new ControllerInputValidator();
     }
 
     public void run() {
@@ -78,7 +78,7 @@ public class FreezingController {
             if (chosenUser.equals("-1")) {
                 run();
             }
-            else if (!controllerHelper.isNum(chosenUser)) {
+            else if (!controllerInputValidator.isNum(chosenUser)) {
                 isValidInput = false;
                 freezingPresenter.invalidInput();
             }
@@ -104,7 +104,7 @@ public class FreezingController {
             if (chosenUser.equals("-1")) {
                 run();
             }
-            else if (!controllerHelper.isNum(chosenUser)) {
+            else if (!controllerInputValidator.isNum(chosenUser)) {
                 isValidInput = false;
                 freezingPresenter.invalidInput();
             }
