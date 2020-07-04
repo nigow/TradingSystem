@@ -79,7 +79,7 @@ public class TradeUtility {
      * adjusted
      */
     public List<Integer> getTopThreePartnersIds() {
-        // TODO only count completed trades  -maryam
+        // TODO only count confirmed trades  -maryam
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
             if (account.getAccountID() == trade.getTraderOneID()) {
@@ -114,7 +114,7 @@ public class TradeUtility {
         List<Trade> AllOneWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
 
-            if (trade.getStatus() != TradeStatus.COMPLETED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
             if (trade.getTraderOneID() == account.getAccountID()) {
                 if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
@@ -159,7 +159,7 @@ public class TradeUtility {
         List<Trade> AllTwoWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
 
-            if (trade.getStatus() != TradeStatus.COMPLETED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
             // i added this  -maryam
 

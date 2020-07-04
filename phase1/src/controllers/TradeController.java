@@ -89,7 +89,7 @@ public class TradeController {
             if (0 <= ind && ind < trades.size()) {
                 tradeManager.setTrade(trades.get(ind));
                 if (tradeManager.isRejected()) {
-                    tradePresenter.showMessage("You already rejected this trade.");
+                    tradePresenter.showMessage("This trade has been cancelled.");
                 } else if (tradeManager.isUnconfirmed()) {
                     List<String> options = new ArrayList<>();
                     options.add("Reject or cancel this trade");
