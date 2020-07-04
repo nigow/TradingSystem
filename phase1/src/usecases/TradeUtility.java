@@ -112,11 +112,29 @@ public class TradeUtility {
         List<TimePlace> AllOneWay = new ArrayList<>();
         List<Trade> AllOneWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
+
+            if (trade.getStatus() != TradeStatus.COMPLETED)
+                continue;
+            if (trade.getTraderOneID() == account.getAccountID()) {
+                if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty()) {
+                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+                    AllOneWay.add(timePlace);
+                }
+            } else if (trade.getTraderTwoID() == account.getAccountID()) {
+                if (trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
+                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+                    AllOneWay.add(timePlace);
+                }
+            }
+            // i changed this  -maryam
+
+            /*
             if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty() ||
                     trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                 AllOneWay.add(timePlace);
             }
+             */
         }
         Collections.sort(AllOneWay);
         int count = 0;
@@ -139,6 +157,11 @@ public class TradeUtility {
         List<TimePlace> AllTwoWay = new ArrayList<>();
         List<Trade> AllTwoWayTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
+
+            if (trade.getStatus() != TradeStatus.COMPLETED)
+                continue;
+            // i added this  -maryam
+
             if (!trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                 AllTwoWay.add(timePlace);
@@ -179,12 +202,13 @@ public class TradeUtility {
      */
     public Integer getTimesIncomplete() {
         Integer timesIncomplete = 0;
-        TradeStatus status = TradeStatus.REJECTED;
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus().equals(status)) {
+            LocalDateTime tradeTime = tradeManager.getTradeGateway().findTimePlaceById(trade.getId()).getTime();
+            if (tradeTime.isBefore(LocalDateTime.now()) && !trade.getStatus().equals(TradeStatus.COMPLETED)) {
                 timesIncomplete++;
             }
         }
+        // i changed this  -maryam
         return timesIncomplete;
     }
 
