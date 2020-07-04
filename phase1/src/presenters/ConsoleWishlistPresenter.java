@@ -48,7 +48,7 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
      */
     @Override
     public String startTrade() {
-        System.out.print("Select desired item (index): ");
+        System.out.print("Select desired item (index, -1 to abort): ");
         return input.next();
     }
 
@@ -57,7 +57,7 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
      */
     @Override
     public String removeFromWishlist() {
-        System.out.print("Select item to remove (index): ");
+        System.out.print("Select item to remove (index, -1 to abort): ");
         return input.next();
     }
 
