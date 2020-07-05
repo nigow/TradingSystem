@@ -109,7 +109,7 @@ public class TradeUtility {
     public List<Integer> getRecentOneWay() {
         List<TimePlace> AllOneWay = new ArrayList<>();
         List<Integer> ThreeRecent = new ArrayList<>();
-        List<Integer> AllOneWayItems = new ArrayList<>();
+        List<Integer> allOneWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
             if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
@@ -136,12 +136,18 @@ public class TradeUtility {
         Collections.sort(AllOneWay);
         for (TimePlace tp: AllOneWay) {
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
-            AllOneWayItems.addAll(trade.getItemOneIDs());
-            AllOneWayItems.addAll(trade.getItemTwoIDs());
+            allOneWayItems.addAll(trade.getItemOneIDs());
+            allOneWayItems.addAll(trade.getItemTwoIDs());
         }
-        for (int i = 0; i < 3; i++) {
-            ThreeRecent.add(AllOneWayItems.get(i));
+
+        int count = 0;
+        int i = 0;
+        while (count < 3 && i < allOneWayItems.size()) {
+            ThreeRecent.add(allOneWayItems.get(i));
+            count++;
+            i++;
         }
+
         return ThreeRecent;
     }
 
@@ -154,7 +160,7 @@ public class TradeUtility {
     public List<Integer> getRecentTwoWay() {
         List<TimePlace> AllTwoWay = new ArrayList<>();
         List<Integer> ThreeRecent = new ArrayList<>();
-        List<Integer> AllTwoWayItems = new ArrayList<>();
+        List<Integer> allTwoWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
             if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
@@ -166,12 +172,18 @@ public class TradeUtility {
         Collections.sort(AllTwoWay);
         for (TimePlace tp: AllTwoWay) {
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
-            AllTwoWayItems.addAll(trade.getItemOneIDs());
-            AllTwoWayItems.addAll(trade.getItemTwoIDs());
+            allTwoWayItems.addAll(trade.getItemOneIDs());
+            allTwoWayItems.addAll(trade.getItemTwoIDs());
         }
-        for (int i = 0; i < 3; i++) {
-            ThreeRecent.add(AllTwoWayItems.get(i));
+
+        int count = 0;
+        int i = 0;
+        while (count < 3 && i < allTwoWayItems.size()) {
+            ThreeRecent.add(allTwoWayItems.get(i));
+            count++;
+            i++;
         }
+
         return ThreeRecent;
     }
 

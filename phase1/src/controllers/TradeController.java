@@ -52,6 +52,7 @@ public class TradeController {
      * Displays trade-managing options to the user and interacts with them to update their information.
      */
     public void run() {
+        tradeUtility.setAccount(accountManager.getCurrAccount());
         while (true) {
             List<String> options = new ArrayList<>();
             List<Runnable> methods = new ArrayList<>();
@@ -91,7 +92,12 @@ public class TradeController {
     }
 
     private void showTrades() {
-        tradePresenter.displayTrades(tradeUtility.getAllTradesAccountString());
+        List<String> trades = new ArrayList<>();
+        for (Trade t : tradeUtility.getAllTradesAccount()) {
+            tradeManager.setTrade(t);
+            trades.add(tradeManager.tradeAsString(accountManager));
+        }
+        tradePresenter.displayTrades(trades);
     }
 
     private void selectAndChangeTrade() {
@@ -106,6 +112,10 @@ public class TradeController {
                     Trade trade = trades.get(ind);
                     tradeManager.setTrade(trade);
                     tradePresenter.showMessage(tradeManager.tradeAsString(accountManager));
+
+                    tradePresenter.showMessage("hello: " + tradeManager.getTrade().getItemOneIDs().toString());
+                    tradePresenter.showMessage("darkness: " + tradeManager.getTrade().getItemTwoIDs().toString());
+
                     if (tradeManager.isRejected()) {
                         tradePresenter.showMessage("This trade has been cancelled.");
                     } else if (tradeManager.isUnconfirmed()) {

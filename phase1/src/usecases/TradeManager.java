@@ -159,7 +159,7 @@ public class TradeManager {
      * @return Whether trade is unconfirmed
      */
     public boolean isUnconfirmed() {
-        return trade.getStatus().equals(TradeStatus.CONFIRMED);
+        return trade.getStatus().equals(TradeStatus.UNCONFIRMED);
     }
 
     /**
@@ -207,6 +207,9 @@ public class TradeManager {
      * @return A user-friendly representation of a string.
      */
     public String tradeAsString(AccountManager accountManager) {
+
+        // TODO show items as well
+
         String ans = "";
         String username1 = accountManager.getAccountFromID(
                 trade.getTraderOneID()).getUsername();
@@ -215,23 +218,23 @@ public class TradeManager {
 
         if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
             ans += "Type: Two-way ";
-            ans += "Account 1: " + username1 + " Account 2: " + username2;
+            ans += "Account 1: " + username1 + " Account 2: " + username2 + " ";
         }
         else {
             ans += "Type: One-way ";
             if (trade.getItemOneIDs().size() > 0) {
-                ans += "Borrower: " + username1 + " Lender: " + username2;
+                ans += "Borrower: " + username1 + " Lender: " + username2 + " ";
             }
             else {
-                ans += "Borrower: " + username2 + " Lender " + username1;
+                ans += "Borrower: " + username2 + " Lender " + username1 + " ";
             }
 
         }
-        ans += "Status: " + trade.getStatus().toString();
+        ans += "Status: " + trade.getStatus().toString() + " ";
         ans += "Type: ";
-        ans += trade.isPermanent() ? "Permanent": "Temporary";
-        ans += "Location: " + timePlace.getPlace();
-        ans += "Time: " + timePlace.getTime();
+        ans += trade.isPermanent() ? "Permanent ": "Temporary ";
+        ans += "Location: " + timePlace.getPlace() + " ";
+        ans += "Time: " + timePlace.getTime() + " ";
 
 
         return ans;
