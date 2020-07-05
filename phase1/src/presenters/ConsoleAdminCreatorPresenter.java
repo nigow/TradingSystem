@@ -1,13 +1,12 @@
 package presenters;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
  * presenter that lets an admin create an account
  * @author Catherine
  */
-public class ConsoleAdminPresenter implements AdminPresenter {
+public class ConsoleAdminCreatorPresenter implements AdminCreatorPresenter {
     /**
      * {@inheritDoc}
      */

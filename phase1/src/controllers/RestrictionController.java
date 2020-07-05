@@ -11,7 +11,7 @@ import usecases.FreezingUtility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestrictionsController {
+public class RestrictionController {
 
     private ManualConfig mc;
 
@@ -23,7 +23,7 @@ public class RestrictionsController {
 
     private ControllerInputValidator controllerInputValidator;
 
-    public RestrictionsController(ManualConfig mc, RestrictionPresenter restrictionPresenter) {
+    public RestrictionController(ManualConfig mc, RestrictionPresenter restrictionPresenter) {
         this.mc = mc;
         freezingUtility = mc.getFreezingUtility();
         authManager = mc.getAuthManager();

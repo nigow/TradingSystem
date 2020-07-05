@@ -33,9 +33,9 @@ public class MenuFacade {
     private final LendingController lendingController;
     private final TradeController tradeController;
     private final WishlistController wishlistController;
-    private final RestrictionsController restrictionsController;
+    private final RestrictionController restrictionsController;
     private final AppealController appealController;
-    private final AdminCreator adminCreator;
+    private final AdminCreatorController adminCreator;
 
     private final ControllerInputValidator controllerInputValidator;
 
@@ -50,8 +50,8 @@ public class MenuFacade {
                       LendingController lendingController,
                       AppealController appealController,
                       TradeController tradeController,
-                      AdminCreator adminCreator,
-                      RestrictionsController restrictionsController,
+                      AdminCreatorController adminCreator,
+                      RestrictionController restrictionsController,
                       MenuPresenter menuPresenter) {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();

@@ -1,18 +1,18 @@
 package controllers;
 
 import gateways.ManualConfig;
-import presenters.AdminPresenter;
+import presenters.AdminCreatorPresenter;
 import usecases.AccountManager;
 
-public class AdminCreator {
+public class AdminCreatorController {
 
-    private AdminPresenter adminPresenter;
+    private AdminCreatorPresenter adminPresenter;
 
     private AccountManager accountManager;
 
     private ManualConfig mc;
 
-    public AdminCreator(ManualConfig mc, AdminPresenter adminPresenter) {
+    public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
         this.mc = mc;
         accountManager = mc.getAccountManager();
         this.adminPresenter = adminPresenter;
