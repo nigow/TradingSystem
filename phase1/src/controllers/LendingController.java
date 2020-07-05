@@ -117,7 +117,8 @@ public class LendingController {
 
         //list only tradable items
         for(Item item: itemManager.getAllItems()){
-            if(item.getOwnerID() == userId && item.isApproved()) myItems.add(item);
+            //I changed this - Isaac
+            if(itemManager.getItemId(item) == userId && itemManager.isApproved(item)) myItems.add(item);
         }
 
         lendingPresenter.displayInventory(myItems);
@@ -135,7 +136,8 @@ public class LendingController {
 
             //valid input
             if(index < myItems.size() && index >= 0){
-                index = myItems.get(index).getItemID();
+                //I changed this - Isaac
+                index = itemManager.getItemId(myItems.get(index));
             }
 
             //user no longer trades

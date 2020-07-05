@@ -95,7 +95,9 @@ public class TradeController {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getAllTradesAccount()) {
             tradeManager.setTrade(t);
-            trades.add(tradeManager.tradeAsString(accountManager));
+            /* I added itemManager as a parameter - Isaac
+             */
+            trades.add(tradeManager.tradeAsString(accountManager, itemManager));
         }
         tradePresenter.displayTrades(trades);
     }
@@ -111,7 +113,9 @@ public class TradeController {
                 if (0 <= ind && ind < trades.size()) {
                     Trade trade = trades.get(ind);
                     tradeManager.setTrade(trade);
-                    tradePresenter.showMessage(tradeManager.tradeAsString(accountManager));
+                    /* I added itemManager as a parameter - Isaac
+                     */
+                    tradePresenter.showMessage(tradeManager.tradeAsString(accountManager, itemManager));
                     if (tradeManager.isRejected()) {
                         tradePresenter.showMessage("This trade has been cancelled.");
                     } else if (tradeManager.isUnconfirmed()) {
