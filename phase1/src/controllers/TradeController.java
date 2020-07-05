@@ -14,13 +14,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: 1. variable and method javadoc 2. code >_<
-
 /**
  * Controller that deals with user's past trades and making changes to them.
  * @author Maryam
  */
 public class TradeController {
+
+    // TODO javadoc
+
     private final TradePresenter tradePresenter;
     private final AuthManager authManager;
     private final AccountManager accountManager;
