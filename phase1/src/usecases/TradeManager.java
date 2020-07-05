@@ -257,6 +257,7 @@ public class TradeManager {
             trade.setTraderOneCompleted(true);
         else if (accountID == trade.getTraderTwoID())
             trade.setTraderTwoCompleted(true);
+        tradeGateway.updateTrade(trade, timePlace);
     }
 
 }

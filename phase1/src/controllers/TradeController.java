@@ -112,10 +112,6 @@ public class TradeController {
                     Trade trade = trades.get(ind);
                     tradeManager.setTrade(trade);
                     tradePresenter.showMessage(tradeManager.tradeAsString(accountManager));
-
-                    tradePresenter.showMessage("hello: " + tradeManager.getTrade().getItemOneIDs().toString());
-                    tradePresenter.showMessage("darkness: " + tradeManager.getTrade().getItemTwoIDs().toString());
-
                     if (tradeManager.isRejected()) {
                         tradePresenter.showMessage("This trade has been cancelled.");
                     } else if (tradeManager.isUnconfirmed()) {
