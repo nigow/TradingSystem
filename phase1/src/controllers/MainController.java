@@ -18,13 +18,13 @@ public class MainController {
     private ManualConfig manualConfig;
     private final AuthController authController;
     private final AppealController appealController;
-    private final AdminCreator adminCreator;
+    private final AdminCreatorController adminCreator;
     private final FreezingController freezingController;
     private final InventoryController inventoryController;
     private final LendingController lendingController;
     private final WishlistController wishlistController;
     private final TradeController tradeController;
-    private final RestrictionsController restrictionsController;
+    private final RestrictionController restrictionsController;
     private final MenuFacade menuFacade;
 
     public MainController() {
@@ -44,9 +44,8 @@ public class MainController {
                 new ConsoleTradeCreatorPresenter());
         freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
         tradeController = new TradeController(manualConfig, new ConsoleTradePresenter());
-        adminCreator = new AdminCreator(manualConfig, new ConsoleAdminPresenter());
-        restrictionsController = new RestrictionsController(manualConfig, /*new ConsoleRestrictionsPresenter()*/ null);
-        // TODO commented ^ until cat pushes
+        adminCreator = new AdminCreatorController(manualConfig, new ConsoleAdminCreatorPresenter());
+        restrictionsController = new RestrictionController(manualConfig, new ConsoleRestrictionPresenter());
         menuFacade = new MenuFacade(manualConfig, freezingController, inventoryController, wishlistController,
                 lendingController, appealController, tradeController, adminCreator, restrictionsController,
                 new ConsoleMenuPresenter());

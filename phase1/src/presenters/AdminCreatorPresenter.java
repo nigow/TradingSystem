@@ -5,7 +5,7 @@ package presenters;
  * @author Catherine
  */
 
-public interface AdminPresenter {
+public interface AdminCreatorPresenter {
     /**
      * creates admin account
      * @return username and password
