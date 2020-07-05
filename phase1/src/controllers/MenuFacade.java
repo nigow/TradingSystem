@@ -1,7 +1,6 @@
 package controllers;
 
 import gateways.ManualConfig;
-import presenters.ConsoleMenuPresenter;
 import presenters.MenuPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -27,18 +26,18 @@ public class MenuFacade {
 
     private final AccountManager accountManager;
 
-    // TODO: 1. waiting on the following classes to be fixed/created 2. javadoc
+    // TODO javadoc
 
     private final FreezingController freezingController;
     private final InventoryController inventoryController;
     private final LendingController lendingController;
     private final TradeController tradeController;
     private final WishlistController wishlistController;
-//    private RestrictionsController restrictionsController;
+    private final RestrictionsController restrictionsController;
     private final AppealController appealController;
-    private AdminCreator adminCreator;
+    private final AdminCreator adminCreator;
 
-    private final ControllerInputValidator helper;
+    private final ControllerInputValidator controllerInputValidator;
 
     /**
      * Initializes MenuFacade based on information from ManualConfig and creates instances of
@@ -52,20 +51,21 @@ public class MenuFacade {
                       AppealController appealController,
                       TradeController tradeController,
                       AdminCreator adminCreator,
+                      RestrictionsController restrictionsController,
                       MenuPresenter menuPresenter) {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
 
         this.menuPresenter = menuPresenter;
 
-        helper = new ControllerInputValidator();
+        controllerInputValidator = new ControllerInputValidator();
 
         this.freezingController = freezingController;
         this.inventoryController = inventoryController;
         this.lendingController = lendingController;
         this.tradeController = tradeController;
         this.wishlistController = wishlistController;
-//        restrictionsController = new RestrictionController(mc);
+        this.restrictionsController = restrictionsController;
         this.appealController = appealController;
         this.adminCreator = adminCreator;
     }
@@ -93,8 +93,8 @@ public class MenuFacade {
             }
 
             if (authManager.canChangeRestrictions(accountManager.getCurrAccount())) {
-//                options.add("Modify the restriction values of the program");
-//                method.add(restrictionsController::run);
+                options.add("Modify the restriction values of the program");
+                method.add(restrictionsController::run);
             }
 
             if (authManager.canFreeze(accountManager.getCurrAccount()) && authManager.canUnfreeze(accountManager.getCurrAccount())) {
@@ -116,7 +116,7 @@ public class MenuFacade {
 
             String action = menuPresenter.displayMenu(options);
 
-            if (helper.isNum(action)) {
+            if (controllerInputValidator.isNum(action)) {
                 int i = Integer.parseInt(action);
                 if (0 <= i && i < method.size())
                     method.get(i).run();

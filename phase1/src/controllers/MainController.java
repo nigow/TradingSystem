@@ -12,46 +12,44 @@ import java.io.IOException;
  * @author Maryam
  */
 public class MainController {
-    ManualConfig manualConfig;
-    AuthController authController;
-    AppealController appealController;
-    AdminCreator adminCreator;
-    FreezingController freezingController;
-    InventoryController inventoryController;
-    LendingController lendingController;
-    MenuFacade menuFacade;
-    WishlistController wishlistController;
-    TradeController tradeController;
+
+    // TODO javadoc
+
+    private ManualConfig manualConfig;
+    private final AuthController authController;
+    private final AppealController appealController;
+    private final AdminCreator adminCreator;
+    private final FreezingController freezingController;
+    private final InventoryController inventoryController;
+    private final LendingController lendingController;
+    private final WishlistController wishlistController;
+    private final TradeController tradeController;
+    private final RestrictionsController restrictionsController;
+    private final MenuFacade menuFacade;
 
     public MainController() {
         try {
             manualConfig = new ManualConfigCSV();
-
         }
         catch (IOException e) {
             e.printStackTrace();
         }
         inventoryController = new InventoryController(manualConfig,
                 new ConsoleInventoryPresenter());
-        wishlistController = new WishlistController(new ConsoleWishlistPresenter(),
-                new ConsoleTradeCreatorPresenter(), manualConfig);
+        wishlistController = new WishlistController(new ConsoleWishlistPresenter(), new ConsoleTradeCreatorPresenter(),
+                manualConfig);
         appealController = new AppealController(manualConfig,
                 new ConsoleAppealPresenter());
-
-        // TODO: LendingController should be called with TradeCreatorPresenter.
-        lendingController = new LendingController(new ConsoleLendingPresenter(),
-                manualConfig, new ConsoleTradeCreatorPresenter());
-        // TODO: FreezingController should have a presenter as input.
+        lendingController = new LendingController(new ConsoleLendingPresenter(), manualConfig,
+                new ConsoleTradeCreatorPresenter());
         freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
-
         tradeController = new TradeController(manualConfig, new ConsoleTradePresenter());
-
         adminCreator = new AdminCreator(manualConfig, new ConsoleAdminPresenter());
-
-        // TODO: Not all controllers are sent in for completion reasons.
-        menuFacade = new MenuFacade(manualConfig, freezingController,
-                inventoryController, wishlistController, lendingController,
-                appealController, tradeController, adminCreator, new ConsoleMenuPresenter());
+        restrictionsController = new RestrictionsController(manualConfig, /*new ConsoleRestrictionsPresenter()*/ null);
+        // TODO commented ^ until cat pushes
+        menuFacade = new MenuFacade(manualConfig, freezingController, inventoryController, wishlistController,
+                lendingController, appealController, tradeController, adminCreator, restrictionsController,
+                new ConsoleMenuPresenter());
 
         authController = new AuthController(manualConfig,
                     new ConsoleHomePresenter(), menuFacade);
