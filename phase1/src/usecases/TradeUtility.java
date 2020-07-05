@@ -76,9 +76,10 @@ public class TradeUtility {
      * adjusted
      */
     public List<Integer> getTopThreePartnersIds() {
-        // TODO only count confirmed trades  -maryam
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
+            if (trade.getStatus() != TradeStatus.CONFIRMED)
+                continue;
             if (account.getAccountID() == trade.getTraderOneID()) {
                 tradeFrequency.compute(trade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
             }
@@ -139,7 +140,14 @@ public class TradeUtility {
             allOneWayItems.addAll(trade.getItemOneIDs());
             allOneWayItems.addAll(trade.getItemTwoIDs());
         }
-
+        int count = 0;
+        for (Integer tradeId : allOneWayItems) {
+            if (count >= 3) break;
+            ThreeRecent.add(tradeId);
+            count++;
+        }
+        return ThreeRecent;
+        /*
         int count = 0;
         int i = 0;
         while (count < 3 && i < allOneWayItems.size()) {
@@ -149,6 +157,7 @@ public class TradeUtility {
         }
 
         return ThreeRecent;
+         */
     }
 
     /**
@@ -175,7 +184,14 @@ public class TradeUtility {
             allTwoWayItems.addAll(trade.getItemOneIDs());
             allTwoWayItems.addAll(trade.getItemTwoIDs());
         }
-
+        int count = 0;
+        for (Integer tradeId : allTwoWayItems) {
+            if (count >= 3) break;
+            ThreeRecent.add(tradeId);
+            count++;
+        }
+        return ThreeRecent;
+        /*
         int count = 0;
         int i = 0;
         while (count < 3 && i < allTwoWayItems.size()) {
@@ -185,6 +201,7 @@ public class TradeUtility {
         }
 
         return ThreeRecent;
+         */
     }
 
     /**

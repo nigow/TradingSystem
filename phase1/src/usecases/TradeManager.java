@@ -206,38 +206,45 @@ public class TradeManager {
      * @param accountManager: An accountManager instance
      * @return A user-friendly representation of a string.
      */
-    public String tradeAsString(AccountManager accountManager) {
-
-        // TODO show items as well
-
-        String ans = "";
+    public String tradeAsString(AccountManager accountManager, ItemManager itemManager) {
+        StringBuilder ans = new StringBuilder();
         String username1 = accountManager.getAccountFromID(
                 trade.getTraderOneID()).getUsername();
         String username2 = accountManager.getAccountFromID(
                 trade.getTraderTwoID()).getUsername();
 
         if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
-            ans += "Type: Two-way ";
-            ans += "Account 1: " + username1 + " Account 2: " + username2 + " ";
+            ans.append("Type: Two-way ");
+            ans.append("Account 1: ").append(username1).append(" Account 2: ").append(username2).append(" ");
         }
         else {
-            ans += "Type: One-way ";
+            ans.append("Type: One-way ");
             if (trade.getItemOneIDs().size() > 0) {
-                ans += "Borrower: " + username1 + " Lender: " + username2 + " ";
+                ans.append("Borrower: ").append(username1).append(" Lender: ").append(username2).append(" ");
             }
             else {
-                ans += "Borrower: " + username2 + " Lender " + username1 + " ";
+                ans.append("Borrower: ").append(username2).append(" Lender ").append(username1).append(" ");
             }
 
         }
-        ans += "Status: " + trade.getStatus().toString() + " ";
-        ans += "Type: ";
-        ans += trade.isPermanent() ? "Permanent ": "Temporary ";
-        ans += "Location: " + timePlace.getPlace() + " ";
-        ans += "Time: " + timePlace.getTime() + " ";
-
-
-        return ans;
+        ans.append("Status: ").append(trade.getStatus().toString()).append(" ");
+        ans.append("Type: ");
+        ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
+        ans.append("Location: ").append(timePlace.getPlace()).append(" ");
+        ans.append("Time: ").append(timePlace.getTime()).append(" ");
+        ans.append("Trader 1 Items: ");
+        String separator = "";
+        for (Integer tradeId : trade.getItemOneIDs()) {
+            ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+            separator = ", ";
+        }
+        separator = "";
+        ans.append("Trader 2 Items: ");
+        for (Integer tradeId : trade.getItemOneIDs()) {
+            ans.append(separator).append(itemManager.getItemById(tradeId).toString()).append(", ");
+            separator = ", ";
+        }
+        return ans.toString();
     }
 
     /**
