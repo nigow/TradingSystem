@@ -17,16 +17,27 @@ import java.util.List;
  */
 public class TradeController {
 
-    // TODO javadoc
+    // TODO: javadoc, but since it's private it's not a priority
 
     private final TradePresenter tradePresenter;
+
     private final AuthManager authManager;
+
     private final AccountManager accountManager;
+
     private final TradeUtility tradeUtility;
+
     private final TradeManager tradeManager;
+
     private final ItemManager itemManager;
+
     private final ControllerInputValidator controllerInputValidator;
 
+    /**
+     * Initialized TradeController by setting necessary usecases and presenter.
+     * @param mc An instance of ManualConfig to get necessary usecases
+     * @param tradePresenter An instance of TradePresenter to display and get information from the user
+     */
     public TradeController(ManualConfig mc, TradePresenter tradePresenter) {
         this.tradePresenter = tradePresenter;
         authManager = mc.getAuthManager();
@@ -37,6 +48,9 @@ public class TradeController {
         controllerInputValidator = new ControllerInputValidator();
     }
 
+    /**
+     * Displays trade-managing options to the user and interacts with them to update their information.
+     */
     public void run() {
         while (true) {
             List<String> options = new ArrayList<>();
@@ -80,7 +94,6 @@ public class TradeController {
         tradePresenter.displayTrades(tradeUtility.getAllTradesAccountString());
     }
 
-    // TODO make helpers to make this less ugly
     private void selectAndChangeTrade() {
         while (true) {
             String index = tradePresenter.selectTrade();
@@ -162,7 +175,6 @@ public class TradeController {
                     controllerInputValidator.isExitStr(newInfo[2]))
                 return;
             if (controllerInputValidator.isDate(newInfo[1]) && controllerInputValidator.isTime(newInfo[2])) {
-                // TODO make sure this does not give an exception for invalid dates
                 LocalDateTime date = LocalDateTime.parse(newInfo[1] + " " + newInfo[2],
                         DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm"));
                 if (date.isAfter(LocalDateTime.now())) {

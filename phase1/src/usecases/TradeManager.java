@@ -202,11 +202,9 @@ public class TradeManager {
         return StringTrade;
     }
 
-    // TODO add implementation to tradeAsString  -maryam
-
     /**
      * @param accountManager: An accountManager instance
-     * @return A friendly user representation of a string.
+     * @return A user-friendly representation of a string.
      */
     public String tradeAsString(AccountManager accountManager) {
         String ans = "";
@@ -239,10 +237,18 @@ public class TradeManager {
         return ans;
     }
 
+    /**
+     * Returns whether this trade is temporary or permanent
+     * @return Whether this trade is temporary or permanent
+     */
     public boolean isPermanent() {
         return trade.isPermanent();
     }
 
+    /**
+     * Updates the completion status of this trade according to the user's id
+     * @param accountID The ID of the user who marked this trade as complete
+     */
     public void updateCompletion(int accountID) {
         if (accountID == trade.getTraderOneID())
             trade.setTraderOneCompleted(true);

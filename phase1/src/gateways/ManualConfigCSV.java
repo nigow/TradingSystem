@@ -24,7 +24,7 @@ public class ManualConfigCSV implements ManualConfig {
      * using existing CSV file.
      */
     public ManualConfigCSV() throws IOException {
-        String filePath = System.getProperty("user.dir") + "/out/files/";
+        String filePath = System.getProperty("user.dir") + "/out/CustomFiles/";
         initializeUseCases(filePath);
     }
 

@@ -38,11 +38,7 @@ public class HomeController {
      */
     private final ControllerInputValidator controllerInputValidator;
 
-    /**
-     * Initializes AuthController based on information from ManualConfig and creates
-     * instances of HomePresenter and MenuFacade.
-     * @param mc An instance of ManualConfig
-     */
+    // TODO: javadoc
     public HomeController(ManualConfig mc, HomePresenter homePresenter,
                           MenuFacade menuFacade) {
         accountManager = mc.getAccountManager();

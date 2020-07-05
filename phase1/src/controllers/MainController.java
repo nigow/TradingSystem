@@ -13,26 +13,39 @@ import java.io.IOException;
  */
 public class MainController {
 
-    // TODO javadoc
+    // TODO: javadoc, but since it's private it's not a priority
 
     /**
      * Stores all the initializes use cases along with a gateway interface.
      */
     private ManualConfig manualConfig;
+
     /**
      * Initiates user login/account creation process.
      */
     private final HomeController homeController;
+
     private final AppealController appealController;
+
     private final AdminCreatorController adminCreator;
+
     private final FreezingController freezingController;
+
     private final InventoryController inventoryController;
+
     private final LendingController lendingController;
+
     private final WishlistController wishlistController;
+
     private final TradeController tradeController;
+
     private final RestrictionController restrictionsController;
+
     private final MenuFacade menuFacade;
 
+    /**
+     * Creates instances of all controllers.
+     */
     public MainController() {
         try {
             manualConfig = new ManualConfigCSV();
@@ -62,7 +75,7 @@ public class MainController {
     }
 
     /**
-     * Starts the program and initiates ManualConfig and AuthController.
+     * Starts the program and runs the home page.
      */
     public void run() {
         homeController.run();

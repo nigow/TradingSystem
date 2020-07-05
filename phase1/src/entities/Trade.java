@@ -59,8 +59,14 @@ public class Trade {
      */
     private int editedCounter;
 
-    // TODO javadoc
+    /**
+     * Whether trader one marked this trade as complete
+     */
     private boolean traderOneCompleted;
+
+    /**
+     * Whether trader two marked this trade as complete
+     */
     private boolean traderTwoCompleted;
 
     /**
@@ -72,6 +78,7 @@ public class Trade {
      * @param traderTwoID The ID of the Account of the second person in this trade.
      * @param itemOneIDs List of IDs of items the first person is trading away.
      * @param itemTwoIDs List of IDs of items the second person is trading away.
+     * @param editedCounter Number of times this trade's timeplace has been edited
      */
     public Trade(int id, int timePlaceID, boolean isPermanent, int traderOneID, int traderTwoID,
                  List<Integer> itemOneIDs, List<Integer> itemTwoIDs, int editedCounter) {
@@ -208,7 +215,6 @@ public class Trade {
         editedCounter++;
     }
 
-    // TODO wherever this toString is used, use the better use case version
     /**
      * Creates a string representation of this trade.
      * @return A string representation of a Trade object.
@@ -229,12 +235,19 @@ public class Trade {
                 '}';
     }
 
-    // TODO java doc
-
+    /**
+     * Returns whether trader one marked this trade as complete or not
+     * @return Whether trader one marked this trade as complete or not
+     */
     public boolean isTraderOneCompleted() {
         return traderOneCompleted;
     }
 
+    /**
+     * Sets whether trader one marked this trade as complete or not, and updates the status
+     * of the trade if it should be updated
+     * @param traderOneCompleted Whether trader one marked this trade as complete
+     */
     public void setTraderOneCompleted(boolean traderOneCompleted) {
         this.traderOneCompleted = traderOneCompleted;
         if (this.traderOneCompleted && this.traderTwoCompleted) {
@@ -242,10 +255,19 @@ public class Trade {
         }
     }
 
+    /**
+     * Returns whether trader two marked this trade as complete or not
+     * @return Whether trader two marked this trade as complete or not
+     */
     public boolean isTraderTwoCompleted() {
         return traderTwoCompleted;
     }
 
+    /**
+     * Sets whether trader two marked this trade as complete or not, and updates the status
+     * of the trade if it should be updated
+     * @param traderTwoCompleted Whether trader two marked this trade as complete
+     */
     public void setTraderTwoCompleted(boolean traderTwoCompleted) {
         this.traderTwoCompleted = traderTwoCompleted;
         if (this.traderOneCompleted && this.traderTwoCompleted) {

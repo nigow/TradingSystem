@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class MenuFacade {
 
+    // TODO: javadoc, but since it's private it's not a priority
+
     /**
      * An instance of AuthManager to access a user's permissions.
      */
@@ -26,24 +28,25 @@ public class MenuFacade {
 
     private final AccountManager accountManager;
 
-    // TODO javadoc
-
     private final FreezingController freezingController;
+
     private final InventoryController inventoryController;
+
     private final LendingController lendingController;
+
     private final TradeController tradeController;
+
     private final WishlistController wishlistController;
+
     private final RestrictionController restrictionsController;
+
     private final AppealController appealController;
+
     private final AdminCreatorController adminCreator;
 
     private final ControllerInputValidator controllerInputValidator;
 
-    /**
-     * Initializes MenuFacade based on information from ManualConfig and creates instances of
-     * AuthManager and necessary controllers.
-     * @param mc An instance of ManualConfig
-     */
+    // TODO: javadoc
     public MenuFacade(ManualConfig mc, FreezingController freezingController,
                       InventoryController inventoryController,
                       WishlistController wishlistController,
