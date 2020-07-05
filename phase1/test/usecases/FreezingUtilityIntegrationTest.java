@@ -44,20 +44,11 @@ public class FreezingUtilityIntegrationTest extends TestCase{
         freezingUtility = setUpFreezingUtility();
 
         freezingUtility.setLendMoreThanBorrow(3);
-        try {
-            freezingUtility.setMaxIncompleteTrade(-1);
-
-        } catch (IllegalArgumentException e){
-            try {
-                freezingUtility.setMaxWeeklyTrade(-2);
-            } catch (IllegalArgumentException ex){
-                freezingUtility.setMaxIncompleteTrade(5);
-                freezingUtility.setMaxWeeklyTrade(4);
-                assertEquals(3, freezingUtility.getLendMoreThanBorrow());
-                assertEquals(5, freezingUtility.getMaxIncompleteTrade());
-                assertEquals(4, freezingUtility.getMaxWeeklyTrade());
-            }
-        }
+        freezingUtility.setMaxIncompleteTrade(5);
+        freezingUtility.setMaxWeeklyTrade(4);
+        assertEquals(3, freezingUtility.getLendMoreThanBorrow());
+        assertEquals(5, freezingUtility.getMaxIncompleteTrade());
+        assertEquals(4, freezingUtility.getMaxWeeklyTrade());
     }
 
     public void testFreezingAccounts(){
