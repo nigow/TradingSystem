@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * An integration test to verify integration of usecases, gateways, and entities is successful.
+ * An integration test to verify integration of use cases, gateways, and entities is successful.
  * @author Michael
  */
 public class AccountIntegrationTest extends TestCase {
