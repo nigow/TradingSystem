@@ -12,7 +12,7 @@ import java.util.List;
  * Controller that deals with creating and authorizing accounts.
  * @author Maryam
  */
-public class AuthController {
+public class HomeController {
     /**
      * An instance of HomePresenter to present options.
      */
@@ -43,7 +43,7 @@ public class AuthController {
      * instances of HomePresenter and MenuFacade.
      * @param mc An instance of ManualConfig
      */
-    public AuthController(ManualConfig mc, HomePresenter homePresenter,
+    public HomeController(ManualConfig mc, HomePresenter homePresenter,
                           MenuFacade menuFacade) {
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();

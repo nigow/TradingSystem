@@ -7,13 +7,13 @@ import presenters.MockHomePresenter;
 
 import static org.junit.Assert.fail;
 
-public class AuthControllerTest {
-    private AuthController authController;
+public class HomeControllerTest {
+    private HomeController homeController;
     private ManualConfig manualConfig;
 
-    public AuthControllerTest() {
+    public HomeControllerTest() {
         manualConfig = new InMemoryManualConfig();
-        authController = new AuthController(manualConfig, new MockHomePresenter(), null);
+        homeController = new HomeController(manualConfig, new MockHomePresenter(), null);
 
     }
 
@@ -25,7 +25,7 @@ public class AuthControllerTest {
         try {
             manualConfig.getAccountManager().createStandardAccount("testUsername",
                     "testPassword");
-            authController.run();
+            homeController.run();
         }
         // NullPointerException should only occur if MenuFacade is called, which should not be the case here.
         catch (NullPointerException e) {

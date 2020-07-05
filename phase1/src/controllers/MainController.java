@@ -15,8 +15,14 @@ public class MainController {
 
     // TODO javadoc
 
+    /**
+     * Stores all the initializes use cases along with a gateway interface.
+     */
     private ManualConfig manualConfig;
-    private final AuthController authController;
+    /**
+     * Initiates user login/account creation process.
+     */
+    private final HomeController homeController;
     private final AppealController appealController;
     private final AdminCreatorController adminCreator;
     private final FreezingController freezingController;
@@ -50,7 +56,7 @@ public class MainController {
                 lendingController, appealController, tradeController, adminCreator, restrictionsController,
                 new ConsoleMenuPresenter());
 
-        authController = new AuthController(manualConfig,
+        homeController = new HomeController(manualConfig,
                     new ConsoleHomePresenter(), menuFacade);
 
     }
@@ -59,6 +65,6 @@ public class MainController {
      * Starts the program and initiates ManualConfig and AuthController.
      */
     public void run() {
-        authController.run();
+        homeController.run();
     }
 }
