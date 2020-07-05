@@ -78,10 +78,10 @@ public class ControllerInputValidator {
     /**
      * Check if a string is valid for storing in a CSV file (does not include commas)
      * @param input Input string
-     * @return Wether the given sstring is valid for storing in a CSV file
+     * @return Whether the given string is valid for storing in a CSV file
      */
     public boolean isValidCSVStr(String input) {
-        return !input.contains(",");
+        return !input.isEmpty() && !input.contains(",");
     }
 
 }
