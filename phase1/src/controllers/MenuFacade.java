@@ -46,7 +46,19 @@ public class MenuFacade {
 
     private final ControllerInputValidator controllerInputValidator;
 
-    // TODO: javadoc
+    /**
+     * Initializes MenuFacade with the necessary controllers, presenter, and usecases.
+     * @param mc An instance of ManualConfig to get the necessary usecases
+     * @param freezingController An instance of FreezingController
+     * @param inventoryController An instance of InventoryController
+     * @param wishlistController An instance of WishlistController
+     * @param lendingController An instance of LendingController
+     * @param appealController An instance of AppealController
+     * @param tradeController An instance of TradeController
+     * @param adminCreator An instance of AdminCreator
+     * @param restrictionController An instance of RestrictionController
+     * @param menuPresenter An instance of MenuPresenter to display information and interact with the user
+     */
     public MenuFacade(ManualConfig mc, FreezingController freezingController,
                       InventoryController inventoryController,
                       WishlistController wishlistController,
@@ -54,7 +66,7 @@ public class MenuFacade {
                       AppealController appealController,
                       TradeController tradeController,
                       AdminCreatorController adminCreator,
-                      RestrictionController restrictionsController,
+                      RestrictionController restrictionController,
                       MenuPresenter menuPresenter) {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
@@ -68,7 +80,7 @@ public class MenuFacade {
         this.lendingController = lendingController;
         this.tradeController = tradeController;
         this.wishlistController = wishlistController;
-        this.restrictionsController = restrictionsController;
+        this.restrictionsController = restrictionController;
         this.appealController = appealController;
         this.adminCreator = adminCreator;
     }

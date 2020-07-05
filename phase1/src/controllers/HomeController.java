@@ -39,6 +39,12 @@ public class HomeController {
     private final ControllerInputValidator controllerInputValidator;
 
     // TODO: javadoc
+    /**
+     * Initializes HomeController with the necessary presenter and usecases.
+     * @param mc An instance of ManualConfig to get the necessary usecases
+     * @param homePresenter An instance of HomePresenter to display information and interact with the user
+     * @param menuFacade An instance of MenuFacade to take user's to the next menu
+     */
     public HomeController(ManualConfig mc, HomePresenter homePresenter,
                           MenuFacade menuFacade) {
         accountManager = mc.getAccountManager();
