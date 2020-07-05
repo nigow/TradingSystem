@@ -45,8 +45,8 @@ public class MainController {
         freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
         tradeController = new TradeController(manualConfig, new ConsoleTradePresenter());
         adminCreator = new AdminCreator(manualConfig, new ConsoleAdminPresenter());
-        restrictionsController = new RestrictionsController(manualConfig, new ConsoleRestrictionsPresenter());
-
+        restrictionsController = new RestrictionsController(manualConfig, /*new ConsoleRestrictionsPresenter()*/ null);
+        // TODO commented ^ until cat pushes
         menuFacade = new MenuFacade(manualConfig, freezingController, inventoryController, wishlistController,
                 lendingController, appealController, tradeController, adminCreator, restrictionsController,
                 new ConsoleMenuPresenter());

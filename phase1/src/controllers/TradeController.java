@@ -4,10 +4,7 @@ import entities.Trade;
 import entities.TradeStatus;
 import gateways.ManualConfig;
 import presenters.TradePresenter;
-import usecases.AccountManager;
-import usecases.AuthManager;
-import usecases.TradeManager;
-import usecases.TradeUtility;
+import usecases.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +24,7 @@ public class TradeController {
     private final AccountManager accountManager;
     private final TradeUtility tradeUtility;
     private final TradeManager tradeManager;
+    private final ItemManager itemManager;
     private final ControllerInputValidator controllerInputValidator;
 
     public TradeController(ManualConfig mc, TradePresenter tradePresenter) {
@@ -35,6 +33,7 @@ public class TradeController {
         accountManager = mc.getAccountManager();
         tradeUtility = mc.getTradeUtility();
         tradeManager = mc.getTradeManager();
+        itemManager = mc.getItemManager();
         controllerInputValidator = new ControllerInputValidator();
     }
 
@@ -134,18 +133,18 @@ public class TradeController {
             options.add("Go back");
             String action = tradePresenter.displayTradeOptions(options);
             if (controllerInputValidator.isNum(action)) {
-                int action_ind = Integer.parseInt(action);
-                if (action_ind == options.size() - 1)
+                int actionInd = Integer.parseInt(action);
+                if (actionInd == options.size() - 1)
                     return;
-                if (0 <= action_ind && action_ind < options.size()) {
-                    if (action_ind == 0) {
+                if (0 <= actionInd && actionInd < options.size()) {
+                    if (actionInd == 0) {
                         tradeManager.updateStatus(TradeStatus.REJECTED);
-                    } else if (action_ind == 1) {
+                    } else if (actionInd == 1) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
                         }
-                    } else if (action_ind == 2) {
+                    } else if (actionInd == 2) {
                         changeTradeTimePlace();
                     }
                     return;
@@ -175,24 +174,20 @@ public class TradeController {
         }
     }
 
-    // TODO: only take completed trades into account for the next three methods
-    // TODO this should show items, not trades
     private void recentTwoWayTrades() {
-        List<String> trades = new ArrayList<>();
-        for (Trade t : tradeUtility.getRecentTwoWay()) {
-            tradeManager.setTrade(t);
-            trades.add(tradeManager.tradeAsString(accountManager));
+        List<String> items = new ArrayList<>();
+        for (int itemID : tradeUtility.getRecentTwoWay()) {
+            items.add(itemManager.getItemById(itemID).toString()); // TODO is it okay to use tostring
         }
-        tradePresenter.displayRecentTwoWayTrade(trades);
+        tradePresenter.displayRecentTwoWayTrade(items);
     }
 
     private void recentOneWayTrades() {
-        List<String> trades = new ArrayList<>();
-        for (Trade t : tradeUtility.getRecentOneWay()) {
-            tradeManager.setTrade(t);
-            trades.add(tradeManager.tradeAsString(accountManager));
+        List<String> items = new ArrayList<>();
+        for (int itemID : tradeUtility.getRecentOneWay()) {
+            items.add(itemManager.getItemById(itemID).toString()); // TODO is it okay to use tostring
         }
-        tradePresenter.displayRecentOneWayTrade(trades);
+        tradePresenter.displayRecentTwoWayTrade(items);
     }
 
     private void frequentPartners() {
