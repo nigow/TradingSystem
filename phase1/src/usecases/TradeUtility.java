@@ -1,9 +1,6 @@
 package usecases;
 
-import entities.Account;
-import entities.TimePlace;
-import entities.Trade;
-import entities.TradeStatus;
+import entities.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -109,11 +106,11 @@ public class TradeUtility {
      * @return List of three most recent one-way trades the current account
      * has made, if less than three list size is adjusted
      */
-    public List<Trade> getRecentOneWay() {
+    public List<Integer> getRecentOneWay() {
         List<TimePlace> AllOneWay = new ArrayList<>();
-        List<Trade> AllOneWayTrades = new ArrayList<>();
+        List<Integer> ThreeRecent = new ArrayList<>();
+        List<Integer> AllOneWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-
             if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
             if (trade.getTraderOneID() == account.getAccountID()) {
@@ -128,7 +125,6 @@ public class TradeUtility {
                 }
             }
             // i changed this  -maryam
-
             /*
             if (!trade.getItemOneID().isEmpty() && trade.getItemTwoID().isEmpty() ||
                     trade.getItemOneID().isEmpty() && !trade.getItemTwoID().isEmpty()) {
@@ -138,14 +134,15 @@ public class TradeUtility {
              */
         }
         Collections.sort(AllOneWay);
-        int count = 0;
         for (TimePlace tp: AllOneWay) {
-            if (count >= 3) break;
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
-            AllOneWayTrades.add(trade);
-            count++;
+            AllOneWayItems.addAll(trade.getItemOneIDs());
+            AllOneWayItems.addAll(trade.getItemTwoIDs());
         }
-        return AllOneWayTrades;
+        for (int i = 0; i < 3; i++) {
+            ThreeRecent.add(AllOneWayItems.get(i));
+        }
+        return ThreeRecent;
     }
 
     /**
@@ -154,29 +151,28 @@ public class TradeUtility {
      * @return List of three most recent two-way trades the current account
      * has made, if less than three list size is adjusted
      */
-    public List<Trade> getRecentTwoWay() {
+    public List<Integer> getRecentTwoWay() {
         List<TimePlace> AllTwoWay = new ArrayList<>();
-        List<Trade> AllTwoWayTrades = new ArrayList<>();
+        List<Integer> ThreeRecent = new ArrayList<>();
+        List<Integer> AllTwoWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-
             if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
-            // i added this  -maryam
-
             if (!trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
                 AllTwoWay.add(timePlace);
             }
         }
         Collections.sort(AllTwoWay);
-        int count = 0;
         for (TimePlace tp: AllTwoWay) {
-            if (count >= 3) break;
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
-            AllTwoWayTrades.add(trade);
-            count++;
+            AllTwoWayItems.addAll(trade.getItemOneIDs());
+            AllTwoWayItems.addAll(trade.getItemTwoIDs());
         }
-        return AllTwoWayTrades;
+        for (int i = 0; i < 3; i++) {
+            ThreeRecent.add(AllTwoWayItems.get(i));
+        }
+        return ThreeRecent;
     }
 
     /**
