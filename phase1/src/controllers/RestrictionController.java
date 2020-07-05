@@ -11,37 +11,18 @@ import usecases.FreezingUtility;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * controller that displays and adjusts restrictions
- * @auth Catherine
- */
 public class RestrictionController {
-    /**
-     * an instance of ManualConfig
-     */
+
     private ManualConfig mc;
-    /**
-     * an instance of FreezingUtility to get and change the restrictions
-     */
+
     private FreezingUtility freezingUtility;
-    /**
-     * an instance of authManager
-     */
+
     private AuthManager authManager;
-    /**
-     * an instance of restrictionPresenter to communicate with user
-     */
+
     private RestrictionPresenter restrictionPresenter;
-    /**
-     * an instance of ControllerInputValidator to checkvalidity of input
-     */
+
     private ControllerInputValidator controllerInputValidator;
 
-    /**
-     * instantiate constructor for RestrictionController
-     * @param mc an instance of ManualConfig
-     * @param restrictionPresenter an instance of RestrictionPresenter
-     */
     public RestrictionController(ManualConfig mc, RestrictionPresenter restrictionPresenter) {
         this.mc = mc;
         freezingUtility = mc.getFreezingUtility();
@@ -50,9 +31,6 @@ public class RestrictionController {
         controllerInputValidator = new ControllerInputValidator();
     }
 
-    /**
-     * lets user to see possible estriction related actions and directs them to action
-     */
     public void run() {
         List<String> options = new ArrayList<>();
         options.add("Lend vs. borrow limit");
@@ -73,7 +51,7 @@ public class RestrictionController {
                 maxIncompleteTrades();
             }
             else if (action.equals("3")) {
-                //TODO go back to home
+                //TODO go back to main
             }
             else {
                 restrictionPresenter.invalidInput();
@@ -83,9 +61,6 @@ public class RestrictionController {
 
     }
 
-    /**
-     * lets user change how many more objects they can lend than borrow
-     */
     protected void lendMoreThanBorrow() {
         boolean isValid = false;
         String newNumber;
@@ -102,9 +77,6 @@ public class RestrictionController {
         }
     }
 
-    /**
-     * lets user change how many incomplete trades are allowed
-     */
     protected void maxIncompleteTrades() {
         boolean isValid = false;
         String newNumber;
@@ -121,9 +93,6 @@ public class RestrictionController {
         }
     }
 
-    /**
-     * lets user change how many trdes they're allowed weekly
-     */
     protected void maxWeeklyTrades() {
         boolean isValid = false;
         String newNumber;
