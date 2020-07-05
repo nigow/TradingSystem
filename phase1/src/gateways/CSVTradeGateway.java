@@ -104,7 +104,7 @@ public class CSVTradeGateway implements TradeGateway {
                 String.valueOf(trade.isTraderTwoCompleted())
         };
 
-        if (trade.getItemTwoIDs().isEmpty()) col[headers.get("trader_one_items")] = " ";
+        if (trade.getItemOneIDs().isEmpty()) col[headers.get("trader_one_items")] = " ";
         if (trade.getItemTwoIDs().isEmpty()) col[headers.get("trader_two_items")] = " ";
 
         return String.join(",", col);
