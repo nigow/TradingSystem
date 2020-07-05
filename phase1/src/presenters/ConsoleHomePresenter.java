@@ -28,9 +28,9 @@ public class ConsoleHomePresenter implements HomePresenter {
     public String[] logIn() {
          String[] logIn = new String[2];
          Scanner input = new Scanner(System.in);
-         System.out.println("Enter your username:");
+         System.out.print("Enter your username (-1 to go back): ");
          logIn[0] = input.nextLine();
-         System.out.println("Enter your password:");
+         System.out.print("Enter your password (-1 to go back): ");
          logIn[1] = input.nextLine();
          return logIn;
     }
@@ -41,9 +41,9 @@ public class ConsoleHomePresenter implements HomePresenter {
     public String[] newAccount() {
         String[] newAccount = new String[2];
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter your desired username:");
+        System.out.print("Enter your desired username (-1 to go back): ");
         newAccount[0] = input.nextLine();
-        System.out.println("Enter your desired password:");
+        System.out.print("Enter your desired password (-1 to go back): ");
         newAccount[1] = input.nextLine();
         return newAccount;
     }

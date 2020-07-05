@@ -77,77 +77,105 @@ public class TradeController {
     }
 
     private void showTrades() {
-        tradePresenter.displayTrades(tradeUtility.getAllTradesAccountString()); // TODO: only show non-rejected trades
+        tradePresenter.displayTrades(tradeUtility.getAllTradesAccountString());
     }
 
     // TODO make helpers to make this less ugly
     private void selectAndChangeTrade() {
-        String index = tradePresenter.selectTrade();
-        if (controllerInputValidator.isNum(index)) {
-            int ind = Integer.parseInt(index);
-            List<Trade> trades = tradeUtility.getAllTradesAccount();
-            if (0 <= ind && ind < trades.size()) {
-                tradeManager.setTrade(trades.get(ind));
-                if (tradeManager.isRejected()) {
-                    tradePresenter.showMessage("This trade has been cancelled.");
-                } else if (tradeManager.isUnconfirmed()) {
-                    List<String> options = new ArrayList<>();
-                    options.add("Reject or cancel this trade");
-                    if (tradeManager.isEditTurn(accountManager.getCurrAccount())) {
-                        options.add("Confirm the time and location for this trade");
-                        options.add("Edit the time and location for this trade");
-                    }
-                    String action = tradePresenter.displayTradeOptions(options);
-                    if (controllerInputValidator.isNum(action)) {
-                        int action_ind = Integer.parseInt(action);
-                        if (0 <= action_ind && action_ind < options.size()) {
-                            if (action_ind == 0) {
-                                tradeManager.updateStatus(TradeStatus.REJECTED);
-                            } else if (action_ind == 1) {
-                                tradeManager.updateStatus(TradeStatus.CONFIRMED);
-                                if (!tradeManager.isPermanent()) {
-                                    tradeManager.reverseTrade();
-                                }
-                            } else if (action_ind == 2) {
-                                changeTrade();
-                            }
-                        } else
-                            tradePresenter.invalidInput();
-                    } else
-                        tradePresenter.invalidInput();
-                } else if (tradeManager.isConfirmed()) {
-                    tradePresenter.showMessage("You have confirmed the meetup for this trade. " +
-                            "Has this trade been completed?");
-                    String ans = tradePresenter.yesOrNo();
-                    if (ans.equals("y")) {
-                        tradePresenter.showMessage("You have marked this trade as complete.");
-                        tradeManager.updateCompletion(accountManager.getCurrAccountID());
-                    } else if (ans.equals("n"))
-                        tradePresenter.showMessage("Okay.");
-                    else
-                        tradePresenter.invalidInput();
-
-                } else if (tradeManager.isCompleted()) {
-                    tradePresenter.showMessage("This trade has already been completed.");
-                }
-            } else if (ind == -1)
+        while (true) {
+            String index = tradePresenter.selectTrade();
+            if (controllerInputValidator.isExitStr(index))
                 return;
-            else
-                tradePresenter.invalidInput();
-        } else
+            if (controllerInputValidator.isNum(index)) {
+                int ind = Integer.parseInt(index);
+                List<Trade> trades = tradeUtility.getAllTradesAccount();
+                if (0 <= ind && ind < trades.size()) {
+                    Trade trade = trades.get(ind);
+                    tradeManager.setTrade(trade);
+                    tradePresenter.showMessage(tradeManager.tradeAsString(accountManager));
+                    if (tradeManager.isRejected()) {
+                        tradePresenter.showMessage("This trade has been cancelled.");
+                    } else if (tradeManager.isUnconfirmed()) {
+                        changeUnconfirmedTrade();
+                    } else if (tradeManager.isConfirmed()) {
+                        changeConfirmedTrade();
+                    } else if (tradeManager.isCompleted()) {
+                        tradePresenter.showMessage("This trade has already been completed.");
+                    }
+                    return;
+                }
+            }
+            tradePresenter.invalidInput();
+        }
+    }
+
+    private void changeConfirmedTrade() {
+        tradePresenter.showMessage("You have confirmed the meetup for this trade. " +
+                "Has this trade been completed?");
+        String ans = tradePresenter.yesOrNo();
+        if (ans.equals("y")) {
+            tradePresenter.showMessage("You have marked this trade as complete.");
+            tradeManager.updateCompletion(accountManager.getCurrAccountID());
+        } else if (ans.equals("n"))
+            tradePresenter.showMessage("Okay.");
+        else
             tradePresenter.invalidInput();
     }
 
-    private void changeTrade() {
-        String[] newInfo = tradePresenter.editTradeTimePlace();
-        if (controllerInputValidator.isDate(newInfo[1]) && controllerInputValidator.isTime(newInfo[2])) {
-            tradeManager.editTimePlace(LocalDateTime.parse(newInfo[1] + " " + newInfo[2], DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm")),
-                    newInfo[0], accountManager.getCurrAccountID());
-        } else
+    private void changeUnconfirmedTrade() {
+        while (true) {
+            List<String> options = new ArrayList<>();
+            options.add("Reject or cancel this trade");
+            if (tradeManager.isEditTurn(accountManager.getCurrAccount())) {
+                options.add("Confirm the time and location for this trade");
+                options.add("Edit the time and location for this trade");
+            }
+            options.add("Go back");
+            String action = tradePresenter.displayTradeOptions(options);
+            if (controllerInputValidator.isNum(action)) {
+                int action_ind = Integer.parseInt(action);
+                if (action_ind == options.size() - 1)
+                    return;
+                if (0 <= action_ind && action_ind < options.size()) {
+                    if (action_ind == 0) {
+                        tradeManager.updateStatus(TradeStatus.REJECTED);
+                    } else if (action_ind == 1) {
+                        tradeManager.updateStatus(TradeStatus.CONFIRMED);
+                        if (!tradeManager.isPermanent()) {
+                            tradeManager.reverseTrade();
+                        }
+                    } else if (action_ind == 2) {
+                        changeTradeTimePlace();
+                    }
+                    return;
+                }
+            }
             tradePresenter.invalidInput();
+        }
+    }
+
+    private void changeTradeTimePlace() {
+        while (true) {
+            String[] newInfo = tradePresenter.editTradeTimePlace();
+            if (controllerInputValidator.isExitStr(newInfo[0]) ||
+                    controllerInputValidator.isExitStr(newInfo[1]) ||
+                    controllerInputValidator.isExitStr(newInfo[2]))
+                return;
+            if (controllerInputValidator.isDate(newInfo[1]) && controllerInputValidator.isTime(newInfo[2])) {
+                // TODO make sure this does not give an exception for invalid dates
+                LocalDateTime date = LocalDateTime.parse(newInfo[1] + " " + newInfo[2],
+                        DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm"));
+                if (date.isAfter(LocalDateTime.now())) {
+                    tradeManager.editTimePlace(date, newInfo[0], accountManager.getCurrAccountID());
+                    return;
+                }
+            }
+            tradePresenter.invalidInput();
+        }
     }
 
     // TODO: only take completed trades into account for the next three methods
+    // TODO this should show items, not trades
     private void recentTwoWayTrades() {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getRecentTwoWay()) {

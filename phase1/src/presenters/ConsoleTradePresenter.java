@@ -29,7 +29,8 @@ public class ConsoleTradePresenter implements TradePresenter {
     public void displayTrades(List<String> trades) {
         System.out.println("Your trades:");
         for (int i = 0; i < trades.size(); i++) {
-            System.out.println(i + ". " + trades.get(i));
+            System.out.println(i + ". ");
+            System.out.println(trades.get(i));
         }
     }
 
@@ -39,7 +40,7 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public String selectTrade() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the index of the trade you want to change (-1 to return): ");
+        System.out.println("Enter the index of the trade you want to change (-1 to go back): ");
         return input.nextLine();
     }
 
@@ -49,12 +50,12 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public String[] editTradeTimePlace() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Suggest a new location for the meeting: ");
+        System.out.print("Suggest a new location for the meeting (-1 to go back): ");
         String[] s = new String[3];
         s[0] = input.nextLine();
-        System.out.print("Suggest a new date for the meeting yyyy-mm-dd: ");
+        System.out.print("Suggest a new date for the meeting yyyy-mm-dd (-1 to go back): ");
         s[1] = input.nextLine();
-        System.out.print("Suggest a new time for the meeting hh-mm: ");
+        System.out.print("Suggest a new time for the meeting hh-mm (-1 to go back): ");
         s[2] = input.nextLine();
         return s;
     }

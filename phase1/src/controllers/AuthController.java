@@ -34,6 +34,11 @@ public class AuthController {
     private final MenuFacade menuFacade;
 
     /**
+     * An instance of ControllerInputValidator to check a user's input is valid
+     */
+    private final ControllerInputValidator controllerInputValidator;
+
+    /**
      * Initializes AuthController based on information from ManualConfig and creates
      * instances of HomePresenter and MenuFacade.
      * @param mc An instance of ManualConfig
@@ -44,6 +49,7 @@ public class AuthController {
         authManager = mc.getAuthManager();
         this.menuFacade = menuFacade;
         this.homePresenter = homePresenter;
+        controllerInputValidator = new ControllerInputValidator();
     }
 
     /**
@@ -56,15 +62,14 @@ public class AuthController {
             options.add("Create an account");
             options.add("Quit");
             String action = homePresenter.displayHomeOptions(options);
-            if (action.equals("0")) {
+            if (action.equals("0"))
                 logIn();
-            } else if (action.equals("1")) {
+            else if (action.equals("1"))
                 createAccount();
-            } else if (action.equals("2")) {
+            else if (action.equals("2"))
                 return;
-            } else {
+            else
                 homePresenter.invalidInput();
-            }
         }
     }
 
@@ -73,12 +78,13 @@ public class AuthController {
      */
     private void logIn() {
         String[] accountInfo = homePresenter.logIn();
+        if (controllerInputValidator.isExitStr(accountInfo[0]) || controllerInputValidator.isExitStr(accountInfo[1]))
+            return;
         if (authManager.authenticateLogin(accountInfo[0], accountInfo[1])) {
             accountManager.setCurrAccount(accountInfo[0]);
             menuFacade.run();
         } else {
             homePresenter.invalidInput();
-            // logIn(); TODO: this is commented out until we implement a good 'back' option
         }
     }
 
@@ -87,11 +93,11 @@ public class AuthController {
      */
     private void createAccount() {
         String[] accountInfo = homePresenter.newAccount();
-        if (accountManager.createStandardAccount(accountInfo[0], accountInfo[1])) {
+        if (controllerInputValidator.isExitStr(accountInfo[0]) || controllerInputValidator.isExitStr(accountInfo[1]))
+            return;
+        if (accountManager.createStandardAccount(accountInfo[0], accountInfo[1]))
             menuFacade.run();
-        } else {
+        else
             homePresenter.invalidInput();
-            // createAccount(); TODO: this is commented out until we implement a good 'back' option
-        }
     }
 }
