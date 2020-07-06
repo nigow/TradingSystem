@@ -30,7 +30,7 @@ public class ManualConfigCSV implements ManualConfig {
 
     /**
      * Creates ManualConfig and initializes the required usecases
-     * using a csv file that can be set mannually.
+     * using a csv file that can be set manually.
      * @param filePath file path to the folder containing csv files
      */
     public ManualConfigCSV(String filePath) throws IOException {

@@ -1,13 +1,9 @@
 package controllers;
 
 import gateways.ManualConfig;
-import presenters.ConsoleWishlistPresenter;
 import presenters.TradeCreatorPresenter;
 import presenters.WishlistPresenter;
-import usecases.AccountManager;
-import usecases.AuthManager;
-import usecases.ItemManager;
-import usecases.WishlistUtility;
+import usecases.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,16 +15,17 @@ import java.util.Map;
  */
 public class WishlistController {
 
-    private WishlistPresenter wishlistPresenter;
-    private TradeCreatorPresenter tradeCreatorPresenter;
+    private final WishlistPresenter wishlistPresenter;
+    private final TradeCreatorPresenter tradeCreatorPresenter;
 
-    private ManualConfig manualConfig;
-    private AccountManager accountManager;
-    private WishlistUtility wishlistUtility;
-    private ItemManager itemManager;
-    private AuthManager authManager;
+    private final ManualConfig manualConfig;
+    private final AccountManager accountManager;
+    private final WishlistUtility wishlistUtility;
+    private final ItemManager itemManager;
+    private final AuthManager authManager;
+    private final TradeUtility tradeUtility;
 
-    private ControllerInputValidator controllerInputValidator;
+    private final ControllerInputValidator controllerInputValidator;
 
     /**
      * Create a controller for the wishlist screen.
@@ -41,6 +38,7 @@ public class WishlistController {
 
         this.manualConfig = manualConfig;
 
+        this.tradeUtility = manualConfig.getTradeUtility();
         this.accountManager = manualConfig.getAccountManager();
         this.wishlistUtility = manualConfig.getWishlistUtility();
         this.itemManager = manualConfig.getItemManager();
@@ -57,6 +55,8 @@ public class WishlistController {
      * Run the controller and allow it to take over current screen.
      */
     public void run() {
+
+        tradeUtility.setAccount(accountManager.getCurrAccount());
 
         Map<String, Runnable> actions = generateActions();
 
@@ -88,7 +88,7 @@ public class WishlistController {
 
         //TODO just a note that canTrade() checks that an account isn't frozen(which checks if account can lend and borrow so the canBorrow() may be removed as it is redundant
         if (authManager.canBorrow(accountManager.getCurrAccount()) &&
-                authManager.canTrade(manualConfig.getTradeUtility(), accountManager.getCurrAccount()))
+                authManager.canTrade(tradeUtility, accountManager.getCurrAccount()))
 
             actions.put("Start trade.", this::startTrade);
 

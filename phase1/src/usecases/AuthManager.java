@@ -17,12 +17,12 @@ public class AuthManager {
     /**
      * The account gateway dealing with storage of accounts
      */
-    private AccountGateway accountGateway;
+    private final AccountGateway accountGateway;
 
     /**
      * The restrictions gateway dealing with the storage of trading restrictions
      */
-    private RestrictionsGateway restrictionsGateway;
+    private final RestrictionsGateway restrictionsGateway;
 
     /**
      * Constructs an instance of AccountManager and stores accountGateway, restrictionsGateway and roleGateway
@@ -220,7 +220,7 @@ public class AuthManager {
      * @param account Account that is checked if it can be frozen
      * @return Whether the account can be frozen or not
      */
-    public boolean canbeFrozen(TradeUtility tradeUtility, Account account){
+    public boolean canBeFrozen(TradeUtility tradeUtility, Account account){
         Restrictions restrictions = restrictionsGateway.getRestrictions();
         boolean lendedMoreThanBorrowed = tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();

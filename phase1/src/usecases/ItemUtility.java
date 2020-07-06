@@ -1,6 +1,5 @@
 package usecases;
 
-import entities.Account;
 import entities.Item;
 
 import java.util.ArrayList;

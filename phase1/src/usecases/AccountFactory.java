@@ -18,7 +18,7 @@ public class AccountFactory {
     /**
      * The account gateway dealing with storage of accounts
      */
-    private AccountGateway accountGateway;
+    private final AccountGateway accountGateway;
 
     public AccountFactory(AccountGateway accountGateway){
         this.accountGateway = accountGateway;

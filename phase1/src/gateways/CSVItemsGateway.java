@@ -17,7 +17,7 @@ public class CSVItemsGateway implements ItemsGateway {
     /**
      * The HashMap that maps the item ID against the item object
      */
-    private Map<Integer, Item> itemMap;
+    private final Map<Integer, Item> itemMap;
 
     /**
      * Constructor for CSVItemsGateway that sets the filepath of the csv file
@@ -46,9 +46,9 @@ public class CSVItemsGateway implements ItemsGateway {
 
                 //read the csv file, and create items corresponding the lines
                 while(line != null){
-                    if (line != ""){
+                    if (!line.equals("")){
                         String[] data = line.split(",");
-                        int id = Integer.valueOf(data[0]);
+                        int id = Integer.parseInt(data[0]);
                         Item item = createItem(data);
                         itemMap.put(id, item);
                     }
@@ -134,11 +134,11 @@ public class CSVItemsGateway implements ItemsGateway {
      */
     private Item createItem(String[] data){
         //create an item
-        int id = Integer.valueOf(data[0]);
+        int id = Integer.parseInt(data[0]);
         String name = data[1];
         String description = data[2];
-        Boolean isApproved = Boolean.valueOf(data[3]);
-        int ownerID = Integer.valueOf(data[4]);
+        boolean isApproved = Boolean.valueOf(data[3]);
+        int ownerID = Integer.parseInt(data[4]);
         Item item = new Item(id, name, description, ownerID);
 
         //owner IDs separated by exclamation marks
@@ -146,7 +146,7 @@ public class CSVItemsGateway implements ItemsGateway {
 
         //set other attributes from the csv file
         for(String oneId:oldWishlist){
-            item.addToAccountsWithItemsInWishlist(Integer.valueOf(oneId));
+            item.addToAccountsWithItemsInWishlist(Integer.parseInt(oneId));
         }
         if(isApproved){
             item.approve();
@@ -180,12 +180,7 @@ public class CSVItemsGateway implements ItemsGateway {
      */
     @Override
     public List<Item> getAllItems(){
-        List<Item> allItems = new ArrayList<>();
-        for(Item item: itemMap.values()){
-            allItems.add(item);
-
-        }
-        return allItems;
+        return new ArrayList<>(itemMap.values());
     }
 
 

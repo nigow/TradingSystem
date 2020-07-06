@@ -1,11 +1,7 @@
 package controllers;
 
 import gateways.ManualConfig;
-import presenters.ConsoleHomePresenter;
-import presenters.HomePresenter;
 import presenters.RestrictionPresenter;
-import presenters.TradePresenter;
-import usecases.AuthManager;
 import usecases.FreezingUtility;
 
 import java.util.ArrayList;
@@ -13,20 +9,14 @@ import java.util.List;
 
 public class RestrictionController {
 
-    private ManualConfig mc;
+    private final FreezingUtility freezingUtility;
 
-    private FreezingUtility freezingUtility;
+    private final RestrictionPresenter restrictionPresenter;
 
-    private AuthManager authManager;
-
-    private RestrictionPresenter restrictionPresenter;
-
-    private ControllerInputValidator controllerInputValidator;
+    private final ControllerInputValidator controllerInputValidator;
 
     public RestrictionController(ManualConfig mc, RestrictionPresenter restrictionPresenter) {
-        this.mc = mc;
         freezingUtility = mc.getFreezingUtility();
-        authManager = mc.getAuthManager();
         this.restrictionPresenter = restrictionPresenter;
         controllerInputValidator = new ControllerInputValidator();
     }
@@ -41,27 +31,28 @@ public class RestrictionController {
         while (!isValidInput) {
             isValidInput = true;
             String action =  restrictionPresenter.displayRestrictionOptions(options);
-            if (action.equals("0")) {
-                lendMoreThanBorrow();
-            }
-            else if (action.equals("1")) {
-                maxIncompleteTrades();
-            }
-            else if (action.equals("2")) {
-                maxIncompleteTrades();
-            }
-            else if (action.equals("3")) {
-                //TODO go back to main
-            }
-            else {
-                restrictionPresenter.invalidInput();
-                isValidInput = false;
+            switch (action) {
+                case "0":
+                    lendMoreThanBorrow();
+                    break;
+                case "1":
+                    maxIncompleteTrades();
+                    break;
+                case "2":
+                    maxWeeklyTrades();
+                    break;
+                case "3":
+                    return;
+                default:
+                    restrictionPresenter.invalidInput();
+                    isValidInput = false;
+                    break;
             }
         }
 
     }
 
-    protected void lendMoreThanBorrow() {
+    private void lendMoreThanBorrow() {
         boolean isValid = false;
         String newNumber;
         while (!isValid) {
@@ -77,7 +68,7 @@ public class RestrictionController {
         }
     }
 
-    protected void maxIncompleteTrades() {
+    private void maxIncompleteTrades() {
         boolean isValid = false;
         String newNumber;
         while (!isValid) {
@@ -93,7 +84,7 @@ public class RestrictionController {
         }
     }
 
-    protected void maxWeeklyTrades() {
+    private void maxWeeklyTrades() {
         boolean isValid = false;
         String newNumber;
         while (!isValid) {
