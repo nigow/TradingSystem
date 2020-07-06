@@ -3,7 +3,6 @@ package usecases;
 import entities.Item;
 import gateways.InMemoryItemGateway;
 import gateways.ItemsGateway;
-import javafx.util.Pair;
 import junit.framework.TestCase;
 
 import java.util.HashMap;
