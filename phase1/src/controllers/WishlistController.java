@@ -56,6 +56,8 @@ public class WishlistController {
      */
     public void run() {
 
+        tradeUtility.setAccount(accountManager.getCurrAccount());
+
         Map<String, Runnable> actions = generateActions();
 
         String input;

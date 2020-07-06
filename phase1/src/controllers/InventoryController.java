@@ -168,7 +168,7 @@ public class InventoryController {
                 name = inventoryPresenter.askName();
                 if (controllerInputValidator.isExitStr(name)) {
                     exit = true;
-                } else if (controllerInputValidator.isValidCSVStr(name)) {
+                } else if (!controllerInputValidator.isValidCSVStr(name)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item name");
                 } else {
                     nameGiven = true;
@@ -177,7 +177,7 @@ public class InventoryController {
                 description = inventoryPresenter.askDescription();
                 if (controllerInputValidator.isExitStr(description)) {
                     exit = true;
-                } else if (controllerInputValidator.isValidCSVStr(description)) {
+                } else if (!controllerInputValidator.isValidCSVStr(description)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item description");
                 } else {
                     descriptionGiven = true;
