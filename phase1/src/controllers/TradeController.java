@@ -160,6 +160,7 @@ public class TradeController {
                         tradeManager.updateStatus(TradeStatus.REJECTED);
                     } else if (actionInd == 1) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
+                        // TODO: perform items swapping
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
                         }

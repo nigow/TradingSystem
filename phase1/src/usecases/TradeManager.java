@@ -264,9 +264,6 @@ public class TradeManager {
             trade.setTraderOneCompleted(true);
         else if (accountID == trade.getTraderTwoID())
             trade.setTraderTwoCompleted(true);
-        if (isCompleted()) {
-            // TODO add functionality to actually perform trade (swap items in inventory and wishlist)
-        }
         tradeGateway.updateTrade(trade, timePlace);
     }
 
