@@ -31,6 +31,8 @@ public class TradeController {
 
     private final ItemManager itemManager;
 
+    private final ItemUtility itemUtility;
+
     private final ControllerInputValidator controllerInputValidator;
 
     /**
@@ -45,6 +47,7 @@ public class TradeController {
         tradeUtility = mc.getTradeUtility();
         tradeManager = mc.getTradeManager();
         itemManager = mc.getItemManager();
+        itemUtility = mc.getItemUtility();
         controllerInputValidator = new ControllerInputValidator();
     }
 
@@ -109,8 +112,7 @@ public class TradeController {
                 int ind = Integer.parseInt(index);
                 List<Trade> trades = tradeUtility.getAllTradesAccount();
                 if (0 <= ind && ind < trades.size()) {
-                    Trade trade = trades.get(ind);
-                    tradeManager.setTrade(trade);
+                    tradeManager.setTrade(trades.get(ind));
                     tradePresenter.showMessage(tradeManager.tradeAsString(accountManager, itemManager));
                     if (tradeManager.isRejected()) {
                         tradePresenter.showMessage("This trade has been cancelled.");
@@ -160,6 +162,7 @@ public class TradeController {
                         tradeManager.updateStatus(TradeStatus.REJECTED);
                     } else if (actionInd == 1) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
+                        tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
                         // TODO: perform items swapping
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
