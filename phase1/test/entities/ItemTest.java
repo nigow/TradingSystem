@@ -35,11 +35,6 @@ public class ItemTest extends TestCase{
         TestCase.assertEquals(item.getOwnerID(), 2);
     }
 
-    public void testGetAccountsWithItemInWishList() {
-        Item item = new Item(1, "Harry Potter", "a book", 2);
-        TestCase.assertTrue(item.getAccountsWithItemInWishlist().isEmpty());
-    }
-
     public void testSetName() {
         Item item = new Item(1, "Harry Potter", "a book", 2);
         item.setName("1984");
@@ -65,37 +60,6 @@ public class ItemTest extends TestCase{
         Item item = new Item(1, "Harry Potter", "a book", 2);
         item.setOwnerID(3);
         TestCase.assertEquals(item.getOwnerID(), 3);
-    }
-
-    public void testAddToAccountsWithItemsInWishlist() {
-        Item item = new Item(1, "Harry Potter", "a book", 2);
-        item.addToAccountsWithItemsInWishlist(3);
-        item.addToAccountsWithItemsInWishlist(14);
-        ArrayList<Integer> lst = new ArrayList<>();
-        lst.add(3);
-        lst.add(14);
-        TestCase.assertEquals(item.getAccountsWithItemInWishlist(), lst);
-    }
-
-    public void testRemoveFromAccountsWithItemsInWishlist() {
-        Item item = new Item(1, "Harry Potter", "a book", 2);
-        item.addToAccountsWithItemsInWishlist(3);
-        item.addToAccountsWithItemsInWishlist(14);
-        TestCase.assertTrue(item.removeFromAccountsWithItemsInWishlist(14));
-        ArrayList<Integer> lst = new ArrayList<>();
-        lst.add(3);
-        TestCase.assertEquals(item.getAccountsWithItemInWishlist(), lst);
-    }
-
-    public void testRemoveNotInList() {
-        Item item = new Item(1, "Harry Potter", "a book", 2);
-        item.addToAccountsWithItemsInWishlist(3);
-        item.addToAccountsWithItemsInWishlist(14);
-        item.removeFromAccountsWithItemsInWishlist(15);
-        ArrayList<Integer> lst = new ArrayList<>();
-        lst.add(3);
-        lst.add(14);
-        TestCase.assertEquals(item.getAccountsWithItemInWishlist(), lst);
     }
 
 }

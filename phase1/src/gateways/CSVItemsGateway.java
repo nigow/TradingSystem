@@ -74,7 +74,7 @@ public class CSVItemsGateway implements ItemsGateway {
 
             //rewrite the header
             FileWriter fw = new FileWriter(filepath, true);
-            fw.write("item_id,name,description,is_approved,owner_id,wishlist_account_id\n");
+            fw.write("item_id,name,description,is_approved,owner_id\n");
 
             //rewrite the entire items
             for(Item item: itemMap.values()){
@@ -101,19 +101,7 @@ public class CSVItemsGateway implements ItemsGateway {
         final String COMMA = ",";
 
         String newLine = "";
-        String wishlistString = "";
 
-        //cast wishlist id to a string, each separated by an exclamation mark
-        for(int i=0; i<item.getAccountsWithItemInWishlist().size(); i++){
-            wishlistString += item.getAccountsWithItemInWishlist().get(i);
-
-            if (i != item.getAccountsWithItemInWishlist().size() - 1){
-                wishlistString += " ";
-            }
-        }
-
-        //Avoid index out of range when there is nothing in the wishlist
-        if (wishlistString.equals("")) wishlistString = " ";
 
         //cast the item to a csv-friendly format
         newLine += item.getItemID() + COMMA
@@ -121,7 +109,7 @@ public class CSVItemsGateway implements ItemsGateway {
                 + item.getDescription() + COMMA
                 + item.isApproved() + COMMA
                 + item.getOwnerID() + COMMA
-                + wishlistString + "\n";
+                + "\n";
         return newLine;
 
     }
@@ -141,13 +129,7 @@ public class CSVItemsGateway implements ItemsGateway {
         int ownerID = Integer.parseInt(data[4]);
         Item item = new Item(id, name, description, ownerID);
 
-        //owner IDs separated by exclamation marks
-        String[] oldWishlist = data[5].split(" ");
 
-        //set other attributes from the csv file
-        for(String oneId:oldWishlist){
-            item.addToAccountsWithItemsInWishlist(Integer.parseInt(oneId));
-        }
         if(isApproved){
             item.approve();
         }

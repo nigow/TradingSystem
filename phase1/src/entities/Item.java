@@ -30,10 +30,10 @@ public class Item {
      */
     private int ownerID;
 
-    /**
-     * The accountIDs of users with this item in their wishlist
-     */
-    private final List<Integer> accountsWithItemInWishlist;
+//    /**
+//     * The accountIDs of users with this item in their wishlist
+//     */
+//    private final List<Integer> accountsWithItemInWishlist;
 
     /**
      * Creates a new item with the given itemID, name, description, and ownerID.
@@ -49,7 +49,7 @@ public class Item {
         this.description= description;
         this.isApproved = false;
         this.ownerID = ownerID;
-        this.accountsWithItemInWishlist = new ArrayList<>();
+//        this.accountsWithItemInWishlist = new ArrayList<>();
     }
 
     /**
@@ -85,20 +85,20 @@ public class Item {
     }
 
     /**
-     * Get the ownerID of owner of this item
+     * Get the ownerID of this item
      * @return ownerID
      */
     public int getOwnerID() {
         return ownerID;
     }
 
-    /**
-     * Get the list of accountIDs of users with this item in their wishlist
-     * @return accountsWithItemInWishlist
-     */
-    public List<Integer> getAccountsWithItemInWishlist() {
-        return accountsWithItemInWishlist;
-    }
+//    /**
+//     * Get the list of accountIDs of users with this item in their wishlist
+//     * @return accountsWithItemInWishlist
+//     */
+//    public List<Integer> getAccountsWithItemInWishlist() {
+//        return accountsWithItemInWishlist;
+//    }
 
     /**
      * Set the name of this item.
@@ -138,22 +138,22 @@ public class Item {
         this.ownerID = ownerID;
     }
 
-    /**
-     * Add an accountID to accountsWithItemInWishlist
-     * @param accountID the ID of the account added
-     */
-    public void addToAccountsWithItemsInWishlist(int accountID) {
-        accountsWithItemInWishlist.add(accountID);
-    }
+//    /**
+//     * Add an accountID to accountsWithItemInWishlist
+//     * @param accountID the ID of the account added
+//     */
+//    public void addToAccountsWithItemsInWishlist(int accountID) {
+//        accountsWithItemInWishlist.add(accountID);
+//    }
 
-    /**
-     * Remove given accountID from the accountsWithItemInWishlist list
-     * @param accountID the ID of the account that should be removed
-     * @return true if the accountID has been removed
-     */
-    public boolean removeFromAccountsWithItemsInWishlist(int accountID) {
-       return accountsWithItemInWishlist.remove(Integer.valueOf(accountID));
-    }
+//    /**
+//     * Remove given accountID from the accountsWithItemInWishlist list
+//     * @param accountID the ID of the account that should be removed
+//     * @return true if the accountID has been removed
+//     */
+//    public boolean removeFromAccountsWithItemsInWishlist(int accountID) {
+//       return accountsWithItemInWishlist.remove(Integer.valueOf(accountID));
+//    }
 
     /**
      * Creates a string representation of this Item
