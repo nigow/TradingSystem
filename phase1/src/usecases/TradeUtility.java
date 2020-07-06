@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * Utility class for trades to access certain types of trades for an account
+ * Utility class for trades to access certain types of trades and information on trades
  * @author Isaac
  */
 public class TradeUtility {
@@ -278,6 +278,13 @@ public class TradeUtility {
         return timesLent;
     }
 
+    /**
+     * Completes a trade
+     * @param trade the trade object representing the trade about to be made
+     * @param accountManager an object for managing accounts
+     * @param itemManager an object for managing items
+     * @param itemUtility an object to access certain types of items
+     */
     public void makeTrade (Trade trade, AccountManager accountManager, ItemManager itemManager,
                            ItemUtility itemUtility) {
         accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
