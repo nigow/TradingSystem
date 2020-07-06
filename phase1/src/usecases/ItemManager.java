@@ -45,8 +45,9 @@ public class ItemManager {
     public boolean removeItem(Item item){
         boolean result = false;
         if (getAllItems().contains(item)) {
-            itemsGateway.deleteItem(item);
+            item.setOwnerID(-1);
             result = true;
+            itemsGateway.updateItem(item);
         }
         return result;
     }
@@ -126,7 +127,13 @@ public class ItemManager {
      * @return List of all items
      */
     public List<Item> getAllItems() {
-        return itemsGateway.getAllItems();
+        List<Item> Items = new ArrayList<>();
+        for (Item item : itemsGateway.getAllItems()) {
+            if (item.getOwnerID() != -1) {
+                Items.add(item);
+            }
+        }
+        return Items;
     }
 
     /**
