@@ -178,6 +178,15 @@ public class AccountManager {
     }
 
     /**
+     * Determines if item corresponding to the itemID is in the current account's wishlist
+     * @param itemID Unique identifier of the item
+     * @return Whether the item corresponding to the itemID is in the current account's wishlist
+     */
+    public boolean isInWishlist(int itemID){
+        return currAccount.getWishlist().contains(itemID);
+    }
+
+    /**
      * Updates in persistent storage the account corresponding to the account
      * @param account Account of user to update
      * @return Whether account is successfully updated or not
