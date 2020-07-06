@@ -37,6 +37,8 @@ public class LendingController {
      */
     private final ManualConfig manualConfig;
 
+    private final ControllerInputValidator validator;
+
     /**
      * A controller that initiates trades
      */
@@ -53,6 +55,7 @@ public class LendingController {
         this.accountManager = manualConfig.getAccountManager();
         this.itemManager = manualConfig.getItemManager();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
+        this.validator = new ControllerInputValidator();
     }
 
     /**
@@ -72,37 +75,24 @@ public class LendingController {
         }
 
         lendingPresenter.displayAccounts(allAccounts);
-
-        int index = -2; //temporary value
-        while(index <= -2){
-            try{
-                index = Integer.parseInt(lendingPresenter.selectAccount());
-
-            }
-
-            //not a number
-            catch(NumberFormatException e){
-                //pass
-            }
-
-            //valid input
-            if(index < allAccounts.size() && index >= 0){
-                index = allAccounts.get(index).getAccountID();
-            }
-
-            //user no longer trades
-            else if (index == -1){
+        boolean flag = true;
+        String temp_index = null;
+        while(flag){
+            temp_index = lendingPresenter.selectAccount();
+            if(temp_index.equals("-1")){
                 lendingPresenter.abort();
                 return -1;
             }
-
-            //<=-2 or more than the list size
-            else{
+            else if(!validator.isNum(temp_index)){
                 lendingPresenter.invalidInput();
             }
+            else{
+                int index = Integer.parseInt(temp_index);
+                if(index >= allAccounts.size()) lendingPresenter.invalidInput();
+                else flag = false;
+            }
         }
-
-        return index;
+        return allAccounts.get(Integer.parseInt(temp_index)).getAccountID();
     }
 
 
@@ -122,35 +112,24 @@ public class LendingController {
 
         lendingPresenter.displayInventory(myItems);
 
-        int index = -2;
-        while(index <= -2){
-            try{
-                index = Integer.parseInt(lendingPresenter.selectItem());
-            }
-
-            //not a number
-            catch(NumberFormatException e){
-                //pass
-            }
-
-            //valid input
-            if(index < myItems.size() && index >= 0){
-                index = myItems.get(index).getItemID();
-            }
-
-            //user no longer trades
-            else if (index == -1) {
+        boolean flag = true;
+        String temp_index = null;
+        while(flag){
+            temp_index = lendingPresenter.selectItem();
+            if(temp_index.equals("-1")){
                 lendingPresenter.abort();
                 return -1;
             }
-
-            //index <= -2 or more than the size of list
-            else{
+            else if(!validator.isNum(temp_index)){
                 lendingPresenter.invalidInput();
             }
-
+            else{
+                int index = Integer.parseInt(temp_index);
+                if(index >= myItems.size()) lendingPresenter.invalidInput();
+                else flag = false;
+            }
         }
-        return index;
+        return myItems.get(Integer.parseInt(temp_index)).getItemID();
     }
 
     /**
