@@ -95,8 +95,6 @@ public class TradeController {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getAllTradesAccount()) {
             tradeManager.setTrade(t);
-            /* I added itemManager as a parameter - Isaac
-             */
             trades.add(tradeManager.tradeAsString(accountManager, itemManager));
         }
         tradePresenter.displayTrades(trades);
@@ -113,8 +111,6 @@ public class TradeController {
                 if (0 <= ind && ind < trades.size()) {
                     Trade trade = trades.get(ind);
                     tradeManager.setTrade(trade);
-                    /* I added itemManager as a parameter - Isaac
-                     */
                     tradePresenter.showMessage(tradeManager.tradeAsString(accountManager, itemManager));
                     if (tradeManager.isRejected()) {
                         tradePresenter.showMessage("This trade has been cancelled.");
@@ -199,7 +195,7 @@ public class TradeController {
     private void recentTwoWayTrades() {
         List<String> items = new ArrayList<>();
         for (int itemID : tradeUtility.getRecentTwoWay()) {
-            items.add(itemManager.getItemById(itemID).toString()); // TODO is it okay to use tostring
+            items.add(itemManager.getItemStringById(itemID));
         }
         tradePresenter.displayRecentTwoWayTrade(items);
     }
@@ -207,7 +203,7 @@ public class TradeController {
     private void recentOneWayTrades() {
         List<String> items = new ArrayList<>();
         for (int itemID : tradeUtility.getRecentOneWay()) {
-            items.add(itemManager.getItemById(itemID).toString()); // TODO is it okay to use tostring
+            items.add(itemManager.getItemStringById(itemID));
         }
         tradePresenter.displayRecentTwoWayTrade(items);
     }
