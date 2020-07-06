@@ -162,27 +162,27 @@ public class AuthManagerIntegrationTest extends TestCase {
         tradeUtility.setAccount(account1);
         //canBeFrozen() Tests
 
-        assertFalse(authManager.canbeFrozen(tradeUtility, account)); //makes sure account can't be frozen when it has the unfreeze permission
-        assertFalse(authManager.canbeFrozen(tradeUtility, account1)); //checks that account1 cant be frozen as lend = borrows
+        assertFalse(authManager.canBeFrozen(tradeUtility, account)); //makes sure account can't be frozen when it has the unfreeze permission
+        assertFalse(authManager.canBeFrozen(tradeUtility, account1)); //checks that account1 cant be frozen as lend = borrows
 
 
         Item item3 = new Item(2, "anime poster", "drawn by Mashiro Shiina", 0);
         //account borrows from account1
         tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen", false, 0, 1, new ArrayList<>(Arrays.asList(item3.getItemID())), new ArrayList<>());
-        assertFalse(authManager.canbeFrozen(tradeUtility, account)); //checks that account cant be frozen as it has done nothing wrong yet
-        assertTrue(authManager.canbeFrozen(tradeUtility, account1)); //checks that account1 can be frozen since it borrowed 1 more than it has lent
+        assertFalse(authManager.canBeFrozen(tradeUtility, account)); //checks that account cant be frozen as it has done nothing wrong yet
+        assertTrue(authManager.canBeFrozen(tradeUtility, account1)); //checks that account1 can be frozen since it borrowed 1 more than it has lent
 
         tradeManager.updateStatus(TradeStatus.REJECTED);
         account.removePermission(Permissions.UNFREEZE); //basically account is no longer admin and can be frozen
-        assertTrue(authManager.canbeFrozen(tradeUtility, account)); //Checks if account can be frozen given that it has too many incomplete trades
-        assertTrue(authManager.canbeFrozen(tradeUtility, account1));
+        assertTrue(authManager.canBeFrozen(tradeUtility, account)); //Checks if account can be frozen given that it has too many incomplete trades
+        assertTrue(authManager.canBeFrozen(tradeUtility, account1));
 
         account.removePermission(Permissions.BORROW);
         account.removePermission(Permissions.LEND);
-        assertFalse(authManager.canbeFrozen(tradeUtility, account)); //makes sure a frozen account can't be frozen
+        assertFalse(authManager.canBeFrozen(tradeUtility, account)); //makes sure a frozen account can't be frozen
 
         account1.addPermission(Permissions.UNFREEZE);
-        assertFalse(authManager.canbeFrozen(tradeUtility, account1)); //makes sure an account that can unfreeze can't be frozen
+        assertFalse(authManager.canBeFrozen(tradeUtility, account1)); //makes sure an account that can unfreeze can't be frozen
 
         //canTrade() tests (only reason the tests are together is the massive amount of code needed to set up tradeUtility and trades)
 

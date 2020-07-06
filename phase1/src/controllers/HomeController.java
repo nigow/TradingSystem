@@ -64,14 +64,19 @@ public class HomeController {
             options.add("Create an account");
             options.add("Quit");
             String action = homePresenter.displayHomeOptions(options);
-            if (action.equals("0"))
-                logIn();
-            else if (action.equals("1"))
-                createAccount();
-            else if (action.equals("2"))
-                return;
-            else
-                homePresenter.invalidInput();
+            switch (action) {
+                case "0":
+                    logIn();
+                    break;
+                case "1":
+                    createAccount();
+                    break;
+                case "2":
+                    return;
+                default:
+                    homePresenter.invalidInput();
+                    break;
+            }
         }
     }
 

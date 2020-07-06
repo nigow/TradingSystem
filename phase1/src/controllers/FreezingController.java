@@ -17,22 +17,19 @@ import java.util.List;
  */
 public class FreezingController {
 
-    private ManualConfig mc;
+    private final FreezingPresenter freezingPresenter;
 
-    private FreezingPresenter freezingPresenter;
+    private final FreezingUtility freezingUtility;
 
-    private FreezingUtility freezingUtility;
+    private final AccountManager accountManager;
 
-    private AccountManager accountManager;
+    private final AuthManager authManager;
 
-    private AuthManager authManager;
+    private final TradeUtility tradeUtility;
 
-    private TradeUtility tradeUtility;
-
-    private ControllerInputValidator controllerInputValidator;
+    private final ControllerInputValidator controllerInputValidator;
 
     public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {
-        this.mc = mc;
         tradeUtility = mc.getTradeUtility();
         this.freezingPresenter = freezingPresenter;
         freezingUtility = mc.getFreezingUtility();
@@ -50,18 +47,19 @@ public class FreezingController {
         while (!isValidInput) {
             isValidInput = true;
             String action = freezingPresenter.displayFreezingOptions(freezingActions);
-            if (action.equals("0")) {
-                freeze();
-            }
-            else if (action.equals("1")) {
-                unfreeze();
-            }
-            else if (action.equals("2")) {
-                //TODO return to home
-            }
-            else {
-                freezingPresenter.invalidInput();
-                isValidInput = false;
+            switch (action) {
+                case "0":
+                    freeze();
+                    break;
+                case "1":
+                    unfreeze();
+                    break;
+                case "2":
+                    return;
+                default:
+                    freezingPresenter.invalidInput();
+                    isValidInput = false;
+                    break;
             }
         }
     }

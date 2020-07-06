@@ -182,7 +182,7 @@ public class TradeController {
                 return;
             if (controllerInputValidator.isDate(newInfo[1]) && controllerInputValidator.isTime(newInfo[2])) {
                 LocalDateTime date = LocalDateTime.parse(newInfo[1] + " " + newInfo[2],
-                        DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm"));
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
                 if (date.isAfter(LocalDateTime.now())) {
                     tradeManager.editTimePlace(date, newInfo[0], accountManager.getCurrAccountID());
                     return;
@@ -205,7 +205,7 @@ public class TradeController {
         for (int itemID : tradeUtility.getRecentOneWay()) {
             items.add(itemManager.getItemStringById(itemID));
         }
-        tradePresenter.displayRecentTwoWayTrade(items);
+        tradePresenter.displayRecentOneWayTrade(items);
     }
 
     private void frequentPartners() {

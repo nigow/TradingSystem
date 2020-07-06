@@ -19,7 +19,7 @@ public class AccountManager {
     /**
      * The account gateway dealing with storage of accounts
      */
-    private AccountGateway accountGateway;
+    private final AccountGateway accountGateway;
 
     /**
      * Constructs an instance of AccountManager and stores accountGateway

@@ -10,10 +10,10 @@ public interface AdminCreatorPresenter {
      * creates admin account
      * @return username and password
      */
-    public String[] createAdmin();
+    String[] createAdmin();
 
     /**
      * lets user know that their input for username and/or password is invalid
      */
-    public void invalidInput();
+    void invalidInput();
 }

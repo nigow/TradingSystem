@@ -27,7 +27,7 @@ public class TradeManager {
     /**
      * The gateway for dealing with the storage of accounts
      */
-    private TradeGateway tradeGateway;
+    private final TradeGateway tradeGateway;
 
     /**
      * Constructor for TradeManager which Stores a TradeGateway
@@ -264,6 +264,9 @@ public class TradeManager {
             trade.setTraderOneCompleted(true);
         else if (accountID == trade.getTraderTwoID())
             trade.setTraderTwoCompleted(true);
+        if (isCompleted()) {
+            // TODO add functionality to actually perform trade (swap items in inventory and wishlist)
+        }
         tradeGateway.updateTrade(trade, timePlace);
     }
 

@@ -25,24 +25,6 @@ public class MainController {
      */
     private final HomeController homeController;
 
-    private final AppealController appealController;
-
-    private final AdminCreatorController adminCreator;
-
-    private final FreezingController freezingController;
-
-    private final InventoryController inventoryController;
-
-    private final LendingController lendingController;
-
-    private final WishlistController wishlistController;
-
-    private final TradeController tradeController;
-
-    private final RestrictionController restrictionsController;
-
-    private final MenuFacade menuFacade;
-
     /**
      * Creates instances of all controllers.
      */
@@ -53,19 +35,19 @@ public class MainController {
         catch (IOException e) {
             e.printStackTrace();
         }
-        inventoryController = new InventoryController(manualConfig,
+        InventoryController inventoryController = new InventoryController(manualConfig,
                 new ConsoleInventoryPresenter());
-        wishlistController = new WishlistController(new ConsoleWishlistPresenter(), new ConsoleTradeCreatorPresenter(),
+        WishlistController wishlistController = new WishlistController(new ConsoleWishlistPresenter(), new ConsoleTradeCreatorPresenter(),
                 manualConfig);
-        appealController = new AppealController(manualConfig,
+        AppealController appealController = new AppealController(manualConfig,
                 new ConsoleAppealPresenter());
-        lendingController = new LendingController(new ConsoleLendingPresenter(), manualConfig,
+        LendingController lendingController = new LendingController(new ConsoleLendingPresenter(), manualConfig,
                 new ConsoleTradeCreatorPresenter());
-        freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
-        tradeController = new TradeController(manualConfig, new ConsoleTradePresenter());
-        adminCreator = new AdminCreatorController(manualConfig, new ConsoleAdminCreatorPresenter());
-        restrictionsController = new RestrictionController(manualConfig, new ConsoleRestrictionPresenter());
-        menuFacade = new MenuFacade(manualConfig, freezingController, inventoryController, wishlistController,
+        FreezingController freezingController = new FreezingController(manualConfig, new ConsoleFreezingPresenter());
+        TradeController tradeController = new TradeController(manualConfig, new ConsoleTradePresenter());
+        AdminCreatorController adminCreator = new AdminCreatorController(manualConfig, new ConsoleAdminCreatorPresenter());
+        RestrictionController restrictionsController = new RestrictionController(manualConfig, new ConsoleRestrictionPresenter());
+        MenuFacade menuFacade = new MenuFacade(manualConfig, freezingController, inventoryController, wishlistController,
                 lendingController, appealController, tradeController, adminCreator, restrictionsController,
                 new ConsoleMenuPresenter());
 
