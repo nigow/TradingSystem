@@ -25,7 +25,6 @@ public class AdminCreatorController {
                 adminPresenter.invalidInput();
             }
         }
-        //TODO returns user to main menu
     }
 
 }

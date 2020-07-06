@@ -64,7 +64,7 @@ public class FreezingController {
         }
     }
 
-    protected void freeze() {
+    private void freeze() {
         List<Account> accounts = freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility);
         List<String> usernames = freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility);
         freezingPresenter.displayPossibleFreeze(usernames);
@@ -90,7 +90,7 @@ public class FreezingController {
         }
     }
 
-    protected void unfreeze() {
+     private void unfreeze() {
         List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);
         List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
         freezingPresenter.displayPossibleUnfreeze(usernames);

@@ -52,7 +52,7 @@ public class RestrictionController {
 
     }
 
-    protected void lendMoreThanBorrow() {
+    private void lendMoreThanBorrow() {
         boolean isValid = false;
         String newNumber;
         while (!isValid) {
@@ -68,7 +68,7 @@ public class RestrictionController {
         }
     }
 
-    protected void maxIncompleteTrades() {
+    private void maxIncompleteTrades() {
         boolean isValid = false;
         String newNumber;
         while (!isValid) {
@@ -84,7 +84,7 @@ public class RestrictionController {
         }
     }
 
-    protected void maxWeeklyTrades() {
+    private void maxWeeklyTrades() {
         boolean isValid = false;
         String newNumber;
         while (!isValid) {
