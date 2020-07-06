@@ -1,6 +1,5 @@
 package entities;
-import java.util.ArrayList;
-import java.util.List;
+
 /** Represents an item
  * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
