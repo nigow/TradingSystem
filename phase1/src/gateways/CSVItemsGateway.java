@@ -180,8 +180,7 @@ public class CSVItemsGateway implements ItemsGateway {
      */
     @Override
     public List<Item> getAllItems(){
-        List<Item> allItems = new ArrayList<>(itemMap.values());
-        return allItems;
+        return new ArrayList<>(itemMap.values());
     }
 
 
