@@ -10,7 +10,11 @@ import org.junit.Test;
 import presenters.TradeCreatorPresenter;
 import presenters.WishlistPresenter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -46,7 +50,7 @@ public class WishlistControllerTest {
     public void tearDown() throws Exception {
     }
 
-    @Test(timeout=50)
+    @Test
     public void startTrade() {
 
         WishlistPresenter wishlistPresenter = new WishlistPresenter() {
@@ -109,12 +113,12 @@ public class WishlistControllerTest {
 
             @Override
             public String getDate() {
-                return "2020-07-06";
+                return LocalDate.now().toString();
             }
 
             @Override
             public String getTime() {
-                return "13:45";
+                return LocalTime.now().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES).toString();
             }
 
             @Override
@@ -141,7 +145,8 @@ public class WishlistControllerTest {
 
         TimePlace timePlace = manualConfig.getTradeManager().getTimePlace();
         assertEquals(timePlace.getPlace(), "nms");
-        assertEquals(timePlace.getTime(), LocalDateTime.of(2020, 7, 6, 13, 45));
+        assertEquals(timePlace.getTime(), LocalDateTime.parse(tradeCreatorPresenter.getDate() + "T" +
+                                                              tradeCreatorPresenter.getTime()));
 
     }
 
