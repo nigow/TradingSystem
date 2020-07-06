@@ -278,4 +278,25 @@ public class TradeUtility {
         return timesLent;
     }
 
+    public void makeTrade (Trade trade, AccountManager accountManager, ItemManager itemManager,
+                           ItemUtility itemUtility) {
+        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
+        for (Integer itemId : trade.getItemOneIDs()) {
+            if (accountManager.getCurrWishlist().contains(itemId)) {
+                accountManager.removeItemFromWishlist(itemId);
+            }
+            if (itemUtility.getApprovedInventoryOfAccount(trade.getTraderOneID()).contains(itemManager.getItemById(itemId))) {
+                itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderTwoID());
+            }
+        }
+        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
+        for (Integer itemId : trade.getItemTwoIDs()) {
+            if (accountManager.getCurrWishlist().contains(itemId)) {
+                accountManager.removeItemFromWishlist(itemId);
+            }
+            if (itemUtility.getApprovedInventoryOfAccount(trade.getTraderTwoID()).contains(itemManager.getItemById(itemId))) {
+                itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderOneID());
+            }
+        }
+    }
 }
