@@ -235,7 +235,9 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.removeFromInventory();
-            if (controllerInputValidator.isNum(option)) {
+            if (controllerInputValidator.isExitStr(option)) {
+                isValid = true;
+            } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
                     boolean removed  = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
@@ -263,7 +265,9 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.approveItem();
-            if (controllerInputValidator.isNum(option)) {
+            if (controllerInputValidator.isExitStr(option)) {
+                isValid = true;
+            } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getDisapprovedString().size()) {
                     itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);

@@ -86,6 +86,9 @@ public class WishlistControllerTest {
         };
 
         TradeCreatorPresenter tradeCreatorPresenter = new TradeCreatorPresenter() {
+
+            private LocalDateTime ldt = LocalDateTime.now();
+
             @Override
             public void invalidInput() {
 
@@ -113,12 +116,12 @@ public class WishlistControllerTest {
 
             @Override
             public String getDate() {
-                return LocalDate.now().toString();
+                return ldt.toLocalDate().toString();
             }
 
             @Override
             public String getTime() {
-                return LocalTime.now().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES).toString();
+                return ldt.toLocalTime().plusMinutes(1).truncatedTo(ChronoUnit.MINUTES).toString();
             }
 
             @Override
