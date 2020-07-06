@@ -153,7 +153,6 @@ public class Account {
      */
     @Override
     public String toString() {
-        return String.format("Account name: %1$s\n" +
-                "ID: %2$s\n", username, accountID);
+        return this.username;
     }
 }
