@@ -149,7 +149,6 @@ public class Account {
     @Override
     public String toString() {
         return String.format("Account name: %1$s\n" +
-                "ID: %2$s\n" +
-                "Permissions: %3$s", username, accountID, permissions.toString());
+                "ID: %2$s\n", username, accountID);
     }
 }
