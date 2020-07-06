@@ -67,14 +67,13 @@ public class WishlistController {
             List<String> options = new ArrayList<>(actions.keySet());
             input = wishlistPresenter.displayWishlistOptions(options);
 
-            if (controllerInputValidator.isNum(input)) {
+            if (controllerInputValidator.isNum(input) && Integer.parseInt(input) < actions.size()) {
 
-                int action = Integer.parseInt(input);
-                if (action < actions.size()) {
-                    actions.values().toArray(new Runnable[0])[action].run();
-                } else {
-                    wishlistPresenter.invalidInput();
-                }
+                actions.values().toArray(new Runnable[0])[Integer.parseInt(input)].run();
+
+            } else {
+
+                wishlistPresenter.invalidInput();
 
             }
 
