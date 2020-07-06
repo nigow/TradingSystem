@@ -238,9 +238,13 @@ public class InventoryController {
             if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
-                    itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
-                    isValid = true;
-                    inventoryPresenter.customMessage("Item successfully removed!");
+                    boolean removed  = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+                    if (removed) {
+                        isValid = true;
+                        inventoryPresenter.customMessage("Item successfully removed!");
+                    } else {
+                        inventoryPresenter.customMessage("Item could not be removed.");
+                    }
                 } else {
                     inventoryPresenter.customMessage("That number does not correspond to an item");
                 }
