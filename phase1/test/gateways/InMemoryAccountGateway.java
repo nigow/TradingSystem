@@ -2,16 +2,17 @@ package gateways;
 
 import entities.Account;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryAccountGateway implements AccountGateway {
     private final Map<Integer, Account> accounts;
 
     public InMemoryAccountGateway(Map<Integer, Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public InMemoryAccountGateway() {
+        this.accounts = new HashMap<>();
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface RestrictionPresenter {
      * @param restrictionOptions possible actions user can choose from
      * @return index of chosen action
      */
-    public String displayRestrictionOptions(List<String> restrictionOptions);
+    String displayRestrictionOptions(List<String> restrictionOptions);
 
     /**
      * displays current value for the restriction
@@ -20,7 +20,7 @@ public interface RestrictionPresenter {
      *                           can lend than borrow
      * @return updated restriction value
      */
-    public String changeLendMoreThanBorrow(int lendMoreThanBorrow);
+    String changeLendMoreThanBorrow(int lendMoreThanBorrow);
 
     /**
      * displays current value for the restriction
@@ -28,17 +28,17 @@ public interface RestrictionPresenter {
      *                            there are
      * @return updated restriction value
      */
-    public String changeMaxIncompleteTrades(int maxIncompleteTrades);
+    String changeMaxIncompleteTrades(int maxIncompleteTrades);
 
     /**
      * displays current value for the restriction
      * @param weeklyTrades current restrictions for  number of trades a user can make weekly
      * @return updated restriction value
      */
-    public String changeMaxWeeklyTrades(int weeklyTrades);
+    String changeMaxWeeklyTrades(int weeklyTrades);
 
     /**
      * tells user that their input was invalid
      */
-    public void invalidInput();
+    void invalidInput();
 }

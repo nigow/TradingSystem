@@ -41,9 +41,9 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
             while(line != null){
                 //only the second line consists of restrictions separated by commas
                 String[] lineArray = line.split(",");
-                int lendLimit = Integer.valueOf(lineArray[0]);
-                int incompleteTrade = Integer.valueOf(lineArray[1]);
-                int weeklyTrade = Integer.valueOf(lineArray[2]);
+                int lendLimit = Integer.parseInt(lineArray[0]);
+                int incompleteTrade = Integer.parseInt(lineArray[1]);
+                int weeklyTrade = Integer.parseInt(lineArray[2]);
 
                 this.currentRestriction = new Restrictions(lendLimit, incompleteTrade, weeklyTrade);
 

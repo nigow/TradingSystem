@@ -27,7 +27,7 @@ public class TradeManager {
     /**
      * The gateway for dealing with the storage of accounts
      */
-    private TradeGateway tradeGateway;
+    private final TradeGateway tradeGateway;
 
     /**
      * Constructor for TradeManager which Stores a TradeGateway
@@ -204,7 +204,7 @@ public class TradeManager {
 
     /**
      * @param accountManager: An accountManager instance
-     * @return A user-friendly representation of a string.
+     * @return A user-friendly representation of a trade.
      */
     public String tradeAsString(AccountManager accountManager, ItemManager itemManager) {
         StringBuilder ans = new StringBuilder();

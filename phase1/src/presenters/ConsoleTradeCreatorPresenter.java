@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
 
-    private Scanner input;
+    private final Scanner input;
 
     /**
      * Create a console presenter for {@link controllers.TradeCreatorController}.

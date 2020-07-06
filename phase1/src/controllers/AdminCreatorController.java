@@ -6,14 +6,11 @@ import usecases.AccountManager;
 
 public class AdminCreatorController {
 
-    private AdminCreatorPresenter adminPresenter;
+    private final AdminCreatorPresenter adminPresenter;
 
-    private AccountManager accountManager;
-
-    private ManualConfig mc;
+    private final AccountManager accountManager;
 
     public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
-        this.mc = mc;
         accountManager = mc.getAccountManager();
         this.adminPresenter = adminPresenter;
     }
@@ -28,7 +25,6 @@ public class AdminCreatorController {
                 adminPresenter.invalidInput();
             }
         }
-        //TODO returns user to main menu
     }
 
 }

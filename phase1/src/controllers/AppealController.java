@@ -7,16 +7,13 @@ import usecases.AuthManager;
 
 public class AppealController {
 
-    private ManualConfig mc;
+    private final AuthManager authManager;
 
-    private AuthManager authManager;
+    private final AppealPresenter appealPresenter;
 
-    private AppealPresenter appealPresenter;
-
-    private AccountManager accountManager;
+    private final AccountManager accountManager;
 
     public AppealController(ManualConfig mc, AppealPresenter appealPresenter) {
-        this.mc = mc;
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
         this.appealPresenter = appealPresenter;

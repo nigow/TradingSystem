@@ -6,9 +6,6 @@ public class MockMenuPresenter implements MenuPresenter {
     private String[] options;
     private int counter;
 
-    public MockMenuPresenter() {
-         options = new String[]{"1", "2", "3"};
-    }
 
     @Override
     public String displayMenu(List<String> menuOptions) {

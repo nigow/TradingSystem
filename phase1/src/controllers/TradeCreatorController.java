@@ -1,11 +1,9 @@
 package controllers;
 
 import gateways.ManualConfig;
-import presenters.ConsoleTradeCreatorPresenter;
 import presenters.TradeCreatorPresenter;
 import usecases.*;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -18,17 +16,17 @@ import java.util.List;
 public class TradeCreatorController {
 
 
-    private TradeManager tradeManager;
-    private AccountManager accountManager;
-    private ItemUtility itemUtility;
+    private final TradeManager tradeManager;
+    private final AccountManager accountManager;
+    private final ItemUtility itemUtility;
 
-    private TradeCreatorPresenter tradeCreatorPresenter;
+    private final TradeCreatorPresenter tradeCreatorPresenter;
 
-    private int traderOneId;
-    private int traderTwoId;
-    private int itemId;
+    private final int traderOneId;
+    private final int traderTwoId;
+    private final int itemId;
 
-    private ControllerInputValidator controllerInputValidator;
+    private final ControllerInputValidator controllerInputValidator;
 
     /**
      * Create a controller for the trade creation screen.

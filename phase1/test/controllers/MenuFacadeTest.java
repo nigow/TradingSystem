@@ -35,7 +35,7 @@ public class MenuFacadeTest {
         return lst;
     }
 
-    @Test
+    @Test(timeout = 100)
     public void testInvalidInput() {
         List<Object> lst = this.setUp(new String[]{"34", "44", "1000", "fjgjf", "hi", "__,", "4"});
         MenuFacade menuFacade = (MenuFacade) lst.get(0);
