@@ -74,11 +74,8 @@ public class AccountManager {
      * @return Whether an account can be created
      */
     private boolean validateAccountRegister(String username, String password) {
-        if(username.matches("^[a-zA-Z0-9_]*$") && password.matches("^[ -~]*$")
-                && !password.contains(",") && accountGateway.findByUsername(username) == null){
-            return true;
-        }
-        return false;
+        return username.matches("^[a-zA-Z0-9_]*$") && password.matches("^[ -~]*$") &&
+                !password.contains(",") && accountGateway.findByUsername(username) == null;
     }
 
     /**
