@@ -6,7 +6,9 @@ import presenters.TradeCreatorPresenter;
 import usecases.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +85,7 @@ public class TradeCreatorController {
 
         String date = tradeCreatorPresenter.getDate();
 
-        while (!controllerInputValidator.isDate(date)) {
+        while (!controllerInputValidator.isDate(date) || LocalDate.parse(date).isBefore(LocalDate.now())) {
 
             if (controllerInputValidator.isExitStr(date)) return;
             tradeCreatorPresenter.invalidInput();
@@ -93,7 +95,8 @@ public class TradeCreatorController {
 
         String time = tradeCreatorPresenter.getTime();
 
-        while (!controllerInputValidator.isTime(time)) {
+        while (!controllerInputValidator.isTime(time) ||
+               !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
 
             if (controllerInputValidator.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
