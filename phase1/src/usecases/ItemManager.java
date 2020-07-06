@@ -45,8 +45,9 @@ public class ItemManager {
     public boolean removeItem(Item item){
         boolean result = false;
         if (getAllItems().contains(item)) {
-            itemsGateway.deleteItem(item);
+            item.setOwnerID(-1);
             result = true;
+            itemsGateway.updateItem(item);
         }
         return result;
     }

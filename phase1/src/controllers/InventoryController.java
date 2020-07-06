@@ -81,7 +81,7 @@ public class InventoryController {
         if (authManager.canCreateItem(accountManager.getCurrAccount())) {
             actions.put("Create a new item", this::createItem);
         }
-        actions.put("Remove your item from inventory", this::removeFromInventory);
+        actions.put("Remove your item from inventory", this::removeFromYourInventory);
         if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
             actions.put("View items awaiting approval", this::displayPending);
             actions.put("Approve an item awaiting approval", this::approveItems);
@@ -228,9 +228,9 @@ public class InventoryController {
     }
 
     /**
-     * Runs the removeFromInventory submenu
+     * Runs the remove your item from inventory submenu
      */
-    private void removeFromInventory() {
+    private void removeFromYourInventory() {
         displayYourInventory();
         boolean isValid = false;
         while (!isValid) {
