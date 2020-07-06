@@ -138,7 +138,7 @@ public class Account {
     }
 
     /**
-     * Remove an item from the wishlist.
+     * Remove an item from the wishlist
      * @param itemID The ID of the item to be removed from this wishlist
      * @return true if the item has been removed
      */
@@ -146,6 +146,11 @@ public class Account {
         return wishlist.remove(Integer.valueOf(itemID));
     }
 
+
+    /**
+     * Creates a string representation of this Account
+     * @return A string representation of this Account object
+     */
     @Override
     public String toString() {
         return String.format("Account name: %1$s\n" +

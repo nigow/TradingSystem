@@ -76,7 +76,7 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Creates a string representation of this meetup.
-     * @return A string representation of a TimePlace object.
+     * @return A string representation of this TimePlace object.
      */
     @Override
     public String toString() {

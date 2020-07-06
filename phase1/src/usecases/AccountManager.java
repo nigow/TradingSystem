@@ -218,6 +218,8 @@ public class AccountManager {
      * @param account Item to search the ID for
      * @return Id associated with the account
      */
-    public int getAccountID(Account account){ return account.getAccountID(); }
+    public int getAccountID(Account account){
+        return account.getAccountID();
+    }
 
 }
