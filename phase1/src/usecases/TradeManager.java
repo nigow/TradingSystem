@@ -81,13 +81,6 @@ public class TradeManager {
     }
 
     /**
-     * Need delete trade method in trade gateway
-     */
-    public void deleteTrade() {
-
-    }
-
-    /**
      * Changes the TimePlace of the trade and updates last edit info
      * @param time New time of the trade
      * @param place New place of the trade
@@ -127,6 +120,7 @@ public class TradeManager {
     }
 
     /**
+     * Getter for the current trade
      * @return The current trade.
      */
     public Trade getTrade() {
@@ -134,6 +128,7 @@ public class TradeManager {
     }
 
     /**
+     * Sets the current trade
      * @param trade The current trade.
      */
     public void setTrade(Trade trade) {
@@ -142,6 +137,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is rejected
      * @return Whether the trade is rejected
      */
     public boolean isRejected() {
@@ -149,6 +145,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is confirmed
      * @return Whether trade is confirmed
      */
     public boolean isConfirmed() {
@@ -156,6 +153,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is unconfirmed
      * @return Whether trade is unconfirmed
      */
     public boolean isUnconfirmed() {
@@ -163,6 +161,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is completed
      * @return Whether trade is completed.
      */
     public boolean isCompleted() {
@@ -170,6 +169,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if it is a accounts turn to edit
      * @param account The account checked
      * @return Whether it's the account's turn to edit.
      */
@@ -177,9 +177,14 @@ public class TradeManager {
         return account.getAccountID() != trade.getLastEditorID();
     }
 
+    /**
+     * Returns the current tradeGateway, a gateway dealing with trades
+     * @return the current tradeGateway
+     */
     public TradeGateway getTradeGateway() {
         return tradeGateway;
     }
+
     /**
      * Retrieves a list of all trades in persistent storage
      * @return List of all trades
@@ -187,7 +192,6 @@ public class TradeManager {
     public List<Trade> getAllTrades() {
         return tradeGateway.getAllTrades();
     }
-
 
 
     /**
@@ -203,6 +207,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns a user-friendly string representation of a trade
      * @param accountManager: An accountManager instance
      * @return A user-friendly representation of a trade.
      */

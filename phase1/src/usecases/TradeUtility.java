@@ -1,9 +1,11 @@
 package usecases;
 
 import entities.*;
+import sun.nio.cs.CharsetMapping;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for trades to access certain types of trades and information on trades
@@ -37,7 +39,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves all the trades the current account has done
+     * Retrieves all the trades the current account has
      * @return List of all of the trades the current account has done
      */
     public List<Trade> getAllTradesAccount() {
@@ -87,16 +89,14 @@ public class TradeUtility {
                 tradeFrequency.compute(trade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
             }
         }
-        SortedMap<Integer, Integer> sortedFrequency = new TreeMap<>(Collections.reverseOrder());
-        for (Map.Entry<Integer, Integer> entry : tradeFrequency.entrySet()) {
-            sortedFrequency.put(entry.getValue(), entry.getKey());
-        }
+        Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         List<Integer> tradeIds = new ArrayList<>();
-        int count = 0;
-        for (Map.Entry<Integer, Integer> entry : sortedFrequency.entrySet()) {
-            if (count >= 3) break;
-            tradeIds.add(entry.getValue());
-            count++;
+        int counter = 0;
+        for (Map.Entry<Integer, Integer> entry : sorted.entrySet()) {
+            if (counter > sorted.size()-4) {
+                tradeIds.add(entry.getKey());
+            }
+            counter++;
         }
         return tradeIds;
     }
@@ -217,6 +217,9 @@ public class TradeUtility {
             if (timePlace.getTime().isBefore(currDate) && timePlace.getTime().isAfter(weekAgo)) {
                 weeklyTrades++;
             }
+            if (timePlace.getTime().isEqual(currDate) || timePlace.getTime().isEqual(weekAgo)) {
+                weeklyTrades++;
+            }
         }
         return weeklyTrades;
     }
@@ -279,7 +282,7 @@ public class TradeUtility {
     }
 
     /**
-     * Completes a trade
+     * Completes the action of making a trade
      * @param trade the trade object representing the trade about to be made
      * @param accountManager an object for managing accounts
      * @param itemManager an object for managing items
