@@ -47,6 +47,7 @@ public class ItemManager {
         if (getAllItems().contains(item)) {
             item.setOwnerID(-1);
             result = true;
+            itemsGateway.updateItem(item);
         }
         return result;
     }
