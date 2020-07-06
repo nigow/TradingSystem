@@ -84,6 +84,10 @@ public class Item {
         return isApproved;
     }
 
+    /**
+     * Get the ownerID of owner of this item
+     * @return
+     */
     public int getOwnerID() {
         return ownerID;
     }
