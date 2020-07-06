@@ -80,7 +80,7 @@ public class Account {
 
     /**
      * Set a new password
-     * @param password The new passoword that'll be assigned to this account
+     * @param password The new password that'll be assigned to this account
      */
     public void setPassword(String password) {
         this.password = password;

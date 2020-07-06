@@ -12,10 +12,10 @@ public interface MenuPresenter {
      * @param menuOptions possible actions
      * @return index of chosen action
      */
-    public String displayMenu(List<String> menuOptions);
+    String displayMenu(List<String> menuOptions);
 
     /**
      * tells user that their input was invalid
      */
-    public void invalidInput();
+    void invalidInput();
 }

@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
 
-    private Scanner input;
+    private final Scanner input;
 
     /**
      * Create a console presenter for {@link controllers.TradeCreatorController}.
@@ -31,7 +31,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
     @Override
     public String getTwoWayTrade() {
         System.out.print("Would you like to make this a two way trade (y/n, -1 to abort): ");
-        return input.next();
+        return input.nextLine();
     }
 
     /**
@@ -53,7 +53,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
     @Override
     public String getItem() {
         System.out.print("Select item in return (index, -1 to abort): ");
-        return input.next();
+        return input.nextLine();
     }
 
     /**
@@ -62,7 +62,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
     @Override
     public String getLocation() {
         System.out.print("Select trade location (-1 to abort): ");
-        return input.next();
+        return input.nextLine();
     }
 
     /**
@@ -71,7 +71,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
     @Override
     public String getDate() {
         System.out.print("Select trade date (YYYY-MM-DD, -1 to abort): ");
-        return input.next();
+        return input.nextLine();
     }
 
     /**
@@ -79,8 +79,8 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
      */
     @Override
     public String getTime() {
-        System.out.print("Select Trade time (HH:MM, -1 to abort): ");
-        return input.next();
+        System.out.print("Select trade time (HH:MM, -1 to abort): ");
+        return input.nextLine();
     }
 
     /**
@@ -89,7 +89,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
     @Override
     public String getIsPerm() {
         System.out.print("Is this trade permanent (y/n, -1 to abort): ");
-        return input.next();
+        return input.nextLine();
     }
 
     /**

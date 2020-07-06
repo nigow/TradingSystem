@@ -27,7 +27,7 @@ public class TradeManager {
     /**
      * The gateway for dealing with the storage of accounts
      */
-    private TradeGateway tradeGateway;
+    private final TradeGateway tradeGateway;
 
     /**
      * Constructor for TradeManager which Stores a TradeGateway
@@ -81,13 +81,6 @@ public class TradeManager {
     }
 
     /**
-     * Need delete trade method in trade gateway
-     */
-    public void deleteTrade() {
-
-    }
-
-    /**
      * Changes the TimePlace of the trade and updates last edit info
      * @param time New time of the trade
      * @param place New place of the trade
@@ -127,6 +120,7 @@ public class TradeManager {
     }
 
     /**
+     * Getter for the current trade
      * @return The current trade.
      */
     public Trade getTrade() {
@@ -134,6 +128,7 @@ public class TradeManager {
     }
 
     /**
+     * Sets the current trade
      * @param trade The current trade.
      */
     public void setTrade(Trade trade) {
@@ -142,6 +137,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is rejected
      * @return Whether the trade is rejected
      */
     public boolean isRejected() {
@@ -149,6 +145,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is confirmed
      * @return Whether trade is confirmed
      */
     public boolean isConfirmed() {
@@ -156,6 +153,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is unconfirmed
      * @return Whether trade is unconfirmed
      */
     public boolean isUnconfirmed() {
@@ -163,6 +161,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if trade is completed
      * @return Whether trade is completed.
      */
     public boolean isCompleted() {
@@ -170,6 +169,7 @@ public class TradeManager {
     }
 
     /**
+     * Returns if it is a accounts turn to edit
      * @param account The account checked
      * @return Whether it's the account's turn to edit.
      */
@@ -177,9 +177,14 @@ public class TradeManager {
         return account.getAccountID() != trade.getLastEditorID();
     }
 
+    /**
+     * Returns the current tradeGateway, a gateway dealing with trades
+     * @return the current tradeGateway
+     */
     public TradeGateway getTradeGateway() {
         return tradeGateway;
     }
+
     /**
      * Retrieves a list of all trades in persistent storage
      * @return List of all trades
@@ -187,7 +192,6 @@ public class TradeManager {
     public List<Trade> getAllTrades() {
         return tradeGateway.getAllTrades();
     }
-
 
 
     /**
@@ -203,41 +207,49 @@ public class TradeManager {
     }
 
     /**
+     * Returns a user-friendly string representation of a trade
      * @param accountManager: An accountManager instance
-     * @return A user-friendly representation of a string.
+     * @return A user-friendly representation of a trade.
      */
-    public String tradeAsString(AccountManager accountManager) {
-
-        // TODO show items as well
-
-        String ans = "";
+    public String tradeAsString(AccountManager accountManager, ItemManager itemManager) {
+        StringBuilder ans = new StringBuilder();
         String username1 = accountManager.getAccountFromID(
                 trade.getTraderOneID()).getUsername();
         String username2 = accountManager.getAccountFromID(
                 trade.getTraderTwoID()).getUsername();
 
         if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
-            ans += "Type: Two-way ";
-            ans += "Account 1: " + username1 + " Account 2: " + username2 + " ";
+            ans.append("Type: Two-way ");
+            ans.append("Account 1: ").append(username1).append(" Account 2: ").append(username2).append(" ");
         }
         else {
-            ans += "Type: One-way ";
+            ans.append("Type: One-way ");
             if (trade.getItemOneIDs().size() > 0) {
-                ans += "Borrower: " + username1 + " Lender: " + username2 + " ";
+                ans.append("Borrower: ").append(username1).append(" Lender: ").append(username2).append(" ");
             }
             else {
-                ans += "Borrower: " + username2 + " Lender " + username1 + " ";
+                ans.append("Borrower: ").append(username2).append(" Lender ").append(username1).append(" ");
             }
 
         }
-        ans += "Status: " + trade.getStatus().toString() + " ";
-        ans += "Type: ";
-        ans += trade.isPermanent() ? "Permanent ": "Temporary ";
-        ans += "Location: " + timePlace.getPlace() + " ";
-        ans += "Time: " + timePlace.getTime() + " ";
-
-
-        return ans;
+        ans.append("Status: ").append(trade.getStatus().toString()).append(" ");
+        ans.append("Type: ");
+        ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
+        ans.append("Location: ").append(timePlace.getPlace()).append(" ");
+        ans.append("Time: ").append(timePlace.getTime()).append(" ");
+        ans.append("Trader 1 Items: ");
+        String separator = "";
+        for (Integer tradeId : trade.getItemOneIDs()) {
+            ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+            separator = ", ";
+        }
+        separator = "";
+        ans.append("Trader 2 Items: ");
+        for (Integer tradeId : trade.getItemOneIDs()) {
+            ans.append(separator).append(itemManager.getItemById(tradeId).toString()).append(", ");
+            separator = ", ";
+        }
+        return ans.toString();
     }
 
     /**
@@ -257,6 +269,7 @@ public class TradeManager {
             trade.setTraderOneCompleted(true);
         else if (accountID == trade.getTraderTwoID())
             trade.setTraderTwoCompleted(true);
+        tradeGateway.updateTrade(trade, timePlace);
     }
 
 }

@@ -31,6 +31,8 @@ public class TradeController {
 
     private final ItemManager itemManager;
 
+    private final ItemUtility itemUtility;
+
     private final ControllerInputValidator controllerInputValidator;
 
     /**
@@ -45,6 +47,7 @@ public class TradeController {
         tradeUtility = mc.getTradeUtility();
         tradeManager = mc.getTradeManager();
         itemManager = mc.getItemManager();
+        itemUtility = mc.getItemUtility();
         controllerInputValidator = new ControllerInputValidator();
     }
 
@@ -95,7 +98,7 @@ public class TradeController {
         List<String> trades = new ArrayList<>();
         for (Trade t : tradeUtility.getAllTradesAccount()) {
             tradeManager.setTrade(t);
-            trades.add(tradeManager.tradeAsString(accountManager));
+            trades.add(tradeManager.tradeAsString(accountManager, itemManager));
         }
         tradePresenter.displayTrades(trades);
     }
@@ -109,13 +112,8 @@ public class TradeController {
                 int ind = Integer.parseInt(index);
                 List<Trade> trades = tradeUtility.getAllTradesAccount();
                 if (0 <= ind && ind < trades.size()) {
-                    Trade trade = trades.get(ind);
-                    tradeManager.setTrade(trade);
-                    tradePresenter.showMessage(tradeManager.tradeAsString(accountManager));
-
-                    tradePresenter.showMessage("hello: " + tradeManager.getTrade().getItemOneIDs().toString());
-                    tradePresenter.showMessage("darkness: " + tradeManager.getTrade().getItemTwoIDs().toString());
-
+                    tradeManager.setTrade(trades.get(ind));
+                    tradePresenter.showMessage(tradeManager.tradeAsString(accountManager, itemManager));
                     if (tradeManager.isRejected()) {
                         tradePresenter.showMessage("This trade has been cancelled.");
                     } else if (tradeManager.isUnconfirmed()) {
@@ -164,6 +162,8 @@ public class TradeController {
                         tradeManager.updateStatus(TradeStatus.REJECTED);
                     } else if (actionInd == 1) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
+                        tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
+                        // TODO: perform items swapping
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
                         }
@@ -186,7 +186,7 @@ public class TradeController {
                 return;
             if (controllerInputValidator.isDate(newInfo[1]) && controllerInputValidator.isTime(newInfo[2])) {
                 LocalDateTime date = LocalDateTime.parse(newInfo[1] + " " + newInfo[2],
-                        DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm"));
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
                 if (date.isAfter(LocalDateTime.now())) {
                     tradeManager.editTimePlace(date, newInfo[0], accountManager.getCurrAccountID());
                     return;
@@ -199,7 +199,7 @@ public class TradeController {
     private void recentTwoWayTrades() {
         List<String> items = new ArrayList<>();
         for (int itemID : tradeUtility.getRecentTwoWay()) {
-            items.add(itemManager.getItemById(itemID).toString()); // TODO is it okay to use tostring
+            items.add(itemManager.getItemStringById(itemID));
         }
         tradePresenter.displayRecentTwoWayTrade(items);
     }
@@ -207,9 +207,9 @@ public class TradeController {
     private void recentOneWayTrades() {
         List<String> items = new ArrayList<>();
         for (int itemID : tradeUtility.getRecentOneWay()) {
-            items.add(itemManager.getItemById(itemID).toString()); // TODO is it okay to use tostring
+            items.add(itemManager.getItemStringById(itemID));
         }
-        tradePresenter.displayRecentTwoWayTrade(items);
+        tradePresenter.displayRecentOneWayTrade(items);
     }
 
     private void frequentPartners() {

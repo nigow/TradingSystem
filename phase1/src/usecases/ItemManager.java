@@ -61,6 +61,15 @@ public class ItemManager {
     }
 
     /**
+     * Get the string representation of item with the id entered
+     * @param ItemId Id of the item
+     * @return The string of item with the entered Id
+     */
+    public String getItemStringById(int ItemId) {
+        return itemsGateway.findById(ItemId).toString();
+    }
+
+    /**
      * Gets the Id of an item
      * @param item the item which information is being returned about
      * @return the Id of an item

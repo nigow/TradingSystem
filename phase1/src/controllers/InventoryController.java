@@ -111,7 +111,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all the items
      */
-    void displayFullInventory() {
+    private void displayFullInventory() {
         this.inventoryPresenter.customMessage("All Items:");
         List<String> allItems = itemUtility.getApprovedString();
         this.inventoryPresenter.displayInventory(allItems);
@@ -120,7 +120,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
-    void displayYourInventory() {
+    private void displayYourInventory() {
         this.inventoryPresenter.customMessage("Your approved items:");
         List<String> allYourItems = itemUtility.getApprovedInventoryOfAccountString(accountManager.getCurrAccountID());
         this.inventoryPresenter.displayInventory(allYourItems);
@@ -129,7 +129,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
-    void displayYourPending() {
+    private void displayYourPending() {
         this.inventoryPresenter.customMessage("Your pending items:");
         List<String> allYourItems = itemUtility.getDisprovedInventoryOfAccountString(accountManager.getCurrAccountID());
         this.inventoryPresenter.displayInventory(allYourItems);
@@ -138,7 +138,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items except for the ones belonging to the user
      */
-    void displayOthersInventory() {
+    private void displayOthersInventory() {
         this.inventoryPresenter.customMessage("Items available for trading: ");
         List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccountID());
         this.inventoryPresenter.displayInventory(othersItems);
@@ -147,7 +147,7 @@ public class InventoryController {
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all the items awaiting approval
      */
-    void displayPending() {
+    private void displayPending() {
         inventoryPresenter.customMessage("Items awaiting approval:");
         List<String> all_disapproved = itemUtility.getDisapprovedString();
         inventoryPresenter.displayInventory(all_disapproved);
@@ -155,7 +155,7 @@ public class InventoryController {
     /**
      * Runs the createItem submenu
      */
-    void createItem() {
+    private void createItem() {
         boolean confirmedItem = false;
         boolean nameGiven = false;
         boolean descriptionGiven = false;
@@ -168,7 +168,7 @@ public class InventoryController {
                 name = inventoryPresenter.askName();
                 if (controllerInputValidator.isExitStr(name)) {
                     exit = true;
-                } else if (name.contains(",")) {
+                } else if (!controllerInputValidator.isValidCSVStr(name)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item name");
                 } else {
                     nameGiven = true;
@@ -177,7 +177,7 @@ public class InventoryController {
                 description = inventoryPresenter.askDescription();
                 if (controllerInputValidator.isExitStr(description)) {
                     exit = true;
-                } else if (description.contains(",")) {
+                } else if (!controllerInputValidator.isValidCSVStr(description)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item description");
                 } else {
                     descriptionGiven = true;
@@ -204,7 +204,7 @@ public class InventoryController {
     /**
      * Runs the add to wishlist submenu
      */
-    void addToWishlist() {
+    private void addToWishlist() {
         displayOthersInventory();
         boolean isValid = false;
         while (!isValid) {
@@ -230,7 +230,7 @@ public class InventoryController {
     /**
      * Runs the removeFromInventory submenu
      */
-    void removeFromInventory() {
+    private void removeFromInventory() {
         displayYourInventory();
         boolean isValid = false;
         while (!isValid) {
@@ -238,9 +238,13 @@ public class InventoryController {
             if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
-                    itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
-                    isValid = true;
-                    inventoryPresenter.customMessage("Item successfully removed!");
+                    boolean removed  = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+                    if (removed) {
+                        isValid = true;
+                        inventoryPresenter.customMessage("Item successfully removed!");
+                    } else {
+                        inventoryPresenter.customMessage("Item could not be removed.");
+                    }
                 } else {
                     inventoryPresenter.customMessage("That number does not correspond to an item");
                 }
@@ -254,7 +258,7 @@ public class InventoryController {
     /**
      * Runs the approve item submenu
      */
-    void approveItems() {
+    private void approveItems() {
         displayPending();
         boolean isValid = false;
         while (!isValid) {

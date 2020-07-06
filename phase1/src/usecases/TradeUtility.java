@@ -4,9 +4,10 @@ import entities.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
- * Utility class for trades to access certain types of trades for an account
+ * Utility class for trades to access certain types of trades and information on trades
  * @author Isaac
  */
 public class TradeUtility {
@@ -37,7 +38,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves all the trades the current account has done
+     * Retrieves all the trades the current account has
      * @return List of all of the trades the current account has done
      */
     public List<Trade> getAllTradesAccount() {
@@ -76,9 +77,10 @@ public class TradeUtility {
      * adjusted
      */
     public List<Integer> getTopThreePartnersIds() {
-        // TODO only count confirmed trades  -maryam
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
+            if (trade.getStatus() != TradeStatus.CONFIRMED)
+                continue;
             if (account.getAccountID() == trade.getTraderOneID()) {
                 tradeFrequency.compute(trade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
             }
@@ -86,16 +88,14 @@ public class TradeUtility {
                 tradeFrequency.compute(trade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
             }
         }
-        SortedMap<Integer, Integer> sortedFrequency = new TreeMap<>(Collections.reverseOrder());
-        for (Map.Entry<Integer, Integer> entry : tradeFrequency.entrySet()) {
-            sortedFrequency.put(entry.getValue(), entry.getKey());
-        }
+        Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         List<Integer> tradeIds = new ArrayList<>();
-        int count = 0;
-        for (Map.Entry<Integer, Integer> entry : sortedFrequency.entrySet()) {
-            if (count >= 3) break;
-            tradeIds.add(entry.getValue());
-            count++;
+        int counter = 0;
+        for (Map.Entry<Integer, Integer> entry : sorted.entrySet()) {
+            if (counter > sorted.size()-4) {
+                tradeIds.add(entry.getKey());
+            }
+            counter++;
         }
         return tradeIds;
     }
@@ -139,7 +139,14 @@ public class TradeUtility {
             allOneWayItems.addAll(trade.getItemOneIDs());
             allOneWayItems.addAll(trade.getItemTwoIDs());
         }
-
+        int count = 0;
+        for (Integer tradeId : allOneWayItems) {
+            if (count >= 3) break;
+            ThreeRecent.add(tradeId);
+            count++;
+        }
+        return ThreeRecent;
+        /*
         int count = 0;
         int i = 0;
         while (count < 3 && i < allOneWayItems.size()) {
@@ -149,6 +156,7 @@ public class TradeUtility {
         }
 
         return ThreeRecent;
+         */
     }
 
     /**
@@ -175,7 +183,14 @@ public class TradeUtility {
             allTwoWayItems.addAll(trade.getItemOneIDs());
             allTwoWayItems.addAll(trade.getItemTwoIDs());
         }
-
+        int count = 0;
+        for (Integer tradeId : allTwoWayItems) {
+            if (count >= 3) break;
+            ThreeRecent.add(tradeId);
+            count++;
+        }
+        return ThreeRecent;
+        /*
         int count = 0;
         int i = 0;
         while (count < 3 && i < allTwoWayItems.size()) {
@@ -185,6 +200,7 @@ public class TradeUtility {
         }
 
         return ThreeRecent;
+         */
     }
 
     /**
@@ -198,6 +214,9 @@ public class TradeUtility {
         for (Trade trade : getAllTradesAccount()) {
             TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
             if (timePlace.getTime().isBefore(currDate) && timePlace.getTime().isAfter(weekAgo)) {
+                weeklyTrades++;
+            }
+            if (timePlace.getTime().isEqual(currDate) || timePlace.getTime().isEqual(weekAgo)) {
                 weeklyTrades++;
             }
         }
@@ -261,4 +280,32 @@ public class TradeUtility {
         return timesLent;
     }
 
+    /**
+     * Completes the action of making a trade
+     * @param trade the trade object representing the trade about to be made
+     * @param accountManager an object for managing accounts
+     * @param itemManager an object for managing items
+     * @param itemUtility an object to access certain types of items
+     */
+    public void makeTrade (Trade trade, AccountManager accountManager, ItemManager itemManager,
+                           ItemUtility itemUtility) {
+        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
+        for (Integer itemId : trade.getItemOneIDs()) {
+            if (accountManager.getCurrWishlist().contains(itemId)) {
+                accountManager.removeItemFromWishlist(itemId);
+            }
+            if (itemUtility.getApprovedInventoryOfAccount(trade.getTraderOneID()).contains(itemManager.getItemById(itemId))) {
+                itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderTwoID());
+            }
+        }
+        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
+        for (Integer itemId : trade.getItemTwoIDs()) {
+            if (accountManager.getCurrWishlist().contains(itemId)) {
+                accountManager.removeItemFromWishlist(itemId);
+            }
+            if (itemUtility.getApprovedInventoryOfAccount(trade.getTraderTwoID()).contains(itemManager.getItemById(itemId))) {
+                itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderOneID());
+            }
+        }
+    }
 }

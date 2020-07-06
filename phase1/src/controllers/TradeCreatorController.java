@@ -1,12 +1,12 @@
 package controllers;
 
 import gateways.ManualConfig;
-import presenters.ConsoleTradeCreatorPresenter;
 import presenters.TradeCreatorPresenter;
 import usecases.*;
 
-import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,17 +16,17 @@ import java.util.List;
 public class TradeCreatorController {
 
 
-    private TradeManager tradeManager;
-    private AccountManager accountManager;
-    private ItemUtility itemUtility;
+    private final TradeManager tradeManager;
+    private final AccountManager accountManager;
+    private final ItemUtility itemUtility;
 
-    private TradeCreatorPresenter tradeCreatorPresenter;
+    private final TradeCreatorPresenter tradeCreatorPresenter;
 
-    private int traderOneId;
-    private int traderTwoId;
-    private int itemId;
+    private final int traderOneId;
+    private final int traderTwoId;
+    private final int itemId;
 
-    private ControllerInputValidator controllerInputValidator;
+    private final ControllerInputValidator controllerInputValidator;
 
     /**
      * Create a controller for the trade creation screen.
@@ -83,7 +83,7 @@ public class TradeCreatorController {
 
         String date = tradeCreatorPresenter.getDate();
 
-        while (!controllerInputValidator.isDate(date)) {
+        while (!controllerInputValidator.isDate(date) || LocalDate.parse(date).isBefore(LocalDate.now())) {
 
             if (controllerInputValidator.isExitStr(date)) return;
             tradeCreatorPresenter.invalidInput();
@@ -93,7 +93,8 @@ public class TradeCreatorController {
 
         String time = tradeCreatorPresenter.getTime();
 
-        while (!controllerInputValidator.isTime(time)) {
+        while (!controllerInputValidator.isTime(time) ||
+               !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
 
             if (controllerInputValidator.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();

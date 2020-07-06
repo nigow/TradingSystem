@@ -18,12 +18,12 @@ public class FreezingUtility {
     /**
      * The restrictions gateway dealing with the storage of trading restrictions
      */
-    private RestrictionsGateway restrictionsGateway;
+    private final RestrictionsGateway restrictionsGateway;
 
     /**
      * The current restrictions of the trading system for all users
      */
-    private Restrictions restrictions;
+    private final Restrictions restrictions;
 
     /**
      * Constructs an instance of FreezingUtility and stores restrictionsGateway
@@ -44,7 +44,7 @@ public class FreezingUtility {
     public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility){
         List<Account> accountsToFreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
-            if (authManager.canbeFrozen(tradeUtility, account)){
+            if (authManager.canBeFrozen(tradeUtility, account)){
                 accountsToFreeze.add(account);
             }
         }
@@ -61,7 +61,7 @@ public class FreezingUtility {
     public List<String> getUsernamesToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility){
         List<String> accountsToFreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
-            if (authManager.canbeFrozen(tradeUtility, account)){
+            if (authManager.canBeFrozen(tradeUtility, account)){
                 accountsToFreeze.add(account.getUsername());
             }
         }
@@ -108,7 +108,7 @@ public class FreezingUtility {
      * @return Whether the given account is successfully frozen or not
      */
     public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account){
-        if (authManager.canbeFrozen(tradeUtility, account)){
+        if (authManager.canBeFrozen(tradeUtility, account)){
             return authManager.removePermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)))
                     && authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
         }
@@ -144,9 +144,6 @@ public class FreezingUtility {
      * @return Whether the restriction is properly set
      */
     public boolean setMaxIncompleteTrade(int maxIncompleteTrade){
-        if (maxIncompleteTrade < 0){
-            throw new IllegalArgumentException("Value cannot be negative or 0");
-        }
         restrictions.setMaxIncompleteTrade(maxIncompleteTrade);
         return restrictionsGateway.updateRestrictions(restrictions);
     }
@@ -157,9 +154,6 @@ public class FreezingUtility {
      * @return Whether the restriction is properly set
      */
     public boolean setMaxWeeklyTrade(int maxWeeklyTrade){
-        if (maxWeeklyTrade <= 0){
-            throw new IllegalArgumentException("Value cannot be negative or 0");
-        }
         restrictions.setMaxWeeklyTrade(maxWeeklyTrade);
         return restrictionsGateway.updateRestrictions(restrictions);
     }
