@@ -46,7 +46,7 @@ public class ItemUtility {
     public List<String> getApprovedString() {
         List<String> approvedItems = new ArrayList<>();
         for (Item item : itemManager.getAllItems()) {
-            if (!item.isApproved()) {
+            if (item.isApproved()) {
                 approvedItems.add(item.toString());
             }
         }

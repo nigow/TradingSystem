@@ -59,9 +59,7 @@ public class TradeCreatorController {
         List<Integer> traderOneItems = new ArrayList<>();
         List<Integer> traderTwoItems = new ArrayList<>();
 
-        // this is a sketchy way of determining whether the trade started as a lend or borrow
-        //TODO determine if this way ^ should be used and if so: add searchWishlistByID() method to accountManager
-        if (accountManager.getCurrAccount().getWishlist().contains(itemId)) {
+        if (accountManager.isInWishlist(itemId)) {
             traderTwoItems.add(itemId);
         } else {
             traderOneItems.add(itemId);

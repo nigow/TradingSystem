@@ -85,7 +85,7 @@ public class LendingControllerTest {
 
             @Override
             public String getDate() {
-                return "2000-01-01";
+                return "9999-12-31";
             }
 
             @Override

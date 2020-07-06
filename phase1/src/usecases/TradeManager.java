@@ -225,10 +225,10 @@ public class TradeManager {
         else {
             ans.append("Type: One-way ");
             if (trade.getItemOneIDs().size() > 0) {
-                ans.append("Borrower: ").append(username1).append(" Lender: ").append(username2).append(" ");
+                ans.append("Borrower: ").append(username2).append(" Lender: ").append(username1).append(" "); //I swapped user1 and user2 (Tairi)
             }
             else {
-                ans.append("Borrower: ").append(username2).append(" Lender ").append(username1).append(" ");
+                ans.append("Borrower: ").append(username1).append(" Lender ").append(username2).append(" "); //I swapped user1 and user2 (Tairi)
             }
 
         }
