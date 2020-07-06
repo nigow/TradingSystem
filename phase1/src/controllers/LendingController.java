@@ -92,7 +92,7 @@ public class LendingController {
                 else flag = false;
             }
         }
-        return allAccounts.get(Integer.parseInt(temp_index)).getAccountID();
+        return accountManager.getAccountID(allAccounts.get(Integer.parseInt(temp_index)));
     }
 
 
@@ -103,7 +103,6 @@ public class LendingController {
     private int chooseItem(){
         List<Item> myItems = new ArrayList<>();
         int userId = accountManager.getCurrAccountID();
-
 
         //list only tradable items
         for(Item item: itemManager.getAllItems()){
@@ -129,7 +128,7 @@ public class LendingController {
                 else flag = false;
             }
         }
-        return myItems.get(Integer.parseInt(temp_index)).getItemID();
+        return itemManager.getItemId(myItems.get(Integer.parseInt(temp_index)));
     }
 
     /**
