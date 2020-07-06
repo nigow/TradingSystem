@@ -79,6 +79,8 @@ public class TradeCreatorController {
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
+        if(controllerInputValidator.isExitStr(tradeLocation)) return;
+
         String date = tradeCreatorPresenter.getDate();
 
         while (!controllerInputValidator.isDate(date) || LocalDate.parse(date).isBefore(LocalDate.now())) {
