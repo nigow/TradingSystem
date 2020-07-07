@@ -5,9 +5,10 @@ import java.util.Scanner;
 
 /**
  * presenter for admins handling changes of restrictions
+ *
  * @author Catherine
  */
-public class ConsoleRestrictionPresenter implements RestrictionPresenter{
+public class ConsoleRestrictionPresenter implements RestrictionPresenter {
     /**
      * {@inheritDoc}
      */
@@ -20,6 +21,7 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter{
         }
         return input.nextLine();
     }
+
     /**
      * {@inheritDoc}
      */

@@ -1,8 +1,11 @@
-
 package entities;
+
 import java.util.ArrayList;
 import java.util.List;
-/** Represents an item
+
+/**
+ * Represents an item
+ *
  * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Account {
@@ -35,10 +38,11 @@ public class Account {
     /**
      * Creates a new account with the given username, password, and rolesID.
      * The wishlist is initialized as an empty Arraylist.
-     * @param username the name of this account
-     * @param password the password for this account
+     *
+     * @param username    the name of this account
+     * @param password    the password for this account
      * @param permissions what this account is allowed to do
-     * @param accountID the id of this account
+     * @param accountID   the id of this account
      */
     public Account(String username, String password, List<Permissions> permissions, int accountID) {
         this.username = username;
@@ -51,11 +55,12 @@ public class Account {
     /**
      * An overloaded constructor
      * Creates a new account with the given username, password, wishlist, and rolesID.
-     * @param username the name of this account
-     * @param password the password for this account
-     * @param wishlist the wishlist that this account should be initialized with
+     *
+     * @param username    the name of this account
+     * @param password    the password for this account
+     * @param wishlist    the wishlist that this account should be initialized with
      * @param permissions what this account is allowed to do
-     * @param accountID the ID of this account
+     * @param accountID   the ID of this account
      */
     public Account(String username, String password, List<Integer> wishlist, List<Permissions> permissions, int accountID) {
         this(username, password, permissions, accountID);
@@ -64,6 +69,7 @@ public class Account {
 
     /**
      * Gets the username of the account
+     *
      * @return username
      */
     public String getUsername() {
@@ -72,6 +78,7 @@ public class Account {
 
     /**
      * Returns the password of this account
+     *
      * @return password
      */
     public String getPassword() {
@@ -80,6 +87,7 @@ public class Account {
 
     /**
      * Set a new password
+     *
      * @param password The new password that'll be assigned to this account
      */
     public void setPassword(String password) {
@@ -88,6 +96,7 @@ public class Account {
 
     /**
      * Get the wishlist of this account
+     *
      * @return wishlist
      */
     public List<Integer> getWishlist() {
@@ -97,6 +106,7 @@ public class Account {
 
     /**
      * Get the accountID of this account
+     *
      * @return accountID
      */
     public int getAccountID() {
@@ -105,6 +115,7 @@ public class Account {
 
     /**
      * Get all permissions that this account has
+     *
      * @return permissions
      */
     public List<Permissions> getPermissions() {
@@ -113,6 +124,7 @@ public class Account {
 
     /**
      * Add a permission to the list of permissions
+     *
      * @param permission The new permission that'll be added to this account
      */
     public void addPermission(Permissions permission) {
@@ -121,6 +133,7 @@ public class Account {
 
     /**
      * Remove given permission from user's list of permissions
+     *
      * @param permission the permission that should be removed from this account
      * @return true if the permission has been removed
      */
@@ -131,6 +144,7 @@ public class Account {
 
     /**
      * Adds an item to the end of the wishlist
+     *
      * @param itemID The ID of the item to be added to this wishlist
      */
     public void addToWishlist(int itemID) {
@@ -139,6 +153,7 @@ public class Account {
 
     /**
      * Remove an item from the wishlist
+     *
      * @param itemID The ID of the item to be removed from this wishlist
      * @return true if the item has been removed
      */
@@ -149,6 +164,7 @@ public class Account {
 
     /**
      * Creates a string representation of this Account
+     *
      * @return A string representation of this Account object
      */
     @Override

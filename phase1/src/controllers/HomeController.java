@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Controller that deals with creating and authorizing accounts.
+ *
  * @author Maryam
  */
 public class HomeController {
@@ -40,9 +41,10 @@ public class HomeController {
 
     /**
      * Initializes HomeController with the necessary presenter and usecases.
-     * @param mc An instance of ManualConfig to get the necessary usecases
+     *
+     * @param mc            An instance of ManualConfig to get the necessary usecases
      * @param homePresenter An instance of HomePresenter to display information and interact with the user
-     * @param menuFacade An instance of MenuFacade to take user's to the next menu
+     * @param menuFacade    An instance of MenuFacade to take user's to the next menu
      */
     public HomeController(ManualConfig mc, HomePresenter homePresenter,
                           MenuFacade menuFacade) {

@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * A factory for creating different types of accounts
+ *
  * @author Andrew
  */
 public class AccountFactory {
@@ -20,12 +21,13 @@ public class AccountFactory {
      */
     private final AccountGateway accountGateway;
 
-    public AccountFactory(AccountGateway accountGateway){
+    public AccountFactory(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
     }
 
     /**
      * Creates a standard account with trading permissions
+     *
      * @param username Username of the new account
      * @param password Password of the new account
      * @return Account that is created with trading permissions
@@ -39,11 +41,12 @@ public class AccountFactory {
 
     /**
      * Creates an administrator account with trading permissions
+     *
      * @param username Username of the new account
      * @param password Password of the new account
      * @return Account that is created with administrator permissions
      */
-    public Account createAdminAccount(String username, String password){
+    public Account createAdminAccount(String username, String password) {
         Account account = createStandardAccount(username, password);
         account.addPermission(Permissions.ADD_ADMIN);
         account.addPermission(Permissions.CHANGE_RESTRICTIONS);

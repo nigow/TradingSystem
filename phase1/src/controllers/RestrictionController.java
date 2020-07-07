@@ -28,7 +28,7 @@ public class RestrictionController {
         options.add("Maximum number of weekly trades");
         options.add("Return to main menu");
         while (true) {
-            String action =  restrictionPresenter.displayRestrictionOptions(options);
+            String action = restrictionPresenter.displayRestrictionOptions(options);
             switch (action) {
                 case "0":
                     lendMoreThanBorrow();
@@ -57,12 +57,10 @@ public class RestrictionController {
             newNumber = restrictionPresenter.changeLendMoreThanBorrow(freezingUtility.getLendMoreThanBorrow());
             if (newNumber.equals("-1")) {
                 return;
-            }
-            else if (!controllerInputValidator.isNum(newNumber)) {
+            } else if (!controllerInputValidator.isNum(newNumber)) {
                 isValid = false;
                 restrictionPresenter.invalidInput();
-            }
-            else {
+            } else {
                 freezingUtility.setLendMoreThanBorrow(Integer.parseInt(newNumber));
             }
         }
@@ -76,12 +74,10 @@ public class RestrictionController {
             newNumber = restrictionPresenter.changeMaxIncompleteTrades(freezingUtility.getMaxIncompleteTrade());
             if (newNumber.equals("-1")) {
                 return;
-            }
-            else if (!controllerInputValidator.isNum(newNumber)) {
+            } else if (!controllerInputValidator.isNum(newNumber)) {
                 isValid = false;
                 restrictionPresenter.invalidInput();
-            }
-            else {
+            } else {
                 freezingUtility.setMaxIncompleteTrade(Integer.parseInt(newNumber));
             }
         }
@@ -95,12 +91,10 @@ public class RestrictionController {
             newNumber = restrictionPresenter.changeMaxWeeklyTrades(freezingUtility.getMaxWeeklyTrade());
             if (newNumber.equals("-1")) {
                 return;
-            }
-            else if (!controllerInputValidator.isNum(newNumber)) {
+            } else if (!controllerInputValidator.isNum(newNumber)) {
                 isValid = false;
                 restrictionPresenter.invalidInput();
-            }
-            else {
+            } else {
                 freezingUtility.setMaxWeeklyTrade(Integer.parseInt(newNumber));
             }
         }

@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Represents a manager responsible for creating and editing trades
+ *
  * @author Isaac
  */
 
@@ -31,6 +32,7 @@ public class TradeManager {
 
     /**
      * Constructor for TradeManager which Stores a TradeGateway
+     *
      * @param tradeGateway The gateway for dealing with the persistent storage of trades
      */
     public TradeManager(TradeGateway tradeGateway) {
@@ -39,8 +41,9 @@ public class TradeManager {
 
     /**
      * Constructor for TradeManager to edit an existing Trade
+     *
      * @param tradeGateway The gateway for dealing with the persistent storage of trades
-     * @param trade An object representing a transaction between 2 users
+     * @param trade        An object representing a transaction between 2 users
      */
     public TradeManager(TradeGateway tradeGateway, Trade trade, TimePlace timePlace) {
         this.tradeGateway = tradeGateway;
@@ -51,13 +54,14 @@ public class TradeManager {
 
     /**
      * Creates a new Trade object to be edited
-     * @param time The time of the Trade
-     * @param place The location of the Trade
+     *
+     * @param time        The time of the Trade
+     * @param place       The location of the Trade
      * @param isPermanent If the trade is permanent or not
      * @param traderOneID The id of the first trader
      * @param traderTwoID The id of the second trader
-     * @param itemOneID A list of items trader one is offering
-     * @param itemTwoID A list of items trader two is offering
+     * @param itemOneID   A list of items trader one is offering
+     * @param itemTwoID   A list of items trader two is offering
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             int traderOneID, int traderTwoID, List<Integer> itemOneID,
@@ -82,8 +86,9 @@ public class TradeManager {
 
     /**
      * Changes the TimePlace of the trade and updates last edit info
-     * @param time New time of the trade
-     * @param place New place of the trade
+     *
+     * @param time     New time of the trade
+     * @param place    New place of the trade
      * @param editorId The id of the person editing the trade
      */
     public void editTimePlace(LocalDateTime time, String place, int editorId) {
@@ -96,6 +101,7 @@ public class TradeManager {
 
     /**
      * Updates the status of the trade
+     *
      * @param tradeStatus The new status of the trade
      */
     public void updateStatus(TradeStatus tradeStatus) {
@@ -105,6 +111,7 @@ public class TradeManager {
 
     /**
      * Getter for the TimePlace of the trade
+     *
      * @return TimePlace of the trade
      */
     public TimePlace getTimePlace() {
@@ -113,6 +120,7 @@ public class TradeManager {
 
     /**
      * Getter for the status of the trade
+     *
      * @return Current status of the trade
      */
     public TradeStatus getTradeStatus() {
@@ -121,6 +129,7 @@ public class TradeManager {
 
     /**
      * Getter for the current trade
+     *
      * @return The current trade.
      */
     public Trade getTrade() {
@@ -129,6 +138,7 @@ public class TradeManager {
 
     /**
      * Sets the current trade
+     *
      * @param trade The current trade.
      */
     public void setTrade(Trade trade) {
@@ -138,6 +148,7 @@ public class TradeManager {
 
     /**
      * Returns if trade is rejected
+     *
      * @return Whether the trade is rejected
      */
     public boolean isRejected() {
@@ -146,6 +157,7 @@ public class TradeManager {
 
     /**
      * Returns if trade is confirmed
+     *
      * @return Whether trade is confirmed
      */
     public boolean isConfirmed() {
@@ -154,6 +166,7 @@ public class TradeManager {
 
     /**
      * Returns if trade is unconfirmed
+     *
      * @return Whether trade is unconfirmed
      */
     public boolean isUnconfirmed() {
@@ -162,6 +175,7 @@ public class TradeManager {
 
     /**
      * Returns if trade is completed
+     *
      * @return Whether trade is completed.
      */
     public boolean isCompleted() {
@@ -170,6 +184,7 @@ public class TradeManager {
 
     /**
      * Returns if it is a accounts turn to edit
+     *
      * @param account The account checked
      * @return Whether it's the account's turn to edit.
      */
@@ -179,6 +194,7 @@ public class TradeManager {
 
     /**
      * Returns the current tradeGateway, a gateway dealing with trades
+     *
      * @return the current tradeGateway
      */
     public TradeGateway getTradeGateway() {
@@ -187,6 +203,7 @@ public class TradeManager {
 
     /**
      * Retrieves a list of all trades in persistent storage
+     *
      * @return List of all trades
      */
     public List<Trade> getAllTrades() {
@@ -196,6 +213,7 @@ public class TradeManager {
 
     /**
      * Retrieves all trades stored in persistent storage in string format
+     *
      * @return List of trades in string format
      */
     public List<String> getAllTradesString() {
@@ -208,6 +226,7 @@ public class TradeManager {
 
     /**
      * Returns a user-friendly string representation of a trade
+     *
      * @param accountManager: An accountManager instance
      * @return A user-friendly representation of a trade.
      */
@@ -221,13 +240,11 @@ public class TradeManager {
         if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
             ans.append("Type: Two-way ");
             ans.append("\nAccount 1: ").append(username1).append("\nAccount 2: ");
-        }
-        else {
+        } else {
             ans.append("Type: One-way ");
             if (trade.getItemOneIDs().size() > 0) {
                 ans.append("\nBorrower: ").append(username2).append("\nLender: "); //I swapped user1 and user2 (Tairi)
-            }
-            else {
+            } else {
                 ans.append("\nBorrower: ").append(username1).append("\nLender: "); //I swapped user1 and user2 (Tairi)
             }
 
@@ -254,6 +271,7 @@ public class TradeManager {
 
     /**
      * Returns whether this trade is temporary or permanent
+     *
      * @return Whether this trade is temporary or permanent
      */
     public boolean isPermanent() {
@@ -262,6 +280,7 @@ public class TradeManager {
 
     /**
      * Updates the completion status of this trade according to the user's id
+     *
      * @param accountID The ID of the user who marked this trade as complete
      */
     public void updateCompletion(int accountID) {
@@ -274,6 +293,7 @@ public class TradeManager {
 
     /**
      * returns the date and time of this trade
+     *
      * @return the date and time of this trade
      */
     public LocalDateTime getDateTime() {

@@ -5,9 +5,10 @@ import java.util.List;
 
 /**
  * presenter that lets user choose what they want to do in their account
+ *
  * @author Catherine
  */
-public class ConsoleMenuPresenter implements MenuPresenter{
+public class ConsoleMenuPresenter implements MenuPresenter {
     /**
      * {@inheritDoc}
      */

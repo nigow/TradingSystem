@@ -2,6 +2,7 @@ package presenters;
 
 /**
  * interface to request appeal to be unfrozen
+ *
  * @author Catherine
  */
 public interface AppealPresenter {

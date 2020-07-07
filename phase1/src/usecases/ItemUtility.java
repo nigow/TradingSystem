@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Utility class for items to access certain types of items
+ *
  * @author Isaac
  */
 public class ItemUtility {
@@ -19,6 +20,7 @@ public class ItemUtility {
 
     /**
      * Constructor for ItemUtility
+     *
      * @param itemManager A manager for editing items
      */
     public ItemUtility(ItemManager itemManager) {
@@ -27,6 +29,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all approved items in the system
+     *
      * @return List of all approved items in the system
      */
     public List<Item> getApproved() {
@@ -41,6 +44,7 @@ public class ItemUtility {
 
     /**
      * Retrieves a string representation of all approved items in the system
+     *
      * @return List of all approved items in the system in string format
      */
     public List<String> getApprovedString() {
@@ -55,6 +59,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all non-approved items in the system
+     *
      * @return List of all non-approved items in the system
      */
     public List<Item> getDisapproved() {
@@ -69,6 +74,7 @@ public class ItemUtility {
 
     /**
      * Retrieves a string representation of all non-approved items in the system
+     *
      * @return List of all non-approved items in the system in string format
      */
     public List<String> getDisapprovedString() {
@@ -83,6 +89,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account
+     *
      * @param accountId the account id which the items are retrieved for
      * @return List of items for account
      */
@@ -98,6 +105,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account in string format
+     *
      * @param accountId the account id which the items are retrieved for
      * @return List of items for account in string format
      */
@@ -113,6 +121,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account
+     *
      * @param accountId the account id which the items are retrieved for
      * @return List of items for account
      */
@@ -128,6 +137,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account in string format
+     *
      * @param accountId the account id which the items are retrieved for
      * @return List of items for account in string format
      */
@@ -143,6 +153,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all items not in a certain account
+     *
      * @param accountId the account id which the items are not retrieved from
      * @return List of all items not in a certain account
      */
@@ -158,6 +169,7 @@ public class ItemUtility {
 
     /**
      * Retrieves all items not in a certain account in string format
+     *
      * @param accountId the account id which the items are not retrieved from
      * @return List of all items not in a certain account string format
      */

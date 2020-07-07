@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 /**
  * Utility class for trades to access certain types of trades and information on trades
+ *
  * @author Isaac
  */
 public class TradeUtility {
@@ -24,13 +25,16 @@ public class TradeUtility {
 
     /**
      * Constructor for TradeUtility which stores an account and TradeManager
+     *
      * @param tradeManager Manager for creating and editing trades
      */
     public TradeUtility(TradeManager tradeManager) {
         this.tradeManager = tradeManager;
     }
 
-    /** Sets the current account to be edited
+    /**
+     * Sets the current account to be edited
+     *
      * @param account the current account to be edited
      */
     public void setAccount(Account account) {
@@ -39,6 +43,7 @@ public class TradeUtility {
 
     /**
      * Retrieves all the trades the current account has
+     *
      * @return List of all of the trades the current account has done
      */
     public List<Trade> getAllTradesAccount() {
@@ -46,8 +51,7 @@ public class TradeUtility {
         for (Trade trade : tradeManager.getAllTrades()) {
             if (trade.getTraderOneID() == account.getAccountID()) {
                 accountTrades.add(trade);
-            }
-            else if (trade.getTraderTwoID() == account.getAccountID()) {
+            } else if (trade.getTraderTwoID() == account.getAccountID()) {
                 accountTrades.add(trade);
             }
         }
@@ -56,6 +60,7 @@ public class TradeUtility {
 
     /**
      * Retrieves all the trades the current account has done in string format
+     *
      * @return List of the trades the current account has done in string format
      */
     public List<String> getAllTradesAccountString() {
@@ -63,8 +68,7 @@ public class TradeUtility {
         for (Trade trade : tradeManager.getAllTrades()) {
             if (trade.getTraderOneID() == account.getAccountID()) {
                 accountTrades.add(trade.toString());
-            }
-            else if (trade.getTraderTwoID() == account.getAccountID()) {
+            } else if (trade.getTraderTwoID() == account.getAccountID()) {
                 accountTrades.add(trade.toString());
             }
         }
@@ -73,6 +77,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the Ids of the top three trade partners of the current account
+     *
      * @return List of top three trade partners, if less than three list size is
      * adjusted
      */
@@ -83,8 +88,7 @@ public class TradeUtility {
                 continue;
             if (account.getAccountID() == trade.getTraderOneID()) {
                 tradeFrequency.compute(trade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
-            }
-            else {
+            } else {
                 tradeFrequency.compute(trade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
             }
         }
@@ -92,7 +96,7 @@ public class TradeUtility {
         List<Integer> tradeIds = new ArrayList<>();
         int counter = 0;
         for (Map.Entry<Integer, Integer> entry : sorted.entrySet()) {
-            if (counter > sorted.size()-4) {
+            if (counter > sorted.size() - 4) {
                 tradeIds.add(entry.getKey());
             }
             counter++;
@@ -103,6 +107,7 @@ public class TradeUtility {
     /**
      * Retrieves the three most recent one-way trades the current account
      * has made
+     *
      * @return List of three most recent one-way trades the current account
      * has made, if less than three list size is adjusted
      */
@@ -134,7 +139,7 @@ public class TradeUtility {
              */
         }
         Collections.sort(AllOneWay);
-        for (TimePlace tp: AllOneWay) {
+        for (TimePlace tp : AllOneWay) {
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
             allOneWayItems.addAll(trade.getItemOneIDs());
             allOneWayItems.addAll(trade.getItemTwoIDs());
@@ -162,6 +167,7 @@ public class TradeUtility {
     /**
      * Retrieves the three most recent two-way trades the current account has
      * made
+     *
      * @return List of three most recent two-way trades the current account
      * has made, if less than three list size is adjusted
      */
@@ -178,7 +184,7 @@ public class TradeUtility {
             }
         }
         Collections.sort(AllTwoWay);
-        for (TimePlace tp: AllTwoWay) {
+        for (TimePlace tp : AllTwoWay) {
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
             allTwoWayItems.addAll(trade.getItemOneIDs());
             allTwoWayItems.addAll(trade.getItemTwoIDs());
@@ -205,6 +211,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the number of trades the current account has made in the past week
+     *
      * @return number of trades user has made in the past week
      */
     public Integer getNumWeeklyTrades() {
@@ -226,6 +233,7 @@ public class TradeUtility {
     /**
      * Retrieves the number of times the current user has failed to complete
      * a trade
+     *
      * @return number of times the current user has failed to complete a trade
      */
     public Integer getTimesIncomplete() {
@@ -237,13 +245,14 @@ public class TradeUtility {
             }
         }
         if (account.getUsername().equals("user25"))
-           System.out.println(account.getUsername() + " " + timesIncomplete);
+            System.out.println(account.getUsername() + " " + timesIncomplete);
         // i changed this  -maryam
         return timesIncomplete;
     }
 
     /**
      * Retrieves the number of times the current user has borrowed items
+     *
      * @return number of times the current user has borrowed items
      */
     public Integer getTimesBorrowed() {
@@ -264,6 +273,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the number of times the current user has lent items
+     *
      * @return number of times the current user has lent items
      */
     public Integer getTimesLent() {
@@ -284,13 +294,14 @@ public class TradeUtility {
 
     /**
      * Completes the action of making a trade
-     * @param trade the trade object representing the trade about to be made
+     *
+     * @param trade          the trade object representing the trade about to be made
      * @param accountManager an object for managing accounts
-     * @param itemManager an object for managing items
-     * @param itemUtility an object to access certain types of items
+     * @param itemManager    an object for managing items
+     * @param itemUtility    an object to access certain types of items
      */
-    public void makeTrade (Trade trade, AccountManager accountManager, ItemManager itemManager,
-                           ItemUtility itemUtility) {
+    public void makeTrade(Trade trade, AccountManager accountManager, ItemManager itemManager,
+                          ItemUtility itemUtility) {
         accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
         for (Integer itemId : trade.getItemOneIDs()) {
             if (accountManager.getCurrWishlist().contains(itemId)) {
@@ -313,9 +324,10 @@ public class TradeUtility {
 
     /**
      * Completes the action of reversing a trade which was rejected
-     * @param trade he trade object representing the trade about to be rejected
+     *
+     * @param trade          he trade object representing the trade about to be rejected
      * @param accountManager an object for managing accounts
-     * @param itemManager an object for managing items
+     * @param itemManager    an object for managing items
      */
     public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
         accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());

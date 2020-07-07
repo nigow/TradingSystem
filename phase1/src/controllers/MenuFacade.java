@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * A class that manages a user's options according to their permissions.
+ *
  * @author Maryam
  */
 public class MenuFacade {
@@ -51,16 +52,17 @@ public class MenuFacade {
 
     /**
      * Initializes MenuFacade with the necessary controllers, presenter, and usecases.
-     * @param mc An instance of ManualConfig to get the necessary usecases
-     * @param freezingController An instance of FreezingController
-     * @param inventoryController An instance of InventoryController
-     * @param wishlistController An instance of WishlistController
-     * @param lendingController An instance of LendingController
-     * @param appealController An instance of AppealController
-     * @param tradeController An instance of TradeController
-     * @param adminCreator An instance of AdminCreator
+     *
+     * @param mc                    An instance of ManualConfig to get the necessary usecases
+     * @param freezingController    An instance of FreezingController
+     * @param inventoryController   An instance of InventoryController
+     * @param wishlistController    An instance of WishlistController
+     * @param lendingController     An instance of LendingController
+     * @param appealController      An instance of AppealController
+     * @param tradeController       An instance of TradeController
+     * @param adminCreator          An instance of AdminCreator
      * @param restrictionController An instance of RestrictionController
-     * @param menuPresenter An instance of MenuPresenter to display information and interact with the user
+     * @param menuPresenter         An instance of MenuPresenter to display information and interact with the user
      */
     public MenuFacade(ManualConfig mc, FreezingController freezingController,
                       InventoryController inventoryController,

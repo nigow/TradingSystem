@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * presenter that allows user to create new account or log in
+ *
  * @author Catherine
  */
 public class ConsoleHomePresenter implements HomePresenter {
@@ -28,9 +29,9 @@ public class ConsoleHomePresenter implements HomePresenter {
      */
     @Override
     public String logInUsername() {
-         Scanner input = new Scanner(System.in);
-         System.out.print("Enter your username (-1 to go back): ");
-         return input.nextLine();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter your username (-1 to go back): ");
+        return input.nextLine();
     }
 
     /**

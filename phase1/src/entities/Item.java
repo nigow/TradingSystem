@@ -1,12 +1,14 @@
 package entities;
 
-/** Represents an item
+/**
+ * Represents an item
+ *
  * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Item {
     /**
      * The unique identifier of this item. (cannot be changed)
-      */
+     */
     private final int itemID;
 
     /**
@@ -38,14 +40,15 @@ public class Item {
      * Creates a new item with the given itemID, name, description, and ownerID.
      * isApproved is set to false by default (items have to be manually approved by an admin).
      * accountsWithItemInWishlist is empty by default until an account adds the item to their wishlist
-     * @param itemID The ID of the item
-     * @param name The name of the item
+     *
+     * @param itemID      The ID of the item
+     * @param name        The name of the item
      * @param description The description of the item
      */
     public Item(int itemID, String name, String description, int ownerID) {
         this.itemID = itemID;
         this.name = name;
-        this.description= description;
+        this.description = description;
         this.isApproved = false;
         this.ownerID = ownerID;
 //        this.accountsWithItemInWishlist = new ArrayList<>();
@@ -53,6 +56,7 @@ public class Item {
 
     /**
      * Get the itemID of this item.
+     *
      * @return itemID
      */
     public int getItemID() {
@@ -61,6 +65,7 @@ public class Item {
 
     /**
      * Get the name of this item.
+     *
      * @return name
      */
     public String getName() {
@@ -69,6 +74,7 @@ public class Item {
 
     /**
      * Get the description of this item.
+     *
      * @return description
      */
     public String getDescription() {
@@ -77,6 +83,7 @@ public class Item {
 
     /**
      * Get the approval status of this item.
+     *
      * @return isApproved
      */
     public boolean isApproved() {
@@ -85,6 +92,7 @@ public class Item {
 
     /**
      * Get the ownerID of this item
+     *
      * @return ownerID
      */
     public int getOwnerID() {
@@ -101,6 +109,7 @@ public class Item {
 
     /**
      * Set the name of this item.
+     *
      * @param name (new name of item)
      */
     public void setName(String name) {
@@ -109,6 +118,7 @@ public class Item {
 
     /**
      * Set the description of this item.
+     *
      * @param description (new description)
      */
     public void setDescription(String description) {
@@ -131,6 +141,7 @@ public class Item {
 
     /**
      * Set the owner's ID of this item
+     *
      * @param ownerID (new owner's ID)
      */
     public void setOwnerID(int ownerID) {
@@ -156,6 +167,7 @@ public class Item {
 
     /**
      * Creates a string representation of this Item
+     *
      * @return a string representation of this Item object
      */
     @Override

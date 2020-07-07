@@ -3,7 +3,7 @@ package presenters;
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleFreezingPresenter implements FreezingPresenter{
+public class ConsoleFreezingPresenter implements FreezingPresenter {
 
     /**
      * {@inheritDoc}

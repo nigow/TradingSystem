@@ -20,6 +20,7 @@ public class CSVTradeGateway implements TradeGateway {
 
     /**
      * Create a trade gateway that uses csv files as persistent storage.
+     *
      * @param csvPath Path to the csv file holding trade data.
      * @throws IOException If the given csv file cannot be accessed.
      */

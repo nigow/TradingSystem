@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Represents the manager that creates an account or takes in an account and edits the wishlist.
+ *
  * @author Andrew
  */
 public class AccountManager {
@@ -23,23 +24,25 @@ public class AccountManager {
 
     /**
      * Constructs an instance of AccountManager and stores accountGateway
+     *
      * @param accountGateway Gateway used to interact with persistent storage of accounts
      */
-    public AccountManager(AccountGateway accountGateway){
+    public AccountManager(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
     }
 
     /**
      * Creates a new standard trading account using username and password by determining if characters used are valid
+     *
      * @param username Username of the new account
      * @param password Password of the new account
      * @return true if account is successfully created and false if username is taken already
      */
-    public boolean createStandardAccount(String username, String password){
-        if (accountGateway.findByUsername(username) == null){
+    public boolean createStandardAccount(String username, String password) {
+        if (accountGateway.findByUsername(username) == null) {
             AccountFactory accountFactory = new AccountFactory(accountGateway);
             Account createdAccount = accountFactory.createStandardAccount(username, password);
-            if (accountGateway.updateAccount(createdAccount)){
+            if (accountGateway.updateAccount(createdAccount)) {
                 currAccount = createdAccount;
                 return true;
             }
@@ -50,15 +53,16 @@ public class AccountManager {
 
     /**
      * Creates a new administrator account with permissions to trade using username and password by determining if characters used are valid
+     *
      * @param username Username of the new account
      * @param password Password of the new account
      * @return true if account is successfully created and false if username is taken already or invalid characters where used
      */
-    public boolean createAdminAccount(String username, String password){
-        if (accountGateway.findByUsername(username) == null){
+    public boolean createAdminAccount(String username, String password) {
+        if (accountGateway.findByUsername(username) == null) {
             AccountFactory accountFactory = new AccountFactory(accountGateway);
             Account createdAccount = accountFactory.createAdminAccount(username, password);
-            if (accountGateway.updateAccount(createdAccount)){
+            if (accountGateway.updateAccount(createdAccount)) {
                 currAccount = createdAccount;
                 return true;
             }
@@ -69,39 +73,43 @@ public class AccountManager {
 
     /**
      * Gets the account corresponding to the accountID provided
+     *
      * @param accountID Unique identifier of account
      * @return Account corresponding to the accountID
      */
-    public Account getAccountFromID(int accountID){
+    public Account getAccountFromID(int accountID) {
         return accountGateway.findById(accountID);
     }
 
     /**
      * Gets the account corresponding to the username provided
+     *
      * @param username Username of an account
      * @return Account corresponding to the username
      */
-    private Account getAccountFromUsername(String username){
+    private Account getAccountFromUsername(String username) {
         return accountGateway.findByUsername(username);
     }
 
     /**
      * Gets the username of an account corresponding to the given unique identifier
+     *
      * @param accountID Unique identifier of account
      * @return Username corresponding to the unique identifier of an account
      */
-    public String getUsernameFromID(int accountID){
+    public String getUsernameFromID(int accountID) {
         return accountGateway.findById(accountID).getUsername();
     }
 
     /**
      * Assigns the given username corresponding to an account to currAccount
+     *
      * @param username Username of Account being set
      * @return Whether the current account is successfully set or not
      */
-    public boolean setCurrAccount(String username){
+    public boolean setCurrAccount(String username) {
         Account account = getAccountFromUsername(username);
-        if (account != null){
+        if (account != null) {
             currAccount = account;
             return true;
         }
@@ -110,14 +118,16 @@ public class AccountManager {
 
     /**
      * Gets the current account being modified
+     *
      * @return The current account
      */
-    public Account getCurrAccount(){
+    public Account getCurrAccount() {
         return currAccount;
     }
 
     /**
      * Gets the current account's unique identifier
+     *
      * @return The current account id
      */
     public int getCurrAccountID() {
@@ -126,19 +136,21 @@ public class AccountManager {
 
     /**
      * Gets the current account's username
+     *
      * @return The current account username
      */
-    public String getCurrAccountUsername(){
+    public String getCurrAccountUsername() {
         return currAccount.getUsername();
     }
 
     /**
      * Adds an itemID to the current account's wishlist
+     *
      * @param itemID Unique identifier of the item
      * @return Whether an item is successfully added to wishlist or not
      */
-    public boolean addItemToWishlist(int itemID){
-        if (currAccount != null){
+    public boolean addItemToWishlist(int itemID) {
+        if (currAccount != null) {
             currAccount.addToWishlist(itemID);
             return accountGateway.updateAccount(currAccount);
         }
@@ -147,11 +159,12 @@ public class AccountManager {
 
     /**
      * Removes an itemID from the current account's wishlist
+     *
      * @param itemID Unique identifier of the item
      * @return Whether an item is successfully removed from wishlist or not
      */
-    public boolean removeItemFromWishlist(int itemID){
-        if (currAccount != null){
+    public boolean removeItemFromWishlist(int itemID) {
+        if (currAccount != null) {
             currAccount.removeFromWishList(itemID);
             return accountGateway.updateAccount(currAccount);
         }
@@ -160,41 +173,46 @@ public class AccountManager {
 
     /**
      * Gets the wishlist of item ids for the current account
+     *
      * @return Wishlist of the current account
      */
-    public List<Integer> getCurrWishlist(){
+    public List<Integer> getCurrWishlist() {
         return currAccount.getWishlist();
     }
 
     /**
      * Determines if item corresponding to the itemID is in the current account's wishlist
+     *
      * @param itemID Unique identifier of the item
      * @return Whether the item corresponding to the itemID is in the current account's wishlist
      */
-    public boolean isInWishlist(int itemID){
+    public boolean isInWishlist(int itemID) {
         return currAccount.getWishlist().contains(itemID);
     }
 
     /**
      * Updates in persistent storage the account corresponding to the account
+     *
      * @param account Account of user to update
      * @return Whether account is successfully updated or not
      */
-    public boolean updateAccount(Account account){
+    public boolean updateAccount(Account account) {
         return accountGateway.updateAccount(account);
     }
 
     /**
      * Retrieves all accounts stored in the system
+     *
      * @return List of all accounts
      */
-    public List<Account> getAccountsList(){
+    public List<Account> getAccountsList() {
         return accountGateway.getAllAccounts();
     }
 
 
     /**
      * Retrieves a formatted string of an account from the given accountID
+     *
      * @param accountID Unique identifier of account
      * @return Formatted String of account
      */
@@ -204,10 +222,11 @@ public class AccountManager {
 
     /**
      * Retrieves the ID of an account given
+     *
      * @param account Item to search the ID for
      * @return Id associated with the account
      */
-    public int getAccountID(Account account){
+    public int getAccountID(Account account) {
         return account.getAccountID();
     }
 

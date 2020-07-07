@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Class containing useful services for wishlists on presenters and controllers
+ *
  * @author Tairi
  */
 public class WishlistUtility {
@@ -25,8 +26,9 @@ public class WishlistUtility {
 
     /**
      * Constructor for WishlistUtility
+     *
      * @param accountGateway account gateway to reference accounts
-     * @param itemsGateway item gateway to reference items
+     * @param itemsGateway   item gateway to reference items
      */
     public WishlistUtility(AccountGateway accountGateway, ItemsGateway itemsGateway) {
         this.accountGateway = accountGateway;
@@ -35,12 +37,13 @@ public class WishlistUtility {
 
     /**
      * Get all wishlist items for a specific account
+     *
      * @param id the Account id to look up for
      * @return wishlist that this account has
      */
-    public List<Item> wishlistItems(int id){
+    public List<Item> wishlistItems(int id) {
         List<Item> wishlist = new ArrayList<>();
-        for(int itemId: accountGateway.findById(id).getWishlist()){
+        for (int itemId : accountGateway.findById(id).getWishlist()) {
             Item item = itemsGateway.findById(itemId);
             wishlist.add(item);
         }
@@ -49,11 +52,12 @@ public class WishlistUtility {
 
     /**
      * Get all wishlists for all accounts
+     *
      * @return A list containing wishlists of all users
      */
-    public List<List<Item>> allWishlist(){
+    public List<List<Item>> allWishlist() {
         List<List<Item>> all = new ArrayList<>();
-        for(Account account: accountGateway.getAllAccounts()){
+        for (Account account : accountGateway.getAllAccounts()) {
             all.add(wishlistItems(account.getAccountID()));
         }
         return all;
@@ -62,11 +66,12 @@ public class WishlistUtility {
 
     /**
      * String representation of all wishlist items for a specific account
+     *
      * @return String representation of all wishlist items
      */
-    public List<String> wishlistToString(int id){
+    public List<String> wishlistToString(int id) {
         List<String> rep = new ArrayList<>();
-        for(Item item: wishlistItems(id)) rep.add(item.toString());
+        for (Item item : wishlistItems(id)) rep.add(item.toString());
         return rep;
     }
 

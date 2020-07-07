@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * presenter that lets an admin create an account
+ *
  * @author Catherine
  */
 public class ConsoleAdminCreatorPresenter implements AdminCreatorPresenter {

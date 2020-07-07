@@ -4,6 +4,7 @@ import usecases.*;
 
 /**
  * Configures the application by integrating gateway interfaces to useCases.
+ *
  * @author Michael
  */
 public interface ManualConfig {

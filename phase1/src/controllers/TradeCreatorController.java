@@ -30,10 +30,11 @@ public class TradeCreatorController {
 
     /**
      * Create a controller for the trade creation screen.
+     *
      * @param tradeCreatorPresenter A presenter for this controller.
-     * @param manualConfig Repository of use cases.
-     * @param peerId Id of account trade is being conducted with.
-     * @param itemId Id of item being offered or asked for.
+     * @param manualConfig          Repository of use cases.
+     * @param peerId                Id of account trade is being conducted with.
+     * @param itemId                Id of item being offered or asked for.
      */
     public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
                                   ManualConfig manualConfig, int peerId, int itemId) {
@@ -79,7 +80,7 @@ public class TradeCreatorController {
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
-        if(controllerInputValidator.isExitStr(tradeLocation)) return;
+        if (controllerInputValidator.isExitStr(tradeLocation)) return;
 
         String date = tradeCreatorPresenter.getDate();
 
@@ -94,7 +95,7 @@ public class TradeCreatorController {
         String time = tradeCreatorPresenter.getTime();
 
         while (!controllerInputValidator.isTime(time) ||
-               !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
+                !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
 
             if (controllerInputValidator.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
@@ -113,7 +114,7 @@ public class TradeCreatorController {
         }
 
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, isPerm.equals("y"),
-                                 traderOneId, traderTwoId, traderOneItems, traderTwoItems);
+                traderOneId, traderTwoId, traderOneItems, traderTwoItems);
         tradeCreatorPresenter.successMessage();
 
     }

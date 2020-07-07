@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 /**
  * A console presenter for displaying trades and related options.
+ *
  * @author Maryam
  */
 public class ConsoleTradePresenter implements TradePresenter {
@@ -80,7 +81,7 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public void displayRecentOneWayTrade(List<String> recentOneWayTrade) {
         System.out.println("These are your most recent items traded in a one-way trade: ");
-        for (String s: recentOneWayTrade) {
+        for (String s : recentOneWayTrade) {
             System.out.println(s);
         }
     }
@@ -91,7 +92,7 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public void displayRecentTwoWayTrade(List<String> recentTwoWayTrade) {
         System.out.println("These are your most recent items traded in a two-way trade: ");
-        for (String s: recentTwoWayTrade) {
+        for (String s : recentTwoWayTrade) {
             System.out.println(s);
         }
     }
@@ -102,7 +103,7 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public void displayFrequentPartners(List<String> frequentPartners) {
         System.out.println("These are your most frequent trading partners: ");
-        for (String s: frequentPartners) {
+        for (String s : frequentPartners) {
             System.out.println(s);
         }
     }

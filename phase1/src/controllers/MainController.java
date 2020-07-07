@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * A class that initiates the program.
+ *
  * @author Maryam
  */
 public class MainController {
@@ -20,8 +21,7 @@ public class MainController {
         ManualConfig manualConfig;
         try {
             manualConfig = new ManualConfigCSV();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return;
         }

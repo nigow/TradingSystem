@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * controller for handling freezing
+ *
  * @author Catherine
  */
 public class FreezingController {
@@ -35,7 +36,7 @@ public class FreezingController {
         freezingUtility = mc.getFreezingUtility();
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
-        controllerInputValidator =  new ControllerInputValidator();
+        controllerInputValidator = new ControllerInputValidator();
     }
 
     public void run() {

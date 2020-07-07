@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Controller that deals with user's past trades and making changes to them.
+ *
  * @author Maryam
  */
 public class TradeController {
@@ -37,7 +38,8 @@ public class TradeController {
 
     /**
      * Initialized TradeController by setting necessary usecases and presenter.
-     * @param mc An instance of ManualConfig to get necessary usecases
+     *
+     * @param mc             An instance of ManualConfig to get necessary usecases
      * @param tradePresenter An instance of TradePresenter to display and get information from the user
      */
     public TradeController(ManualConfig mc, TradePresenter tradePresenter) {
@@ -190,7 +192,7 @@ public class TradeController {
         if (controllerInputValidator.isExitStr(location))
             return;
 
-        while(!controllerInputValidator.isValidCSVStr(location)) {
+        while (!controllerInputValidator.isValidCSVStr(location)) {
             tradePresenter.invalidInput();
             location = tradePresenter.editTradeLocation();
             if (controllerInputValidator.isExitStr(location))
