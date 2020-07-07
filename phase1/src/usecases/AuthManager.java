@@ -244,11 +244,16 @@ public class AuthManager {
     public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
         Restrictions restrictions = restrictionsGateway.getRestrictions();
         tradeUtility.setAccount(account);
-        boolean lendedMoreThanBorrowed =
+        boolean lentMoreThanBorrowed =
                 tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
         tradeUtility.setAccount(adminAccount);
-        return !canUnfreeze(account) && !isFrozen(account) && (!lendedMoreThanBorrowed || !withinMaxIncompleteTrades);
+        return !canUnfreeze(account) && !isFrozen(account) && (!lentMoreThanBorrowed || !withinMaxIncompleteTrades);
+    }
+
+    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility) {
+        return tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >=
+                restrictionsGateway.getRestrictions().getLendMoreThanBorrow();
     }
 
     /**
