@@ -129,7 +129,6 @@ public class MenuFacade {
                 method.add(adminCreator::run);
             }
 
-//            if (authManager.isFrozen(accountManager.getCurrAccount())) {
             if (authManager.requestUnfreeze(accountManager.getCurrAccount())) {
                 options.add("Request to be unfrozen");
                 method.add(appealController::run);
