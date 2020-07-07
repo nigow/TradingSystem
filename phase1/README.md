@@ -169,7 +169,7 @@ Which action would you like to do?
 4. Logout
 ```
 
-From there, you'll be shown a list of users. Enter the number to the left of a user to trade with them. Note that you can only make a two-way trade or lend an item to a user using this option (you cannot request an item from them and offer nothing in return).
+From there, you'll be shown a list of items you possess. Enter the number to the left of an item to trade with them, then you will be prompted to select a user similarly. Note that you can only make a two-way trade or lend an item to a user using this option (you cannot request an item from them and offer nothing in return).
 
 #### Trading From an Item in Your Wishlist
 
