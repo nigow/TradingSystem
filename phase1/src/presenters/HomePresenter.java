@@ -35,8 +35,15 @@ public interface HomePresenter {
      * @return password
      */
     String newAccountPassword();
+
     /**
      * tells user that their input was invalid
      */
     void invalidInput();
+
+    /**
+     * displays a custom message to the user
+     * @param message a custom message for the user
+     */
+    void showMessage(String message);
 }

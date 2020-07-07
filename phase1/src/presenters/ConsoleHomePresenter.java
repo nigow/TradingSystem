@@ -9,6 +9,7 @@ import java.util.List;
  * @author Catherine
  */
 public class ConsoleHomePresenter implements HomePresenter {
+
     /**
      * {@inheritDoc}
      */
@@ -21,6 +22,7 @@ public class ConsoleHomePresenter implements HomePresenter {
         }
         return input.nextLine();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -40,6 +42,7 @@ public class ConsoleHomePresenter implements HomePresenter {
         System.out.print("Enter your password (-1 to go back): ");
         return input.nextLine();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -59,11 +62,20 @@ public class ConsoleHomePresenter implements HomePresenter {
         System.out.print("Enter your desired password (-1 to go back): ");
         return input.nextLine();
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessage(String message) {
+        System.out.println(message);
     }
 }

@@ -84,18 +84,20 @@ public class HomeController {
      * Calls the presenter and logs in a user based on their information.
      */
     private void logIn() {
-        String username = homePresenter.logInUsername();
-        if (controllerInputValidator.isExitStr(username)) {
-            return;
-        }
-        String password = homePresenter.logInPassword();
-        if (controllerInputValidator.isExitStr(password))
-            return;
-        if (authManager.authenticateLogin(username, password)) {
-            accountManager.setCurrAccount(username);
-            menuFacade.run();
-        } else {
-            homePresenter.invalidInput();
+        while (true) {
+            String username = homePresenter.logInUsername();
+            if (controllerInputValidator.isExitStr(username)) {
+                return;
+            }
+            String password = homePresenter.logInPassword();
+            if (controllerInputValidator.isExitStr(password))
+                return;
+            if (authManager.authenticateLogin(username, password)) {
+                accountManager.setCurrAccount(username);
+                menuFacade.run();
+                return;
+            } else
+                homePresenter.showMessage("That username/password combination is incorrect.");
         }
     }
 
@@ -103,16 +105,19 @@ public class HomeController {
      * Calls the presenter and creates an account for the user.
      */
     private void createAccount() {
-        String username = homePresenter.newAccountUsername();
-        if (controllerInputValidator.isExitStr(username)) {
-            return;
+        while (true) {
+            String username = homePresenter.newAccountUsername();
+            if (controllerInputValidator.isExitStr(username)) {
+                return;
+            }
+            String password = homePresenter.newAccountPassword();
+            if (controllerInputValidator.isExitStr(password))
+                return;
+            if (accountManager.createStandardAccount(username, password)) {
+                menuFacade.run();
+                return;
+            } else
+                homePresenter.showMessage("You cannot register with that username.");
         }
-        String password = homePresenter.newAccountPassword();
-        if (controllerInputValidator.isExitStr(password))
-            return;
-        if (accountManager.createStandardAccount(username, password))
-            menuFacade.run();
-        else
-            homePresenter.invalidInput();
     }
 }
