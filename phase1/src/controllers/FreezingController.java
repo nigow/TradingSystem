@@ -12,24 +12,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * controller for handling freezing
- *
+ * controller that lets admin freeze and unfreeze users
  * @author Catherine
  */
 public class FreezingController {
-
+    /**
+     * an instance of FreezingPresenter to display options
+     */
     private final FreezingPresenter freezingPresenter;
-
+    /**
+     * an instance of FreezingUtility to get qualifying accounts
+     */
     private final FreezingUtility freezingUtility;
-
+    /**
+     * an instance of AccountManager
+     */
     private final AccountManager accountManager;
-
+    /**
+     * an instance of AuthManager
+     */
     private final AuthManager authManager;
-
+    /**
+     * an instance of tradeUtility
+     */
     private final TradeUtility tradeUtility;
-
+    /**
+     * an instance of ControllerInputValidator to check if input is valid
+     */
     private final ControllerInputValidator controllerInputValidator;
 
+    /**
+     * initializes constructor with necessary use cases and presenter
+     * @param mc an instance of ManualConfig to get use cases
+     * @param freezingPresenter an instance of FreezingPresenter to display information
+     */
     public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {
         tradeUtility = mc.getTradeUtility();
         this.freezingPresenter = freezingPresenter;
@@ -39,6 +55,9 @@ public class FreezingController {
         controllerInputValidator = new ControllerInputValidator();
     }
 
+    /**
+     * shows actions that can be completed and redirects admin to method of requested action
+     */
     public void run() {
         List<String> freezingActions = new ArrayList<>();
         freezingActions.add("Freeze users");
@@ -60,6 +79,9 @@ public class FreezingController {
         }
     }
 
+    /**
+     * freezes an account that should be frozen
+     */
     private void freeze() {
         List<Account> accounts = freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility);
         List<String> usernames = freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility);
@@ -80,6 +102,9 @@ public class FreezingController {
         }
     }
 
+    /**
+     * unfreezes an account that has requested to be unfrozen
+     */
     private void unfreeze() {
         List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);
         List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
