@@ -279,7 +279,7 @@ public class TradeIntegrationTest extends TestCase {
         items2.add(201);
         LocalDateTime time = LocalDateTime.now();
         LocalDateTime time3days = LocalDateTime.now().minusDays(3);
-        LocalDateTime time7days = LocalDateTime.now().minusDays(7);
+        LocalDateTime time7days = LocalDateTime.now().minusDays(6);
         LocalDateTime time12days = LocalDateTime.now().minusDays(12);
         tradeManager.createTrade(time, "UTM", false, 50, 51,
                 items1, items2);
@@ -291,10 +291,11 @@ public class TradeIntegrationTest extends TestCase {
                 items2, items1);
         tradeManager.createTrade(time12days, "UTM", false, 50, 51,
                 items1, items2);
-        tradeManager.updateStatus(TradeStatus.COMPLETED);
+        tradeManager.updateStatus(TradeStatus.CONFIRMED);
         Integer ans = 3;
         assertEquals(tradeUtility.getNumWeeklyTrades(), ans);
-        assertEquals(tradeUtility.getTimesIncomplete(), ans);
+        Integer ans2 = 1;
+        assertEquals(tradeUtility.getTimesIncomplete(), ans2);
     }
 }
 
