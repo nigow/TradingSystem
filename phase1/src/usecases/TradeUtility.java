@@ -232,7 +232,7 @@ public class TradeUtility {
         Integer timesIncomplete = 0;
         for (Trade trade : getAllTradesAccount()) {
             LocalDateTime tradeTime = tradeManager.getTradeGateway().findTimePlaceById(trade.getId()).getTime();
-            if (tradeTime.isBefore(LocalDateTime.now()) && !trade.getStatus().equals(TradeStatus.COMPLETED)) {
+            if (tradeTime.isBefore(LocalDateTime.now()) && trade.getStatus().equals(TradeStatus.CONFIRMED)) {
                 timesIncomplete++;
             }
         }
