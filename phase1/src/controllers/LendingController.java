@@ -82,7 +82,7 @@ public class LendingController {
         String temp_index = null;
         while (flag) {
             temp_index = lendingPresenter.selectAccount();
-            if (temp_index.equals("-1")) {
+            if (validator.isExitStr(temp_index)) {
                 lendingPresenter.abort();
                 return -1;
             } else if (!validator.isNum(temp_index)) {
@@ -117,7 +117,7 @@ public class LendingController {
         String temp_index = null;
         while (flag) {
             temp_index = lendingPresenter.selectItem();
-            if (temp_index.equals("-1")) {
+            if (validator.isExitStr(temp_index)) {
                 lendingPresenter.abort();
                 return -1;
             } else if (!validator.isNum(temp_index)) {
