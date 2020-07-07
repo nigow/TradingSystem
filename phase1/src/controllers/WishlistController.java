@@ -87,7 +87,7 @@ public class WishlistController {
         actions.put("Remove item from wishlist.", this::removeFromWishlist);
 
         // tradecreatorcontroller will handle if initiator has to give item in return
-        if (authManager.canTrade(tradeUtility, accountManager.getCurrAccount()))
+        if (authManager.canTrade(accountManager.getCurrAccount()))
 
             actions.put("Start trade.", this::startTrade);
 

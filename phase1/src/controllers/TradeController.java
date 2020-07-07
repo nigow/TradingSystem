@@ -170,14 +170,14 @@ public class TradeController {
                     if (actionInd == 0) {
                         tradeManager.updateStatus(TradeStatus.REJECTED);
                         tradePresenter.showMessage("You rejected this trade.");
-                    } else if (actionInd == 1) {
+                    } else if (actionInd == 1 && tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
                         tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
                         }
                         tradePresenter.showMessage("You confirmed the time and location for this trade.");
-                    } else if (actionInd == 2) {
+                    } else {
                         changeTradeTimePlace();
                     }
                     return;
