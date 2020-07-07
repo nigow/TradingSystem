@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * presenter that lets an admin create an account
+ *
  * @author Catherine
  */
 public class ConsoleAdminCreatorPresenter implements AdminCreatorPresenter {
@@ -18,15 +19,22 @@ public class ConsoleAdminCreatorPresenter implements AdminCreatorPresenter {
         return input.nextLine();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String createAdminPassword() {
-Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         System.out.println("Enter your desired password:");
         System.out.println("Enter \"-1\" to go back.");
         return input.nextLine();
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void invalidInput() {
-        System.out.println("Your input was invalid. Please try again.");
+    public void showMessage(String message) {
+        System.out.println(message);
     }
 }

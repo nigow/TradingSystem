@@ -25,18 +25,21 @@ public class TradeCreatorController {
     private final int traderOneId;
     private final int traderTwoId;
     private final int itemId;
+    private final boolean forceTwoWay;
 
     private final ControllerInputValidator controllerInputValidator;
 
     /**
      * Create a controller for the trade creation screen.
+     *
      * @param tradeCreatorPresenter A presenter for this controller.
-     * @param manualConfig Repository of use cases.
-     * @param peerId Id of account trade is being conducted with.
-     * @param itemId Id of item being offered or asked for.
+     * @param manualConfig          Repository of use cases.
+     * @param peerId                Id of account trade is being conducted with.
+     * @param itemId                Id of item being offered or asked for.
+     * @param forceTwoWay           Whether two way trade should be forced.
      */
     public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
-                                  ManualConfig manualConfig, int peerId, int itemId) {
+                                  ManualConfig manualConfig, int peerId, int itemId, boolean forceTwoWay) {
 
         this.tradeManager = manualConfig.getTradeManager();
         this.accountManager = manualConfig.getAccountManager();
@@ -46,6 +49,7 @@ public class TradeCreatorController {
         this.traderOneId = accountManager.getCurrAccountID();
         this.traderTwoId = peerId;
         this.itemId = itemId;
+        this.forceTwoWay = forceTwoWay;
 
         controllerInputValidator = new ControllerInputValidator();
 
@@ -65,7 +69,7 @@ public class TradeCreatorController {
             traderOneItems.add(itemId);
         }
 
-        String twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
+        String twoWayTrade = forceTwoWay ? "y" : tradeCreatorPresenter.getTwoWayTrade();
 
         while (!controllerInputValidator.isBool(twoWayTrade)) {
 
@@ -79,7 +83,7 @@ public class TradeCreatorController {
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
-        if(controllerInputValidator.isExitStr(tradeLocation)) return;
+        if (controllerInputValidator.isExitStr(tradeLocation)) return;
 
         String date = tradeCreatorPresenter.getDate();
 
@@ -94,7 +98,7 @@ public class TradeCreatorController {
         String time = tradeCreatorPresenter.getTime();
 
         while (!controllerInputValidator.isTime(time) ||
-               !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
+                !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
 
             if (controllerInputValidator.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
@@ -113,7 +117,7 @@ public class TradeCreatorController {
         }
 
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, isPerm.equals("y"),
-                                 traderOneId, traderTwoId, traderOneItems, traderTwoItems);
+                traderOneId, traderTwoId, traderOneItems, traderTwoItems);
         tradeCreatorPresenter.successMessage();
 
     }

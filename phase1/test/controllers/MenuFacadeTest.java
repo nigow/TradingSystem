@@ -37,7 +37,8 @@ public class MenuFacadeTest {
 
     @Test(timeout = 100)
     public void testInvalidInput() {
-        List<Object> lst = this.setUp(new String[]{"34", "44", "1000", "fjgjf", "hi", "__,", "4"});
+        // 3 is the exit key for a regular user.
+        List<Object> lst = this.setUp(new String[]{"34", "44", "1000", "fjgjf", "hi", "__,", "3"});
         MenuFacade menuFacade = (MenuFacade) lst.get(0);
         ManualConfig manualConfig = (ManualConfig) lst.get(1);
         manualConfig.getAccountManager().createStandardAccount("test", "account");

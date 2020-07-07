@@ -28,7 +28,7 @@ public class RestrictionController {
         options.add("Maximum number of weekly trades");
         options.add("Return to main menu");
         while (true) {
-            String action =  restrictionPresenter.displayRestrictionOptions(options);
+            String action = restrictionPresenter.displayRestrictionOptions(options);
             switch (action) {
                 case "0":
                     lendMoreThanBorrow();
@@ -50,58 +50,46 @@ public class RestrictionController {
     }
 
     private void lendMoreThanBorrow() {
-        boolean isValid = false;
-        String newNumber;
-        while (!isValid) {
-            isValid = true;
-            newNumber = restrictionPresenter.changeLendMoreThanBorrow(freezingUtility.getLendMoreThanBorrow());
-            if (newNumber.equals("-1")) {
+        while (true) {
+            String newNumber = restrictionPresenter.changeLendMoreThanBorrow(freezingUtility.getLendMoreThanBorrow());
+            if (controllerInputValidator.isExitStr(newNumber))
                 return;
-            }
-            else if (!controllerInputValidator.isNum(newNumber)) {
-                isValid = false;
+            if (!controllerInputValidator.isNum(newNumber))
                 restrictionPresenter.invalidInput();
-            }
             else {
                 freezingUtility.setLendMoreThanBorrow(Integer.parseInt(newNumber));
+                restrictionPresenter.showMessage("You changed the restriction threshold.");
+                return;
             }
         }
     }
 
     private void maxIncompleteTrades() {
-        boolean isValid = false;
-        String newNumber;
-        while (!isValid) {
-            isValid = true;
-            newNumber = restrictionPresenter.changeMaxIncompleteTrades(freezingUtility.getMaxIncompleteTrade());
-            if (newNumber.equals("-1")) {
+        while (true) {
+            String newNumber = restrictionPresenter.changeMaxIncompleteTrades(freezingUtility.getMaxIncompleteTrade());
+            if (controllerInputValidator.isExitStr(newNumber))
                 return;
-            }
-            else if (!controllerInputValidator.isNum(newNumber)) {
-                isValid = false;
+            if (!controllerInputValidator.isNum(newNumber))
                 restrictionPresenter.invalidInput();
-            }
             else {
                 freezingUtility.setMaxIncompleteTrade(Integer.parseInt(newNumber));
+                restrictionPresenter.showMessage("You changed the restriction threshold.");
+                return;
             }
         }
     }
 
     private void maxWeeklyTrades() {
-        boolean isValid = false;
-        String newNumber;
-        while (!isValid) {
-            isValid = true;
-            newNumber = restrictionPresenter.changeMaxWeeklyTrades(freezingUtility.getMaxWeeklyTrade());
-            if (newNumber.equals("-1")) {
+        while (true) {
+            String newNumber = restrictionPresenter.changeMaxWeeklyTrades(freezingUtility.getMaxWeeklyTrade());
+            if (controllerInputValidator.isExitStr(newNumber))
                 return;
-            }
-            else if (!controllerInputValidator.isNum(newNumber)) {
-                isValid = false;
+            if (!controllerInputValidator.isNum(newNumber))
                 restrictionPresenter.invalidInput();
-            }
             else {
                 freezingUtility.setMaxWeeklyTrade(Integer.parseInt(newNumber));
+                restrictionPresenter.showMessage("You changed the restriction threshold.");
+                return;
             }
         }
     }

@@ -80,7 +80,7 @@ public class LendingControllerTest {
 
             @Override
             public String getLocation() {
-                return null;
+                return "UTM";
             }
 
             @Override
@@ -118,7 +118,7 @@ public class LendingControllerTest {
     }
 
 
-    @Test
+    @Test(timeout=50)
     public void invalidInput(){
         ManualConfig manualConfig = new InMemoryManualConfig();
         AccountManager accountManager = manualConfig.getAccountManager();
@@ -168,7 +168,7 @@ public class LendingControllerTest {
 
         LendingController lendingController = new LendingController(lendingPresenter, manualConfig, new ConsoleTradeCreatorPresenter());
         lendingController.run();
-        assert(tradeManager.getAllTrades().isEmpty() == true);
+        assert(tradeManager.getAllTrades().isEmpty());
     }
 
 

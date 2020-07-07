@@ -7,6 +7,7 @@ import java.io.IOException;
 
 /**
  * Configures the application by initializing CSV gateways and use cases.
+ *
  * @author Michael
  */
 public class ManualConfigCSV implements ManualConfig {
@@ -31,13 +32,14 @@ public class ManualConfigCSV implements ManualConfig {
     /**
      * Creates ManualConfig and initializes the required usecases
      * using a csv file that can be set manually.
+     *
      * @param filePath file path to the folder containing csv files
      */
     public ManualConfigCSV(String filePath) throws IOException {
         initializeUseCases(filePath);
     }
 
-    private void initializeUseCases(String filePath) throws IOException{
+    private void initializeUseCases(String filePath) throws IOException {
 
         File dir = new File(filePath);
         if (!dir.isDirectory() && !dir.mkdirs()) throw new IOException();
@@ -53,7 +55,7 @@ public class ManualConfigCSV implements ManualConfig {
         AccountGateway csvAccountGateway =
                 new CSVAccountGateway(filePath + "accounts.csv");
         accountManager = new AccountManager(csvAccountGateway);
-        if (accountManager.getAccountsList().size() == 0)  {
+        if (accountManager.getAccountsList().size() == 0) {
             accountManager.createAdminAccount("admin", "12345");
         }
         authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);

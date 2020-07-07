@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Controller that deals with lending service
+ *
  * @author Tairi
  */
 public class LendingController {
@@ -47,9 +48,10 @@ public class LendingController {
 
     /**
      * Initialize the use cases and presenter
+     *
      * @param manualConfig collection of gateways
      */
-    public LendingController(LendingPresenter lendingPresenter, ManualConfig manualConfig, TradeCreatorPresenter tradeCreatorPresenter){
+    public LendingController(LendingPresenter lendingPresenter, ManualConfig manualConfig, TradeCreatorPresenter tradeCreatorPresenter) {
         this.manualConfig = manualConfig;
         this.lendingPresenter = lendingPresenter;
         this.accountManager = manualConfig.getAccountManager();
@@ -60,16 +62,17 @@ public class LendingController {
 
     /**
      * Helper method that sends all accounts available to trade with, and let the user choose
+     *
      * @return index of the account in the list of accounts provided
      */
-    private int chooseAccount(){
+    private int chooseAccount() {
         List<Account> allAccounts = accountManager.getAccountsList();
 
         //remove the current account
-        Iterator iterator = allAccounts.iterator();
-        while(iterator.hasNext()){
-            Account account = (Account)iterator.next();
-            if(account.getAccountID() == accountManager.getCurrAccountID()){
+        Iterator<Account> iterator = allAccounts.iterator();
+        while (iterator.hasNext()) {
+            Account account = iterator.next();
+            if (account.getAccountID() == accountManager.getCurrAccountID()) {
                 iterator.remove();
             }
         }
@@ -77,18 +80,16 @@ public class LendingController {
         lendingPresenter.displayAccounts(allAccounts);
         boolean flag = true;
         String temp_index = null;
-        while(flag){
+        while (flag) {
             temp_index = lendingPresenter.selectAccount();
-            if(temp_index.equals("-1")){
+            if (validator.isExitStr(temp_index)) {
                 lendingPresenter.abort();
                 return -1;
-            }
-            else if(!validator.isNum(temp_index)){
+            } else if (!validator.isNum(temp_index)) {
                 lendingPresenter.invalidInput();
-            }
-            else{
+            } else {
                 int index = Integer.parseInt(temp_index);
-                if(index >= allAccounts.size()) lendingPresenter.invalidInput();
+                if (index >= allAccounts.size()) lendingPresenter.invalidInput();
                 else flag = false;
             }
         }
@@ -98,33 +99,32 @@ public class LendingController {
 
     /**
      * Helper method that sends all tradable items that the user owns
+     *
      * @return index of the item in the list of accounts provided
      */
-    private int chooseItem(){
+    private int chooseItem() {
         List<Item> myItems = new ArrayList<>();
         int userId = accountManager.getCurrAccountID();
 
         //list only tradable items
-        for(Item item: itemManager.getAllItems()){
-            if(item.getOwnerID() == userId && item.isApproved()) myItems.add(item);
+        for (Item item : itemManager.getAllItems()) {
+            if (item.getOwnerID() == userId && item.isApproved()) myItems.add(item);
         }
 
         lendingPresenter.displayInventory(myItems);
 
         boolean flag = true;
         String temp_index = null;
-        while(flag){
+        while (flag) {
             temp_index = lendingPresenter.selectItem();
-            if(temp_index.equals("-1")){
+            if (validator.isExitStr(temp_index)) {
                 lendingPresenter.abort();
                 return -1;
-            }
-            else if(!validator.isNum(temp_index)){
+            } else if (!validator.isNum(temp_index)) {
                 lendingPresenter.invalidInput();
-            }
-            else{
+            } else {
                 int index = Integer.parseInt(temp_index);
-                if(index >= myItems.size()) lendingPresenter.invalidInput();
+                if (index >= myItems.size()) lendingPresenter.invalidInput();
                 else flag = false;
             }
         }
@@ -134,14 +134,15 @@ public class LendingController {
     /**
      * Let the user choose who to trade and which item to lend and start trading.
      */
-    public void run(){
+    public void run() {
         int toAccountId = chooseAccount();
         if (toAccountId == -1) return;
+
         int tradingItemId = chooseItem();
-        if(tradingItemId == -1) return;
+        if (tradingItemId == -1) return;
 
         TradeCreatorController startTrade;
-        startTrade = new TradeCreatorController(tradeCreatorPresenter, manualConfig, toAccountId, tradingItemId);
+        startTrade = new TradeCreatorController(tradeCreatorPresenter, manualConfig, toAccountId, tradingItemId, false);
         startTrade.run();
     }
 

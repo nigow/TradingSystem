@@ -29,9 +29,10 @@ public class WishlistController {
 
     /**
      * Create a controller for the wishlist screen.
-     * @param wishlistPresenter A presenter for this controller.
+     *
+     * @param wishlistPresenter     A presenter for this controller.
      * @param tradeCreatorPresenter A presenter for {@link controllers.TradeCreatorController}.
-     * @param manualConfig Repository of use cases.
+     * @param manualConfig          Repository of use cases.
      */
     public WishlistController(WishlistPresenter wishlistPresenter, TradeCreatorPresenter tradeCreatorPresenter,
                               ManualConfig manualConfig) {
@@ -82,14 +83,14 @@ public class WishlistController {
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
 
-        //TODO just a note that canTrade() checks that an account isn't frozen(which checks if account can lend and borrow so the canBorrow() may be removed as it is redundant
-        if (authManager.canBorrow(accountManager.getCurrAccount()) &&
-                authManager.canTrade(tradeUtility, accountManager.getCurrAccount()))
+        // tradecreatorcontroller will handle if initiator has to give item in return
+        if (authManager.canTrade(tradeUtility, accountManager.getCurrAccount()))
 
             actions.put("Start trade.", this::startTrade);
 
         actions.put("Remove item from wishlist.", this::removeFromWishlist);
-        actions.put("Back.", () -> {});
+        actions.put("Back.", () -> {
+        });
         return actions;
     }
 
@@ -111,8 +112,8 @@ public class WishlistController {
         List<Integer> wishlistIds = accountManager.getCurrWishlist();
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
-        new TradeCreatorController(tradeCreatorPresenter,
-                manualConfig, itemManager.getItemById(itemId).getOwnerID(), itemId).run();
+        new TradeCreatorController(tradeCreatorPresenter, manualConfig, itemManager.getOwnerId(itemId), itemId,
+                !authManager.lentMoreThanBorrowed(tradeUtility)).run();
 
     }
 

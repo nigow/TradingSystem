@@ -4,6 +4,7 @@ import java.time.*;
 
 /**
  * Represents the time and place of a meetup.
+ *
  * @author Maryam
  */
 public class TimePlace implements Comparable<TimePlace> {
@@ -24,8 +25,9 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Creates a TimePlace object based on an ID, the time of the meetup, and the location of the meetup.
-     * @param id The ID of this meetup.
-     * @param time The time of this meetup.
+     *
+     * @param id    The ID of this meetup.
+     * @param time  The time of this meetup.
      * @param place The location of this meetup.
      */
     public TimePlace(int id, LocalDateTime time, String place) {
@@ -36,6 +38,7 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Returns the ID of this meetup.
+     *
      * @return The ID of this meetup.
      */
     public int getId() {
@@ -44,6 +47,7 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Returns the location of this meetup.
+     *
      * @return The location of this meetup.
      */
     public String getPlace() {
@@ -52,6 +56,7 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Returns the time of this meetup.
+     *
      * @return The time of this meetup.
      */
     public LocalDateTime getTime() {
@@ -60,6 +65,7 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Sets the location of this meetup.
+     *
      * @param place The location of this meetup.
      */
     public void setPlace(String place) {
@@ -68,6 +74,7 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Sets the time of this meetup.
+     *
      * @param time The time of this meetup.
      */
     public void setTime(LocalDateTime time) {
@@ -76,6 +83,7 @@ public class TimePlace implements Comparable<TimePlace> {
 
     /**
      * Creates a string representation of this meetup.
+     *
      * @return A string representation of this TimePlace object.
      */
     @Override
@@ -90,6 +98,7 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Compares two TimePlace objects by their date.
      * An object with a later date is considered 'smaller'.
+     *
      * @param other A TimePlace object.
      * @return -1 if this TimePlace has a more recent date, 1 if the other has a more recent date, 0 otherwise.
      */

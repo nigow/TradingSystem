@@ -4,11 +4,13 @@ import java.util.List;
 
 /**
  * interface that shows possible actions
+ *
  * @author Catherine
  */
 public interface MenuPresenter {
     /**
      * displays all possible actions for the user
+     *
      * @param menuOptions possible actions
      * @return index of chosen action
      */

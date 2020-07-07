@@ -7,9 +7,10 @@ import java.util.regex.Pattern;
 
 /**
  * A restriction gateway that uses csv files as persistent storage.
+ *
  * @author Tairi
  */
-public class CSVRestrictionsGateway implements RestrictionsGateway{
+public class CSVRestrictionsGateway implements RestrictionsGateway {
 
     /**
      * The current restrictions of the system consists of lend, weekly trades and incomplete trade limits
@@ -25,6 +26,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
 
     /**
      * Constructor for CSVRoleGateway that construct the current restrictions
+     *
      * @param filepath the filepath to the csv file
      */
     public CSVRestrictionsGateway(String filepath) throws IOException {
@@ -38,7 +40,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
         //skip the first row
         line = br.readLine();
 
-        while(line != null && Pattern.matches("^[0-9]+,[0-9]+,[0-9]+$", line)){
+        while (line != null && Pattern.matches("^[0-9]+,[0-9]+,[0-9]+$", line)) {
             //only the second line consists of restrictions separated by commas
             String[] lineArray = line.split(",");
             int lendLimit = Integer.parseInt(lineArray[0]);
@@ -87,7 +89,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
             fw.close();
             return true;
 
-        }catch(IOException e){
+        } catch (IOException e) {
             System.out.println("No such file exists");
 
         }

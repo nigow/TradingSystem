@@ -12,6 +12,7 @@ public interface TradeGateway {
 
     /**
      * Given a trade's ID, return the corresponding Trade object.
+     *
      * @param id ID of desired trade.
      * @return Trade possessing the given ID (null if an invalid ID was given).
      */
@@ -19,6 +20,7 @@ public interface TradeGateway {
 
     /**
      * Given a trade's ID, return the time + place it's happening at.
+     *
      * @param id ID of desired trade.
      * @return Time + place of trade possessing the given ID (null if an invalid ID was given).
      */
@@ -26,7 +28,8 @@ public interface TradeGateway {
 
     /**
      * Given a trade and the time + place it's taking place at, save its information to persistent storage.
-     * @param trade Trade being saved.
+     *
+     * @param trade     Trade being saved.
      * @param timePlace Time + place trade is happening at.
      * @return Whether trade's persistent storage was successfully updated or not.
      */
@@ -34,12 +37,14 @@ public interface TradeGateway {
 
     /**
      * Retrieve every trade in the system.
+     *
      * @return List of every trade in the system.
      */
     List<Trade> getAllTrades();
 
     /**
      * Return an ID that does not belong to any trade at the time the method is called.
+     *
      * @return An unused ID.
      */
     int generateValidId();

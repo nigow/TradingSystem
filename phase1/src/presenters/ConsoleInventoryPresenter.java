@@ -1,9 +1,11 @@
 package presenters;
+
 import java.util.List;
 import java.util.Scanner;
 
 /**
  * A presenter for the inventory page
+ *
  * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  */
 public class ConsoleInventoryPresenter implements InventoryPresenter {
@@ -15,7 +17,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
         Scanner input = new Scanner(System.in);
         System.out.println("Choose an option to do:");
         for (int i = 0; i < InventoryOptions.size(); i++) {
-            System.out.println(i + "-" + InventoryOptions.get(i));
+            System.out.println(i + ". " + InventoryOptions.get(i));
         }
         return input.nextLine();
     }
@@ -66,7 +68,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public String confirmItem(String name, String description) {
         Scanner input = new Scanner(System.in);
-        System.out.print(name + ": " + description +"\nIs this correct? (y/n/-1 to go back) :");
+        System.out.print(name + ": " + description + "\nIs this correct? (y/n/-1 to go back) :");
         return input.nextLine();
     }
 

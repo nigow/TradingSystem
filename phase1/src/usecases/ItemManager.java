@@ -2,11 +2,13 @@ package usecases;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import entities.Item;
 import gateways.ItemsGateway;
 
 /**
  * Represents a manager for items which creates an item or takes in an item to edit
+ *
  * @author Isaac
  */
 
@@ -19,6 +21,7 @@ public class ItemManager {
 
     /**
      * Constructor for ItemManager which stores an ItemsGateway
+     *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
     public ItemManager(ItemsGateway itemsGateway) {
@@ -28,9 +31,10 @@ public class ItemManager {
     /**
      * Creates a new item and stores in the persistent storage and allows for editing of the
      * new item
-     * @param name The name of the item
+     *
+     * @param name        The name of the item
      * @param description The description of the item
-     * @param ownerId The id of the owner of the item
+     * @param ownerId     The id of the owner of the item
      */
     public void createItem(String name, String description, int ownerId) {
         Item item = new Item(itemsGateway.generateValidId(), name, description, ownerId);
@@ -39,10 +43,11 @@ public class ItemManager {
 
     /**
      * Deletes an item in the system and returns if item was successfully deleted
+     *
      * @param item The item to be deleted
      * @return If the deletion was successful
      */
-    public boolean removeItem(Item item){
+    public boolean removeItem(Item item) {
         boolean result = false;
         if (getAllItems().contains(item)) {
             item.setOwnerID(-1);
@@ -54,6 +59,7 @@ public class ItemManager {
 
     /**
      * Get the item with the id entered
+     *
      * @param ItemId Id of the item
      * @return The item with the entered Id
      */
@@ -63,6 +69,7 @@ public class ItemManager {
 
     /**
      * Get the string representation of item with the id entered
+     *
      * @param ItemId Id of the item
      * @return The string of item with the entered Id
      */
@@ -72,6 +79,7 @@ public class ItemManager {
 
     /**
      * Gets the Id of an item
+     *
      * @param item the item which information is being returned about
      * @return the Id of an item
      */
@@ -81,6 +89,7 @@ public class ItemManager {
 
     /**
      * Gets the approval status of the item
+     *
      * @param item the item which information is being returned about
      * @return the approval status of the item
      */
@@ -90,33 +99,37 @@ public class ItemManager {
 
     /**
      * Gets the Id of the owner of the item
-     * @param item the item which information is being returned about
-     * @return the Id of the owner of the item
+     *
+     * @param itemId the id of the item which information is being returned about
+     * @return the Id of the owner of the item (-1 if no item can be found).
      */
-    public int getOwnerId(Item item) {
-        return item.getOwnerID();
+    public int getOwnerId(int itemId) {
+        Item item = itemsGateway.findById(itemId);
+        if (item != null) return item.getOwnerID();
+        return -1;
     }
 
     /**
      * Update the owner of the item
-     * @param item the item being updated
+     *
+     * @param item    the item being updated
      * @param ownerId the new owner of the item
      */
-    public void updateOwner(Item item, int ownerId){
+    public void updateOwner(Item item, int ownerId) {
         item.setOwnerID(ownerId);
         itemsGateway.updateItem(item);
     }
 
     /**
      * Update the approval status of the item
-     * @param item the item being updated
+     *
+     * @param item     the item being updated
      * @param approval the new approval status of the item
      */
-    public void updateApproval(Item item, boolean approval){
-        if (approval){
+    public void updateApproval(Item item, boolean approval) {
+        if (approval) {
             item.approve();
-        }
-        else {
+        } else {
             item.disapprove();
         }
         itemsGateway.updateItem(item);
@@ -124,6 +137,7 @@ public class ItemManager {
 
     /**
      * Retrieves all items stored in persistent storage
+     *
      * @return List of all items
      */
     public List<Item> getAllItems() {
@@ -138,6 +152,7 @@ public class ItemManager {
 
     /**
      * Retrieves all items stored in persistent storage in string format
+     *
      * @return List of all items in string format
      */
     public List<String> getAllItemsString() {

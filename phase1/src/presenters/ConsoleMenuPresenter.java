@@ -5,9 +5,10 @@ import java.util.List;
 
 /**
  * presenter that lets user choose what they want to do in their account
+ *
  * @author Catherine
  */
-public class ConsoleMenuPresenter implements MenuPresenter{
+public class ConsoleMenuPresenter implements MenuPresenter {
     /**
      * {@inheritDoc}
      */
@@ -16,7 +17,7 @@ public class ConsoleMenuPresenter implements MenuPresenter{
         Scanner input = new Scanner(System.in);
         System.out.println("Which action would you like to do?");
         for (int i = 0; i < menuOptions.size(); i++) {
-            System.out.println(i + "-" + menuOptions.get(i));
+            System.out.println(i + ". " + menuOptions.get(i));
         }
         return input.nextLine();
     }

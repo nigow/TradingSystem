@@ -70,38 +70,6 @@ public class AccountIntegrationTest extends TestCase {
         assertEquals(accountManager.getAccountsList().size(), 2);
     }
 
-
-    /**
-     * Verifies that invalid accounts aren't created and valid ones are
-     */
-    public void testCreatingValidAccount(){
-        accountManager = setUpAccount();
-        assertEquals(accountManager.getAccountsList().size(), 1);
-        assertEquals(accountManager.getAccountsList().get(0).getUsername(), "admin");
-        assertEquals(accountManager.getAccountsList().get(0).getAccountID(), 0);
-        accountManager.createStandardAccount("みお", "12345");
-        assertEquals(accountManager.getAccountsList().size(), 1);
-        accountManager.createAdminAccount("😊", "12345");
-        assertEquals(accountManager.getAccountsList().size(), 1);
-        accountManager.createStandardAccount("BobtheCoder", "123,456");
-        assertEquals(accountManager.getAccountsList().size(), 1);
-        StringBuilder password = new StringBuilder();
-        StringBuilder username = new StringBuilder();
-        for(char c = 0; c < 128; c++) {
-            Character ascii = c;
-            if (ascii.toString().matches("^[a-zA-Z0-9_]*$")) {
-                username.append(ascii);
-            }
-            if (ascii.toString().matches("^[ -~]*$") && !ascii.equals(',')){
-                password.append(ascii);
-            }
-        }
-        System.out.println(password.toString());
-        accountManager.createAdminAccount(username.toString(), password.toString());
-        assertEquals(accountManager.getAccountsList().size(), 2);
-
-    }
-
     /**
      * Verifies that both getters of AccountManager return the same Account instance.
      */

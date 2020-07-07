@@ -14,6 +14,7 @@ import usecases.ItemUtility;
 
 /**
  * Controller that deals with the inventory
+ *
  * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class InventoryController {
@@ -51,7 +52,8 @@ public class InventoryController {
     /**
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
-     * @param manualConfig the configuration for the program
+     *
+     * @param manualConfig       the configuration for the program
      * @param inventoryPresenter the presenter for displaying the inventory
      */
     public InventoryController(ManualConfig manualConfig, InventoryPresenter inventoryPresenter) {
@@ -86,7 +88,8 @@ public class InventoryController {
             actions.put("View items awaiting approval", this::displayPending);
             actions.put("Approve an item awaiting approval", this::approveItems);
         }
-        actions.put("Return to main menu", () -> {});
+        actions.put("Return to main menu", () -> {
+        });
 
         List<String> menu = new ArrayList<>(actions.keySet());
 
@@ -104,7 +107,7 @@ public class InventoryController {
                 }
             }
 
-        } while(!option.equals(String.valueOf(menu.size() - 1)));
+        } while (!option.equals(String.valueOf(menu.size() - 1)));
 
     }
 
@@ -152,6 +155,7 @@ public class InventoryController {
         List<String> all_disapproved = itemUtility.getDisapprovedString();
         inventoryPresenter.displayInventory(all_disapproved);
     }
+
     /**
      * Runs the createItem submenu
      */
@@ -244,7 +248,7 @@ public class InventoryController {
             } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
-                    boolean removed  = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
                     if (removed) {
                         isValid = true;
                         inventoryPresenter.customMessage("Item successfully removed!");

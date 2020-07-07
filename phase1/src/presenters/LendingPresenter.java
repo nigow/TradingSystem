@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Presenter for lending services
+ *
  * @author Tairi
  */
 public interface LendingPresenter {
@@ -22,12 +23,14 @@ public interface LendingPresenter {
 
     /**
      * Prompt user to select an account to trade with
+     *
      * @return index of account listed in displayAccounts
      */
     String selectAccount();
 
     /**
      * Prompt user to select an item to lend
+     *
      * @return index of item listed in displayInventory
      */
     String selectItem();

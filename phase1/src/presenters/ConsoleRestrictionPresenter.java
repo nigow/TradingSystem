@@ -5,9 +5,10 @@ import java.util.Scanner;
 
 /**
  * presenter for admins handling changes of restrictions
+ *
  * @author Catherine
  */
-public class ConsoleRestrictionPresenter implements RestrictionPresenter{
+public class ConsoleRestrictionPresenter implements RestrictionPresenter {
     /**
      * {@inheritDoc}
      */
@@ -16,10 +17,11 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter{
         Scanner input = new Scanner(System.in);
         System.out.println("Choose an option to do:");
         for (int i = 0; i < restrictionOptions.size(); i++) {
-            System.out.println(i + "-" + restrictionOptions.get(i));
+            System.out.println(i + ". " + restrictionOptions.get(i));
         }
         return input.nextLine();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -62,5 +64,13 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter{
     @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessage(String message) {
+        System.out.println(message);
     }
 }

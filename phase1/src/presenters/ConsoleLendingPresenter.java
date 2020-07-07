@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 /**
  * Presenter to provide lending services on CUI
+ *
  * @author Tairi
  */
 public class ConsoleLendingPresenter implements LendingPresenter {

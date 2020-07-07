@@ -4,32 +4,54 @@ import gateways.ManualConfig;
 import presenters.AdminCreatorPresenter;
 import usecases.AccountManager;
 
+/**
+ * controller to create new admin accounts
+ * @author Catherine
+ */
 public class AdminCreatorController {
-
+    /**
+     * an instance of AdminCreatorPresenter to let user know what to do
+     */
     private final AdminCreatorPresenter adminPresenter;
-
+    /**
+     * an instance of AccountManager to create new account
+     */
     private final AccountManager accountManager;
+    /**
+     * an instance of ControllerInputValidator to check for valid input
+     */
+    private final ControllerInputValidator controllerInputValidator;
 
+    /**
+     * initializes AdminCreatorController with necessary presenter and use cases
+     * @param mc an instance of ManualConfig to get use cases
+     * @param adminPresenter an instance of AdminPresenter to display information
+     */
     public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
         accountManager = mc.getAccountManager();
         this.adminPresenter = adminPresenter;
+        controllerInputValidator = new ControllerInputValidator();
     }
 
+    /**
+     * calls presenters to get username and password for new admin account
+     */
     public void run() {
-        boolean isValid = false;
-        String[] info = new String[2];
-        while (!isValid) {
-            info[0] = adminPresenter.createAdminUsername();
-            if (info[0].equals("-1")) {
+        while (true) {
+            String username = adminPresenter.createAdminUsername();
+            if (controllerInputValidator.isExitStr(username))
                 return;
-            }
-            info[1] = adminPresenter.createAdminPassword();
-            if (info[1].equals("-1")) {
+            String password = adminPresenter.createAdminPassword();
+            if (controllerInputValidator.isExitStr(password))
                 return;
-            }
-            isValid = accountManager.createAdminAccount(info[0], info[1]);
-            if (!isValid) {
-                adminPresenter.invalidInput();
+            if (!controllerInputValidator.isValidUserPass(username, password))
+                adminPresenter.showMessage("The characters in that username and password are illegal.");
+            else {
+                if (accountManager.createAdminAccount(username, password)) {
+                    adminPresenter.showMessage("You have added a new admin account.");
+                    return;
+                } else
+                    adminPresenter.showMessage("That username is taken.");
             }
         }
     }

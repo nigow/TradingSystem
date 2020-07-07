@@ -3,7 +3,7 @@ package presenters;
 /**
  * presenter that lets user
  */
-public class ConsoleAppealPresenter implements AppealPresenter{
+public class ConsoleAppealPresenter implements AppealPresenter {
     /**
      * {@inheritDoc}
      */
