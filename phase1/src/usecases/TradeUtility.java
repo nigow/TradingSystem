@@ -92,7 +92,9 @@ public class TradeUtility {
                 tradeFrequency.compute(trade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
             }
         }
-        Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         List<Integer> tradeIds = new ArrayList<>();
         int counter = 0;
         for (Map.Entry<Integer, Integer> entry : sorted.entrySet()) {
