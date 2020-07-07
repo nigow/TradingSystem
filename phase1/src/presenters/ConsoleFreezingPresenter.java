@@ -10,7 +10,7 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
         Scanner input = new Scanner(System.in);
         System.out.println("Which action would you like to do?");
         for (int i = 0; i < freezingOptions.size(); i++) {
-            System.out.println(i + "-" + freezingOptions.get(i));
+            System.out.println(i + ". " + freezingOptions.get(i));
         }
         return input.nextLine();
     }
@@ -19,7 +19,7 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
     public void displayPossibleFreeze(List<String> possibleUsers) {
         System.out.println("These users should be frozen according to current restrictions:");
         for (int i = 0; i < possibleUsers.size(); i++) {
-            System.out.println(i + "-" + possibleUsers.get(i));
+            System.out.println(i + ". " + possibleUsers.get(i));
         }
     }
 
@@ -27,7 +27,7 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
     public void displayPossibleUnfreeze(List<String> possibleUsers) {
         System.out.println("These users have requested to be unfrozen:");
         for (int i = 0; i < possibleUsers.size(); i++) {
-            System.out.println(i + "-" + possibleUsers.get(i));
+            System.out.println(i + ". " + possibleUsers.get(i));
         }
     }
 

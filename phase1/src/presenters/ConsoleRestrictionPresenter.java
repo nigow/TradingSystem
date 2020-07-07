@@ -16,7 +16,7 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter{
         Scanner input = new Scanner(System.in);
         System.out.println("Choose an option to do:");
         for (int i = 0; i < restrictionOptions.size(); i++) {
-            System.out.println(i + "-" + restrictionOptions.get(i));
+            System.out.println(i + ". " + restrictionOptions.get(i));
         }
         return input.nextLine();
     }

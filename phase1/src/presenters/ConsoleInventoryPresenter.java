@@ -15,7 +15,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
         Scanner input = new Scanner(System.in);
         System.out.println("Choose an option to do:");
         for (int i = 0; i < InventoryOptions.size(); i++) {
-            System.out.println(i + "-" + InventoryOptions.get(i));
+            System.out.println(i + ". " + InventoryOptions.get(i));
         }
         return input.nextLine();
     }

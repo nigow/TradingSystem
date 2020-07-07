@@ -18,7 +18,7 @@ public class ConsoleHomePresenter implements HomePresenter {
         Scanner input = new Scanner(System.in);
         System.out.println("Which action would you like to do?");
         for (int i = 0; i < homeOptions.size(); i++) {
-            System.out.println(i + "-" + homeOptions.get(i));
+            System.out.println(i + ". " + homeOptions.get(i));
         }
         return input.nextLine();
     }

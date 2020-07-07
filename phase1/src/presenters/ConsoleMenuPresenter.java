@@ -16,7 +16,7 @@ public class ConsoleMenuPresenter implements MenuPresenter{
         Scanner input = new Scanner(System.in);
         System.out.println("Which action would you like to do?");
         for (int i = 0; i < menuOptions.size(); i++) {
-            System.out.println(i + "-" + menuOptions.get(i));
+            System.out.println(i + ". " + menuOptions.get(i));
         }
         return input.nextLine();
     }
