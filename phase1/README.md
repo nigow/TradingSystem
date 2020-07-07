@@ -2,7 +2,7 @@
 
 ## Setting Up the Code
 
-To set up and run the code, follow the [instructions listed here](https://q.utoronto.ca/courses/154572/pages/project-phase-1?module_item_id=1428678). Most importantly, set Phase 1 as your project folder. Ensure that the file ```phase1/out/files/restrictions.csv``` is present (it should already be there). All other necessary files will be generated as the program runs. There is also a .zip file in ```phase1``` with some pre-configured csv files you can use for manual testing. If you wish to use these, you must move these files to ```phase1/out/files```. 
+To set up and run the code, follow the [instructions listed here](https://q.utoronto.ca/courses/154572/pages/project-phase-1?module_item_id=1428678). Most importantly, set Phase 1 as your project folder. Ensure that the file ```phase1/out/files/restrictions.csv``` is present (it should already be there). All other necessary files will be generated as the program runs. There are also 2 .zip files in ```phase1``` with two sets of pre-configured csv files (big and small) you can use for manual testing. If you wish to use these, you must move these files to ```phase1/out/files```. 
 
 There will be a build error in the test files if you do not add the necessary JUnit packages to your path. If you do not wish to add these packages, we have added an option called ```Main (no test)```to change the run configuration to run despite any build errors in the test folder.
 
