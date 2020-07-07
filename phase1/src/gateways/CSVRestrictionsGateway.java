@@ -3,6 +3,7 @@ package gateways;
 import entities.Restrictions;
 
 import java.io.*;
+import java.util.regex.Pattern;
 
 /**
  * A restriction gateway that uses csv files as persistent storage.
@@ -26,38 +27,34 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
      * Constructor for CSVRoleGateway that construct the current restrictions
      * @param filepath the filepath to the csv file
      */
-    public CSVRestrictionsGateway(String filepath) {
+    public CSVRestrictionsGateway(String filepath) throws IOException {
         this.filepath = filepath;
 
-        try{
-            //pre-processing of file reading
-            File f = new File(filepath);
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            String line = br.readLine();
+        //pre-processing of file reading
+        File f = new File(filepath);
+        BufferedReader br = new BufferedReader(new FileReader(f));
+        String line = br.readLine();
 
-            //skip the first row
+        //skip the first row
+        line = br.readLine();
+
+        while(line != null && Pattern.matches("^[0-9]+,[0-9]+,[0-9]+$", line)){
+            //only the second line consists of restrictions separated by commas
+            String[] lineArray = line.split(",");
+            int lendLimit = Integer.parseInt(lineArray[0]);
+            int incompleteTrade = Integer.parseInt(lineArray[1]);
+            int weeklyTrade = Integer.parseInt(lineArray[2]);
+
+            this.currentRestriction = new Restrictions(lendLimit, incompleteTrade, weeklyTrade);
+
             line = br.readLine();
 
-            while(line != null){
-                //only the second line consists of restrictions separated by commas
-                String[] lineArray = line.split(",");
-                int lendLimit = Integer.parseInt(lineArray[0]);
-                int incompleteTrade = Integer.parseInt(lineArray[1]);
-                int weeklyTrade = Integer.parseInt(lineArray[2]);
-
-                this.currentRestriction = new Restrictions(lendLimit, incompleteTrade, weeklyTrade);
-
-
-                line = br.readLine();
-
-            }
-
-            br.close();
-
-        }catch(IOException e){
-            System.out.println("Wrong path given!");
-
         }
+
+        br.close();
+
+        // currentRestriction being null here means file was corrupted
+        if (currentRestriction == null) throw new IOException("Restrictions.csv corrupted.");
     }
 
     /**
