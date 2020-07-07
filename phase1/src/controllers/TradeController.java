@@ -131,16 +131,22 @@ public class TradeController {
     }
 
     private void changeConfirmedTrade() {
-        tradePresenter.showMessage("You have confirmed the meetup for this trade. " +
-                "Has this trade been completed?");
-        String ans = tradePresenter.yesOrNo();
-        if (ans.equals("y")) {
-            tradePresenter.showMessage("You have marked this trade as complete.");
-            tradeManager.updateCompletion(accountManager.getCurrAccountID());
-        } else if (ans.equals("n"))
-            tradePresenter.showMessage("Okay.");
-        else
-            tradePresenter.invalidInput();
+        tradePresenter.showMessage("You have confirmed the time and location for this trade.");
+        if (tradeManager.getDateTime().isBefore(LocalDateTime.now())) {
+            while (true) {
+                tradePresenter.showMessage("Has this trade been completed?");
+                String ans = tradePresenter.yesOrNo();
+                if (ans.equals("y")) {
+                    tradePresenter.showMessage("You have marked this trade as complete.");
+                    tradeManager.updateCompletion(accountManager.getCurrAccountID());
+                    return;
+                } else if (ans.equals("n")) {
+                    tradePresenter.showMessage("Okay.");
+                    return;
+                } else
+                    tradePresenter.invalidInput();
+            }
+        }
     }
 
     private void changeUnconfirmedTrade() {
@@ -161,12 +167,14 @@ public class TradeController {
                 if (0 <= actionInd && actionInd < options.size()) {
                     if (actionInd == 0) {
                         tradeManager.updateStatus(TradeStatus.REJECTED);
+                        tradePresenter.showMessage("You rejected this trade.");
                     } else if (actionInd == 1) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
                         tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
                         }
+                        tradePresenter.showMessage("You confirmed the time and location for this trade.");
                     } else if (actionInd == 2) {
                         changeTradeTimePlace();
                     }
@@ -217,7 +225,7 @@ public class TradeController {
 
             if (dateTime.isAfter(LocalDateTime.now())) {
                 tradeManager.editTimePlace(dateTime, location, accountManager.getCurrAccountID());
-                tradePresenter.showMessage("You have suggested a new meetup");
+                tradePresenter.showMessage("You have suggested a new time and location for this trade.");
                 return;
             }
             tradePresenter.showMessage("You need to choose a date and time in the future.");
