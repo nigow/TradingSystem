@@ -175,6 +175,8 @@ public class TradeController {
                         tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
+                            tradeManager.updateStatus(TradeStatus.CONFIRMED);
+                            tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
                         }
                         tradePresenter.showMessage("You confirmed the time and location for this trade.");
                     } else {
