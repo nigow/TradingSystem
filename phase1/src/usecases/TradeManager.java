@@ -220,31 +220,31 @@ public class TradeManager {
 
         if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
             ans.append("Type: Two-way ");
-            ans.append("Account 1: ").append(username1).append(" Account 2: ").append(username2).append(" ");
+            ans.append("\nAccount 1: ").append(username1).append("\nAccount 2: ");
         }
         else {
             ans.append("Type: One-way ");
             if (trade.getItemOneIDs().size() > 0) {
-                ans.append("Borrower: ").append(username2).append(" Lender: ").append(username1).append(" "); //I swapped user1 and user2 (Tairi)
+                ans.append("\nBorrower: ").append(username2).append("\nLender: "); //I swapped user1 and user2 (Tairi)
             }
             else {
-                ans.append("Borrower: ").append(username1).append(" Lender ").append(username2).append(" "); //I swapped user1 and user2 (Tairi)
+                ans.append("\nBorrower: ").append(username1).append("\nLender: "); //I swapped user1 and user2 (Tairi)
             }
 
         }
-        ans.append("Status: ").append(trade.getStatus().toString()).append(" ");
-        ans.append("Type: ");
+        ans.append("\nStatus: ").append(trade.getStatus().toString()).append(" ");
+        ans.append("\nType: ");
         ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
-        ans.append("Location: ").append(timePlace.getPlace()).append(" ");
-        ans.append("Time: ").append(timePlace.getTime()).append(" ");
-        ans.append("Trader 1 Items: ");
+        ans.append("\nLocation: ").append(timePlace.getPlace()).append(" ");
+        ans.append("\nTime: ").append(timePlace.getTime()).append(" ");
+        ans.append("\nTrader 1 Items: ");
         String separator = "";
         for (Integer tradeId : trade.getItemOneIDs()) {
             ans.append(separator).append(itemManager.getItemById(tradeId).toString());
             separator = ", ";
         }
         separator = "";
-        ans.append("Trader 2 Items: ");
+        ans.append("\nTrader 2 Items: ");
         for (Integer tradeId : trade.getItemOneIDs()) {
             ans.append(separator).append(itemManager.getItemById(tradeId).toString()).append(", ");
             separator = ", ";

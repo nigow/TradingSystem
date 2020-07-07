@@ -1,6 +1,5 @@
 package entities;
-import java.util.ArrayList;
-import java.util.List;
+
 /** Represents an item
  * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
@@ -86,7 +85,7 @@ public class Item {
 
     /**
      * Get the ownerID of this item
-     * @return
+     * @return ownerID
      */
     public int getOwnerID() {
         return ownerID;
@@ -156,7 +155,8 @@ public class Item {
 //    }
 
     /**
-     * @return a string representation of this object
+     * Creates a string representation of this Item
+     * @return a string representation of this Item object
      */
     @Override
     public String toString() {

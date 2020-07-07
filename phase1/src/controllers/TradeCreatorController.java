@@ -98,7 +98,7 @@ public class TradeCreatorController {
 
             if (controllerInputValidator.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
-            time = tradeCreatorPresenter.getDate();
+            time = tradeCreatorPresenter.getTime();
 
         }
 
