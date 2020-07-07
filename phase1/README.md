@@ -158,7 +158,7 @@ To start a trade, you have two options: trading with a specific user, or trading
 
 #### Trading With a Specific User
 
-To trade with a specific user, choose ```Initiate a trade with a specific account``` from the main menu. This option is unavailable if you do not own items or your account is frozen:
+To trade with a specific user, choose ```Initiate a trade with a specific account``` from the main menu. This option is unavailable if you do not own items, you have surpassed the weekly threshold for trades, or your account is frozen:
 
 ```latex
 Which action would you like to do?
@@ -276,7 +276,7 @@ Which action would you like to do?
 
 ### Changing the Global Restriction Values
 
-By default, an account is eligible for freezing if it borrows **0** or more times than it lends, if it has **5** or more incomplete trades, or if they've traded more than **10** times in a week. These values can be changed in ```Modify the restriction values of the program```:
+By default, you can cannot make a one-way trade where you are borrowing unless you've lent **0** or more items than you've borrowed, you become eligible for freezing if you have more than **5** incomplete trades, and you cannot make more than **10** trades in a week. These values can be changed in ```Modify the restriction values of the program```:
 
 ```latex
 Which action would you like to do?
