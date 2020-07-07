@@ -244,7 +244,7 @@ public class AuthManager {
         return isFrozen(account) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
 
-    // TODO quick fix but having adminAccount as input is sketch af  -maryam
+    // TODO: quick fix but having adminAccount as input is sketch  -maryam
     /**
      * Determines whether a given account should be frozen
      *
