@@ -33,7 +33,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
         //pre-processing of file reading
         File f = new File(filepath);
         BufferedReader br = new BufferedReader(new FileReader(f));
-        String line = br.readLine();
+        String line;
 
         //skip the first row
         line = br.readLine();

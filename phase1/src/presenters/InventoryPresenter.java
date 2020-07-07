@@ -66,7 +66,7 @@ public interface InventoryPresenter {
     void invalidInput();
 
     /**
-     * tells user that they've successfuly aborted their choice
+     * tells user that they've successfully aborted their choice
      */
     void abortMessage();
 

@@ -122,7 +122,7 @@ public class CSVItemsGateway implements ItemsGateway {
         int id = Integer.parseInt(data[0]);
         String name = data[1];
         String description = data[2];
-        boolean isApproved = Boolean.valueOf(data[3]);
+        boolean isApproved = Boolean.parseBoolean(data[3]);
         int ownerID = Integer.parseInt(data[4]);
         Item item = new Item(id, name, description, ownerID);
 
