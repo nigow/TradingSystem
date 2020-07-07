@@ -199,6 +199,7 @@ From there, you'll be shown a list of items in your wishlist. Enter the number t
 
 After you create a trade, you'll have to choose if it's a one-way or two-way trade, if it's permanent or temporary, and the time, date, and place. If a trade is temporary, another trade will take place at the same location, exactly 30 days after the first trade. Also, you cannot set a time for a trade that is earlier than the current time.
 
+After the date of a confirmed date has passed, you can go back and mark the trade as completed. Once both people have marked the trade as completed, it will no longer count towards your number of incomplete trades. 
 ### Managing Trades in Progress
 
 To check on all your trades, go to the main menu and choose ```Manage your existing trades```: 
@@ -341,6 +342,7 @@ Which action would you like to do?
 - The location of your meetup cannot include commas
 - You cannot confirm a trade that has a current meet up time that has already passed
 - You cannot edit a trade's time to be in the past
+- Once you've received an item from a trade, you can use it for other trades. It is your responsibility to ensure that you do not give away items that aren't yours
 - When viewing your top 3 items in recent trades, we only show items you gave away
 - We do not support negative numbers when restricting (as per the specifications)
 - Accounts don't automatically get frozen/unfrozen, and admin has to login and do this manually
