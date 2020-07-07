@@ -219,11 +219,11 @@ public class TradeManager {
                 trade.getTraderTwoID()).getUsername();
 
         if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
-            ans.append("\nType: Two-way ");
+            ans.append("Type: Two-way ");
             ans.append("\nAccount 1: ").append(username1).append("\nAccount 2: ");
         }
         else {
-            ans.append("\nType: One-way ");
+            ans.append("Type: One-way ");
             if (trade.getItemOneIDs().size() > 0) {
                 ans.append("\nBorrower: ").append(username2).append("\nLender: "); //I swapped user1 and user2 (Tairi)
             }
@@ -234,7 +234,7 @@ public class TradeManager {
         }
         ans.append("\nStatus: ").append(trade.getStatus().toString()).append(" ");
         ans.append("\nType: ");
-        ans.append(trade.isPermanent() ? "\nPermanent " : "\nTemporary ");
+        ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
         ans.append("\nLocation: ").append(timePlace.getPlace()).append(" ");
         ans.append("\nTime: ").append(timePlace.getTime()).append(" ");
         ans.append("\nTrader 1 Items: ");
