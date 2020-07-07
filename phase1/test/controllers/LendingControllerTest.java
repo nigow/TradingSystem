@@ -80,7 +80,7 @@ public class LendingControllerTest {
 
             @Override
             public String getLocation() {
-                return null;
+                return "UTM";
             }
 
             @Override
@@ -168,7 +168,7 @@ public class LendingControllerTest {
 
         LendingController lendingController = new LendingController(lendingPresenter, manualConfig, new ConsoleTradeCreatorPresenter());
         lendingController.run();
-        assert(tradeManager.getAllTrades().isEmpty() == true);
+        assert(tradeManager.getAllTrades().isEmpty());
     }
 
 
