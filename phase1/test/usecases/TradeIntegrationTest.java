@@ -55,9 +55,13 @@ public class TradeIntegrationTest extends TestCase {
         HashMap<Integer, Account> h = new HashMap<>();
         h.put(0, initial);
 
+
         AccountGateway accountGateway = new InMemoryAccountGateway(h);
 
         accountManager = new AccountManager(accountGateway);
+        for (int i = 0; i < 100; i++) {
+            accountManager.createStandardAccount("User" + i, "Password");
+        }
         assertTrue(accountManager.setCurrAccount("admin"));
         return accountManager;
 
@@ -105,6 +109,8 @@ public class TradeIntegrationTest extends TestCase {
         items2.add(201);
         LocalDateTime time = LocalDateTime.now();
         accountManager = setUpAccount();
+        System.out.println(accountManager.getCurrAccount());
+
         tradeManager.createTrade(time, "UTM", false, 12, 13,
                 items1, items2, accountManager);
         assertEquals(tradeManager.getAllTrades().size(), 2);
