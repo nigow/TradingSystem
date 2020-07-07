@@ -17,8 +17,6 @@ import java.util.List;
  */
 public class MenuFacade {
 
-    // TODO: javadoc, but since it's private it's not a priority
-
     /**
      * An instance of AuthManager to access a user's permissions.
      */
