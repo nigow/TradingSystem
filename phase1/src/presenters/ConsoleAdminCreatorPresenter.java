@@ -11,16 +11,20 @@ public class ConsoleAdminCreatorPresenter implements AdminCreatorPresenter {
      * {@inheritDoc}
      */
     @Override
-    public String[] createAdmin() {
-        String[] adminInfo = new String[2];
+    public String createAdminUsername() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter your desired username:");
-        adminInfo[0] = input.nextLine();
-        System.out.println("Enter your desired password:");
-        adminInfo[1] = input.nextLine();
-        return adminInfo;
+        System.out.println("Enter \"-1\" to go back.");
+        return input.nextLine();
     }
 
+    @Override
+    public String createAdminPassword() {
+Scanner input = new Scanner(System.in);
+        System.out.println("Enter your desired password:");
+        System.out.println("Enter \"-1\" to go back.");
+        return input.nextLine();
+    }
     @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
