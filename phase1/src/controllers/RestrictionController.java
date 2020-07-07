@@ -27,9 +27,7 @@ public class RestrictionController {
         options.add("Maximum number of incomplete trades");
         options.add("Maximum number of weekly trades");
         options.add("Return to main menu");
-        boolean isValidInput = false;
-        while (!isValidInput) {
-            isValidInput = true;
+        while (true) {
             String action =  restrictionPresenter.displayRestrictionOptions(options);
             switch (action) {
                 case "0":
@@ -45,7 +43,6 @@ public class RestrictionController {
                     return;
                 default:
                     restrictionPresenter.invalidInput();
-                    isValidInput = false;
                     break;
             }
         }
