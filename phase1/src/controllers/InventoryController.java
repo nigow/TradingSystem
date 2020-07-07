@@ -173,6 +173,7 @@ public class InventoryController {
             if (!nameGiven) {
                 name = inventoryPresenter.askName();
                 if (controllerInputValidator.isExitStr(name)) {
+                    inventoryPresenter.abortMessage();
                     exit = true;
                 } else if (!controllerInputValidator.isValidCSVStr(name)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item name");
@@ -182,6 +183,7 @@ public class InventoryController {
             } else if (!descriptionGiven) {
                 description = inventoryPresenter.askDescription();
                 if (controllerInputValidator.isExitStr(description)) {
+                    inventoryPresenter.abortMessage();
                     exit = true;
                 } else if (!controllerInputValidator.isValidCSVStr(description)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item description");
@@ -191,6 +193,7 @@ public class InventoryController {
             } else {
                 String confirm = inventoryPresenter.confirmItem(name, description);
                 if (controllerInputValidator.isExitStr(confirm)) {
+                    inventoryPresenter.abortMessage();
                     exit = true;
                 } else if (confirm.equals("n")) {
                     inventoryPresenter.customMessage("Item not added.");
@@ -216,6 +219,7 @@ public class InventoryController {
         while (!isValid) {
             String option = inventoryPresenter.addToWishlist();
             if (controllerInputValidator.isExitStr(option)) {
+                inventoryPresenter.abortMessage();
                 isValid = true;
             } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
@@ -246,6 +250,7 @@ public class InventoryController {
         while (!isValid) {
             String option = inventoryPresenter.removeFromInventory();
             if (controllerInputValidator.isExitStr(option)) {
+                inventoryPresenter.abortMessage();
                 isValid = true;
             } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
@@ -276,6 +281,7 @@ public class InventoryController {
         while (!isValid) {
             String option = inventoryPresenter.approveItem();
             if (controllerInputValidator.isExitStr(option)) {
+                inventoryPresenter.abortMessage();
                 isValid = true;
             } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
