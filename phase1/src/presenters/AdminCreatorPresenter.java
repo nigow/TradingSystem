@@ -1,28 +1,28 @@
 package presenters;
 
 /**
- * interface for the presenter handling the log-in of admin
+ * Interface for handling the log-in of admin.
  *
  * @author Catherine
  */
 
 public interface AdminCreatorPresenter {
     /**
-     * creates admin username
+     * Creates admin username.
      *
      * @return username
      */
     String createAdminUsername();
 
     /**
-     * create admin password
+     * Create admin password.
      *
      * @return password
      */
     String createAdminPassword();
 
     /**
-     * presents the user with a custom message
+     * Presents the user with a custom message.
      */
     void showMessage(String message);
 }

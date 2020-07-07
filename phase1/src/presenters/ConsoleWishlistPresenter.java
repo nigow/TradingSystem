@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Console presenter for {@link controllers.WishlistController}.
+ * Console presenter for managing the wishlist and starting trades.
  */
 public class ConsoleWishlistPresenter implements WishlistPresenter {
 

@@ -3,13 +3,13 @@ package presenters;
 import java.util.List;
 
 /**
- * interface that logs user in and creates accounts
+ * Interface for logging an user in and creating accounts.
  *
  * @author Catherine
  */
 public interface HomePresenter {
     /**
-     * displays possible actions
+     * Displays possible actions for logging in or creating accounts.
      *
      * @param homeOptions possible actions user can choose from
      * @return index of chosen action
@@ -17,40 +17,40 @@ public interface HomePresenter {
     String displayHomeOptions(List<String> homeOptions);
 
     /**
-     * gets user's username
+     * Gets user's username.
      *
-     * @return username
+     * @return username of Account
      */
     String logInUsername();
 
     /**
-     * gets user's password
+     * Gets user's password.
      *
-     * @return password
+     * @return password of Account
      */
     String logInPassword();
 
     /**
-     * gets desired account username
+     * Gets desired account username.
      *
      * @return username
      */
     String newAccountUsername();
 
     /**
-     * gets desired account password
+     * Gets desired account password.
      *
      * @return password
      */
     String newAccountPassword();
 
     /**
-     * tells user that their input was invalid
+     * Tells user that their input was invalid.
      */
     void invalidInput();
 
     /**
-     * displays a custom message to the user
+     * Displays a custom message to the user.
      *
      * @param message a custom message for the user
      */

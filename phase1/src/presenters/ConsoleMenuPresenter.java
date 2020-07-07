@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.List;
 
 /**
- * presenter that lets user choose what they want to do in their account
+ * Console presenter for letting users choose what they want to do in their account.
  *
  * @author Catherine
  */

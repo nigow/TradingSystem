@@ -1,13 +1,13 @@
 package presenters;
 
 /**
- * interface to request appeal to be unfrozen
+ * Interface for appealing to be unfrozen.
  *
  * @author Catherine
  */
 public interface AppealPresenter {
     /**
-     * lets user know their request has been received
+     * Lets user know their request has been received.
      */
     void displaySuccessfulAppeal();
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * presenter for admins handling changes of restrictions
+ * Console presenter for admin handling of changes to restrictions.
  *
  * @author Catherine
  */

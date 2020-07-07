@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * A console presenter for displaying trades and related options.
+ * Console presenter for displaying trades and related options.
  *
  * @author Maryam
  */

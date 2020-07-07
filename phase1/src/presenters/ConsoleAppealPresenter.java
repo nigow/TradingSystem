@@ -1,7 +1,7 @@
 package presenters;
 
 /**
- * presenter that lets user
+ * Console presenter for letting user appeal to be unfrozen.
  */
 public class ConsoleAppealPresenter implements AppealPresenter {
     /**

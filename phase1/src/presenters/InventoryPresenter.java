@@ -3,13 +3,13 @@ package presenters;
 import java.util.List;
 
 /**
- * interface for the inventory that can create changes to the wishlist
+ * Interface for changing inventory and adding to wishlist.
  *
  * @author Catherine
  */
 public interface InventoryPresenter {
     /**
-     * displays possible actions
+     * Displays possible actions for dealing with inventory.
      *
      * @param InventoryOptions possible actions user can choose from
      * @return index of chosen action
@@ -17,14 +17,14 @@ public interface InventoryPresenter {
     String displayInventoryOptions(List<String> InventoryOptions);
 
     /**
-     * displays inventory
+     * Displays inventory.
      *
      * @param inventory list of inventory item
      */
     void displayInventory(List<String> inventory);
 
     /**
-     * add to wishlist
+     * Add to wishlist.
      *
      * @return indexes of items that user would like to add to the wishlist
      */
@@ -32,21 +32,21 @@ public interface InventoryPresenter {
     String addToWishlist();
 
     /**
-     * ask user what they want to name their item
+     * Asks user what they want to name their item.
      *
      * @return the Name of the Item the user wishes to create
      */
     String askName();
 
     /**
-     * ask user for their item's description
+     * Asks user for their item's description.
      *
      * @return the Description of the Item the user wishes to create
      */
     String askDescription();
 
     /**
-     * ask user to confirm their item
+     * Ask user to confirm their item.
      *
      * @param name        The name that the user has given
      * @param description the description that the user has given
@@ -55,7 +55,7 @@ public interface InventoryPresenter {
     String confirmItem(String name, String description);
 
     /**
-     * remove from inventory
+     * Remove an item from inventory.
      *
      * @return indexes of item that user would like removed from inventory
      */
@@ -63,24 +63,24 @@ public interface InventoryPresenter {
 
 
     /**
-     * approve chosen items
+     * Approve chosen item.
      *
      * @return indexes of item that can be approved
      */
     String approveItem();
 
     /**
-     * tells user that their input was invalid
+     * Tells user that their input was invalid.
      */
     void invalidInput();
 
     /**
-     * tells user that they've successfully aborted their choice
+     * Tells user that they've successfully aborted their choice.
      */
     void abortMessage();
 
     /**
-     * sends a customizable message to the user
+     * Sends a customizable message to the user.
      *
      * @param message the message that will be printed to the user
      */

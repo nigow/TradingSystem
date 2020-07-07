@@ -3,13 +3,13 @@ package presenters;
 import java.util.List;
 
 /**
- * interface used by administrator to freeze and unfreeze account
+ * Interface for freezing and unfreezing account.
  *
  * @author Catherine
  */
 public interface FreezingPresenter {
     /**
-     * displays possible actions
+     * Displays possible actions for freezing accounts.
      *
      * @param freezingOptions possible actions user can choose from
      * @return index of chosen item
@@ -17,40 +17,40 @@ public interface FreezingPresenter {
     String displayFreezingOptions(List<String> freezingOptions);
 
     /**
-     * displays list of users that should be frozen
+     * Displays list of users that should be frozen.
      *
      * @param possibleUsers list of usernames that should be frozen
      */
     void displayPossibleFreeze(List<String> possibleUsers);
 
     /**
-     * displays list of users that requests to be unfrozen
+     * Displays list of users that requests to be unfrozen.
      *
      * @param possibleUsers list of usernames that have requested to be unfrozen
      */
     void displayPossibleUnfreeze(List<String> possibleUsers);
 
     /**
-     * freezes chosen users
+     * Freezes chosen users.
      *
      * @return indexes of users to freeze
      */
     String freeze();
 
     /**
-     * unfreezes chosen users
+     * Unfreezes chosen users.
      *
-     * @return indexes of suers to unfreeze
+     * @return indexes of users to unfreeze
      */
     String unfreeze();
 
     /**
-     * tells user that their input was invalid
+     * Tells user that their input was invalid.
      */
     void invalidInput();
 
     /**
-     * presents the user with a custom message
+     * Presents the user with a custom message.
      */
     void showMessage(String message);
 

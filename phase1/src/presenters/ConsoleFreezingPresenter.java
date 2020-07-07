@@ -3,6 +3,9 @@ package presenters;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Console presenter for freezing and unfreezing an account.
+ */
 public class ConsoleFreezingPresenter implements FreezingPresenter {
 
     /**

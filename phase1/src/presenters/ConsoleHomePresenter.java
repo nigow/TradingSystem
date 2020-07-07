@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.List;
 
 /**
- * presenter that allows user to create new account or log in
+ * Console presenter for allowing an user to create new account or login.
  *
  * @author Catherine
  */

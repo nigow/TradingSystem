@@ -3,7 +3,7 @@ package presenters;
 import java.util.Scanner;
 
 /**
- * presenter that lets an admin create an account
+ * Console presenter for letting an admin create an account.
  *
  * @author Catherine
  */

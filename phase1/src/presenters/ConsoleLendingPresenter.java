@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Presenter to provide lending services on CUI
+ * Console presenter for providing lending services on GUI.
  *
  * @author Tairi
  */

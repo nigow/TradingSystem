@@ -3,14 +3,14 @@ package presenters;
 import java.util.List;
 
 /**
- * interface for suggesting a time and place for a new trade
+ * Interface for suggesting a time and place for a new trade.
  *
  * @author Catherine
  */
 public interface TradeCreatorPresenter {
 
     /**
-     * tells user that their input was invalid
+     * Tells user that their input was invalid.
      */
     void invalidInput();
 

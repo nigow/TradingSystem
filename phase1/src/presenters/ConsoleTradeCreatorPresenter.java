@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Console presenter for {@link controllers.TradeCreatorController}.
+ * Console presenter for suggesting a time and place for a new trade.
  */
 public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
 
