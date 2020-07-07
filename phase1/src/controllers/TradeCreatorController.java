@@ -124,8 +124,8 @@ public class TradeCreatorController {
 
     private boolean setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
 
-        String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getUsernameFromID(traderTwoId) :
-                accountManager.getCurrAccountUsername();
+        String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getCurrAccountUsername() :
+                accountManager.getUsernameFromID(traderTwoId);
 
         List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getApprovedInventoryOfAccountString(traderOneId) :
                 itemUtility.getApprovedInventoryOfAccountString(traderTwoId);
