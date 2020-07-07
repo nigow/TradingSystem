@@ -292,7 +292,9 @@ public class TradeUtility {
         accountManager.setCurrAccount(account.getUsername());
     }
 
-    // TODO bad bad bad stuff with .setCurrAccount; do not use this method  -maryam
+    // TODO bad bad bad stuff with .setCurrAccount. also buggy because
+    //  back we don't know which user's wishlist to change back.
+    //  do not use for now.  -maryam
     /**
      * Completes the action of reversing a trade which was rejected
      *
