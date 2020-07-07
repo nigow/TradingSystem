@@ -109,8 +109,9 @@ public class FreezingUtility {
      */
     public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account, Account adminAccount){
         if (authManager.canBeFrozen(tradeUtility, account, adminAccount)){
-            return authManager.removePermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)))
-                    && authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
+            return authManager.removePermissionsByIDs(account,
+                    new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND))) &&
+                    authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
         }
         return false;
     }
@@ -123,7 +124,9 @@ public class FreezingUtility {
      */
     public boolean unfreezeAccount(AuthManager authManager, Account account){
         if (authManager.isPending(account)){
-            return authManager.addPermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)));
+            return authManager.addPermissionsByIDs(account,
+                    new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND))) &&
+                    authManager.removePermissionByID(account, Permissions.REQUEST_UNFREEZE);
         }
         return false;
     }
