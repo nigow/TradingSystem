@@ -26,38 +26,35 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
      * Constructor for CSVRoleGateway that construct the current restrictions
      * @param filepath the filepath to the csv file
      */
-    public CSVRestrictionsGateway(String filepath) {
+    public CSVRestrictionsGateway(String filepath) throws IOException {
         this.filepath = filepath;
 
-        try{
-            //pre-processing of file reading
-            File f = new File(filepath);
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            String line = br.readLine();
 
-            //skip the first row
+        //pre-processing of file reading
+        File f = new File(filepath);
+        BufferedReader br = new BufferedReader(new FileReader(f));
+        String line = br.readLine();
+
+        //skip the first row
+        line = br.readLine();
+
+        while(line != null){
+            //only the second line consists of restrictions separated by commas
+            String[] lineArray = line.split(",");
+            int lendLimit = Integer.parseInt(lineArray[0]);
+            int incompleteTrade = Integer.parseInt(lineArray[1]);
+            int weeklyTrade = Integer.parseInt(lineArray[2]);
+
+            this.currentRestriction = new Restrictions(lendLimit, incompleteTrade, weeklyTrade);
+
+
             line = br.readLine();
 
-            while(line != null){
-                //only the second line consists of restrictions separated by commas
-                String[] lineArray = line.split(",");
-                int lendLimit = Integer.parseInt(lineArray[0]);
-                int incompleteTrade = Integer.parseInt(lineArray[1]);
-                int weeklyTrade = Integer.parseInt(lineArray[2]);
-
-                this.currentRestriction = new Restrictions(lendLimit, incompleteTrade, weeklyTrade);
-
-
-                line = br.readLine();
-
-            }
-
-            br.close();
-
-        }catch(IOException e){
-            System.out.println("Wrong path given!");
-
         }
+
+        br.close();
+
+
     }
 
     /**

@@ -23,43 +23,40 @@ public class CSVItemsGateway implements ItemsGateway {
      * Constructor for CSVItemsGateway that sets the filepath of the csv file
      * @param filepath the filepath of the csv file
      */
-    public CSVItemsGateway(String filepath){
+    public CSVItemsGateway(String filepath) throws IOException {
         //setting attributes
         this.filepath = filepath;
         this.itemMap = new HashMap<>();
 
-        try {
-            File f = new File(filepath);
 
-            //Set the header row if the csv is empty
-            if(f.length() == 0){
-                save();
+        File f = new File(filepath);
 
-            }else{
-                //pre-processing the file reading system
-                BufferedReader br = new BufferedReader(new FileReader(f));
-                br.readLine();
-                String line;
+        //Set the header row if the csv is empty
+        if(f.length() == 0){
 
-                //skip the first line
-                line = br.readLine();
+            if (!save()) throw new IOException();
 
-                //read the csv file, and create items corresponding the lines
-                while(line != null){
-                    if (!line.equals("")){
-                        String[] data = line.split(",");
-                        int id = Integer.parseInt(data[0]);
-                        Item item = createItem(data);
-                        itemMap.put(id, item);
-                    }
+        }else{
+            //pre-processing the file reading system
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            br.readLine();
+            String line;
 
-                    line = br.readLine();
+            //skip the first line
+            line = br.readLine();
+
+            //read the csv file, and create items corresponding the lines
+            while(line != null){
+                if (!line.equals("")){
+                    String[] data = line.split(",");
+                    int id = Integer.parseInt(data[0]);
+                    Item item = createItem(data);
+                    itemMap.put(id, item);
                 }
-                br.close();
-            }
 
-        }catch(IOException e){
-            System.out.println("A wrong file path given");
+                line = br.readLine();
+            }
+            br.close();
         }
 
     }
