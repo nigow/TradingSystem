@@ -50,7 +50,7 @@ public class WishlistControllerTest {
     public void tearDown() throws Exception {
     }
 
-    @Test
+    @Test(timeout = 50)
     public void startTrade() {
 
         WishlistPresenter wishlistPresenter = new WishlistPresenter() {
