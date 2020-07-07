@@ -169,8 +169,11 @@ public class TradeUtility {
         Collections.sort(AllTwoWay);
         for (TimePlace tp : AllTwoWay) {
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
-            allTwoWayItems.addAll(trade.getItemOneIDs());
-            allTwoWayItems.addAll(trade.getItemTwoIDs());
+            if (account.getAccountID() == trade.getTraderOneID()) {
+                allTwoWayItems.addAll(trade.getItemOneIDs());
+            } else {
+                allTwoWayItems.addAll(trade.getItemTwoIDs());
+            }
         }
         int count = 0;
         for (Integer tradeId : allTwoWayItems) {
