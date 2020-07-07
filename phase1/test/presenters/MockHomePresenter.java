@@ -44,6 +44,6 @@ public class MockHomePresenter implements HomePresenter {
 
     @Override
     public void showMessage(String message) {
-        //pass
+        // pass
     }
 }

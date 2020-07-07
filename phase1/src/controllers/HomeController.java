@@ -92,7 +92,8 @@ public class HomeController {
             String password = homePresenter.logInPassword();
             if (controllerInputValidator.isExitStr(password))
                 return;
-            if (authManager.authenticateLogin(username, password)) {
+            if (controllerInputValidator.isValidUserPass(username, password) &&
+                    authManager.authenticateLogin(username, password)) {
                 accountManager.setCurrAccount(username);
                 menuFacade.run();
                 return;
@@ -113,11 +114,15 @@ public class HomeController {
             String password = homePresenter.newAccountPassword();
             if (controllerInputValidator.isExitStr(password))
                 return;
-            if (accountManager.createStandardAccount(username, password)) {
-                menuFacade.run();
-                return;
-            } else
-                homePresenter.showMessage("You cannot register with that username.");
+            if (!controllerInputValidator.isValidUserPass(username, password))
+                homePresenter.showMessage("The characters in that username and password are illegal.");
+            else {
+                if (accountManager.createStandardAccount(username, password)) {
+                    menuFacade.run();
+                    return;
+                } else
+                    homePresenter.showMessage("That username is taken.");
+            }
         }
     }
 }
