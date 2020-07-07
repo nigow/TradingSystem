@@ -83,13 +83,13 @@ public class LendingController {
         while (flag) {
             temp_index = lendingPresenter.selectAccount();
             if (validator.isExitStr(temp_index)) {
-                lendingPresenter.abort();
+                abort();
                 return -1;
             } else if (!validator.isNum(temp_index)) {
-                lendingPresenter.invalidInput();
+                invalidInput();
             } else {
                 int index = Integer.parseInt(temp_index);
-                if (index >= allAccounts.size()) lendingPresenter.invalidInput();
+                if (index >= allAccounts.size()) invalidInput();
                 else flag = false;
             }
         }
@@ -118,17 +118,25 @@ public class LendingController {
         while (flag) {
             temp_index = lendingPresenter.selectItem();
             if (validator.isExitStr(temp_index)) {
-                lendingPresenter.abort();
+                abort();
                 return -1;
             } else if (!validator.isNum(temp_index)) {
-                lendingPresenter.invalidInput();
+                invalidInput();
             } else {
                 int index = Integer.parseInt(temp_index);
-                if (index >= myItems.size()) lendingPresenter.invalidInput();
+                if (index >= myItems.size()) invalidInput();
                 else flag = false;
             }
         }
         return itemManager.getItemId(myItems.get(Integer.parseInt(temp_index)));
+    }
+
+    private void invalidInput(){
+        lendingPresenter.customMessage("Invalid input. Please try again.");
+    }
+
+    private void abort(){
+        lendingPresenter.customMessage("Cancellation succeeded.");
     }
 
     /**

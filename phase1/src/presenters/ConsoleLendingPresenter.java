@@ -48,6 +48,11 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         return input.next();
     }
 
+    @Override
+    public void customMessage(String message) {
+        System.out.println(message);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -62,19 +67,7 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void invalidInput() {
-        System.out.println("Your input was invalid. Please try again with a valid number listed");
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void abort() {
-        System.out.println("Abort");
-    }
+
+
 }

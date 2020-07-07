@@ -36,12 +36,7 @@ public interface LendingPresenter {
     String selectItem();
 
     /**
-     * Let user know that the input is invalid
+     * Send a message to the user
      */
-    void invalidInput();
-
-    /**
-     * Let user know that the lending is cancelled
-     */
-    void abort();
+    void customMessage(String message);
 }
