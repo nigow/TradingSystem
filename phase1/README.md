@@ -230,6 +230,20 @@ You'll be shown a list of the trades that you can edit. If you were not the last
 
 Once a temporary trade has been confirmed by both parties, a new permanent trade will be created to signify returning the item back to its original owner. The default time and location of the return trade is exactly 30 days after the original trade at the same location, but it can be edited. 
 
+#### Viewing Your Previous Trade Information
+
+In ```Manage your existing trades```, you can also view all your previous trades (```view all trades```), view the last 3 items you've given away in two-way trades and one way trades (```View items given away in recent two-way trades``` and ```View items given away in recent one-way trades```, respectively), and view your most frequent trading partners (```View your most frequent trading partners```):
+
+```latex
+Choose one of the following options: 
+0. View your trades                                <-----
+1. Select a trade to edit 
+2. View items given away in recent two-way trades  <-----
+3. View items given away in recent one-way trades  <-----
+4. View your most frequent trading partners        <-----
+5. Return to previous menu
+```
+
 ### Request to be Unfrozen
 
 If a user has been frozen, ```Request to be unfrozen``` will appear on their main menu: 
@@ -331,6 +345,7 @@ Which action would you like to do?
 - We do not support negative numbers when restricting (as per the specifications)
 - Accounts don't automatically get frozen/unfrozen, and admin has to login and do this manually
 - The global action to abort an action is "-1"
+- Do not have the .csv files open in excel while you're running the program
 
 ## Authors
 
