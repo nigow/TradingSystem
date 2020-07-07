@@ -321,14 +321,15 @@ Which action would you like to do?
 
 ## Extra Notes
 
-- You cannot edit a trade's time to be in the past
-- You cannot accept a trade that has a current meet up time that has already passed
+- Your username is restricted to the following characters: a-z, A-Z, 0-9, _
+- Your password cannot be empty, contain a space, -, ~, or comma
 - Your items' names and descriptions cannot include commas
 - The location of your meetup cannot include commas
-- Your username is restricted to the following characters: a-z, A-Z, 0-9, _
-- Your password cannot be empty, contain a space, -, ~, or comma.
-- We do not support negative numbers when restricting (as per the specifications)
+- You cannot confirm a trade that has a current meet up time that has already passed
+- You cannot edit a trade's time to be in the past
 - When viewing your top 3 items in recent trades, we only show items you gave away
+- We do not support negative numbers when restricting (as per the specifications)
+- Accounts don't automatically get frozen/unfrozen, and admin has to login and do this manually
 - The global action to abort an action is "-1"
 
 ## Authors
