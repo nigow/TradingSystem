@@ -93,12 +93,9 @@ public class TradeManager {
     /**
      * Initiates a reverse trade
      */
-    public void reverseTrade() {
-        int id = tradeGateway.generateValidId();
-        this.timePlace = new TimePlace(id, timePlace.getTime().plusDays(30), timePlace.getPlace());
-        this.trade = new Trade(id, id, true, trade.getTraderOneID(),
-                trade.getTraderTwoID(), trade.getItemTwoIDs(), trade.getItemOneIDs(), 0);
-        tradeGateway.updateTrade(this.trade, this.timePlace);
+    public void reverseTrade(AccountManager accountManager) {
+        createTrade(timePlace.getTime().plusDays(30), timePlace.getPlace(), true, trade.getTraderOneID(),
+                trade.getTraderTwoID(), trade.getItemTwoIDs(), trade.getItemOneIDs(), accountManager);
     }
 
     /**
