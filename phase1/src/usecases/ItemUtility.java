@@ -93,6 +93,21 @@ public class ItemUtility {
      * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
+    public List<Item> getAllInventoryOfAccount(int accountID) {
+        List<Item> items = new ArrayList<>();
+        for (Item item : itemManager.getAllItems()) {
+            if (item.getOwnerID() == accountID)
+                items.add(item);
+        }
+        return items;
+    }
+
+    /**
+     * Retrieves all approved items for a certain account.
+     *
+     * @param accountID Account ID which the items are retrieved for
+     * @return List of items for account
+     */
     public List<Item> getApprovedInventoryOfAccount(int accountID) {
         List<Item> Items = new ArrayList<>();
         for (Item item : getApproved()) {

@@ -109,8 +109,10 @@ public class MenuFacade {
             options.add("Manage your existing trades");
             method.add(tradeController::run);
 
-            options.add("Browse the inventory");
-            method.add(inventoryController::run);
+            if (authManager.canBrowseInventory(accountManager.getCurrAccount())) {
+                options.add("Browse the inventory");
+                method.add(inventoryController::run);
+            }
 
             options.add("Manage your wishlist");
             method.add(wishlistController::run);

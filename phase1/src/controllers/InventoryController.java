@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import entities.Item;
 import gateways.ManualConfig;
 import presenters.InventoryPresenter;
 import usecases.AuthManager;
@@ -254,8 +255,11 @@ public class InventoryController {
                 isValid = true;
             } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
-                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+//                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
+//                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+                List<Item> items = itemUtility.getAllInventoryOfAccount(accountManager.getCurrAccountID());
+                if (ind < items.size()) {
+                    boolean removed = itemManager.removeItem(items.get(ind));
                     if (removed) {
                         isValid = true;
                         inventoryPresenter.customMessage("Item successfully removed!");
