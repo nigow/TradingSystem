@@ -1,13 +1,13 @@
 package entities;
 
 /**
- * Represents an item
+ * Represents an item.
  *
  * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Item {
     /**
-     * The unique identifier of this item. (cannot be changed)
+     * The unique identifier of this item. (cannot be changed).
      */
     private final int itemID;
 
@@ -26,15 +26,8 @@ public class Item {
      */
     private boolean isApproved;
 
-    /**00
-     * 000
-     * 000
-     * 0
-     *
-     *
-     *
-     * 0
-     * The ID of the owner of this item
+    /**
+     * The ID of the owner of this item.
      */
     private int ownerID;
 
@@ -46,11 +39,12 @@ public class Item {
     /**
      * Creates a new item with the given itemID, name, description, and ownerID.
      * isApproved is set to false by default (items have to be manually approved by an admin).
-     * accountsWithItemInWishlist is empty by default until an account adds the item to their wishlist
+     * accountsWithItemInWishlist is empty by default until an account adds the item to their wishlist.
      *
      * @param itemID      The ID of the item
      * @param name        The name of the item
      * @param description The description of the item
+     * @param ownerID     The ID of the item
      */
     public Item(int itemID, String name, String description, int ownerID) {
         this.itemID = itemID;
@@ -98,7 +92,7 @@ public class Item {
     }
 
     /**
-     * Get the ownerID of this item
+     * Get the ownerID of this item.
      *
      * @return ownerID
      */
@@ -140,14 +134,14 @@ public class Item {
     }
 
     /**
-     * Set the approval status of this item to false
+     * Set the approval status of this item to false.
      */
     public void disapprove() {
         isApproved = false;
     }
 
     /**
-     * Set the owner's ID of this item
+     * Set the owner's ID of this item.
      *
      * @param ownerID (new owner's ID)
      */
@@ -173,7 +167,7 @@ public class Item {
 //    }
 
     /**
-     * Creates a string representation of this Item
+     * Creates a string representation of this item.
      *
      * @return a string representation of this Item object
      */

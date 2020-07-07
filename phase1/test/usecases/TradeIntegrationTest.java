@@ -110,7 +110,7 @@ public class TradeIntegrationTest extends TestCase {
         assertEquals(tradeManager.getAllTrades().size(), 2);
         assertEquals(tradeManager.getAllTrades().get(1).getTraderOneID(), 12);
         assertEquals(tradeManager.getAllTrades().get(1).getItemOneIDs(), items1);
-        tradeManager.reverseTrade();
+        tradeManager.reverseTrade(accountManager);
         assertEquals(tradeManager.getAllTrades().size(), 3);
         assertEquals(tradeManager.getAllTrades().get(2).getTraderOneID(), 12);
         assertEquals(tradeManager.getAllTrades().get(2).getItemOneIDs(), items2);

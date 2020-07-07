@@ -1,7 +1,7 @@
 package entities;
 
 /**
- * Different Permissions an account can have
+ * Different permissions an account can have.
  *
  * @author Michael
  */

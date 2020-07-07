@@ -4,34 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents an item
+ * Represents an account.
  *
  * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Account {
 
     /**
-     * The username of this account (cannot be changed)
+     * The username of this account (cannot be changed).
      */
     private final String username;
 
     /**
-     * The password of this account
+     * The password of this account.
      */
     private String password;
 
     /**
-     * The user's wishlist (stores itemID of the items)
+     * The user's wishlist (stores itemID of the items).
      */
     private final List<Integer> wishlist;
 
     /**
-     * The list of permissions of the user
+     * The list of permissions of the user.
      */
     private final List<Permissions> permissions;
 
     /**
-     * The unique identifier of this account (cannot be changed)
+     * The unique identifier of this account (cannot be changed).
      */
     private final int accountID;
 
@@ -53,7 +53,7 @@ public class Account {
     }
 
     /**
-     * An overloaded constructor
+     * An overloaded constructor.
      * Creates a new account with the given username, password, wishlist, and rolesID.
      *
      * @param username    the name of this account
@@ -68,7 +68,7 @@ public class Account {
     }
 
     /**
-     * Gets the username of the account
+     * Gets the username of the account.
      *
      * @return username
      */
@@ -77,7 +77,7 @@ public class Account {
     }
 
     /**
-     * Returns the password of this account
+     * Returns the password of this account.
      *
      * @return password
      */
@@ -86,7 +86,7 @@ public class Account {
     }
 
     /**
-     * Set a new password
+     * Set a new password.
      *
      * @param password The new password that'll be assigned to this account
      */
@@ -95,7 +95,7 @@ public class Account {
     }
 
     /**
-     * Get the wishlist of this account
+     * Get the wishlist of this account.
      *
      * @return wishlist
      */
@@ -105,7 +105,7 @@ public class Account {
 
 
     /**
-     * Get the accountID of this account
+     * Get the accountID of this account.
      *
      * @return accountID
      */
@@ -114,7 +114,7 @@ public class Account {
     }
 
     /**
-     * Get all permissions that this account has
+     * Get all permissions that this account has.
      *
      * @return permissions
      */
@@ -123,7 +123,7 @@ public class Account {
     }
 
     /**
-     * Add a permission to the list of permissions
+     * Add a permission to the list of permissions.
      *
      * @param permission The new permission that'll be added to this account
      */
@@ -132,7 +132,7 @@ public class Account {
     }
 
     /**
-     * Remove given permission from user's list of permissions
+     * Remove given permission from user's list of permissions.
      *
      * @param permission the permission that should be removed from this account
      * @return true if the permission has been removed
@@ -143,7 +143,7 @@ public class Account {
 
 
     /**
-     * Adds an item to the end of the wishlist
+     * Adds an item to the end of the wishlist.
      *
      * @param itemID The ID of the item to be added to this wishlist
      */
@@ -152,7 +152,7 @@ public class Account {
     }
 
     /**
-     * Remove an item from the wishlist
+     * Remove an item from the wishlist.
      *
      * @param itemID The ID of the item to be removed from this wishlist
      * @return true if the item has been removed
@@ -163,7 +163,7 @@ public class Account {
 
 
     /**
-     * Creates a string representation of this Account
+     * Creates a string representation of this Account.
      *
      * @return A string representation of this Account object
      */

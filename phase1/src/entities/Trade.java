@@ -73,14 +73,14 @@ public class Trade {
     /**
      * Creates a Trade object based on input. The status is set to unconfirmed.
      *
-     * @param id            The ID of this trade.
-     * @param timePlaceID   The ID of a TimePlace object denoting the meetup for this trade.
-     * @param isPermanent   Whether this is a permanent or temporary trade.
-     * @param traderOneID   The ID of the Account of the first person in this trade.
-     * @param traderTwoID   The ID of the Account of the second person in this trade.
-     * @param itemOneIDs    List of IDs of items the first person is trading away.
-     * @param itemTwoIDs    List of IDs of items the second person is trading away.
-     * @param editedCounter Number of times this trade's timeplace has been edited
+     * @param id            The ID of this trade
+     * @param timePlaceID   The ID of a TimePlace object denoting the meetup for this trade
+     * @param isPermanent   Whether this is a permanent or temporary trade
+     * @param traderOneID   The ID of the Account of the first person in this trade
+     * @param traderTwoID   The ID of the Account of the second person in this trade
+     * @param itemOneIDs    List of IDs of items the first person is trading away
+     * @param itemTwoIDs    List of IDs of items the second person is trading away
+     * @param editedCounter Number of times this trade's TimePlace has been edited
      */
     public Trade(int id, int timePlaceID, boolean isPermanent, int traderOneID, int traderTwoID,
                  List<Integer> itemOneIDs, List<Integer> itemTwoIDs, int editedCounter) {
@@ -101,7 +101,7 @@ public class Trade {
     /**
      * Returns the ID of this trade.
      *
-     * @return The ID of this trade.
+     * @return The ID of this trade
      */
     public int getId() {
         return id;
@@ -110,7 +110,7 @@ public class Trade {
     /**
      * Returns the ID of a TimePlace object denoting the meetup for this trade.
      *
-     * @return The ID of a TimePlace object denoting the meetup for this trade.
+     * @return The ID of a TimePlace object denoting the meetup for this trade
      */
     public int getTimePlaceID() {
         return timePlaceID;
@@ -119,7 +119,7 @@ public class Trade {
     /**
      * Returns whether this is a permanent or temporary trade.
      *
-     * @return Whether this is a permanent or temporary trade.
+     * @return Whether this is a permanent or temporary trade
      */
     public boolean isPermanent() {
         return isPermanent;
@@ -128,7 +128,7 @@ public class Trade {
     /**
      * Returns the ID of the account of the first person in this trade.
      *
-     * @return The ID of the Account of the first person in this trade.
+     * @return The ID of the Account of the first person in this trade
      */
     public int getTraderOneID() {
         return traderOneID;
@@ -137,7 +137,7 @@ public class Trade {
     /**
      * Returns the ID of the account of the second person in this trade.
      *
-     * @return The ID of the Account of the second person in this trade.
+     * @return The ID of the Account of the second person in this trade
      */
     public int getTraderTwoID() {
         return traderTwoID;
@@ -146,7 +146,7 @@ public class Trade {
     /**
      * Returns the list of IDs of items the first person is trading away.
      *
-     * @return List of IDs of items the first person is trading away.
+     * @return List of IDs of items the first person is trading away
      */
     public List<Integer> getItemOneIDs() {
         return itemOneIDs;
@@ -155,7 +155,7 @@ public class Trade {
     /**
      * Returns the list of IDs of items the second person is trading away.
      *
-     * @return List of IDs of items the second person is trading away.
+     * @return List of IDs of items the second person is trading away
      */
     public List<Integer> getItemTwoIDs() {
         return itemTwoIDs;
@@ -164,7 +164,7 @@ public class Trade {
     /**
      * Returns the status of this trade.
      *
-     * @return The status of this trade.
+     * @return The status of this trade
      */
     public TradeStatus getStatus() {
         return status;
@@ -173,7 +173,7 @@ public class Trade {
     /**
      * Returns the ID of the person who last suggested a meetup.
      *
-     * @return The ID of the person who last suggested a meetup.
+     * @return The ID of the person who last suggested a meetup
      */
     public int getLastEditorID() {
         return lastEditorID;
@@ -182,7 +182,7 @@ public class Trade {
     /**
      * Returns the number of times a meetup has been suggested.
      *
-     * @return The number of times a meetup has been suggested.
+     * @return The number of times a meetup has been suggested
      */
     public int getEditedCounter() {
         return editedCounter;
@@ -191,7 +191,7 @@ public class Trade {
     /**
      * Changes the meetup time and location for this trade.
      *
-     * @param timePlaceID The new ID of a TimePlace object denoting the meetup for this trade.
+     * @param timePlaceID The new ID of a TimePlace object denoting the meetup for this trade
      */
     public void setTimePlaceID(int timePlaceID) {
         this.timePlaceID = timePlaceID;
@@ -200,7 +200,7 @@ public class Trade {
     /**
      * Sets whether this trade is temporary or permanent.
      *
-     * @param permanent Whether this is a permanent or temporary trade.
+     * @param permanent Whether this is a permanent or temporary trade
      */
     public void setPermanent(boolean permanent) {
         isPermanent = permanent;
@@ -209,7 +209,7 @@ public class Trade {
     /**
      * Changes the status of this trade.
      *
-     * @param status The new status of this trade.
+     * @param status The new status of this trade
      */
     public void setStatus(TradeStatus status) {
         this.status = status;
@@ -218,7 +218,7 @@ public class Trade {
     /**
      * Changes the ID of the last person who suggested a meetup.
      *
-     * @param lastEditorID The ID of the last person who suggested a meetup.
+     * @param lastEditorID The ID of the last person who suggested a meetup
      */
     public void setLastEditorID(int lastEditorID) {
         this.lastEditorID = lastEditorID;
@@ -234,7 +234,7 @@ public class Trade {
     /**
      * Creates a string representation of this trade.
      *
-     * @return A string representation of a Trade object.
+     * @return A string representation of a Trade object
      */
     @Override
     public String toString() {
@@ -253,7 +253,7 @@ public class Trade {
     }
 
     /**
-     * Returns whether trader one marked this trade as complete or not
+     * Returns whether trader one marked this trade as complete or not.
      *
      * @return Whether trader one marked this trade as complete or not
      */
@@ -263,7 +263,7 @@ public class Trade {
 
     /**
      * Sets whether trader one marked this trade as complete or not, and updates the status
-     * of the trade if it should be updated
+     * of the trade if it should be updated.
      *
      * @param traderOneCompleted Whether trader one marked this trade as complete
      */
@@ -275,7 +275,7 @@ public class Trade {
     }
 
     /**
-     * Returns whether trader two marked this trade as complete or not
+     * Returns whether trader two marked this trade as complete or not.
      *
      * @return Whether trader two marked this trade as complete or not
      */
@@ -285,7 +285,7 @@ public class Trade {
 
     /**
      * Sets whether trader two marked this trade as complete or not, and updates the status
-     * of the trade if it should be updated
+     * of the trade if it should be updated.
      *
      * @param traderTwoCompleted Whether trader two marked this trade as complete
      */
