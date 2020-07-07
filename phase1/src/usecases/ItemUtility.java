@@ -7,19 +7,19 @@ import java.util.List;
 
 
 /**
- * Utility class for items to access certain types of items
+ * Utility class for items to access certain types of items.
  *
  * @author Isaac
  */
 public class ItemUtility {
 
     /**
-     * The manager for editing items
+     * The manager for editing items.
      */
     private final ItemManager itemManager;
 
     /**
-     * Constructor for ItemUtility
+     * Constructor for ItemUtility.
      *
      * @param itemManager A manager for editing items
      */
@@ -28,7 +28,7 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all approved items in the system
+     * Retrieves all approved items in the system.
      *
      * @return List of all approved items in the system
      */
@@ -43,7 +43,7 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves a string representation of all approved items in the system
+     * Retrieves a string representation of all approved items in the system.
      *
      * @return List of all approved items in the system in string format
      */
@@ -58,7 +58,7 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all non-approved items in the system
+     * Retrieves all non-approved items in the system.
      *
      * @return List of all non-approved items in the system
      */
@@ -73,7 +73,7 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves a string representation of all non-approved items in the system
+     * Retrieves a string representation of all non-approved items in the system.
      *
      * @return List of all non-approved items in the system in string format
      */
@@ -88,15 +88,15 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all items for a certain account
+     * Retrieves all items for a certain account.
      *
-     * @param accountId the account id which the items are retrieved for
+     * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
-    public List<Item> getApprovedInventoryOfAccount(int accountId) {
+    public List<Item> getApprovedInventoryOfAccount(int accountID) {
         List<Item> Items = new ArrayList<>();
         for (Item item : getApproved()) {
-            if (item.getOwnerID() == accountId) {
+            if (item.getOwnerID() == accountID) {
                 Items.add(item);
             }
         }
@@ -104,15 +104,15 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all items for a certain account in string format
+     * Retrieves all items for a certain account in string format.
      *
-     * @param accountId the account id which the items are retrieved for
+     * @param accountID Account ID which the items are retrieved for
      * @return List of items for account in string format
      */
-    public List<String> getApprovedInventoryOfAccountString(int accountId) {
+    public List<String> getApprovedInventoryOfAccountString(int accountID) {
         List<String> Items = new ArrayList<>();
         for (Item item : getApproved()) {
-            if (item.getOwnerID() == accountId) {
+            if (item.getOwnerID() == accountID) {
                 Items.add(item.toString());
             }
         }
@@ -120,15 +120,15 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all items for a certain account
+     * Retrieves all items for a certain account.
      *
-     * @param accountId the account id which the items are retrieved for
+     * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
-    public List<Item> getDisprovedInventoryOfAccount(int accountId) {
+    public List<Item> getDisprovedInventoryOfAccount(int accountID) {
         List<Item> Items = new ArrayList<>();
         for (Item item : getDisapproved()) {
-            if (item.getOwnerID() == accountId) {
+            if (item.getOwnerID() == accountID) {
                 Items.add(item);
             }
         }
@@ -136,15 +136,15 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all items for a certain account in string format
+     * Retrieves all items for a certain account in string format.
      *
-     * @param accountId the account id which the items are retrieved for
+     * @param accountID Account ID which the items are retrieved for
      * @return List of items for account in string format
      */
-    public List<String> getDisprovedInventoryOfAccountString(int accountId) {
+    public List<String> getDisprovedInventoryOfAccountString(int accountID) {
         List<String> Items = new ArrayList<>();
         for (Item item : getDisapproved()) {
-            if (item.getOwnerID() == accountId) {
+            if (item.getOwnerID() == accountID) {
                 Items.add(item.toString());
             }
         }
@@ -152,16 +152,16 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all items not in a certain account/the account's wishlsit
+     * Retrieves all items not in a certain account/the account's wishlist.
      *
-     * @param accountId the account id which the items are not retrieved from
-     * @param currentWishlist the list of itemIDs of items in wishlist of the user
+     * @param accountID Account ID which the items are not retrieved from
+     * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account
      */
-    public List<Item> getNotInAccount(int accountId, List<Integer> currentWishlist) {
+    public List<Item> getNotInAccount(int accountID, List<Integer> currentWishlist) {
         List<Item> Items = new ArrayList<>();
         for (Item item : getApproved()) {
-            if (item.getOwnerID() != accountId && !currentWishlist.contains(item.getItemID())) {
+            if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
                 Items.add(item);
             }
         }
@@ -169,16 +169,16 @@ public class ItemUtility {
     }
 
     /**
-     * Retrieves all items not in a certain account in string format
+     * Retrieves all items not in a certain account in string format.
      *
-     * @param accountId the account id which the items are not retrieved from
-     * @param currentWishlist the list of itemIDs of items in wishlist of the user
+     * @param accountID Account ID which the items are not retrieved from
+     * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account string format
      */
-    public List<String> getNotInAccountString(int accountId, List<Integer> currentWishlist) {
+    public List<String> getNotInAccountString(int accountID, List<Integer> currentWishlist) {
         List<String> Items = new ArrayList<>();
         for (Item item : getApproved()) {
-            if (item.getOwnerID() != accountId && !currentWishlist.contains(item.getItemID())) {
+            if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
                 Items.add(item.toString());
             }
         }

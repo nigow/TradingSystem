@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a manager responsible for creating and editing trades
+ * Represents a manager responsible for creating and editing trades.
  *
  * @author Isaac
  */
@@ -16,22 +16,22 @@ import java.util.List;
 public class TradeManager {
 
     /**
-     * An object representing a transaction between 2 users
+     * An object representing a transaction between 2 users.
      */
     private Trade trade;
 
     /**
-     * An object representing the time and place of the trade
+     * An object representing the time and place of the trade.
      */
     private TimePlace timePlace;
 
     /**
-     * The gateway for dealing with the storage of accounts
+     * The gateway for dealing with the storage of accounts.
      */
     private final TradeGateway tradeGateway;
 
     /**
-     * Constructor for TradeManager which Stores a TradeGateway
+     * Constructor for TradeManager which Stores a TradeGateway.
      *
      * @param tradeGateway The gateway for dealing with the persistent storage of trades
      */
@@ -40,7 +40,7 @@ public class TradeManager {
     }
 
     /**
-     * Constructor for TradeManager to edit an existing Trade
+     * Constructor for TradeManager to edit an existing Trade.
      *
      * @param tradeGateway The gateway for dealing with the persistent storage of trades
      * @param trade        An object representing a transaction between 2 users
@@ -56,7 +56,7 @@ public class TradeManager {
     //  back we don't know which user's wishlist to change back.
     //  do not use for now.
     /**
-     * Creates a new Trade object to be edited
+     * Creates a new Trade object to be edited.
      *
      * @param time        The time of the Trade
      * @param place       The location of the Trade
@@ -91,7 +91,7 @@ public class TradeManager {
     }
 
     /**
-     * Initiates a reverse trade
+     * Initiates a reverse trade.
      */
     public void reverseTrade(AccountManager accountManager) {
         createTrade(timePlace.getTime().plusDays(30), timePlace.getPlace(), true, trade.getTraderOneID(),
@@ -99,22 +99,22 @@ public class TradeManager {
     }
 
     /**
-     * Changes the TimePlace of the trade and updates last edit info
+     * Changes the TimePlace of the trade and updates last edit info.
      *
      * @param time     New time of the trade
      * @param place    New place of the trade
-     * @param editorId The id of the person editing the trade
+     * @param editorID The id of the person editing the trade
      */
-    public void editTimePlace(LocalDateTime time, String place, int editorId) {
+    public void editTimePlace(LocalDateTime time, String place, int editorID) {
         timePlace.setTime(time);
         timePlace.setPlace(place);
-        trade.setLastEditorID(editorId);
+        trade.setLastEditorID(editorID);
         trade.incrementEditedCounter();
         tradeGateway.updateTrade(trade, timePlace);
     }
 
     /**
-     * Updates the status of the trade
+     * Updates the status of the trade.
      *
      * @param tradeStatus The new status of the trade
      */
@@ -124,7 +124,7 @@ public class TradeManager {
     }
 
     /**
-     * Getter for the TimePlace of the trade
+     * Getter for the TimePlace of the trade.
      *
      * @return TimePlace of the trade
      */
@@ -133,7 +133,7 @@ public class TradeManager {
     }
 
     /**
-     * Getter for the status of the trade
+     * Getter for the status of the trade.
      *
      * @return Current status of the trade
      */
@@ -142,7 +142,7 @@ public class TradeManager {
     }
 
     /**
-     * Getter for the current trade
+     * Getter for the current trade.
      *
      * @return The current trade.
      */
@@ -151,7 +151,7 @@ public class TradeManager {
     }
 
     /**
-     * Sets the current trade
+     * Sets the current trade.
      *
      * @param trade The current trade.
      */
@@ -161,7 +161,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns if trade is rejected
+     * Returns if trade is rejected.
      *
      * @return Whether the trade is rejected
      */
@@ -170,7 +170,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns if trade is confirmed
+     * Returns if trade is confirmed.
      *
      * @return Whether trade is confirmed
      */
@@ -179,7 +179,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns if trade is unconfirmed
+     * Returns if trade is unconfirmed.
      *
      * @return Whether trade is unconfirmed
      */
@@ -188,7 +188,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns if trade is completed
+     * Returns if trade is completed.
      *
      * @return Whether trade is completed.
      */
@@ -197,7 +197,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns if it is a accounts turn to edit
+     * Returns if it is a accounts turn to edit.
      *
      * @param account The account checked
      * @return Whether it's the account's turn to edit.
@@ -207,7 +207,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns the current tradeGateway, a gateway dealing with trades
+     * Returns the current tradeGateway, a gateway dealing with trades.
      *
      * @return the current tradeGateway
      */
@@ -216,7 +216,7 @@ public class TradeManager {
     }
 
     /**
-     * Retrieves a list of all trades in persistent storage
+     * Retrieves a list of all trades in persistent storage.
      *
      * @return List of all trades
      */
@@ -226,7 +226,7 @@ public class TradeManager {
 
 
     /**
-     * Retrieves all trades stored in persistent storage in string format
+     * Retrieves all trades stored in persistent storage in string format.
      *
      * @return List of trades in string format
      */
@@ -239,7 +239,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns a user-friendly string representation of a trade
+     * Returns a user-friendly string representation of a trade.
      *
      * @param accountManager: An accountManager instance
      * @return A user-friendly representation of a trade.
@@ -299,7 +299,7 @@ public class TradeManager {
     }
 
     /**
-     * Returns whether this trade is temporary or permanent
+     * Returns whether this trade is temporary or permanent.
      *
      * @return Whether this trade is temporary or permanent
      */
@@ -308,7 +308,7 @@ public class TradeManager {
     }
 
     /**
-     * Updates the completion status of this trade according to the user's id
+     * Updates the completion status of this trade according to the user's ID.
      *
      * @param accountID The ID of the user who marked this trade as complete
      */
@@ -321,9 +321,9 @@ public class TradeManager {
     }
 
     /**
-     * returns the date and time of this trade
+     * Returns the date and time of this trade.
      *
-     * @return the date and time of this trade
+     * @return Date and time of this trade
      */
     public LocalDateTime getDateTime() {
         return timePlace.getTime();

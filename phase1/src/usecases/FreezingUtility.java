@@ -10,24 +10,24 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Represents the manager responsible for dealing with frozen accounts and managing restrictions
+ * Manager responsible for dealing with frozen accounts and managing restrictions.
  *
  * @author Andrew
  */
 public class FreezingUtility {
 
     /**
-     * The restrictions gateway dealing with the storage of trading restrictions
+     * The restrictions gateway dealing with the storage of trading restrictions.
      */
     private final RestrictionsGateway restrictionsGateway;
 
     /**
-     * The current restrictions of the trading system for all users
+     * The current restrictions of the trading system for all users.
      */
     private final Restrictions restrictions;
 
     /**
-     * Constructs an instance of FreezingUtility and stores restrictionsGateway
+     * Constructs an instance of FreezingUtility and stores restrictionsGateway.
      *
      * @param restrictionsGateway Gateway used to interact with persistent storage of restrictions
      */
@@ -37,12 +37,12 @@ public class FreezingUtility {
     }
 
     /**
-     * Gets a list of accounts that have broken restrictions and are to be frozen
+     * Gets a list of accounts that have broken restrictions and are to be frozen.
      *
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
      * @param tradeUtility   Utility for getting trade information
-     * @return a list of accounts to freeze
+     * @return list of accounts to freeze
      */
     public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility) {
         List<Account> accountsToFreeze = new ArrayList<>();
@@ -55,12 +55,12 @@ public class FreezingUtility {
     }
 
     /**
-     * Gets a list of account usernames that have broken restrictions and are to be frozen
+     * Gets a list of account usernames that have broken restrictions and are to be frozen.
      *
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
      * @param tradeUtility   Utility for getting trade information
-     * @return a list of account usernames to freeze
+     * @return list of account usernames to freeze
      */
     public List<String> getUsernamesToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility) {
         List<String> accountsToFreeze = new ArrayList<>();
@@ -73,7 +73,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Gets a list of accounts that have been frozen and have requested to be unfrozen
+     * Gets a list of accounts that have been frozen and have requested to be unfrozen.
      *
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
@@ -90,11 +90,11 @@ public class FreezingUtility {
     }
 
     /**
-     * Gets a list of account usernames that have been frozen and have requested to be unfrozen
+     * Gets a list of account usernames that have been frozen and have requested to be unfrozen.
      *
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
-     * @return a list of account usernames to freeze
+     * @return list of account usernames to freeze
      */
     public List<String> getUsernamesToUnfreeze(AccountManager accountManager, AuthManager authManager) {
         List<String> accountsToUnfreeze = new ArrayList<>();
@@ -107,7 +107,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen
+     * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
      * @param authManager  Manager for permissions and authorizing actions
      * @param tradeUtility Utility for getting trade information
@@ -125,7 +125,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Unfreezes an account that requested to be unfrozen by adding the ability to borrow
+     * Unfreezes an account that requested to be unfrozen by adding the ability to borrow.
      *
      * @param authManager Manager for permissions and authorizing actions
      * @param account     Account to unfreeze
@@ -141,7 +141,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Updates the restriction of the amount of items needed to be lent before borrowing
+     * Updates the restriction of the amount of items needed to be lent before borrowing.
      *
      * @param lendMoreThanBorrow Amount of items needed to be lent before borrowing
      * @return Whether the restriction is properly set
@@ -152,7 +152,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Updates the restriction of the max number of incomplete trades before an account is frozen
+     * Updates the restriction of the max number of incomplete trades before an account is frozen.
      *
      * @param maxIncompleteTrade Max number of incomplete trades
      * @return Whether the restriction is properly set
@@ -163,7 +163,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Updates the restriction of the max number of weekly trades before an account is frozen
+     * Updates the restriction of the max number of weekly trades before an account is frozen.
      *
      * @param maxWeeklyTrade Max number of weekly trades
      * @return Whether the restriction is properly set
@@ -174,7 +174,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Gets the current restriction for amount of items needed to be lent before borrowing
+     * Gets the current restriction for amount of items needed to be lent before borrowing.
      *
      * @return Amount of items needed to be lent before borrowing
      */
@@ -183,7 +183,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Gets the current restriction of the max number of incomplete trades before an account is frozen
+     * Gets the current restriction of the max number of incomplete trades before an account is frozen.
      *
      * @return Max number of incomplete trades
      */
@@ -192,7 +192,7 @@ public class FreezingUtility {
     }
 
     /**
-     * Gets the current restriction of the max number of weekly trades before an account is frozen
+     * Gets the current restriction of the max number of weekly trades before an account is frozen.
      *
      * @return Max number of weekly trades
      */
