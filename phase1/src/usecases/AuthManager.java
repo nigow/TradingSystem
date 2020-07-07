@@ -205,13 +205,23 @@ public class AuthManager {
     }
 
     /**
-     * Determines whether a given account account can unfreeze other accounts
+     * Determines whether a given account can unfreeze other accounts
      *
      * @param account Account that is checked it see if it can unfreeze other accounts
      * @return Whether the account can unfreeze other accounts
      */
     public boolean canUnfreeze(Account account) {
         return account.getPermissions().contains(Permissions.UNFREEZE);
+    }
+
+    /**
+     * Determines whether a given account can request to be unfrozen
+     *
+     * @param account Account that is checked it see if it can request to be unfrozen
+     * @return Whether the account can request to be unfrozen
+     */
+    public boolean canRequestUnfreeze(Account account) {
+        return account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
 
     /**
@@ -252,6 +262,12 @@ public class AuthManager {
         return !canUnfreeze(account) && !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
 
+    /**
+     * Determines whether the current account has lent more than borrowed
+     *
+     * @param tradeUtility Utility for getting trade information
+     * @return Whether the current account has lent more than borrowed
+     */
     public boolean lentMoreThanBorrowed(TradeUtility tradeUtility) {
         return tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >=
                 restrictionsGateway.getRestrictions().getLendMoreThanBorrow();
@@ -260,13 +276,13 @@ public class AuthManager {
     /**
      * Determines whether a given account can trade
      *
-     * @param tradeUtility Utility for getting trade information
      * @param account      Account that is checked if it can be frozen
      * @return Whether account can trade or not
      */
-    public boolean canTrade(TradeUtility tradeUtility, Account account) {
+    public boolean canTrade(Account account) {
         return !isFrozen(account);
     }
+
 
     /**
      * Determines whether a given account can request to unfreeze and requests to unfreeze if it can
@@ -275,11 +291,7 @@ public class AuthManager {
      * @return Whether the account can request to unfreeze or not
      */
     public boolean requestUnfreeze(Account account) {
-        if (isFrozen(account) && !isPending(account)) {
-            account.removePermission(Permissions.REQUEST_UNFREEZE);
-            accountGateway.updateAccount(account);
-            return true;
-        }
-        return false;
+        account.removePermission(Permissions.REQUEST_UNFREEZE);
+        return accountGateway.updateAccount(account);
     }
 }
