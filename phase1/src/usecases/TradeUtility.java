@@ -179,6 +179,9 @@ public class TradeUtility {
         return ThreeRecent;
     }
 
+    // TODO: this function is broken rn according to the specs:
+    //  There is a limit on the number of transactions any one person
+    //  can conduct in one week, before the account is frozen.  -maryam
     /**
      * Retrieves the number of trades the current account has made in the past week
      *

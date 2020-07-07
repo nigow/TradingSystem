@@ -150,7 +150,7 @@ public class AuthManager {
      * @param account Account that is checked if it can borrow items
      * @return Whether the account can borrow items
      */
-    public boolean canBorrow(Account account) {
+    private boolean canBorrow(Account account) {
         return account.getPermissions().contains(Permissions.BORROW);
     }
 
@@ -160,7 +160,7 @@ public class AuthManager {
      * @param account Account that is checked if it can lend items
      * @return Whether the account can lend items
      */
-    public boolean canLend(Account account) {
+    private boolean canLend(Account account) {
         return account.getPermissions().contains(Permissions.LEND);
     }
 
@@ -246,11 +246,10 @@ public class AuthManager {
     public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
         Restrictions restrictions = restrictionsGateway.getRestrictions();
         tradeUtility.setAccount(account);
-        boolean lentMoreThanBorrowed =
-                tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
         tradeUtility.setAccount(adminAccount);
-        return !canUnfreeze(account) && !isFrozen(account) && (!lentMoreThanBorrowed || !withinMaxIncompleteTrades);
+        return !canUnfreeze(account) && !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
 
     public boolean lentMoreThanBorrowed(TradeUtility tradeUtility) {
@@ -266,8 +265,7 @@ public class AuthManager {
      * @return Whether account can trade or not
      */
     public boolean canTrade(TradeUtility tradeUtility, Account account) {
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
-        return !isFrozen(account) && withinWeeklyLimit;
+        return !isFrozen(account);
     }
 
     /**
