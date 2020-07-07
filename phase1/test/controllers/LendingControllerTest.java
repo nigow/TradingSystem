@@ -118,7 +118,7 @@ public class LendingControllerTest {
     }
 
 
-    @Test
+    @Test(timeout=50)
     public void invalidInput(){
         ManualConfig manualConfig = new InMemoryManualConfig();
         AccountManager accountManager = manualConfig.getAccountManager();

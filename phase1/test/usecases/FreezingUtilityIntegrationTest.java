@@ -94,13 +94,13 @@ public class FreezingUtilityIntegrationTest extends TestCase{
         assertEquals(freezingUtility.getAccountsToUnfreeze(accountManager, authManager).size(), 0); //checks that no account should be unfrozen since no accounts requested
         assertEquals(freezingUtility.getUsernamesToUnfreeze(accountManager, authManager).size(), 0); //checks that no username should be unfrozen since no accounts requested
 
-        assertTrue(freezingUtility.freezeAccount(authManager, tradeUtility, account)); //checks that account can be frozen and is frozen
+        assertTrue(freezingUtility.freezeAccount(authManager, tradeUtility, account, null)); //checks that account can be frozen and is frozen
         assertTrue(authManager.isFrozen(account)); //makes sure account is actually frozen
-        assertFalse(freezingUtility.freezeAccount(authManager, tradeUtility, account)); //checks that a frozen account isn't frozen
+        assertFalse(freezingUtility.freezeAccount(authManager, tradeUtility, account, null)); //checks that a frozen account isn't frozen
 
         assertTrue(authManager.requestUnfreeze(account));
 
-        assertFalse(freezingUtility.freezeAccount(authManager, tradeUtility, account)); //checks that a pending account isnt frozen
+        assertFalse(freezingUtility.freezeAccount(authManager, tradeUtility, account, null)); //checks that a pending account isnt frozen
         assertEquals(freezingUtility.getAccountsToUnfreeze(accountManager, authManager).get(0).getAccountID(), 0); //checks that one account should be unfrozen
         assertEquals(freezingUtility.getUsernamesToUnfreeze(accountManager, authManager).get(0), "Miyo_Sasaki"); //checks that one username should be unfrozen
 
