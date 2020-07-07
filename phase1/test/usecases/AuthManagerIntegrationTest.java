@@ -73,14 +73,6 @@ public class AuthManagerIntegrationTest extends TestCase {
         accountManager.createAdminAccount("Yorushika", "n-buna");
         Account account2 = accountManager.getCurrAccount();
 
-        assertTrue(authManager.canBorrow(account2));
-        account2.removePermission(Permissions.BORROW);
-        assertFalse(authManager.canBorrow(account2));
-
-        assertTrue(authManager.canLend(account2));
-        account2.removePermission(Permissions.LEND);
-        assertFalse(authManager.canLend(account2));
-
         assertTrue(authManager.canBrowseInventory(account2));
         account2.removePermission(Permissions.BROWSE_INVENTORY);
         assertFalse(authManager.canBrowseInventory(account2));
@@ -168,7 +160,9 @@ public class AuthManagerIntegrationTest extends TestCase {
 
         Item item3 = new Item(2, "anime poster", "drawn by Mashiro Shiina", 0);
         //account borrows from account1
-        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen", false, 0, 1, new ArrayList<>(Arrays.asList(item3.getItemID())), new ArrayList<>());
+        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen",
+                false, 0, 1,
+                new ArrayList<>(Arrays.asList(item3.getItemID())), new ArrayList<>(), null);
         assertFalse(authManager.canBeFrozen(tradeUtility, account, null)); //checks that account cant be frozen as it has done nothing wrong yet
         assertTrue(authManager.canBeFrozen(tradeUtility, account1, null)); //checks that account1 can be frozen since it borrowed 1 more than it has lent
 
@@ -186,12 +180,14 @@ public class AuthManagerIntegrationTest extends TestCase {
 
         //canTrade() tests (only reason the tests are together is the massive amount of code needed to set up tradeUtility and trades)
 
-        assertFalse(authManager.canTrade(tradeUtility, account)); //frozen accounts cant trade
-        assertTrue(authManager.canTrade(tradeUtility, account1)); //at weekly limit so can't trade
+        assertFalse(authManager.canTrade(account)); //frozen accounts cant trade
+        assertTrue(authManager.canTrade(account1)); //at weekly limit so can't trade
 
-        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 20, 3), "Bahen", false, 0, 1, new ArrayList<>(), new ArrayList<>(Arrays.asList(item1.getItemID())));
-        assertFalse(authManager.canTrade(tradeUtility, account)); //frozen accounts cant trade
-        assertFalse(authManager.canTrade(tradeUtility, account1)); //at weekly limit so can't trade
+        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 20, 3),
+                "Bahen", false, 0, 1,
+                new ArrayList<>(), new ArrayList<>(Arrays.asList(item1.getItemID())), null);
+        assertFalse(authManager.canTrade(account)); //frozen accounts cant trade
+        assertFalse(authManager.canTrade(account1)); //at weekly limit so can't trade
     }
 
 

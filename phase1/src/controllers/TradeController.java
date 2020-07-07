@@ -174,7 +174,7 @@ public class TradeController {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
                         tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
                         if (!tradeManager.isPermanent()) {
-                            tradeManager.reverseTrade();
+                            tradeManager.reverseTrade(accountManager);
                             tradeManager.updateStatus(TradeStatus.CONFIRMED);
                             tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
                         }
