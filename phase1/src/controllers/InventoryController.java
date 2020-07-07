@@ -143,7 +143,7 @@ public class InventoryController {
      */
     private void displayOthersInventory() {
         this.inventoryPresenter.customMessage("Items available for trading: ");
-        List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccountID());
+        List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccountID(), accountManager.getCurrWishlist());
         this.inventoryPresenter.displayInventory(othersItems);
     }
 
@@ -217,8 +217,8 @@ public class InventoryController {
                 isValid = true;
             } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID()).size()) {
-                    if (accountManager.addItemToWishlist(itemManager.getItemId(itemUtility.getNotInAccount(accountManager.getCurrAccountID()).get(ind)))) {
+                if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).size()) {
+                    if (accountManager.addItemToWishlist(itemManager.getItemId(itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).get(ind)))) {
                         inventoryPresenter.customMessage("Item successfully added to your wishlist!");
                         isValid = true;
                     } else {
