@@ -90,7 +90,7 @@ Choose an option to do:
 7. Return to main menu
 ```
 
-From there, follow the prompts to create your new item. Note that the inclusion of commas are not allowed in the name or description of the item.
+From there, follow the prompts to create your new item. The item will not be visible until an admin authorizes the item. Note that the inclusion of commas are not allowed in the name or description of the item.
 
 ### Removing an item from your inventory
 
