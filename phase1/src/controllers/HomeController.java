@@ -38,7 +38,6 @@ public class HomeController {
      */
     private final ControllerInputValidator controllerInputValidator;
 
-    // TODO: javadoc
     /**
      * Initializes HomeController with the necessary presenter and usecases.
      * @param mc An instance of ManualConfig to get the necessary usecases

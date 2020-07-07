@@ -165,7 +165,6 @@ public class TradeController {
                     } else if (actionInd == 1) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
                         tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
-                        // TODO: perform items swapping
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
                         }
