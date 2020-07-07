@@ -25,29 +25,40 @@ public class ConsoleHomePresenter implements HomePresenter {
      * {@inheritDoc}
      */
     @Override
-    public String[] logIn() {
-         String[] logIn = new String[2];
+    public String logInUsername() {
          Scanner input = new Scanner(System.in);
          System.out.print("Enter your username (-1 to go back): ");
-         logIn[0] = input.nextLine();
-         System.out.print("Enter your password (-1 to go back): ");
-         logIn[1] = input.nextLine();
-         return logIn;
+         return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String logInPassword() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter your password (-1 to go back): ");
+        return input.nextLine();
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public String[] newAccount() {
-        String[] newAccount = new String[2];
+    public String newAccountUsername() {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter your desired username (-1 to go back): ");
-        newAccount[0] = input.nextLine();
-        System.out.print("Enter your desired password (-1 to go back): ");
-        newAccount[1] = input.nextLine();
-        return newAccount;
+        return input.nextLine();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String newAccountPassword() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter your desired password (-1 to go back): ");
+        return input.nextLine();
+    }
     /**
      * {@inheritDoc}
      */

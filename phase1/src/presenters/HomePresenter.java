@@ -13,17 +13,28 @@ public interface HomePresenter {
      */
     String displayHomeOptions(List<String> homeOptions);
     /**
-     * log user in
-     * @return username and password inputted
+     * gets user's username
+     * @return username
      */
-    String[] logIn();
+    String logInUsername();
 
     /**
-     * creates account with given information
-     * @return username and password they would like to use for account
+     * gets user's password
+     * @return password
      */
-    String[] newAccount();
+    String logInPassword();
 
+    /**
+     * gets desired account username
+     * @return username
+     */
+    String newAccountUsername();
+
+    /**
+     * gets desired account password
+     * @return password
+     */
+    String newAccountPassword();
     /**
      * tells user that their input was invalid
      */
