@@ -55,7 +55,6 @@ public class TradeController {
      * Displays trade-managing options to the user and interacts with them to update their information.
      */
     public void run() {
-        tradeUtility.setAccount(accountManager.getCurrAccount());
         while (true) {
             List<String> options = new ArrayList<>();
             List<Runnable> methods = new ArrayList<>();

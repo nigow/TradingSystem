@@ -55,9 +55,6 @@ public class WishlistController {
      * Run the controller and allow it to take over current screen.
      */
     public void run() {
-
-        tradeUtility.setAccount(accountManager.getCurrAccount());
-
         Map<String, Runnable> actions = generateActions();
 
         String input;
