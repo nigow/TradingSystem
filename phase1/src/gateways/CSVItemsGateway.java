@@ -13,19 +13,20 @@ import java.util.*;
 public class CSVItemsGateway implements ItemsGateway {
 
     /**
-     * The filepath to the csv file persisting items
+     * The filepath to the csv file persisting items.
      */
     private final String filepath; //path to the csv file
 
     /**
-     * The HashMap that maps the item ID against the item object
+     * The HashMap that maps the item ID against the item object.
      */
     private final Map<Integer, Item> itemMap;
 
     /**
-     * Constructor for CSVItemsGateway that sets the filepath of the csv file
+     * Constructor for CSVItemsGateway that sets the filepath of the csv file.
      *
      * @param filepath the filepath of the csv file
+     * @throws IOException If the given csv file cannot be accessed
      */
     public CSVItemsGateway(String filepath) throws IOException {
         //setting attributes
@@ -94,7 +95,7 @@ public class CSVItemsGateway implements ItemsGateway {
     }
 
     /**
-     * return a String representation of the item that is CSV friendly.
+     * Return a String representation of the item that is CSV friendly.
      *
      * @param item Item object to be converted
      * @return the csv-friendly representation of the item
@@ -116,11 +117,11 @@ public class CSVItemsGateway implements ItemsGateway {
     }
 
     /**
-     * Helper method that returns an Item object with a given string of text in csv
+     * Helper method that returns an Item object with a given string of text in csv.
      * Precondition: id is valid
      *
      * @param data List of strings contained in a line, separated by commas
-     * @return Item possessing the given ID.
+     * @return Item possessing the given ID
      */
     private Item createItem(String[] data) {
         //create an item

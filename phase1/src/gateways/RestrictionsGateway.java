@@ -18,6 +18,7 @@ public interface RestrictionsGateway {
      * Given a system restrictions object, save its information to persistent storage.
      *
      * @param restrictions Restrictions being saved.
+     * @return Whether restriction's persistent storage was successfully updated or not
      */
     boolean updateRestrictions(Restrictions restrictions);
 
