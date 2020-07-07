@@ -277,7 +277,7 @@ Which action would you like to do?
 
 ### Changing the Global Restriction Values
 
-By default, you can cannot make a one-way trade where you are borrowing unless you've lent **0** or more items than you've borrowed, you become eligible for freezing if you have more than **5** incomplete trades, and you cannot make more than **10** trades in a week. These values can be changed in ```Modify the restriction values of the program```:
+By default, you can cannot make a one-way trade where you are borrowing unless you've lent **0** or more items than you've borrowed, you become eligible for freezing if you have more than **5** incomplete trades, and you cannot have more than **10** trades of any kind (cancelled, unconfirmed, confirmed, completed) in a week. These values can be changed in ```Modify the restriction values of the program```:
 
 ```latex
 Which action would you like to do?
