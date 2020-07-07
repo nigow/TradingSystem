@@ -21,8 +21,8 @@ public class CSVAccountGateway implements AccountGateway {
     /**
      * Create an account gateway that uses csv files as persistent storage.
      *
-     * @param csvPath Path to the csv file holding account data.
-     * @throws IOException If the given csv file cannot be accessed.
+     * @param csvPath Path to the csv file holding account data
+     * @throws IOException If the given csv file cannot be accessed
      */
     public CSVAccountGateway(String csvPath) throws IOException {
 

@@ -13,21 +13,22 @@ import java.util.regex.Pattern;
 public class CSVRestrictionsGateway implements RestrictionsGateway {
 
     /**
-     * The current restrictions of the system consists of lend, weekly trades and incomplete trade limits
+     * The current restrictions of the system consists of lend, weekly trades and incomplete trade limits.
      */
     private Restrictions currentRestriction;
 
 
     /**
-     * Path to the CSV file that stores the current restrictions
+     * Path to the CSV file that stores the current restrictions.
      */
     private final String filepath;
 
 
     /**
-     * Constructor for CSVRoleGateway that construct the current restrictions
+     * Constructor for CSVRoleGateway that construct the current restrictions.
      *
      * @param filepath the filepath to the csv file
+     * @throws IOException If the given csv file cannot be accessed
      */
     public CSVRestrictionsGateway(String filepath) throws IOException {
         this.filepath = filepath;

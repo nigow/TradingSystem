@@ -21,8 +21,9 @@ public class ManualConfigCSV implements ManualConfig {
     private TradeUtility tradeUtility;
 
     /**
-     * Creates ManualConfig and initializes the required usecases
+     * Creates ManualConfig and initializes the required use cases
      * using existing CSV file.
+     * @throws IOException If the given csv file cannot be accessed
      */
     public ManualConfigCSV() throws IOException {
         String filePath = System.getProperty("user.dir") + "/out/files/";
@@ -30,10 +31,11 @@ public class ManualConfigCSV implements ManualConfig {
     }
 
     /**
-     * Creates ManualConfig and initializes the required usecases
+     * Creates ManualConfig and initializes the required use cases
      * using a csv file that can be set manually.
      *
      * @param filePath file path to the folder containing csv files
+     * @throws IOException If the given csv file cannot be accessed
      */
     public ManualConfigCSV(String filePath) throws IOException {
         initializeUseCases(filePath);
