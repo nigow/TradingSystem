@@ -46,4 +46,9 @@ public interface RestrictionPresenter {
      * tells user that their input was invalid
      */
     void invalidInput();
+
+    /**
+     * presents the user with a custom message
+     */
+    void showMessage(String message);
 }

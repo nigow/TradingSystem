@@ -66,9 +66,8 @@ public class FreezingController {
         List<Account> accounts = freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility);
         List<String> usernames = freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility);
         freezingPresenter.displayPossibleFreeze(usernames);
-        String chosenUser;
         while (true) {
-            chosenUser = freezingPresenter.freeze();
+            String chosenUser = freezingPresenter.freeze();
             if (controllerInputValidator.isExitStr(chosenUser))
                 return;
             if (!controllerInputValidator.isNum(chosenUser))
@@ -87,9 +86,8 @@ public class FreezingController {
         List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);
         List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
         freezingPresenter.displayPossibleUnfreeze(usernames);
-        String chosenUser;
         while (true) {
-            chosenUser = freezingPresenter.freeze();
+            String chosenUser = freezingPresenter.freeze();
             if (controllerInputValidator.isExitStr(chosenUser))
                 return;
             if (!controllerInputValidator.isNum(chosenUser))

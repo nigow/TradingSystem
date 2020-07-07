@@ -65,4 +65,12 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter {
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
 }
