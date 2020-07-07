@@ -259,6 +259,7 @@ public class TradeUtility {
         return timesLent;
     }
 
+    // TODO i am fixing everything in the most shady way possible and this shit needs to be fixed  -maryam
     /**
      * Completes the action of making a trade
      *
@@ -269,6 +270,7 @@ public class TradeUtility {
      */
     public void makeTrade(Trade trade, AccountManager accountManager, ItemManager itemManager,
                           ItemUtility itemUtility) {
+        Account account = accountManager.getCurrAccount();
         accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
         for (Integer itemId : trade.getItemOneIDs()) {
             if (accountManager.getCurrWishlist().contains(itemId)) {
@@ -287,8 +289,10 @@ public class TradeUtility {
                 itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderOneID());
             }
         }
+        accountManager.setCurrAccount(account.getUsername());
     }
 
+    // TODO bad bad bad stuff with .setCurrAccount; do not use this method  -maryam
     /**
      * Completes the action of reversing a trade which was rejected
      *
@@ -297,6 +301,7 @@ public class TradeUtility {
      * @param itemManager    an object for managing items
      */
     public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
+        Account account = accountManager.getCurrAccount();
         accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
         for (Integer itemId : trade.getItemOneIDs()) {
             accountManager.addItemToWishlist(itemId);
@@ -307,5 +312,6 @@ public class TradeUtility {
             accountManager.addItemToWishlist(itemId);
             itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderTwoID());
         }
+        accountManager.setCurrAccount(account.getUsername());
     }
 }
