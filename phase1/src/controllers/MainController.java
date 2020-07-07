@@ -17,12 +17,13 @@ public class MainController {
      * Creates an instance of controllers, starts the program, and runs the home page.
      */
     public void run() {
-        ManualConfig manualConfig = null;
+        ManualConfig manualConfig;
         try {
             manualConfig = new ManualConfigCSV();
         }
         catch (IOException e) {
             e.printStackTrace();
+            return;
         }
 
         InventoryController inventoryController =
