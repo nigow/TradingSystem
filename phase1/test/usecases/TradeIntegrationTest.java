@@ -1,6 +1,8 @@
 package usecases;
 
 import entities.*;
+import gateways.AccountGateway;
+import gateways.InMemoryAccountGateway;
 import gateways.InMemoryTradeGateway;
 import gateways.TradeGateway;
 import junit.framework.TestCase;
@@ -19,6 +21,7 @@ public class TradeIntegrationTest extends TestCase {
     private TradeManager tradeManager;
     private TradeUtility tradeUtility;
     private TradeGateway tradeGateway;
+    private AccountManager accountManager;
 
     private TradeManager setUpTradeManager() {
         List<Integer> items1 = new ArrayList<>();
@@ -44,6 +47,20 @@ public class TradeIntegrationTest extends TestCase {
         tradeManager = setUpTradeManager();
         tradeUtility = new TradeUtility(tradeManager);
         return tradeUtility;
+    }
+
+    private AccountManager setUpAccount(){
+
+        Account initial = new Account("admin", "1234", new ArrayList<>(), 0);
+        HashMap<Integer, Account> h = new HashMap<>();
+        h.put(0, initial);
+
+        AccountGateway accountGateway = new InMemoryAccountGateway(h);
+
+        accountManager = new AccountManager(accountGateway);
+        assertTrue(accountManager.setCurrAccount("admin"));
+        return accountManager;
+
     }
 
     /**
@@ -87,8 +104,9 @@ public class TradeIntegrationTest extends TestCase {
         items1.add(101);
         items2.add(201);
         LocalDateTime time = LocalDateTime.now();
+        accountManager = setUpAccount();
         tradeManager.createTrade(time, "UTM", false, 12, 13,
-                items1, items2);
+                items1, items2, accountManager);
         assertEquals(tradeManager.getAllTrades().size(), 2);
         assertEquals(tradeManager.getAllTrades().get(1).getTraderOneID(), 12);
         assertEquals(tradeManager.getAllTrades().get(1).getItemOneIDs(), items1);
@@ -137,8 +155,9 @@ public class TradeIntegrationTest extends TestCase {
         items1.add(101);
         items2.add(201);
         LocalDateTime time = LocalDateTime.now();
+        accountManager = setUpAccount();
         tradeManager.createTrade(time, "UTM", false, 11, 12,
-                items1, items2);
+                items1, items2, accountManager);
         Permissions permissions = Permissions.LOGIN;
         List<Permissions> permissionsList = new ArrayList<>();
         permissionsList.add(permissions);
@@ -150,7 +169,7 @@ public class TradeIntegrationTest extends TestCase {
         items3.add(102);
         items4.add(202);
         tradeManager.createTrade(time, "UTM", false, 10, 11,
-                items3, items4);
+                items3, items4, accountManager);
         assertEquals(tradeUtility.getAllTradesAccount().size(), 3);
         Account account2 = new Account("Username", "Password", permissionsList, 14);
         tradeUtility.setAccount(account2);
@@ -178,10 +197,11 @@ public class TradeIntegrationTest extends TestCase {
         items3.add(301);
         items4.add(401);
         LocalDateTime time = LocalDateTime.now();
+        accountManager = setUpAccount();
         tradeManager.createTrade(time.minusDays(1), "UTM", false, 20, 21,
-                items1, items2);
+                items1, items2, accountManager);
         tradeManager.createTrade(time.minusDays(1), "UTM", false, 21, 22,
-                items3, items);
+                items3, items, accountManager);
         List<Integer> ans = new ArrayList<>();
         assertEquals(tradeUtility.getTopThreePartnersIds(), ans);
         assertEquals(tradeUtility.getRecentOneWay(), ans);
@@ -195,20 +215,21 @@ public class TradeIntegrationTest extends TestCase {
         assertTrue(tradeUtility.getRecentOneWay().contains(301));
         assertTrue(tradeUtility.getRecentTwoWay().contains(101));
         assertTrue(tradeUtility.getRecentTwoWay().contains(201));
+        accountManager = setUpAccount();
         tradeManager.createTrade(time, "UTM", false, 21, 23,
-                items1, items2);
+                items1, items2, accountManager);
         tradeManager.createTrade(time, "UTM", false, 25, 21,
-                items3, items1);
+                items3, items1, accountManager);
         tradeManager.createTrade(time, "UTM", false, 22, 25,
-                items3, items4);
+                items3, items4, accountManager);
         tradeManager.createTrade(time, "UTM", false, 23, 21,
-                items, items2);
+                items, items2, accountManager);
         tradeManager.createTrade(time, "UTM", false, 21, 25,
-                items4, items);
+                items4, items, accountManager);
         tradeManager.createTrade(time, "UTM", false, 22, 21,
-                items4, items);
+                items4, items, accountManager);
         tradeManager.createTrade(time, "UTM", false, 21, 23,
-                items3, items);
+                items3, items, accountManager);
         for (Trade trade: tradeUtility.getAllTradesAccount()) {
             tradeManager.setTrade(trade);
             tradeManager.updateStatus(TradeStatus.CONFIRMED);
@@ -244,14 +265,15 @@ public class TradeIntegrationTest extends TestCase {
         items2.add(201);
         items3.add(301);
         LocalDateTime time = LocalDateTime.now();
+        accountManager = setUpAccount();
         tradeManager.createTrade(time, "UTM", false, 40, 41,
-                items1, items);
+                items1, items, accountManager);
         tradeManager.createTrade(time, "UTM", false, 41, 40,
-                items2, items);
+                items2, items, accountManager);
         tradeManager.createTrade(time, "UTM", false, 40, 41,
-                items, items3);
+                items, items3, accountManager);
         tradeManager.createTrade(time, "UTM", false, 40, 41,
-                items2, items3);
+                items2, items3, accountManager);
         Integer ans = 2;
         Integer ans2 = 1;
         assertEquals(tradeUtility.getTimesLent(), ans);
@@ -278,16 +300,17 @@ public class TradeIntegrationTest extends TestCase {
         LocalDateTime time3days = LocalDateTime.now().minusDays(3);
         LocalDateTime time7days = LocalDateTime.now().minusDays(6);
         LocalDateTime time12days = LocalDateTime.now().minusDays(12);
+        accountManager = setUpAccount();
         tradeManager.createTrade(time, "UTM", false, 50, 51,
-                items1, items2);
+                items1, items2, accountManager);
         tradeManager.createTrade(time3days, "UTM", false, 50, 51,
-                items1, items2);
+                items1, items2, accountManager);
         tradeManager.createTrade(time7days, "UTM", false, 50, 51,
-                items1, items2);
+                items1, items2, accountManager);
         tradeManager.createTrade(time12days, "UTM", false, 51, 50,
-                items2, items1);
+                items2, items1, accountManager);
         tradeManager.createTrade(time12days, "UTM", false, 50, 51,
-                items1, items2);
+                items1, items2, accountManager);
         tradeManager.updateStatus(TradeStatus.CONFIRMED);
         Integer ans = 3;
         assertEquals(tradeUtility.getNumWeeklyTrades(), ans);
