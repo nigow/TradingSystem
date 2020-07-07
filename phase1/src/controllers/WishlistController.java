@@ -83,9 +83,8 @@ public class WishlistController {
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
 
-        //TODO just a note that canTrade() checks that an account isn't frozen(which checks if account can lend and borrow so the canBorrow() may be removed as it is redundant
-        if (authManager.canBorrow(accountManager.getCurrAccount()) &&
-                authManager.canTrade(tradeUtility, accountManager.getCurrAccount()))
+        // tradecreatorcontroller will handle if initiator has to give item in return
+        if (authManager.canTrade(tradeUtility, accountManager.getCurrAccount()))
 
             actions.put("Start trade.", this::startTrade);
 
