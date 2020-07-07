@@ -245,7 +245,7 @@ public class TradeManager {
         }
         separator = "";
         ans.append("\nTrader 2 Items: ");
-        for (Integer tradeId : trade.getItemOneIDs()) {
+        for (Integer tradeId : trade.getItemTwoIDs()) {
             ans.append(separator).append(itemManager.getItemById(tradeId).toString()).append(", ");
             separator = ", ";
         }
