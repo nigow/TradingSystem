@@ -84,11 +84,15 @@ public class HomeController {
      * Calls the presenter and logs in a user based on their information.
      */
     private void logIn() {
-        String[] accountInfo = homePresenter.logIn();
-        if (controllerInputValidator.isExitStr(accountInfo[0]) || controllerInputValidator.isExitStr(accountInfo[1]))
+        String username = homePresenter.logInUsername();
+        if (controllerInputValidator.isExitStr(username)) {
             return;
-        if (authManager.authenticateLogin(accountInfo[0], accountInfo[1])) {
-            accountManager.setCurrAccount(accountInfo[0]);
+        }
+        String password = homePresenter.logInPassword();
+        if (controllerInputValidator.isExitStr(password))
+            return;
+        if (authManager.authenticateLogin(username, password)) {
+            accountManager.setCurrAccount(username);
             menuFacade.run();
         } else {
             homePresenter.invalidInput();
@@ -99,10 +103,14 @@ public class HomeController {
      * Calls the presenter and creates an account for the user.
      */
     private void createAccount() {
-        String[] accountInfo = homePresenter.newAccount();
-        if (controllerInputValidator.isExitStr(accountInfo[0]) || controllerInputValidator.isExitStr(accountInfo[1]))
+        String username = homePresenter.newAccountUsername();
+        if (controllerInputValidator.isExitStr(username)) {
             return;
-        if (accountManager.createStandardAccount(accountInfo[0], accountInfo[1]))
+        }
+        String password = homePresenter.newAccountPassword();
+        if (controllerInputValidator.isExitStr(password))
+            return;
+        if (accountManager.createStandardAccount(username, password))
             menuFacade.run();
         else
             homePresenter.invalidInput();

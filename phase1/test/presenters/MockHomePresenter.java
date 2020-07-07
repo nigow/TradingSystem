@@ -19,19 +19,22 @@ public class MockHomePresenter implements HomePresenter {
     }
 
     @Override
-    public String[] logIn() {
-        String[] login = new String[2];
-        login[0] = "testUsername";
-        login[1] = "testPassword";
-        return login;
+    public String logInUsername() {
+        return "TestUsername";
     }
 
     @Override
-    public String[] newAccount() {
-        String[] newAccount = new String[2];
-        newAccount[0] = "testUsername";
-        newAccount[1] = "testPassword";
-        return newAccount;
+    public String logInPassword() {
+        return "TestPassword";
+    }
+
+    @Override
+    public String newAccountUsername() {
+        return "testUsername";
+    }
+    @Override
+    public String newAccountPassword() {
+        return "testPassword";
     }
 
     @Override
