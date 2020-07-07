@@ -49,10 +49,8 @@ public class FreezingController {
             switch (action) {
                 case "0":
                     freeze();
-                    return;
                 case "1":
                     unfreeze();
-                    return;
                 case "2":
                     return;
                 default:

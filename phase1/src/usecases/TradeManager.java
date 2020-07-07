@@ -239,13 +239,13 @@ public class TradeManager {
 
         if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
             ans.append("Type: Two-way ");
-            ans.append("\nAccount 1: ").append(username1).append("\nAccount 2: ");
+            ans.append("\nAccount 1: ").append(username1).append("\nAccount 2: ").append(username2);
         } else {
             ans.append("Type: One-way ");
             if (trade.getItemOneIDs().size() > 0) {
-                ans.append("\nBorrower: ").append(username2).append("\nLender: "); //I swapped user1 and user2 (Tairi)
+                ans.append("\nBorrower: ").append(username2).append("\nLender: ").append(username1);
             } else {
-                ans.append("\nBorrower: ").append(username1).append("\nLender: "); //I swapped user1 and user2 (Tairi)
+                ans.append("\nBorrower: ").append(username1).append("\nLender: ").append(username2);
             }
 
         }
@@ -263,7 +263,7 @@ public class TradeManager {
         separator = "";
         ans.append("\nTrader 2 Items: ");
         for (Integer tradeId : trade.getItemTwoIDs()) {
-            ans.append(separator).append(itemManager.getItemById(tradeId).toString()).append(", ");
+            ans.append(separator).append(itemManager.getItemById(tradeId).toString());
             separator = ", ";
         }
         return ans.toString();
