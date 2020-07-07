@@ -44,7 +44,7 @@ public class FreezingUtility {
     public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility){
         List<Account> accountsToFreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
-            if (authManager.canBeFrozen(tradeUtility, account)){
+            if (authManager.canBeFrozen(tradeUtility, account, accountManager.getCurrAccount())){
                 accountsToFreeze.add(account);
             }
         }
@@ -61,7 +61,7 @@ public class FreezingUtility {
     public List<String> getUsernamesToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility){
         List<String> accountsToFreeze = new ArrayList<>();
         for (Account account: accountManager.getAccountsList()){
-            if (authManager.canBeFrozen(tradeUtility, account)){
+            if (authManager.canBeFrozen(tradeUtility, account, accountManager.getCurrAccount())){
                 accountsToFreeze.add(account.getUsername());
             }
         }
@@ -107,8 +107,8 @@ public class FreezingUtility {
      * @param account Account to freeze
      * @return Whether the given account is successfully frozen or not
      */
-    public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account){
-        if (authManager.canBeFrozen(tradeUtility, account)){
+    public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account, Account adminAccount){
+        if (authManager.canBeFrozen(tradeUtility, account, adminAccount)){
             return authManager.removePermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)))
                     && authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
         }

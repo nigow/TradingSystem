@@ -25,7 +25,7 @@ public class AuthManager {
     private final RestrictionsGateway restrictionsGateway;
 
     /**
-     * Constructs an instance of AccountManager and stores accountGateway, restrictionsGateway and roleGateway
+     * Constructs an instance of AuthManager and stores accountGateway, restrictionsGateway and roleGateway
      * @param accountGateway Gateway used to interact with persistent storage of accounts
      * @param restrictionsGateway Gateway used to interact with persistent storage of restrictions
      */
@@ -220,10 +220,13 @@ public class AuthManager {
      * @param account Account that is checked if it can be frozen
      * @return Whether the account can be frozen or not
      */
-    public boolean canBeFrozen(TradeUtility tradeUtility, Account account){
+    public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount){
         Restrictions restrictions = restrictionsGateway.getRestrictions();
-        boolean lendedMoreThanBorrowed = tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
+        tradeUtility.setAccount(account);
+        boolean lendedMoreThanBorrowed =
+                tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >= restrictions.getLendMoreThanBorrow();
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
+        tradeUtility.setAccount(adminAccount);
         return !canUnfreeze(account) && !isFrozen(account) && (!lendedMoreThanBorrowed || !withinMaxIncompleteTrades);
     }
 

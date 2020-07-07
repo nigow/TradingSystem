@@ -85,7 +85,7 @@ public class FreezingController {
                 freezingPresenter.invalidInput();
             }
             else {
-                freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(chosenUser)));
+                freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(chosenUser)), accountManager.getCurrAccount());
             }
         }
     }

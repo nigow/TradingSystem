@@ -236,6 +236,8 @@ public class TradeUtility {
                 timesIncomplete++;
             }
         }
+        if (account.getUsername().equals("user25"))
+           System.out.println(account.getUsername() + " " + timesIncomplete);
         // i changed this  -maryam
         return timesIncomplete;
     }
