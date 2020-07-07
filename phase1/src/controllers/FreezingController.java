@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * controller that lets admin freeze and unfreeze users
+ *
  * @author Catherine
  */
 public class FreezingController {
@@ -43,7 +44,8 @@ public class FreezingController {
 
     /**
      * initializes constructor with necessary use cases and presenter
-     * @param mc an instance of ManualConfig to get use cases
+     *
+     * @param mc                an instance of ManualConfig to get use cases
      * @param freezingPresenter an instance of FreezingPresenter to display information
      */
     public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {

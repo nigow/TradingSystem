@@ -6,6 +6,7 @@ import usecases.AccountManager;
 
 /**
  * controller to create new admin accounts
+ *
  * @author Catherine
  */
 public class AdminCreatorController {
@@ -24,7 +25,8 @@ public class AdminCreatorController {
 
     /**
      * initializes AdminCreatorController with necessary presenter and use cases
-     * @param mc an instance of ManualConfig to get use cases
+     *
+     * @param mc             an instance of ManualConfig to get use cases
      * @param adminPresenter an instance of AdminPresenter to display information
      */
     public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {

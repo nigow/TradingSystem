@@ -91,7 +91,8 @@ public class WishlistController {
 
             actions.put("Start trade.", this::startTrade);
 
-        actions.put("Back.", () -> {});
+        actions.put("Back.", () -> {
+        });
         return actions;
     }
 

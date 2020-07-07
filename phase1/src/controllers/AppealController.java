@@ -7,6 +7,7 @@ import usecases.AuthManager;
 
 /**
  * controller that makes appeal request
+ *
  * @author Catherine
  */
 public class AppealController {
@@ -25,7 +26,8 @@ public class AppealController {
 
     /**
      * initializes constructor with necessary use cases and presenter
-     * @param mc an instance of ManualConfig to get use cases
+     *
+     * @param mc              an instance of ManualConfig to get use cases
      * @param appealPresenter an instance of AppealPresenter to display information
      */
     public AppealController(ManualConfig mc, AppealPresenter appealPresenter) {

@@ -154,7 +154,7 @@ public class ItemUtility {
     /**
      * Retrieves all items not in a certain account/the account's wishlist.
      *
-     * @param accountID Account ID which the items are not retrieved from
+     * @param accountID       Account ID which the items are not retrieved from
      * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account
      */
@@ -171,7 +171,7 @@ public class ItemUtility {
     /**
      * Retrieves all items not in a certain account in string format.
      *
-     * @param accountID Account ID which the items are not retrieved from
+     * @param accountID       Account ID which the items are not retrieved from
      * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account string format
      */

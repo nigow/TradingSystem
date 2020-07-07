@@ -245,6 +245,7 @@ public class AuthManager {
     }
 
     // TODO: quick fix but having adminAccount as input is sketch  -maryam
+
     /**
      * Determines whether a given account should be frozen.
      *
@@ -276,7 +277,7 @@ public class AuthManager {
     /**
      * Determines whether a given account can trade.
      *
-     * @param account      Account that is checked if it can be frozen
+     * @param account Account that is checked if it can be frozen
      * @return Whether account can trade or not
      */
     public boolean canTrade(Account account) {

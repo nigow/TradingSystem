@@ -131,11 +131,11 @@ public class LendingController {
         return itemManager.getItemId(myItems.get(Integer.parseInt(temp_index)));
     }
 
-    private void invalidInput(){
+    private void invalidInput() {
         lendingPresenter.customMessage("Invalid input. Please try again.");
     }
 
-    private void abort(){
+    private void abort() {
         lendingPresenter.customMessage("Cancellation succeeded.");
     }
 

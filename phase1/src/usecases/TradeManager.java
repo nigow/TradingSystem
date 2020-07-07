@@ -55,6 +55,7 @@ public class TradeManager {
     // TODO: bad bad bad stuff with .setCurrAccount. also buggy because
     //  back we don't know which user's wishlist to change back.
     //  do not use for now.
+
     /**
      * Creates a new Trade object to be edited.
      *
