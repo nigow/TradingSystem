@@ -335,8 +335,8 @@ Which action would you like to do?
 
 ## Extra Notes
 
-- Your username is restricted to the following characters: a-z, A-Z, 0-9, _
-- Your password cannot be empty, contain a space, -, ~, or comma
+- Your username is case-sensitive and restricted to the following characters: a-z, A-Z, 0-9, _
+- Your password is case-sensitive and cannot be empty, contain a space, -, ~, or comma
 - Your items' names and descriptions cannot include commas
 - The location of your meetup cannot include commas
 - You cannot confirm a trade that has a current meet up time that has already passed
