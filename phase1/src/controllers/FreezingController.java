@@ -74,7 +74,7 @@ public class FreezingController {
             isValidInput = true;
             chosenUser = freezingPresenter.freeze();
             if (chosenUser.equals("-1")) {
-                run();
+                return;
             }
             else if (!controllerInputValidator.isNum(chosenUser)) {
                 isValidInput = false;
@@ -100,7 +100,7 @@ public class FreezingController {
             isValidInput = true;
             chosenUser = freezingPresenter.unfreeze();
             if (chosenUser.equals("-1")) {
-                run();
+                return;
             }
             else if (!controllerInputValidator.isNum(chosenUser)) {
                 isValidInput = false;
