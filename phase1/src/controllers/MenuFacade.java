@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.Trade;
 import gateways.ManualConfig;
 import presenters.MenuPresenter;
 import usecases.AccountManager;

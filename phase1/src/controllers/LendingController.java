@@ -69,13 +69,7 @@ public class LendingController {
         List<Account> allAccounts = accountManager.getAccountsList();
 
         //remove the current account
-        Iterator<Account> iterator = allAccounts.iterator();
-        while (iterator.hasNext()) {
-            Account account = iterator.next();
-            if (account.getAccountID() == accountManager.getCurrAccountID()) {
-                iterator.remove();
-            }
-        }
+        allAccounts.removeIf(account -> account.getAccountID() == accountManager.getCurrAccountID());
 
         lendingPresenter.displayAccounts(allAccounts);
         boolean flag = true;
