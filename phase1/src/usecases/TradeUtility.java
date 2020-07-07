@@ -84,7 +84,7 @@ public class TradeUtility {
     public List<Integer> getTopThreePartnersIds() {
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (account.getAccountID() == trade.getTraderOneID()) {
                 tradeFrequency.compute(trade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
@@ -118,7 +118,7 @@ public class TradeUtility {
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allOneWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (trade.getTraderOneID() == account.getAccountID()) {
                 if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
@@ -159,7 +159,7 @@ public class TradeUtility {
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allTwoWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
