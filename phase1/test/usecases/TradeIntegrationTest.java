@@ -1,16 +1,13 @@
 package usecases;
 
 import entities.*;
-import gateways.InMemoryItemGateway;
 import gateways.InMemoryTradeGateway;
-import gateways.ItemsGateway;
 import gateways.TradeGateway;
 import junit.framework.TestCase;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
