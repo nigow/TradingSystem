@@ -61,7 +61,7 @@ public class ConsoleLendingPresenter implements LendingPresenter {
         System.out.println("Here are your items. Which item would you like to offer?");
         for (int i = 0; i < inventory.size(); i++) {
 
-            System.out.println(i + ". " + inventory.get(i).getName() + "Description: "
+            System.out.println(i + ". " + inventory.get(i).getName() + " Description: "
                     + inventory.get(i).getDescription());
 
         }
