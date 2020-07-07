@@ -149,7 +149,8 @@ public class TradeController {
             List<String> options = new ArrayList<>();
             options.add("Reject or cancel this trade");
             if (tradeManager.isEditTurn(accountManager.getCurrAccount())) {
-                options.add("Confirm the time and location for this trade");
+                if (tradeManager.getDateTime().isAfter(LocalDateTime.now()))
+                    options.add("Confirm the time and location for this trade");
                 options.add("Edit the time and location for this trade");
             }
             options.add("Go back");
