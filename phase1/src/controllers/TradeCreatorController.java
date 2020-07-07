@@ -75,7 +75,7 @@ public class TradeCreatorController {
 
         }
 
-        if (twoWayTrade.equals("y")) setUpTwoWayTrade(traderOneItems, traderTwoItems);
+        if (twoWayTrade.equals("y") && !setUpTwoWayTrade(traderOneItems, traderTwoItems)) return;
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
@@ -118,7 +118,7 @@ public class TradeCreatorController {
 
     }
 
-    private void setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
+    private boolean setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
 
         String oppositeAccountUsername = traderOneItems.isEmpty() ? accountManager.getUsernameFromID(traderTwoId) :
                 accountManager.getCurrAccountUsername();
@@ -131,7 +131,7 @@ public class TradeCreatorController {
 
         while (!controllerInputValidator.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
 
-            if (controllerInputValidator.isExitStr(oppositeItemIndex)) return;
+            if (controllerInputValidator.isExitStr(oppositeItemIndex)) return false;
             tradeCreatorPresenter.invalidInput();
             oppositeItemIndex = tradeCreatorPresenter.getItem();
 
@@ -143,6 +143,7 @@ public class TradeCreatorController {
             traderTwoItems.add(itemUtility.getApprovedInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
         }
 
+        return true;
     }
 
 }
