@@ -82,7 +82,9 @@ public class FreezingUtilityIntegrationTest extends TestCase{
         assertEquals(freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility).size(), 0); //checks that no username should be frozen
 
         Item item3 = new Item(2, "anime poster", "drawn by Mashiro Shiina", 0);
-        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen", false, 0, 1, new ArrayList<>(Arrays.asList(item3.getItemID())), new ArrayList<>());
+        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen",
+                false, 0, 1, new ArrayList<>(Arrays.asList(item3.getItemID())),
+                new ArrayList<>(), null);
 
         assertEquals(freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility).get(0).getAccountID(), 1); //checks that only 1 account should be frozen
         assertEquals(freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility).get(0), "Kento_Hinode");

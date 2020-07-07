@@ -26,7 +26,14 @@ public class Item {
      */
     private boolean isApproved;
 
-    /**
+    /**00
+     * 000
+     * 000
+     * 0
+     *
+     *
+     *
+     * 0
      * The ID of the owner of this item
      */
     private int ownerID;

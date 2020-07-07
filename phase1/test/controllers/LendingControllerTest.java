@@ -46,16 +46,11 @@ public class LendingControllerTest {
                 return "0";
             }
 
-
             @Override
-            public void invalidInput() {
-                //pass
+            public void customMessage(String message) {
+
             }
 
-            @Override
-            public void abort() {
-                //pass
-            }
         };
         TradeCreatorPresenter tradeCreatorPresenter = new TradeCreatorPresenter() {
             @Override
@@ -154,16 +149,11 @@ public class LendingControllerTest {
                 return "aaa";
             }
 
-
             @Override
-            public void invalidInput() {
-                //pass
+            public void customMessage(String message) {
+
             }
 
-            @Override
-            public void abort() {
-                //pass
-            }
         };
 
         LendingController lendingController = new LendingController(lendingPresenter, manualConfig, new ConsoleTradeCreatorPresenter());
