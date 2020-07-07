@@ -308,4 +308,23 @@ public class TradeUtility {
             }
         }
     }
+
+    /**
+     * Completes the action of reversing a trade which was rejected
+     * @param trade he trade object representing the trade about to be rejected
+     * @param accountManager an object for managing accounts
+     * @param itemManager an object for managing items
+     */
+    public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
+        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
+        for (Integer itemId : trade.getItemOneIDs()) {
+            accountManager.addItemToWishlist(itemId);
+            itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderOneID());
+        }
+        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
+        for (Integer itemId : trade.getItemTwoIDs()) {
+            accountManager.addItemToWishlist(itemId);
+            itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderTwoID());
+        }
+    }
 }
