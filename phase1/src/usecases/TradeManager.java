@@ -52,6 +52,9 @@ public class TradeManager {
     }
 
 
+    // TODO bad bad bad stuff with .setCurrAccount. also buggy because
+    //  back we don't know which user's wishlist to change back.
+    //  do not use for now.
     /**
      * Creates a new Trade object to be edited
      *
@@ -65,12 +68,26 @@ public class TradeManager {
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             int traderOneID, int traderTwoID, List<Integer> itemOneID,
-                            List<Integer> itemTwoID) {
+                            List<Integer> itemTwoID, AccountManager accountManager) {
         int id = tradeGateway.generateValidId();
         this.timePlace = new TimePlace(id, time, place);
         this.trade = new Trade(id, id, isPermanent, traderOneID, traderTwoID,
                 itemOneID, itemTwoID, 0);
         tradeGateway.updateTrade(trade, timePlace);
+        Account account = accountManager.getCurrAccount();
+        accountManager.setCurrAccount(accountManager.getUsernameFromID(traderTwoID));
+        for (Integer itemId : itemOneID) {
+            if (accountManager.getCurrWishlist().contains(itemId)) {
+                accountManager.removeItemFromWishlist(itemId);
+            }
+        }
+        accountManager.setCurrAccount(accountManager.getUsernameFromID(traderOneID));
+        for (Integer itemId : itemTwoID) {
+            if (accountManager.getCurrWishlist().contains(itemId)) {
+                accountManager.removeItemFromWishlist(itemId);
+            }
+        }
+        accountManager.setCurrAccount(account.getUsername());
     }
 
     /**
