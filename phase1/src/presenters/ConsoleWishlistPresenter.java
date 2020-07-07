@@ -36,6 +36,7 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
      */
     @Override
     public void displayWishlist(List<String> wishlist) {
+        System.out.println("Wishlist items:");
         for (int i = 0; i < wishlist.size(); i++) {
 
             System.out.println(i + ". " + wishlist.get(i));

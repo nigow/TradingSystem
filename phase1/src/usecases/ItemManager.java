@@ -100,11 +100,13 @@ public class ItemManager {
     /**
      * Gets the Id of the owner of the item
      *
-     * @param item the item which information is being returned about
-     * @return the Id of the owner of the item
+     * @param itemId the id of the item which information is being returned about
+     * @return the Id of the owner of the item (-1 if no item can be found).
      */
-    public int getOwnerId(Item item) {
-        return item.getOwnerID();
+    public int getOwnerId(int itemId) {
+        Item item = itemsGateway.findById(itemId);
+        if (item != null) return item.getOwnerID();
+        return -1;
     }
 
     /**

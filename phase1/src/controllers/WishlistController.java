@@ -113,8 +113,8 @@ public class WishlistController {
         List<Integer> wishlistIds = accountManager.getCurrWishlist();
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
-        new TradeCreatorController(tradeCreatorPresenter,
-                manualConfig, itemManager.getItemById(itemId).getOwnerID(), itemId).run();
+        new TradeCreatorController(tradeCreatorPresenter, manualConfig, itemManager.getOwnerId(itemId), itemId,
+                !authManager.lentMoreThanBorrowed(tradeUtility)).run();
 
     }
 
