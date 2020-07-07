@@ -110,8 +110,7 @@ public class CSVItemsGateway implements ItemsGateway {
                 + item.getName() + COMMA
                 + item.getDescription() + COMMA
                 + item.isApproved() + COMMA
-                + item.getOwnerID() + COMMA
-                + "\n";
+                + item.getOwnerID() + "\n";
         return newLine;
 
     }
