@@ -1,7 +1,7 @@
 package presenters;
 
 /**
- * Interface for handling the log-in of admin.
+ * Interface for handling the login of admin.
  *
  * @author Catherine
  */
