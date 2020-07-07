@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.Trade;
 import gateways.ManualConfig;
 import presenters.MenuPresenter;
 import usecases.AccountManager;
@@ -115,7 +116,7 @@ public class MenuFacade {
             options.add("Manage your wishlist");
             method.add(wishlistController::run);
 
-            if (authManager.canLend(accountManager.getCurrAccount()) &&
+            if (authManager.canTrade(tradeUtility, accountManager.getCurrAccount()) &&
                     !itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).isEmpty()) {
                 options.add("Initiate a trade with a specific account");
                 method.add(lendingController::run);
