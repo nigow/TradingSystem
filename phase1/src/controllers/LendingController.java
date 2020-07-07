@@ -69,9 +69,9 @@ public class LendingController {
         List<Account> allAccounts = accountManager.getAccountsList();
 
         //remove the current account
-        Iterator iterator = allAccounts.iterator();
+        Iterator<Account> iterator = allAccounts.iterator();
         while (iterator.hasNext()) {
-            Account account = (Account) iterator.next();
+            Account account = iterator.next();
             if (account.getAccountID() == accountManager.getCurrAccountID()) {
                 iterator.remove();
             }
@@ -135,14 +135,14 @@ public class LendingController {
      * Let the user choose who to trade and which item to lend and start trading.
      */
     public void run() {
-        int tradingItemId = chooseItem();
-        if (tradingItemId == -1) return;
-
         int toAccountId = chooseAccount();
         if (toAccountId == -1) return;
 
+        int tradingItemId = chooseItem();
+        if (tradingItemId == -1) return;
+
         TradeCreatorController startTrade;
-        startTrade = new TradeCreatorController(tradeCreatorPresenter, manualConfig, toAccountId, tradingItemId);
+        startTrade = new TradeCreatorController(tradeCreatorPresenter, manualConfig, toAccountId, tradingItemId, false);
         startTrade.run();
     }
 

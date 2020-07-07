@@ -25,6 +25,7 @@ public class TradeCreatorController {
     private final int traderOneId;
     private final int traderTwoId;
     private final int itemId;
+    private final boolean forceTwoWay;
 
     private final ControllerInputValidator controllerInputValidator;
 
@@ -35,9 +36,10 @@ public class TradeCreatorController {
      * @param manualConfig          Repository of use cases.
      * @param peerId                Id of account trade is being conducted with.
      * @param itemId                Id of item being offered or asked for.
+     * @param forceTwoWay           Whether two way trade should be forced.
      */
     public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
-                                  ManualConfig manualConfig, int peerId, int itemId) {
+                                  ManualConfig manualConfig, int peerId, int itemId, boolean forceTwoWay) {
 
         this.tradeManager = manualConfig.getTradeManager();
         this.accountManager = manualConfig.getAccountManager();
@@ -47,6 +49,7 @@ public class TradeCreatorController {
         this.traderOneId = accountManager.getCurrAccountID();
         this.traderTwoId = peerId;
         this.itemId = itemId;
+        this.forceTwoWay = forceTwoWay;
 
         controllerInputValidator = new ControllerInputValidator();
 
@@ -66,7 +69,7 @@ public class TradeCreatorController {
             traderOneItems.add(itemId);
         }
 
-        String twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
+        String twoWayTrade = forceTwoWay ? "y" : tradeCreatorPresenter.getTwoWayTrade();
 
         while (!controllerInputValidator.isBool(twoWayTrade)) {
 

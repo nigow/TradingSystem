@@ -4,7 +4,7 @@
 
 To set up and run the code, follow the [instructions listed here](https://q.utoronto.ca/courses/154572/pages/project-phase-1?module_item_id=1428678). Most importantly, set Phase 1 as your project folder. Ensure that the file ```phase1/out/files/restrictions.csv``` is present (it should already be there). All other necessary files will be generated as the program runs. There is also a .zip file in ```phase1``` with some pre-configured csv files you can use for manual testing. If you wish to use these, you must move these files to ```phase1/out/files```. 
 
-There will be a build error in the test files if you do not add the necessary JUnit packages to your path. If you do not wish to add these packages, we have added a option called ```Main (no test)```to change the run configuration to run despite any build errors in the test folder.
+There will be a build error in the test files if you do not add the necessary JUnit packages to your path. If you do not wish to add these packages, we have added an option called ```Main (no test)```to change the run configuration to run despite any build errors in the test folder.
 
 ## Running the Code
 
@@ -108,7 +108,7 @@ Choose an option to do:
 7. Return to main menu
 ```
 
-From there, you'll be shown a list of all your approved items, and you can enter the number to the left of the item you wish to remove to remove it. 
+From there, you'll be shown a list of all your approved items, and you can enter the number to the left of the item you wish to remove. 
 
 ### Adding an Item to Your Wishlist
 
@@ -150,7 +150,7 @@ From there, choose ``` Remove item from wishlist```:
 Select action:
 ```
 
-And you'll be shown the items in your wishlist. Enter in the number to the left of the item to remove it from your wishlist.
+And you'll be shown the items in your wishlist. Enter the number to the left of the item to remove it from your wishlist.
 
 ### Starting a Trade
 
@@ -158,7 +158,7 @@ To start a trade, you have two options: trading with a specific user, or trading
 
 #### Trading With a Specific User
 
-To trade with a specific user, choose ```Initiate a trade with a specific account``` from the main menu:
+To trade with a specific user, choose ```Initiate a trade with a specific account``` from the main menu. This option is unavailable if you do not own items or your account is frozen:
 
 ```latex
 Which action would you like to do?
@@ -169,7 +169,7 @@ Which action would you like to do?
 4. Logout
 ```
 
-From there, you'll be shown a list of items you possess. Enter the number to the left of an item to trade with them, then you will be prompted to select a user similarly. Note that you can only make a two-way trade or lend an item to a user using this option (you cannot request an item from them and offer nothing in return).
+From there, you'll be shown a list of users. Enter the number to the left of a user to trade with them. Note that you can only make a two-way trade or lend an item to a user using this option (you cannot request an item from them and offer nothing in return).
 
 #### Trading From an Item in Your Wishlist
 
@@ -184,7 +184,7 @@ Which action would you like to do?
 4. Logout
 ```
 
-From there, choose ```Start trade```:
+From there, choose ```Start trade```. This will be unavailable if your account is frozen:
 
 ```latex
 0. Start trade.
@@ -193,7 +193,7 @@ From there, choose ```Start trade```:
 Select action: 
 ```
 
-From there, you'll be shown a list of items in your wishlist. Enter the number to the left of the item you wish to recieve to create a trade with that item. Note that you can only make a two-way trade or borrow from a user using this option (you cannot lend to them without asking for something in return).
+From there, you'll be shown a list of items in your wishlist. Enter the number to the left of the item you wish to receive to create a trade with that item. Note that you can only make a two-way trade or borrow from a user using this option (you cannot lend to them without asking for something in return).
 
 ### Configuring a Trade
 
@@ -201,7 +201,7 @@ After you create a trade, you'll have to choose if it's a one-way or two-way tra
 
 ### Managing Trades in Progress
 
-To check on your unfinished trades, go to the main menu and choose ```Manage your existing trades```: 
+To check on all your trades, go to the main menu and choose ```Manage your existing trades```: 
 
 ```latex
 Which action would you like to do?
@@ -228,7 +228,7 @@ You'll be shown a list of the trades that you can edit. If you were not the last
 
 #### Returning a Temporary Trade
 
-Once a temporary trade has been confirmed by both parties, a new permanent trade will be created to signify returning the item back to it's original owner. The default time and location of the return trade is exactly 30 days after the original trade at the same location, but it can be edited. 
+Once a temporary trade has been confirmed by both parties, a new permanent trade will be created to signify returning the item back to its original owner. The default time and location of the return trade is exactly 30 days after the original trade at the same location, but it can be edited. 
 
 ### Request to be Unfrozen
 
@@ -323,7 +323,12 @@ Which action would you like to do?
 
 - You cannot edit a trade's time to be in the past
 - You cannot accept a trade that has a current meet up time that has already passed
+- Your items' names and descriptions cannot include commas
+- The location of your meetup cannot include commas
+- Your username is restricted to the following characters: a-z, A-Z, 0-9, _
+- Your password cannot be empty, contain a space, -, ~, or comma.
 - We do not support negative numbers when restricting (as per the specifications)
+- When viewing your top 3 items in recent trades, we only show items you gave away
 - The global action to abort an action is "-1"
 
 ## Authors
