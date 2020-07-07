@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 public class ConsoleFreezingPresenter implements FreezingPresenter{
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String displayFreezingOptions(List<String> freezingOptions) {
         Scanner input = new Scanner(System.in);
@@ -15,6 +18,9 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
         return input.nextLine();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void displayPossibleFreeze(List<String> possibleUsers) {
         System.out.println("These users should be frozen according to current restrictions:");
@@ -23,6 +29,9 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void displayPossibleUnfreeze(List<String> possibleUsers) {
         System.out.println("These users have requested to be unfrozen:");
@@ -31,6 +40,9 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String freeze() {
         Scanner input = new Scanner(System.in);
@@ -39,6 +51,9 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
         return input.nextLine();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String unfreeze() {
         Scanner input = new Scanner(System.in);
@@ -47,9 +62,19 @@ public class ConsoleFreezingPresenter implements FreezingPresenter{
         return input.nextLine();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
 }

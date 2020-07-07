@@ -42,4 +42,9 @@ public interface FreezingPresenter {
      */
     void invalidInput();
 
+    /**
+     * presents the user with a custom message
+     */
+    void showMessage(String message);
+
 }

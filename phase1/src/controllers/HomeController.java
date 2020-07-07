@@ -117,6 +117,7 @@ public class HomeController {
                 homePresenter.showMessage("The characters in that username and password are illegal.");
             else {
                 if (accountManager.createStandardAccount(username, password)) {
+                    homePresenter.showMessage("You have created an account.");
                     menuFacade.run();
                     return;
                 } else

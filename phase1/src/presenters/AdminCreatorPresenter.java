@@ -19,7 +19,7 @@ public interface AdminCreatorPresenter {
     String createAdminPassword();
 
     /**
-     * lets user know that their input for username and/or password is invalid
+     * presents the user with a custom message
      */
-    void invalidInput();
+    void showMessage(String message);
 }

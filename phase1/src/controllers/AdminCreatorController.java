@@ -10,26 +10,30 @@ public class AdminCreatorController {
 
     private final AccountManager accountManager;
 
+    private final ControllerInputValidator controllerInputValidator;
+
     public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
         accountManager = mc.getAccountManager();
         this.adminPresenter = adminPresenter;
+        controllerInputValidator = new ControllerInputValidator();
     }
 
     public void run() {
-        boolean isValid = false;
-        String[] info = new String[2];
-        while (!isValid) {
-            info[0] = adminPresenter.createAdminUsername();
-            if (info[0].equals("-1")) {
+        while (true) {
+            String username = adminPresenter.createAdminUsername();
+            if (controllerInputValidator.isExitStr(username))
                 return;
-            }
-            info[1] = adminPresenter.createAdminPassword();
-            if (info[1].equals("-1")) {
+            String password = adminPresenter.createAdminPassword();
+            if (controllerInputValidator.isExitStr(password))
                 return;
-            }
-            isValid = accountManager.createAdminAccount(info[0], info[1]);
-            if (!isValid) {
-                adminPresenter.invalidInput();
+            if (!controllerInputValidator.isValidUserPass(username, password))
+                adminPresenter.showMessage("The characters in that username and password are illegal.");
+            else {
+                if (accountManager.createAdminAccount(username, password)) {
+                    adminPresenter.showMessage("You have added a new admin account.");
+                    return;
+                } else
+                    adminPresenter.showMessage("That username is taken.");
             }
         }
     }

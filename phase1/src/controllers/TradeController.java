@@ -202,7 +202,7 @@ public class TradeController {
             if (controllerInputValidator.isExitStr(date))
                 return;
 
-            while (!controllerInputValidator.isValidCSVStr(date) || !controllerInputValidator.isDate(date)) {
+            while (!controllerInputValidator.isDate(date)) {
                 tradePresenter.invalidInput();
                 date = tradePresenter.editTradeDate();
                 if (controllerInputValidator.isExitStr(date))
@@ -213,7 +213,7 @@ public class TradeController {
             if (controllerInputValidator.isExitStr(time))
                 return;
 
-            while (!controllerInputValidator.isValidCSVStr(time) || !controllerInputValidator.isTime(time)) {
+            while (!controllerInputValidator.isTime(time)) {
                 tradePresenter.invalidInput();
                 time = tradePresenter.editTradeTime();
                 if (controllerInputValidator.isExitStr(time))
