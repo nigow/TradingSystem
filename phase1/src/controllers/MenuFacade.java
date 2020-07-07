@@ -4,6 +4,7 @@ import gateways.ManualConfig;
 import presenters.MenuPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
+import usecases.ItemUtility;
 import usecases.TradeUtility;
 
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class MenuFacade {
 
     private final TradeUtility tradeUtility;
 
+    private final ItemUtility itemUtility;
+
     /**
      * Initializes MenuFacade with the necessary controllers, presenter, and usecases.
      *
@@ -76,6 +79,7 @@ public class MenuFacade {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
         tradeUtility = mc.getTradeUtility();
+        itemUtility = mc.getItemUtility();
 
         this.menuPresenter = menuPresenter;
 
@@ -111,7 +115,8 @@ public class MenuFacade {
             options.add("Manage your wishlist");
             method.add(wishlistController::run);
 
-            if (authManager.canLend(accountManager.getCurrAccount())) {
+            if (authManager.canLend(accountManager.getCurrAccount()) &&
+                    !itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).isEmpty()) {
                 options.add("Initiate a trade with a specific account");
                 method.add(lendingController::run);
             }

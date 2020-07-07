@@ -158,7 +158,7 @@ To start a trade, you have two options: trading with a specific user, or trading
 
 #### Trading With a Specific User
 
-To trade with a specific user, choose ```Initiate a trade with a specific account``` from the main menu:
+To trade with a specific user, choose ```Initiate a trade with a specific account``` from the main menu. This option is unavailable if you do not own items or your account is frozen:
 
 ```latex
 Which action would you like to do?
@@ -169,7 +169,7 @@ Which action would you like to do?
 4. Logout
 ```
 
-From there, you'll be shown a list of items you possess. Enter the number to the left of an item to trade with them, then you will be prompted to select a user similarly. Note that you can only make a two-way trade or lend an item to a user using this option (you cannot request an item from them and offer nothing in return).
+From there, you'll be shown a list of users. Enter the number to the left of a user to trade with them. Note that you can only make a two-way trade or lend an item to a user using this option (you cannot request an item from them and offer nothing in return).
 
 #### Trading From an Item in Your Wishlist
 
@@ -184,7 +184,7 @@ Which action would you like to do?
 4. Logout
 ```
 
-From there, choose ```Start trade```:
+From there, choose ```Start trade```. This will be unavailable if your account is frozen:
 
 ```latex
 0. Start trade.
@@ -193,7 +193,7 @@ From there, choose ```Start trade```:
 Select action: 
 ```
 
-From there, you'll be shown a list of items in your wishlist. Enter the number to the left of the item you wish to recieve to create a trade with that item. Note that you can only make a two-way trade or borrow from a user using this option (you cannot lend to them without asking for something in return).
+From there, you'll be shown a list of items in your wishlist. Enter the number to the left of the item you wish to receive to create a trade with that item. Note that you can only make a two-way trade or borrow from a user using this option (you cannot lend to them without asking for something in return).
 
 ### Configuring a Trade
 
@@ -201,7 +201,7 @@ After you create a trade, you'll have to choose if it's a one-way or two-way tra
 
 ### Managing Trades in Progress
 
-To check on your unfinished trades, go to the main menu and choose ```Manage your existing trades```: 
+To check on all your trades, go to the main menu and choose ```Manage your existing trades```: 
 
 ```latex
 Which action would you like to do?

@@ -135,11 +135,11 @@ public class LendingController {
      * Let the user choose who to trade and which item to lend and start trading.
      */
     public void run() {
-        int tradingItemId = chooseItem();
-        if (tradingItemId == -1) return;
-
         int toAccountId = chooseAccount();
         if (toAccountId == -1) return;
+
+        int tradingItemId = chooseItem();
+        if (tradingItemId == -1) return;
 
         TradeCreatorController startTrade;
         startTrade = new TradeCreatorController(tradeCreatorPresenter, manualConfig, toAccountId, tradingItemId);
