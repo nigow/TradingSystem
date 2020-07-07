@@ -110,7 +110,7 @@ public class FreezingController {
         List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
         freezingPresenter.displayPossibleUnfreeze(usernames);
         while (true) {
-            String chosenUser = freezingPresenter.freeze();
+            String chosenUser = freezingPresenter.unfreeze();
             if (controllerInputValidator.isExitStr(chosenUser))
                 return;
             if (!controllerInputValidator.isNum(chosenUser))
