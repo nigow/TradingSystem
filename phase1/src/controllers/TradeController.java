@@ -105,6 +105,7 @@ public class TradeController {
 
     private void selectAndChangeTrade() {
         while (true) {
+            showTrades();
             String index = tradePresenter.selectTrade();
             if (controllerInputValidator.isExitStr(index))
                 return;
