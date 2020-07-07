@@ -1,10 +1,14 @@
 package usecases;
 
+import entities.Account;
 import entities.Item;
+import gateways.AccountGateway;
+import gateways.InMemoryAccountGateway;
 import gateways.InMemoryItemGateway;
 import gateways.ItemsGateway;
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -121,6 +125,17 @@ public class ItemIntegrationTest extends TestCase {
      * Verifies Items can be properly retrieved from a users inventory
      */
     public void testInventory() {
+        Account initial = new Account("admin", "1234", new ArrayList<>(), 10);
+        Account initial1 = new Account("admin2", "1234", new ArrayList<>(), 11);
+        Account initial2 = new Account("admin3", "1234", new ArrayList<>(), 12);
+        Account initial3 = new Account("admin4", "1234", new ArrayList<>(), 14);
+        HashMap<Integer, Account> h = new HashMap<>();
+        AccountGateway accountGateway = new InMemoryAccountGateway(h);
+        h.put(10, initial);
+        h.put(11, initial1);
+        h.put(12, initial2);
+        h.put(14, initial3);
+        AccountManager accountManager = new AccountManager(accountGateway);
         itemManager = setUpItemManager();
         itemUtility = setUpItemUtility();
         itemManager.createItem("Tomato", "A Fruit", 11);
@@ -146,10 +161,14 @@ public class ItemIntegrationTest extends TestCase {
         assertEquals(itemUtility.getApprovedInventoryOfAccount(12).size(), 1);
         assertEquals(itemUtility.getApprovedInventoryOfAccount(11).size(), 4);
         assertEquals(itemUtility.getApprovedInventoryOfAccount(10).size(), 1);
-        assertEquals(itemUtility.getNotInAccount(10).size(), 5);
-        assertEquals(itemUtility.getNotInAccount(11).size(), 2);
-        assertEquals(itemUtility.getNotInAccount(12).size(), 5);
-        assertEquals(itemUtility.getNotInAccount(14).size(), 6);
+        accountManager.setCurrAccount(accountManager.getUsernameFromID(10));
+        assertEquals(itemUtility.getNotInAccount(10, accountManager.getCurrWishlist()).size(), 5);
+        accountManager.setCurrAccount(accountManager.getUsernameFromID(11));
+        assertEquals(itemUtility.getNotInAccount(11, accountManager.getCurrWishlist()).size(), 2);
+        accountManager.setCurrAccount(accountManager.getUsernameFromID(12));
+        assertEquals(itemUtility.getNotInAccount(12, accountManager.getCurrWishlist()).size(), 5);
+        accountManager.setCurrAccount(accountManager.getUsernameFromID(14));
+        assertEquals(itemUtility.getNotInAccount(14, accountManager.getCurrWishlist()).size(), 6);
     }
 }
 
