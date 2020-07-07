@@ -41,4 +41,9 @@ public class MockHomePresenter implements HomePresenter {
     public void invalidInput() {
         // pass
     }
+
+    @Override
+    public void showMessage(String message) {
+        //pass
+    }
 }
