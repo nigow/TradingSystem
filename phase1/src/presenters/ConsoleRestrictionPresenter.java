@@ -27,6 +27,7 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter{
     public String changeLendMoreThanBorrow(int lendMoreThanBorrow) {
         Scanner input = new Scanner(System.in);
         System.out.println("You currently have to lend at least " + lendMoreThanBorrow + " more items than you borrow.");
+        System.out.println("Input \"-1\" to go back.");
         System.out.println("Change this to:");
         return input.nextLine();
     }
@@ -38,6 +39,7 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter{
     public String changeMaxIncompleteTrades(int maxIncompleteTrades) {
         Scanner input = new Scanner(System.in);
         System.out.println("You can currently have maximum " + maxIncompleteTrades + " incomplete trades.");
+        System.out.println("Input \"-1\" to go back.");
         System.out.println("Change this to:");
         return input.nextLine();
     }
@@ -49,6 +51,7 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter{
     public String changeMaxWeeklyTrades(int weeklyTrades) {
         Scanner input = new Scanner(System.in);
         System.out.println("You can currently make maximum " + weeklyTrades + " trades in a week.");
+        System.out.println("Input \"-1\" to go back.");
         System.out.println("Change this to:");
         return input.nextLine();
     }
