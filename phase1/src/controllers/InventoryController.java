@@ -105,6 +105,8 @@ public class InventoryController {
                 } else {
                     inventoryPresenter.customMessage("That number does not correspond to an item");
                 }
+            } else {
+                inventoryPresenter.invalidInput();
             }
 
         } while (!option.equals(String.valueOf(menu.size() - 1)));
