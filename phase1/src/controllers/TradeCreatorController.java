@@ -117,7 +117,7 @@ public class TradeCreatorController {
         }
 
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, isPerm.equals("y"),
-                traderOneId, traderTwoId, traderOneItems, traderTwoItems);
+                traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountManager);
         tradeCreatorPresenter.successMessage();
 
     }
