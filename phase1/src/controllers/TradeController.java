@@ -179,21 +179,49 @@ public class TradeController {
     }
 
     private void changeTradeTimePlace() {
-        while (true) {
-            String[] newInfo = tradePresenter.editTradeTimePlace();
-            if (controllerInputValidator.isExitStr(newInfo[0]) ||
-                    controllerInputValidator.isExitStr(newInfo[1]) ||
-                    controllerInputValidator.isExitStr(newInfo[2]))
-                return;
-            if (controllerInputValidator.isDate(newInfo[1]) && controllerInputValidator.isTime(newInfo[2])) {
-                LocalDateTime date = LocalDateTime.parse(newInfo[1] + " " + newInfo[2],
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
-                if (date.isAfter(LocalDateTime.now())) {
-                    tradeManager.editTimePlace(date, newInfo[0], accountManager.getCurrAccountID());
-                    return;
-                }
-            }
+        String location = tradePresenter.editTradeLocation();
+        if (controllerInputValidator.isExitStr(location))
+            return;
+
+        while(!controllerInputValidator.isValidCSVStr(location)) {
             tradePresenter.invalidInput();
+            location = tradePresenter.editTradeLocation();
+            if (controllerInputValidator.isExitStr(location))
+                return;
+        }
+
+        while (true) {
+            String date = tradePresenter.editTradeDate();
+            if (controllerInputValidator.isExitStr(date))
+                return;
+
+            while (!controllerInputValidator.isValidCSVStr(date) || !controllerInputValidator.isDate(date)) {
+                tradePresenter.invalidInput();
+                date = tradePresenter.editTradeDate();
+                if (controllerInputValidator.isExitStr(date))
+                    return;
+            }
+
+            String time = tradePresenter.editTradeTime();
+            if (controllerInputValidator.isExitStr(time))
+                return;
+
+            while (!controllerInputValidator.isValidCSVStr(time) || !controllerInputValidator.isTime(time)) {
+                tradePresenter.invalidInput();
+                time = tradePresenter.editTradeTime();
+                if (controllerInputValidator.isExitStr(time))
+                    return;
+            }
+
+            LocalDateTime dateTime =
+                    LocalDateTime.parse(date + " " + time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+            if (dateTime.isAfter(LocalDateTime.now())) {
+                tradeManager.editTimePlace(dateTime, location, accountManager.getCurrAccountID());
+                tradePresenter.showMessage("You have suggested a new meetup");
+                return;
+            }
+            tradePresenter.showMessage("You need to choose a date and time in the future.");
         }
     }
 

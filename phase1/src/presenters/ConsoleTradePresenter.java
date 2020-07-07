@@ -48,16 +48,30 @@ public class ConsoleTradePresenter implements TradePresenter {
      * {@inheritDoc}
      */
     @Override
-    public String[] editTradeTimePlace() {
+    public String editTradeTime() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Suggest a new time for the meeting hh-mm (-1 to go back): ");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String editTradeDate() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Suggest a new date for the meeting yyyy-mm-dd (-1 to go back): ");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String editTradeLocation() {
         Scanner input = new Scanner(System.in);
         System.out.print("Suggest a new location for the meeting (-1 to go back): ");
-        String[] s = new String[3];
-        s[0] = input.nextLine();
-        System.out.print("Suggest a new date for the meeting yyyy-mm-dd (-1 to go back): ");
-        s[1] = input.nextLine();
-        System.out.print("Suggest a new time for the meeting hh-mm (-1 to go back): ");
-        s[2] = input.nextLine();
-        return s;
+        return input.nextLine();
     }
 
     /**
