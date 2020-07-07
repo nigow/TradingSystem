@@ -33,10 +33,10 @@ public class AccountManager {
      * Creates a new standard trading account using username and password by determining if characters used are valid
      * @param username Username of the new account
      * @param password Password of the new account
-     * @return true if account is successfully created and false if username is taken already or invalid characters where used
+     * @return true if account is successfully created and false if username is taken already
      */
     public boolean createStandardAccount(String username, String password){
-        if (validateAccountRegister(username, password)){
+        if (accountGateway.findByUsername(username) == null){
             AccountFactory accountFactory = new AccountFactory(accountGateway);
             Account createdAccount = accountFactory.createStandardAccount(username, password);
             if (accountGateway.updateAccount(createdAccount)){
@@ -55,7 +55,7 @@ public class AccountManager {
      * @return true if account is successfully created and false if username is taken already or invalid characters where used
      */
     public boolean createAdminAccount(String username, String password){
-        if (validateAccountRegister(username, password)){
+        if (accountGateway.findByUsername(username) == null){
             AccountFactory accountFactory = new AccountFactory(accountGateway);
             Account createdAccount = accountFactory.createAdminAccount(username, password);
             if (accountGateway.updateAccount(createdAccount)){
@@ -65,17 +65,6 @@ public class AccountManager {
             return false;
         }
         return false;
-    }
-
-    /**
-     * Determines if an account can be created with the given username and password
-     * @param username Username of the new account
-     * @param password Password of the new account
-     * @return Whether an account can be created
-     */
-    private boolean validateAccountRegister(String username, String password) {
-        return username.matches("^[a-zA-Z0-9_]*$") && password.matches("^[ -~]*$") &&
-                !password.contains(",") && accountGateway.findByUsername(username) == null;
     }
 
     /**
