@@ -3,6 +3,7 @@ package gateways;
 import entities.Restrictions;
 
 import java.io.*;
+import java.util.regex.Pattern;
 
 /**
  * A restriction gateway that uses csv files as persistent storage.
@@ -29,7 +30,6 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
     public CSVRestrictionsGateway(String filepath) throws IOException {
         this.filepath = filepath;
 
-
         //pre-processing of file reading
         File f = new File(filepath);
         BufferedReader br = new BufferedReader(new FileReader(f));
@@ -38,7 +38,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
         //skip the first row
         line = br.readLine();
 
-        while(line != null){
+        while(line != null && Pattern.matches("^[0-9]+,[0-9]+,[0-9]+$", line)){
             //only the second line consists of restrictions separated by commas
             String[] lineArray = line.split(",");
             int lendLimit = Integer.parseInt(lineArray[0]);
@@ -47,14 +47,14 @@ public class CSVRestrictionsGateway implements RestrictionsGateway{
 
             this.currentRestriction = new Restrictions(lendLimit, incompleteTrade, weeklyTrade);
 
-
             line = br.readLine();
 
         }
 
         br.close();
 
-
+        // currentRestriction being null here means file was corrupted
+        if (currentRestriction == null) throw new IOException("Restrictions.csv corrupted.");
     }
 
     /**
