@@ -10,6 +10,7 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * An integration test to verify integration of usecases, gateways, and entities is successful.
@@ -169,6 +170,13 @@ public class ItemIntegrationTest extends TestCase {
         assertEquals(itemUtility.getNotInAccount(12, accountManager.getCurrWishlist()).size(), 5);
         accountManager.setCurrAccount(accountManager.getUsernameFromID(14));
         assertEquals(itemUtility.getNotInAccount(14, accountManager.getCurrWishlist()).size(), 6);
+        List<Integer> wishlist = new ArrayList<>();
+        wishlist.add(itemManager.getItemId(itemManager.getAllItems().get(1)));
+        wishlist.add(itemManager.getItemId(itemManager.getAllItems().get(2)));
+        assertEquals(itemUtility.getNotInAccount(10, wishlist).size(), 3);
+        assertEquals(itemUtility.getNotInAccount(11, wishlist).size(), 1);
+        assertEquals(itemUtility.getNotInAccount(12, wishlist).size(), 4);
+        assertEquals(itemUtility.getNotInAccount(14, wishlist).size(), 4);
     }
 }
 
