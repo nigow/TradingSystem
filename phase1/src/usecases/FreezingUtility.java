@@ -112,6 +112,7 @@ public class FreezingUtility {
      * @param authManager  Manager for permissions and authorizing actions
      * @param tradeUtility Utility for getting trade information
      * @param account      Account to freeze
+     * @param adminAccount The admin account that is freezing this account
      * @return Whether the given account is successfully frozen or not
      */
     public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account, Account adminAccount) {

@@ -239,6 +239,7 @@ public class AuthManager {
      *
      * @param tradeUtility Utility for getting trade information
      * @param account      Account that is checked if it can be frozen
+     * @param adminAccount The admin account that is freezing this account
      * @return Whether the account can be frozen or not
      */
     public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
