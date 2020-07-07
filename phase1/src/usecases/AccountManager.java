@@ -203,9 +203,9 @@ public class AccountManager {
     }
 
     /**
-     * Retrieves the ID of an account given
-     * @param account Item to search the ID for
-     * @return Id associated with the account
+     * Retrieves the ID of a given account
+     * @param account Account to get from ID
+     * @return ID associated with the account
      */
     public int getAccountID(Account account){
         return account.getAccountID();
