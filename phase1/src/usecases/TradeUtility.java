@@ -114,8 +114,8 @@ public class TradeUtility {
      * has made, if less than three list size is adjusted
      */
     public List<Integer> getRecentOneWay() {
-        List<TimePlace> AllOneWay = new ArrayList<>();
-        List<Integer> ThreeRecent = new ArrayList<>();
+        List<TimePlace> allOneWay = new ArrayList<>();
+        List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allOneWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
             if (trade.getStatus() != TradeStatus.CONFIRMED)
@@ -123,17 +123,17 @@ public class TradeUtility {
             if (trade.getTraderOneID() == account.getAccountID()) {
                 if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
                     TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
-                    AllOneWay.add(timePlace);
+                    allOneWay.add(timePlace);
                 }
             } else if (trade.getTraderTwoID() == account.getAccountID()) {
                 if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                     TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
-                    AllOneWay.add(timePlace);
+                    allOneWay.add(timePlace);
                 }
             }
         }
-        Collections.sort(AllOneWay);
-        for (TimePlace tp : AllOneWay) {
+        Collections.sort(allOneWay);
+        for (TimePlace tp : allOneWay) {
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
             allOneWayItems.addAll(trade.getItemOneIDs());
             allOneWayItems.addAll(trade.getItemTwoIDs());
@@ -141,10 +141,10 @@ public class TradeUtility {
         int count = 0;
         for (Integer tradeId : allOneWayItems) {
             if (count >= 3) break;
-            ThreeRecent.add(tradeId);
+            threeRecent.add(tradeId);
             count++;
         }
-        return ThreeRecent;
+        return threeRecent;
     }
 
     /**
@@ -155,19 +155,19 @@ public class TradeUtility {
      * has made, if less than three list size is adjusted
      */
     public List<Integer> getRecentTwoWay() {
-        List<TimePlace> AllTwoWay = new ArrayList<>();
-        List<Integer> ThreeRecent = new ArrayList<>();
+        List<TimePlace> allTwoWay = new ArrayList<>();
+        List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allTwoWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
             if (trade.getStatus() != TradeStatus.CONFIRMED)
                 continue;
             if (!trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
-                AllTwoWay.add(timePlace);
+                allTwoWay.add(timePlace);
             }
         }
-        Collections.sort(AllTwoWay);
-        for (TimePlace tp : AllTwoWay) {
+        Collections.sort(allTwoWay);
+        for (TimePlace tp : allTwoWay) {
             Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
             if (account.getAccountID() == trade.getTraderOneID()) {
                 allTwoWayItems.addAll(trade.getItemOneIDs());
@@ -178,10 +178,10 @@ public class TradeUtility {
         int count = 0;
         for (Integer tradeId : allTwoWayItems) {
             if (count >= 3) break;
-            ThreeRecent.add(tradeId);
+            threeRecent.add(tradeId);
             count++;
         }
-        return ThreeRecent;
+        return threeRecent;
     }
 
     // TODO: this function is broken rn according to the specs:
@@ -306,7 +306,7 @@ public class TradeUtility {
     /**
      * Completes the action of reversing a trade which was rejected
      *
-     * @param trade          he trade object representing the trade about to be rejected
+     * @param trade          the trade object representing the trade about to be rejected
      * @param accountManager an object for managing accounts
      * @param itemManager    an object for managing items
      */

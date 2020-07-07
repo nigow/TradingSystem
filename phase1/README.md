@@ -227,11 +227,11 @@ Choose one of the following options:
 
 You'll be shown a list of the trades that you can edit. If you were not the last person to edit the trade, then you can confirm the time and location for the trade, or suggest a new time and location for the trade. You can reject/cancel the trade regardless of whether or not you were the last person to edit it. 
 
-#### Returning a Temporary Trade
+### Returning a Temporary Trade
 
 Once a temporary trade has been confirmed by both parties, a new permanent trade will be created to signify returning the item back to its original owner. The default time and location of the return trade is exactly 30 days after the original trade at the same location, but it can be edited. 
 
-#### Viewing Your Previous Trade Information
+### Viewing Your Previous Trade Information
 
 In ```Manage your existing trades```, you can also view all your previous trades (```view all trades```), view the last 3 items you've given away in two-way trades and one way trades (```View items given away in recent two-way trades``` and ```View items given away in recent one-way trades```, respectively), and view your most frequent trading partners (```View your most frequent trading partners```):
 
@@ -277,7 +277,7 @@ Which action would you like to do?
 
 ### Changing the Global Restriction Values
 
-By default, you can cannot make a one-way trade where you are borrowing unless you've lent **0** or more items than you've borrowed, you become eligible for freezing if you have more than **5** incomplete trades, and you cannot make more than **10** trades in a week. These values can be changed in ```Modify the restriction values of the program```:
+By default, you can cannot make a one-way trade where you are borrowing unless you've lent **0** or more items than you've borrowed, you become eligible for freezing if you have more than **5** incomplete trades, and you cannot have more than **10** trades of any kind (cancelled, unconfirmed, confirmed, completed) in a week. These values can be changed in ```Modify the restriction values of the program```:
 
 ```latex
 Which action would you like to do?
@@ -343,7 +343,8 @@ Which action would you like to do?
 - You cannot confirm a trade that has a current meet up time that has already passed
 - You cannot edit a trade's time to be in the past
 - Once you've received an item from a trade, you can use it for other trades. It is your responsibility to ensure that you do not give away items that aren't yours
-- When viewing your top 3 items in recent trades, we only show items you gave away
+- When viewing your most recent 3 items in recent trades, we only show items you gave away
+- We order the most recent 3 items based on confirmed transaction date
 - We do not support negative numbers when restricting (as per the specifications)
 - Accounts don't automatically get frozen/unfrozen, and admin has to login and do this manually
 - The global action to abort an action is "-1"
