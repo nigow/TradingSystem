@@ -68,8 +68,10 @@ public class FreezingController {
             switch (action) {
                 case "0":
                     freeze();
+                    break;
                 case "1":
                     unfreeze();
+                    break;
                 case "2":
                     return;
                 default:
@@ -110,7 +112,7 @@ public class FreezingController {
         List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
         freezingPresenter.displayPossibleUnfreeze(usernames);
         while (true) {
-            String chosenUser = freezingPresenter.freeze();
+            String chosenUser = freezingPresenter.unfreeze();
             if (controllerInputValidator.isExitStr(chosenUser))
                 return;
             if (!controllerInputValidator.isNum(chosenUser))

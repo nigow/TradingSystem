@@ -196,7 +196,7 @@ public class InventoryController {
                     descriptionGiven = false;
                 } else if (confirm.equals("y")) {
                     itemManager.createItem(name, description, accountManager.getCurrAccountID());
-                    inventoryPresenter.customMessage("Item successfully added!");
+                    inventoryPresenter.customMessage("Item successfully added, pending admin approval!");
                     confirmedItem = true;
                 } else {
                     inventoryPresenter.invalidInput();

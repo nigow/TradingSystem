@@ -254,18 +254,33 @@ public class TradeManager {
         ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
         ans.append("\nLocation: ").append(timePlace.getPlace()).append(" ");
         ans.append("\nTime: ").append(timePlace.getTime()).append(" ");
-        ans.append("\nTrader 1 Items: ");
-        String separator = "";
-        for (Integer tradeId : trade.getItemOneIDs()) {
-            ans.append(separator).append(itemManager.getItemById(tradeId).toString());
-            separator = ", ";
+
+        if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
+            ans.append("\nTrader 1 Items: ");
+            String separator = "";
+            for (Integer tradeId : trade.getItemOneIDs()) {
+                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                separator = ", ";
+            }
+            separator = "";
+            ans.append("\nTrader 2 Items: ");
+            for (Integer tradeId : trade.getItemTwoIDs()) {
+                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                separator = ", ";
+            }
+        } else {
+            ans.append("\nItem being borrowed/lent: ");
+            String separator = "";
+            for (Integer tradeId : trade.getItemOneIDs()) {
+                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                separator = ", ";
+            }
+            for (Integer tradeId : trade.getItemTwoIDs()) {
+                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                separator = ", ";
+            }
         }
-        separator = "";
-        ans.append("\nTrader 2 Items: ");
-        for (Integer tradeId : trade.getItemTwoIDs()) {
-            ans.append(separator).append(itemManager.getItemById(tradeId).toString());
-            separator = ", ";
-        }
+
         return ans.toString();
     }
 

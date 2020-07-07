@@ -28,7 +28,7 @@ public class ConsoleInventoryPresenter implements InventoryPresenter {
     @Override
     public void displayInventory(List<String> inventory) {
         for (int i = 0; i < inventory.size(); i++) {
-            System.out.println(i + ": " + inventory.get(i));
+            System.out.println(i + ". " + inventory.get(i));
         }
     }
 
