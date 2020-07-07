@@ -272,4 +272,12 @@ public class TradeManager {
         tradeGateway.updateTrade(trade, timePlace);
     }
 
+    /**
+     * returns the date and time of this trade
+     * @return the date and time of this trade
+     */
+    public LocalDateTime getDateTime() {
+        return timePlace.getTime();
+    }
+
 }

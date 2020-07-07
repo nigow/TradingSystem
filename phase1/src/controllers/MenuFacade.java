@@ -4,6 +4,7 @@ import gateways.ManualConfig;
 import presenters.MenuPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
+import usecases.TradeUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,8 @@ public class MenuFacade {
 
     private final ControllerInputValidator controllerInputValidator;
 
+    private final TradeUtility tradeUtility;
+
     /**
      * Initializes MenuFacade with the necessary controllers, presenter, and usecases.
      * @param mc An instance of ManualConfig to get the necessary usecases
@@ -70,6 +73,7 @@ public class MenuFacade {
                       MenuPresenter menuPresenter) {
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();
+        tradeUtility = mc.getTradeUtility();
 
         this.menuPresenter = menuPresenter;
 
@@ -89,6 +93,9 @@ public class MenuFacade {
      * Calls the presenter with options for the user based on their permission and executes the action.
      */
     public void run() {
+
+        tradeUtility.setAccount(accountManager.getCurrAccount());
+
         while (true) {
             List<String> options = new ArrayList<>();
             List<Runnable> method = new ArrayList<>();

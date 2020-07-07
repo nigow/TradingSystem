@@ -7,10 +7,16 @@ package presenters;
 
 public interface AdminCreatorPresenter {
     /**
-     * creates admin account
-     * @return username and password
+     * creates admin username
+     * @return username
      */
-    String[] createAdmin();
+    String createAdminUsername();
+
+    /**
+     * create admin password
+     * @return password
+     */
+    String createAdminPassword();
 
     /**
      * lets user know that their input for username and/or password is invalid

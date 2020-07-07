@@ -55,7 +55,6 @@ public class TradeController {
      * Displays trade-managing options to the user and interacts with them to update their information.
      */
     public void run() {
-        tradeUtility.setAccount(accountManager.getCurrAccount());
         while (true) {
             List<String> options = new ArrayList<>();
             List<Runnable> methods = new ArrayList<>();
@@ -149,7 +148,8 @@ public class TradeController {
             List<String> options = new ArrayList<>();
             options.add("Reject or cancel this trade");
             if (tradeManager.isEditTurn(accountManager.getCurrAccount())) {
-                options.add("Confirm the time and location for this trade");
+                if (tradeManager.getDateTime().isAfter(LocalDateTime.now()))
+                    options.add("Confirm the time and location for this trade");
                 options.add("Edit the time and location for this trade");
             }
             options.add("Go back");
@@ -164,7 +164,6 @@ public class TradeController {
                     } else if (actionInd == 1) {
                         tradeManager.updateStatus(TradeStatus.CONFIRMED);
                         tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
-                        // TODO: perform items swapping
                         if (!tradeManager.isPermanent()) {
                             tradeManager.reverseTrade();
                         }

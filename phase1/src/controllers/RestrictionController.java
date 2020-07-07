@@ -55,7 +55,10 @@ public class RestrictionController {
         while (!isValid) {
             isValid = true;
             newNumber = restrictionPresenter.changeLendMoreThanBorrow(freezingUtility.getLendMoreThanBorrow());
-            if (!controllerInputValidator.isNum(newNumber)) {
+            if (newNumber.equals("-1")) {
+                return;
+            }
+            else if (!controllerInputValidator.isNum(newNumber)) {
                 isValid = false;
                 restrictionPresenter.invalidInput();
             }
@@ -71,7 +74,10 @@ public class RestrictionController {
         while (!isValid) {
             isValid = true;
             newNumber = restrictionPresenter.changeMaxIncompleteTrades(freezingUtility.getMaxIncompleteTrade());
-            if (!controllerInputValidator.isNum(newNumber)) {
+            if (newNumber.equals("-1")) {
+                return;
+            }
+            else if (!controllerInputValidator.isNum(newNumber)) {
                 isValid = false;
                 restrictionPresenter.invalidInput();
             }
@@ -87,7 +93,10 @@ public class RestrictionController {
         while (!isValid) {
             isValid = true;
             newNumber = restrictionPresenter.changeMaxWeeklyTrades(freezingUtility.getMaxWeeklyTrade());
-            if (!controllerInputValidator.isNum(newNumber)) {
+            if (newNumber.equals("-1")) {
+                return;
+            }
+            else if (!controllerInputValidator.isNum(newNumber)) {
                 isValid = false;
                 restrictionPresenter.invalidInput();
             }
