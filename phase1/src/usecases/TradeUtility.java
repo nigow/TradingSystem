@@ -143,17 +143,6 @@ public class TradeUtility {
             count++;
         }
         return ThreeRecent;
-        /*
-        int count = 0;
-        int i = 0;
-        while (count < 3 && i < allOneWayItems.size()) {
-            ThreeRecent.add(allOneWayItems.get(i));
-            count++;
-            i++;
-        }
-
-        return ThreeRecent;
-         */
     }
 
     /**
@@ -188,17 +177,6 @@ public class TradeUtility {
             count++;
         }
         return ThreeRecent;
-        /*
-        int count = 0;
-        int i = 0;
-        while (count < 3 && i < allTwoWayItems.size()) {
-            ThreeRecent.add(allTwoWayItems.get(i));
-            count++;
-            i++;
-        }
-
-        return ThreeRecent;
-         */
     }
 
     /**

@@ -328,6 +328,7 @@ Which action would you like to do?
 - Your username is restricted to the following characters: a-z, A-Z, 0-9, _
 - Your password cannot be empty, contain a space, -, ~, or comma.
 - We do not support negative numbers when restricting (as per the specifications)
+- When viewing your top 3 items in recent trades, we only show items you gave away
 - The global action to abort an action is "-1"
 
 ## Authors
