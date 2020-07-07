@@ -116,7 +116,7 @@ public class MenuFacade {
             options.add("Manage your wishlist");
             method.add(wishlistController::run);
 
-            if (authManager.canTrade(tradeUtility, accountManager.getCurrAccount()) &&
+            if (authManager.canTrade(accountManager.getCurrAccount()) &&
                     !itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).isEmpty()) {
                 options.add("Initiate a trade with a specific account");
                 method.add(lendingController::run);
@@ -137,7 +137,7 @@ public class MenuFacade {
                 method.add(adminCreator::run);
             }
 
-            if (authManager.requestUnfreeze(accountManager.getCurrAccount())) {
+            if (authManager.canRequestUnfreeze(accountManager.getCurrAccount())) {
                 options.add("Request to be unfrozen");
                 method.add(appealController::run);
             }
