@@ -132,6 +132,12 @@ public class InventoryController {
         this.inventoryPresenter.displayInventory(allYourItems);
     }
 
+    private void displayAllYourInventory() {
+        this.inventoryPresenter.customMessage("All your items, including pending items:");
+        List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
+        this.inventoryPresenter.displayInventory(allYourItems);
+    }
+
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
@@ -246,7 +252,7 @@ public class InventoryController {
      * Runs the remove your item from inventory submenu
      */
     private void removeFromYourInventory() {
-        displayYourInventory();
+        displayAllYourInventory();
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.removeFromInventory();

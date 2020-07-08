@@ -108,7 +108,7 @@ Choose an option to do:
 7. Return to main menu
 ```
 
-From there, you'll be shown a list of all your approved items, and you can enter the number to the left of the item you wish to remove. 
+From there, you'll be shown a list of all your approved and pending items, and you can enter the number to the left of the item you wish to remove. 
 
 ### Adding an Item to Your Wishlist
 

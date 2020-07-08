@@ -51,7 +51,7 @@ public class ConsoleTradePresenter implements TradePresenter {
     @Override
     public String editTradeTime() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Suggest a new time for the meeting hh-mm (-1 to go back): ");
+        System.out.print("Suggest a new time for the meeting hh:mm (-1 to go back): ");
         return input.nextLine();
     }
 
