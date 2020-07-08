@@ -8,7 +8,7 @@ There are also 2 .zip files in ```phase1``` with two sets of pre-configured csv 
 
 There will be a build error in the test files if you do not add the necessary JUnit packages to your path. If you do not wish to add these packages, we have added an option called ```Main (no test)```to change the run configuration to run despite any build errors in the test folder.
 
-Finally, we've provided scripts in the phase1 folder (docgen.bat and docgen.sh) that you can run to create a folder with all the javadocs in the program.
+Finally, we've provided scripts in the phase1 folder (docgen.bat and docgen.sh) that create the HTML files for the javadocs in a docs folder.
 
 ## Running the Code
 
