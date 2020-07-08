@@ -34,6 +34,8 @@ public class TradeController {
 
     private final ControllerInputValidator controllerInputValidator;
 
+    private final int MAX_ALLOWED_EDITS = 6;
+
     /**
      * Initialized TradeController by setting necessary usecases and presenter.
      *
@@ -157,7 +159,7 @@ public class TradeController {
                 if (tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
                     options.add("Confirm the time and location for this trade");
                 }
-                if (tradeManager.getEditedCounter() < 6) {
+                if (tradeManager.getEditedCounter() < MAX_ALLOWED_EDITS) {
                     options.add("Edit the time and location for this trade");
                 }
             }

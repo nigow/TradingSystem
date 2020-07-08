@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
  */
 public class TradeUtility {
 
+    private final int NUMBER_OF_NEEDED_STATS = 3;
+
     /**
      * Manager responsible for creating and editing trades.
      */
@@ -98,7 +100,7 @@ public class TradeUtility {
         List<Integer> tradeIds = new ArrayList<>();
         int count = 0;
         for (Map.Entry<Integer, Integer> entry : sorted.entrySet()) {
-            if (count >= 3) break;
+            if (count >= NUMBER_OF_NEEDED_STATS) break;
             tradeIds.add(entry.getKey());
             count++;
         }
@@ -139,7 +141,7 @@ public class TradeUtility {
         }
         int count = 0;
         for (Integer tradeId : allOneWayItems) {
-            if (count >= 3) break;
+            if (count >= NUMBER_OF_NEEDED_STATS) break;
             threeRecent.add(tradeId);
             count++;
         }
@@ -176,7 +178,7 @@ public class TradeUtility {
         }
         int count = 0;
         for (Integer tradeId : allTwoWayItems) {
-            if (count >= 3) break;
+            if (count >= NUMBER_OF_NEEDED_STATS) break;
             threeRecent.add(tradeId);
             count++;
         }
