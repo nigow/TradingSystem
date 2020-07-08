@@ -184,6 +184,11 @@ public class TradeController {
                         tradePresenter.showMessage("You confirmed the time and location for this trade.");
                     } else {
                         changeTradeTimePlace();
+                        if (tradeManager.getEditedCounter() == MAX_ALLOWED_EDITS) {
+                            tradeManager.updateStatus(TradeStatus.REJECTED);
+                            tradePresenter.showMessage("You have edited " +
+                                    "the time and location for this trade too many times, and it has been cancelled.");
+                        }
                     }
                     return;
                 }
