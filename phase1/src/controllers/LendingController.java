@@ -9,7 +9,6 @@ import usecases.AccountManager;
 import usecases.ItemManager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -38,7 +37,7 @@ public class LendingController {
      */
     private final ManualConfig manualConfig;
 
-    private final ControllerInputValidator validator;
+    private final InputHandler validator;
 
     /**
      * A controller that initiates trades
@@ -57,7 +56,7 @@ public class LendingController {
         this.accountManager = manualConfig.getAccountManager();
         this.itemManager = manualConfig.getItemManager();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
-        this.validator = new ControllerInputValidator();
+        this.validator = new InputHandler();
     }
 
     /**

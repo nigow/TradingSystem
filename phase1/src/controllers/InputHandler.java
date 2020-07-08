@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Class containing helper methods for verifying input.
  */
-public class ControllerInputValidator {
+public class InputHandler {
 
     private final String TRUE = "y";
     private final String FALSE = "n";

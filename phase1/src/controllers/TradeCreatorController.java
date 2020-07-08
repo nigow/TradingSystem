@@ -27,7 +27,7 @@ public class TradeCreatorController {
     private final int itemId;
     private final boolean forceTwoWay;
 
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     /**
      * Create a controller for the trade creation screen.
@@ -51,7 +51,7 @@ public class TradeCreatorController {
         this.itemId = itemId;
         this.forceTwoWay = forceTwoWay;
 
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
 
     }
 
@@ -69,27 +69,27 @@ public class TradeCreatorController {
             traderOneItems.add(itemId);
         }
 
-        String twoWayTrade = forceTwoWay ? controllerInputValidator.getTrue() : tradeCreatorPresenter.getTwoWayTrade();
+        String twoWayTrade = forceTwoWay ? inputHandler.getTrue() : tradeCreatorPresenter.getTwoWayTrade();
 
-        while (!controllerInputValidator.isBool(twoWayTrade)) {
+        while (!inputHandler.isBool(twoWayTrade)) {
 
-            if (controllerInputValidator.isExitStr(twoWayTrade)) return;
+            if (inputHandler.isExitStr(twoWayTrade)) return;
             tradeCreatorPresenter.invalidInput();
             twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
 
         }
 
-        if (controllerInputValidator.isTrue(twoWayTrade) && !setUpTwoWayTrade(traderOneItems, traderTwoItems)) return;
+        if (inputHandler.isTrue(twoWayTrade) && !setUpTwoWayTrade(traderOneItems, traderTwoItems)) return;
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
-        if (controllerInputValidator.isExitStr(tradeLocation)) return;
+        if (inputHandler.isExitStr(tradeLocation)) return;
 
         String date = tradeCreatorPresenter.getDate();
 
-        while (!controllerInputValidator.isDate(date) || LocalDate.parse(date).isBefore(LocalDate.now())) {
+        while (!inputHandler.isDate(date) || LocalDate.parse(date).isBefore(LocalDate.now())) {
 
-            if (controllerInputValidator.isExitStr(date)) return;
+            if (inputHandler.isExitStr(date)) return;
             tradeCreatorPresenter.invalidInput();
             date = tradeCreatorPresenter.getDate();
 
@@ -97,10 +97,10 @@ public class TradeCreatorController {
 
         String time = tradeCreatorPresenter.getTime();
 
-        while (!controllerInputValidator.isTime(time) ||
+        while (!inputHandler.isTime(time) ||
                 !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
 
-            if (controllerInputValidator.isExitStr(time)) return;
+            if (inputHandler.isExitStr(time)) return;
             tradeCreatorPresenter.invalidInput();
             time = tradeCreatorPresenter.getTime();
 
@@ -108,15 +108,15 @@ public class TradeCreatorController {
 
         String isPerm = tradeCreatorPresenter.getIsPerm();
 
-        while (!controllerInputValidator.isBool(isPerm)) {
+        while (!inputHandler.isBool(isPerm)) {
 
-            if (controllerInputValidator.isExitStr(isPerm)) return;
+            if (inputHandler.isExitStr(isPerm)) return;
             tradeCreatorPresenter.invalidInput();
             isPerm = tradeCreatorPresenter.getIsPerm();
 
         }
 
-        tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, controllerInputValidator.isTrue(isPerm),
+        tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, inputHandler.isTrue(isPerm),
                 traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountManager);
         tradeCreatorPresenter.successMessage();
 
@@ -132,9 +132,9 @@ public class TradeCreatorController {
         tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
         String oppositeItemIndex = tradeCreatorPresenter.getItem();
 
-        while (!controllerInputValidator.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
+        while (!inputHandler.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
 
-            if (controllerInputValidator.isExitStr(oppositeItemIndex)) return false;
+            if (inputHandler.isExitStr(oppositeItemIndex)) return false;
             tradeCreatorPresenter.invalidInput();
             oppositeItemIndex = tradeCreatorPresenter.getItem();
 

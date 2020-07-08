@@ -32,7 +32,7 @@ public class TradeController {
 
     private final ItemUtility itemUtility;
 
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     private final int MAX_ALLOWED_EDITS = 6;
 
@@ -50,7 +50,7 @@ public class TradeController {
         tradeManager = mc.getTradeManager();
         itemManager = mc.getItemManager();
         itemUtility = mc.getItemUtility();
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
     }
 
     /**
@@ -82,7 +82,7 @@ public class TradeController {
 
             String action = tradePresenter.displayTradeOptions(options);
 
-            if (controllerInputValidator.isNum(action)) {
+            if (inputHandler.isNum(action)) {
                 int i = Integer.parseInt(action);
                 if (0 <= i && i < methods.size())
                     methods.get(i).run();
@@ -108,9 +108,9 @@ public class TradeController {
         while (true) {
             showTrades();
             String index = tradePresenter.selectTrade();
-            if (controllerInputValidator.isExitStr(index))
+            if (inputHandler.isExitStr(index))
                 return;
-            if (controllerInputValidator.isNum(index)) {
+            if (inputHandler.isNum(index)) {
                 int ind = Integer.parseInt(index);
                 List<Trade> trades = tradeUtility.getAllTradesAccount();
                 if (0 <= ind && ind < trades.size()) {
@@ -138,11 +138,11 @@ public class TradeController {
             while (true) {
                 tradePresenter.showMessage("Has this trade been completed?");
                 String ans = tradePresenter.yesOrNo();
-                if (controllerInputValidator.isTrue(ans)) {
+                if (inputHandler.isTrue(ans)) {
                     tradePresenter.showMessage("You have marked this trade as complete.");
                     tradeManager.updateCompletion(accountManager.getCurrAccountID());
                     return;
-                } else if (controllerInputValidator.isFalse(ans)) {
+                } else if (inputHandler.isFalse(ans)) {
                     tradePresenter.showMessage("Okay.");
                     return;
                 } else
@@ -165,7 +165,7 @@ public class TradeController {
             }
             options.add("Go back");
             String action = tradePresenter.displayTradeOptions(options);
-            if (controllerInputValidator.isNum(action)) {
+            if (inputHandler.isNum(action)) {
                 int actionInd = Integer.parseInt(action);
                 if (actionInd == options.size() - 1)
                     return;
@@ -194,36 +194,36 @@ public class TradeController {
 
     private void changeTradeTimePlace() {
         String location = tradePresenter.editTradeLocation();
-        if (controllerInputValidator.isExitStr(location))
+        if (inputHandler.isExitStr(location))
             return;
 
-        while (!controllerInputValidator.isValidCSVStr(location)) {
+        while (!inputHandler.isValidCSVStr(location)) {
             tradePresenter.invalidInput();
             location = tradePresenter.editTradeLocation();
-            if (controllerInputValidator.isExitStr(location))
+            if (inputHandler.isExitStr(location))
                 return;
         }
 
         while (true) {
             String date = tradePresenter.editTradeDate();
-            if (controllerInputValidator.isExitStr(date))
+            if (inputHandler.isExitStr(date))
                 return;
 
-            while (!controllerInputValidator.isDate(date)) {
+            while (!inputHandler.isDate(date)) {
                 tradePresenter.invalidInput();
                 date = tradePresenter.editTradeDate();
-                if (controllerInputValidator.isExitStr(date))
+                if (inputHandler.isExitStr(date))
                     return;
             }
 
             String time = tradePresenter.editTradeTime();
-            if (controllerInputValidator.isExitStr(time))
+            if (inputHandler.isExitStr(time))
                 return;
 
-            while (!controllerInputValidator.isTime(time)) {
+            while (!inputHandler.isTime(time)) {
                 tradePresenter.invalidInput();
                 time = tradePresenter.editTradeTime();
-                if (controllerInputValidator.isExitStr(time))
+                if (inputHandler.isExitStr(time))
                     return;
             }
 
