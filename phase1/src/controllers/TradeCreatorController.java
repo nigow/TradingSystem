@@ -69,7 +69,7 @@ public class TradeCreatorController {
             traderOneItems.add(itemId);
         }
 
-        String twoWayTrade = forceTwoWay ? controllerInputValidator.getTRUE() : tradeCreatorPresenter.getTwoWayTrade();
+        String twoWayTrade = forceTwoWay ? controllerInputValidator.getTrue() : tradeCreatorPresenter.getTwoWayTrade();
 
         while (!controllerInputValidator.isBool(twoWayTrade)) {
 

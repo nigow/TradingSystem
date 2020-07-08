@@ -17,7 +17,7 @@ public class ControllerInputValidator {
      *
      * @return the TRUE string
      */
-    public String getTRUE() {
+    public String getTrue() {
         return TRUE;
     }
 
@@ -26,7 +26,7 @@ public class ControllerInputValidator {
      *
      * @return the FALSE string
      */
-    public String getFALSE() {
+    public String getFalse() {
         return FALSE;
     }
 
