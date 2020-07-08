@@ -14,7 +14,7 @@ import usecases.AccountManager;
 import usecases.ItemUtility;
 
 /**
- * Controller that deals with the inventory
+ * Controller that deals with the inventory.
  *
  * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */

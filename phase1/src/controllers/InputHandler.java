@@ -5,7 +5,7 @@ import java.time.Year;
 import java.util.regex.Pattern;
 
 /**
- * Controller containing helper methods for verifying input.
+ * Handler that contains helper methods for verifying input.
  */
 public class InputHandler {
 
@@ -13,7 +13,7 @@ public class InputHandler {
     private final String FALSE = "n";
 
     /**
-     * Returns the TRUE string
+     * Returns the TRUE string.
      *
      * @return the TRUE string
      */
@@ -22,7 +22,7 @@ public class InputHandler {
     }
 
     /**
-     * Returns the FALSE string
+     * Returns the FALSE string.
      *
      * @return the FALSE string
      */

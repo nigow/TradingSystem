@@ -7,6 +7,9 @@ import usecases.FreezingUtility;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller that deals with changing restrictions.
+ */
 public class RestrictionController {
 
     private final FreezingUtility freezingUtility;

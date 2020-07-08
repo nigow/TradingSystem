@@ -35,14 +35,14 @@ public class HomeController {
     private final MenuFacade menuFacade;
 
     /**
-     * An instance of ControllerInputValidator to check a user's input is valid
+     * An instance of ControllerInputValidator to check a user's input is valid.
      */
     private final InputHandler inputHandler;
 
     /**
-     * Initializes HomeController with the necessary presenter and usecases.
+     * Initializes HomeController with the necessary presenter and use cases.
      *
-     * @param mc            An instance of ManualConfig to get the necessary usecases
+     * @param mc            An instance of ManualConfig to get the necessary use cases
      * @param homePresenter An instance of HomePresenter to display information and interact with the user
      * @param menuFacade    An instance of MenuFacade to take user's to the next menu
      */

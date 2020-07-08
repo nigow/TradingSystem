@@ -37,9 +37,9 @@ public class TradeController {
     private final int MAX_ALLOWED_EDITS = 6;
 
     /**
-     * Initialized TradeController by setting necessary usecases and presenter.
+     * Initialized TradeController by setting necessary use cases and presenter.
      *
-     * @param mc             An instance of ManualConfig to get necessary usecases
+     * @param mc             An instance of ManualConfig to get necessary use cases
      * @param tradePresenter An instance of TradePresenter to display and get information from the user
      */
     public TradeController(ManualConfig mc, TradePresenter tradePresenter) {

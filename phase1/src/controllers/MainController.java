@@ -8,7 +8,7 @@ import presenters.*;
 import java.io.IOException;
 
 /**
- * A class that initiates the program.
+ * Main controller that initiates the program.
  *
  * @author Maryam
  */

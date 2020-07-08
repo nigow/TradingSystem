@@ -40,7 +40,7 @@ public class LendingController {
     private final InputHandler validator;
 
     /**
-     * A presenter that initiates trades.
+     * Presenter that initiates trades.
      */
     private final TradeCreatorPresenter tradeCreatorPresenter;
 
@@ -62,7 +62,7 @@ public class LendingController {
     }
 
     /**
-     * Helper method that sends all accounts available to trade with, and let the user choose
+     * Helper method that sends all accounts available to trade with, and let the user choose.
      *
      * @return index of the account in the list of accounts provided
      */
@@ -93,7 +93,7 @@ public class LendingController {
 
 
     /**
-     * Helper method that sends all tradable items that the user owns
+     * Helper method that sends all tradable items that the user owns.
      *
      * @return index of the item in the list of accounts provided
      */

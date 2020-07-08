@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class that manages a user's options according to their permissions.
+ * Controller that manages a user's options according to their permissions.
  *
  * @author Maryam
  */
@@ -52,9 +52,9 @@ public class MenuFacade {
     private final ItemUtility itemUtility;
 
     /**
-     * Initializes MenuFacade with the necessary controllers, presenter, and usecases.
+     * Initializes MenuFacade with the necessary controllers, presenter, and use cases.
      *
-     * @param mc                    An instance of ManualConfig to get the necessary usecases
+     * @param mc                    An instance of ManualConfig to get the necessary use cases
      * @param freezingController    An instance of FreezingController
      * @param inventoryController   An instance of InventoryController
      * @param wishlistController    An instance of WishlistController
