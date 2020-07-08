@@ -11,36 +11,36 @@ public interface HomePresenter {
     /**
      * Displays possible actions for logging in or creating accounts.
      *
-     * @param homeOptions possible actions user can choose from
-     * @return index of chosen action
+     * @param homeOptions Possible actions user can choose from
+     * @return Index of chosen action
      */
     String displayHomeOptions(List<String> homeOptions);
 
     /**
      * Gets user's username.
      *
-     * @return username of Account
+     * @return Username of account to login
      */
     String logInUsername();
 
     /**
      * Gets user's password.
      *
-     * @return password of Account
+     * @return Password of account to login
      */
     String logInPassword();
 
     /**
      * Gets desired account username.
      *
-     * @return username
+     * @return Username of the new account
      */
     String newAccountUsername();
 
     /**
      * Gets desired account password.
      *
-     * @return password
+     * @return Password of the new account
      */
     String newAccountPassword();
 
@@ -52,7 +52,7 @@ public interface HomePresenter {
     /**
      * Displays a custom message to the user.
      *
-     * @param message a custom message for the user
+     * @param message Custom message for the user
      */
     void showMessage(String message);
 }

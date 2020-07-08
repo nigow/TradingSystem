@@ -11,8 +11,8 @@ public interface MenuPresenter {
     /**
      * Displays all possible actions for the user.
      *
-     * @param menuOptions possible actions
-     * @return index of chosen action
+     * @param menuOptions Possible actions
+     * @return Index of chosen action
      */
     String displayMenu(List<String> menuOptions);
 

@@ -5,15 +5,15 @@ import java.time.Year;
 import java.util.regex.Pattern;
 
 /**
- * Class containing helper methods for verifying input.
+ * Controller containing helper methods for verifying input.
  */
 public class ControllerInputValidator {
 
     /**
      * Check if a string is a non-negative integer.
      *
-     * @param input Input string.
-     * @return Whether given string is a non-negative integer.
+     * @param input Input string
+     * @return Whether given string is a non-negative integer
      */
     public boolean isNum(String input) {
 
@@ -24,8 +24,8 @@ public class ControllerInputValidator {
     /**
      * Check if a string is a valid date in the form of yyyy-mm-dd.
      *
-     * @param input Input string.
-     * @return Whether given string is a valid date in the form of yyyy-mm-dd.
+     * @param input Input string
+     * @return Whether given string is a valid date in the form of yyyy-mm-dd
      */
     public boolean isDate(String input) {
 
@@ -46,8 +46,8 @@ public class ControllerInputValidator {
     /**
      * Check if a string is a time in the form of hh:mm.
      *
-     * @param input Input string.
-     * @return Whether given string is a time in the form of hh:mm.
+     * @param input Input string
+     * @return Whether given string is a time in the form of hh:mm
      */
     public boolean isTime(String input) {
 
@@ -59,8 +59,8 @@ public class ControllerInputValidator {
     /**
      * Check if a string is a boolean/decision in the form of "y" or "n".
      *
-     * @param input Input string.
-     * @return Whether given string is a boolean/decision in the form of "y" or "n".
+     * @param input Input string
+     * @return Whether given string is a boolean/decision in the form of "y" or "n"
      */
     public boolean isBool(String input) {
 
@@ -71,8 +71,8 @@ public class ControllerInputValidator {
     /**
      * Check if a string is the program standard exit string (-1).
      *
-     * @param input Input string.
-     * @return Whether given string is the program standard exit string (-1).
+     * @param input Input string
+     * @return Whether given string is the program standard exit string (-1)
      */
     public boolean isExitStr(String input) {
 
@@ -81,7 +81,7 @@ public class ControllerInputValidator {
     }
 
     /**
-     * Check if a string is valid for storing in a CSV file (does not include commas)
+     * Check if a string is valid for storing in a CSV file (does not include commas).
      *
      * @param input Input string
      * @return Whether the given string is valid for storing in a CSV file
@@ -91,7 +91,7 @@ public class ControllerInputValidator {
     }
 
     /**
-     * Determines if an account can be created with the given username and password
+     * Determines if an account can be created with the given username and password.
      *
      * @param username Username of the new account
      * @param password Password of the new account

@@ -5,29 +5,29 @@ import presenters.AdminCreatorPresenter;
 import usecases.AccountManager;
 
 /**
- * controller to create new admin accounts
+ * Controller that creates new admin accounts.
  *
  * @author Catherine
  */
 public class AdminCreatorController {
     /**
-     * an instance of AdminCreatorPresenter to let user know what to do
+     * An instance of AdminCreatorPresenter to let user know what to do.
      */
     private final AdminCreatorPresenter adminPresenter;
     /**
-     * an instance of AccountManager to create new account
+     * An instance of AccountManager to create new account.
      */
     private final AccountManager accountManager;
     /**
-     * an instance of ControllerInputValidator to check for valid input
+     * An instance of ControllerInputValidator to check for valid input.
      */
     private final ControllerInputValidator controllerInputValidator;
 
     /**
-     * initializes AdminCreatorController with necessary presenter and use cases
+     * Initializes AdminCreatorController with necessary presenter and use cases.
      *
-     * @param mc             an instance of ManualConfig to get use cases
-     * @param adminPresenter an instance of AdminPresenter to display information
+     * @param mc             An instance of ManualConfig to get use cases
+     * @param adminPresenter An instance of AdminPresenter to display information
      */
     public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
         accountManager = mc.getAccountManager();
@@ -36,7 +36,7 @@ public class AdminCreatorController {
     }
 
     /**
-     * calls presenters to get username and password for new admin account
+     * Calls presenters to get username and password for new admin account.
      */
     public void run() {
         while (true) {

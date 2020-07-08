@@ -11,22 +11,22 @@ public interface InventoryPresenter {
     /**
      * Displays possible actions for dealing with inventory.
      *
-     * @param InventoryOptions possible actions user can choose from
-     * @return index of chosen action
+     * @param InventoryOptions Possible actions user can choose from
+     * @return Index of chosen action
      */
     String displayInventoryOptions(List<String> InventoryOptions);
 
     /**
      * Displays inventory.
      *
-     * @param inventory list of inventory item
+     * @param inventory List of inventory items
      */
     void displayInventory(List<String> inventory);
 
     /**
      * Add to wishlist.
      *
-     * @return indexes of items that user would like to add to the wishlist
+     * @return Indexes of items that user would like to add to the wishlist
      */
 
     String addToWishlist();
@@ -34,30 +34,30 @@ public interface InventoryPresenter {
     /**
      * Asks user what they want to name their item.
      *
-     * @return the Name of the Item the user wishes to create
+     * @return Name of the Item the user wishes to create
      */
     String askName();
 
     /**
      * Asks user for their item's description.
      *
-     * @return the Description of the Item the user wishes to create
+     * @return Description of the Item the user wishes to create
      */
     String askDescription();
 
     /**
      * Ask user to confirm their item.
      *
-     * @param name        The name that the user has given
-     * @param description the description that the user has given
-     * @return the Description of the Item the user wishes to create
+     * @param name        Name that the user has given
+     * @param description Description that the user has given
+     * @return Description of the item the user wishes to create
      */
     String confirmItem(String name, String description);
 
     /**
      * Remove an item from inventory.
      *
-     * @return indexes of item that user would like removed from inventory
+     * @return Indexes of item that user would like removed from inventory
      */
     String removeFromInventory();
 
@@ -65,7 +65,7 @@ public interface InventoryPresenter {
     /**
      * Approve chosen item.
      *
-     * @return indexes of item that can be approved
+     * @return Indexes of item that can be approved
      */
     String approveItem();
 
@@ -82,7 +82,7 @@ public interface InventoryPresenter {
     /**
      * Sends a customizable message to the user.
      *
-     * @param message the message that will be printed to the user
+     * @param message Message that will be printed to the user
      */
     void customMessage(String message);
 

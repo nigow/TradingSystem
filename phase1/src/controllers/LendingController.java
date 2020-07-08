@@ -13,43 +13,45 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Controller that deals with lending service
+ * Controller that deals with lending service.
  *
  * @author Tairi
  */
 public class LendingController {
     /**
-     * Presenter for lending services
+     * Presenter for lending services.
      */
     private final LendingPresenter lendingPresenter;
 
     /**
-     * account manager needed to provide account-related services
+     * Account manager needed to provide account-related services.
      */
     private final AccountManager accountManager;
 
     /**
-     * item manager needed to provide item-related services
+     * Item manager needed to provide item-related services.
      */
     private final ItemManager itemManager;
 
     /**
-     * Collection of gateways
+     * Collection of gateways.
      */
     private final ManualConfig manualConfig;
 
     private final ControllerInputValidator validator;
 
     /**
-     * A controller that initiates trades
+     * A presenter that initiates trades.
      */
     private final TradeCreatorPresenter tradeCreatorPresenter;
 
 
     /**
-     * Initialize the use cases and presenter
+     * Initialize the use cases and presenter.
      *
-     * @param manualConfig collection of gateways
+     * @param lendingPresenter Presenter for lending services
+     * @param manualConfig Collection of gateways
+     * @param tradeCreatorPresenter Presenter for suggesting trades
      */
     public LendingController(LendingPresenter lendingPresenter, ManualConfig manualConfig, TradeCreatorPresenter tradeCreatorPresenter) {
         this.manualConfig = manualConfig;

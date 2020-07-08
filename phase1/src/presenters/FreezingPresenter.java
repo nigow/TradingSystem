@@ -11,36 +11,36 @@ public interface FreezingPresenter {
     /**
      * Displays possible actions for freezing accounts.
      *
-     * @param freezingOptions possible actions user can choose from
-     * @return index of chosen item
+     * @param freezingOptions Possible actions user can choose from
+     * @return Index of chosen item
      */
     String displayFreezingOptions(List<String> freezingOptions);
 
     /**
      * Displays list of users that should be frozen.
      *
-     * @param possibleUsers list of usernames that should be frozen
+     * @param possibleUsers List of usernames that should be frozen
      */
     void displayPossibleFreeze(List<String> possibleUsers);
 
     /**
      * Displays list of users that requests to be unfrozen.
      *
-     * @param possibleUsers list of usernames that have requested to be unfrozen
+     * @param possibleUsers List of usernames that have requested to be unfrozen
      */
     void displayPossibleUnfreeze(List<String> possibleUsers);
 
     /**
      * Freezes chosen users.
      *
-     * @return indexes of users to freeze
+     * @return Indexes of users to freeze
      */
     String freeze();
 
     /**
      * Unfreezes chosen users.
      *
-     * @return indexes of users to unfreeze
+     * @return Indexes of users to unfreeze
      */
     String unfreeze();
 
@@ -51,6 +51,8 @@ public interface FreezingPresenter {
 
     /**
      * Presents the user with a custom message.
+     *
+     * @param message Message to display
      */
     void showMessage(String message);
 

@@ -8,6 +8,8 @@ package presenters;
 public interface AppealPresenter {
     /**
      * Lets user know their request has been received.
+     *
+     * @param username Username of account
      */
     void displaySuccessfulAppeal(String username);
 }

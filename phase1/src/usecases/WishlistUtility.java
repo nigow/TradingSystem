@@ -43,8 +43,8 @@ public class WishlistUtility {
      */
     public List<Item> wishlistItems(int accountID) {
         List<Item> wishlist = new ArrayList<>();
-        for (int itemId : accountGateway.findById(accountID).getWishlist()) {
-            Item item = itemsGateway.findById(itemId);
+        for (int itemID : accountGateway.findById(accountID).getWishlist()) {
+            Item item = itemsGateway.findById(itemID);
             wishlist.add(item);
         }
         return wishlist;
@@ -67,11 +67,12 @@ public class WishlistUtility {
     /**
      * String representation of all wishlist items for a specific account.
      *
+     * @param
      * @return String representation of all wishlist items
      */
-    public List<String> wishlistToString(int id) {
+    public List<String> wishlistToString(int accountID) {
         List<String> rep = new ArrayList<>();
-        for (Item item : wishlistItems(id)) rep.add(item.toString());
+        for (Item item : wishlistItems(accountID)) rep.add(item.toString());
         return rep;
     }
 
