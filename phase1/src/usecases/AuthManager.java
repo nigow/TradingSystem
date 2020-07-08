@@ -104,8 +104,6 @@ public class AuthManager {
         return accountGateway.updateAccount(account);
     }
 
-// TODO: for later uses
-
 //    /**
 //     * Determines whether a given account account can login.
 //     *
@@ -245,8 +243,6 @@ public class AuthManager {
     public boolean isPending(Account account) {
         return isFrozen(account) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
-
-    // TODO: quick fix but having adminAccount as input is sketch  -maryam
 
     /**
      * Determines whether a given account should be frozen.
