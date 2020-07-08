@@ -39,7 +39,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
      */
     @Override
     public void showInventory(String username, List<String> inventory) {
-        System.out.println("Here is " + username + "'s inventory:");
+        System.out.println("Here is " + username + " inventory:");
         for (int i = 0; i < inventory.size(); i++) {
 
             System.out.println(i + ". " + inventory.get(i));
@@ -52,7 +52,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
      */
     @Override
     public String getItem() {
-        System.out.print("Select item in return (index, -1 to abort): ");
+        System.out.print("Select item to give/receive in return (index, -1 to abort): ");
         return input.nextLine();
     }
 

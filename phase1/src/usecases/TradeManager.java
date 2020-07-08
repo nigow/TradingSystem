@@ -156,6 +156,15 @@ public class TradeManager {
     }
 
     /**
+     * Gets the number of times this trade has been edited.
+     *
+     * @return The number of times this trade has been edited.
+     */
+    public int getEditedCounter() {
+        return trade.getEditedCounter();
+    }
+
+    /**
      * Sets the current trade.
      *
      * @param trade The current trade.

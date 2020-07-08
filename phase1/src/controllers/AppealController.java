@@ -41,7 +41,7 @@ public class AppealController {
      */
     public void run() {
         authManager.requestUnfreeze(accountManager.getCurrAccount());
-        appealPresenter.displaySuccessfulAppeal();
+        appealPresenter.displaySuccessfulAppeal(accountManager.getCurrAccountUsername());
     }
 
 }
