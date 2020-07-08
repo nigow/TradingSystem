@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controller for the wishlist screen.
+ * Controller that deals with the wishlist screen.
  */
 public class WishlistController {
 

@@ -12,41 +12,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * controller that lets admin freeze and unfreeze users
+ * Controller that lets admin freeze and unfreeze users.
  *
  * @author Catherine
  */
 public class FreezingController {
     /**
-     * an instance of FreezingPresenter to display options
+     * An instance of FreezingPresenter to display options.
      */
     private final FreezingPresenter freezingPresenter;
     /**
-     * an instance of FreezingUtility to get qualifying accounts
+     * An instance of FreezingUtility to get qualifying accounts.
      */
     private final FreezingUtility freezingUtility;
     /**
-     * an instance of AccountManager
+     * An instance of AccountManager.
      */
     private final AccountManager accountManager;
     /**
-     * an instance of AuthManager
+     * An instance of AuthManager.
      */
     private final AuthManager authManager;
     /**
-     * an instance of tradeUtility
+     * An instance of tradeUtility.
      */
     private final TradeUtility tradeUtility;
     /**
-     * an instance of ControllerInputValidator to check if input is valid
+     * An instance of ControllerInputValidator to check if input is valid.
      */
     private final InputHandler inputHandler;
 
     /**
-     * initializes constructor with necessary use cases and presenter
+     * Initializes constructor with necessary use cases and presenter.
      *
-     * @param mc                an instance of ManualConfig to get use cases
-     * @param freezingPresenter an instance of FreezingPresenter to display information
+     * @param mc                An instance of ManualConfig to get use cases
+     * @param freezingPresenter An instance of FreezingPresenter to display information
      */
     public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {
         tradeUtility = mc.getTradeUtility();
@@ -58,7 +58,7 @@ public class FreezingController {
     }
 
     /**
-     * shows actions that can be completed and redirects admin to method of requested action
+     * Shows actions that can be completed and redirects admin to method of requested action.
      */
     public void run() {
         List<String> freezingActions = new ArrayList<>();
@@ -84,7 +84,7 @@ public class FreezingController {
     }
 
     /**
-     * freezes an account that should be frozen
+     * Freezes an account that should be frozen.
      */
     private void freeze() {
         List<Account> accounts = freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility);
@@ -107,7 +107,7 @@ public class FreezingController {
     }
 
     /**
-     * unfreezes an account that has requested to be unfrozen
+     * Unfreezes an account that has requested to be unfrozen.
      */
     private void unfreeze() {
         List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);

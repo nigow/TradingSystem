@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controller for the trade creation screen.
+ * Controller that deals with the trade creation screen.
  */
 public class TradeCreatorController {
 
