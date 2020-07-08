@@ -40,7 +40,7 @@ public class FreezingController {
     /**
      * an instance of ControllerInputValidator to check if input is valid
      */
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     /**
      * initializes constructor with necessary use cases and presenter
@@ -54,7 +54,7 @@ public class FreezingController {
         freezingUtility = mc.getFreezingUtility();
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
     }
 
     /**
@@ -92,9 +92,9 @@ public class FreezingController {
         freezingPresenter.displayPossibleFreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.freeze();
-            if (controllerInputValidator.isExitStr(chosenUser))
+            if (inputHandler.isExitStr(chosenUser))
                 return;
-            if (!controllerInputValidator.isNum(chosenUser))
+            if (!inputHandler.isNum(chosenUser))
                 freezingPresenter.invalidInput();
             else if (Integer.parseInt(chosenUser) >= accounts.size())
                 freezingPresenter.invalidInput();
@@ -115,9 +115,9 @@ public class FreezingController {
         freezingPresenter.displayPossibleUnfreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.unfreeze();
-            if (controllerInputValidator.isExitStr(chosenUser))
+            if (inputHandler.isExitStr(chosenUser))
                 return;
-            if (!controllerInputValidator.isNum(chosenUser))
+            if (!inputHandler.isNum(chosenUser))
                 freezingPresenter.invalidInput();
             else if (Integer.parseInt(chosenUser) >= accounts.size())
                 freezingPresenter.invalidInput();

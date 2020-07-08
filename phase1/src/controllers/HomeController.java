@@ -37,7 +37,7 @@ public class HomeController {
     /**
      * An instance of ControllerInputValidator to check a user's input is valid
      */
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     /**
      * Initializes HomeController with the necessary presenter and usecases.
@@ -52,7 +52,7 @@ public class HomeController {
         authManager = mc.getAuthManager();
         this.menuFacade = menuFacade;
         this.homePresenter = homePresenter;
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
     }
 
     /**
@@ -87,13 +87,13 @@ public class HomeController {
     private void logIn() {
         while (true) {
             String username = homePresenter.logInUsername();
-            if (controllerInputValidator.isExitStr(username)) {
+            if (inputHandler.isExitStr(username)) {
                 return;
             }
             String password = homePresenter.logInPassword();
-            if (controllerInputValidator.isExitStr(password))
+            if (inputHandler.isExitStr(password))
                 return;
-            if (controllerInputValidator.isValidUserPass(username, password) &&
+            if (inputHandler.isValidUserPass(username, password) &&
                     authManager.authenticateLogin(username, password)) {
                 accountManager.setCurrAccount(username);
                 menuFacade.run();
@@ -109,13 +109,13 @@ public class HomeController {
     private void createAccount() {
         while (true) {
             String username = homePresenter.newAccountUsername();
-            if (controllerInputValidator.isExitStr(username)) {
+            if (inputHandler.isExitStr(username)) {
                 return;
             }
             String password = homePresenter.newAccountPassword();
-            if (controllerInputValidator.isExitStr(password))
+            if (inputHandler.isExitStr(password))
                 return;
-            if (!controllerInputValidator.isValidUserPass(username, password))
+            if (!inputHandler.isValidUserPass(username, password))
                 homePresenter.showMessage("The characters in that username and password are illegal.");
             else {
                 if (accountManager.createStandardAccount(username, password)) {

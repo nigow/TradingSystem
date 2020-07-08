@@ -21,7 +21,7 @@ public class AdminCreatorController {
     /**
      * An instance of ControllerInputValidator to check for valid input.
      */
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     /**
      * Initializes AdminCreatorController with necessary presenter and use cases.
@@ -32,7 +32,7 @@ public class AdminCreatorController {
     public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
         accountManager = mc.getAccountManager();
         this.adminPresenter = adminPresenter;
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
     }
 
     /**
@@ -41,12 +41,12 @@ public class AdminCreatorController {
     public void run() {
         while (true) {
             String username = adminPresenter.createAdminUsername();
-            if (controllerInputValidator.isExitStr(username))
+            if (inputHandler.isExitStr(username))
                 return;
             String password = adminPresenter.createAdminPassword();
-            if (controllerInputValidator.isExitStr(password))
+            if (inputHandler.isExitStr(password))
                 return;
-            if (!controllerInputValidator.isValidUserPass(username, password))
+            if (!inputHandler.isValidUserPass(username, password))
                 adminPresenter.showMessage("The characters in that username and password are illegal.");
             else {
                 if (accountManager.createAdminAccount(username, password)) {

@@ -25,7 +25,7 @@ public class WishlistController {
     private final AuthManager authManager;
     private final TradeUtility tradeUtility;
 
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     /**
      * Create a controller for the wishlist screen.
@@ -48,7 +48,7 @@ public class WishlistController {
         this.wishlistPresenter = wishlistPresenter;
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
 
     }
 
@@ -65,7 +65,7 @@ public class WishlistController {
             List<String> options = new ArrayList<>(actions.keySet());
             input = wishlistPresenter.displayWishlistOptions(options);
 
-            if (controllerInputValidator.isNum(input) && Integer.parseInt(input) < actions.size()) {
+            if (inputHandler.isNum(input) && Integer.parseInt(input) < actions.size()) {
 
                 actions.values().toArray(new Runnable[0])[Integer.parseInt(input)].run();
 
@@ -108,9 +108,9 @@ public class WishlistController {
         String itemIndex = wishlistPresenter.startTrade();
         List<Integer> wishlistIds = accountManager.getCurrWishlist();
 
-        while (!controllerInputValidator.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistIds.size()) {
+        while (!inputHandler.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistIds.size()) {
 
-            if (controllerInputValidator.isExitStr(itemIndex)) return;
+            if (inputHandler.isExitStr(itemIndex)) return;
             wishlistPresenter.invalidInput();
             itemIndex = wishlistPresenter.startTrade();
 
@@ -130,9 +130,9 @@ public class WishlistController {
         String itemIndex = wishlistPresenter.removeFromWishlist();
         List<Integer> wishlistIds = accountManager.getCurrWishlist();
 
-        while (!controllerInputValidator.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistIds.size()) {
+        while (!inputHandler.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistIds.size()) {
 
-            if (controllerInputValidator.isExitStr(itemIndex)) return;
+            if (inputHandler.isExitStr(itemIndex)) return;
             wishlistPresenter.invalidInput();
             itemIndex = wishlistPresenter.removeFromWishlist();
 

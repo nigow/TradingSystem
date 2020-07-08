@@ -7,7 +7,28 @@ import java.util.regex.Pattern;
 /**
  * Controller containing helper methods for verifying input.
  */
-public class ControllerInputValidator {
+public class InputHandler {
+
+    private final String TRUE = "y";
+    private final String FALSE = "n";
+
+    /**
+     * Returns the TRUE string
+     *
+     * @return the TRUE string
+     */
+    public String getTrue() {
+        return TRUE;
+    }
+
+    /**
+     * Returns the FALSE string
+     *
+     * @return the FALSE string
+     */
+    public String getFalse() {
+        return FALSE;
+    }
 
     /**
      * Check if a string is a non-negative integer.
@@ -64,8 +85,28 @@ public class ControllerInputValidator {
      */
     public boolean isBool(String input) {
 
-        return input.equals("y") || input.equals("n");
+        return isTrue(input) || isFalse(input);
 
+    }
+
+    /**
+     * Check if a string is a boolean/decision in the form of "y".
+     *
+     * @param input Input string.
+     * @return Whether given string is a boolean/decision in the form of "y".
+     */
+    public boolean isTrue(String input) {
+        return input.equals(TRUE);
+    }
+
+    /**
+     * Check if a string is a boolean/decision in the form of "n".
+     *
+     * @param input Input string.
+     * @return Whether given string is a boolean/decision in the form of "n".
+     */
+    public boolean isFalse(String input) {
+        return input.equals(FALSE);
     }
 
     /**

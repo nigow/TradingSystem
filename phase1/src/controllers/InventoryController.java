@@ -48,7 +48,7 @@ public class InventoryController {
     /**
      * An instance of ControllerHelper for helper methods
      */
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     /**
      * Constructor to initialize all the instances, from ManualConfig,
@@ -63,7 +63,7 @@ public class InventoryController {
         this.itemUtility = manualConfig.getItemUtility();
         this.inventoryPresenter = inventoryPresenter;
         this.authManager = manualConfig.getAuthManager();
-        this.controllerInputValidator = new ControllerInputValidator();
+        this.inputHandler = new InputHandler();
     }
 
 
@@ -97,7 +97,7 @@ public class InventoryController {
         do {
             option = inventoryPresenter.displayInventoryOptions(menu);
 
-            if (controllerInputValidator.isNum(option)) {
+            if (inputHandler.isNum(option)) {
                 int action = Integer.parseInt(option);
 
                 if (action < actions.size()) {
@@ -179,34 +179,34 @@ public class InventoryController {
         while (!confirmedItem && !exit) {
             if (!nameGiven) {
                 name = inventoryPresenter.askName();
-                if (controllerInputValidator.isExitStr(name)) {
+                if (inputHandler.isExitStr(name)) {
                     inventoryPresenter.abortMessage();
                     exit = true;
-                } else if (!controllerInputValidator.isValidCSVStr(name)) {
+                } else if (!inputHandler.isValidCSVStr(name)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item name");
                 } else {
                     nameGiven = true;
                 }
             } else if (!descriptionGiven) {
                 description = inventoryPresenter.askDescription();
-                if (controllerInputValidator.isExitStr(description)) {
+                if (inputHandler.isExitStr(description)) {
                     inventoryPresenter.abortMessage();
                     exit = true;
-                } else if (!controllerInputValidator.isValidCSVStr(description)) {
+                } else if (!inputHandler.isValidCSVStr(description)) {
                     inventoryPresenter.customMessage("You cannot have a comma in your item description");
                 } else {
                     descriptionGiven = true;
                 }
             } else {
                 String confirm = inventoryPresenter.confirmItem(name, description);
-                if (controllerInputValidator.isExitStr(confirm)) {
+                if (inputHandler.isExitStr(confirm)) {
                     inventoryPresenter.abortMessage();
                     exit = true;
-                } else if (confirm.equals("n")) {
+                } else if (inputHandler.isFalse(confirm)) {
                     inventoryPresenter.customMessage("Item not added.");
                     nameGiven = false;
                     descriptionGiven = false;
-                } else if (confirm.equals("y")) {
+                } else if (inputHandler.isTrue(confirm)) {
                     itemManager.createItem(name, description, accountManager.getCurrAccountID());
                     inventoryPresenter.customMessage("Item successfully added, pending admin approval!");
                     confirmedItem = true;
@@ -225,10 +225,10 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.addToWishlist();
-            if (controllerInputValidator.isExitStr(option)) {
+            if (inputHandler.isExitStr(option)) {
                 inventoryPresenter.abortMessage();
                 isValid = true;
-            } else if (controllerInputValidator.isNum(option)) {
+            } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).size()) {
                     if (accountManager.addItemToWishlist(itemManager.getItemId(itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).get(ind)))) {
@@ -256,10 +256,10 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.removeFromInventory();
-            if (controllerInputValidator.isExitStr(option)) {
+            if (inputHandler.isExitStr(option)) {
                 inventoryPresenter.abortMessage();
                 isValid = true;
-            } else if (controllerInputValidator.isNum(option)) {
+            } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
 //                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
 //                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
@@ -290,10 +290,10 @@ public class InventoryController {
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.approveItem();
-            if (controllerInputValidator.isExitStr(option)) {
+            if (inputHandler.isExitStr(option)) {
                 inventoryPresenter.abortMessage();
                 isValid = true;
-            } else if (controllerInputValidator.isNum(option)) {
+            } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getDisapprovedString().size()) {
                     itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);

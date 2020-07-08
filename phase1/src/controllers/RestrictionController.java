@@ -13,12 +13,12 @@ public class RestrictionController {
 
     private final RestrictionPresenter restrictionPresenter;
 
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     public RestrictionController(ManualConfig mc, RestrictionPresenter restrictionPresenter) {
         freezingUtility = mc.getFreezingUtility();
         this.restrictionPresenter = restrictionPresenter;
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
     }
 
     public void run() {
@@ -52,9 +52,9 @@ public class RestrictionController {
     private void lendMoreThanBorrow() {
         while (true) {
             String newNumber = restrictionPresenter.changeLendMoreThanBorrow(freezingUtility.getLendMoreThanBorrow());
-            if (controllerInputValidator.isExitStr(newNumber))
+            if (inputHandler.isExitStr(newNumber))
                 return;
-            if (!controllerInputValidator.isNum(newNumber))
+            if (!inputHandler.isNum(newNumber))
                 restrictionPresenter.invalidInput();
             else {
                 freezingUtility.setLendMoreThanBorrow(Integer.parseInt(newNumber));
@@ -67,9 +67,9 @@ public class RestrictionController {
     private void maxIncompleteTrades() {
         while (true) {
             String newNumber = restrictionPresenter.changeMaxIncompleteTrades(freezingUtility.getMaxIncompleteTrade());
-            if (controllerInputValidator.isExitStr(newNumber))
+            if (inputHandler.isExitStr(newNumber))
                 return;
-            if (!controllerInputValidator.isNum(newNumber))
+            if (!inputHandler.isNum(newNumber))
                 restrictionPresenter.invalidInput();
             else {
                 freezingUtility.setMaxIncompleteTrade(Integer.parseInt(newNumber));
@@ -82,9 +82,9 @@ public class RestrictionController {
     private void maxWeeklyTrades() {
         while (true) {
             String newNumber = restrictionPresenter.changeMaxWeeklyTrades(freezingUtility.getMaxWeeklyTrade());
-            if (controllerInputValidator.isExitStr(newNumber))
+            if (inputHandler.isExitStr(newNumber))
                 return;
-            if (!controllerInputValidator.isNum(newNumber))
+            if (!inputHandler.isNum(newNumber))
                 restrictionPresenter.invalidInput();
             else {
                 freezingUtility.setMaxWeeklyTrade(Integer.parseInt(newNumber));

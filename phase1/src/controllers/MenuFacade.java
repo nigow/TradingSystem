@@ -45,7 +45,7 @@ public class MenuFacade {
 
     private final AdminCreatorController adminCreator;
 
-    private final ControllerInputValidator controllerInputValidator;
+    private final InputHandler inputHandler;
 
     private final TradeUtility tradeUtility;
 
@@ -81,7 +81,7 @@ public class MenuFacade {
 
         this.menuPresenter = menuPresenter;
 
-        controllerInputValidator = new ControllerInputValidator();
+        inputHandler = new InputHandler();
 
         this.freezingController = freezingController;
         this.inventoryController = inventoryController;
@@ -145,7 +145,7 @@ public class MenuFacade {
 
             String action = menuPresenter.displayMenu(options);
 
-            if (controllerInputValidator.isNum(action)) {
+            if (inputHandler.isNum(action)) {
                 int i = Integer.parseInt(action);
                 if (0 <= i && i < method.size())
                     method.get(i).run();
