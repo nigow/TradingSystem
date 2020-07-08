@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.Trade;
 import gateways.ManualConfig;
 import presenters.MenuPresenter;
 import usecases.AccountManager;
@@ -17,8 +16,6 @@ import java.util.List;
  * @author Maryam
  */
 public class MenuFacade {
-
-    // TODO: javadoc, but since it's private it's not a priority
 
     /**
      * An instance of AuthManager to access a user's permissions.
@@ -110,8 +107,10 @@ public class MenuFacade {
             options.add("Manage your existing trades");
             method.add(tradeController::run);
 
-            options.add("Browse the inventory");
-            method.add(inventoryController::run);
+            if (authManager.canBrowseInventory(accountManager.getCurrAccount())) {
+                options.add("Browse the inventory");
+                method.add(inventoryController::run);
+            }
 
             options.add("Manage your wishlist");
             method.add(wishlistController::run);

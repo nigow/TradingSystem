@@ -7,24 +7,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Utility class for trades to access certain types of trades and information on trades
+ * Utility class for accessing certain types of trades and information on trades.
  *
  * @author Isaac
  */
 public class TradeUtility {
 
     /**
-     * Manager responsible for creating and editing trades
+     * Manager responsible for creating and editing trades.
      */
     private final TradeManager tradeManager;
 
     /**
-     * The account which info on its trades are being retrieved
+     * The account which info on its trades are being retrieved.
      */
     private Account account;
 
     /**
-     * Constructor for TradeUtility which stores an account and TradeManager
+     * Constructor for TradeUtility which stores an account and TradeManager.
      *
      * @param tradeManager Manager for creating and editing trades
      */
@@ -33,7 +33,7 @@ public class TradeUtility {
     }
 
     /**
-     * Sets the current account to be edited
+     * Sets the current account to be edited.
      *
      * @param account the current account to be edited
      */
@@ -42,7 +42,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves all the trades the current account has
+     * Retrieves all the trades the current account has.
      *
      * @return List of all of the trades the current account has done
      */
@@ -59,7 +59,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves all the trades the current account has done in string format
+     * Retrieves all the trades the current account has done in string format.
      *
      * @return List of the trades the current account has done in string format
      */
@@ -76,7 +76,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves the Ids of the top three trade partners of the current account
+     * Retrieves the Ids of the top three trade partners of the current account.
      *
      * @return List of top three trade partners, if less than three list size is
      * adjusted
@@ -84,7 +84,7 @@ public class TradeUtility {
     public List<Integer> getTopThreePartnersIds() {
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (account.getAccountID() == trade.getTraderOneID()) {
                 tradeFrequency.compute(trade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
@@ -96,19 +96,18 @@ public class TradeUtility {
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         List<Integer> tradeIds = new ArrayList<>();
-        int counter = 0;
+        int count = 0;
         for (Map.Entry<Integer, Integer> entry : sorted.entrySet()) {
-            if (counter > sorted.size() - 4) {
-                tradeIds.add(entry.getKey());
-            }
-            counter++;
+            if (count >= 3) break;
+            tradeIds.add(entry.getKey());
+            count++;
         }
         return tradeIds;
     }
 
     /**
      * Retrieves the three most recent one-way trades the current account
-     * has made
+     * has made.
      *
      * @return List of three most recent one-way trades the current account
      * has made, if less than three list size is adjusted
@@ -118,7 +117,7 @@ public class TradeUtility {
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allOneWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (trade.getTraderOneID() == account.getAccountID()) {
                 if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
@@ -149,7 +148,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the three most recent two-way trades the current account has
-     * made
+     * made.
      *
      * @return List of three most recent two-way trades the current account
      * has made, if less than three list size is adjusted
@@ -159,7 +158,7 @@ public class TradeUtility {
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allTwoWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED)
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
                 TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
@@ -184,11 +183,10 @@ public class TradeUtility {
         return threeRecent;
     }
 
-    // TODO: this function is broken rn according to the specs:
-    //  There is a limit on the number of transactions any one person
-    //  can conduct in one week, before the account is frozen.  -maryam
+    // TODO: fix this according to when transaction is made  -maryam
+
     /**
-     * Retrieves the number of trades the current account has made in the past week
+     * Retrieves the number of trades the current account has made in the past week.
      *
      * @return number of trades user has made in the past week
      */
@@ -210,7 +208,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the number of times the current user has failed to complete
-     * a trade
+     * a trade.
      *
      * @return number of times the current user has failed to complete a trade
      */
@@ -226,7 +224,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves the number of times the current user has borrowed items
+     * Retrieves the number of times the current user has borrowed items.
      *
      * @return number of times the current user has borrowed items
      */
@@ -247,7 +245,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves the number of times the current user has lent items
+     * Retrieves the number of times the current user has lent items.
      *
      * @return number of times the current user has lent items
      */
@@ -267,9 +265,10 @@ public class TradeUtility {
         return timesLent;
     }
 
-    // TODO i am fixing everything in the most shady way possible and this shit needs to be fixed  -maryam
+    // TODO: fix later to not use accountManager
+
     /**
-     * Completes the action of making a trade
+     * Completes the action of making a trade.
      *
      * @param trade          the trade object representing the trade about to be made
      * @param accountManager an object for managing accounts
@@ -300,11 +299,12 @@ public class TradeUtility {
         accountManager.setCurrAccount(account.getUsername());
     }
 
-    // TODO bad bad bad stuff with .setCurrAccount. also buggy because
+    // TODO: bad bad bad stuff with .setCurrAccount. also buggy because
     //  back we don't know which user's wishlist to change back.
     //  do not use for now.  -maryam
+
     /**
-     * Completes the action of reversing a trade which was rejected
+     * Completes the action of reversing a trade which was rejected.
      *
      * @param trade          the trade object representing the trade about to be rejected
      * @param accountManager an object for managing accounts

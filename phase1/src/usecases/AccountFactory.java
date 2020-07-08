@@ -10,23 +10,28 @@ import java.util.List;
 
 
 /**
- * A factory for creating different types of accounts
+ * Factory for creating different types of accounts.
  *
  * @author Andrew
  */
 public class AccountFactory {
 
     /**
-     * The account gateway dealing with storage of accounts
+     * The account gateway dealing with storage of accounts.
      */
     private final AccountGateway accountGateway;
 
+    /**
+     * Creates an instance of AccountFactory and stores accountGateway.
+     *
+     * @param accountGateway Gateway used to interact with persistent storage of accounts
+     */
     public AccountFactory(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
     }
 
     /**
-     * Creates a standard account with trading permissions
+     * Creates a standard account with trading permissions.
      *
      * @param username Username of the new account
      * @param password Password of the new account
@@ -40,7 +45,7 @@ public class AccountFactory {
     }
 
     /**
-     * Creates an administrator account with trading permissions
+     * Creates an administrator account with trading permissions.
      *
      * @param username Username of the new account
      * @param password Password of the new account

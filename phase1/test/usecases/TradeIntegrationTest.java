@@ -55,9 +55,13 @@ public class TradeIntegrationTest extends TestCase {
         HashMap<Integer, Account> h = new HashMap<>();
         h.put(0, initial);
 
+
         AccountGateway accountGateway = new InMemoryAccountGateway(h);
 
         accountManager = new AccountManager(accountGateway);
+        for (int i = 0; i < 100; i++) {
+            accountManager.createStandardAccount("User" + i, "Password");
+        }
         assertTrue(accountManager.setCurrAccount("admin"));
         return accountManager;
 
@@ -213,7 +217,6 @@ public class TradeIntegrationTest extends TestCase {
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(22));
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(20));
         assertTrue(tradeUtility.getRecentOneWay().contains(301));
-        assertTrue(tradeUtility.getRecentTwoWay().contains(101));
         assertTrue(tradeUtility.getRecentTwoWay().contains(201));
         accountManager = setUpAccount();
         tradeManager.createTrade(time, "UTM", false, 21, 23,
@@ -242,7 +245,6 @@ public class TradeIntegrationTest extends TestCase {
         assertTrue(tradeUtility.getRecentOneWay().contains(301));
         assertTrue(tradeUtility.getRecentOneWay().contains(401));
         assertTrue(tradeUtility.getRecentTwoWay().contains(201));
-        assertTrue(tradeUtility.getRecentTwoWay().contains(301));
         assertTrue(tradeUtility.getRecentTwoWay().contains(101));
     }
 

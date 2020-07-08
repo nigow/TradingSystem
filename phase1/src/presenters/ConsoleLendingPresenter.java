@@ -68,6 +68,4 @@ public class ConsoleLendingPresenter implements LendingPresenter {
     }
 
 
-
-
 }

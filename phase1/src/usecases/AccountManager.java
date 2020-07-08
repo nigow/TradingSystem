@@ -6,24 +6,24 @@ import gateways.AccountGateway;
 import java.util.List;
 
 /**
- * Represents the manager that creates an account or takes in an account and edits the wishlist.
+ * Manager that creates an account or takes in an account and edits the wishlist.
  *
  * @author Andrew
  */
 public class AccountManager {
 
     /**
-     * The current account being edited
+     * The current account being edited.
      */
     private Account currAccount;
 
     /**
-     * The account gateway dealing with storage of accounts
+     * The account gateway dealing with storage of accounts.
      */
     private final AccountGateway accountGateway;
 
     /**
-     * Constructs an instance of AccountManager and stores accountGateway
+     * Constructs an instance of AccountManager and stores accountGateway.
      *
      * @param accountGateway Gateway used to interact with persistent storage of accounts
      */
@@ -32,7 +32,7 @@ public class AccountManager {
     }
 
     /**
-     * Creates a new standard trading account using username and password by determining if characters used are valid
+     * Creates a new standard trading account using username and password by determining if characters used are valid.
      *
      * @param username Username of the new account
      * @param password Password of the new account
@@ -52,7 +52,7 @@ public class AccountManager {
     }
 
     /**
-     * Creates a new administrator account with permissions to trade using username and password by determining if characters used are valid
+     * Creates a new administrator account with permissions to trade using username and password by determining if characters used are valid.
      *
      * @param username Username of the new account
      * @param password Password of the new account
@@ -72,7 +72,7 @@ public class AccountManager {
     }
 
     /**
-     * Gets the account corresponding to the accountID provided
+     * Gets the account corresponding to the accountID provided.
      *
      * @param accountID Unique identifier of account
      * @return Account corresponding to the accountID
@@ -82,7 +82,7 @@ public class AccountManager {
     }
 
     /**
-     * Gets the account corresponding to the username provided
+     * Gets the account corresponding to the username provided.
      *
      * @param username Username of an account
      * @return Account corresponding to the username
@@ -92,7 +92,7 @@ public class AccountManager {
     }
 
     /**
-     * Gets the username of an account corresponding to the given unique identifier
+     * Gets the username of an account corresponding to the given unique identifier.
      *
      * @param accountID Unique identifier of account
      * @return Username corresponding to the unique identifier of an account
@@ -102,7 +102,7 @@ public class AccountManager {
     }
 
     /**
-     * Assigns the given username corresponding to an account to currAccount
+     * Assigns the given username corresponding to an account to currAccount.
      *
      * @param username Username of Account being set
      * @return Whether the current account is successfully set or not
@@ -117,7 +117,7 @@ public class AccountManager {
     }
 
     /**
-     * Gets the current account being modified
+     * Gets the current account being modified.
      *
      * @return The current account
      */
@@ -126,7 +126,7 @@ public class AccountManager {
     }
 
     /**
-     * Gets the current account's unique identifier
+     * Gets the current account's unique identifier.
      *
      * @return The current account id
      */
@@ -135,7 +135,7 @@ public class AccountManager {
     }
 
     /**
-     * Gets the current account's username
+     * Gets the current account's username.
      *
      * @return The current account username
      */
@@ -144,7 +144,7 @@ public class AccountManager {
     }
 
     /**
-     * Adds an itemID to the current account's wishlist
+     * Adds an itemID to the current account's wishlist.
      *
      * @param itemID Unique identifier of the item
      * @return Whether an item is successfully added to wishlist or not
@@ -158,7 +158,7 @@ public class AccountManager {
     }
 
     /**
-     * Removes an itemID from the current account's wishlist
+     * Removes an itemID from the current account's wishlist.
      *
      * @param itemID Unique identifier of the item
      * @return Whether an item is successfully removed from wishlist or not
@@ -172,7 +172,7 @@ public class AccountManager {
     }
 
     /**
-     * Gets the wishlist of item ids for the current account
+     * Gets the wishlist of item ids for the current account.
      *
      * @return Wishlist of the current account
      */
@@ -181,7 +181,7 @@ public class AccountManager {
     }
 
     /**
-     * Determines if item corresponding to the itemID is in the current account's wishlist
+     * Determines if item corresponding to the itemID is in the current account's wishlist.
      *
      * @param itemID Unique identifier of the item
      * @return Whether the item corresponding to the itemID is in the current account's wishlist
@@ -191,7 +191,7 @@ public class AccountManager {
     }
 
     /**
-     * Updates in persistent storage the account corresponding to the account
+     * Updates in persistent storage the account corresponding to the account.
      *
      * @param account Account of user to update
      * @return Whether account is successfully updated or not
@@ -201,7 +201,7 @@ public class AccountManager {
     }
 
     /**
-     * Retrieves all accounts stored in the system
+     * Retrieves all accounts stored in the system.
      *
      * @return List of all accounts
      */
@@ -211,7 +211,7 @@ public class AccountManager {
 
 
     /**
-     * Retrieves a formatted string of an account from the given accountID
+     * Retrieves a formatted string of an account from the given accountID.
      *
      * @param accountID Unique identifier of account
      * @return Formatted String of account
@@ -221,7 +221,7 @@ public class AccountManager {
     }
 
     /**
-     * Retrieves the ID of a given account
+     * Retrieves the ID of a given account.
      *
      * @param account Account to get from ID
      * @return ID associated with the account

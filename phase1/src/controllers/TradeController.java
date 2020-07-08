@@ -18,8 +18,6 @@ import java.util.List;
  */
 public class TradeController {
 
-    // TODO: javadoc, but since it's private it's not a priority
-
     private final TradePresenter tradePresenter;
 
     private final AuthManager authManager;
@@ -156,9 +154,12 @@ public class TradeController {
             List<String> options = new ArrayList<>();
             options.add("Reject or cancel this trade");
             if (tradeManager.isEditTurn(accountManager.getCurrAccount())) {
-                if (tradeManager.getDateTime().isAfter(LocalDateTime.now()))
+                if (tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
                     options.add("Confirm the time and location for this trade");
-                options.add("Edit the time and location for this trade");
+                }
+                if (tradeManager.getEditedCounter() < 6) {
+                    options.add("Edit the time and location for this trade");
+                }
             }
             options.add("Go back");
             String action = tradePresenter.displayTradeOptions(options);

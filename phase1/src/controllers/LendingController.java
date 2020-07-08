@@ -69,13 +69,7 @@ public class LendingController {
         List<Account> allAccounts = accountManager.getAccountsList();
 
         //remove the current account
-        Iterator<Account> iterator = allAccounts.iterator();
-        while (iterator.hasNext()) {
-            Account account = iterator.next();
-            if (account.getAccountID() == accountManager.getCurrAccountID()) {
-                iterator.remove();
-            }
-        }
+        allAccounts.removeIf(account -> account.getAccountID() == accountManager.getCurrAccountID());
 
         lendingPresenter.displayAccounts(allAccounts);
         boolean flag = true;
@@ -131,11 +125,11 @@ public class LendingController {
         return itemManager.getItemId(myItems.get(Integer.parseInt(temp_index)));
     }
 
-    private void invalidInput(){
+    private void invalidInput() {
         lendingPresenter.customMessage("Invalid input. Please try again.");
     }
 
-    private void abort(){
+    private void abort() {
         lendingPresenter.customMessage("Cancellation succeeded.");
     }
 

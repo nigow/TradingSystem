@@ -108,7 +108,7 @@ Choose an option to do:
 7. Return to main menu
 ```
 
-From there, you'll be shown a list of all your approved items, and you can enter the number to the left of the item you wish to remove. 
+From there, you'll be shown a list of all your approved and pending items, and you can enter the number to the left of the item you wish to remove. 
 
 ### Adding an Item to Your Wishlist
 
@@ -144,13 +144,37 @@ Which action would you like to do?
 From there, choose ``` Remove item from wishlist```:
 
 ``` latex
-0. Start trade.
-1. Remove item from wishlist.
-2. Back.
+0. View wishlist  
+1. Start trade.
+2. Remove item from wishlist.  <-----
+3. Back.
 Select action:
 ```
 
 And you'll be shown the items in your wishlist. Enter the number to the left of the item to remove it from your wishlist.
+
+### Viewing Your Wishlist
+
+To view your wishlist, go to ```Manage your wishlist```: 
+
+```latex
+Which action would you like to do?
+0. Manage your existing trades
+1. Browse the inventory   
+2. Manage your wishlist   <-----
+3. Initiate a trade with a specific account
+4. Logout
+```
+
+And choose ```View wishlist```:
+
+``` latex
+0. View wishlist   <-----
+1. Start trade.
+2. Remove item from wishlist.  
+3. Back.
+Select action:
+```
 
 ### Starting a Trade
 
@@ -187,10 +211,11 @@ Which action would you like to do?
 From there, choose ```Start trade```. This will be unavailable if your account is frozen:
 
 ```latex
-0. Start trade.
-1. Remove item from wishlist.
-2. Back.
-Select action: 
+0. View wishlist  
+1. Start trade.   <-----
+2. Remove item from wishlist.  
+3. Back.
+Select action:
 ```
 
 From there, you'll be shown a list of items in your wishlist. Enter the number to the left of the item you wish to receive to create a trade with that item. Note that you can only make a two-way trade or borrow from a user using this option (you cannot lend to them without asking for something in return).
@@ -200,6 +225,7 @@ From there, you'll be shown a list of items in your wishlist. Enter the number t
 After you create a trade, you'll have to choose if it's a one-way or two-way trade, if it's permanent or temporary, and the time, date, and place. If a trade is temporary, another trade will take place at the same location, exactly 30 days after the first trade. Also, you cannot set a time for a trade that is earlier than the current time.
 
 After the date of a confirmed date has passed, you can go back and mark the trade as completed. Once both people have marked the trade as completed, it will no longer count towards your number of incomplete trades. 
+
 ### Managing Trades in Progress
 
 To check on all your trades, go to the main menu and choose ```Manage your existing trades```: 

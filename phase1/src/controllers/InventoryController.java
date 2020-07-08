@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import entities.Item;
 import gateways.ManualConfig;
 import presenters.InventoryPresenter;
 import usecases.AuthManager;
@@ -131,6 +132,12 @@ public class InventoryController {
         this.inventoryPresenter.displayInventory(allYourItems);
     }
 
+    private void displayAllYourInventory() {
+        this.inventoryPresenter.customMessage("All your items, including pending items:");
+        List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
+        this.inventoryPresenter.displayInventory(allYourItems);
+    }
+
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
@@ -245,7 +252,7 @@ public class InventoryController {
      * Runs the remove your item from inventory submenu
      */
     private void removeFromYourInventory() {
-        displayYourInventory();
+        displayAllYourInventory();
         boolean isValid = false;
         while (!isValid) {
             String option = inventoryPresenter.removeFromInventory();
@@ -254,8 +261,11 @@ public class InventoryController {
                 isValid = true;
             } else if (controllerInputValidator.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
-                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+//                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
+//                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
+                List<Item> items = itemUtility.getAllInventoryOfAccount(accountManager.getCurrAccountID());
+                if (ind < items.size()) {
+                    boolean removed = itemManager.removeItem(items.get(ind));
                     if (removed) {
                         isValid = true;
                         inventoryPresenter.customMessage("Item successfully removed!");

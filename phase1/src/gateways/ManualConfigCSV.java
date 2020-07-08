@@ -23,6 +23,7 @@ public class ManualConfigCSV implements ManualConfig {
     /**
      * Creates ManualConfig and initializes the required use cases
      * using existing CSV file.
+     *
      * @throws IOException If the given csv file cannot be accessed
      */
     public ManualConfigCSV() throws IOException {
