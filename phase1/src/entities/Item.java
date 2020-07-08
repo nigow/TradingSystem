@@ -7,17 +7,17 @@ package entities;
  */
 public class Item {
     /**
-     * The unique identifier of this item. (cannot be changed).
+     * Unique identifier of this item. (cannot be changed).
      */
     private final int itemID;
 
     /**
-     * The name of this item.
+     * Name of this item.
      */
     private String name;
 
     /**
-     * The description of this item.
+     * Description of this item.
      */
     private String description;
 
@@ -27,7 +27,7 @@ public class Item {
     private boolean isApproved;
 
     /**
-     * The ID of the owner of this item.
+     * The unique identifier of the owner of this item.
      */
     private int ownerID;
 
@@ -41,10 +41,10 @@ public class Item {
      * isApproved is set to false by default (items have to be manually approved by an admin).
      * accountsWithItemInWishlist is empty by default until an account adds the item to their wishlist.
      *
-     * @param itemID      The ID of the item
-     * @param name        The name of the item
-     * @param description The description of the item
-     * @param ownerID     The ID of the item
+     * @param itemID      Unique identifier of the item
+     * @param name        Name of the item
+     * @param description Description of the item
+     * @param ownerID     Unique identifier of the owner of the item
      */
     public Item(int itemID, String name, String description, int ownerID) {
         this.itemID = itemID;
@@ -58,7 +58,7 @@ public class Item {
     /**
      * Get the itemID of this item.
      *
-     * @return itemID
+     * @return Unique identifier of the item
      */
     public int getItemID() {
         return itemID;
@@ -67,7 +67,7 @@ public class Item {
     /**
      * Get the name of this item.
      *
-     * @return name
+     * @return Name of the item
      */
     public String getName() {
         return name;
@@ -76,7 +76,7 @@ public class Item {
     /**
      * Get the description of this item.
      *
-     * @return description
+     * @return Description of the item
      */
     public String getDescription() {
         return description;
@@ -85,7 +85,7 @@ public class Item {
     /**
      * Get the approval status of this item.
      *
-     * @return isApproved
+     * @return Whether the item is approved
      */
     public boolean isApproved() {
         return isApproved;
@@ -94,7 +94,7 @@ public class Item {
     /**
      * Get the ownerID of this item.
      *
-     * @return ownerID
+     * @return Unique identifier of the owner
      */
     public int getOwnerID() {
         return ownerID;
@@ -111,7 +111,7 @@ public class Item {
     /**
      * Set the name of this item.
      *
-     * @param name (new name of item)
+     * @param name New name of the item
      */
     public void setName(String name) {
         this.name = name;
@@ -120,7 +120,7 @@ public class Item {
     /**
      * Set the description of this item.
      *
-     * @param description (new description)
+     * @param description New description of the item
      */
     public void setDescription(String description) {
         this.description = description;
@@ -143,7 +143,7 @@ public class Item {
     /**
      * Set the owner's ID of this item.
      *
-     * @param ownerID (new owner's ID)
+     * @param ownerID New unique identifier of the owner
      */
     public void setOwnerID(int ownerID) {
         this.ownerID = ownerID;
@@ -169,7 +169,7 @@ public class Item {
     /**
      * Creates a string representation of this item.
      *
-     * @return a string representation of this Item object
+     * @return String representation of this Item object
      */
     @Override
     public String toString() {

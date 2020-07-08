@@ -11,27 +11,27 @@ import java.util.List;
 public class Account {
 
     /**
-     * The username of this account (cannot be changed).
+     * Username of this account (cannot be changed).
      */
     private final String username;
 
     /**
-     * The password of this account.
+     * Password of this account.
      */
     private String password;
 
     /**
-     * The user's wishlist (stores itemID of the items).
+     * User's wishlist (stores itemID of the items).
      */
     private final List<Integer> wishlist;
 
     /**
-     * The list of permissions of the user.
+     * List of permissions of the user.
      */
     private final List<Permissions> permissions;
 
     /**
-     * The unique identifier of this account (cannot be changed).
+     * Unique identifier of this account (cannot be changed).
      */
     private final int accountID;
 
@@ -39,10 +39,10 @@ public class Account {
      * Creates a new account with the given username, password, and rolesID.
      * The wishlist is initialized as an empty Arraylist.
      *
-     * @param username    the name of this account
-     * @param password    the password for this account
-     * @param permissions what this account is allowed to do
-     * @param accountID   the id of this account
+     * @param username    Username of this account
+     * @param password    Password for this account
+     * @param permissions What this account is allowed to do
+     * @param accountID   Unique identifier of this account
      */
     public Account(String username, String password, List<Permissions> permissions, int accountID) {
         this.username = username;
@@ -56,11 +56,11 @@ public class Account {
      * An overloaded constructor.
      * Creates a new account with the given username, password, wishlist, and rolesID.
      *
-     * @param username    the name of this account
-     * @param password    the password for this account
-     * @param wishlist    the wishlist that this account should be initialized with
-     * @param permissions what this account is allowed to do
-     * @param accountID   the ID of this account
+     * @param username    Username of this account
+     * @param password    Password for this account
+     * @param wishlist    Wishlist that this account should be initialized with
+     * @param permissions What this account is allowed to do
+     * @param accountID   Unique identifier of this account
      */
     public Account(String username, String password, List<Integer> wishlist, List<Permissions> permissions, int accountID) {
         this(username, password, permissions, accountID);
@@ -70,7 +70,7 @@ public class Account {
     /**
      * Gets the username of the account.
      *
-     * @return username
+     * @return Username of the account
      */
     public String getUsername() {
         return username;
@@ -79,7 +79,7 @@ public class Account {
     /**
      * Returns the password of this account.
      *
-     * @return password
+     * @return Password of the account
      */
     public String getPassword() {
         return password;
@@ -88,7 +88,7 @@ public class Account {
     /**
      * Set a new password.
      *
-     * @param password The new password that'll be assigned to this account
+     * @param password New password that'll be assigned to this account
      */
     public void setPassword(String password) {
         this.password = password;
@@ -97,7 +97,7 @@ public class Account {
     /**
      * Get the wishlist of this account.
      *
-     * @return wishlist
+     * @return Wishlist of the account
      */
     public List<Integer> getWishlist() {
         return wishlist;
@@ -107,7 +107,7 @@ public class Account {
     /**
      * Get the accountID of this account.
      *
-     * @return accountID
+     * @return Unique identifier of the account
      */
     public int getAccountID() {
         return accountID;

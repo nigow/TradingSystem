@@ -27,9 +27,9 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Creates a TimePlace object based on an ID, the time of the meetup, and the location of the meetup.
      *
-     * @param id    The ID of this meetup
-     * @param time  The time of this meetup
-     * @param place The location of this meetup
+     * @param id    ID of this meetup
+     * @param time  Time of this meetup
+     * @param place Location of this meetup
      */
     public TimePlace(int id, LocalDateTime time, String place) {
         this.id = id;
@@ -40,7 +40,7 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Returns the ID of this meetup.
      *
-     * @return The ID of this meetup
+     * @return ID of this meetup
      */
     public int getId() {
         return id;
@@ -49,7 +49,7 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Returns the location of this meetup.
      *
-     * @return The location of this meetup
+     * @return Location of this meetup
      */
     public String getPlace() {
         return place;
@@ -58,7 +58,7 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Returns the time of this meetup.
      *
-     * @return The time of this meetup
+     * @return Time of this meetup
      */
     public LocalDateTime getTime() {
         return time;
@@ -67,7 +67,7 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Sets the location of this meetup.
      *
-     * @param place The location of this meetup
+     * @param place Location of this meetup
      */
     public void setPlace(String place) {
         this.place = place;
@@ -76,7 +76,7 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Sets the time of this meetup.
      *
-     * @param time The time of this meetup
+     * @param time Time of this meetup
      */
     public void setTime(LocalDateTime time) {
         this.time = time;
@@ -85,7 +85,7 @@ public class TimePlace implements Comparable<TimePlace> {
     /**
      * Creates a string representation of this meetup.
      *
-     * @return A string representation of this TimePlace object
+     * @return String representation of this TimePlace object
      */
     @Override
     public String toString() {
