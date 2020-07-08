@@ -15,6 +15,8 @@ import java.util.List;
 
 public class TradeManager {
 
+    private final int RETURN_TRADE_DAYS = 30;
+
     /**
      * An object representing a transaction between 2 users.
      */
@@ -99,7 +101,7 @@ public class TradeManager {
      * @param accountManager Manager for editing wishlist
      */
     public void reverseTrade(AccountManager accountManager) {
-        createTrade(timePlace.getTime().plusDays(30), timePlace.getPlace(), true, trade.getTraderOneID(),
+        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS), timePlace.getPlace(), true, trade.getTraderOneID(),
                 trade.getTraderTwoID(), trade.getItemTwoIDs(), trade.getItemOneIDs(), accountManager);
     }
 
