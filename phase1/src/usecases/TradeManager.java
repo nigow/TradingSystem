@@ -42,8 +42,9 @@ public class TradeManager {
     /**
      * Constructor for TradeManager to edit an existing Trade.
      *
-     * @param tradeGateway The gateway for dealing with the persistent storage of trades
-     * @param trade        An object representing a transaction between 2 users
+     * @param tradeGateway Gateway for dealing with the persistent storage of trades
+     * @param trade        Object representing a transaction between 2 users
+     * @param timePlace    TimePlace of the trade.
      */
     public TradeManager(TradeGateway tradeGateway, Trade trade, TimePlace timePlace) {
         this.tradeGateway = tradeGateway;
@@ -59,13 +60,14 @@ public class TradeManager {
     /**
      * Creates a new Trade object to be edited.
      *
-     * @param time        The time of the Trade
-     * @param place       The location of the Trade
-     * @param isPermanent If the trade is permanent or not
-     * @param traderOneID The id of the first trader
-     * @param traderTwoID The id of the second trader
-     * @param itemOneID   A list of items trader one is offering
-     * @param itemTwoID   A list of items trader two is offering
+     * @param time        Time of the Trade
+     * @param place       Location of the Trade
+     * @param isPermanent Whether the trade is permanent or not
+     * @param traderOneID ID of the first trader
+     * @param traderTwoID ID of the second trader
+     * @param itemOneID   List of items trader one is offering
+     * @param itemTwoID   List of items trader two is offering
+     * @param accountManager Manager for editing wishlist
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             int traderOneID, int traderTwoID, List<Integer> itemOneID,
@@ -93,6 +95,8 @@ public class TradeManager {
 
     /**
      * Initiates a reverse trade.
+     *
+     * @param accountManager Manager for editing wishlist
      */
     public void reverseTrade(AccountManager accountManager) {
         createTrade(timePlace.getTime().plusDays(30), timePlace.getPlace(), true, trade.getTraderOneID(),
@@ -104,7 +108,7 @@ public class TradeManager {
      *
      * @param time     New time of the trade
      * @param place    New place of the trade
-     * @param editorID The id of the person editing the trade
+     * @param editorID ID of the person editing the trade
      */
     public void editTimePlace(LocalDateTime time, String place, int editorID) {
         timePlace.setTime(time);
@@ -117,7 +121,7 @@ public class TradeManager {
     /**
      * Updates the status of the trade.
      *
-     * @param tradeStatus The new status of the trade
+     * @param tradeStatus New status of the trade
      */
     public void updateStatus(TradeStatus tradeStatus) {
         trade.setStatus(tradeStatus);
@@ -251,8 +255,9 @@ public class TradeManager {
     /**
      * Returns a user-friendly string representation of a trade.
      *
-     * @param accountManager: An accountManager instance
-     * @return A user-friendly representation of a trade.
+     * @param accountManager Manager for manipulating accounts
+     * @param itemManager Manager for manipulating items
+     * @return An user-friendly representation of a trade
      */
     public String tradeAsString(AccountManager accountManager, ItemManager itemManager) {
         StringBuilder ans = new StringBuilder();
@@ -320,7 +325,7 @@ public class TradeManager {
     /**
      * Updates the completion status of this trade according to the user's ID.
      *
-     * @param accountID The ID of the user who marked this trade as complete
+     * @param accountID The ID of the account who marked this trade as complete
      */
     public void updateCompletion(int accountID) {
         if (accountID == trade.getTraderOneID())

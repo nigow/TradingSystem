@@ -37,7 +37,7 @@ public class TradeUtility {
     /**
      * Sets the current account to be edited.
      *
-     * @param account the current account to be edited
+     * @param account Current account to be edited
      */
     public void setAccount(Account account) {
         this.account = account;
@@ -190,7 +190,7 @@ public class TradeUtility {
     /**
      * Retrieves the number of trades the current account has made in the past week.
      *
-     * @return number of trades user has made in the past week
+     * @return Number of trades user has made in the past week
      */
     public Integer getNumWeeklyTrades() {
         Integer weeklyTrades = 0;
@@ -212,7 +212,7 @@ public class TradeUtility {
      * Retrieves the number of times the current user has failed to complete
      * a trade.
      *
-     * @return number of times the current user has failed to complete a trade
+     * @return Number of times the current user has failed to complete a trade
      */
     public Integer getTimesIncomplete() {
         Integer timesIncomplete = 0;
@@ -228,7 +228,7 @@ public class TradeUtility {
     /**
      * Retrieves the number of times the current user has borrowed items.
      *
-     * @return number of times the current user has borrowed items
+     * @return Number of times the current user has borrowed items
      */
     public Integer getTimesBorrowed() {
         Integer timesBorrowed = 0;
@@ -249,7 +249,7 @@ public class TradeUtility {
     /**
      * Retrieves the number of times the current user has lent items.
      *
-     * @return number of times the current user has lent items
+     * @return Number of times the current user has lent items
      */
     public Integer getTimesLent() {
         Integer timesLent = 0;
@@ -272,10 +272,10 @@ public class TradeUtility {
     /**
      * Completes the action of making a trade.
      *
-     * @param trade          the trade object representing the trade about to be made
-     * @param accountManager an object for managing accounts
-     * @param itemManager    an object for managing items
-     * @param itemUtility    an object to access certain types of items
+     * @param trade          Trade object representing the trade about to be made
+     * @param accountManager Manager for accounts
+     * @param itemManager    Manager for items
+     * @param itemUtility    Utility for accessing certain types of items
      */
     public void makeTrade(Trade trade, AccountManager accountManager, ItemManager itemManager,
                           ItemUtility itemUtility) {
@@ -308,9 +308,9 @@ public class TradeUtility {
     /**
      * Completes the action of reversing a trade which was rejected.
      *
-     * @param trade          the trade object representing the trade about to be rejected
-     * @param accountManager an object for managing accounts
-     * @param itemManager    an object for managing items
+     * @param trade          Trade object representing the trade about to be rejected
+     * @param accountManager Object for managing accounts
+     * @param itemManager    Object for managing items
      */
     public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
         Account account = accountManager.getCurrAccount();

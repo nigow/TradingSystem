@@ -42,7 +42,7 @@ public class FreezingUtility {
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
      * @param tradeUtility   Utility for getting trade information
-     * @return list of accounts to freeze
+     * @return List of accounts to freeze
      */
     public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility) {
         List<Account> accountsToFreeze = new ArrayList<>();
@@ -60,7 +60,7 @@ public class FreezingUtility {
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
      * @param tradeUtility   Utility for getting trade information
-     * @return list of account usernames to freeze
+     * @return List of account usernames to freeze
      */
     public List<String> getUsernamesToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility) {
         List<String> accountsToFreeze = new ArrayList<>();
@@ -77,7 +77,7 @@ public class FreezingUtility {
      *
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
-     * @return a list of accounts to freeze
+     * @return List of accounts to freeze
      */
     public List<Account> getAccountsToUnfreeze(AccountManager accountManager, AuthManager authManager) {
         List<Account> accountsToUnfreeze = new ArrayList<>();
@@ -94,7 +94,7 @@ public class FreezingUtility {
      *
      * @param accountManager Manager for accounts used to retrieve all accounts
      * @param authManager    Manager for permissions and authorizing actions
-     * @return list of account usernames to freeze
+     * @return List of account usernames to freeze
      */
     public List<String> getUsernamesToUnfreeze(AccountManager accountManager, AuthManager authManager) {
         List<String> accountsToUnfreeze = new ArrayList<>();

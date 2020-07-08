@@ -251,7 +251,7 @@ Choose one of the following options:
 5. Return to previous menu
 ```
 
-You'll be shown a list of the trades that you can edit. If you were not the last person to edit the trade, then you can confirm the time and location for the trade, or suggest a new time and location for the trade. You can reject/cancel the trade regardless of whether or not you were the last person to edit it. 
+You'll be shown a list of the trades that you can edit. If you were not the last person to edit the trade, then you can confirm the time and location for the trade, or suggest a new time and location for the trade. A trade can only be edited up to 6 times. After the sixth edit, you must confirm or reject the trade as it is. You can reject/cancel the trade regardless of whether or not you were the last person to edit it. 
 
 ### Returning a Temporary Trade
 

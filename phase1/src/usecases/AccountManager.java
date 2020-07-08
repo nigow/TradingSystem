@@ -36,7 +36,7 @@ public class AccountManager {
      *
      * @param username Username of the new account
      * @param password Password of the new account
-     * @return true if account is successfully created and false if username is taken already
+     * @return Whether standard account is created successfully
      */
     public boolean createStandardAccount(String username, String password) {
         if (accountGateway.findByUsername(username) == null) {
@@ -56,7 +56,7 @@ public class AccountManager {
      *
      * @param username Username of the new account
      * @param password Password of the new account
-     * @return true if account is successfully created and false if username is taken already or invalid characters where used
+     * @return Whether admin account is created successfully
      */
     public boolean createAdminAccount(String username, String password) {
         if (accountGateway.findByUsername(username) == null) {
@@ -128,7 +128,7 @@ public class AccountManager {
     /**
      * Gets the current account's unique identifier.
      *
-     * @return The current account id
+     * @return The current account ID
      */
     public int getCurrAccountID() {
         return currAccount.getAccountID();
