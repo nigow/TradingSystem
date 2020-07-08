@@ -109,8 +109,6 @@ public class TradeIntegrationTest extends TestCase {
         items2.add(201);
         LocalDateTime time = LocalDateTime.now();
         accountManager = setUpAccount();
-        System.out.println(accountManager.getCurrAccount());
-
         tradeManager.createTrade(time, "UTM", false, 12, 13,
                 items1, items2, accountManager);
         assertEquals(tradeManager.getAllTrades().size(), 2);
@@ -219,7 +217,6 @@ public class TradeIntegrationTest extends TestCase {
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(22));
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(20));
         assertTrue(tradeUtility.getRecentOneWay().contains(301));
-        System.out.println(tradeUtility.getRecentTwoWay());
         assertTrue(tradeUtility.getRecentTwoWay().contains(201));
         accountManager = setUpAccount();
         tradeManager.createTrade(time, "UTM", false, 21, 23,
@@ -240,9 +237,6 @@ public class TradeIntegrationTest extends TestCase {
             tradeManager.setTrade(trade);
             tradeManager.updateStatus(TradeStatus.CONFIRMED);
         }
-        System.out.println(tradeUtility.getTopThreePartnersIds());
-        System.out.println(tradeUtility.getRecentTwoWay());
-        System.out.println(tradeUtility.getRecentOneWay());
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(22));
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(25));
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(23));
