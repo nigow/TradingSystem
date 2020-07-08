@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class ControllerInputValidator {
 
     private final String TRUE = "y";
-    private final String FALSE = "y";
+    private final String FALSE = "n";
 
     /**
      * Returns the TRUE string
