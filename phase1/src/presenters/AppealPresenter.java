@@ -9,5 +9,5 @@ public interface AppealPresenter {
     /**
      * Lets user know their request has been received.
      */
-    void displaySuccessfulAppeal();
+    void displaySuccessfulAppeal(String username);
 }

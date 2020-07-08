@@ -8,7 +8,7 @@ public class ConsoleAppealPresenter implements AppealPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void displaySuccessfulAppeal() {
-        System.out.println("Your appeal has been received.");
+    public void displaySuccessfulAppeal(String username) {
+        System.out.println(username + "'s appeal has been received.");
     }
 }
