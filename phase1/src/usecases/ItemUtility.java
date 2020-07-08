@@ -21,7 +21,7 @@ public class ItemUtility {
     /**
      * Constructor for ItemUtility.
      *
-     * @param itemManager A manager for editing items
+     * @param itemManager Manager for editing items
      */
     public ItemUtility(ItemManager itemManager) {
         this.itemManager = itemManager;

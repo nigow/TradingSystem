@@ -27,8 +27,8 @@ public class WishlistUtility {
     /**
      * Constructor for WishlistUtility.
      *
-     * @param accountGateway account gateway to reference accounts
-     * @param itemsGateway   item gateway to reference items
+     * @param accountGateway Account gateway to reference accounts
+     * @param itemsGateway   Item gateway to reference items
      */
     public WishlistUtility(AccountGateway accountGateway, ItemsGateway itemsGateway) {
         this.accountGateway = accountGateway;
@@ -38,12 +38,12 @@ public class WishlistUtility {
     /**
      * Get all wishlist items for a specific account.
      *
-     * @param id the Account id to look up for
-     * @return wishlist that this account has
+     * @param accountID The Account ID to look up for
+     * @return Wishlist that this account has
      */
-    public List<Item> wishlistItems(int id) {
+    public List<Item> wishlistItems(int accountID) {
         List<Item> wishlist = new ArrayList<>();
-        for (int itemId : accountGateway.findById(id).getWishlist()) {
+        for (int itemId : accountGateway.findById(accountID).getWishlist()) {
             Item item = itemsGateway.findById(itemId);
             wishlist.add(item);
         }
@@ -51,7 +51,7 @@ public class WishlistUtility {
     }
 
     /**
-     * Get all wishlists for all accounts.
+     * Get the wishlists for all accounts.
      *
      * @return A list containing wishlists of all users
      */
@@ -65,7 +65,7 @@ public class WishlistUtility {
 
 
     /**
-     * String representation of all wishlist items for a specific account/
+     * String representation of all wishlist items for a specific account.
      *
      * @return String representation of all wishlist items
      */
