@@ -170,30 +170,34 @@ public class TradeController {
                 if (actionInd == options.size() - 1)
                     return;
                 if (0 <= actionInd && actionInd < options.size()) {
-                    if (actionInd == 0) {
-                        tradeManager.updateStatus(TradeStatus.REJECTED);
-                        tradePresenter.showMessage("You rejected this trade.");
-                    } else if (actionInd == 1 && tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
-                        tradeManager.updateStatus(TradeStatus.CONFIRMED);
-                        tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
-                        if (!tradeManager.isPermanent()) {
-                            tradeManager.reverseTrade(accountManager);
-                            tradeManager.updateStatus(TradeStatus.CONFIRMED);
-                            tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
-                        }
-                        tradePresenter.showMessage("You confirmed the time and location for this trade.");
-                    } else {
-                        changeTradeTimePlace();
-                        if (tradeManager.getEditedCounter() == MAX_ALLOWED_EDITS) {
-                            tradeManager.updateStatus(TradeStatus.REJECTED);
-                            tradePresenter.showMessage("You have edited " +
-                                    "the time and location for this trade too many times, and it has been cancelled.");
-                        }
-                    }
+                    changeUnconfirmedTradeActions(actionInd);
                     return;
                 }
             }
             tradePresenter.invalidInput();
+        }
+    }
+
+    private void changeUnconfirmedTradeActions(int actionInd) {
+        if (actionInd == 0) {
+            tradeManager.updateStatus(TradeStatus.REJECTED);
+            tradePresenter.showMessage("You rejected this trade.");
+        } else if (actionInd == 1 && tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
+            tradeManager.updateStatus(TradeStatus.CONFIRMED);
+            tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
+            if (!tradeManager.isPermanent()) {
+                tradeManager.reverseTrade(accountManager);
+                tradeManager.updateStatus(TradeStatus.CONFIRMED);
+                tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
+            }
+            tradePresenter.showMessage("You confirmed the time and location for this trade.");
+        } else {
+            changeTradeTimePlace();
+            if (tradeManager.getEditedCounter() == MAX_ALLOWED_EDITS) {
+                tradeManager.updateStatus(TradeStatus.REJECTED);
+                tradePresenter.showMessage("You have edited " +
+                        "the time and location for this trade too many times, and it has been cancelled.");
+            }
         }
     }
 
