@@ -18,8 +18,6 @@ import java.util.List;
  */
 public class TradeController {
 
-    // TODO: javadoc, but since it's private it's not a priority
-
     private final TradePresenter tradePresenter;
 
     private final AuthManager authManager;
