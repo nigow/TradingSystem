@@ -138,11 +138,11 @@ public class TradeController {
             while (true) {
                 tradePresenter.showMessage("Has this trade been completed?");
                 String ans = tradePresenter.yesOrNo();
-                if (ans.equals("y")) {
+                if (controllerInputValidator.isTrue(ans)) {
                     tradePresenter.showMessage("You have marked this trade as complete.");
                     tradeManager.updateCompletion(accountManager.getCurrAccountID());
                     return;
-                } else if (ans.equals("n")) {
+                } else if (controllerInputValidator.isFalse(ans)) {
                     tradePresenter.showMessage("Okay.");
                     return;
                 } else

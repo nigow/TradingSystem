@@ -69,7 +69,7 @@ public class TradeCreatorController {
             traderOneItems.add(itemId);
         }
 
-        String twoWayTrade = forceTwoWay ? "y" : tradeCreatorPresenter.getTwoWayTrade();
+        String twoWayTrade = forceTwoWay ? controllerInputValidator.getTRUE() : tradeCreatorPresenter.getTwoWayTrade();
 
         while (!controllerInputValidator.isBool(twoWayTrade)) {
 
@@ -79,7 +79,7 @@ public class TradeCreatorController {
 
         }
 
-        if (twoWayTrade.equals("y") && !setUpTwoWayTrade(traderOneItems, traderTwoItems)) return;
+        if (controllerInputValidator.isTrue(twoWayTrade) && !setUpTwoWayTrade(traderOneItems, traderTwoItems)) return;
 
         String tradeLocation = tradeCreatorPresenter.getLocation();
 
@@ -116,7 +116,7 @@ public class TradeCreatorController {
 
         }
 
-        tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, isPerm.equals("y"),
+        tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, controllerInputValidator.isTrue(isPerm),
                 traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountManager);
         tradeCreatorPresenter.successMessage();
 

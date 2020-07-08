@@ -202,11 +202,11 @@ public class InventoryController {
                 if (controllerInputValidator.isExitStr(confirm)) {
                     inventoryPresenter.abortMessage();
                     exit = true;
-                } else if (confirm.equals("n")) {
+                } else if (controllerInputValidator.isFalse(confirm)) {
                     inventoryPresenter.customMessage("Item not added.");
                     nameGiven = false;
                     descriptionGiven = false;
-                } else if (confirm.equals("y")) {
+                } else if (controllerInputValidator.isTrue(confirm)) {
                     itemManager.createItem(name, description, accountManager.getCurrAccountID());
                     inventoryPresenter.customMessage("Item successfully added, pending admin approval!");
                     confirmedItem = true;

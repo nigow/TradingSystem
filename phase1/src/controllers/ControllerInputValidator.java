@@ -9,6 +9,27 @@ import java.util.regex.Pattern;
  */
 public class ControllerInputValidator {
 
+    private final String TRUE = "y";
+    private final String FALSE = "y";
+
+    /**
+     * Returns the TRUE string
+     *
+     * @return the TRUE string
+     */
+    public String getTRUE() {
+        return TRUE;
+    }
+
+    /**
+     * Returns the FALSE string
+     *
+     * @return the FALSE string
+     */
+    public String getFALSE() {
+        return FALSE;
+    }
+
     /**
      * Check if a string is a non-negative integer.
      *
@@ -64,8 +85,28 @@ public class ControllerInputValidator {
      */
     public boolean isBool(String input) {
 
-        return input.equals("y") || input.equals("n");
+        return isTrue(input) || isFalse(input);
 
+    }
+
+    /**
+     * Check if a string is a boolean/decision in the form of "y".
+     *
+     * @param input Input string.
+     * @return Whether given string is a boolean/decision in the form of "y".
+     */
+    public boolean isTrue(String input) {
+        return input.equals(TRUE);
+    }
+
+    /**
+     * Check if a string is a boolean/decision in the form of "n".
+     *
+     * @param input Input string.
+     * @return Whether given string is a boolean/decision in the form of "n".
+     */
+    public boolean isFalse(String input) {
+        return input.equals(FALSE);
     }
 
     /**
