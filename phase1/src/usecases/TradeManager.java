@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a manager responsible for creating and editing trades.
+ * Manager responsible for creating and editing trades.
  *
  * @author Isaac
  */
@@ -134,7 +134,7 @@ public class TradeManager {
     }
 
     /**
-     * Getter for the status of the trade.
+     * Gets the status of the trade.
      *
      * @return Current status of the trade
      */
@@ -143,7 +143,7 @@ public class TradeManager {
     }
 
     /**
-     * Getter for the current trade.
+     * Gets the current trade.
      *
      * @return The current trade.
      */

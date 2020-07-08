@@ -7,24 +7,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Utility class for trades to access certain types of trades and information on trades
+ * Utility class for accessing certain types of trades and information on trades.
  *
  * @author Isaac
  */
 public class TradeUtility {
 
     /**
-     * Manager responsible for creating and editing trades
+     * Manager responsible for creating and editing trades.
      */
     private final TradeManager tradeManager;
 
     /**
-     * The account which info on its trades are being retrieved
+     * The account which info on its trades are being retrieved.
      */
     private Account account;
 
     /**
-     * Constructor for TradeUtility which stores an account and TradeManager
+     * Constructor for TradeUtility which stores an account and TradeManager.
      *
      * @param tradeManager Manager for creating and editing trades
      */
@@ -33,7 +33,7 @@ public class TradeUtility {
     }
 
     /**
-     * Sets the current account to be edited
+     * Sets the current account to be edited.
      *
      * @param account the current account to be edited
      */
@@ -42,7 +42,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves all the trades the current account has
+     * Retrieves all the trades the current account has.
      *
      * @return List of all of the trades the current account has done
      */
@@ -59,7 +59,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves all the trades the current account has done in string format
+     * Retrieves all the trades the current account has done in string format.
      *
      * @return List of the trades the current account has done in string format
      */
@@ -76,7 +76,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves the Ids of the top three trade partners of the current account
+     * Retrieves the Ids of the top three trade partners of the current account.
      *
      * @return List of top three trade partners, if less than three list size is
      * adjusted
@@ -108,7 +108,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the three most recent one-way trades the current account
-     * has made
+     * has made.
      *
      * @return List of three most recent one-way trades the current account
      * has made, if less than three list size is adjusted
@@ -149,7 +149,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the three most recent two-way trades the current account has
-     * made
+     * made.
      *
      * @return List of three most recent two-way trades the current account
      * has made, if less than three list size is adjusted
@@ -187,7 +187,7 @@ public class TradeUtility {
     // TODO: fix this according to when transaction is made  -maryam
 
     /**
-     * Retrieves the number of trades the current account has made in the past week
+     * Retrieves the number of trades the current account has made in the past week.
      *
      * @return number of trades user has made in the past week
      */
@@ -209,7 +209,7 @@ public class TradeUtility {
 
     /**
      * Retrieves the number of times the current user has failed to complete
-     * a trade
+     * a trade.
      *
      * @return number of times the current user has failed to complete a trade
      */
@@ -225,7 +225,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves the number of times the current user has borrowed items
+     * Retrieves the number of times the current user has borrowed items.
      *
      * @return number of times the current user has borrowed items
      */
@@ -246,7 +246,7 @@ public class TradeUtility {
     }
 
     /**
-     * Retrieves the number of times the current user has lent items
+     * Retrieves the number of times the current user has lent items.
      *
      * @return number of times the current user has lent items
      */
@@ -269,7 +269,7 @@ public class TradeUtility {
     // TODO: fix later to not use accountManager
 
     /**
-     * Completes the action of making a trade
+     * Completes the action of making a trade.
      *
      * @param trade          the trade object representing the trade about to be made
      * @param accountManager an object for managing accounts
@@ -305,7 +305,7 @@ public class TradeUtility {
     //  do not use for now.  -maryam
 
     /**
-     * Completes the action of reversing a trade which was rejected
+     * Completes the action of reversing a trade which was rejected.
      *
      * @param trade          the trade object representing the trade about to be rejected
      * @param accountManager an object for managing accounts

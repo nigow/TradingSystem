@@ -104,15 +104,17 @@ public class AuthManager {
         return accountGateway.updateAccount(account);
     }
 
-    /**
-     * Determines whether a given account account can login.
-     *
-     * @param account Account that is checked it see if it can login
-     * @return Whether the account can login or not
-     */
-    public boolean canLogin(Account account) {
-        return account.getPermissions().contains(Permissions.LOGIN);
-    }
+// TODO: for later uses
+
+//    /**
+//     * Determines whether a given account account can login.
+//     *
+//     * @param account Account that is checked it see if it can login
+//     * @return Whether the account can login or not
+//     */
+//    public boolean canLogin(Account account) {
+//        return account.getPermissions().contains(Permissions.LOGIN);
+//    }
 
     /**
      * Determines whether a given account can add to wishlist.
@@ -284,9 +286,8 @@ public class AuthManager {
         return !isFrozen(account);
     }
 
-
     /**
-     * Determines whether a given account can request to unfreeze and requests to unfreeze if it can
+     * Determines whether a given account can request to unfreeze and requests to unfreeze if it can.
      *
      * @param account Account to request to be unfrozen
      * @return Whether the account can request to unfreeze or not
