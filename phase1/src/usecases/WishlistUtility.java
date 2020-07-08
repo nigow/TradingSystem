@@ -67,7 +67,7 @@ public class WishlistUtility {
     /**
      * String representation of all wishlist items for a specific account.
      *
-     * @param
+     * @param accountID Unique identifier of account
      * @return String representation of all wishlist items
      */
     public List<String> wishlistToString(int accountID) {
