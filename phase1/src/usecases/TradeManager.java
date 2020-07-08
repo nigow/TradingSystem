@@ -62,13 +62,13 @@ public class TradeManager {
     /**
      * Creates a new Trade object to be edited.
      *
-     * @param time        Time of the Trade
-     * @param place       Location of the Trade
-     * @param isPermanent Whether the trade is permanent or not
-     * @param traderOneID ID of the first trader
-     * @param traderTwoID ID of the second trader
-     * @param itemOneID   List of items trader one is offering
-     * @param itemTwoID   List of items trader two is offering
+     * @param time           Time of the Trade
+     * @param place          Location of the Trade
+     * @param isPermanent    Whether the trade is permanent or not
+     * @param traderOneID    ID of the first trader
+     * @param traderTwoID    ID of the second trader
+     * @param itemOneID      List of items trader one is offering
+     * @param itemTwoID      List of items trader two is offering
      * @param accountManager Manager for editing wishlist
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
@@ -258,7 +258,7 @@ public class TradeManager {
      * Returns a user-friendly string representation of a trade.
      *
      * @param accountManager Manager for manipulating accounts
-     * @param itemManager Manager for manipulating items
+     * @param itemManager    Manager for manipulating items
      * @return An user-friendly representation of a trade
      */
     public String tradeAsString(AccountManager accountManager, ItemManager itemManager) {

@@ -48,8 +48,8 @@ public class LendingController {
     /**
      * Initialize the use cases and presenter.
      *
-     * @param lendingPresenter Presenter for lending services
-     * @param manualConfig Collection of gateways
+     * @param lendingPresenter      Presenter for lending services
+     * @param manualConfig          Collection of gateways
      * @param tradeCreatorPresenter Presenter for suggesting trades
      */
     public LendingController(LendingPresenter lendingPresenter, ManualConfig manualConfig, TradeCreatorPresenter tradeCreatorPresenter) {

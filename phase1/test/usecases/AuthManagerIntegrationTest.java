@@ -105,9 +105,9 @@ public class AuthManagerIntegrationTest extends TestCase {
         account2.removePermission(Permissions.UNFREEZE);
         assertFalse(authManager.canUnfreeze(account2));
 
-        assertTrue(authManager.canLogin(account2));
-        account2.removePermission(Permissions.LOGIN);
-        assertFalse(authManager.canLogin(account2));
+//        assertTrue(authManager.canLogin(account2));
+//        account2.removePermission(Permissions.LOGIN);
+//        assertFalse(authManager.canLogin(account2));
     }
 
     public void testFrozen(){
