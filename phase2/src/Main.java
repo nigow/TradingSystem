@@ -1,4 +1,4 @@
-package controllers;
+import controllers.MainController;
 
 /**
  * Contains the main method that starts the program.
