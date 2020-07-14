@@ -1,0 +1,19 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main (no test)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ConsoleMain" />
+    <module name="phase2" />
+    <selectedOptions>
+      <option name="before.launch.openToolWindow" />
+      <option name="beforeRunTasks" />
+      <option name="commandLineParameters" />
+      <option name="doNotBuildBeforeRun" />
+      <option name="environmentVariables" />
+      <option name="jrePath" />
+      <option name="mainClass" />
+      <option name="workingDirectory" />
+    </selectedOptions>
+    <method v="2">
+      <option name="MakeNoErrorCheck" enabled="true" />
+    </method>
+  </configuration>
+</component>

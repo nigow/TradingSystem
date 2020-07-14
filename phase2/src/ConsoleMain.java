@@ -5,7 +5,7 @@ import controllers.MainController;
  *
  * @author Maryam
  */
-public class Main {
+public class ConsoleMain {
     /**
      * Calls the run method of MainController to start the program.
      *
