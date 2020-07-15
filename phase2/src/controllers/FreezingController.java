@@ -45,15 +45,15 @@ public class FreezingController {
     /**
      * Initializes constructor with necessary use cases and presenter.
      *
-     * @param mc                An instance of ManualConfig to get use cases
+     * @param useCasePool       An instance of ManualConfig to get use cases
      * @param freezingPresenter An instance of FreezingPresenter to display information
      */
-    public FreezingController(UseCasePool mc, FreezingPresenter freezingPresenter) {
-        tradeUtility = mc.getTradeUtility();
+    public FreezingController(UseCasePool useCasePool, FreezingPresenter freezingPresenter) {
+        tradeUtility = useCasePool.getTradeUtility();
         this.freezingPresenter = freezingPresenter;
-        freezingUtility = mc.getFreezingUtility();
-        accountManager = mc.getAccountManager();
-        authManager = mc.getAuthManager();
+        freezingUtility = useCasePool.getFreezingUtility();
+        accountManager = useCasePool.getAccountManager();
+        authManager = useCasePool.getAuthManager();
         inputHandler = new InputHandler();
     }
 

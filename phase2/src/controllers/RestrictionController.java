@@ -18,8 +18,8 @@ public class RestrictionController {
 
     private final InputHandler inputHandler;
 
-    public RestrictionController(UseCasePool mc, RestrictionPresenter restrictionPresenter) {
-        freezingUtility = mc.getFreezingUtility();
+    public RestrictionController(UseCasePool useCasePool, RestrictionPresenter restrictionPresenter) {
+        freezingUtility = useCasePool.getFreezingUtility();
         this.restrictionPresenter = restrictionPresenter;
         inputHandler = new InputHandler();
     }

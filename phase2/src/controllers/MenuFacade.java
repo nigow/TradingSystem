@@ -54,7 +54,7 @@ public class MenuFacade {
     /**
      * Initializes MenuFacade with the necessary controllers, presenter, and use cases.
      *
-     * @param mc                    An instance of ManualConfig to get the necessary use cases
+     * @param useCasePool           An instance of UseCasePool to get the necessary use cases
      * @param freezingController    An instance of FreezingController
      * @param inventoryController   An instance of InventoryController
      * @param wishlistController    An instance of WishlistController
@@ -65,7 +65,7 @@ public class MenuFacade {
      * @param restrictionController An instance of RestrictionController
      * @param menuPresenter         An instance of MenuPresenter to display information and interact with the user
      */
-    public MenuFacade(UseCasePool mc, FreezingController freezingController,
+    public MenuFacade(UseCasePool useCasePool, FreezingController freezingController,
                       InventoryController inventoryController,
                       WishlistController wishlistController,
                       LendingController lendingController,
@@ -74,10 +74,10 @@ public class MenuFacade {
                       AdminCreatorController adminCreator,
                       RestrictionController restrictionController,
                       MenuPresenter menuPresenter) {
-        authManager = mc.getAuthManager();
-        accountManager = mc.getAccountManager();
-        tradeUtility = mc.getTradeUtility();
-        itemUtility = mc.getItemUtility();
+        authManager = useCasePool.getAuthManager();
+        accountManager = useCasePool.getAccountManager();
+        tradeUtility = useCasePool.getTradeUtility();
+        itemUtility = useCasePool.getItemUtility();
 
         this.menuPresenter = menuPresenter;
 

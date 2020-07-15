@@ -42,14 +42,14 @@ public class HomeController {
     /**
      * Initializes HomeController with the necessary presenter and use cases.
      *
-     * @param mc            An instance of ManualConfig to get the necessary use cases
+     * @param useCasePool   An instance of UseCasePool to get the necessary use cases
      * @param homePresenter An instance of HomePresenter to display information and interact with the user
      * @param menuFacade    An instance of MenuFacade to take user's to the next menu
      */
-    public HomeController(UseCasePool mc, HomePresenter homePresenter,
+    public HomeController(UseCasePool useCasePool, HomePresenter homePresenter,
                           MenuFacade menuFacade) {
-        accountManager = mc.getAccountManager();
-        authManager = mc.getAuthManager();
+        accountManager = useCasePool.getAccountManager();
+        authManager = useCasePool.getAuthManager();
         this.menuFacade = menuFacade;
         this.homePresenter = homePresenter;
         inputHandler = new InputHandler();

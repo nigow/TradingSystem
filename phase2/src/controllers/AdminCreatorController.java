@@ -26,11 +26,11 @@ public class AdminCreatorController {
     /**
      * Initializes AdminCreatorController with necessary presenter and use cases.
      *
-     * @param mc             An instance of ManualConfig to get use cases
+     * @param useCasePool    An instance of ManualConfig to get use cases
      * @param adminPresenter An instance of AdminPresenter to display information
      */
-    public AdminCreatorController(UseCasePool mc, AdminCreatorPresenter adminPresenter) {
-        accountManager = mc.getAccountManager();
+    public AdminCreatorController(UseCasePool useCasePool, AdminCreatorPresenter adminPresenter) {
+        accountManager = useCasePool.getAccountManager();
         this.adminPresenter = adminPresenter;
         inputHandler = new InputHandler();
     }
