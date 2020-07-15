@@ -1,7 +1,7 @@
 package controllers;
 
 import entities.Account;
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.FreezingPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -45,15 +45,15 @@ public class FreezingController {
     /**
      * Initializes constructor with necessary use cases and presenter.
      *
-     * @param mc                An instance of ManualConfig to get use cases
+     * @param useCasePool       An instance of ManualConfig to get use cases
      * @param freezingPresenter An instance of FreezingPresenter to display information
      */
-    public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {
-        tradeUtility = mc.getTradeUtility();
+    public FreezingController(UseCasePool useCasePool, FreezingPresenter freezingPresenter) {
+        tradeUtility = useCasePool.getTradeUtility();
         this.freezingPresenter = freezingPresenter;
-        freezingUtility = mc.getFreezingUtility();
-        accountManager = mc.getAccountManager();
-        authManager = mc.getAuthManager();
+        freezingUtility = useCasePool.getFreezingUtility();
+        accountManager = useCasePool.getAccountManager();
+        authManager = useCasePool.getAuthManager();
         inputHandler = new InputHandler();
     }
 
@@ -100,7 +100,7 @@ public class FreezingController {
                 freezingPresenter.invalidInput();
             else {
                 freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(chosenUser)), accountManager.getCurrAccount());
-                freezingPresenter.showMessage("You have frozen this account.");
+                freezingPresenter.displaySuccessfulFreeze();
                 return;
             }
         }
@@ -123,7 +123,7 @@ public class FreezingController {
                 freezingPresenter.invalidInput();
             else {
                 freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(chosenUser)));
-                freezingPresenter.showMessage("You have unfrozen this account.");
+                freezingPresenter.displaySuccessfulUnfreeze();
                 return;
             }
         }

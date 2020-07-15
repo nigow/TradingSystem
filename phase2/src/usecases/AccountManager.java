@@ -23,16 +23,23 @@ public class AccountManager {
     private final AccountGateway accountGateway;
 
     /**
+     * Used to create accounts in standardized ways.
+     */
+    private final AccountBuilder accountBuilder;
+
+    /**
      * Constructs an instance of AccountManager and stores accountGateway.
      *
      * @param accountGateway Gateway used to interact with persistent storage of accounts
      */
     public AccountManager(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
+        accountBuilder = new AccountBuilder(accountGateway);
     }
 
     /**
-     * Creates a new standard trading account using username and password by determining if characters used are valid.
+     * Creates a new standard trading account using username and password by determining if
+     * characters used are valid.
      *
      * @param username Username of the new account
      * @param password Password of the new account
@@ -40,8 +47,7 @@ public class AccountManager {
      */
     public boolean createStandardAccount(String username, String password) {
         if (accountGateway.findByUsername(username) == null) {
-            AccountFactory accountFactory = new AccountFactory(accountGateway);
-            Account createdAccount = accountFactory.createStandardAccount(username, password);
+            Account createdAccount = accountBuilder.createStandardAccount(username, password);
             if (accountGateway.updateAccount(createdAccount)) {
                 currAccount = createdAccount;
                 return true;
@@ -60,8 +66,7 @@ public class AccountManager {
      */
     public boolean createAdminAccount(String username, String password) {
         if (accountGateway.findByUsername(username) == null) {
-            AccountFactory accountFactory = new AccountFactory(accountGateway);
-            Account createdAccount = accountFactory.createAdminAccount(username, password);
+            Account createdAccount = accountBuilder.createAdminAccount(username, password);
             if (accountGateway.updateAccount(createdAccount)) {
                 currAccount = createdAccount;
                 return true;

@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.AppealPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -27,12 +27,12 @@ public class AppealController {
     /**
      * Initializes constructor with necessary use cases and presenter.
      *
-     * @param mc              An instance of ManualConfig to get use cases
+     * @param useCasePool     An instance of UseCasePool to get use cases
      * @param appealPresenter An instance of AppealPresenter to display information
      */
-    public AppealController(ManualConfig mc, AppealPresenter appealPresenter) {
-        authManager = mc.getAuthManager();
-        accountManager = mc.getAccountManager();
+    public AppealController(UseCasePool useCasePool, AppealPresenter appealPresenter) {
+        authManager = useCasePool.getAuthManager();
+        accountManager = useCasePool.getAccountManager();
         this.appealPresenter = appealPresenter;
     }
 

@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.HomePresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -42,14 +42,14 @@ public class HomeController {
     /**
      * Initializes HomeController with the necessary presenter and use cases.
      *
-     * @param mc            An instance of ManualConfig to get the necessary use cases
+     * @param useCasePool   An instance of UseCasePool to get the necessary use cases
      * @param homePresenter An instance of HomePresenter to display information and interact with the user
      * @param menuFacade    An instance of MenuFacade to take user's to the next menu
      */
-    public HomeController(ManualConfig mc, HomePresenter homePresenter,
+    public HomeController(UseCasePool useCasePool, HomePresenter homePresenter,
                           MenuFacade menuFacade) {
-        accountManager = mc.getAccountManager();
-        authManager = mc.getAuthManager();
+        accountManager = useCasePool.getAccountManager();
+        authManager = useCasePool.getAuthManager();
         this.menuFacade = menuFacade;
         this.homePresenter = homePresenter;
         inputHandler = new InputHandler();
@@ -99,7 +99,7 @@ public class HomeController {
                 menuFacade.run();
                 return;
             } else
-                homePresenter.showMessage("That username/password combination is incorrect.");
+                homePresenter.displayIncorrectInfo();
         }
     }
 
@@ -116,14 +116,14 @@ public class HomeController {
             if (inputHandler.isExitStr(password))
                 return;
             if (!inputHandler.isValidUserPass(username, password))
-                homePresenter.showMessage("The characters in that username and password are illegal.");
+                homePresenter.displayInvalidInfo();
             else {
                 if (accountManager.createStandardAccount(username, password)) {
-                    homePresenter.showMessage("You have created an account.");
+                    homePresenter.displaySuccessfulAccount();
                     menuFacade.run();
                     return;
                 } else
-                    homePresenter.showMessage("That username is taken.");
+                    homePresenter.displayOverlappingInfo();
             }
         }
     }

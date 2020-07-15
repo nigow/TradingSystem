@@ -1,7 +1,7 @@
 package controllers;
 
-import gateways.ManualConfig;
-import gateways.ManualConfigCSV;
+import gateways.UseCasePool;
+import gateways.CSVUseCasePool;
 import presenters.*;
 
 
@@ -18,40 +18,40 @@ public class MainController {
      * Creates an instance of controllers, starts the program, and runs the home page.
      */
     public void run() {
-        ManualConfig manualConfig;
+        UseCasePool useCasePool;
         try {
-            manualConfig = new ManualConfigCSV();
+            useCasePool = new CSVUseCasePool();
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
         InventoryController inventoryController =
-                new InventoryController(manualConfig, new ConsoleInventoryPresenter());
+                new InventoryController(useCasePool, new ConsoleInventoryPresenter());
 
         WishlistController wishlistController =
-                new WishlistController(new ConsoleWishlistPresenter(), new ConsoleTradeCreatorPresenter(), manualConfig);
+                new WishlistController(new ConsoleWishlistPresenter(), new ConsoleTradeCreatorPresenter(), useCasePool);
 
         AppealController appealController =
-                new AppealController(manualConfig, new ConsoleAppealPresenter());
+                new AppealController(useCasePool, new ConsoleAppealPresenter());
 
         LendingController lendingController =
-                new LendingController(new ConsoleLendingPresenter(), manualConfig, new ConsoleTradeCreatorPresenter());
+                new LendingController(new ConsoleLendingPresenter(), useCasePool, new ConsoleTradeCreatorPresenter());
 
         FreezingController freezingController =
-                new FreezingController(manualConfig, new ConsoleFreezingPresenter());
+                new FreezingController(useCasePool, new ConsoleFreezingPresenter());
 
         TradeController tradeController =
-                new TradeController(manualConfig, new ConsoleTradePresenter());
+                new TradeController(useCasePool, new ConsoleTradePresenter());
 
         AdminCreatorController adminCreator =
-                new AdminCreatorController(manualConfig, new ConsoleAdminCreatorPresenter());
+                new AdminCreatorController(useCasePool, new ConsoleAdminCreatorPresenter());
 
         RestrictionController restrictionsController =
-                new RestrictionController(manualConfig, new ConsoleRestrictionPresenter());
+                new RestrictionController(useCasePool, new ConsoleRestrictionPresenter());
 
         MenuFacade menuFacade = new MenuFacade(
-                manualConfig,
+                useCasePool,
                 freezingController,
                 inventoryController,
                 wishlistController,
@@ -62,7 +62,7 @@ public class MainController {
                 restrictionsController,
                 new ConsoleMenuPresenter());
 
-        HomeController homeController = new HomeController(manualConfig, new ConsoleHomePresenter(), menuFacade);
+        HomeController homeController = new HomeController(useCasePool, new ConsoleHomePresenter(), menuFacade);
 
         homeController.run();
     }

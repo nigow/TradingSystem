@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.AdminCreatorPresenter;
 import usecases.AccountManager;
 
@@ -26,11 +26,11 @@ public class AdminCreatorController {
     /**
      * Initializes AdminCreatorController with necessary presenter and use cases.
      *
-     * @param mc             An instance of ManualConfig to get use cases
+     * @param useCasePool    An instance of ManualConfig to get use cases
      * @param adminPresenter An instance of AdminPresenter to display information
      */
-    public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
-        accountManager = mc.getAccountManager();
+    public AdminCreatorController(UseCasePool useCasePool, AdminCreatorPresenter adminPresenter) {
+        accountManager = useCasePool.getAccountManager();
         this.adminPresenter = adminPresenter;
         inputHandler = new InputHandler();
     }
@@ -47,13 +47,13 @@ public class AdminCreatorController {
             if (inputHandler.isExitStr(password))
                 return;
             if (!inputHandler.isValidUserPass(username, password))
-                adminPresenter.showMessage("The characters in that username and password are illegal.");
+                adminPresenter.displayInvalidInfo();
             else {
                 if (accountManager.createAdminAccount(username, password)) {
-                    adminPresenter.showMessage("You have added a new admin account.");
+                    adminPresenter.displaySuccessfulAccount();
                     return;
                 } else
-                    adminPresenter.showMessage("That username is taken.");
+                    adminPresenter.displayOverlappingInfo();
             }
         }
     }

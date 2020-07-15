@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.TradeCreatorPresenter;
 import presenters.WishlistPresenter;
 import usecases.*;
@@ -18,7 +18,7 @@ public class WishlistController {
     private final WishlistPresenter wishlistPresenter;
     private final TradeCreatorPresenter tradeCreatorPresenter;
 
-    private final ManualConfig manualConfig;
+    private final UseCasePool useCasePool;
     private final AccountManager accountManager;
     private final WishlistUtility wishlistUtility;
     private final ItemManager itemManager;
@@ -32,18 +32,18 @@ public class WishlistController {
      *
      * @param wishlistPresenter     A presenter for this controller.
      * @param tradeCreatorPresenter A presenter for {@link controllers.TradeCreatorController}.
-     * @param manualConfig          Repository of use cases.
+     * @param useCasePool          Repository of use cases.
      */
     public WishlistController(WishlistPresenter wishlistPresenter, TradeCreatorPresenter tradeCreatorPresenter,
-                              ManualConfig manualConfig) {
+                              UseCasePool useCasePool) {
 
-        this.manualConfig = manualConfig;
+        this.useCasePool = useCasePool;
 
-        this.tradeUtility = manualConfig.getTradeUtility();
-        this.accountManager = manualConfig.getAccountManager();
-        this.wishlistUtility = manualConfig.getWishlistUtility();
-        this.itemManager = manualConfig.getItemManager();
-        this.authManager = manualConfig.getAuthManager();
+        this.tradeUtility = useCasePool.getTradeUtility();
+        this.accountManager = useCasePool.getAccountManager();
+        this.wishlistUtility = useCasePool.getWishlistUtility();
+        this.itemManager = useCasePool.getItemManager();
+        this.authManager = useCasePool.getAuthManager();
 
         this.wishlistPresenter = wishlistPresenter;
         this.tradeCreatorPresenter = tradeCreatorPresenter;
@@ -118,7 +118,7 @@ public class WishlistController {
 
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
-        new TradeCreatorController(tradeCreatorPresenter, manualConfig, itemManager.getOwnerId(itemId), itemId,
+        new TradeCreatorController(tradeCreatorPresenter, useCasePool, itemManager.getOwnerId(itemId), itemId,
                 !authManager.lentMoreThanBorrowed(tradeUtility)).run();
 
     }

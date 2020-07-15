@@ -2,7 +2,7 @@ package controllers;
 
 import entities.Account;
 import entities.Item;
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.LendingPresenter;
 import presenters.TradeCreatorPresenter;
 import usecases.AccountManager;
@@ -35,7 +35,7 @@ public class LendingController {
     /**
      * Collection of gateways.
      */
-    private final ManualConfig manualConfig;
+    private final UseCasePool useCasePool;
 
     private final InputHandler validator;
 
@@ -49,14 +49,14 @@ public class LendingController {
      * Initialize the use cases and presenter.
      *
      * @param lendingPresenter      Presenter for lending services
-     * @param manualConfig          Collection of gateways
+     * @param useCasePool          Collection of gateways
      * @param tradeCreatorPresenter Presenter for suggesting trades
      */
-    public LendingController(LendingPresenter lendingPresenter, ManualConfig manualConfig, TradeCreatorPresenter tradeCreatorPresenter) {
-        this.manualConfig = manualConfig;
+    public LendingController(LendingPresenter lendingPresenter, UseCasePool useCasePool, TradeCreatorPresenter tradeCreatorPresenter) {
+        this.useCasePool = useCasePool;
         this.lendingPresenter = lendingPresenter;
-        this.accountManager = manualConfig.getAccountManager();
-        this.itemManager = manualConfig.getItemManager();
+        this.accountManager = useCasePool.getAccountManager();
+        this.itemManager = useCasePool.getItemManager();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
         this.validator = new InputHandler();
     }
@@ -145,7 +145,7 @@ public class LendingController {
         if (tradingItemId == -1) return;
 
         TradeCreatorController startTrade;
-        startTrade = new TradeCreatorController(tradeCreatorPresenter, manualConfig, toAccountId, tradingItemId, false);
+        startTrade = new TradeCreatorController(tradeCreatorPresenter, useCasePool, toAccountId, tradingItemId, false);
         startTrade.run();
     }
 

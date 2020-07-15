@@ -77,7 +77,16 @@ public class ConsoleFreezingPresenter implements FreezingPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
-        System.out.println(message);
+    public void displaySuccessfulFreeze() {
+        System.out.println("You have frozen this account.");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displaySuccessfulUnfreeze() {
+        System.out.println("You have unfrozen this account.");
+    }
+
 }

@@ -4,7 +4,7 @@ import entities.Account;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import usecases.AccountFactory;
+import usecases.AccountBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class CSVAccountGatewayTest {
         AccountGateway ag = new CSVAccountGateway(tempPath);
 
 
-        AccountFactory accountFactory = new AccountFactory(ag);
-        ag.updateAccount(accountFactory.createAdminAccount("admin", "12345"));
+        AccountBuilder accountBuilder = new AccountBuilder(ag);
+        ag.updateAccount(accountBuilder.createAdminAccount("admin", "12345"));
 
         assertEquals(ag.findById(0).getUsername(), "admin");
 
@@ -37,8 +37,8 @@ public class CSVAccountGatewayTest {
         String tempPath = tempFolder.getRoot().getAbsolutePath() + "\\temp.csv";
 
         AccountGateway ag = new CSVAccountGateway(tempPath);
-        AccountFactory accountFactory = new AccountFactory(ag);
-        ag.updateAccount(accountFactory.createAdminAccount("admin", "12345"));
+        AccountBuilder accountBuilder = new AccountBuilder(ag);
+        ag.updateAccount(accountBuilder.createAdminAccount("admin", "12345"));
 
         assertEquals(ag.findByUsername("admin").getUsername(), "admin");
 
@@ -66,8 +66,8 @@ public class CSVAccountGatewayTest {
 
         AccountGateway ag = new CSVAccountGateway(tempPath);
 
-        AccountFactory accountFactory = new AccountFactory(ag);
-        ag.updateAccount(accountFactory.createAdminAccount("admin", "12345"));
+        AccountBuilder accountBuilder = new AccountBuilder(ag);
+        ag.updateAccount(accountBuilder.createAdminAccount("admin", "12345"));
         // note: this is only accurate because there is just one account in the system. when there are multiple
         // accounts the order getAllAccounts() returns them in is unpredictable
         assertEquals(ag.getAllAccounts().get(0).getUsername(), "admin");

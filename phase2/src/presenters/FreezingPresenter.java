@@ -50,10 +50,12 @@ public interface FreezingPresenter {
     void invalidInput();
 
     /**
-     * Presents the user with a custom message.
-     *
-     * @param message Message to display
+     * Tells user that the chosen users have been frozen.
      */
-    void showMessage(String message);
+    void displaySuccessfulFreeze();
 
+    /**
+     * Tells user that the chosen users have been unfrozen.
+     */
+    void displaySuccessfulUnfreeze();
 }

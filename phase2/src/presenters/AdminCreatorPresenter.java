@@ -22,9 +22,17 @@ public interface AdminCreatorPresenter {
     String createAdminPassword();
 
     /**
-     * Presents the user with a custom message.
-     *
-     * @param message Message to display
+     * tells user their username and/or password is invalid
      */
-    void showMessage(String message);
+    void displayInvalidInfo();
+
+    /**
+     * tells user that the admin account has been made successfully
+     */
+    void displaySuccessfulAccount();
+
+    /**
+     * tells user that an account has already been made with the info
+     */
+    void displayOverlappingInfo();
 }

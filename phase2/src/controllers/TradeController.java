@@ -2,7 +2,7 @@ package controllers;
 
 import entities.Trade;
 import entities.TradeStatus;
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.TradePresenter;
 import usecases.*;
 
@@ -42,7 +42,7 @@ public class TradeController {
      * @param mc             An instance of ManualConfig to get necessary use cases
      * @param tradePresenter An instance of TradePresenter to display and get information from the user
      */
-    public TradeController(ManualConfig mc, TradePresenter tradePresenter) {
+    public TradeController(UseCasePool mc, TradePresenter tradePresenter) {
         this.tradePresenter = tradePresenter;
         authManager = mc.getAuthManager();
         accountManager = mc.getAccountManager();

@@ -26,7 +26,7 @@ public class AuthManager {
     private final RestrictionsGateway restrictionsGateway;
 
     /**
-     * Constructs an instance of AuthManager and stores accountGateway, restrictionsGateway and roleGateway.
+     * Constructs an instance of AuthManager and stores accountGateway, restrictionsGateway.
      *
      * @param accountGateway      Gateway used to interact with persistent storage of accounts
      * @param restrictionsGateway Gateway used to interact with persistent storage of restrictions
