@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Andrew
  */
-public class AccountFactory {
+public class AccountBuilder {
 
     /**
      * The account gateway dealing with storage of accounts.
@@ -26,7 +26,7 @@ public class AccountFactory {
      *
      * @param accountGateway Gateway used to interact with persistent storage of accounts
      */
-    public AccountFactory(AccountGateway accountGateway) {
+    public AccountBuilder(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
     }
 
