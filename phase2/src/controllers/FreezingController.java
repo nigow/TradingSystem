@@ -100,7 +100,7 @@ public class FreezingController {
                 freezingPresenter.invalidInput();
             else {
                 freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(chosenUser)), accountManager.getCurrAccount());
-                freezingPresenter.showMessage("You have frozen this account.");
+                freezingPresenter.displaySuccessfulFreeze();
                 return;
             }
         }
@@ -123,7 +123,7 @@ public class FreezingController {
                 freezingPresenter.invalidInput();
             else {
                 freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(chosenUser)));
-                freezingPresenter.showMessage("You have unfrozen this account.");
+                freezingPresenter.displaySuccessfulUnfreeze();
                 return;
             }
         }
