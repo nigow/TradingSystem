@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import entities.Item;
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.InventoryPresenter;
 import usecases.AuthManager;
 import usecases.ItemManager;
@@ -54,15 +54,15 @@ public class InventoryController {
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
      *
-     * @param manualConfig       the configuration for the program
+     * @param useCasePool       the configuration for the program
      * @param inventoryPresenter the presenter for displaying the inventory
      */
-    public InventoryController(ManualConfig manualConfig, InventoryPresenter inventoryPresenter) {
-        this.itemManager = manualConfig.getItemManager();
-        this.accountManager = manualConfig.getAccountManager();
-        this.itemUtility = manualConfig.getItemUtility();
+    public InventoryController(UseCasePool useCasePool, InventoryPresenter inventoryPresenter) {
+        this.itemManager = useCasePool.getItemManager();
+        this.accountManager = useCasePool.getAccountManager();
+        this.itemUtility = useCasePool.getItemUtility();
         this.inventoryPresenter = inventoryPresenter;
-        this.authManager = manualConfig.getAuthManager();
+        this.authManager = useCasePool.getAuthManager();
         this.inputHandler = new InputHandler();
     }
 

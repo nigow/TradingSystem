@@ -1,7 +1,7 @@
 package controllers;
 
-import gateways.InMemoryManualConfig;
-import gateways.ManualConfig;
+import gateways.InMemoryUseCasePool;
+import gateways.UseCasePool;
 import org.junit.Assert;
 import presenters.MockMenuPresenter;
 import org.junit.Test;
@@ -12,26 +12,26 @@ import java.util.List;
 public class MenuFacadeTest {
 
     private List<Object> setUp(String[] options) {
-        ManualConfig inMemoryManualConfig = new InMemoryManualConfig();
-        FreezingController freezingController = new FreezingController(inMemoryManualConfig, null);
-        InventoryController inventoryController = new InventoryController(inMemoryManualConfig, null);
+        UseCasePool inMemoryUseCasePool = new InMemoryUseCasePool();
+        FreezingController freezingController = new FreezingController(inMemoryUseCasePool, null);
+        InventoryController inventoryController = new InventoryController(inMemoryUseCasePool, null);
         WishlistController wishlistController = new WishlistController(null, null,
-                inMemoryManualConfig);
+                inMemoryUseCasePool);
         LendingController lendingController = new LendingController(null,
-                inMemoryManualConfig, null);
-        AppealController appealController = new AppealController(inMemoryManualConfig, null);
-        TradeController tradeController = new TradeController(inMemoryManualConfig, null);
-        AdminCreatorController adminCreatorController = new AdminCreatorController(inMemoryManualConfig,
+                inMemoryUseCasePool, null);
+        AppealController appealController = new AppealController(inMemoryUseCasePool, null);
+        TradeController tradeController = new TradeController(inMemoryUseCasePool, null);
+        AdminCreatorController adminCreatorController = new AdminCreatorController(inMemoryUseCasePool,
                 null);
-        RestrictionController restrictionController = new RestrictionController(inMemoryManualConfig,
+        RestrictionController restrictionController = new RestrictionController(inMemoryUseCasePool,
                 null);
         MockMenuPresenter menuPresenter = new MockMenuPresenter();
         menuPresenter.setOptions(options);
         List<Object> lst = new ArrayList<>();
-        lst.add(new MenuFacade(inMemoryManualConfig, freezingController, inventoryController,
+        lst.add(new MenuFacade(inMemoryUseCasePool, freezingController, inventoryController,
                 wishlistController, lendingController, appealController, tradeController, adminCreatorController,
                 restrictionController, menuPresenter));
-        lst.add(inMemoryManualConfig);
+        lst.add(inMemoryUseCasePool);
         return lst;
     }
 
@@ -40,8 +40,8 @@ public class MenuFacadeTest {
         // 3 is the exit key for a regular user.
         List<Object> lst = this.setUp(new String[]{"34", "44", "1000", "fjgjf", "hi", "__,", "3"});
         MenuFacade menuFacade = (MenuFacade) lst.get(0);
-        ManualConfig manualConfig = (ManualConfig) lst.get(1);
-        manualConfig.getAccountManager().createStandardAccount("test", "account");
+        UseCasePool useCasePool = (UseCasePool) lst.get(1);
+        useCasePool.getAccountManager().createStandardAccount("test", "account");
         try {
             menuFacade.run();
         }

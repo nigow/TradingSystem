@@ -1,13 +1,13 @@
 package controllers;
 
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import org.junit.Test;
 import presenters.InventoryPresenter;
 import java.util.List;
 
 public class InventoryControllerTest {
-    private ManualConfig manualConfig;
+    private UseCasePool useCasePool;
 
 
     @Test

@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.MenuPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -65,7 +65,7 @@ public class MenuFacade {
      * @param restrictionController An instance of RestrictionController
      * @param menuPresenter         An instance of MenuPresenter to display information and interact with the user
      */
-    public MenuFacade(ManualConfig mc, FreezingController freezingController,
+    public MenuFacade(UseCasePool mc, FreezingController freezingController,
                       InventoryController inventoryController,
                       WishlistController wishlistController,
                       LendingController lendingController,

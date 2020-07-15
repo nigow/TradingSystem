@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.TradeCreatorPresenter;
 import usecases.*;
 
@@ -33,17 +33,17 @@ public class TradeCreatorController {
      * Create a controller for the trade creation screen.
      *
      * @param tradeCreatorPresenter A presenter for this controller.
-     * @param manualConfig          Repository of use cases.
+     * @param useCasePool          Repository of use cases.
      * @param peerId                Id of account trade is being conducted with.
      * @param itemId                Id of item being offered or asked for.
      * @param forceTwoWay           Whether two way trade should be forced.
      */
     public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
-                                  ManualConfig manualConfig, int peerId, int itemId, boolean forceTwoWay) {
+                                  UseCasePool useCasePool, int peerId, int itemId, boolean forceTwoWay) {
 
-        this.tradeManager = manualConfig.getTradeManager();
-        this.accountManager = manualConfig.getAccountManager();
-        this.itemUtility = manualConfig.getItemUtility();
+        this.tradeManager = useCasePool.getTradeManager();
+        this.accountManager = useCasePool.getAccountManager();
+        this.itemUtility = useCasePool.getItemUtility();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
         this.traderOneId = accountManager.getCurrAccountID();

@@ -7,7 +7,7 @@ import usecases.*;
  *
  * @author Michael
  */
-public interface ManualConfig {
+public interface UseCasePool {
 
     /**
      * Gets an instance of AccountManager use case.

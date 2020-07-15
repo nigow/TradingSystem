@@ -2,8 +2,8 @@ package controllers;
 
 import entities.Account;
 import entities.Item;
-import gateways.InMemoryManualConfig;
-import gateways.ManualConfig;
+import gateways.InMemoryUseCasePool;
+import gateways.UseCasePool;
 import org.junit.Test;
 import presenters.ConsoleTradeCreatorPresenter;
 import presenters.LendingPresenter;
@@ -20,10 +20,10 @@ public class LendingControllerTest {
 
     @Test
     public void validInput(){
-        ManualConfig manualConfig = new InMemoryManualConfig();
-        AccountManager accountManager = manualConfig.getAccountManager();
-        ItemManager itemManager = manualConfig.getItemManager();
-        TradeManager tradeManager = manualConfig.getTradeManager();
+        UseCasePool useCasePool = new InMemoryUseCasePool();
+        AccountManager accountManager = useCasePool.getAccountManager();
+        ItemManager itemManager = useCasePool.getItemManager();
+        TradeManager tradeManager = useCasePool.getTradeManager();
         LendingPresenter lendingPresenter = new LendingPresenter(){
 
             @Override
@@ -99,7 +99,7 @@ public class LendingControllerTest {
             }
         };
 
-        LendingController lendingController = new LendingController(lendingPresenter, manualConfig, tradeCreatorPresenter);
+        LendingController lendingController = new LendingController(lendingPresenter, useCasePool, tradeCreatorPresenter);
         Account admin = accountManager.getAccountsList().get(0);
         itemManager.createItem("Apple", "Tasty", admin.getAccountID());
         Item item = itemManager.getAllItems().get(0);
@@ -115,10 +115,10 @@ public class LendingControllerTest {
 
     @Test(timeout=50)
     public void invalidInput(){
-        ManualConfig manualConfig = new InMemoryManualConfig();
-        AccountManager accountManager = manualConfig.getAccountManager();
-        ItemManager itemManager = manualConfig.getItemManager();
-        TradeManager tradeManager = manualConfig.getTradeManager();
+        UseCasePool useCasePool = new InMemoryUseCasePool();
+        AccountManager accountManager = useCasePool.getAccountManager();
+        ItemManager itemManager = useCasePool.getItemManager();
+        TradeManager tradeManager = useCasePool.getTradeManager();
 
         LendingPresenter lendingPresenter = new LendingPresenter(){
 
@@ -156,7 +156,7 @@ public class LendingControllerTest {
 
         };
 
-        LendingController lendingController = new LendingController(lendingPresenter, manualConfig, new ConsoleTradeCreatorPresenter());
+        LendingController lendingController = new LendingController(lendingPresenter, useCasePool, new ConsoleTradeCreatorPresenter());
         lendingController.run();
         assert(tradeManager.getAllTrades().isEmpty());
     }

@@ -5,7 +5,7 @@ import usecases.*;
 
 import java.util.HashMap;
 
-public class InMemoryManualConfig implements ManualConfig {
+public class InMemoryUseCasePool implements UseCasePool {
     private AccountManager accountManager;
     private AuthManager authManager;
     private ItemManager itemManager;
@@ -16,7 +16,7 @@ public class InMemoryManualConfig implements ManualConfig {
     private TradeUtility tradeUtility;
 
 
-    public InMemoryManualConfig(){
+    public InMemoryUseCasePool(){
         InMemoryAccountGateway accountGateway = new InMemoryAccountGateway(new HashMap<Integer, Account>());
         InMemoryItemGateway itemGateway = new InMemoryItemGateway(new HashMap<Integer, Item>());
         InMemoryTradeGateway tradeGateway = new InMemoryTradeGateway(new HashMap<Integer, Trade>(), new HashMap<Integer, TimePlace>());

@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.AdminCreatorPresenter;
 import usecases.AccountManager;
 
@@ -29,7 +29,7 @@ public class AdminCreatorController {
      * @param mc             An instance of ManualConfig to get use cases
      * @param adminPresenter An instance of AdminPresenter to display information
      */
-    public AdminCreatorController(ManualConfig mc, AdminCreatorPresenter adminPresenter) {
+    public AdminCreatorController(UseCasePool mc, AdminCreatorPresenter adminPresenter) {
         accountManager = mc.getAccountManager();
         this.adminPresenter = adminPresenter;
         inputHandler = new InputHandler();

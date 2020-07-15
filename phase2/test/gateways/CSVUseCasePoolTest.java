@@ -2,14 +2,13 @@ package gateways;
 
 import junit.framework.TestCase;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
 
 
-public class ManualConfigCSVTest extends TestCase {
+public class CSVUseCasePoolTest extends TestCase {
     public void testAccountManagerCreation() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getAccountManager());
         }
         catch (IOException ignored) {
@@ -20,7 +19,7 @@ public class ManualConfigCSVTest extends TestCase {
 
     public void testAuthManagerCreation() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getAuthManager());
         }
         catch (IOException ignored) {
@@ -31,7 +30,7 @@ public class ManualConfigCSVTest extends TestCase {
 
     public void testItemManagerCreation() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getItemManager());
         }
         catch (IOException ignored) {
@@ -42,7 +41,7 @@ public class ManualConfigCSVTest extends TestCase {
 
     public void testFreezingUtilityCreation() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getFreezingUtility());
         }
         catch (IOException ignored) {
@@ -53,7 +52,7 @@ public class ManualConfigCSVTest extends TestCase {
 
     public void testTradeManagerCreation() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getTradeManager());
         }
         catch (IOException ignored) {
@@ -64,7 +63,7 @@ public class ManualConfigCSVTest extends TestCase {
 
     public void testWishlistUtilityCreation() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getWishlistUtility());
         }
         catch (IOException ignored) {
@@ -75,7 +74,7 @@ public class ManualConfigCSVTest extends TestCase {
 
     public void testGetItemUtility() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getItemUtility());
         }
         catch (IOException ignored) {
@@ -86,7 +85,7 @@ public class ManualConfigCSVTest extends TestCase {
 
     public void testGetTradeUtility() {
         try {
-            ManualConfigCSV mc = new ManualConfigCSV();
+            CSVUseCasePool mc = new CSVUseCasePool();
             assertNotNull(mc.getTradeUtility());
         }
         catch (IOException ignored) {

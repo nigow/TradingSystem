@@ -1,7 +1,7 @@
 package controllers;
 
 import entities.Account;
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.FreezingPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -48,7 +48,7 @@ public class FreezingController {
      * @param mc                An instance of ManualConfig to get use cases
      * @param freezingPresenter An instance of FreezingPresenter to display information
      */
-    public FreezingController(ManualConfig mc, FreezingPresenter freezingPresenter) {
+    public FreezingController(UseCasePool mc, FreezingPresenter freezingPresenter) {
         tradeUtility = mc.getTradeUtility();
         this.freezingPresenter = freezingPresenter;
         freezingUtility = mc.getFreezingUtility();

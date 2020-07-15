@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.HomePresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
@@ -46,7 +46,7 @@ public class HomeController {
      * @param homePresenter An instance of HomePresenter to display information and interact with the user
      * @param menuFacade    An instance of MenuFacade to take user's to the next menu
      */
-    public HomeController(ManualConfig mc, HomePresenter homePresenter,
+    public HomeController(UseCasePool mc, HomePresenter homePresenter,
                           MenuFacade menuFacade) {
         accountManager = mc.getAccountManager();
         authManager = mc.getAuthManager();

@@ -10,7 +10,7 @@ import java.io.IOException;
  *
  * @author Michael
  */
-public class ManualConfigCSV implements ManualConfig {
+public class CSVUseCasePool implements UseCasePool {
     private AccountManager accountManager;
     private AuthManager authManager;
     private ItemManager itemManager;
@@ -26,7 +26,7 @@ public class ManualConfigCSV implements ManualConfig {
      *
      * @throws IOException If the given csv file cannot be accessed
      */
-    public ManualConfigCSV() throws IOException {
+    public CSVUseCasePool() throws IOException {
         String filePath = System.getProperty("user.dir") + "/out/files/";
         initializeUseCases(filePath);
     }
@@ -38,7 +38,7 @@ public class ManualConfigCSV implements ManualConfig {
      * @param filePath file path to the folder containing csv files
      * @throws IOException If the given csv file cannot be accessed
      */
-    public ManualConfigCSV(String filePath) throws IOException {
+    public CSVUseCasePool(String filePath) throws IOException {
         initializeUseCases(filePath);
     }
 

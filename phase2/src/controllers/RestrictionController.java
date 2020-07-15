@@ -1,6 +1,6 @@
 package controllers;
 
-import gateways.ManualConfig;
+import gateways.UseCasePool;
 import presenters.RestrictionPresenter;
 import usecases.FreezingUtility;
 
@@ -18,7 +18,7 @@ public class RestrictionController {
 
     private final InputHandler inputHandler;
 
-    public RestrictionController(ManualConfig mc, RestrictionPresenter restrictionPresenter) {
+    public RestrictionController(UseCasePool mc, RestrictionPresenter restrictionPresenter) {
         freezingUtility = mc.getFreezingUtility();
         this.restrictionPresenter = restrictionPresenter;
         inputHandler = new InputHandler();
