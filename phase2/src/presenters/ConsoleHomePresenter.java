@@ -76,7 +76,32 @@ public class ConsoleHomePresenter implements HomePresenter {
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
-        System.out.println(message);
+    public void displayIncorrectInfo() {
+        System.out.println("That username/password combination is incorrect.");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayInvalidInfo() {
+        System.out.println("The characters in that username and password are illegal.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displaySuccessfulAccount() {
+        System.out.println("You have created an account.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayOverlappingInfo() {
+        System.out.println("That username is taken.");
+    }
+
 }

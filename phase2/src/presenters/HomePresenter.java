@@ -50,9 +50,22 @@ public interface HomePresenter {
     void invalidInput();
 
     /**
-     * Displays a custom message to the user.
-     *
-     * @param message Custom message for the user
+     * tells user that their inputted username/password is incorrect
      */
-    void showMessage(String message);
+    void displayIncorrectInfo();
+
+    /**
+     * tells user their username and/or password is invalid
+     */
+    void displayInvalidInfo();
+
+    /**
+     * tells user that the admin account has been made successfully
+     */
+    void displaySuccessfulAccount();
+
+    /**
+     * tells user that an account has already been made with the info
+     */
+    void displayOverlappingInfo();
 }

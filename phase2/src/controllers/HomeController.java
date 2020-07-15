@@ -99,7 +99,7 @@ public class HomeController {
                 menuFacade.run();
                 return;
             } else
-                homePresenter.showMessage("That username/password combination is incorrect.");
+                homePresenter.displayIncorrectInfo();
         }
     }
 
@@ -116,14 +116,14 @@ public class HomeController {
             if (inputHandler.isExitStr(password))
                 return;
             if (!inputHandler.isValidUserPass(username, password))
-                homePresenter.showMessage("The characters in that username and password are illegal.");
+                homePresenter.displayInvalidInfo();
             else {
                 if (accountManager.createStandardAccount(username, password)) {
-                    homePresenter.showMessage("You have created an account.");
+                    homePresenter.displaySuccessfulAccount();
                     menuFacade.run();
                     return;
                 } else
-                    homePresenter.showMessage("That username is taken.");
+                    homePresenter.displayOverlappingInfo();
             }
         }
     }
