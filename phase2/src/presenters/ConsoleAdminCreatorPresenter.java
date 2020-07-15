@@ -34,7 +34,23 @@ public class ConsoleAdminCreatorPresenter implements AdminCreatorPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
-        System.out.println(message);
+    public void displayInvalidInfo() {
+        System.out.println("The characters in that username and password are illegal.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displaySuccessfulAccount() {
+        System.out.println("You have added a new admin account.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayOverlappingInfo() {
+        System.out.println("That username is taken.");
     }
 }

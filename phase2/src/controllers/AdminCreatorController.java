@@ -47,13 +47,13 @@ public class AdminCreatorController {
             if (inputHandler.isExitStr(password))
                 return;
             if (!inputHandler.isValidUserPass(username, password))
-                adminPresenter.showMessage("The characters in that username and password are illegal.");
+                adminPresenter.displayInvalidInfo();
             else {
                 if (accountManager.createAdminAccount(username, password)) {
-                    adminPresenter.showMessage("You have added a new admin account.");
+                    adminPresenter.displaySuccessfulAccount();
                     return;
                 } else
-                    adminPresenter.showMessage("That username is taken.");
+                    adminPresenter.displayOverlappingInfo();
             }
         }
     }
