@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class WindowHandler extends Application {
 
@@ -48,8 +49,11 @@ public class WindowHandler extends Application {
 
     private Scene createScene(Scenes scene) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString()));
-        Scene newScene = new Scene(loader.load()); // todo: could handle size here
+        // todo: make this adaptive once we figure out how DI will work with additional view layer
+        ResourceBundle res = ResourceBundle.getBundle("localization.Landing");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString()), res);
+        Scene newScene = new Scene(loader.load());
 
         loader.<SceneView>getController().setWindowHandler(this); // todo: pass whatever else needs to be passed
 
