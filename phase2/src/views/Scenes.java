@@ -2,7 +2,8 @@ package views;
 
 public enum Scenes {
 
-    LANDING("LandingView.fxml");
+    LANDING("Landing"),
+    LOGIN("Login");
 
     private final String fxml;
 

@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -49,13 +51,14 @@ public class WindowHandler extends Application {
 
     private Scene createScene(Scenes scene) throws IOException {
 
-        // todo: make this adaptive once we figure out how DI will work with additional view layer
-        ResourceBundle res = ResourceBundle.getBundle("localization.Landing");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString()), res);
+        // todo: make below code adapt to DI when backend changes are done
+        ResourceBundle res = ResourceBundle.getBundle("localization." + scene.toString());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"), res);
         Scene newScene = new Scene(loader.load());
 
-        loader.<SceneView>getController().setWindowHandler(this); // todo: pass whatever else needs to be passed
+        loader.<SceneView>getController().setWindowHandler(this);
 
         return newScene;
 

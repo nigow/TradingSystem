@@ -8,7 +8,7 @@
       <Label text="%welcomeMessage" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 100;">
          <children>
-            <Button mnemonicParsing="false" text="%login" />
+            <Button mnemonicParsing="false" onAction="#loginClicked" text="%login" />
             <Button mnemonicParsing="false" text="%register" />
          </children>
       </HBox>
