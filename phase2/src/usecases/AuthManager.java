@@ -56,12 +56,10 @@ public class AuthManager {
      *
      * @param account      Account to add the permission to
      * @param permissionID Unique identifier of permission
-     * @return Whether the permission is successfully added or not
      */
 
-    public boolean addPermissionByID(Account account, Permissions permissionID) {
+    public void addPermissionByID(Account account, Permissions permissionID) {
         account.addPermission(permissionID);
-        return accountGateway.updateAccount(account);
     }
 
     /**
@@ -69,13 +67,11 @@ public class AuthManager {
      *
      * @param account       Account to add the list of permissions to
      * @param permissionIDs List of unique identifiers of permissions
-     * @return Whether the permissions are successfully added or not
      */
-    public boolean addPermissionsByIDs(Account account, List<Permissions> permissionIDs) {
+    public void addPermissionsByIDs(Account account, List<Permissions> permissionIDs) {
         for (Permissions permissionID : permissionIDs) {
             account.addPermission(permissionID);
         }
-        return accountGateway.updateAccount(account);
     }
 
     /**
@@ -83,11 +79,9 @@ public class AuthManager {
      *
      * @param account      Account to remove the permission from
      * @param permissionID Unique identifier of permission
-     * @return Whether the permission is successfully removed or not
      */
-    public boolean removePermissionByID(Account account, Permissions permissionID) {
+    public void removePermissionByID(Account account, Permissions permissionID) {
         account.removePermission(permissionID);
-        return accountGateway.updateAccount(account);
     }
 
     /**
@@ -95,13 +89,11 @@ public class AuthManager {
      *
      * @param account       Account to remove the list of permissions from
      * @param permissionIDs List of unique identifiers of permissions
-     * @return Whether permissions are successfully removed or not
      */
-    public boolean removePermissionsByIDs(Account account, List<Permissions> permissionIDs) {
+    public void removePermissionsByIDs(Account account, List<Permissions> permissionIDs) {
         for (Permissions permissionID : permissionIDs) {
             account.removePermission(permissionID);
         }
-        return accountGateway.updateAccount(account);
     }
 
 //    /**
@@ -255,12 +247,14 @@ public class AuthManager {
     public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
         Restrictions restrictions = restrictionsGateway.getRestrictions();
         tradeUtility.setAccount(account);
+
+        //TODO each boolean should be method within TradeUtility so AuthManager doesn't depend on restrictionsGateway
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
         boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
         tradeUtility.setAccount(adminAccount);
         return !canUnfreeze(account) && !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
-
+    //TODO should be in TradeUtility
     /**
      * Determines whether the current account has lent more than borrowed.
      *
@@ -272,6 +266,7 @@ public class AuthManager {
                 restrictionsGateway.getRestrictions().getLendMoreThanBorrow();
     }
 
+    //TODO Negation of isFrozen() so useless method
     /**
      * Determines whether a given account can trade.
      *

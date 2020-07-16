@@ -17,11 +17,6 @@ import java.util.List;
 public class FreezingUtility {
 
     /**
-     * The restrictions gateway dealing with the storage of trading restrictions.
-     */
-    private final RestrictionsGateway restrictionsGateway;
-
-    /**
      * The current restrictions of the trading system for all users.
      */
     private final Restrictions restrictions;
@@ -29,11 +24,10 @@ public class FreezingUtility {
     /**
      * Constructs an instance of FreezingUtility and stores restrictionsGateway.
      *
-     * @param restrictionsGateway Gateway used to interact with persistent storage of restrictions
+     * @param restrictions Restrictions of the current program
      */
-    public FreezingUtility(RestrictionsGateway restrictionsGateway) {
-        this.restrictionsGateway = restrictionsGateway;
-        restrictions = restrictionsGateway.getRestrictions();
+    public FreezingUtility(Restrictions restrictions) {
+        this.restrictions = restrictions;
     }
 
     /**
@@ -117,9 +111,9 @@ public class FreezingUtility {
      */
     public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account, Account adminAccount) {
         if (authManager.canBeFrozen(tradeUtility, account, adminAccount)) {
-            return authManager.removePermissionsByIDs(account,
-                    new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND))) &&
-                    authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
+            authManager.removePermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)));
+            authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
+            return true;
         }
         return false;
     }
@@ -129,13 +123,13 @@ public class FreezingUtility {
      *
      * @param authManager Manager for permissions and authorizing actions
      * @param account     Account to unfreeze
-     * @return Whether the given account is successfully unfrozen or not
+     * @return Whether the given account is successfully frozen or not
      */
     public boolean unfreezeAccount(AuthManager authManager, Account account) {
         if (authManager.isPending(account)) {
-            return authManager.addPermissionsByIDs(account,
-                    new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND))) &&
-                    authManager.removePermissionByID(account, Permissions.REQUEST_UNFREEZE);
+            authManager.addPermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)));
+            authManager.removePermissionByID(account, Permissions.REQUEST_UNFREEZE);
+            return true;
         }
         return false;
     }
@@ -144,33 +138,27 @@ public class FreezingUtility {
      * Updates the restriction of the amount of items needed to be lent before borrowing.
      *
      * @param lendMoreThanBorrow Amount of items needed to be lent before borrowing
-     * @return Whether the restriction is properly set
      */
-    public boolean setLendMoreThanBorrow(int lendMoreThanBorrow) {
+    public void setLendMoreThanBorrow(int lendMoreThanBorrow) {
         restrictions.setLendMoreThanBorrow(lendMoreThanBorrow);
-        return restrictionsGateway.updateRestrictions(restrictions);
     }
 
     /**
      * Updates the restriction of the max number of incomplete trades before an account is frozen.
      *
      * @param maxIncompleteTrade Max number of incomplete trades
-     * @return Whether the restriction is properly set
      */
-    public boolean setMaxIncompleteTrade(int maxIncompleteTrade) {
+    public void setMaxIncompleteTrade(int maxIncompleteTrade) {
         restrictions.setMaxIncompleteTrade(maxIncompleteTrade);
-        return restrictionsGateway.updateRestrictions(restrictions);
     }
 
     /**
      * Updates the restriction of the max number of weekly trades before an account is frozen.
      *
      * @param maxWeeklyTrade Max number of weekly trades
-     * @return Whether the restriction is properly set
      */
-    public boolean setMaxWeeklyTrade(int maxWeeklyTrade) {
+    public void setMaxWeeklyTrade(int maxWeeklyTrade) {
         restrictions.setMaxWeeklyTrade(maxWeeklyTrade);
-        return restrictionsGateway.updateRestrictions(restrictions);
     }
 
     /**
