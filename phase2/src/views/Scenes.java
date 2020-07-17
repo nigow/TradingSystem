@@ -3,7 +3,8 @@ package views;
 public enum Scenes {
 
     LANDING("Landing"),
-    LOGIN("Login");
+    LOGIN("Login"),
+    MENU("Menu");
 
     private final String fxml;
 

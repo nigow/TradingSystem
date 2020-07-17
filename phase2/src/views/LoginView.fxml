@@ -5,7 +5,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.LoginView">
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" BorderPane.alignment="CENTER">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" text="%username">
                <graphic>
@@ -17,7 +17,7 @@
                   <PasswordField />
                </graphic>
             </Label>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%login" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAttempted" text="%login" />
          </children>
       </VBox>
    </center>
