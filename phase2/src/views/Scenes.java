@@ -4,7 +4,8 @@ public enum Scenes {
 
     LANDING("Landing"),
     LOGIN("Login"),
-    MENU("Menu");
+    MENU("Menu"),
+    WAREHOUSE("Warehouse");
 
     private final String fxml;
 
