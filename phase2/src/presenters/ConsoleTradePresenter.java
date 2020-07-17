@@ -120,17 +120,83 @@ public class ConsoleTradePresenter implements TradePresenter {
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
-        System.out.println(message);
+    public String isTradeCompleted() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Has this trade been completed?");
+        System.out.print("y/n: ");
+        return input.nextLine();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String yesOrNo() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("y/n: ");
-        return input.nextLine();
+    public void displayTrade(String trade) {
+        System.out.println(trade);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayCancelled() {
+        System.out.println("This trade has been cancelled.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayCompleted() {
+        System.out.println("This trade is now completed.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayConfirmed() {
+        System.out.println("The time and place of this trade has been confirmed.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayRejected() {
+        System.out.println("This trade has been rejected.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayIncomplete() {
+        System.out.println("This trade is still incomplete.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayLimitReached() {
+        System.out.println("\"You have edited \" +\n" +
+                "                        \"the time and location for this trade too many times.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayFuture() {
+        System.out.println("You need to choose a date and time in the future.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displaySuggestion() {
+        System.out.println("You have suggested a new time and location for this trade.");
     }
 }
