@@ -127,11 +127,11 @@ public class LendingController {
     }
 
     private void invalidInput() {
-        lendingPresenter.customMessage("Invalid input. Please try again.");
+        lendingPresenter.displayInvalidInput();
     }
 
     private void abort() {
-        lendingPresenter.customMessage("Cancellation succeeded.");
+        lendingPresenter.displaySuccessfulInput();
     }
 
     /**

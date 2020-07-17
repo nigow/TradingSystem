@@ -80,10 +80,7 @@ public interface InventoryPresenter {
     void abortMessage();
 
     /**
-     * Sends a customizable message to the user.
-     *
-     * @param message Message that will be printed to the user
+     * Tells user a customMessage.
      */
-    void customMessage(String message);
-
+    void customMessage(String customMessage);
 }

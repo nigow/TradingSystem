@@ -118,7 +118,6 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all the items
      */
     private void displayFullInventory() {
-        this.inventoryPresenter.customMessage("All Items:");
         List<String> allItems = itemUtility.getApprovedString();
         this.inventoryPresenter.displayInventory(allItems);
     }

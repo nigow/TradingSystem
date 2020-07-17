@@ -49,8 +49,13 @@ public class ConsoleLendingPresenter implements LendingPresenter {
     }
 
     @Override
-    public void customMessage(String message) {
-        System.out.println(message);
+    public void displayInvalidInput() {
+        System.out.println("Invalid input. Please try again.");
+    }
+
+    @Override
+    public void displaySuccessfulInput() {
+        System.out.println("Cancellation succeeded.");
     }
 
     /**
