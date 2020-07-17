@@ -70,7 +70,7 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
-        System.out.println(message);
+    public void displayChangedRestriction() {
+        System.out.println("You changed the restriction threshold.");
     }
 }

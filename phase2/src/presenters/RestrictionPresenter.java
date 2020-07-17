@@ -46,9 +46,7 @@ public interface RestrictionPresenter {
     void invalidInput();
 
     /**
-     * Presents the user with a custom message.
-     *
-     * @param message Message to display
+     * Tells user that the restriction threshhold has changed.
      */
-    void showMessage(String message);
+    void displayChangedRestriction();
 }

@@ -61,7 +61,7 @@ public class RestrictionController {
                 restrictionPresenter.invalidInput();
             else {
                 freezingUtility.setLendMoreThanBorrow(Integer.parseInt(newNumber));
-                restrictionPresenter.showMessage("You changed the restriction threshold.");
+                restrictionPresenter.displayChangedRestriction();
                 return;
             }
         }
@@ -76,7 +76,7 @@ public class RestrictionController {
                 restrictionPresenter.invalidInput();
             else {
                 freezingUtility.setMaxIncompleteTrade(Integer.parseInt(newNumber));
-                restrictionPresenter.showMessage("You changed the restriction threshold.");
+                restrictionPresenter.displayChangedRestriction();
                 return;
             }
         }
@@ -91,7 +91,7 @@ public class RestrictionController {
                 restrictionPresenter.invalidInput();
             else {
                 freezingUtility.setMaxWeeklyTrade(Integer.parseInt(newNumber));
-                restrictionPresenter.showMessage("You changed the restriction threshold.");
+                restrictionPresenter.displayChangedRestriction();
                 return;
             }
         }
