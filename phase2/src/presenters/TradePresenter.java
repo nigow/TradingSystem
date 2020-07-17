@@ -78,16 +78,55 @@ public interface TradePresenter {
     void invalidInput();
 
     /**
-     * Presents the user with a custom message.
-     *
-     * @param message Message to display
-     */
-    void showMessage(String message);
-
-    /**
-     * Presents the user with the option to say yes or no.
+     * Lets user say if a trade has been completed.
      *
      * @return User's input y/n
      */
-    String yesOrNo();
+    String isTradeCompleted();
+
+    /**
+     * Displays a trade.
+     * @param trade a string representation of a string
+     */
+    void displayTrade(String trade);
+
+    /**
+     *Tells user that the trade has been cancelled.
+     */
+    void displayCancelled();
+
+    /**
+     * Tells user that a trade has been completed.
+     */
+    void displayCompleted();
+
+    /**
+     * Tells user that a trade time and place has been confirmed.
+     */
+    void displayConfirmed();
+
+    /**
+     * Tells user that the trade has been rejected.
+     */
+    void displayRejected();
+
+    /**
+     * Tells user that the trade is still incomplete.
+     */
+    void displayIncomplete();
+
+    /**
+     * Tells user that their edit limit has been reached.
+     */
+    void displayLimitReached();
+
+    /**
+     * Tells user that their date/time must be in the future.
+     */
+    void displayFuture();
+
+    /**
+     * Tells user that a new time/date has been suggested.
+     */
+    void displaySuggestion();
 }
