@@ -1,14 +1,11 @@
 package controllers.experimental;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
 
 import controllers.InputHandler;
 import entities.Item;
 import gateways.UseCasePool;
-import presenters.InventoryPresenter;
+import presenters.experimental.YourInventoryPresenter;
 import usecases.AuthManager;
 import usecases.ItemManager;
 import usecases.AccountManager;
@@ -24,7 +21,7 @@ public class YourInventoryController {
     /**
      * The presenter counterpart to this class
      */
-    private final InventoryPresenter inventoryPresenter;
+    private final YourInventoryPresenter yourInventoryPresenter;
 
     /**
      * An instance of ItemManager to access items
@@ -56,20 +53,23 @@ public class YourInventoryController {
      * and add options to actions depending on the user's permissions
      *
      * @param useCasePool       the configuration for the program
-     * @param inventoryPresenter the presenter for displaying the inventory
+     * @param yourInventoryPresenter the presenter for displaying the inventory
      */
-    public YourInventoryController(UseCasePool useCasePool, InventoryPresenter inventoryPresenter) {
+    public YourInventoryController(UseCasePool useCasePool, YourInventoryPresenter  yourInventoryPresenter) {
         this.itemManager = useCasePool.getItemManager();
         this.accountManager = useCasePool.getAccountManager();
         this.itemUtility = useCasePool.getItemUtility();
-        this.inventoryPresenter = inventoryPresenter;
-        this.authManager = useCasePool.getAuthManager();
+        this.yourInventoryPresenter = yourInventoryPresenter;
+        this.authManager = useCasePool.getAuthManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
         this.inputHandler = new InputHandler();
     }
 
+    /**
+     * Calls the presenter to display a user's inventory
+     */
     private void displayAllYourInventory() {
         List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
-        this.inventoryPresenter.displayInventory(allYourItems);
+        this.yourInventoryPresenter.displayInventory(allYourItems);
     }
 
     /**
@@ -79,13 +79,12 @@ public class YourInventoryController {
      * @param description The description of the item
      */
     private boolean createItem(String name, String description) {
-        while(true) {
-            if(inputHandler.isValidCSVStr(name) && inputHandler.isValidCSVStr(description)) {
-                itemManager.createItem(name, description, accountManager.getCurrAccountID());
-                return true;
-            } else {
-                return false;
-            }
+
+        if(inputHandler.isValidCSVStr(name) && inputHandler.isValidCSVStr(description)) {
+            itemManager.createItem(name, description, accountManager.getCurrAccountID());
+            return true;
+        } else {
+            return false;
         }
     }
 
