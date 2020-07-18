@@ -22,4 +22,10 @@ public class MenuView implements SceneView {
         windowHandler.changeScene(Scenes.WAREHOUSE);
 
     }
+
+    public void modifyRestrictionsClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.RESTRICTIONS);
+
+    }
 }

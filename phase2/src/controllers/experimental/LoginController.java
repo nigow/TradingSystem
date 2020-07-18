@@ -69,7 +69,7 @@ public class LoginController {
                 accountManager.setCurrAccount(username);
                 return true;
             } else
-                homePresenter.displayIncorrectInfo();
+                // homePresenter.displayIncorrectInfo();
                 return false;
         }
     }

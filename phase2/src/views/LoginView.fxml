@@ -17,6 +17,7 @@
                   <PasswordField fx:id="passwordBox" />
                </graphic>
             </Label>
+            <Label fx:id="failMessageLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="%failMessage" visible="false" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAttempted" text="%login" />
          </children>
       </VBox>
