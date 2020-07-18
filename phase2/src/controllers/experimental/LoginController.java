@@ -8,7 +8,11 @@ import usecases.AccountManager;
 import usecases.AuthManager;
 
 
-
+/**
+ *  A controller to handle logins
+ *
+ * @author Ethan (follow him on instagram @ethannomiddlenamelam)
+ */
 public class LoginController {
 
     /**
@@ -37,7 +41,7 @@ public class LoginController {
     private final InputHandler inputHandler;
 
     /**
-     * Initializes HomeController with the necessary presenter and use cases.
+     * Initializes LoginController with the necessary presenter and use cases.
      *
      * @param useCasePool   An instance of UseCasePool to get the necessary use cases
      * @param homePresenter An instance of HomePresenter to display information and interact with the user
@@ -54,16 +58,19 @@ public class LoginController {
 
 
     /**
-     * Calls the presenter and logs in a user based on their information.
+     * Takes in the username and password from the view and logs in the user
+     * @param username the username the user enters
+     * @param password the password the user enters
      */
-    public void logIn(String username, String password) {
+    public boolean logIn(String username, String password) {
         while (true) {
             if (inputHandler.isValidUserPass(username, password) &&
                     authManager.authenticateLogin(username, password)) {
                 accountManager.setCurrAccount(username);
-                return;
+                return true;
             } else
                 homePresenter.displayIncorrectInfo();
+                return false;
         }
     }
 
