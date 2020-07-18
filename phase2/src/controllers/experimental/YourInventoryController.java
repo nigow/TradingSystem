@@ -64,6 +64,9 @@ public class YourInventoryController {
         this.inputHandler = new InputHandler();
     }
 
+    /**
+     * Calls the presenter to display a user's inventory
+     */
     private void displayAllYourInventory() {
         List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
         this.yourInventoryPresenter.displayInventory(allYourItems);
