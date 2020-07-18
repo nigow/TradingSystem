@@ -67,130 +67,36 @@ public class YourInventoryController {
         this.inputHandler = new InputHandler();
     }
 
-    /**
-     * Runs the main menu of the program
-     */
-    public void run() {
-        String option;
-
-        Map<String, Runnable> actions = new LinkedHashMap<>();
-        actions.put("View your items", this::displayAllYourInventory);
-        if (authManager.canCreateItem(accountManager.getCurrAccount())) {
-            actions.put("Create a new item", this::createItem);
-        }
-        actions.put("Remove your item from inventory", this::removeFromYourInventory);
-        actions.put("Return to main menu", () -> {
-        });
-
-        List<String> menu = new ArrayList<>(actions.keySet());
-
-        do {
-            option = inventoryPresenter.displayInventoryOptions(menu);
-
-            if (inputHandler.isNum(option)) {
-                int action = Integer.parseInt(option);
-
-                if (action < actions.size()) {
-                    actions.values().toArray(new Runnable[0])[action].run();
-
-                } else {
-                    inventoryPresenter.customMessage("That number does not correspond to an item");
-                }
-            } else {
-                inventoryPresenter.invalidInput();
-            }
-
-        } while (!option.equals(String.valueOf(menu.size() - 1)));
-
-    }
-
     private void displayAllYourInventory() {
         List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
         this.inventoryPresenter.displayInventory(allYourItems);
     }
 
     /**
-     * Runs the createItem submenu
+     * Creates an item
+     *
+     * @param name The name of the item
+     * @param description The description of the item
      */
-    private void createItem() {
-        boolean confirmedItem = false;
-        boolean nameGiven = false;
-        boolean descriptionGiven = false;
-        boolean exit = false;
-        String name = "";
-        String description = "";
-
-        while (!confirmedItem && !exit) {
-            if (!nameGiven) {
-                name = inventoryPresenter.askName();
-                if (inputHandler.isExitStr(name)) {
-                    inventoryPresenter.abortMessage();
-                    exit = true;
-                } else if (!inputHandler.isValidCSVStr(name)) {
-                    inventoryPresenter.customMessage("You cannot have a comma in your item name");
-                } else {
-                    nameGiven = true;
-                }
-            } else if (!descriptionGiven) {
-                description = inventoryPresenter.askDescription();
-                if (inputHandler.isExitStr(description)) {
-                    inventoryPresenter.abortMessage();
-                    exit = true;
-                } else if (!inputHandler.isValidCSVStr(description)) {
-                    inventoryPresenter.customMessage("You cannot have a comma in your item description");
-                } else {
-                    descriptionGiven = true;
-                }
+    private boolean createItem(String name, String description) {
+        while(true) {
+            if(inputHandler.isValidCSVStr(name) && inputHandler.isValidCSVStr(description)) {
+                itemManager.createItem(name, description, accountManager.getCurrAccountID());
+                return true;
             } else {
-                String confirm = inventoryPresenter.confirmItem(name, description);
-                if (inputHandler.isExitStr(confirm)) {
-                    inventoryPresenter.abortMessage();
-                    exit = true;
-                } else if (inputHandler.isFalse(confirm)) {
-                    inventoryPresenter.customMessage("Item not added.");
-                    nameGiven = false;
-                    descriptionGiven = false;
-                } else if (inputHandler.isTrue(confirm)) {
-                    itemManager.createItem(name, description, accountManager.getCurrAccountID());
-                    inventoryPresenter.customMessage("Item successfully added, pending admin approval!");
-                    confirmedItem = true;
-                } else {
-                    inventoryPresenter.invalidInput();
-                }
+                return false;
             }
         }
     }
 
     /**
-     * Runs the remove your item from inventory submenu
+     * Removes an item from the inventory
+     *
+     * @param ind The index in the list of items in this user's
      */
-    private void removeFromYourInventory() {
-        displayAllYourInventory();
-        boolean isValid = false;
-        while (!isValid) {
-            String option = inventoryPresenter.removeFromInventory();
-            if (inputHandler.isExitStr(option)) {
-                inventoryPresenter.abortMessage();
-                isValid = true;
-            } else if (inputHandler.isNum(option)) {
-                int ind = Integer.parseInt(option);
-                List<Item> items = itemUtility.getAllInventoryOfAccount(accountManager.getCurrAccountID());
-                if (ind < items.size()) {
-                    boolean removed = itemManager.removeItem(items.get(ind));
-                    if (removed) {
-                        isValid = true;
-                        inventoryPresenter.customMessage("Item successfully removed!");
-                    } else {
-                        inventoryPresenter.customMessage("Item could not be removed.");
-                    }
-                } else {
-                    inventoryPresenter.customMessage("That number does not correspond to an item");
-                }
-
-            } else {
-                inventoryPresenter.invalidInput();
-            }
-        }
+    private boolean removeFromYourInventory(String ind) {
+        List<Item> items = itemUtility.getAllInventoryOfAccount(accountManager.getCurrAccountID());
+        return itemManager.removeItem(items.get(Integer.parseInt(ind)));
     }
 
 }
