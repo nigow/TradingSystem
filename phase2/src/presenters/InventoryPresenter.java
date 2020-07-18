@@ -17,13 +17,6 @@ public interface InventoryPresenter {
     String displayInventoryOptions(List<String> InventoryOptions);
 
     /**
-     * Displays inventory.
-     *
-     * @param inventory List of inventory items
-     */
-    void displayInventory(List<String> inventory);
-
-    /**
      * Add to wishlist.
      *
      * @return Indexes of items that user would like to add to the wishlist
@@ -78,9 +71,34 @@ public interface InventoryPresenter {
      * Tells user that they've successfully aborted their choice.
      */
     void abortMessage();
+    
+    void displayApprovedItems(List<String> approvedItems);
 
-    /**
-     * Tells user a customMessage.
-     */
-    void customMessage(String customMessage);
+    void displayAllItems(List<String> allItems);
+
+    void displayUserPendingItems(List<String> pendingItems);
+
+    void displayAvailableItems(List<String> availableItems);
+
+    void displayAllPendingItems(List<String> pendingItems);
+
+    void displayOthersItems(List<String> othersItems);
+
+    void displayUserItems(List<String> userItems);
+
+    void displayDoesNotCorrespond();
+
+    void commaError();
+
+    void itemError();
+
+    void itemSuccess();
+
+    void pending();
+
+    void itemRemovalSuccess();
+
+    void itemRemovalError();
+
+    void itemApproved();
 }

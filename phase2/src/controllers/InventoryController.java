@@ -104,7 +104,7 @@ public class InventoryController {
                     actions.values().toArray(new Runnable[0])[action].run();
 
                 } else {
-                    inventoryPresenter.customMessage("That number does not correspond to an item");
+                    inventoryPresenter.displayDoesNotCorrespond();
                 }
             } else {
                 inventoryPresenter.invalidInput();
@@ -119,49 +119,47 @@ public class InventoryController {
      */
     private void displayFullInventory() {
         List<String> allItems = itemUtility.getApprovedString();
-        this.inventoryPresenter.displayInventory(allItems);
+        this.inventoryPresenter.displayAllItems(allItems);
     }
 
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
     private void displayYourInventory() {
-        this.inventoryPresenter.customMessage("Your approved items:");
         List<String> allYourItems = itemUtility.getApprovedInventoryOfAccountString(accountManager.getCurrAccountID());
-        this.inventoryPresenter.displayInventory(allYourItems);
+        this.inventoryPresenter.displayApprovedItems(allYourItems);
     }
 
+    /**
+     *
+     */
     private void displayAllYourInventory() {
-        this.inventoryPresenter.customMessage("All your items, including pending items:");
         List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
-        this.inventoryPresenter.displayInventory(allYourItems);
+        this.inventoryPresenter.displayUserPendingItems(allYourItems);
     }
 
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
     private void displayYourPending() {
-        this.inventoryPresenter.customMessage("Your pending items:");
         List<String> allYourItems = itemUtility.getDisprovedInventoryOfAccountString(accountManager.getCurrAccountID());
-        this.inventoryPresenter.displayInventory(allYourItems);
+        this.inventoryPresenter.displayUserPendingItems(allYourItems);
     }
 
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all items except for the ones belonging to the user
      */
     private void displayOthersInventory() {
-        this.inventoryPresenter.customMessage("Items available for trading: ");
         List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccountID(), accountManager.getCurrWishlist());
-        this.inventoryPresenter.displayInventory(othersItems);
+        this.inventoryPresenter.displayOthersItems(othersItems);
     }
 
     /**
      * Runs the displayInventory method in InventoryPresenter, passing in all the items awaiting approval
      */
     private void displayPending() {
-        inventoryPresenter.customMessage("Items awaiting approval:");
         List<String> all_disapproved = itemUtility.getDisapprovedString();
-        inventoryPresenter.displayInventory(all_disapproved);
+        inventoryPresenter.displayAllPendingItems(all_disapproved);
     }
 
     /**
@@ -182,7 +180,7 @@ public class InventoryController {
                     inventoryPresenter.abortMessage();
                     exit = true;
                 } else if (!inputHandler.isValidCSVStr(name)) {
-                    inventoryPresenter.customMessage("You cannot have a comma in your item name");
+                    inventoryPresenter.commaError();
                 } else {
                     nameGiven = true;
                 }
@@ -192,7 +190,7 @@ public class InventoryController {
                     inventoryPresenter.abortMessage();
                     exit = true;
                 } else if (!inputHandler.isValidCSVStr(description)) {
-                    inventoryPresenter.customMessage("You cannot have a comma in your item description");
+                    inventoryPresenter.commaError();
                 } else {
                     descriptionGiven = true;
                 }
@@ -202,12 +200,13 @@ public class InventoryController {
                     inventoryPresenter.abortMessage();
                     exit = true;
                 } else if (inputHandler.isFalse(confirm)) {
-                    inventoryPresenter.customMessage("Item not added.");
+                    inventoryPresenter.itemError();
                     nameGiven = false;
                     descriptionGiven = false;
                 } else if (inputHandler.isTrue(confirm)) {
                     itemManager.createItem(name, description, accountManager.getCurrAccountID());
-                    inventoryPresenter.customMessage("Item successfully added, pending admin approval!");
+                    inventoryPresenter.itemSuccess();
+                    inventoryPresenter.pending();
                     confirmedItem = true;
                 } else {
                     inventoryPresenter.invalidInput();
@@ -231,14 +230,14 @@ public class InventoryController {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).size()) {
                     if (accountManager.addItemToWishlist(itemManager.getItemId(itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).get(ind)))) {
-                        inventoryPresenter.customMessage("Item successfully added to your wishlist!");
+                        inventoryPresenter.itemSuccess();
                         isValid = true;
                     } else {
-                        inventoryPresenter.customMessage("Item could not be added to your wishlist.");
+                        inventoryPresenter.itemError();
                     }
 
                 } else {
-                    inventoryPresenter.customMessage("That number does not correspond to an item");
+                    inventoryPresenter.displayDoesNotCorrespond();
                 }
             } else {
                 inventoryPresenter.invalidInput();
@@ -267,12 +266,12 @@ public class InventoryController {
                     boolean removed = itemManager.removeItem(items.get(ind));
                     if (removed) {
                         isValid = true;
-                        inventoryPresenter.customMessage("Item successfully removed!");
+                        inventoryPresenter.itemRemovalSuccess();
                     } else {
-                        inventoryPresenter.customMessage("Item could not be removed.");
+                        inventoryPresenter.itemError();
                     }
                 } else {
-                    inventoryPresenter.customMessage("That number does not correspond to an item");
+                    inventoryPresenter.displayDoesNotCorrespond();
                 }
 
             } else {
@@ -297,9 +296,9 @@ public class InventoryController {
                 if (ind < itemUtility.getDisapprovedString().size()) {
                     itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);
                     isValid = true;
-                    inventoryPresenter.customMessage("Item successfully approved!");
+                    inventoryPresenter.approveItem();
                 } else {
-                    inventoryPresenter.customMessage("That number does not correspond to an item");
+                    inventoryPresenter.displayDoesNotCorrespond();
                 }
             } else {
                 inventoryPresenter.invalidInput();
