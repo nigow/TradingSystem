@@ -61,9 +61,9 @@ public class HomeController {
     public void run() {
         while (true) {
             List<String> options = new ArrayList<>();
-            options.add("Login");
-            options.add("Create an account");
-            options.add("Quit");
+            options.add(homePresenter.logIn());
+            options.add(homePresenter.createAccount());
+            options.add(homePresenter.quit());
             String action = homePresenter.displayHomeOptions(options);
             switch (action) {
                 case "0":

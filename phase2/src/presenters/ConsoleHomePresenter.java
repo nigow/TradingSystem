@@ -104,4 +104,34 @@ public class ConsoleHomePresenter implements HomePresenter {
         System.out.println("That username is taken.");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String logIn() {
+        String message = "Log in";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String createAccount() {
+        String message = "Create a new account";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String quit() {
+        String message = "Quit";
+        System.out.println(message);
+        return message;
+    }
+
 }

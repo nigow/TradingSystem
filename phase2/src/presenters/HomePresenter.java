@@ -68,4 +68,21 @@ public interface HomePresenter {
      * tells user that an account has already been made with the info
      */
     void displayOverlappingInfo();
+
+    /**
+     * shows user option to log in
+     * @return string message
+     */
+    String logIn();
+
+    /**
+     * shows user option to create a new account
+     * @return string message
+     */
+    String createAccount();
+    /**
+     * shows user option to quit the program
+     * @return string message
+     */
+    String quit();
 }
