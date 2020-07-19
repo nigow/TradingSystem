@@ -58,4 +58,22 @@ public interface FreezingPresenter {
      * Tells user that the chosen users have been unfrozen.
      */
     void displaySuccessfulUnfreeze();
+
+    /**
+     * Shows "freeze user" option.
+     * @return the string message
+     */
+    String freezeUser();
+
+    /**
+     * Shoes "unfreeze user" option.
+     * @return the string message
+     */
+    String unfreezeUser();
+
+    /**
+     * Shows "return to home" option.
+     * @return the string message
+     */
+    String returnToHome();
 }

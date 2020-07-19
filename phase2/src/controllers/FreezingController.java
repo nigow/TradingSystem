@@ -62,9 +62,9 @@ public class FreezingController {
      */
     public void run() {
         List<String> freezingActions = new ArrayList<>();
-        freezingActions.add("Freeze users");
-        freezingActions.add("Unfreeze users");
-        freezingActions.add("Return to home");
+        freezingActions.add(freezingPresenter.freezeUser());
+        freezingActions.add(freezingPresenter.unfreezeUser());
+        freezingActions.add(freezingPresenter.returnToHome());
         while (true) {
             String action = freezingPresenter.displayFreezingOptions(freezingActions);
             switch (action) {

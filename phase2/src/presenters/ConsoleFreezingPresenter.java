@@ -89,4 +89,34 @@ public class ConsoleFreezingPresenter implements FreezingPresenter {
         System.out.println("You have unfrozen this account.");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String freezeUser() {
+        String message = "Freeze users";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String unfreezeUser() {
+        String message = "Unreeze users";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String returnToHome() {
+        String message = "Return to home";
+        System.out.println(message);
+        return message;
+    }
+
 }
