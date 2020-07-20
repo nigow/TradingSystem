@@ -47,9 +47,15 @@ public class LendingControllerTest {
             }
 
             @Override
-            public void customMessage(String message) {
+            public void displayInvalidInput() {
 
             }
+
+            @Override
+            public void displaySuccessfulInput() {
+
+            }
+
 
         };
         TradeCreatorPresenter tradeCreatorPresenter = new TradeCreatorPresenter() {
@@ -150,9 +156,16 @@ public class LendingControllerTest {
             }
 
             @Override
-            public void customMessage(String message) {
+            public void displayInvalidInput() {
 
             }
+
+            @Override
+            public void displaySuccessfulInput() {
+
+            }
+
+
 
         };
 

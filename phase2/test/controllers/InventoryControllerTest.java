@@ -18,11 +18,6 @@ public class InventoryControllerTest {
             }
 
             @Override
-            public void displayInventory(List<String> inventory) {
-
-            }
-
-            @Override
             public String addToWishlist() {
                 return null;
             }
@@ -63,9 +58,81 @@ public class InventoryControllerTest {
             }
 
             @Override
-            public void customMessage(String message) {
+            public void displayApprovedItems(List<String> approvedItems) {
 
             }
+
+            @Override
+            public void displayAllItems(List<String> allItems) {
+
+            }
+
+            @Override
+            public void displayUserPendingItems(List<String> pendingItems) {
+
+            }
+
+            @Override
+            public void displayAvailableItems(List<String> availableItems) {
+
+            }
+
+            @Override
+            public void displayAllPendingItems(List<String> pendingItems) {
+
+            }
+
+            @Override
+            public void displayOthersItems(List<String> othersItems) {
+
+            }
+
+            @Override
+            public void displayUserItems(List<String> userItems) {
+
+            }
+
+            @Override
+            public void displayDoesNotCorrespond() {
+
+            }
+
+            @Override
+            public void commaError() {
+
+            }
+
+            @Override
+            public void itemError() {
+
+            }
+
+            @Override
+            public void itemSuccess() {
+
+            }
+
+            @Override
+            public void pending() {
+
+            }
+
+            @Override
+            public void itemRemovalSuccess() {
+
+            }
+
+            @Override
+            public void itemRemovalError() {
+
+            }
+
+            @Override
+            public void itemApproved() {
+
+            }
+
+
         };
 
     }
