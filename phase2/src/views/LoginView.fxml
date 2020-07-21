@@ -17,9 +17,9 @@
    <children>
       <Label text="%username" />
       <Label text="%password" GridPane.rowIndex="1" />
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="%failMessage" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+      <Label fx:id="failMessageLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="%failMessage" GridPane.columnSpan="2" GridPane.rowIndex="2" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%login" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-      <TextField GridPane.columnIndex="1" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="usernameBox" GridPane.columnIndex="1" />
+      <TextField fx:id="passwordBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>
