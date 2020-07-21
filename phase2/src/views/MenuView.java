@@ -28,4 +28,10 @@ public class MenuView implements SceneView {
         windowHandler.changeScene(Scenes.RESTRICTIONS);
 
     }
+
+    public void initiateTradeClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.TRADE_CREATOR);
+
+    }
 }

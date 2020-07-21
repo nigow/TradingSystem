@@ -6,7 +6,9 @@ public enum Scenes {
     LOGIN("Login"),
     MENU("Menu"),
     WAREHOUSE("Warehouse"),
-    RESTRICTIONS("Restrictions");
+    RESTRICTIONS("Restrictions"),
+    PROFILE("Profile"),
+    TRADE_CREATOR("TradeCreator");
 
     private final String fxml;
 

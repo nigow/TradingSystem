@@ -19,11 +19,11 @@
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageExistingTrades" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageInventory" GridPane.columnIndex="1" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%manageWishlist" GridPane.columnIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%initiateTrade" GridPane.rowIndex="1" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#initiateTradeClicked" text="%initiateTrade" GridPane.rowIndex="1" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyRestrictionsClicked" text="%modifyRestrictions" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageFrozenAccounts" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%addAdmin" GridPane.rowIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%requestUnfreeze" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageAccount" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#logoutClicked" text="%logout" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%approveItems" GridPane.rowIndex="3" />
    </children>
