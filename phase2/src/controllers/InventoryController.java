@@ -74,22 +74,22 @@ public class InventoryController {
         String option;
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
-        actions.put("View all approved items", this::displayFullInventory);
-        actions.put("View your approved items", this::displayYourInventory);
-        actions.put("View your pending items", this::displayYourPending);
-        actions.put("View all items available for trading", this::displayOthersInventory);
+        actions.put(inventoryPresenter.viewAllApproved(), this::displayFullInventory);
+        actions.put(inventoryPresenter.viewYourApproved(), this::displayYourInventory);
+        actions.put(inventoryPresenter.viewYourPending(), this::displayYourPending);
+        actions.put(inventoryPresenter.viewAllAvailable(), this::displayOthersInventory);
         if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
-            actions.put("Add to wishlist", this::addToWishlist);
+            actions.put(inventoryPresenter.addItemToWishlist(), this::addToWishlist);
         }
         if (authManager.canCreateItem(accountManager.getCurrAccount())) {
-            actions.put("Create a new item", this::createItem);
+            actions.put(inventoryPresenter.createNewItem(), this::createItem);
         }
-        actions.put("Remove your item from inventory", this::removeFromYourInventory);
+        actions.put(inventoryPresenter.removeYourItem(), this::removeFromYourInventory);
         if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
-            actions.put("View items awaiting approval", this::displayPending);
-            actions.put("Approve an item awaiting approval", this::approveItems);
+            actions.put(inventoryPresenter.viewAllPending(), this::displayPending);
+            actions.put(inventoryPresenter.approveAnItem(), this::approveItems);
         }
-        actions.put("Return to main menu", () -> {
+        actions.put(inventoryPresenter.returnToHome(), () -> {
         });
 
         List<String> menu = new ArrayList<>(actions.keySet());
@@ -131,7 +131,7 @@ public class InventoryController {
     }
 
     /**
-     *
+     *Runs the displayInventory method in InventoryPresenter, passing all items
      */
     private void displayAllYourInventory() {
         List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
