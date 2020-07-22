@@ -49,7 +49,7 @@ public interface UseCasePool {
      *
      * @return An instance of WishlistUtility use case.
      */
-    WishlistUtility getWishlistUtility();
+    WishlistManager getWishlistManager();
 
     /**
      * Gets an instance of ItemUtility use case.

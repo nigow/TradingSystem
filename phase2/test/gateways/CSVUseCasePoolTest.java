@@ -64,7 +64,7 @@ public class CSVUseCasePoolTest extends TestCase {
     public void testWishlistUtilityCreation() {
         try {
             CSVUseCasePool mc = new CSVUseCasePool();
-            assertNotNull(mc.getWishlistUtility());
+            assertNotNull(mc.getWishlistManager());
         }
         catch (IOException ignored) {
             fail();

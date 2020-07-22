@@ -11,7 +11,7 @@ public class InMemoryUseCasePool implements UseCasePool {
     private ItemManager itemManager;
     private FreezingUtility freezingUtility;
     private TradeManager tradeManager;
-    private WishlistUtility wishlistUtility;
+    private WishlistManager wishlistManager;
     private ItemUtility itemUtility;
     private TradeUtility tradeUtility;
 
@@ -28,7 +28,7 @@ public class InMemoryUseCasePool implements UseCasePool {
         this.itemManager = new ItemManager(itemGateway);
         this.freezingUtility = new FreezingUtility(restrictionsGateway);
         this.tradeManager = new TradeManager(tradeGateway);
-        this.wishlistUtility = new WishlistUtility(accountGateway, itemGateway);
+        this.wishlistManager = new WishlistManager(accountGateway, itemGateway);
         this.itemUtility = new ItemUtility(itemManager);
         this.tradeUtility = new TradeUtility(tradeManager);
 
@@ -65,8 +65,8 @@ public class InMemoryUseCasePool implements UseCasePool {
     }
 
     @Override
-    public WishlistUtility getWishlistUtility() {
-        return this.wishlistUtility;
+    public WishlistManager getWishlistManager() {
+        return this.wishlistManager;
     }
 
     @Override

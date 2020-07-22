@@ -16,7 +16,7 @@ public class CSVUseCasePool implements UseCasePool {
     private ItemManager itemManager;
     private FreezingUtility freezingUtility;
     private TradeManager tradeManager;
-    private WishlistUtility wishlistUtility;
+    private WishlistManager wishlistManager;
     private ItemUtility itemUtility;
     private TradeUtility tradeUtility;
 
@@ -63,7 +63,7 @@ public class CSVUseCasePool implements UseCasePool {
             accountManager.createAdminAccount("admin", "12345");
         }
         authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
-        wishlistUtility = new WishlistUtility(csvAccountGateway, csvItemsGateway);
+        wishlistManager = new WishlistManager(csvAccountGateway, csvItemsGateway);
 
 
         TradeGateway csvTradeGateway =
@@ -110,8 +110,8 @@ public class CSVUseCasePool implements UseCasePool {
     /**
      * @return An instance of WishlistUtility use case.
      */
-    public WishlistUtility getWishlistUtility() {
-        return wishlistUtility;
+    public WishlistManager getWishlistManager() {
+        return wishlistManager;
     }
 
     /**

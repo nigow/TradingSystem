@@ -13,11 +13,10 @@ import java.util.List;
  *
  * @author Tairi
  */
-public class WishlistUtility {
-    /**
-     * The gateway for account.
-     */
-    public final AccountGateway accountGateway;
+public class WishlistManager {
+
+
+    private AccountRepository accountRepository;
 
     /**
      * The gateway for items.
@@ -27,12 +26,49 @@ public class WishlistUtility {
     /**
      * Constructor for WishlistUtility.
      *
-     * @param accountGateway Account gateway to reference accounts
-     * @param itemsGateway   Item gateway to reference items
+     *
+     * @param itemsGateway Item gateway to reference items
      */
-    public WishlistUtility(AccountGateway accountGateway, ItemsGateway itemsGateway) {
-        this.accountGateway = accountGateway;
+    public WishlistManager(AccountRepository accountRepository, ItemsGateway itemsGateway) {
+        this.accountRepository = accountRepository;
         this.itemsGateway = itemsGateway;
+    }
+
+    /**
+     * Adds an itemID to the given account's wishlist.
+     *
+     * @param itemID Unique identifier of the item
+     */
+    public void addItemToWishlist(Account account, int itemID) {
+        account.addToWishlist(itemID);
+    }
+
+    /**
+     * Removes an itemID from the given account's wishlist.
+     *
+     * @param itemID Unique identifier of the item
+     */
+    public void removeItemFromWishlist(Account account, int itemID) {
+        account.removeFromWishList(itemID);
+    }
+
+    /**
+     * Gets the wishlist of item ids for the given account.
+     *
+     * @return Wishlist of the current account
+     */
+    public List<Integer> getCurrWishlist(Account account) {
+        return account.getWishlist();
+    }
+
+    /**
+     * Determines if item corresponding to the itemID is in the current account's wishlist.
+     *
+     * @param itemID Unique identifier of the item
+     * @return Whether the item corresponding to the itemID is in the current account's wishlist
+     */
+    public boolean isInWishlist(Account account, int itemID) {
+        return account.getWishlist().contains(itemID);
     }
 
     /**
@@ -43,7 +79,7 @@ public class WishlistUtility {
      */
     public List<Item> wishlistItems(int accountID) {
         List<Item> wishlist = new ArrayList<>();
-        for (int itemID : accountGateway.findById(accountID).getWishlist()) {
+        for (int itemID : accountRepository.getAccountFromID(accountID).getWishlist()) {
             Item item = itemsGateway.findById(itemID);
             wishlist.add(item);
         }
@@ -57,7 +93,7 @@ public class WishlistUtility {
      */
     public List<List<Item>> allWishlist() {
         List<List<Item>> all = new ArrayList<>();
-        for (Account account : accountGateway.getAllAccounts()) {
+        for (Account account : accountRepository.getAccounts()) {
             all.add(wishlistItems(account.getAccountID()));
         }
         return all;

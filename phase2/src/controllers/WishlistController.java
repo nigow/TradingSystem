@@ -20,7 +20,7 @@ public class WishlistController {
 
     private final UseCasePool useCasePool;
     private final AccountManager accountManager;
-    private final WishlistUtility wishlistUtility;
+    private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
     private final AuthManager authManager;
     private final TradeUtility tradeUtility;
@@ -41,7 +41,7 @@ public class WishlistController {
 
         this.tradeUtility = useCasePool.getTradeUtility();
         this.accountManager = useCasePool.getAccountManager();
-        this.wishlistUtility = useCasePool.getWishlistUtility();
+        this.wishlistManager = useCasePool.getWishlistManager();
         this.itemManager = useCasePool.getItemManager();
         this.authManager = useCasePool.getAuthManager();
 
@@ -97,7 +97,7 @@ public class WishlistController {
     }
 
     private void displayWishlist() {
-        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccountID());
+        List<String> wishlistInfo = wishlistManager.wishlistToString(accountManager.getCurrAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
     }
 
