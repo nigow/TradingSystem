@@ -49,7 +49,8 @@ public class CSVUseCasePool implements UseCasePool {
 
         RestrictionsGateway csvRestrictionsGateway =
                 new CSVRestrictionsGateway(filePath + "restrictions.csv");
-        freezingUtility = new FreezingUtility(csvRestrictionsGateway);
+        // TODO: We need to decide if we want gateways to know of entities.
+        freezingUtility = new FreezingUtility(csvRestrictionsGateway.getRestrictions());
         ItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
         itemManager = new ItemManager(csvItemsGateway);
         itemUtility = new ItemUtility(itemManager);
