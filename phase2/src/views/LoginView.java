@@ -6,6 +6,7 @@ import gateways.CSVUseCasePool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class LoginView implements SceneView {
     private TextField usernameBox;
 
     @FXML
-    private TextField passwordBox;
+    private PasswordField passwordBox;
 
     private WindowHandler windowHandler;
 
