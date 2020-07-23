@@ -49,4 +49,28 @@ public interface RestrictionPresenter {
      * Tells user that the restriction threshhold has changed.
      */
     void displayChangedRestriction();
+
+    /**
+     * Message letting user known they can adjust the lend vs. borrow limit.
+     * @return the string message
+     */
+    String lendBorrowLimit();
+
+    /**
+     * Message letting user known they can adjust the maximum number of incomplete trades.
+     * @return the string message
+     */
+    String maxIncompleteTrades();
+
+    /**
+     * Message letting user known they can maximum number of weekly trades.
+     * @return the string message
+     */
+    String maxWeeklyTrades();
+
+    /**
+     * Message letting user known they can return to the main menu.
+     * @return the string message
+     */
+    String returnToMainMenu();
 }

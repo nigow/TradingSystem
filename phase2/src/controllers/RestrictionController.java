@@ -26,10 +26,10 @@ public class RestrictionController {
 
     public void run() {
         List<String> options = new ArrayList<>();
-        options.add("Lend vs. borrow limit");
-        options.add("Maximum number of incomplete trades");
-        options.add("Maximum number of weekly trades");
-        options.add("Return to main menu");
+        options.add(restrictionPresenter.lendBorrowLimit());
+        options.add(restrictionPresenter.maxIncompleteTrades());
+        options.add(restrictionPresenter.maxWeeklyTrades());
+        options.add(restrictionPresenter.returnToMainMenu());
         while (true) {
             String action = restrictionPresenter.displayRestrictionOptions(options);
             switch (action) {

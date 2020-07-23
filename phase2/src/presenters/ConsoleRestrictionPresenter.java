@@ -73,4 +73,44 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter {
     public void displayChangedRestriction() {
         System.out.println("You changed the restriction threshold.");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String lendBorrowLimit() {
+        String message = "Lend vs. borrow limit";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String maxIncompleteTrades() {
+        String message = "Maximum number of incomplete trades";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String maxWeeklyTrades() {
+        String message = "Maximum number of weekly trades";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String returnToMainMenu() {
+        String message = "Return to main menu";
+        System.out.println(message);
+        return message;
+    }
 }
