@@ -213,4 +213,19 @@ public class ItemUtility {
         }
         return Items;
     }
+
+    /**
+     * Retrieves an item with a certain id, if item does not exist return null
+     * @param itemId Id of item to be retrieved
+     * @return The item with the id in question
+     */
+    public Item findItemById(int itemId) {
+        for (Item item : items) {
+            if (item.getItemID() == itemId) {
+                return item;
+            }
+        }
+        return null;
+    }
+
 }

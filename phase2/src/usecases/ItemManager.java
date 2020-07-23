@@ -12,7 +12,6 @@ import gateways.ItemsGateway;
  * @author Isaac
  */
 
-// TODO remove calls to itemsGateway to get or find an item
 public class ItemManager extends ItemUtility{
 
     /**
@@ -65,7 +64,7 @@ public class ItemManager extends ItemUtility{
      * @return item with the entered Id
      */
     public Item getItemById(int ItemID) {
-        return itemsGateway.findById(ItemID);
+        return super.findItemById(ItemID);
     }
 
     /**
@@ -75,7 +74,7 @@ public class ItemManager extends ItemUtility{
      * @return String of item with the entered ID
      */
     public String getItemStringById(int ItemID) {
-        return itemsGateway.findById(ItemID).toString();
+        return super.findItemById(ItemID).toString();
     }
 
     /**
@@ -105,7 +104,7 @@ public class ItemManager extends ItemUtility{
      * @return ID of the owner of the item (-1 if no item can be found).
      */
     public int getOwnerId(int itemID) {
-        Item item = itemsGateway.findById(itemID);
+        Item item = super.findItemById(itemID);
         if (item != null) return item.getOwnerID();
         return -1;
     }
