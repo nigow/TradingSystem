@@ -15,10 +15,10 @@ public class CSVUseCasePool implements UseCasePool {
     private AuthManager authManager;
     private ItemManager itemManager;
     private FreezingUtility freezingUtility;
-    private TradeManager tradeManager;
+    private OldTradeManager oldTradeManager;
     private WishlistManager wishlistManager;
     private ItemUtility itemUtility;
-    private TradeUtility tradeUtility;
+    private OldTradeUtility oldTradeUtility;
     private AccountRepository accountRepository;
 
     /**
@@ -75,8 +75,8 @@ public class CSVUseCasePool implements UseCasePool {
 
         TradeGateway csvTradeGateway =
                 new CSVTradeGateway(filePath + "trades.csv");
-        tradeManager = new TradeManager(csvTradeGateway);
-        tradeUtility = new TradeUtility(tradeManager);
+        oldTradeManager = new OldTradeManager(csvTradeGateway);
+        oldTradeUtility = new OldTradeUtility(oldTradeManager);
     }
 
     /**
@@ -108,10 +108,10 @@ public class CSVUseCasePool implements UseCasePool {
     }
 
     /**
-     * @return an instance of TradeManager use case.
+     * @return an instance of OldTradeManager use case.
      */
-    public TradeManager getTradeManager() {
-        return tradeManager;
+    public OldTradeManager getOldTradeManager() {
+        return oldTradeManager;
     }
 
     /**
@@ -129,10 +129,10 @@ public class CSVUseCasePool implements UseCasePool {
     }
 
     /**
-     * @return An instance of TradeUtility use case.
+     * @return An instance of OldTradeUtility use case.
      */
-    public TradeUtility getTradeUtility() {
-        return tradeUtility;
+    public OldTradeUtility getOldTradeUtility() {
+        return oldTradeUtility;
     }
 
     @Override

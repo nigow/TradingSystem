@@ -6,7 +6,7 @@ import presenters.FreezingPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
 import usecases.FreezingUtility;
-import usecases.TradeUtility;
+import usecases.OldTradeUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +34,9 @@ public class FreezingController {
      */
     private final AuthManager authManager;
     /**
-     * An instance of tradeUtility.
+     * An instance of oldTradeUtility.
      */
-    private final TradeUtility tradeUtility;
+    private final OldTradeUtility oldTradeUtility;
     /**
      * An instance of ControllerInputValidator to check if input is valid.
      */
@@ -49,7 +49,7 @@ public class FreezingController {
      * @param freezingPresenter An instance of FreezingPresenter to display information
      */
     public FreezingController(UseCasePool useCasePool, FreezingPresenter freezingPresenter) {
-        tradeUtility = useCasePool.getTradeUtility();
+        oldTradeUtility = useCasePool.getOldTradeUtility();
         this.freezingPresenter = freezingPresenter;
         freezingUtility = useCasePool.getFreezingUtility();
         accountManager = useCasePool.getAccountManager();
@@ -88,8 +88,8 @@ public class FreezingController {
      */
     private void freeze() {
         // TODO: This shouldn't send an adminAccount
-        List<Account> accounts = freezingUtility.getAccountsToFreeze(tradeUtility, accountManager.getCurrAccount());
-        List<String> usernames = freezingUtility.getUsernamesToFreeze(tradeUtility, accountManager.getCurrAccount());
+        List<Account> accounts = freezingUtility.getAccountsToFreeze(oldTradeUtility, accountManager.getCurrAccount());
+        List<String> usernames = freezingUtility.getUsernamesToFreeze(oldTradeUtility, accountManager.getCurrAccount());
         freezingPresenter.displayPossibleFreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.freeze();
@@ -100,7 +100,7 @@ public class FreezingController {
             else if (Integer.parseInt(chosenUser) >= accounts.size())
                 freezingPresenter.invalidInput();
             else {
-                freezingUtility.freezeAccount(tradeUtility, accounts.get(Integer.parseInt(chosenUser)), accountManager.getCurrAccount());
+                freezingUtility.freezeAccount(oldTradeUtility, accounts.get(Integer.parseInt(chosenUser)), accountManager.getCurrAccount());
                 freezingPresenter.displaySuccessfulFreeze();
                 return;
             }

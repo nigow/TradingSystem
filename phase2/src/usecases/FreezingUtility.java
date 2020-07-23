@@ -5,7 +5,6 @@ import entities.Permissions;
 import entities.Restrictions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,13 +36,13 @@ public class FreezingUtility {
     /**
      * Gets a list of accounts that have broken restrictions and are to be frozen.
      *
-     * @param tradeUtility   Utility for getting trade information
+     * @param oldTradeUtility   Utility for getting trade information
      * @return List of accounts to freeze
      */
-    public List<Account> getAccountsToFreeze(TradeUtility tradeUtility, Account adminAccount) {
+    public List<Account> getAccountsToFreeze(OldTradeUtility oldTradeUtility, Account adminAccount) {
         List<Account> accountsToFreeze = new ArrayList<>();
         for (Account account : accountRepository.getAccounts()) {
-            if (canBeFrozen(tradeUtility, account, adminAccount)) {
+            if (canBeFrozen(oldTradeUtility, account, adminAccount)) {
                 accountsToFreeze.add(account);
             }
         }
@@ -53,13 +52,13 @@ public class FreezingUtility {
     /**
      * Gets a list of account usernames that have broken restrictions and are to be frozen.
      *
-     * @param tradeUtility   Utility for getting trade information
+     * @param oldTradeUtility   Utility for getting trade information
      * @return List of account usernames to freeze
      */
-    public List<String> getUsernamesToFreeze(TradeUtility tradeUtility, Account adminAccount) {
+    public List<String> getUsernamesToFreeze(OldTradeUtility oldTradeUtility, Account adminAccount) {
         List<String> accountsToFreeze = new ArrayList<>();
         for (Account account : accountRepository.getAccounts()) {
-            if (canBeFrozen(tradeUtility, account, adminAccount)) {
+            if (canBeFrozen(oldTradeUtility, account, adminAccount)) {
                 accountsToFreeze.add(account.getUsername());
             }
         }
@@ -99,13 +98,13 @@ public class FreezingUtility {
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
-     * @param tradeUtility Utility for getting trade information
+     * @param oldTradeUtility Utility for getting trade information
      * @param account      Account to freeze
      * @param adminAccount The admin account that is freezing this account
      * @return Whether the given account is successfully frozen or not
      */
-    public boolean freezeAccount(TradeUtility tradeUtility, Account account, Account adminAccount) {
-        if (canBeFrozen(tradeUtility, account, adminAccount)) {
+    public boolean freezeAccount(OldTradeUtility oldTradeUtility, Account account, Account adminAccount) {
+        if (canBeFrozen(oldTradeUtility, account, adminAccount)) {
             account.removePermission(Permissions.BORROW);
             account.removePermission(Permissions.LEND);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
@@ -208,32 +207,32 @@ public class FreezingUtility {
     /**
      * Determines whether a given account should be frozen.
      *
-     * @param tradeUtility Utility for getting trade information
+     * @param oldTradeUtility Utility for getting trade information
      * @param account      Account that is checked if it can be frozen
      * @param adminAccount The admin account that is freezing this account
      * @return Whether the account can be frozen or not
      */
-    // TODO incomplete since TradeUtility isn't updated
-    public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
-        tradeUtility.setAccount(account);
+    // TODO incomplete since OldTradeUtility isn't updated
+    public boolean canBeFrozen(OldTradeUtility oldTradeUtility, Account account, Account adminAccount) {
+        oldTradeUtility.setAccount(account);
 
-        //TODO each boolean should be method within TradeUtility or here?
-        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictions.getMaxWeeklyTrade();
-        tradeUtility.setAccount(adminAccount);
+        //TODO each boolean should be method within OldTradeUtility or here?
+        boolean withinMaxIncompleteTrades = oldTradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = oldTradeUtility.getNumWeeklyTrades() < restrictions.getMaxWeeklyTrade();
+        oldTradeUtility.setAccount(adminAccount);
         return !account.getPermissions().contains(Permissions.UNFREEZE) &&
                 !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
 
-    //TODO should be in TradeUtility?
+    //TODO should be in OldTradeUtility?
     /**
      * Determines whether the current account has lent more than borrowed.
      *
-     * @param tradeUtility Utility for getting trade information
+     * @param oldTradeUtility Utility for getting trade information
      * @return Whether the current account has lent more than borrowed
      */
-    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility) {
-        return tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >=
+    public boolean lentMoreThanBorrowed(OldTradeUtility oldTradeUtility) {
+        return oldTradeUtility.getTimesLent() - oldTradeUtility.getTimesBorrowed() >=
                 restrictions.getLendMoreThanBorrow();
     }
 

@@ -38,11 +38,11 @@ public interface UseCasePool {
     FreezingUtility getFreezingUtility();
 
     /**
-     * Gets an instance of TradeManager use case.
+     * Gets an instance of OldTradeManager use case.
      *
-     * @return an instance of TradeManager use case.
+     * @return an instance of OldTradeManager use case.
      */
-    TradeManager getTradeManager();
+    OldTradeManager getOldTradeManager();
 
     /**
      * Gets an instance of WishlistUtility use case.
@@ -59,11 +59,11 @@ public interface UseCasePool {
     ItemUtility getItemUtility();
 
     /**
-     * Gets an instance of TradeUtility use case.
+     * Gets an instance of OldTradeUtility use case.
      *
-     * @return An instance of TradeUtility use case.
+     * @return An instance of OldTradeUtility use case.
      */
-    TradeUtility getTradeUtility();
+    OldTradeUtility getOldTradeUtility();
 
     /**
 

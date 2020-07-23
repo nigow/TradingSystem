@@ -7,6 +7,7 @@ import java.util.List;
  *
  * @author Maryam
  */
+// TODO: This is depreciated.
 public class OldTrade {
     /**
      * The ID of this trade.

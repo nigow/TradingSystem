@@ -10,10 +10,10 @@ public class InMemoryUseCasePool implements UseCasePool {
     private AuthManager authManager;
     private ItemManager itemManager;
     private FreezingUtility freezingUtility;
-    private TradeManager tradeManager;
+    private OldTradeManager oldTradeManager;
     private WishlistManager wishlistManager;
     private ItemUtility itemUtility;
-    private TradeUtility tradeUtility;
+    private OldTradeUtility oldTradeUtility;
 
 
     public InMemoryUseCasePool(){
@@ -29,11 +29,11 @@ public class InMemoryUseCasePool implements UseCasePool {
         // TODO fix this for tests
         this.freezingUtility = null;
 //      this.freezingUtility = new FreezingUtility(restrictionsGateway);
-        this.tradeManager = new TradeManager(tradeGateway);
+        this.oldTradeManager = new OldTradeManager(tradeGateway);
         this.wishlistManager = null;
 //      this.wishlistManager = new WishlistManager(accountGateway, itemGateway);
         this.itemUtility = new ItemUtility();
-        this.tradeUtility = new TradeUtility(tradeManager);
+        this.oldTradeUtility = new OldTradeUtility(oldTradeManager);
 
         if (accountManager.getAccountsList().size() == 0)  {
             accountManager.createAdminAccount("admin", "12345");
@@ -63,8 +63,8 @@ public class InMemoryUseCasePool implements UseCasePool {
     }
 
     @Override
-    public TradeManager getTradeManager() {
-        return this.tradeManager;
+    public OldTradeManager getOldTradeManager() {
+        return this.oldTradeManager;
     }
 
     @Override
@@ -78,8 +78,8 @@ public class InMemoryUseCasePool implements UseCasePool {
     }
 
     @Override
-    public TradeUtility getTradeUtility() {
-        return this.tradeUtility;
+    public OldTradeUtility getOldTradeUtility() {
+        return this.oldTradeUtility;
     }
 
     @Override

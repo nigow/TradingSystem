@@ -23,7 +23,7 @@ public class WishlistController {
     private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
     private final AuthManager authManager;
-    private final TradeUtility tradeUtility;
+    private final OldTradeUtility oldTradeUtility;
 
     private final InputHandler inputHandler;
 
@@ -39,7 +39,7 @@ public class WishlistController {
 
         this.useCasePool = useCasePool;
 
-        this.tradeUtility = useCasePool.getTradeUtility();
+        this.oldTradeUtility = useCasePool.getOldTradeUtility();
         this.accountManager = useCasePool.getAccountManager();
         this.wishlistManager = useCasePool.getWishlistManager();
         this.itemManager = useCasePool.getItemManager();
@@ -119,7 +119,7 @@ public class WishlistController {
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
         new TradeCreatorController(tradeCreatorPresenter, useCasePool, itemManager.getOwnerId(itemId), itemId,
-                !authManager.lentMoreThanBorrowed(tradeUtility)).run();
+                !authManager.lentMoreThanBorrowed(oldTradeUtility)).run();
 
     }
 

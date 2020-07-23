@@ -239,30 +239,30 @@ public class AuthManager {
     /**
      * Determines whether a given account should be frozen.
      *
-     * @param tradeUtility Utility for getting trade information
+     * @param oldTradeUtility Utility for getting trade information
      * @param account      Account that is checked if it can be frozen
      * @param adminAccount The admin account that is freezing this account
      * @return Whether the account can be frozen or not
      */
-    public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
+    public boolean canBeFrozen(OldTradeUtility oldTradeUtility, Account account, Account adminAccount) {
         Restrictions restrictions = restrictionsGateway.getRestrictions();
-        tradeUtility.setAccount(account);
+        oldTradeUtility.setAccount(account);
 
-        //TODO each boolean should be method within TradeUtility so AuthManager doesn't depend on restrictionsGateway
-        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
-        tradeUtility.setAccount(adminAccount);
+        //TODO each boolean should be method within OldTradeUtility so AuthManager doesn't depend on restrictionsGateway
+        boolean withinMaxIncompleteTrades = oldTradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = oldTradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
+        oldTradeUtility.setAccount(adminAccount);
         return !canUnfreeze(account) && !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
-    //TODO should be in TradeUtility
+    //TODO should be in OldTradeUtility
     /**
      * Determines whether the current account has lent more than borrowed.
      *
-     * @param tradeUtility Utility for getting trade information
+     * @param oldTradeUtility Utility for getting trade information
      * @return Whether the current account has lent more than borrowed
      */
-    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility) {
-        return tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >=
+    public boolean lentMoreThanBorrowed(OldTradeUtility oldTradeUtility) {
+        return oldTradeUtility.getTimesLent() - oldTradeUtility.getTimesBorrowed() >=
                 restrictionsGateway.getRestrictions().getLendMoreThanBorrow();
     }
 

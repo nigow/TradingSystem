@@ -53,7 +53,7 @@ public class CSVUseCasePoolTest extends TestCase {
     public void testTradeManagerCreation() {
         try {
             CSVUseCasePool mc = new CSVUseCasePool();
-            assertNotNull(mc.getTradeManager());
+            assertNotNull(mc.getOldTradeManager());
         }
         catch (IOException ignored) {
             fail();
@@ -86,7 +86,7 @@ public class CSVUseCasePoolTest extends TestCase {
     public void testGetTradeUtility() {
         try {
             CSVUseCasePool mc = new CSVUseCasePool();
-            assertNotNull(mc.getTradeUtility());
+            assertNotNull(mc.getOldTradeUtility());
         }
         catch (IOException ignored) {
             fail();

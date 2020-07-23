@@ -71,36 +71,36 @@ public class FreezingUtilityIntegrationTest extends TestCase{
         timePlaceHashMap.put(0, timePlace);
 
         TradeGateway tradeGateway = new InMemoryTradeGateway(tradeHashMap, timePlaceHashMap);
-        TradeManager tradeManager = new TradeManager(tradeGateway);
-        TradeUtility tradeUtility = new TradeUtility(tradeManager);
-        tradeUtility.setAccount(account1);
+        OldTradeManager oldTradeManager = new OldTradeManager(tradeGateway);
+        OldTradeUtility oldTradeUtility = new OldTradeUtility(oldTradeManager);
+        oldTradeUtility.setAccount(account1);
 
         //Methods are heavily interrelated so they are clumped together (the tests are very specific as well, which led to this clump of a method)
 
-        assertEquals(freezingUtility.getAccountsToFreeze(tradeUtility, accountManager.getCurrAccount()).size(), 0); //checks that no account should be frozen
+        assertEquals(freezingUtility.getAccountsToFreeze(oldTradeUtility, accountManager.getCurrAccount()).size(), 0); //checks that no account should be frozen
 
         Item item3 = new Item(2, "anime poster", "drawn by Mashiro Shiina", 0);
-//        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen",
+//        oldTradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen",
 //                false, 0, 1, new ArrayList<>(Arrays.asList(item3.getItemID())),
 //                new ArrayList<>(), null);
 //
-//        assertEquals(freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility).get(0).getAccountID(), 1); //checks that only 1 account should be frozen
-//        assertEquals(freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility).get(0), "Kento_Hinode");
+//        assertEquals(freezingUtility.getAccountsToFreeze(accountManager, authManager, oldTradeUtility).get(0).getAccountID(), 1); //checks that only 1 account should be frozen
+//        assertEquals(freezingUtility.getUsernamesToFreeze(accountManager, authManager, oldTradeUtility).get(0), "Kento_Hinode");
 //
-//        tradeManager.updateStatus(TradeStatus.REJECTED);
+//        oldTradeManager.updateStatus(TradeStatus.REJECTED);
 //        account.removePermission(Permissions.UNFREEZE);
-//        assertEquals(freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility).size(), 2); //checks that both accounts should be frozen
-//        assertEquals(freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility).size(), 2); //checks that both usernames should be frozen
+//        assertEquals(freezingUtility.getAccountsToFreeze(accountManager, authManager, oldTradeUtility).size(), 2); //checks that both accounts should be frozen
+//        assertEquals(freezingUtility.getUsernamesToFreeze(accountManager, authManager, oldTradeUtility).size(), 2); //checks that both usernames should be frozen
 //        assertEquals(freezingUtility.getAccountsToUnfreeze(accountManager, authManager).size(), 0); //checks that no account should be unfrozen since no accounts requested
 //        assertEquals(freezingUtility.getUsernamesToUnfreeze(accountManager, authManager).size(), 0); //checks that no username should be unfrozen since no accounts requested
 //
-//        assertTrue(freezingUtility.freezeAccount(authManager, tradeUtility, account, null)); //checks that account can be frozen and is frozen
+//        assertTrue(freezingUtility.freezeAccount(authManager, oldTradeUtility, account, null)); //checks that account can be frozen and is frozen
 //        assertTrue(authManager.isFrozen(account)); //makes sure account is actually frozen
-//        assertFalse(freezingUtility.freezeAccount(authManager, tradeUtility, account, null)); //checks that a frozen account isn't frozen
+//        assertFalse(freezingUtility.freezeAccount(authManager, oldTradeUtility, account, null)); //checks that a frozen account isn't frozen
 //
 //        assertTrue(authManager.requestUnfreeze(account));
 //
-//        assertFalse(freezingUtility.freezeAccount(authManager, tradeUtility, account, null)); //checks that a pending account isnt frozen
+//        assertFalse(freezingUtility.freezeAccount(authManager, oldTradeUtility, account, null)); //checks that a pending account isnt frozen
 //        assertEquals(freezingUtility.getAccountsToUnfreeze(accountManager, authManager).get(0).getAccountID(), 0); //checks that one account should be unfrozen
 //        assertEquals(freezingUtility.getUsernamesToUnfreeze(accountManager, authManager).get(0), "Miyo_Sasaki"); //checks that one username should be unfrozen
 //

@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
  *
  * @author Isaac
  */
-public class TradeUtility {
+public class OldTradeUtility {
 
     private final int NUMBER_OF_NEEDED_STATS = 3;
 
     /**
      * Manager responsible for creating and editing trades.
      */
-    private final TradeManager tradeManager;
+    private final OldTradeManager oldTradeManager;
 
     /**
      * The account which info on its trades are being retrieved.
@@ -26,12 +26,12 @@ public class TradeUtility {
     private Account account;
 
     /**
-     * Constructor for TradeUtility which stores an account and TradeManager.
+     * Constructor for OldTradeUtility which stores an account and OldTradeManager.
      *
-     * @param tradeManager Manager for creating and editing trades
+     * @param oldTradeManager Manager for creating and editing trades
      */
-    public TradeUtility(TradeManager tradeManager) {
-        this.tradeManager = tradeManager;
+    public OldTradeUtility(OldTradeManager oldTradeManager) {
+        this.oldTradeManager = oldTradeManager;
     }
 
     /**
@@ -50,7 +50,7 @@ public class TradeUtility {
      */
     public List<OldTrade> getAllTradesAccount() {
         List<OldTrade> accountOldTrades = new ArrayList<>();
-        for (OldTrade oldTrade : tradeManager.getAllTrades()) {
+        for (OldTrade oldTrade : oldTradeManager.getAllTrades()) {
             if (oldTrade.getTraderOneID() == account.getAccountID()) {
                 accountOldTrades.add(oldTrade);
             } else if (oldTrade.getTraderTwoID() == account.getAccountID()) {
@@ -67,7 +67,7 @@ public class TradeUtility {
      */
     public List<String> getAllTradesAccountString() {
         List<String> accountTrades = new ArrayList<>();
-        for (OldTrade oldTrade : tradeManager.getAllTrades()) {
+        for (OldTrade oldTrade : oldTradeManager.getAllTrades()) {
             if (oldTrade.getTraderOneID() == account.getAccountID()) {
                 accountTrades.add(oldTrade.toString());
             } else if (oldTrade.getTraderTwoID() == account.getAccountID()) {
@@ -123,19 +123,19 @@ public class TradeUtility {
                 continue;
             if (oldTrade.getTraderOneID() == account.getAccountID()) {
                 if (!oldTrade.getItemOneIDs().isEmpty() && oldTrade.getItemTwoIDs().isEmpty()) {
-                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
+                    TimePlace timePlace = oldTradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
                     allOneWay.add(timePlace);
                 }
             } else if (oldTrade.getTraderTwoID() == account.getAccountID()) {
                 if (oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
-                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
+                    TimePlace timePlace = oldTradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
                     allOneWay.add(timePlace);
                 }
             }
         }
         Collections.sort(allOneWay);
         for (TimePlace tp : allOneWay) {
-            OldTrade oldTrade = tradeManager.getTradeGateway().findTradeById(tp.getId());
+            OldTrade oldTrade = oldTradeManager.getTradeGateway().findTradeById(tp.getId());
             allOneWayItems.addAll(oldTrade.getItemOneIDs());
             allOneWayItems.addAll(oldTrade.getItemTwoIDs());
         }
@@ -163,13 +163,13 @@ public class TradeUtility {
             if (oldTrade.getStatus() != TradeStatus.CONFIRMED && oldTrade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
-                TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
+                TimePlace timePlace = oldTradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
                 allTwoWay.add(timePlace);
             }
         }
         Collections.sort(allTwoWay);
         for (TimePlace tp : allTwoWay) {
-            OldTrade oldTrade = tradeManager.getTradeGateway().findTradeById(tp.getId());
+            OldTrade oldTrade = oldTradeManager.getTradeGateway().findTradeById(tp.getId());
             if (account.getAccountID() == oldTrade.getTraderOneID()) {
                 allTwoWayItems.addAll(oldTrade.getItemOneIDs());
             } else {
@@ -195,7 +195,7 @@ public class TradeUtility {
         LocalDateTime currDate = LocalDateTime.now();
         LocalDateTime weekAgo = LocalDateTime.now().minusDays(7);
         for (OldTrade oldTrade : getAllTradesAccount()) {
-            TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
+            TimePlace timePlace = oldTradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
             if (timePlace.getTime().isBefore(currDate) && timePlace.getTime().isAfter(weekAgo)) {
                 weeklyTrades++;
             }
@@ -215,7 +215,7 @@ public class TradeUtility {
     public Integer getTimesIncomplete() {
         Integer timesIncomplete = 0;
         for (OldTrade oldTrade : getAllTradesAccount()) {
-            LocalDateTime tradeTime = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId()).getTime();
+            LocalDateTime tradeTime = oldTradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId()).getTime();
             if (tradeTime.isBefore(LocalDateTime.now()) && oldTrade.getStatus().equals(TradeStatus.CONFIRMED)) {
                 timesIncomplete++;
             }

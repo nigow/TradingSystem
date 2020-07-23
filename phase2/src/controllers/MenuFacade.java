@@ -5,7 +5,7 @@ import presenters.MenuPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
 import usecases.ItemUtility;
-import usecases.TradeUtility;
+import usecases.OldTradeUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class MenuFacade {
 
     private final InputHandler inputHandler;
 
-    private final TradeUtility tradeUtility;
+    private final OldTradeUtility oldTradeUtility;
 
     private final ItemUtility itemUtility;
 
@@ -76,7 +76,7 @@ public class MenuFacade {
                       MenuPresenter menuPresenter) {
         authManager = useCasePool.getAuthManager();
         accountManager = useCasePool.getAccountManager();
-        tradeUtility = useCasePool.getTradeUtility();
+        oldTradeUtility = useCasePool.getOldTradeUtility();
         itemUtility = useCasePool.getItemUtility();
 
         this.menuPresenter = menuPresenter;
@@ -98,7 +98,7 @@ public class MenuFacade {
      */
     public void run() {
 
-        tradeUtility.setAccount(accountManager.getCurrAccount());
+        oldTradeUtility.setAccount(accountManager.getCurrAccount());
 
         while (true) {
             List<String> options = new ArrayList<>();

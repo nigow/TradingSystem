@@ -13,7 +13,7 @@ import java.util.List;
  * @author Isaac
  */
 
-public class TradeManager {
+public class OldTradeManager {
 
     private final int RETURN_TRADE_DAYS = 30;
 
@@ -33,22 +33,22 @@ public class TradeManager {
     private final TradeGateway tradeGateway;
 
     /**
-     * Constructor for TradeManager which Stores a TradeGateway.
+     * Constructor for OldTradeManager which Stores a TradeGateway.
      *
      * @param tradeGateway The gateway for dealing with the persistent storage of trades
      */
-    public TradeManager(TradeGateway tradeGateway) {
+    public OldTradeManager(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
     }
 
     /**
-     * Constructor for TradeManager to edit an existing OldTrade.
+     * Constructor for OldTradeManager to edit an existing OldTrade.
      *
      * @param tradeGateway Gateway for dealing with the persistent storage of trades
      * @param oldTrade        Object representing a transaction between 2 users
      * @param timePlace    TimePlace of the oldTrade.
      */
-    public TradeManager(TradeGateway tradeGateway, OldTrade oldTrade, TimePlace timePlace) {
+    public OldTradeManager(TradeGateway tradeGateway, OldTrade oldTrade, TimePlace timePlace) {
         this.tradeGateway = tradeGateway;
         this.oldTrade = oldTrade;
         this.timePlace = timePlace;

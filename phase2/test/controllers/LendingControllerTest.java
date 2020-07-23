@@ -10,7 +10,7 @@ import presenters.LendingPresenter;
 import presenters.TradeCreatorPresenter;
 import usecases.AccountManager;
 import usecases.ItemManager;
-import usecases.TradeManager;
+import usecases.OldTradeManager;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class LendingControllerTest {
         UseCasePool useCasePool = new InMemoryUseCasePool();
         AccountManager accountManager = useCasePool.getAccountManager();
         ItemManager itemManager = useCasePool.getItemManager();
-        TradeManager tradeManager = useCasePool.getTradeManager();
+        OldTradeManager oldTradeManager = useCasePool.getOldTradeManager();
         LendingPresenter lendingPresenter = new LendingPresenter(){
 
             @Override
@@ -108,7 +108,7 @@ public class LendingControllerTest {
         accountManager.setCurrAccount(admin.getUsername());
         lendingController.run();
 
-        assert(tradeManager.getAllTrades().get(0).getItemOneIDs().get(0) == item.getItemID());
+        assert(oldTradeManager.getAllTrades().get(0).getItemOneIDs().get(0) == item.getItemID());
 
     }
 
@@ -118,7 +118,7 @@ public class LendingControllerTest {
         UseCasePool useCasePool = new InMemoryUseCasePool();
         AccountManager accountManager = useCasePool.getAccountManager();
         ItemManager itemManager = useCasePool.getItemManager();
-        TradeManager tradeManager = useCasePool.getTradeManager();
+        OldTradeManager oldTradeManager = useCasePool.getOldTradeManager();
 
         LendingPresenter lendingPresenter = new LendingPresenter(){
 
@@ -158,7 +158,7 @@ public class LendingControllerTest {
 
         LendingController lendingController = new LendingController(lendingPresenter, useCasePool, new ConsoleTradeCreatorPresenter());
         lendingController.run();
-        assert(tradeManager.getAllTrades().isEmpty());
+        assert(oldTradeManager.getAllTrades().isEmpty());
     }
 
 
