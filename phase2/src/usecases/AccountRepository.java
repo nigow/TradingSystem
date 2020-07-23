@@ -3,7 +3,6 @@ package usecases;
 import entities.Account;
 import entities.Permissions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountRepository {

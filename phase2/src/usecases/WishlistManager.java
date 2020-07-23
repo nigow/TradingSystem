@@ -18,6 +18,7 @@ public class WishlistManager {
 
     private AccountRepository accountRepository;
 
+    //TODO remove and change when ItemUtility is updated
     /**
      * The gateway for items.
      */

@@ -18,7 +18,9 @@ public class FreezingUtility {
     /**
      * The current restrictions of the trading system for all users.
      */
-    private final Restrictions restrictions;
+    private Restrictions restrictions;
+
+    private AccountRepository accountRepository;
 
     /**
      * Constructs an instance of FreezingUtility and stores restrictionsGateway.
@@ -27,22 +29,21 @@ public class FreezingUtility {
      */
 
     //TODO how do we want to instantiate restrictions. From existing(like csv) or create a new instance here?
-    public FreezingUtility(Restrictions restrictions) {
+    public FreezingUtility(AccountRepository accountRepository, Restrictions restrictions) {
+        this.accountRepository = accountRepository;
         this.restrictions = restrictions;
     }
 
     /**
      * Gets a list of accounts that have broken restrictions and are to be frozen.
      *
-     * @param accountManager Manager for accounts used to retrieve all accounts
-     * @param authManager    Manager for permissions and authorizing actions
      * @param tradeUtility   Utility for getting trade information
      * @return List of accounts to freeze
      */
-    public List<Account> getAccountsToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility) {
+    public List<Account> getAccountsToFreeze(TradeUtility tradeUtility, Account adminAccount) {
         List<Account> accountsToFreeze = new ArrayList<>();
-        for (Account account : accountManager.getAccountsList()) {
-            if (authManager.canBeFrozen(tradeUtility, account, accountManager.getCurrAccount())) {
+        for (Account account : accountRepository.getAccounts()) {
+            if (canBeFrozen(tradeUtility, account, adminAccount)) {
                 accountsToFreeze.add(account);
             }
         }
@@ -52,15 +53,13 @@ public class FreezingUtility {
     /**
      * Gets a list of account usernames that have broken restrictions and are to be frozen.
      *
-     * @param accountManager Manager for accounts used to retrieve all accounts
-     * @param authManager    Manager for permissions and authorizing actions
      * @param tradeUtility   Utility for getting trade information
      * @return List of account usernames to freeze
      */
-    public List<String> getUsernamesToFreeze(AccountManager accountManager, AuthManager authManager, TradeUtility tradeUtility) {
+    public List<String> getUsernamesToFreeze(TradeUtility tradeUtility, Account adminAccount) {
         List<String> accountsToFreeze = new ArrayList<>();
-        for (Account account : accountManager.getAccountsList()) {
-            if (authManager.canBeFrozen(tradeUtility, account, accountManager.getCurrAccount())) {
+        for (Account account : accountRepository.getAccounts()) {
+            if (canBeFrozen(tradeUtility, account, adminAccount)) {
                 accountsToFreeze.add(account.getUsername());
             }
         }
@@ -70,14 +69,12 @@ public class FreezingUtility {
     /**
      * Gets a list of accounts that have been frozen and have requested to be unfrozen.
      *
-     * @param accountManager Manager for accounts used to retrieve all accounts
-     * @param authManager    Manager for permissions and authorizing actions
      * @return List of accounts to freeze
      */
-    public List<Account> getAccountsToUnfreeze(AccountManager accountManager, AuthManager authManager) {
+    public List<Account> getAccountsToUnfreeze() {
         List<Account> accountsToUnfreeze = new ArrayList<>();
-        for (Account account : accountManager.getAccountsList()) {
-            if (authManager.isPending(account)) {
+        for (Account account : accountRepository.getAccounts()) {
+            if (isPending(account)) {
                 accountsToUnfreeze.add(account);
             }
         }
@@ -87,14 +84,12 @@ public class FreezingUtility {
     /**
      * Gets a list of account usernames that have been frozen and have requested to be unfrozen.
      *
-     * @param accountManager Manager for accounts used to retrieve all accounts
-     * @param authManager    Manager for permissions and authorizing actions
      * @return List of account usernames to freeze
      */
-    public List<String> getUsernamesToUnfreeze(AccountManager accountManager, AuthManager authManager) {
+    public List<String> getUsernamesToUnfreeze() {
         List<String> accountsToUnfreeze = new ArrayList<>();
-        for (Account account : accountManager.getAccountsList()) {
-            if (authManager.isPending(account)) {
+        for (Account account : accountRepository.getAccounts()) {
+            if (isPending(account)) {
                 accountsToUnfreeze.add(account.getUsername());
             }
         }
@@ -104,16 +99,16 @@ public class FreezingUtility {
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
-     * @param authManager  Manager for permissions and authorizing actions
      * @param tradeUtility Utility for getting trade information
      * @param account      Account to freeze
      * @param adminAccount The admin account that is freezing this account
      * @return Whether the given account is successfully frozen or not
      */
-    public boolean freezeAccount(AuthManager authManager, TradeUtility tradeUtility, Account account, Account adminAccount) {
-        if (authManager.canBeFrozen(tradeUtility, account, adminAccount)) {
-            authManager.removePermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)));
-            authManager.addPermissionByID(account, Permissions.REQUEST_UNFREEZE);
+    public boolean freezeAccount(TradeUtility tradeUtility, Account account, Account adminAccount) {
+        if (canBeFrozen(tradeUtility, account, adminAccount)) {
+            account.removePermission(Permissions.BORROW);
+            account.removePermission(Permissions.LEND);
+            account.addPermission(Permissions.REQUEST_UNFREEZE);
             return true;
         }
         return false;
@@ -122,14 +117,14 @@ public class FreezingUtility {
     /**
      * Unfreezes an account that requested to be unfrozen by adding the ability to borrow.
      *
-     * @param authManager Manager for permissions and authorizing actions
      * @param account     Account to unfreeze
      * @return Whether the given account is successfully frozen or not
      */
-    public boolean unfreezeAccount(AuthManager authManager, Account account) {
-        if (authManager.isPending(account)) {
-            authManager.addPermissionsByIDs(account, new ArrayList<>(Arrays.asList(Permissions.BORROW, Permissions.LEND)));
-            authManager.removePermissionByID(account, Permissions.REQUEST_UNFREEZE);
+    public boolean unfreezeAccount(Account account) {
+        if (isPending(account)) {
+            account.removePermission(Permissions.REQUEST_UNFREEZE);
+            account.addPermission(Permissions.LEND);
+            account.addPermission(Permissions.BORROW);
             return true;
         }
         return false;
@@ -218,6 +213,7 @@ public class FreezingUtility {
      * @param adminAccount The admin account that is freezing this account
      * @return Whether the account can be frozen or not
      */
+    // TODO incomplete since TradeUtility isn't updated
     public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
         tradeUtility.setAccount(account);
 
