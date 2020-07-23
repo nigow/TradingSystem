@@ -86,26 +86,26 @@ public class CSVTradeGateway implements TradeGateway {
 
     }
 
-    private String generateRow(Trade trade, TimePlace timePlace) {
+    private String generateRow(OldTrade oldTrade, TimePlace timePlace) {
 
         String[] col = {
-                String.valueOf(trade.getId()),
-                String.valueOf(trade.getTraderOneID()),
-                String.valueOf(trade.getTraderTwoID()),
-                trade.getItemOneIDs().stream().map(String::valueOf).collect(Collectors.joining(" ")),
-                trade.getItemTwoIDs().stream().map(String::valueOf).collect(Collectors.joining(" ")),
+                String.valueOf(oldTrade.getId()),
+                String.valueOf(oldTrade.getTraderOneID()),
+                String.valueOf(oldTrade.getTraderTwoID()),
+                oldTrade.getItemOneIDs().stream().map(String::valueOf).collect(Collectors.joining(" ")),
+                oldTrade.getItemTwoIDs().stream().map(String::valueOf).collect(Collectors.joining(" ")),
                 //timePlace.getTime().truncatedTo(ChronoUnit.MINUTES) + " " + timePlace.getPlace(),
                 timePlace.getTime() + " " + timePlace.getPlace(),
-                String.valueOf(trade.getEditedCounter()),
-                String.valueOf(trade.getLastEditorID()),
-                String.valueOf(trade.getStatus()),
-                String.valueOf(trade.isPermanent()),
-                String.valueOf(trade.isTraderOneCompleted()),
-                String.valueOf(trade.isTraderTwoCompleted())
+                String.valueOf(oldTrade.getEditedCounter()),
+                String.valueOf(oldTrade.getLastEditorID()),
+                String.valueOf(oldTrade.getStatus()),
+                String.valueOf(oldTrade.isPermanent()),
+                String.valueOf(oldTrade.isTraderOneCompleted()),
+                String.valueOf(oldTrade.isTraderTwoCompleted())
         };
 
-        if (trade.getItemOneIDs().isEmpty()) col[headers.get("trader_one_items")] = " ";
-        if (trade.getItemTwoIDs().isEmpty()) col[headers.get("trader_two_items")] = " ";
+        if (oldTrade.getItemOneIDs().isEmpty()) col[headers.get("trader_one_items")] = " ";
+        if (oldTrade.getItemTwoIDs().isEmpty()) col[headers.get("trader_two_items")] = " ";
 
         return String.join(",", col);
     }
@@ -114,7 +114,7 @@ public class CSVTradeGateway implements TradeGateway {
      * {@inheritDoc}
      */
     @Override
-    public Trade findTradeById(int id) {
+    public OldTrade findTradeById(int id) {
         if (trades.containsKey(id)) {
 
             String[] col = trades.get(id).split(",");
@@ -130,13 +130,13 @@ public class CSVTradeGateway implements TradeGateway {
             boolean traderOneConfirmed = Boolean.parseBoolean(col[headers.get("trader_one_confirmed")]);
             boolean traderTwoConfirmed = Boolean.parseBoolean(col[headers.get("trader_two_confirmed")]);
 
-            Trade trade = new Trade(id, id, isPermanent, traderOneId, traderTwoId, traderOneItems, traderTwoItems, editCounter);
-            trade.setLastEditorID(lastEditorId);
-            trade.setStatus(status);
-            trade.setTraderOneCompleted(traderOneConfirmed);
-            trade.setTraderTwoCompleted(traderTwoConfirmed);
+            OldTrade oldTrade = new OldTrade(id, id, isPermanent, traderOneId, traderTwoId, traderOneItems, traderTwoItems, editCounter);
+            oldTrade.setLastEditorID(lastEditorId);
+            oldTrade.setStatus(status);
+            oldTrade.setTraderOneCompleted(traderOneConfirmed);
+            oldTrade.setTraderTwoCompleted(traderTwoConfirmed);
 
-            return trade;
+            return oldTrade;
         }
 
         return null;
@@ -161,18 +161,18 @@ public class CSVTradeGateway implements TradeGateway {
      * {@inheritDoc}
      */
     @Override
-    public boolean updateTrade(Trade trade, TimePlace timePlace) {
+    public boolean updateTrade(OldTrade oldTrade, TimePlace timePlace) {
 
-        String backup = trades.get(trade.getId());
+        String backup = trades.get(oldTrade.getId());
 
-        trades.put(trade.getId(), generateRow(trade, timePlace));
+        trades.put(oldTrade.getId(), generateRow(oldTrade, timePlace));
         try {
 
             save();
 
         } catch (IOException e) {
 
-            if (backup != null) trades.put(trade.getId(), backup);
+            if (backup != null) trades.put(oldTrade.getId(), backup);
             return false;
 
         }
@@ -185,12 +185,12 @@ public class CSVTradeGateway implements TradeGateway {
      * {@inheritDoc}
      */
     @Override
-    public List<Trade> getAllTrades() {
-        List<Trade> allTrades = new ArrayList<>();
+    public List<OldTrade> getAllTrades() {
+        List<OldTrade> allOldTrades = new ArrayList<>();
         for (Integer id : trades.keySet()) {
-            allTrades.add(findTradeById(id));
+            allOldTrades.add(findTradeById(id));
         }
-        return allTrades;
+        return allOldTrades;
     }
 
     /**

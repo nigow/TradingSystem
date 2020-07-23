@@ -48,16 +48,16 @@ public class TradeUtility {
      *
      * @return List of all of the trades the current account has done
      */
-    public List<Trade> getAllTradesAccount() {
-        List<Trade> accountTrades = new ArrayList<>();
-        for (Trade trade : tradeManager.getAllTrades()) {
-            if (trade.getTraderOneID() == account.getAccountID()) {
-                accountTrades.add(trade);
-            } else if (trade.getTraderTwoID() == account.getAccountID()) {
-                accountTrades.add(trade);
+    public List<OldTrade> getAllTradesAccount() {
+        List<OldTrade> accountOldTrades = new ArrayList<>();
+        for (OldTrade oldTrade : tradeManager.getAllTrades()) {
+            if (oldTrade.getTraderOneID() == account.getAccountID()) {
+                accountOldTrades.add(oldTrade);
+            } else if (oldTrade.getTraderTwoID() == account.getAccountID()) {
+                accountOldTrades.add(oldTrade);
             }
         }
-        return accountTrades;
+        return accountOldTrades;
     }
 
     /**
@@ -67,11 +67,11 @@ public class TradeUtility {
      */
     public List<String> getAllTradesAccountString() {
         List<String> accountTrades = new ArrayList<>();
-        for (Trade trade : tradeManager.getAllTrades()) {
-            if (trade.getTraderOneID() == account.getAccountID()) {
-                accountTrades.add(trade.toString());
-            } else if (trade.getTraderTwoID() == account.getAccountID()) {
-                accountTrades.add(trade.toString());
+        for (OldTrade oldTrade : tradeManager.getAllTrades()) {
+            if (oldTrade.getTraderOneID() == account.getAccountID()) {
+                accountTrades.add(oldTrade.toString());
+            } else if (oldTrade.getTraderTwoID() == account.getAccountID()) {
+                accountTrades.add(oldTrade.toString());
             }
         }
         return accountTrades;
@@ -85,13 +85,13 @@ public class TradeUtility {
      */
     public List<Integer> getTopThreePartnersIds() {
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
-        for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
+        for (OldTrade oldTrade : getAllTradesAccount()) {
+            if (oldTrade.getStatus() != TradeStatus.CONFIRMED && oldTrade.getStatus() != TradeStatus.COMPLETED)
                 continue;
-            if (account.getAccountID() == trade.getTraderOneID()) {
-                tradeFrequency.compute(trade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
+            if (account.getAccountID() == oldTrade.getTraderOneID()) {
+                tradeFrequency.compute(oldTrade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
             } else {
-                tradeFrequency.compute(trade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
+                tradeFrequency.compute(oldTrade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
             }
         }
         Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream()
@@ -118,26 +118,26 @@ public class TradeUtility {
         List<TimePlace> allOneWay = new ArrayList<>();
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allOneWayItems = new ArrayList<>();
-        for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
+        for (OldTrade oldTrade : getAllTradesAccount()) {
+            if (oldTrade.getStatus() != TradeStatus.CONFIRMED && oldTrade.getStatus() != TradeStatus.COMPLETED)
                 continue;
-            if (trade.getTraderOneID() == account.getAccountID()) {
-                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
-                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+            if (oldTrade.getTraderOneID() == account.getAccountID()) {
+                if (!oldTrade.getItemOneIDs().isEmpty() && oldTrade.getItemTwoIDs().isEmpty()) {
+                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
                     allOneWay.add(timePlace);
                 }
-            } else if (trade.getTraderTwoID() == account.getAccountID()) {
-                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
-                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+            } else if (oldTrade.getTraderTwoID() == account.getAccountID()) {
+                if (oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
+                    TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
                     allOneWay.add(timePlace);
                 }
             }
         }
         Collections.sort(allOneWay);
         for (TimePlace tp : allOneWay) {
-            Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
-            allOneWayItems.addAll(trade.getItemOneIDs());
-            allOneWayItems.addAll(trade.getItemTwoIDs());
+            OldTrade oldTrade = tradeManager.getTradeGateway().findTradeById(tp.getId());
+            allOneWayItems.addAll(oldTrade.getItemOneIDs());
+            allOneWayItems.addAll(oldTrade.getItemTwoIDs());
         }
         int count = 0;
         for (Integer tradeId : allOneWayItems) {
@@ -159,21 +159,21 @@ public class TradeUtility {
         List<TimePlace> allTwoWay = new ArrayList<>();
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allTwoWayItems = new ArrayList<>();
-        for (Trade trade : getAllTradesAccount()) {
-            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
+        for (OldTrade oldTrade : getAllTradesAccount()) {
+            if (oldTrade.getStatus() != TradeStatus.CONFIRMED && oldTrade.getStatus() != TradeStatus.COMPLETED)
                 continue;
-            if (!trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
-                TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+            if (!oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
+                TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
                 allTwoWay.add(timePlace);
             }
         }
         Collections.sort(allTwoWay);
         for (TimePlace tp : allTwoWay) {
-            Trade trade = tradeManager.getTradeGateway().findTradeById(tp.getId());
-            if (account.getAccountID() == trade.getTraderOneID()) {
-                allTwoWayItems.addAll(trade.getItemOneIDs());
+            OldTrade oldTrade = tradeManager.getTradeGateway().findTradeById(tp.getId());
+            if (account.getAccountID() == oldTrade.getTraderOneID()) {
+                allTwoWayItems.addAll(oldTrade.getItemOneIDs());
             } else {
-                allTwoWayItems.addAll(trade.getItemTwoIDs());
+                allTwoWayItems.addAll(oldTrade.getItemTwoIDs());
             }
         }
         int count = 0;
@@ -194,8 +194,8 @@ public class TradeUtility {
         Integer weeklyTrades = 0;
         LocalDateTime currDate = LocalDateTime.now();
         LocalDateTime weekAgo = LocalDateTime.now().minusDays(7);
-        for (Trade trade : getAllTradesAccount()) {
-            TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(trade.getId());
+        for (OldTrade oldTrade : getAllTradesAccount()) {
+            TimePlace timePlace = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId());
             if (timePlace.getTime().isBefore(currDate) && timePlace.getTime().isAfter(weekAgo)) {
                 weeklyTrades++;
             }
@@ -214,9 +214,9 @@ public class TradeUtility {
      */
     public Integer getTimesIncomplete() {
         Integer timesIncomplete = 0;
-        for (Trade trade : getAllTradesAccount()) {
-            LocalDateTime tradeTime = tradeManager.getTradeGateway().findTimePlaceById(trade.getId()).getTime();
-            if (tradeTime.isBefore(LocalDateTime.now()) && trade.getStatus().equals(TradeStatus.CONFIRMED)) {
+        for (OldTrade oldTrade : getAllTradesAccount()) {
+            LocalDateTime tradeTime = tradeManager.getTradeGateway().findTimePlaceById(oldTrade.getId()).getTime();
+            if (tradeTime.isBefore(LocalDateTime.now()) && oldTrade.getStatus().equals(TradeStatus.CONFIRMED)) {
                 timesIncomplete++;
             }
         }
@@ -230,13 +230,13 @@ public class TradeUtility {
      */
     public Integer getTimesBorrowed() {
         Integer timesBorrowed = 0;
-        for (Trade trade : getAllTradesAccount()) {
-            if (account.getAccountID() == trade.getTraderTwoID()) {
-                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
+        for (OldTrade oldTrade : getAllTradesAccount()) {
+            if (account.getAccountID() == oldTrade.getTraderTwoID()) {
+                if (!oldTrade.getItemOneIDs().isEmpty() && oldTrade.getItemTwoIDs().isEmpty()) {
                     timesBorrowed++;
                 }
             } else {
-                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
+                if (oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
                     timesBorrowed++;
                 }
             }
@@ -251,13 +251,13 @@ public class TradeUtility {
      */
     public Integer getTimesLent() {
         Integer timesLent = 0;
-        for (Trade trade : getAllTradesAccount()) {
-            if (account.getAccountID() == trade.getTraderTwoID()) {
-                if (trade.getItemOneIDs().isEmpty() && !trade.getItemTwoIDs().isEmpty()) {
+        for (OldTrade oldTrade : getAllTradesAccount()) {
+            if (account.getAccountID() == oldTrade.getTraderTwoID()) {
+                if (oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
                     timesLent++;
                 }
             } else {
-                if (!trade.getItemOneIDs().isEmpty() && trade.getItemTwoIDs().isEmpty()) {
+                if (!oldTrade.getItemOneIDs().isEmpty() && oldTrade.getItemTwoIDs().isEmpty()) {
                     timesLent++;
                 }
             }
@@ -266,55 +266,55 @@ public class TradeUtility {
     }
 
     /**
-     * Completes the action of making a trade.
+     * Completes the action of making a oldTrade.
      *
-     * @param trade          Trade object representing the trade about to be made
+     * @param oldTrade          OldTrade object representing the oldTrade about to be made
      * @param accountManager Manager for accounts
      * @param itemManager    Manager for items
      * @param itemUtility    Utility for accessing certain types of items
      */
-    public void makeTrade(Trade trade, AccountManager accountManager, ItemManager itemManager,
+    public void makeTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager,
                           ItemUtility itemUtility) {
         Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
-        for (Integer itemId : trade.getItemOneIDs()) {
+        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
+        for (Integer itemId : oldTrade.getItemOneIDs()) {
             if (accountManager.getCurrWishlist().contains(itemId)) {
                 accountManager.removeItemFromWishlist(itemId);
             }
-            if (itemUtility.getApprovedInventoryOfAccount(trade.getTraderOneID()).contains(itemManager.getItemById(itemId))) {
-                itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderTwoID());
+            if (itemUtility.getApprovedInventoryOfAccount(oldTrade.getTraderOneID()).contains(itemManager.getItemById(itemId))) {
+                itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderTwoID());
             }
         }
-        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
-        for (Integer itemId : trade.getItemTwoIDs()) {
+        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
+        for (Integer itemId : oldTrade.getItemTwoIDs()) {
             if (accountManager.getCurrWishlist().contains(itemId)) {
                 accountManager.removeItemFromWishlist(itemId);
             }
-            if (itemUtility.getApprovedInventoryOfAccount(trade.getTraderTwoID()).contains(itemManager.getItemById(itemId))) {
-                itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderOneID());
+            if (itemUtility.getApprovedInventoryOfAccount(oldTrade.getTraderTwoID()).contains(itemManager.getItemById(itemId))) {
+                itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderOneID());
             }
         }
         accountManager.setCurrAccount(account.getUsername());
     }
 
     /**
-     * Completes the action of reversing a trade which was rejected.
+     * Completes the action of reversing a oldTrade which was rejected.
      *
-     * @param trade          Trade object representing the trade about to be rejected
+     * @param oldTrade          OldTrade object representing the oldTrade about to be rejected
      * @param accountManager Object for managing accounts
      * @param itemManager    Object for managing items
      */
-    public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
+    public void rejectedTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
         Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
-        for (Integer itemId : trade.getItemOneIDs()) {
+        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
+        for (Integer itemId : oldTrade.getItemOneIDs()) {
             accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderOneID());
+            itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderOneID());
         }
-        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
-        for (Integer itemId : trade.getItemTwoIDs()) {
+        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
+        for (Integer itemId : oldTrade.getItemTwoIDs()) {
             accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.getItemById(itemId), trade.getTraderTwoID());
+            itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderTwoID());
         }
         accountManager.setCurrAccount(account.getUsername());
     }

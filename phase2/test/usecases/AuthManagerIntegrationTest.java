@@ -139,12 +139,12 @@ public class AuthManagerIntegrationTest extends TestCase {
 
         Item item1 = new Item(0, "anime figure", "neat figure", 0);
         Item item2 = new Item(1, "japanese artwork appreciation pillow", "fluffy and cool", 1);
-        Trade trade = new Trade(0, 0, true, 0, 1, new ArrayList<>(Arrays.asList(item1.getItemID())) ,new ArrayList<>(Arrays.asList(item2.getItemID())), 3);
-        trade.setStatus(TradeStatus.REJECTED);
+        OldTrade oldTrade = new OldTrade(0, 0, true, 0, 1, new ArrayList<>(Arrays.asList(item1.getItemID())) ,new ArrayList<>(Arrays.asList(item2.getItemID())), 3);
+        oldTrade.setStatus(TradeStatus.REJECTED);
         TimePlace timePlace = new TimePlace(0, LocalDateTime.of(2020, 7, 1, 0, 0), "UTM");
 
-        HashMap<Integer, Trade> tradeHashMap = new HashMap<>();
-        tradeHashMap.put(0, trade);
+        HashMap<Integer, OldTrade> tradeHashMap = new HashMap<>();
+        tradeHashMap.put(0, oldTrade);
         HashMap<Integer, TimePlace> timePlaceHashMap = new HashMap<>();
         timePlaceHashMap.put(0, timePlace);
 
@@ -180,14 +180,14 @@ public class AuthManagerIntegrationTest extends TestCase {
 //
 //        //canTrade() tests (only reason the tests are together is the massive amount of code needed to set up tradeUtility and trades)
 //
-//        assertFalse(authManager.canTrade(account)); //frozen accounts cant trade
-//        assertTrue(authManager.canTrade(account1)); //at weekly limit so can't trade
+//        assertFalse(authManager.canTrade(account)); //frozen accounts cant oldTrade
+//        assertTrue(authManager.canTrade(account1)); //at weekly limit so can't oldTrade
 //
 //        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 20, 3),
 //                "Bahen", false, 0, 1,
 //                new ArrayList<>(), new ArrayList<>(Arrays.asList(item1.getItemID())), null);
-//        assertFalse(authManager.canTrade(account)); //frozen accounts cant trade
-//        assertFalse(authManager.canTrade(account1)); //at weekly limit so can't trade
+//        assertFalse(authManager.canTrade(account)); //frozen accounts cant oldTrade
+//        assertFalse(authManager.canTrade(account1)); //at weekly limit so can't oldTrade
     }
 
 

@@ -17,7 +17,7 @@ import java.util.List;
  * An integration test to verify integration of usecases, gateways, and entities is successful.
  * @author Isaac
  */
-public class TradeIntegrationTest extends TestCase {
+public class OldTradeIntegrationTest extends TestCase {
     private TradeManager tradeManager;
     private TradeUtility tradeUtility;
     private TradeGateway tradeGateway;
@@ -28,9 +28,9 @@ public class TradeIntegrationTest extends TestCase {
         List<Integer> items2 = new ArrayList<>();
         items1.add(100);
         items2.add(200);
-        Trade initial = new Trade(0, 0, false, 10, 11,
+        OldTrade initial = new OldTrade(0, 0, false, 10, 11,
                 items1, items2, 0);
-        HashMap<Integer, Trade> h = new HashMap<>();
+        HashMap<Integer, OldTrade> h = new HashMap<>();
         h.put(0, initial);
 
         LocalDateTime time = LocalDateTime.now();
@@ -39,7 +39,7 @@ public class TradeIntegrationTest extends TestCase {
         hash.put(0, first);
         tradeGateway = new InMemoryTradeGateway(h, hash);
         tradeManager = new TradeManager(tradeGateway);
-        tradeManager.setTrade(initial);
+        tradeManager.setOldTrade(initial);
         return tradeManager;
     }
 
@@ -87,13 +87,13 @@ public class TradeIntegrationTest extends TestCase {
         List<Integer> items2 = new ArrayList<>();
         items1.add(101);
         items2.add(201);
-        Trade trade2 = new Trade(1, 1, false, 12, 13,
+        OldTrade oldTrade2 = new OldTrade(1, 1, false, 12, 13,
                 items1, items2, 0);
         LocalDateTime time = LocalDateTime.now();
         TimePlace timePlace2 = new TimePlace(1, time, "UTM");
-        tradeGateway.updateTrade(trade2, timePlace2);
-        tradeManager.setTrade(trade2);
-        assertEquals(tradeManager.getTrade(), trade2);
+        tradeGateway.updateTrade(oldTrade2, timePlace2);
+        tradeManager.setOldTrade(oldTrade2);
+        assertEquals(tradeManager.getOldTrade(), oldTrade2);
         assertEquals(tradeManager.getTimePlace(), timePlace2);
     }
 
@@ -130,7 +130,7 @@ public class TradeIntegrationTest extends TestCase {
         tradeManager.editTimePlace(newTime, "Home", 11);
         assertEquals(tradeManager.getTimePlace().getTime(), newTime);
         assertEquals(tradeManager.getTimePlace().getPlace(), "Home");
-        assertEquals(tradeManager.getTrade().getLastEditorID(), 11);
+        assertEquals(tradeManager.getOldTrade().getLastEditorID(), 11);
     }
 
     /**
@@ -210,8 +210,8 @@ public class TradeIntegrationTest extends TestCase {
         assertEquals(tradeUtility.getTopThreePartnersIds(), ans);
         assertEquals(tradeUtility.getRecentOneWay(), ans);
         assertEquals(tradeUtility.getRecentTwoWay(), ans);
-        for (Trade trade: tradeUtility.getAllTradesAccount()) {
-            tradeManager.setTrade(trade);
+        for (OldTrade oldTrade : tradeUtility.getAllTradesAccount()) {
+            tradeManager.setOldTrade(oldTrade);
             tradeManager.updateStatus(TradeStatus.CONFIRMED);
         }
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(22));
@@ -233,8 +233,8 @@ public class TradeIntegrationTest extends TestCase {
                 items4, items, accountManager);
         tradeManager.createTrade(time, "UTM", false, 21, 23,
                 items3, items, accountManager);
-        for (Trade trade: tradeUtility.getAllTradesAccount()) {
-            tradeManager.setTrade(trade);
+        for (OldTrade oldTrade : tradeUtility.getAllTradesAccount()) {
+            tradeManager.setOldTrade(oldTrade);
             tradeManager.updateStatus(TradeStatus.CONFIRMED);
         }
         assertTrue(tradeUtility.getTopThreePartnersIds().contains(22));

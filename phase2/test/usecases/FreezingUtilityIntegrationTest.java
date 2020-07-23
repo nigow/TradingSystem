@@ -61,12 +61,12 @@ public class FreezingUtilityIntegrationTest extends TestCase{
 
         Item item1 = new Item(0, "anime figure", "neat figure", 0);
         Item item2 = new Item(1, "japanese artwork appreciation pillow", "fluffy and cool", 1);
-        Trade trade = new Trade(0, 0, true, 0, 1, new ArrayList<>(Arrays.asList(item1.getItemID())) ,new ArrayList<>(Arrays.asList(item2.getItemID())), 3);
-        trade.setStatus(TradeStatus.REJECTED);
+        OldTrade oldTrade = new OldTrade(0, 0, true, 0, 1, new ArrayList<>(Arrays.asList(item1.getItemID())) ,new ArrayList<>(Arrays.asList(item2.getItemID())), 3);
+        oldTrade.setStatus(TradeStatus.REJECTED);
         TimePlace timePlace = new TimePlace(0, LocalDateTime.of(2020, 7, 1, 0, 0), "UTM");
 
-        HashMap<Integer, Trade> tradeHashMap = new HashMap<>();
-        tradeHashMap.put(0, trade);
+        HashMap<Integer, OldTrade> tradeHashMap = new HashMap<>();
+        tradeHashMap.put(0, oldTrade);
         HashMap<Integer, TimePlace> timePlaceHashMap = new HashMap<>();
         timePlaceHashMap.put(0, timePlace);
 

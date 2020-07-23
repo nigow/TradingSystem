@@ -20,10 +20,10 @@ public class TradeManager {
     /**
      * An object representing a transaction between 2 users.
      */
-    private Trade trade;
+    private OldTrade oldTrade;
 
     /**
-     * An object representing the time and place of the trade.
+     * An object representing the time and place of the oldTrade.
      */
     private TimePlace timePlace;
 
@@ -42,24 +42,24 @@ public class TradeManager {
     }
 
     /**
-     * Constructor for TradeManager to edit an existing Trade.
+     * Constructor for TradeManager to edit an existing OldTrade.
      *
      * @param tradeGateway Gateway for dealing with the persistent storage of trades
-     * @param trade        Object representing a transaction between 2 users
-     * @param timePlace    TimePlace of the trade.
+     * @param oldTrade        Object representing a transaction between 2 users
+     * @param timePlace    TimePlace of the oldTrade.
      */
-    public TradeManager(TradeGateway tradeGateway, Trade trade, TimePlace timePlace) {
+    public TradeManager(TradeGateway tradeGateway, OldTrade oldTrade, TimePlace timePlace) {
         this.tradeGateway = tradeGateway;
-        this.trade = trade;
+        this.oldTrade = oldTrade;
         this.timePlace = timePlace;
     }
 
     /**
-     * Creates a new Trade object to be edited.
+     * Creates a new OldTrade object to be edited.
      *
-     * @param time           Time of the Trade
-     * @param place          Location of the Trade
-     * @param isPermanent    Whether the trade is permanent or not
+     * @param time           Time of the OldTrade
+     * @param place          Location of the OldTrade
+     * @param isPermanent    Whether the oldTrade is permanent or not
      * @param traderOneID    ID of the first trader
      * @param traderTwoID    ID of the second trader
      * @param itemOneID      List of items trader one is offering
@@ -71,9 +71,9 @@ public class TradeManager {
                             List<Integer> itemTwoID, AccountManager accountManager) {
         int id = tradeGateway.generateValidId();
         this.timePlace = new TimePlace(id, time, place);
-        this.trade = new Trade(id, id, isPermanent, traderOneID, traderTwoID,
+        this.oldTrade = new OldTrade(id, id, isPermanent, traderOneID, traderTwoID,
                 itemOneID, itemTwoID, 0);
-        tradeGateway.updateTrade(trade, timePlace);
+        tradeGateway.updateTrade(oldTrade, timePlace);
         Account account = accountManager.getCurrAccount();
         accountManager.setCurrAccount(accountManager.getUsernameFromID(traderTwoID));
         for (Integer itemId : itemOneID) {
@@ -91,120 +91,120 @@ public class TradeManager {
     }
 
     /**
-     * Initiates a reverse trade.
+     * Initiates a reverse oldTrade.
      *
      * @param accountManager Manager for editing wishlist
      */
     public void reverseTrade(AccountManager accountManager) {
-        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS), timePlace.getPlace(), true, trade.getTraderOneID(),
-                trade.getTraderTwoID(), trade.getItemTwoIDs(), trade.getItemOneIDs(), accountManager);
+        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS), timePlace.getPlace(), true, oldTrade.getTraderOneID(),
+                oldTrade.getTraderTwoID(), oldTrade.getItemTwoIDs(), oldTrade.getItemOneIDs(), accountManager);
     }
 
     /**
-     * Changes the TimePlace of the trade and updates last edit info.
+     * Changes the TimePlace of the oldTrade and updates last edit info.
      *
-     * @param time     New time of the trade
-     * @param place    New place of the trade
-     * @param editorID ID of the person editing the trade
+     * @param time     New time of the oldTrade
+     * @param place    New place of the oldTrade
+     * @param editorID ID of the person editing the oldTrade
      */
     public void editTimePlace(LocalDateTime time, String place, int editorID) {
         timePlace.setTime(time);
         timePlace.setPlace(place);
-        trade.setLastEditorID(editorID);
-        trade.incrementEditedCounter();
-        tradeGateway.updateTrade(trade, timePlace);
+        oldTrade.setLastEditorID(editorID);
+        oldTrade.incrementEditedCounter();
+        tradeGateway.updateTrade(oldTrade, timePlace);
     }
 
     /**
-     * Updates the status of the trade.
+     * Updates the status of the oldTrade.
      *
-     * @param tradeStatus New status of the trade
+     * @param tradeStatus New status of the oldTrade
      */
     public void updateStatus(TradeStatus tradeStatus) {
-        trade.setStatus(tradeStatus);
-        tradeGateway.updateTrade(trade, timePlace);
+        oldTrade.setStatus(tradeStatus);
+        tradeGateway.updateTrade(oldTrade, timePlace);
     }
 
     /**
-     * Getter for the TimePlace of the trade.
+     * Getter for the TimePlace of the oldTrade.
      *
-     * @return TimePlace of the trade
+     * @return TimePlace of the oldTrade
      */
     public TimePlace getTimePlace() {
         return this.timePlace;
     }
 
     /**
-     * Gets the status of the trade.
+     * Gets the status of the oldTrade.
      *
-     * @return Current status of the trade
+     * @return Current status of the oldTrade
      */
     public TradeStatus getTradeStatus() {
-        return trade.getStatus();
+        return oldTrade.getStatus();
     }
 
     /**
-     * Gets the current trade.
+     * Gets the current oldTrade.
      *
-     * @return The current trade.
+     * @return The current oldTrade.
      */
-    public Trade getTrade() {
-        return trade;
+    public OldTrade getOldTrade() {
+        return oldTrade;
     }
 
     /**
-     * Gets the number of times this trade has been edited.
+     * Gets the number of times this oldTrade has been edited.
      *
-     * @return The number of times this trade has been edited.
+     * @return The number of times this oldTrade has been edited.
      */
     public int getEditedCounter() {
-        return trade.getEditedCounter();
+        return oldTrade.getEditedCounter();
     }
 
     /**
-     * Sets the current trade.
+     * Sets the current oldTrade.
      *
-     * @param trade The current trade.
+     * @param oldTrade The current oldTrade.
      */
-    public void setTrade(Trade trade) {
-        this.trade = trade;
-        timePlace = tradeGateway.findTimePlaceById(trade.getId());
+    public void setOldTrade(OldTrade oldTrade) {
+        this.oldTrade = oldTrade;
+        timePlace = tradeGateway.findTimePlaceById(oldTrade.getId());
     }
 
     /**
-     * Returns if trade is rejected.
+     * Returns if oldTrade is rejected.
      *
-     * @return Whether the trade is rejected
+     * @return Whether the oldTrade is rejected
      */
     public boolean isRejected() {
-        return trade.getStatus().equals(TradeStatus.REJECTED);
+        return oldTrade.getStatus().equals(TradeStatus.REJECTED);
     }
 
     /**
-     * Returns if trade is confirmed.
+     * Returns if oldTrade is confirmed.
      *
-     * @return Whether trade is confirmed
+     * @return Whether oldTrade is confirmed
      */
     public boolean isConfirmed() {
-        return trade.getStatus().equals(TradeStatus.CONFIRMED);
+        return oldTrade.getStatus().equals(TradeStatus.CONFIRMED);
     }
 
     /**
-     * Returns if trade is unconfirmed.
+     * Returns if oldTrade is unconfirmed.
      *
-     * @return Whether trade is unconfirmed
+     * @return Whether oldTrade is unconfirmed
      */
     public boolean isUnconfirmed() {
-        return trade.getStatus().equals(TradeStatus.UNCONFIRMED);
+        return oldTrade.getStatus().equals(TradeStatus.UNCONFIRMED);
     }
 
     /**
-     * Returns if trade is completed.
+     * Returns if oldTrade is completed.
      *
-     * @return Whether trade is completed.
+     * @return Whether oldTrade is completed.
      */
     public boolean isCompleted() {
-        return trade.getStatus().equals(TradeStatus.COMPLETED);
+        return oldTrade.getStatus().equals(TradeStatus.COMPLETED);
     }
 
     /**
@@ -214,7 +214,7 @@ public class TradeManager {
      * @return Whether it's the account's turn to edit.
      */
     public boolean isEditTurn(Account account) {
-        return account.getAccountID() != trade.getLastEditorID();
+        return account.getAccountID() != oldTrade.getLastEditorID();
     }
 
     /**
@@ -231,7 +231,7 @@ public class TradeManager {
      *
      * @return List of all trades
      */
-    public List<Trade> getAllTrades() {
+    public List<OldTrade> getAllTrades() {
         return tradeGateway.getAllTrades();
     }
 
@@ -243,65 +243,65 @@ public class TradeManager {
      */
     public List<String> getAllTradesString() {
         List<String> StringTrade = new ArrayList<>();
-        for (Trade trade : getAllTrades()) {
-            StringTrade.add(trade.toString());
+        for (OldTrade oldTrade : getAllTrades()) {
+            StringTrade.add(oldTrade.toString());
         }
         return StringTrade;
     }
 
     /**
-     * Returns a user-friendly string representation of a trade.
+     * Returns a user-friendly string representation of a oldTrade.
      *
      * @param accountManager Manager for manipulating accounts
      * @param itemManager    Manager for manipulating items
-     * @return An user-friendly representation of a trade
+     * @return An user-friendly representation of a oldTrade
      */
     public String tradeAsString(AccountManager accountManager, ItemManager itemManager) {
         StringBuilder ans = new StringBuilder();
         String username1 = accountManager.getAccountFromID(
-                trade.getTraderOneID()).getUsername();
+                oldTrade.getTraderOneID()).getUsername();
         String username2 = accountManager.getAccountFromID(
-                trade.getTraderTwoID()).getUsername();
+                oldTrade.getTraderTwoID()).getUsername();
 
-        if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
+        if (oldTrade.getItemOneIDs().size() > 0 && oldTrade.getItemTwoIDs().size() > 0) {
             ans.append("Type: Two-way ");
             ans.append("\nAccount 1: ").append(username1).append("\nAccount 2: ").append(username2);
         } else {
             ans.append("Type: One-way ");
-            if (trade.getItemOneIDs().size() > 0) {
+            if (oldTrade.getItemOneIDs().size() > 0) {
                 ans.append("\nBorrower: ").append(username2).append("\nLender: ").append(username1);
             } else {
                 ans.append("\nBorrower: ").append(username1).append("\nLender: ").append(username2);
             }
 
         }
-        ans.append("\nStatus: ").append(trade.getStatus().toString()).append(" ");
+        ans.append("\nStatus: ").append(oldTrade.getStatus().toString()).append(" ");
         ans.append("\nType: ");
-        ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
+        ans.append(oldTrade.isPermanent() ? "Permanent " : "Temporary ");
         ans.append("\nLocation: ").append(timePlace.getPlace()).append(" ");
         ans.append("\nTime: ").append(timePlace.getTime()).append(" ");
 
-        if (trade.getItemOneIDs().size() > 0 && trade.getItemTwoIDs().size() > 0) {
+        if (oldTrade.getItemOneIDs().size() > 0 && oldTrade.getItemTwoIDs().size() > 0) {
             ans.append("\nTrader 1 Items: ");
             String separator = "";
-            for (Integer tradeId : trade.getItemOneIDs()) {
+            for (Integer tradeId : oldTrade.getItemOneIDs()) {
                 ans.append(separator).append(itemManager.getItemById(tradeId).toString());
                 separator = ", ";
             }
             separator = "";
             ans.append("\nTrader 2 Items: ");
-            for (Integer tradeId : trade.getItemTwoIDs()) {
+            for (Integer tradeId : oldTrade.getItemTwoIDs()) {
                 ans.append(separator).append(itemManager.getItemById(tradeId).toString());
                 separator = ", ";
             }
         } else {
             ans.append("\nItem being borrowed/lent: ");
             String separator = "";
-            for (Integer tradeId : trade.getItemOneIDs()) {
+            for (Integer tradeId : oldTrade.getItemOneIDs()) {
                 ans.append(separator).append(itemManager.getItemById(tradeId).toString());
                 separator = ", ";
             }
-            for (Integer tradeId : trade.getItemTwoIDs()) {
+            for (Integer tradeId : oldTrade.getItemTwoIDs()) {
                 ans.append(separator).append(itemManager.getItemById(tradeId).toString());
                 separator = ", ";
             }
@@ -311,31 +311,31 @@ public class TradeManager {
     }
 
     /**
-     * Returns whether this trade is temporary or permanent.
+     * Returns whether this oldTrade is temporary or permanent.
      *
-     * @return Whether this trade is temporary or permanent
+     * @return Whether this oldTrade is temporary or permanent
      */
     public boolean isPermanent() {
-        return trade.isPermanent();
+        return oldTrade.isPermanent();
     }
 
     /**
-     * Updates the completion status of this trade according to the user's ID.
+     * Updates the completion status of this oldTrade according to the user's ID.
      *
-     * @param accountID The ID of the account who marked this trade as complete
+     * @param accountID The ID of the account who marked this oldTrade as complete
      */
     public void updateCompletion(int accountID) {
-        if (accountID == trade.getTraderOneID())
-            trade.setTraderOneCompleted(true);
-        else if (accountID == trade.getTraderTwoID())
-            trade.setTraderTwoCompleted(true);
-        tradeGateway.updateTrade(trade, timePlace);
+        if (accountID == oldTrade.getTraderOneID())
+            oldTrade.setTraderOneCompleted(true);
+        else if (accountID == oldTrade.getTraderTwoID())
+            oldTrade.setTraderTwoCompleted(true);
+        tradeGateway.updateTrade(oldTrade, timePlace);
     }
 
     /**
-     * Returns the date and time of this trade.
+     * Returns the date and time of this oldTrade.
      *
-     * @return Date and time of this trade
+     * @return Date and time of this oldTrade
      */
     public LocalDateTime getDateTime() {
         return timePlace.getTime();

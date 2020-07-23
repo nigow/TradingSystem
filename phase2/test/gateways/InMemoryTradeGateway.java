@@ -1,21 +1,21 @@
 package gateways;
 
+import entities.OldTrade;
 import entities.TimePlace;
-import entities.Trade;
 
 import java.util.*;
 
 public class InMemoryTradeGateway implements TradeGateway{
-    public final Map<Integer, Trade> tradeMap;
+    public final Map<Integer, OldTrade> tradeMap;
     public final Map<Integer, TimePlace> timePlaceMap;
 
-    public InMemoryTradeGateway(Map<Integer, Trade> trades, Map<Integer, TimePlace> timePlace){
+    public InMemoryTradeGateway(Map<Integer, OldTrade> trades, Map<Integer, TimePlace> timePlace){
         this.tradeMap = trades;
         this.timePlaceMap = timePlace;
     }
 
     @Override
-    public Trade findTradeById(int id){
+    public OldTrade findTradeById(int id){
         if(tradeMap.containsKey(id)) return tradeMap.get(id);
         return null;
     }
@@ -27,19 +27,19 @@ public class InMemoryTradeGateway implements TradeGateway{
     }
 
     @Override
-    public boolean updateTrade(Trade trade, TimePlace timePlace){
-        tradeMap.put(trade.getId(), trade);
+    public boolean updateTrade(OldTrade oldTrade, TimePlace timePlace){
+        tradeMap.put(oldTrade.getId(), oldTrade);
         timePlaceMap.put(timePlace.getId(), timePlace);
         return true;
     }
 
     @Override
-    public List<Trade> getAllTrades(){
-        List<Trade> tradeList = new ArrayList<>();
-        for(Trade value: tradeMap.values()){
-            tradeList.add(value);
+    public List<OldTrade> getAllTrades(){
+        List<OldTrade> oldTradeList = new ArrayList<>();
+        for(OldTrade value: tradeMap.values()){
+            oldTradeList.add(value);
         }
-        return tradeList;
+        return oldTradeList;
     }
 
     @Override

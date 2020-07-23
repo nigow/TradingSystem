@@ -1,6 +1,6 @@
 package controllers;
 
-import entities.Trade;
+import entities.OldTrade;
 import entities.TradeStatus;
 import gateways.UseCasePool;
 import presenters.TradePresenter;
@@ -97,8 +97,8 @@ public class TradeController {
 
     private void showTrades() {
         List<String> trades = new ArrayList<>();
-        for (Trade t : tradeUtility.getAllTradesAccount()) {
-            tradeManager.setTrade(t);
+        for (OldTrade t : tradeUtility.getAllTradesAccount()) {
+            tradeManager.setOldTrade(t);
             trades.add(tradeManager.tradeAsString(accountManager, itemManager));
         }
         tradePresenter.displayTrades(trades);
@@ -112,9 +112,9 @@ public class TradeController {
                 return;
             if (inputHandler.isNum(index)) {
                 int ind = Integer.parseInt(index);
-                List<Trade> trades = tradeUtility.getAllTradesAccount();
-                if (0 <= ind && ind < trades.size()) {
-                    tradeManager.setTrade(trades.get(ind));
+                List<OldTrade> oldTrades = tradeUtility.getAllTradesAccount();
+                if (0 <= ind && ind < oldTrades.size()) {
+                    tradeManager.setOldTrade(oldTrades.get(ind));
                     tradePresenter.showMessage(tradeManager.tradeAsString(accountManager, itemManager));
                     if (tradeManager.isRejected()) {
                         tradePresenter.showMessage("This trade has been cancelled.");
@@ -184,11 +184,11 @@ public class TradeController {
             tradePresenter.showMessage("You rejected this trade.");
         } else if (actionInd == 1 && tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
             tradeManager.updateStatus(TradeStatus.CONFIRMED);
-            tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
+            tradeUtility.makeTrade(tradeManager.getOldTrade(), accountManager, itemManager, itemUtility);
             if (!tradeManager.isPermanent()) {
                 tradeManager.reverseTrade(accountManager);
                 tradeManager.updateStatus(TradeStatus.CONFIRMED);
-                tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
+                tradeUtility.makeTrade(tradeManager.getOldTrade(), accountManager, itemManager, itemUtility);
             }
             tradePresenter.showMessage("You confirmed the time and location for this trade.");
         } else {

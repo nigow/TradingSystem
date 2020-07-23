@@ -19,7 +19,7 @@ public class InMemoryUseCasePool implements UseCasePool {
     public InMemoryUseCasePool(){
         InMemoryAccountGateway accountGateway = new InMemoryAccountGateway(new HashMap<Integer, Account>());
         InMemoryItemGateway itemGateway = new InMemoryItemGateway(new HashMap<Integer, Item>());
-        InMemoryTradeGateway tradeGateway = new InMemoryTradeGateway(new HashMap<Integer, Trade>(), new HashMap<Integer, TimePlace>());
+        InMemoryTradeGateway tradeGateway = new InMemoryTradeGateway(new HashMap<Integer, OldTrade>(), new HashMap<Integer, TimePlace>());
         InMemoryRestrictionsGateway restrictionsGateway = new InMemoryRestrictionsGateway(new Restrictions(1,1,1));
         // Restrictions are tentative
 
