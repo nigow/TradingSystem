@@ -129,4 +129,39 @@ public interface TradePresenter {
      * Tells user that a new time/date has been suggested.
      */
     void displaySuggestion();
+
+    /**
+     * Shows user they have the option to see their trades.
+     * @return string message
+     */
+    String viewTrades();
+
+    /**
+     * Shows user they can select a trade to edit.
+     * @return string message
+     */
+    String editTrade();
+
+    /**
+     * Shows user they can see recently given away items in two way traces.
+     * @return string message
+     */
+    String twoWayRecent();
+
+    /**
+     * Shows user they can see recently given away items in one way traces.
+     * @return string message
+     */
+    String oneWayRecent();
+
+    /**
+     * Shows user their most frequent trade partners.
+     * @return string message
+     */
+    String frequentPartners();
+    /**
+     * Shows user they can return to the previous screen.
+     * @return string message
+     */
+    String returnToPrevious();
 }

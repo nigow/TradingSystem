@@ -61,24 +61,24 @@ public class TradeController {
             List<String> options = new ArrayList<>();
             List<Runnable> methods = new ArrayList<>();
 
-            options.add("View your trades");
+            options.add(tradePresenter.viewTrades());
             methods.add(this::showTrades);
 
             if (!authManager.isFrozen(accountManager.getCurrAccount())) {
-                options.add("Select a trade to edit");
+                options.add(tradePresenter.editTrade());
                 methods.add(this::selectAndChangeTrade);
             }
 
-            options.add("View items given away in recent two-way trades");
+            options.add(tradePresenter.twoWayRecent());
             methods.add(this::recentTwoWayTrades);
 
-            options.add("View items given away in recent one-way trades");
+            options.add(tradePresenter.oneWayRecent());
             methods.add(this::recentOneWayTrades);
 
-            options.add("View your most frequent trading partners");
+            options.add(tradePresenter.frequentPartners());
             methods.add(this::frequentPartners);
 
-            options.add("Return to previous menu");
+            options.add(tradePresenter.returnToPrevious());
 
             String action = tradePresenter.displayTradeOptions(options);
 

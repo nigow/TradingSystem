@@ -199,4 +199,64 @@ public class ConsoleTradePresenter implements TradePresenter {
     public void displaySuggestion() {
         System.out.println("You have suggested a new time and location for this trade.");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String viewTrades() {
+        String message = "View your trades";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String editTrade() {
+        String message = "Select a trade to edit";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String twoWayRecent() {
+        String message = "View items given away in recent two-way trades";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String oneWayRecent() {
+        String message = "View items given away in recent one-way trades";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String frequentPartners() {
+        String message = "View your most frequent trading partners";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String returnToPrevious() {
+        String message = "Return to previous menu";
+        System.out.println(message);
+        return message;
+    }
 }
