@@ -24,7 +24,7 @@ public class FreezingUtilityIntegrationTest extends TestCase{
     private FreezingUtility setUpFreezingUtility(){
         Restrictions currRestrictions = new Restrictions(1, 3, 5);
         restrictionsGateway = new InMemoryRestrictionsGateway(currRestrictions);
-        freezingUtility = new FreezingUtility(currRestrictions);
+        freezingUtility = new FreezingUtility(null, currRestrictions);
 
 
         assertEquals(1, currRestrictions.getLendMoreThanBorrow());
@@ -77,8 +77,7 @@ public class FreezingUtilityIntegrationTest extends TestCase{
 
         //Methods are heavily interrelated so they are clumped together (the tests are very specific as well, which led to this clump of a method)
 
-        assertEquals(freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility).size(), 0); //checks that no account should be frozen
-        assertEquals(freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility).size(), 0); //checks that no username should be frozen
+        assertEquals(freezingUtility.getAccountsToFreeze(tradeUtility, accountManager.getCurrAccount()).size(), 0); //checks that no account should be frozen
 
         Item item3 = new Item(2, "anime poster", "drawn by Mashiro Shiina", 0);
 //        tradeManager.createTrade(LocalDateTime.of(2020, 7, 2, 0, 0), "Bahen",

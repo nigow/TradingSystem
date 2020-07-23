@@ -87,8 +87,9 @@ public class FreezingController {
      * Freezes an account that should be frozen.
      */
     private void freeze() {
-        List<Account> accounts = freezingUtility.getAccountsToFreeze(accountManager, authManager, tradeUtility);
-        List<String> usernames = freezingUtility.getUsernamesToFreeze(accountManager, authManager, tradeUtility);
+        // TODO: This shouldn't send an adminAccount
+        List<Account> accounts = freezingUtility.getAccountsToFreeze(tradeUtility, accountManager.getCurrAccount());
+        List<String> usernames = freezingUtility.getUsernamesToFreeze(tradeUtility, accountManager.getCurrAccount());
         freezingPresenter.displayPossibleFreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.freeze();
@@ -99,7 +100,7 @@ public class FreezingController {
             else if (Integer.parseInt(chosenUser) >= accounts.size())
                 freezingPresenter.invalidInput();
             else {
-                freezingUtility.freezeAccount(authManager, tradeUtility, accounts.get(Integer.parseInt(chosenUser)), accountManager.getCurrAccount());
+                freezingUtility.freezeAccount(tradeUtility, accounts.get(Integer.parseInt(chosenUser)), accountManager.getCurrAccount());
                 freezingPresenter.displaySuccessfulFreeze();
                 return;
             }
@@ -110,8 +111,8 @@ public class FreezingController {
      * Unfreezes an account that has requested to be unfrozen.
      */
     private void unfreeze() {
-        List<Account> accounts = freezingUtility.getAccountsToUnfreeze(accountManager, authManager);
-        List<String> usernames = freezingUtility.getUsernamesToUnfreeze(accountManager, authManager);
+        List<Account> accounts = freezingUtility.getAccountsToUnfreeze();
+        List<String> usernames = freezingUtility.getUsernamesToUnfreeze();
         freezingPresenter.displayPossibleUnfreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.unfreeze();
@@ -122,7 +123,7 @@ public class FreezingController {
             else if (Integer.parseInt(chosenUser) >= accounts.size())
                 freezingPresenter.invalidInput();
             else {
-                freezingUtility.unfreezeAccount(authManager, accounts.get(Integer.parseInt(chosenUser)));
+                freezingUtility.unfreezeAccount(accounts.get(Integer.parseInt(chosenUser)));
                 freezingPresenter.displaySuccessfulUnfreeze();
                 return;
             }

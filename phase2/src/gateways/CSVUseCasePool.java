@@ -51,7 +51,10 @@ public class CSVUseCasePool implements UseCasePool {
         RestrictionsGateway csvRestrictionsGateway =
                 new CSVRestrictionsGateway(filePath + "restrictions.csv");
         // TODO: We need to decide if we want gateways to know of entities.
-        freezingUtility = new FreezingUtility(csvRestrictionsGateway.getRestrictions());
+        // TODO: Need to pass an actual list of accounts.
+        accountRepository = new AccountRepository(null);
+
+        freezingUtility = new FreezingUtility(accountRepository , csvRestrictionsGateway.getRestrictions());
         ItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
         itemManager = new ItemManager(csvItemsGateway);
         itemUtility = new ItemUtility(itemManager);
@@ -63,8 +66,7 @@ public class CSVUseCasePool implements UseCasePool {
         if (accountManager.getAccountsList().size() == 0) {
             accountManager.createAdminAccount("admin", "12345");
         }
-        // TODO: Need to pass an actual list of accounts.
-        accountRepository = new AccountRepository(null);
+
 
         authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
         wishlistManager = new WishlistManager(accountRepository, csvItemsGateway);
