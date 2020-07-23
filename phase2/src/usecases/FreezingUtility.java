@@ -3,7 +3,6 @@ package usecases;
 import entities.Account;
 import entities.Permissions;
 import entities.Restrictions;
-import gateways.RestrictionsGateway;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +25,8 @@ public class FreezingUtility {
      *
      * @param restrictions Restrictions of the current program
      */
+
+    //TODO how do we want to instantiate restrictions. From existing(like csv) or create a new instance here?
     public FreezingUtility(Restrictions restrictions) {
         this.restrictions = restrictions;
     }
@@ -186,5 +187,66 @@ public class FreezingUtility {
      */
     public int getMaxWeeklyTrade() {
         return restrictions.getMaxWeeklyTrade();
+    }
+
+    /**
+     * Determines whether a given account is frozen.
+     *
+     * @param account Account that is checked if it is frozen
+     * @return Whether the account is frozen or not
+     */
+    public boolean isFrozen(Account account) {
+        return account.getPermissions().contains(Permissions.LEND) &&
+                !account.getPermissions().contains(Permissions.BORROW);
+    }
+
+    /**
+     * Determines whether a given account has requested to be unfrozen.
+     *
+     * @param account Account that is checked to see if it has requested to be unfrozen
+     * @return Whether the account has requested to be unfrozen or not
+     */
+    public boolean isPending(Account account) {
+        return isFrozen(account) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
+    }
+
+    /**
+     * Determines whether a given account should be frozen.
+     *
+     * @param tradeUtility Utility for getting trade information
+     * @param account      Account that is checked if it can be frozen
+     * @param adminAccount The admin account that is freezing this account
+     * @return Whether the account can be frozen or not
+     */
+    public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
+        tradeUtility.setAccount(account);
+
+        //TODO each boolean should be method within TradeUtility or here?
+        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictions.getMaxWeeklyTrade();
+        tradeUtility.setAccount(adminAccount);
+        return !account.getPermissions().contains(Permissions.UNFREEZE) &&
+                !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
+    }
+
+    //TODO should be in TradeUtility?
+    /**
+     * Determines whether the current account has lent more than borrowed.
+     *
+     * @param tradeUtility Utility for getting trade information
+     * @return Whether the current account has lent more than borrowed
+     */
+    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility) {
+        return tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >=
+                restrictions.getLendMoreThanBorrow();
+    }
+
+    /**
+     * Determines whether a given account can request to unfreeze and requests to unfreeze if it can.
+     *
+     * @param account Account to request to be unfrozen
+     */
+    public void requestUnfreeze(Account account) {
+        account.removePermission(Permissions.REQUEST_UNFREEZE);
     }
 }
