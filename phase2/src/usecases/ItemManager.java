@@ -12,7 +12,8 @@ import gateways.ItemsGateway;
  * @author Isaac
  */
 
-public class ItemManager {
+// TODO remove calls to itemsGateway to get or find an item
+public class ItemManager extends ItemUtility{
 
     /**
      * The gateway which deals with items.
@@ -142,7 +143,7 @@ public class ItemManager {
      */
     public List<Item> getAllItems() {
         List<Item> Items = new ArrayList<>();
-        for (Item item : itemsGateway.getAllItems()) {
+        for (Item item : items) {
             if (item.getOwnerID() != -1) {
                 Items.add(item);
             }

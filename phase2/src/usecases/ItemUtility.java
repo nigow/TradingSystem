@@ -11,20 +11,19 @@ import java.util.List;
  *
  * @author Isaac
  */
+
+// TODO add method to parse list of strings to item
 public class ItemUtility {
 
     /**
-     * The manager for editing items.
+     * List of all items in the system
      */
-    private final ItemManager itemManager;
+    protected List<Item> items;
 
     /**
      * Constructor for ItemUtility.
-     *
-     * @param itemManager Manager for editing items
      */
-    public ItemUtility(ItemManager itemManager) {
-        this.itemManager = itemManager;
+    public ItemUtility() {
     }
 
     /**
@@ -34,7 +33,7 @@ public class ItemUtility {
      */
     public List<Item> getApproved() {
         List<Item> approvedItems = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : items) {
             if (item.isApproved()) {
                 approvedItems.add(item);
             }
@@ -49,7 +48,7 @@ public class ItemUtility {
      */
     public List<String> getApprovedString() {
         List<String> approvedItems = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : items) {
             if (item.isApproved()) {
                 approvedItems.add(item.toString());
             }
@@ -64,7 +63,7 @@ public class ItemUtility {
      */
     public List<Item> getDisapproved() {
         List<Item> disapprovedItems = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : items) {
             if (!item.isApproved()) {
                 disapprovedItems.add(item);
             }
@@ -79,7 +78,7 @@ public class ItemUtility {
      */
     public List<String> getDisapprovedString() {
         List<String> disapprovedItems = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : items) {
             if (!item.isApproved()) {
                 disapprovedItems.add(item.toString());
             }
@@ -95,7 +94,7 @@ public class ItemUtility {
      */
     public List<Item> getAllInventoryOfAccount(int accountID) {
         List<Item> items = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : this.items) {
             if (item.getOwnerID() == accountID)
                 items.add(item);
         }
@@ -110,7 +109,7 @@ public class ItemUtility {
      */
     public List<String> getAllInventoryOfAccountString(int accountID) {
         List<String> items = new ArrayList<>();
-        for (Item item : itemManager.getAllItems()) {
+        for (Item item : this.items) {
             if (item.getOwnerID() == accountID)
                 items.add(item.toString());
         }
