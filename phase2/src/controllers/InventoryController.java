@@ -231,12 +231,18 @@ public class InventoryController {
             } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
                 if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).size()) {
-                    if (accountManager.addItemToWishlist(itemManager.getItemId(itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).get(ind)))) {
-                        inventoryPresenter.customMessage("Item successfully added to your wishlist!");
-                        isValid = true;
-                    } else {
-                        inventoryPresenter.customMessage("Item could not be added to your wishlist.");
-                    }
+                    accountManager.addItemToWishlist(itemManager.getItemId(
+                            itemUtility.getNotInAccount(accountManager.getCurrAccountID(),
+                            accountManager.getCurrWishlist()).get(ind)));
+                    inventoryPresenter.customMessage("Item successfully added to your wishlist!");
+                    isValid = true;
+                    // TODO:
+//                    if (accountManager.addItemToWishlist(itemManager.getItemId(itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).get(ind)))) {
+//                        inventoryPresenter.customMessage("Item successfully added to your wishlist!");
+//                        isValid = true;
+//                    } else {
+//                        inventoryPresenter.customMessage("Item could not be added to your wishlist.");
+//                    }
 
                 } else {
                     inventoryPresenter.customMessage("That number does not correspond to an item");

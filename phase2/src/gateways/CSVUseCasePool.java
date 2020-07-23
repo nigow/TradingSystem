@@ -19,6 +19,7 @@ public class CSVUseCasePool implements UseCasePool {
     private WishlistManager wishlistManager;
     private ItemUtility itemUtility;
     private TradeUtility tradeUtility;
+    private AccountRepository accountRepository;
 
     /**
      * Creates ManualConfig and initializes the required use cases
@@ -62,8 +63,11 @@ public class CSVUseCasePool implements UseCasePool {
         if (accountManager.getAccountsList().size() == 0) {
             accountManager.createAdminAccount("admin", "12345");
         }
+        // TODO: Need to pass an actual list of accounts.
+        accountRepository = new AccountRepository(null);
+
         authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
-        wishlistManager = new WishlistManager(csvAccountGateway, csvItemsGateway);
+        wishlistManager = new WishlistManager(accountRepository, csvItemsGateway);
 
 
         TradeGateway csvTradeGateway =
@@ -126,5 +130,10 @@ public class CSVUseCasePool implements UseCasePool {
      */
     public TradeUtility getTradeUtility() {
         return tradeUtility;
+    }
+
+    @Override
+    public AccountRepository getAccountRepository() {
+        return accountRepository;
     }
 }

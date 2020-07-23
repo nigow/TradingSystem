@@ -21,11 +21,10 @@ public class FreezingUtilityIntegrationTest extends TestCase{
     private FreezingUtility freezingUtility;
     private RestrictionsGateway restrictionsGateway;
 
-
     private FreezingUtility setUpFreezingUtility(){
         Restrictions currRestrictions = new Restrictions(1, 3, 5);
         restrictionsGateway = new InMemoryRestrictionsGateway(currRestrictions);
-        freezingUtility = new FreezingUtility(restrictionsGateway);
+        freezingUtility = new FreezingUtility(currRestrictions);
 
 
         assertEquals(1, currRestrictions.getLendMoreThanBorrow());

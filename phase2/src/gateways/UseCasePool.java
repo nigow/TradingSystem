@@ -65,4 +65,9 @@ public interface UseCasePool {
      */
     TradeUtility getTradeUtility();
 
+    /**
+
+     */
+    AccountRepository getAccountRepository();
+
 }
