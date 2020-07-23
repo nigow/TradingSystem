@@ -57,7 +57,8 @@ public class CSVUseCasePool implements UseCasePool {
         freezingUtility = new FreezingUtility(accountRepository , csvRestrictionsGateway.getRestrictions());
         ItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
         itemManager = new ItemManager(csvItemsGateway);
-        itemUtility = new ItemUtility(itemManager);
+        itemUtility = new ItemUtility();
+        // TODO: Need to give ItemUtility all items
 
 
         AccountGateway csvAccountGateway =

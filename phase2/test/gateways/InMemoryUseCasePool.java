@@ -32,7 +32,7 @@ public class InMemoryUseCasePool implements UseCasePool {
         this.tradeManager = new TradeManager(tradeGateway);
         this.wishlistManager = null;
 //      this.wishlistManager = new WishlistManager(accountGateway, itemGateway);
-        this.itemUtility = new ItemUtility(itemManager);
+        this.itemUtility = new ItemUtility();
         this.tradeUtility = new TradeUtility(tradeManager);
 
         if (accountManager.getAccountsList().size() == 0)  {
