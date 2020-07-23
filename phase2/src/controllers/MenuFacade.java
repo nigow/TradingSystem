@@ -104,44 +104,44 @@ public class MenuFacade {
             List<String> options = new ArrayList<>();
             List<Runnable> method = new ArrayList<>();
 
-            options.add("Manage your existing trades");
+            options.add(menuPresenter.manageTrades());
             method.add(tradeController::run);
 
             if (authManager.canBrowseInventory(accountManager.getCurrAccount())) {
-                options.add("Browse the inventory");
+                options.add(menuPresenter.browseInventory());
                 method.add(inventoryController::run);
             }
 
-            options.add("Manage your wishlist");
+            options.add(menuPresenter.manageWishlist());
             method.add(wishlistController::run);
 
             if (authManager.canTrade(accountManager.getCurrAccount()) &&
                     !itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).isEmpty()) {
-                options.add("Initiate a trade with a specific account");
+                options.add(menuPresenter.initiateTrade());
                 method.add(lendingController::run);
             }
 
             if (authManager.canChangeRestrictions(accountManager.getCurrAccount())) {
-                options.add("Modify the restriction values of the program");
+                options.add(menuPresenter.modifyRestrictions());
                 method.add(restrictionsController::run);
             }
 
             if (authManager.canFreeze(accountManager.getCurrAccount()) && authManager.canUnfreeze(accountManager.getCurrAccount())) {
-                options.add("Manage the frozen accounts");
+                options.add(menuPresenter.manageFrozen());
                 method.add(freezingController::run);
             }
 
             if (authManager.canAddAdmin(accountManager.getCurrAccount())) {
-                options.add("Add an admin account");
+                options.add(menuPresenter.addAdmin());
                 method.add(adminCreator::run);
             }
 
             if (authManager.canRequestUnfreeze(accountManager.getCurrAccount())) {
-                options.add("Request to be unfrozen");
+                options.add(menuPresenter.requestUnfreeze());
                 method.add(appealController::run);
             }
 
-            options.add("Logout");
+            options.add(menuPresenter.logout());
 
             String action = menuPresenter.displayMenu(options);
 
