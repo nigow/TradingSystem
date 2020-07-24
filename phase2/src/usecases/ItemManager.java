@@ -57,15 +57,6 @@ public class ItemManager extends ItemUtility{
         return result;
     }
 
-    /**
-     * Get the item with the ID entered.
-     *
-     * @param ItemID ID of the item
-     * @return item with the entered Id
-     */
-    public Item getItemById(int ItemID) {
-        return super.findItemById(ItemID);
-    }
 
     /**
      * Get the string representation of item with the id entered.
