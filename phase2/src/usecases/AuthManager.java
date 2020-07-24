@@ -8,6 +8,7 @@ import gateways.RestrictionsGateway;
 
 import java.util.List;
 
+//TODO to be removed
 /**
  * Manager responsible for authenticating logging in and authorizing actions.
  *

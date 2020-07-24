@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// TODO to be removed
 /**
  * Manager that creates an account or takes in an account and edits the wishlist.
  *
