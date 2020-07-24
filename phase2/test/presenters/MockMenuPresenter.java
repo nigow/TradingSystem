@@ -17,6 +17,51 @@ public class MockMenuPresenter implements MenuPresenter {
         //pass
     }
 
+    @Override
+    public String manageTrades() {
+        return null;
+    }
+
+    @Override
+    public String browseInventory() {
+        return null;
+    }
+
+    @Override
+    public String manageWishlist() {
+        return null;
+    }
+
+    @Override
+    public String initiateTrade() {
+        return null;
+    }
+
+    @Override
+    public String modifyRestrictions() {
+        return null;
+    }
+
+    @Override
+    public String manageFrozen() {
+        return null;
+    }
+
+    @Override
+    public String addAdmin() {
+        return null;
+    }
+
+    @Override
+    public String requestUnfreeze() {
+        return null;
+    }
+
+    @Override
+    public String logout() {
+        return null;
+    }
+
     public void setOptions(String[] options) {
         this.options = options;
     }
