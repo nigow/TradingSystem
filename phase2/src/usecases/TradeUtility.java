@@ -61,16 +61,15 @@ public class TradeUtility {
         return accountOldTrades;
     }
 
-
     /**
      * Returns a user-friendly string representation of a oldTrade.
      *
      * @param oldTrade The Trade whose representation is being returned
      * @param accountManager Manager for manipulating accounts
-     * @param itemManager    Manager for manipulating items
+     * @param itemUtility    Manager for manipulating items
      * @return An user-friendly representation of a oldTrade
      */
-    public String tradeAsString(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
+    public String tradeAsString(OldTrade oldTrade, AccountManager accountManager, ItemUtility itemUtility) {
         TimePlace timePlace = getTimePlaceByID(oldTrade.getTimePlaceID());
         StringBuilder ans = new StringBuilder();
         String username1 = accountManager.getAccountFromID(
@@ -100,24 +99,24 @@ public class TradeUtility {
             ans.append("\nTrader 1 Items: ");
             String separator = "";
             for (Integer tradeId : oldTrade.getItemOneIDs()) {
-                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
                 separator = ", ";
             }
             separator = "";
             ans.append("\nTrader 2 Items: ");
             for (Integer tradeId : oldTrade.getItemTwoIDs()) {
-                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
                 separator = ", ";
             }
         } else {
             ans.append("\nItem being borrowed/lent: ");
             String separator = "";
             for (Integer tradeId : oldTrade.getItemOneIDs()) {
-                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
                 separator = ", ";
             }
             for (Integer tradeId : oldTrade.getItemTwoIDs()) {
-                ans.append(separator).append(itemManager.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
                 separator = ", ";
             }
         }
@@ -330,5 +329,88 @@ public class TradeUtility {
         return timesLent;
     }
 
+    /**
+     * Returns the date and time of this oldTrade.
+     *
+     * @return Date and time of this oldTrade
+     */
+    public LocalDateTime getDateTime(int tradeID) {
+        return getTimePlaceByID(getTradeByID(tradeID).getTimePlaceID()).getTime();
+    }
 
+    /**
+     * Gets the number of times this oldTrade has been edited.
+     *
+     * @return The number of times this oldTrade has been edited.
+     */
+    public int getEditedCounter(int tradeID) {
+        return getTradeByID(tradeID).getEditedCounter();
+    }
+
+    /**
+     * Returns whether this oldTrade is temporary or permanent.
+     *
+     * @return Whether this oldTrade is temporary or permanent
+     */
+    public boolean isPermanent(int tradeID) {
+        return getTradeByID(tradeID).isPermanent();
+    }
+
+    /**
+     * Returns if oldTrade is rejected.
+     *
+     * @return Whether the oldTrade is rejected
+     */
+    public boolean isRejected(int tradeID) {
+        return getTradeByID(tradeID).getStatus().equals(TradeStatus.REJECTED);
+    }
+
+    /**
+     * Returns if oldTrade is confirmed.
+     *
+     * @return Whether oldTrade is confirmed
+     */
+    public boolean isConfirmed(int tradeID) {
+        return getTradeByID(tradeID).getStatus().equals(TradeStatus.CONFIRMED);
+    }
+
+    /**
+     * Returns if oldTrade is unconfirmed.
+     *
+     * @return Whether oldTrade is unconfirmed
+     */
+    public boolean isUnconfirmed(int tradeID) {
+        return getTradeByID(tradeID).getStatus().equals(TradeStatus.UNCONFIRMED);
+    }
+
+    /**
+     * Returns if oldTrade is completed.
+     *
+     * @return Whether oldTrade is completed.
+     */
+    public boolean isCompleted(int tradeID) {
+        return getTradeByID(tradeID).getStatus().equals(TradeStatus.COMPLETED);
+    }
+
+    /**
+     * Gets the status of the oldTrade.
+     *
+     * @return Current status of the oldTrade
+     */
+    public TradeStatus getTradeStatus(int tradeID) {
+        return getTradeByID(tradeID).getStatus();
+    }
+
+    /**
+     * Retrieves all trades stored in persistent storage in string format.
+     *
+     * @return List of trades in string format
+     */
+    public List<String> getAllTradesString(AccountManager accountManager, ItemUtility itemUtility) {
+        List<String> StringTrade = new ArrayList<>();
+        for (OldTrade oldTrade : trades) {
+            StringTrade.add(tradeAsString(oldTrade, accountManager, itemUtility));
+        }
+        return StringTrade;
+    }
 }
