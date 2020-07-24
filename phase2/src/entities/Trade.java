@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public class Trade {
 
     private final int[] itemsIds;
 
-    private TradeStatus status;
+    private TradeStatus tradeStatus;
 
     private int lastEditorID;
 
@@ -28,26 +27,52 @@ public class Trade {
     private final List<Boolean> tradeCompletions;
 
     /**
-     * Creates a new OldTrade object. The status is set to unconfirmed.
+     * Creates a new Trade object. The status is set to unconfirmed.
      * The trade is uncompleted.
      *
      * @param id            ID of this trade
      * @param isPermanent   Whether this is a permanent or temporary trade
      * @param tradersIds    A collection of integer storing the ids of all traders.
      * @param itemsIds      A collection of ids for the items in this trade.
+     */
+    public Trade(int id, boolean isPermanent, int[] tradersIds, int[] itemsIds) {
+        this.id = id;
+        this.isPermanent = isPermanent;
+        this.tradersIds = tradersIds;
+        this.itemsIds = itemsIds;
+        tradeStatus = TradeStatus.UNCONFIRMED;
+        editedCounter = 0;
+        lastEditorID = tradersIds[0];
+        tradeCompletions = new ArrayList<>();
+        for(int i = 1; i <= tradersIds.length; i++) {
+            tradeCompletions.add(false);
+        }
+    }
+
+    /**
+     * Initializes a Trade object which already exists in the system.
+     *
+     * @param id            ID of this trade
+     * @param isPermanent   Whether this is a permanent or temporary trade
+     * @param tradersIds    A collection of integer storing the ids of all traders.
+     * @param itemsIds      A collection of ids for the items in this trade.
      * @param editedCounter Number of times this trade's TimePlace has been edited
+     * @param tradeStatus   The status of the trade.
+     * @param tradeCompletions The completions of this trade.
      */
     public Trade(int id, boolean isPermanent, int[] tradersIds,
-                 int[] itemsIds, int editedCounter) {
+                 int[] itemsIds, int editedCounter, TradeStatus tradeStatus,
+                 List<Boolean> tradeCompletions) {
         this.id = id;
         this.isPermanent = isPermanent;
         this.tradersIds = tradersIds;
         this.itemsIds = itemsIds;
         this.editedCounter = editedCounter;
-        status = TradeStatus.UNCONFIRMED;
+        this.tradeCompletions = tradeCompletions;
+        this.tradeStatus = tradeStatus;
         lastEditorID = tradersIds[0];
-        tradeCompletions = new ArrayList<>(Arrays.asList(false, false));
     }
+
 
     /**
      * Returns the ID of this trade.
@@ -91,8 +116,8 @@ public class Trade {
      *
      * @return Status of this trade
      */
-    public TradeStatus getStatus() {
-        return status;
+    public TradeStatus getTradeStatus() {
+        return tradeStatus;
     }
 
     /**
@@ -125,10 +150,10 @@ public class Trade {
     /**
      * Changes the status of this trade.
      *
-     * @param status New status of this trade
+     * @param tradeStatus New status of this trade
      */
-    public void setStatus(TradeStatus status) {
-        this.status = status;
+    public void setTradeStatus(TradeStatus tradeStatus) {
+        this.tradeStatus = tradeStatus;
     }
 
     /**
@@ -174,7 +199,7 @@ public class Trade {
                 "id=" + id +
                 ", timePlaceID=" + id +
                 ", isPermanent=" + isPermanent +
-                ", status=" + status +
+                ", status=" + tradeStatus +
                 ", lastEditorID=" + lastEditorID +
                 ", editedCounter=" + editedCounter +
                 '}';
