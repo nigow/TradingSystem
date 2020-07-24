@@ -38,8 +38,21 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
      * {@inheritDoc}
      */
     @Override
+    public void showInventory(List<String> inventory) {
+        System.out.println("Here is your inventory:");
+        for (int i = 0; i < inventory.size(); i++) {
+
+            System.out.println(i + ". " + inventory.get(i));
+
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void showInventory(String username, List<String> inventory) {
-        System.out.println("Here is " + username + " inventory:");
+        System.out.println("Here is " + username + "'s inventory:");
         for (int i = 0; i < inventory.size(); i++) {
 
             System.out.println(i + ". " + inventory.get(i));

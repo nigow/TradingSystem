@@ -22,7 +22,14 @@ public interface TradeCreatorPresenter {
     String getTwoWayTrade();
 
     /**
-     * Display a certain user's inventory.
+     * Display a the user's inventory.
+     *
+     * @param inventory A list of item information.
+     */
+    void showInventory(List<String> inventory);
+
+    /**
+     * Display another user's inventory.
      *
      * @param username  Username of user whose inventory is being displayed.
      * @param inventory A list of item information.

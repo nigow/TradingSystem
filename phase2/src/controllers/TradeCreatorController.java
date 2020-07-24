@@ -124,12 +124,16 @@ public class TradeCreatorController {
 
     private boolean setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
 
-        String oppositeAccountUsername = traderOneItems.isEmpty() ? "your" : accountManager.getUsernameFromID(traderTwoId) + "'s";
-
         List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getApprovedInventoryOfAccountString(traderOneId) :
                 itemUtility.getApprovedInventoryOfAccountString(traderTwoId);
 
-        tradeCreatorPresenter.showInventory(oppositeAccountUsername, inventory);
+        if (traderOneItems.isEmpty()) {
+            tradeCreatorPresenter.showInventory(inventory);
+        }
+        else {
+            tradeCreatorPresenter.showInventory(accountManager.getUsernameFromID(traderTwoId), inventory);
+        }
+
         String oppositeItemIndex = tradeCreatorPresenter.getItem();
 
         while (!inputHandler.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
