@@ -18,21 +18,15 @@ public class WishlistManager {
 
     private AccountRepository accountRepository;
 
-    //TODO remove and change when ItemUtility is updated
-    /**
-     * The gateway for items.
-     */
-    public final ItemsGateway itemsGateway;
+    private ItemUtility itemUtility;
 
     /**
      * Constructor for WishlistUtility.
      *
-     *
-     * @param itemsGateway Item gateway to reference items
      */
-    public WishlistManager(AccountRepository accountRepository, ItemsGateway itemsGateway) {
+    public WishlistManager(AccountRepository accountRepository, ItemUtility itemsUtility) {
         this.accountRepository = accountRepository;
-        this.itemsGateway = itemsGateway;
+        this.itemUtility = itemsUtility;
     }
 
     /**
@@ -81,7 +75,7 @@ public class WishlistManager {
     public List<Item> wishlistItems(int accountID) {
         List<Item> wishlist = new ArrayList<>();
         for (int itemID : accountRepository.getAccountFromID(accountID).getWishlist()) {
-            Item item = itemsGateway.findById(itemID);
+            Item item = itemUtility.findItemById(itemID);
             wishlist.add(item);
         }
         return wishlist;

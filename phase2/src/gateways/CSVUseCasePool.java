@@ -70,7 +70,7 @@ public class CSVUseCasePool implements UseCasePool {
 
 
         authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
-        wishlistManager = new WishlistManager(accountRepository, csvItemsGateway);
+        wishlistManager = new WishlistManager(accountRepository, itemUtility);
 
 
         TradeGateway csvTradeGateway =
