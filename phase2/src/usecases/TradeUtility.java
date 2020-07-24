@@ -99,24 +99,24 @@ public class TradeUtility {
             ans.append("\nTrader 1 Items: ");
             String separator = "";
             for (Integer tradeId : oldTrade.getItemOneIDs()) {
-                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
                 separator = ", ";
             }
             separator = "";
             ans.append("\nTrader 2 Items: ");
             for (Integer tradeId : oldTrade.getItemTwoIDs()) {
-                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
                 separator = ", ";
             }
         } else {
             ans.append("\nItem being borrowed/lent: ");
             String separator = "";
             for (Integer tradeId : oldTrade.getItemOneIDs()) {
-                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
                 separator = ", ";
             }
             for (Integer tradeId : oldTrade.getItemTwoIDs()) {
-                ans.append(separator).append(itemUtility.getItemById(tradeId).toString());
+                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
                 separator = ", ";
             }
         }
