@@ -45,7 +45,7 @@ public class AccountRepository {
      * @param accountID Unique identifier of account
      * @return Account corresponding to the accountID
      */
-    protected Account getAccountFromID(int accountID) {
+    Account getAccountFromID(int accountID) {
         return accounts.get(accountID);
     }
 
@@ -55,7 +55,7 @@ public class AccountRepository {
      * @param username Username of an account
      * @return Account corresponding to the username
      */
-    protected Account getAccountFromUsername(String username) {
+    Account getAccountFromUsername(String username) {
         for(Account account: accounts.values()){
             if (account.getUsername().equals(username)){
                 return account;
