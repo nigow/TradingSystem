@@ -39,14 +39,14 @@ public class FreezingUtility {
      * @param tradeUtility   Utility for getting trade information
      * @return List of accounts to freeze
      */
-    public List<Account> getAccountsToFreeze(TradeUtility tradeUtility) {
-        List<Account> accountsToFreeze = new ArrayList<>();
-        for (Account account : accountRepository.getAccounts()) {
-            if (canBeFrozen(tradeUtility, account)) {
-                accountsToFreeze.add(account);
+    public List<Integer> getAccountIDsToFreeze(TradeUtility tradeUtility) {
+        List<Integer> accountIDsToFreeze = new ArrayList<>();
+        for (int accountID : accountRepository.getAccountIDs()) {
+            if (canBeFrozen(tradeUtility, accountID)) {
+                accountIDsToFreeze.add(accountID);
             }
         }
-        return accountsToFreeze;
+        return accountIDsToFreeze;
     }
 
     /**
@@ -55,11 +55,11 @@ public class FreezingUtility {
      * @param tradeUtility   Utility for getting trade information
      * @return List of account usernames to freeze
      */
-    public List<String> getUsernamesToFreeze(TradeUtility tradeUtility {
+    public List<String> getUsernamesToFreeze(TradeUtility tradeUtility) {
         List<String> accountsToFreeze = new ArrayList<>();
-        for (Account account : accountRepository.getAccounts()) {
-            if (canBeFrozen(tradeUtility, account)) {
-                accountsToFreeze.add(account.getUsername());
+        for (int accountID : accountRepository.getAccountIDs()) {
+            if (canBeFrozen(tradeUtility, accountID)) {
+                accountsToFreeze.add(accountRepository.getUsernameFromID(accountID));
             }
         }
         return accountsToFreeze;
@@ -70,14 +70,14 @@ public class FreezingUtility {
      *
      * @return List of accounts to freeze
      */
-    public List<Account> getAccountsToUnfreeze() {
-        List<Account> accountsToUnfreeze = new ArrayList<>();
-        for (Account account : accountRepository.getAccounts()) {
-            if (isPending(account)) {
-                accountsToUnfreeze.add(account);
+    public List<Integer> getAccountsToUnfreeze() {
+        List<Integer> accountIDsToUnfreeze = new ArrayList<>();
+        for (int accountID : accountRepository.getAccountIDs()) {
+            if (isPending(accountID)) {
+                accountIDsToUnfreeze.add(accountID);
             }
         }
-        return accountsToUnfreeze;
+        return accountIDsToUnfreeze;
     }
 
     /**
@@ -87,9 +87,9 @@ public class FreezingUtility {
      */
     public List<String> getUsernamesToUnfreeze() {
         List<String> accountsToUnfreeze = new ArrayList<>();
-        for (Account account : accountRepository.getAccounts()) {
-            if (isPending(account)) {
-                accountsToUnfreeze.add(account.getUsername());
+        for (int accountID : accountRepository.getAccountIDs()) {
+            if (isPending(accountID)) {
+                accountsToUnfreeze.add(accountRepository.getUsernameFromID(accountID));
             }
         }
         return accountsToUnfreeze;
@@ -99,11 +99,12 @@ public class FreezingUtility {
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
      * @param tradeUtility Utility for getting trade information
-     * @param account      Account to freeze
+     * @param accountID      Account to freeze
      * @return Whether the given account is successfully frozen or not
      */
-    public boolean freezeAccount(TradeUtility tradeUtility, Account account) {
-        if (canBeFrozen(tradeUtility, account)) {
+    public boolean freezeAccount(TradeUtility tradeUtility, int accountID) {
+        if (canBeFrozen(tradeUtility, accountID)) {
+            Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.BORROW);
             account.removePermission(Permissions.LEND);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
@@ -115,11 +116,12 @@ public class FreezingUtility {
     /**
      * Unfreezes an account that requested to be unfrozen by adding the ability to borrow.
      *
-     * @param account     Account to unfreeze
+     * @param accountID     Account to unfreeze
      * @return Whether the given account is successfully frozen or not
      */
-    public boolean unfreezeAccount(Account account) {
-        if (isPending(account)) {
+    public boolean unfreezeAccount(int accountID) {
+        if (isPending(accountID)) {
+            Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.REQUEST_UNFREEZE);
             account.addPermission(Permissions.LEND);
             account.addPermission(Permissions.BORROW);
@@ -185,10 +187,11 @@ public class FreezingUtility {
     /**
      * Determines whether a given account is frozen.
      *
-     * @param account Account that is checked if it is frozen
+     * @param accountID Account that is checked if it is frozen
      * @return Whether the account is frozen or not
      */
-    public boolean isFrozen(Account account) {
+    public boolean isFrozen(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
         return account.getPermissions().contains(Permissions.LEND) &&
                 !account.getPermissions().contains(Permissions.BORROW);
     }
@@ -196,26 +199,27 @@ public class FreezingUtility {
     /**
      * Determines whether a given account has requested to be unfrozen.
      *
-     * @param account Account that is checked to see if it has requested to be unfrozen
+     * @param accountID Account that is checked to see if it has requested to be unfrozen
      * @return Whether the account has requested to be unfrozen or not
      */
-    public boolean isPending(Account account) {
-        return isFrozen(account) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
+    public boolean isPending(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        return isFrozen(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
 
     /**
      * Determines whether a given account should be frozen.
      *
      * @param tradeUtility Utility for getting trade information
-     * @param account      Account that is checked if it can be frozen
+     * @param accountID    Unique identifier of an account that is checked if it can be frozen
      * @return Whether the account can be frozen or not
      */
-    public boolean canBeFrozen(TradeUtility tradeUtility, Account account) {
-
-        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete(account.getAccountID()) <= restrictions.getMaxIncompleteTrade();
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades(account.getAccountID()) < restrictions.getMaxWeeklyTrade();
+    public boolean canBeFrozen(TradeUtility tradeUtility, int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete(accountID) <= restrictions.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades(accountID) < restrictions.getMaxWeeklyTrade();
         return !account.getPermissions().contains(Permissions.UNFREEZE) &&
-                !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
+                !isFrozen(accountID) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
 
     //TODO should be in OldTradeUtility?
@@ -225,17 +229,17 @@ public class FreezingUtility {
      * @param tradeUtility Utility for getting trade information
      * @return Whether the current account has lent more than borrowed
      */
-    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility, Account account) {
-        return tradeUtility.getTimesLent(account.getAccountID()) - tradeUtility.getTimesBorrowed(account.getAccountID()) >=
+    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility, int accountID) {
+        return tradeUtility.getTimesLent(accountID) - tradeUtility.getTimesBorrowed(accountID) >=
                 restrictions.getLendMoreThanBorrow();
     }
 
     /**
      * Determines whether a given account can request to unfreeze and requests to unfreeze if it can.
      *
-     * @param account Account to request to be unfrozen
+     * @param accountID Account to request to be unfrozen
      */
-    public void requestUnfreeze(Account account) {
-        account.removePermission(Permissions.REQUEST_UNFREEZE);
+    public void requestUnfreeze(int accountID) {
+        accountRepository.getAccountFromID(accountID).removePermission(Permissions.REQUEST_UNFREEZE);
     }
 }
