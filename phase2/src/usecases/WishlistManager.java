@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Utility class of useful services for wishlist.
  *
- * @author Tairi
+ * @author Tairi, Andrew
  */
 public class WishlistManager {
 
@@ -32,10 +32,11 @@ public class WishlistManager {
     /**
      * Adds an itemID to the given account's wishlist.
      *
+     * @param accountID Unique identifier of the account
      * @param itemID Unique identifier of the item
      */
-    public void addItemToWishlist(Account account, int itemID) {
-        account.addToWishlist(itemID);
+    public void addItemToWishlist(int accountID, int itemID) {
+        accountRepository.getAccountFromID(accountID).addToWishlist(itemID);
     }
 
     /**
@@ -43,17 +44,17 @@ public class WishlistManager {
      *
      * @param itemID Unique identifier of the item
      */
-    public void removeItemFromWishlist(Account account, int itemID) {
-        account.removeFromWishList(itemID);
+    public void removeItemFromWishlist(int accountID, int itemID) {
+        accountRepository.getAccountFromID(accountID).removeFromWishList(itemID);
     }
 
     /**
      * Gets the wishlist of item ids for the given account.
      *
-     * @return Wishlist of the current account
+     * @return Wishlist of the given account
      */
-    public List<Integer> getCurrWishlist(Account account) {
-        return account.getWishlist();
+    public List<Integer> getWishlistFromID(int accountID) {
+        return accountRepository.getAccountFromID(accountID).getWishlist();
     }
 
     /**
@@ -62,8 +63,8 @@ public class WishlistManager {
      * @param itemID Unique identifier of the item
      * @return Whether the item corresponding to the itemID is in the current account's wishlist
      */
-    public boolean isInWishlist(Account account, int itemID) {
-        return account.getWishlist().contains(itemID);
+    public boolean isInWishlist(int accountID, int itemID) {
+        return accountRepository.getAccountFromID(accountID).getWishlist().contains(itemID);
     }
 
     /**
@@ -72,7 +73,7 @@ public class WishlistManager {
      * @param accountID The Account ID to look up for
      * @return Wishlist that this account has
      */
-    public List<Item> wishlistItems(int accountID) {
+    public List<Item> getWishlistItems(int accountID) {
         List<Item> wishlist = new ArrayList<>();
         for (int itemID : accountRepository.getAccountFromID(accountID).getWishlist()) {
             Item item = itemUtility.findItemById(itemID);
@@ -82,14 +83,14 @@ public class WishlistManager {
     }
 
     /**
-     * Get the wishlists for all accounts.
+     * Get the wish lists for all accounts.
      *
      * @return A list containing wishlists of all users
      */
-    public List<List<Item>> allWishlist() {
+    public List<List<Item>> getAllWishlist() {
         List<List<Item>> all = new ArrayList<>();
         for (Account account : accountRepository.getAccounts()) {
-            all.add(wishlistItems(account.getAccountID()));
+            all.add(getWishlistItems(account.getAccountID()));
         }
         return all;
     }
@@ -101,9 +102,9 @@ public class WishlistManager {
      * @param accountID Unique identifier of account
      * @return String representation of all wishlist items
      */
-    public List<String> wishlistToString(int accountID) {
+    public List<String> getWishlistToString(int accountID) {
         List<String> rep = new ArrayList<>();
-        for (Item item : wishlistItems(accountID)) rep.add(item.toString());
+        for (Item item : getWishlistItems(accountID)) rep.add(item.toString());
         return rep;
     }
 

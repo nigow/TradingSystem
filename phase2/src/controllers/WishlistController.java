@@ -97,7 +97,7 @@ public class WishlistController {
     }
 
     private void displayWishlist() {
-        List<String> wishlistInfo = wishlistManager.wishlistToString(accountManager.getCurrAccountID());
+        List<String> wishlistInfo = wishlistManager.getWishlistToString(accountManager.getCurrAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
     }
 
