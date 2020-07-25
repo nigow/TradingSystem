@@ -4,15 +4,16 @@ import entities.Account;
 import entities.Permissions;
 import gateways.experimental.AccountGateway;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AccountRepository {
 
-    private List<Account> accounts = new ArrayList<>();
+    private Map<Integer, Account> accounts;
     private final AccountGateway accountGateway;
 
-    // TODO references but we'd need to override clone() method in Account to prevent and I don't think this will affect anything
     public AccountRepository(AccountGateway accountGateway){
         this.accountGateway = accountGateway;
         accountGateway.populate(this);
@@ -31,7 +32,7 @@ public class AccountRepository {
             //TODO remove referencing of list of perms
             int accountID = accounts.size();
             Account newAccount = new Account(username, password, perms, accountID);
-            accounts.add(newAccount);
+            accounts.put(accountID, newAccount);
             //TODO accountGateway.save(username, password, newAccount.getWishlist(), perms, accountID);
             return true;
         }
@@ -44,13 +45,8 @@ public class AccountRepository {
      * @param accountID Unique identifier of account
      * @return Account corresponding to the accountID
      */
-    public Account getAccountFromID(int accountID) {
-        for(Account account: accounts){
-            if (account.getAccountID() == accountID){
-                return account;
-            }
-        }
-        return null;
+    protected Account getAccountFromID(int accountID) {
+        return accounts.get(accountID);
     }
 
     /**
@@ -59,8 +55,8 @@ public class AccountRepository {
      * @param username Username of an account
      * @return Account corresponding to the username
      */
-    public Account getAccountFromUsername(String username) {
-        for(Account account: accounts){
+    protected Account getAccountFromUsername(String username) {
+        for(Account account: accounts.values()){
             if (account.getUsername().equals(username)){
                 return account;
             }
@@ -75,12 +71,7 @@ public class AccountRepository {
      * @return Username corresponding to the unique identifier of an account
      */
     public String getUsernameFromID(int accountID) {
-        for(Account account: accounts){
-            if (account.getAccountID() == accountID){
-                return account.getUsername();
-            }
-        }
-        return null;
+        return accounts.get(accountID).getUsername();
     }
 
     /**
@@ -88,8 +79,12 @@ public class AccountRepository {
      *
      * @return List of all accounts
      */
-    public List<Account> getAccounts() {
-        return accounts;
+    protected List<Account> getAccounts() {
+        return (List<Account>) accounts.values();
+    }
+
+    public List<Integer> getAccountIDs(){
+        return new ArrayList<>(accounts.keySet());
     }
 
     /**
@@ -108,15 +103,11 @@ public class AccountRepository {
      * @param account Account to get from ID
      * @return ID associated with the account
      */
-    public int getAccountID(Account account) {
+    protected int getAccountID(Account account) {
         return account.getAccountID();
     }
 
-    public void addAccount(Account account){
-        accounts.add(account);
-    }
-
-    public void removeAccount(Account account){
-        accounts.remove(account);
+    public void removeAccount(int accountID){
+        accounts.remove(accountID);
     }
 }
