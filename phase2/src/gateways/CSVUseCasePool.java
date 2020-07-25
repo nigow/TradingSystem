@@ -20,6 +20,8 @@ public class CSVUseCasePool implements UseCasePool {
     private ItemUtility itemUtility;
     private OldTradeUtility oldTradeUtility;
     private AccountRepository accountRepository;
+    private PermissionManager permissionManager;
+    private LoginManager loginManager;
 
     /**
      * Creates ManualConfig and initializes the required use cases

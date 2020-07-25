@@ -70,4 +70,7 @@ public interface UseCasePool {
      */
     AccountRepository getAccountRepository();
 
+    PermissionManager getPermissionManager();
+
+    LoginManager getLoginManager();
 }

@@ -79,7 +79,7 @@ public class AccountRepository {
      *
      * @return List of all accounts
      */
-    protected List<Account> getAccounts() {
+    public List<Account> getAccounts() {
         return (List<Account>) accounts.values();
     }
 
@@ -103,7 +103,7 @@ public class AccountRepository {
      * @param account Account to get from ID
      * @return ID associated with the account
      */
-    protected int getAccountID(Account account) {
+    public int getAccountID(Account account) {
         return account.getAccountID();
     }
 
