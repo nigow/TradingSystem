@@ -2,16 +2,20 @@ package usecases;
 
 import entities.Account;
 import entities.Permissions;
+import gateways.experimental.AccountGateway;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountRepository {
 
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
+    private final AccountGateway accountGateway;
 
     // TODO references but we'd need to override clone() method in Account to prevent and I don't think this will affect anything
-    public AccountRepository(List<Account> accounts){
-        this.accounts = accounts;
+    public AccountRepository(AccountGateway accountGateway){
+        this.accountGateway = accountGateway;
+        accountGateway.populate(this);
     }
 
     /**
@@ -25,8 +29,10 @@ public class AccountRepository {
     public boolean createAccount(String username, String password, List<Permissions> perms) {
         if (getAccountFromUsername(username) == null) {
             //TODO remove referencing of list of perms
-            Account newAccount = new Account(username, password, perms, accounts.size());
+            int accountID = accounts.size();
+            Account newAccount = new Account(username, password, perms, accountID);
             accounts.add(newAccount);
+            //TODO accountGateway.save(username, password, newAccount.getWishlist(), perms, accountID);
             return true;
         }
         return false;
