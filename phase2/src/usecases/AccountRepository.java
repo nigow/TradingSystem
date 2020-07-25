@@ -12,7 +12,7 @@ import java.util.Map;
 public class AccountRepository {
 
     private Map<Integer, Account> accounts;
-    private final AccountGateway accountGateway;
+    final AccountGateway accountGateway;
 
     public AccountRepository(AccountGateway accountGateway){
         this.accountGateway = accountGateway;

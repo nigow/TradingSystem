@@ -3,6 +3,7 @@ package usecases;
 import entities.Account;
 import entities.Permissions;
 import entities.Restrictions;
+import gateways.experimental.RestrictionsGateway;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +22,17 @@ public class FreezingUtility {
 
     private AccountRepository accountRepository;
 
+    private RestrictionsGateway restrictionsGateway;
+
     /**
      * Constructs an instance of FreezingUtility and stores restrictionsGateway.
      *
-     * @param restrictions Restrictions of the current program
      */
 
     //TODO how do we want to instantiate restrictions. From existing(like csv) or create a new instance here?
-    public FreezingUtility(AccountRepository accountRepository, Restrictions restrictions) {
+    public FreezingUtility(AccountRepository accountRepository, RestrictionsGateway restrictionsGateway) {
         this.accountRepository = accountRepository;
-        this.restrictions = restrictions;
+        restrictionsGateway.populate(this);
     }
 
     /**
