@@ -135,7 +135,6 @@ public class TradeManager extends TradeUtility{
         for (int accountID : trade.getTraderIds()) {
             for (int itemID : trade.itemsTraderGets(accountID)) {
                 itemManager.updateOwner(itemManager.findItemById(itemID), accountID);
-                wishlistManager.removeItemFromWishlist(accountID, itemID); // TODO we are removing from wishlists in both places
             }
         }
     }
