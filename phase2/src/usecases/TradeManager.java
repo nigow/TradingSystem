@@ -1,10 +1,8 @@
 package usecases;
 
-import controllers.WishlistController;
 import entities.*;
 import gateways.TradeGateway;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,11 +42,11 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Creates a new OldTrade object to be edited.
+     * Creates a new Trade object to be edited.
      *
-     * @param time           Time of the OldTrade
-     * @param place          Location of the OldTrade
-     * @param isPermanent    Whether the oldTrade is permanent or not
+     * @param time           Time of the Trade
+     * @param place          Location of the Trade
+     * @param isPermanent    Whether the Trade is permanent or not
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List< List<Integer> > itemsIds) {
@@ -65,7 +63,7 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Initiates a reverse oldTrade.
+     * Initiates a reverse Trade.
      *
      */
     public void reverseTrade(int id) {
@@ -82,11 +80,11 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Changes the TimePlace of the oldTrade and updates last edit info.
+     * Changes the TimePlace of the Trade and updates last edit info.
      *
-     * @param time     New time of the oldTrade
-     * @param place    New place of the oldTrade
-     * @param editorID ID of the person editing the oldTrade
+     * @param time     New time of the Trade
+     * @param place    New place of the Trade
+     * @param editorID ID of the person editing the Trade
      */
     public void editTimePlace(int tradeID, LocalDateTime time, String place, int editorID) {
         TimePlace timePlace = getTimePlaceByID(tradeID);
@@ -98,9 +96,9 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Updates the status of the oldTrade.
+     * Updates the status of the Trade.
      *
-     * @param tradeStatus New status of the oldTrade
+     * @param tradeStatus New status of the Trade
      */
     public void updateStatus(int tradeID, TradeStatus tradeStatus) {
         Trade trade = getTradeByID(tradeID);
@@ -118,9 +116,9 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Updates the completion status of this oldTrade according to the user's ID.
+     * Updates the completion status of this Trade according to the user's ID.
      *
-     * @param accountID The ID of the account who marked this oldTrade as complete
+     * @param accountID The ID of the account who marked this Trade as complete
      */
     public void updateCompletion(int accountID, int tradeID) {
         Trade trade = getTradeByID(tradeID);
@@ -129,48 +127,38 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Completes the action of making a oldTrade.
+     * Completes the action of making a trade.
      *
-     * @param oldTrade          OldTrade object representing the oldTrade about to be made
+     * @param trade          Trade object representing the trade about to be made
      */
-    public void makeTrade(OldTrade oldTrade) {
-        for (Integer itemId : oldTrade.getItemOneIDs()) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
-            }
-            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderOneID()).contains(itemManager.findItemById(itemId))) {
-                itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderTwoID());
-            }
-        }
-        for (Integer itemId : oldTrade.getItemTwoIDs()) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
-            }
-            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderTwoID()).contains(itemManager.findItemById(itemId))) {
-                itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderOneID());
+    public void makeTrade(Trade trade) {
+        for (int accountID : trade.getTraderIds()) {
+            for (int itemID : trade.itemsTraderGets(accountID)) {
+                itemManager.updateOwner(itemManager.findItemById(itemID), accountID);
+                wishlistManager.removeItemFromWishlist(accountID, itemID); // TODO we are removing from wishlists in both places
             }
         }
     }
 
     // TODO unused and broken method
 //    /**
-//     * Completes the action of reversing a oldTrade which was rejected.
+//     * Completes the action of reversing a Trade which was rejected.
 //     *
-//     * @param oldTrade          OldTrade object representing the oldTrade about to be rejected
+//     * @param trade          Trade object representing the Trade about to be rejected
 //     * @param accountManager Object for managing accounts
 //     * @param itemManager    Object for managing items
 //     */
-//    public void rejectedTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
+//    public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
 //        Account account = accountManager.getCurrAccount();
-//        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
-//        for (Integer itemId : oldTrade.getItemOneIDs()) {
+//        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
+//        for (Integer itemId : trade.getItemOneIDs()) {
 //            accountManager.addItemToWishlist(itemId);
-//            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderOneID());
+//            itemManager.updateOwner(itemManager.findItemById(itemId), trade.getTraderOneID());
 //        }
-//        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
-//        for (Integer itemId : oldTrade.getItemTwoIDs()) {
+//        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
+//        for (Integer itemId : trade.getItemTwoIDs()) {
 //            accountManager.addItemToWishlist(itemId);
-//            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderTwoID());
+//            itemManager.updateOwner(itemManager.findItemById(itemId), trade.getTraderTwoID());
 //        }
 //        accountManager.setCurrAccount(account.getUsername());
 //    }
