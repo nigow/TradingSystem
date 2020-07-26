@@ -3,7 +3,6 @@ package usecases;
 import entities.Account;
 import entities.Permissions;
 import entities.Restrictions;
-import gateways.experimental.AccountGateway;
 import gateways.experimental.RestrictionsGateway;
 
 import java.util.ArrayList;
@@ -23,8 +22,6 @@ public class FreezingUtility {
 
     private final AccountRepository accountRepository;
 
-    private AccountGateway accountGateway;
-
     private final RestrictionsGateway restrictionsGateway;
 
     private TradeUtility tradeUtility;
@@ -34,10 +31,9 @@ public class FreezingUtility {
      *
      */
 
-    public FreezingUtility(AccountRepository accountRepository, TradeUtility tradeUtility, AccountGateway accountGateway, RestrictionsGateway restrictionsGateway) {
+    public FreezingUtility(AccountRepository accountRepository, TradeUtility tradeUtility, RestrictionsGateway restrictionsGateway) {
         this.accountRepository = accountRepository;
         this.tradeUtility = tradeUtility;
-        this.accountGateway = accountGateway;
         this.restrictionsGateway = restrictionsGateway;
         restrictionsGateway.populate(this);
     }
@@ -114,6 +110,7 @@ public class FreezingUtility {
             account.removePermission(Permissions.BORROW);
             account.removePermission(Permissions.LEND);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
+            accountRepository.updateAccount(account);
             return true;
         }
         return false;
@@ -131,6 +128,7 @@ public class FreezingUtility {
             account.removePermission(Permissions.REQUEST_UNFREEZE);
             account.addPermission(Permissions.LEND);
             account.addPermission(Permissions.BORROW);
+            accountRepository.updateAccount(account);
             return true;
         }
         return false;
@@ -143,6 +141,7 @@ public class FreezingUtility {
      */
     public void setLendMoreThanBorrow(int lendMoreThanBorrow) {
         restrictions.setLendMoreThanBorrow(lendMoreThanBorrow);
+        updateRestrictions(restrictions);
     }
 
     /**
@@ -152,6 +151,7 @@ public class FreezingUtility {
      */
     public void setMaxIncompleteTrade(int maxIncompleteTrade) {
         restrictions.setMaxIncompleteTrade(maxIncompleteTrade);
+        updateRestrictions(restrictions);
     }
 
     /**
@@ -161,6 +161,7 @@ public class FreezingUtility {
      */
     public void setMaxWeeklyTrade(int maxWeeklyTrade) {
         restrictions.setMaxWeeklyTrade(maxWeeklyTrade);
+        updateRestrictions(restrictions);
     }
 
     public int getNumberOfDays() {
@@ -169,6 +170,7 @@ public class FreezingUtility {
 
     public void setNumberOfDays(int numberOfDays) {
         restrictions.setNumberOfDays(numberOfDays);
+        updateRestrictions(restrictions);
     }
 
     public int getNumberOfStats() {
@@ -177,6 +179,7 @@ public class FreezingUtility {
 
     public void setNumberOfStats(int numberOfStats) {
         restrictions.setNumberOfStats(numberOfStats);
+        updateRestrictions(restrictions);
     }
 
     public int getNumberOfEdits() {
@@ -185,6 +188,7 @@ public class FreezingUtility {
 
     public void setNumberOfEdits(int numberOfEdits) {
         restrictions.setNumberOfEdits(numberOfEdits);
+        updateRestrictions(restrictions);
     }
 
     /**
@@ -268,6 +272,14 @@ public class FreezingUtility {
      * @param accountID Account to request to be unfrozen
      */
     public void requestUnfreeze(int accountID) {
-        accountRepository.getAccountFromID(accountID).removePermission(Permissions.REQUEST_UNFREEZE);
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.removePermission(Permissions.REQUEST_UNFREEZE);
+        accountRepository.updateAccount(account);
+    }
+
+    public void updateRestrictions(Restrictions restrictions){
+        restrictionsGateway.save(restrictions.getLendMoreThanBorrow(), restrictions.getMaxIncompleteTrade(),
+                restrictions.getMaxWeeklyTrade(), restrictions.getNumberOfDays(), restrictions.getNumberOfEdits(),
+                restrictions.getNumberOfStats());
     }
 }
