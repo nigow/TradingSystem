@@ -1,8 +1,6 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.AppealPresenter;
-import org.twelve.usecases.AccountManager;
-import org.twelve.usecases.AuthManager;
 
 /**
  * Controller that makes appeal requests.

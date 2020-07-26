@@ -2,7 +2,6 @@ package org.twelve.controllers;
 
 
 import org.twelve.presenters.AdminCreatorPresenter;
-import org.twelve.usecases.AccountManager;
 
 /**
  * Controller that creates new admin accounts.

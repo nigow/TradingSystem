@@ -2,8 +2,6 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Account;
 import org.twelve.presenters.FreezingPresenter;
-import org.twelve.usecases.AccountManager;
-import org.twelve.usecases.AuthManager;
 import org.twelve.usecases.FreezingUtility;
 
 import java.util.ArrayList;

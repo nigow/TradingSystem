@@ -1,8 +1,6 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.HomePresenter;
-import org.twelve.usecases.AccountManager;
-import org.twelve.usecases.AuthManager;
 
 import java.util.ArrayList;
 import java.util.List;

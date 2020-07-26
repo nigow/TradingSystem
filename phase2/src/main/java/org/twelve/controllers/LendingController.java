@@ -4,7 +4,6 @@ package org.twelve.controllers;
 
 import org.twelve.presenters.LendingPresenter;
 import org.twelve.presenters.TradeCreatorPresenter;
-import org.twelve.usecases.AccountManager;
 import org.twelve.usecases.ItemManager;
 
 import java.util.ArrayList;

@@ -5,8 +5,6 @@ import org.twelve.controllers.InputHandler;
 import org.twelve.controllers.MenuFacade;
 import org.twelve.controllers.UseCasePool;
 import org.twelve.presenters.HomePresenter;
-import org.twelve.usecases.AccountManager;
-import org.twelve.usecases.AuthManager;
 
 /**
  *  A controller to handle logins

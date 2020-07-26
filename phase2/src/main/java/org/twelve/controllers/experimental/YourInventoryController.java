@@ -4,8 +4,6 @@ import org.twelve.controllers.InputHandler;
 import org.twelve.controllers.UseCasePool;
 import org.twelve.entities.Item;
 import org.twelve.presenters.experimental.YourInventoryPresenter;
-import org.twelve.usecases.AccountManager;
-import org.twelve.usecases.AuthManager;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.ItemUtility;
 

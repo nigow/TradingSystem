@@ -1,8 +1,6 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.InventoryPresenter;
-import org.twelve.usecases.AccountManager;
-import org.twelve.usecases.AuthManager;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.ItemUtility;
 
