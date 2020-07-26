@@ -123,11 +123,8 @@ public class TradeManager extends TradeUtility{
      * @param accountID The ID of the account who marked this oldTrade as complete
      */
     public void updateCompletion(int accountID, int tradeID) {
-        OldTrade oldTrade = getTradeByID(tradeID);
-        if (accountID == oldTrade.getTraderOneID())
-            oldTrade.setTraderOneCompleted(true);
-        else if (accountID == oldTrade.getTraderTwoID())
-            oldTrade.setTraderTwoCompleted(true);
+        Trade trade = getTradeByID(tradeID);
+        trade.setCompletedOfTrader(accountID, true);
         // TODO call gateway save
     }
 
