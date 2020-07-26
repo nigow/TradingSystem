@@ -3,6 +3,7 @@ package usecases;
 import entities.*;
 import gateways.experimental.TradeGateway;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,12 +48,13 @@ public class TradeManager extends TradeUtility{
                 TradeStatus.valueOf(tradeStatus), tradeCompletions);
         trades.add(trade);
         updateToGateway(trade);
-        // TODO getting of timeplaces
     }
 
     public void updateToGateway(Trade trade) {
+        TimePlace timePlace = getTimePlaceByID(trade.getId());
         tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
-                trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions());
+                trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions(),
+                timePlace.getTime().toString(), timePlace.getPlace());
     }
 
     /**
@@ -74,7 +76,6 @@ public class TradeManager extends TradeUtility{
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
         updateToGateway(trade);
-        // TODO update to gateway timeplace
     }
 
     /**
@@ -108,7 +109,6 @@ public class TradeManager extends TradeUtility{
         timePlace.setPlace(place);
         trade.incrementEditedCounter();
         updateToGateway(trade);
-        // TODO update to gateway timeplace
     }
 
     /**
