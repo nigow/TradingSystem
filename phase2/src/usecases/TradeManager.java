@@ -114,7 +114,7 @@ public class TradeManager extends TradeUtility{
      * @return Whether it's the account's turn to edit.
      */
     public boolean isEditTurn(int accountID, int tradeID) {
-        return accountID != getTradeByID(tradeID).getLastEditorID();
+        return getTradeByID(tradeID).isEditTurn(accountID);
     }
 
     /**
