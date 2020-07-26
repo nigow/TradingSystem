@@ -208,6 +208,7 @@ abstract public class TradeUtility {
         return threeRecent;
     }
 
+    // TODO: fix the logic behind this
     /**
      * Retrieves the number of trades the current account has made in the past week.
      *
@@ -217,8 +218,8 @@ abstract public class TradeUtility {
         Integer weeklyTrades = 0;
         LocalDateTime currDate = LocalDateTime.now();
         LocalDateTime weekAgo = LocalDateTime.now().minusDays(7);
-        for (OldTrade oldTrade : getAllTradesAccount(accountID)) {
-            TimePlace timePlace = getTimePlaceByID(oldTrade.getId());
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            TimePlace timePlace = getTimePlaceByID(trade.getId());
             if (timePlace.getTime().isBefore(currDate) && timePlace.getTime().isAfter(weekAgo)) {
                 weeklyTrades++;
             }
