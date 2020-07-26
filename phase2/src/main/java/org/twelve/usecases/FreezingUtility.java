@@ -282,4 +282,12 @@ public class FreezingUtility {
                 restrictions.getMaxWeeklyTrade(), restrictions.getNumberOfDays(), restrictions.getNumberOfEdits(),
                 restrictions.getNumberOfStats());
     }
+
+    public void createRestrictions(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
+                                   int numberOfEdits, int numberOfStats) {
+
+        restrictions = new Restrictions(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
+                numberOfEdits, numberOfStats);
+
+    }
 }
