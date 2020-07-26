@@ -6,6 +6,7 @@ import gateways.experimental.AccountGateway;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -29,14 +30,11 @@ public class AccountRepository {
      */
     public boolean createAccount(String username, String password, List<Permissions> perms) {
         if (getAccountFromUsername(username) == null) {
-            List<Permissions> permsToAdd = new ArrayList<>();
-            for(Permissions perm: perms){
-                permsToAdd.add(perm);
-            }
+            List<Permissions> permsToAdd = new ArrayList<>(perms);
             int accountID = accounts.size();
             Account newAccount = new Account(username, password, permsToAdd, accountID);
             accounts.put(accountID, newAccount);
-            //TODO accountGateway.save(username, password, newAccount.getWishlist(), permsToAdd, accountID);
+            updateAccount(newAccount);
             return true;
         }
         return false;
@@ -112,5 +110,9 @@ public class AccountRepository {
 
     public void removeAccount(int accountID){
         accounts.remove(accountID);
+    }
+
+    public void updateAccount(Account account){
+        accountGateway.save(account.getAccountID(), account.getUsername(), account.getPassword(), account.getWishlist(), account.getPermissions());
     }
 }
