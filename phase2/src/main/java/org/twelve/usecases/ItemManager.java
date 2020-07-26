@@ -14,14 +14,12 @@ import org.twelve.gateways.experimental.ItemsGateway;
  * @author Isaac
  */
 
-public class ItemManager extends ItemUtility{
+public class ItemManager extends org.twelve.usecases.ItemUtility {
 
     /**
      * The gateway which deals with items.
      */
     private final ItemsGateway itemsGateway;
-
-    private int generateValidIDCounter;
 
     /**
      * Constructor for ItemManager which stores an ItemsGateway.
@@ -30,11 +28,6 @@ public class ItemManager extends ItemUtility{
      */
     public ItemManager(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
-        generateValidIDCounter = 0;
-    }
-
-    public int generateValidID() {
-        return generateValidIDCounter++;
     }
 
     public void addToItems(int id, String name, String description, int ownerId) {
@@ -42,7 +35,7 @@ public class ItemManager extends ItemUtility{
         items.put(id, item);
     }
 
-    public void updateToItemsGateway(Item item) {
+    private void updateToItemsGateway(Item item) {
         itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
                 item.isApproved(), item.getOwnerID());
     }
@@ -56,7 +49,7 @@ public class ItemManager extends ItemUtility{
      * @param ownerID     The id of the owner of the item
      */
     public void createItem(String name, String description, int ownerID) {
-        int id = generateValidID();
+        int id = items.size();
         Item item = new Item(id, name, description, ownerID);
         this.items.put(id, item);
         updateToItemsGateway(item);
