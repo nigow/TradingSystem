@@ -182,6 +182,11 @@ public class Trade {
         return itemsOfTrader(getNextTraderID(id));
     }
 
+    public void setCompletedOfTrader(int id, boolean isCompleted) {
+        int index = tradersIds.indexOf(id);
+        tradeCompletions.set(index, isCompleted);
+    }
+
     public boolean isEditTurn(int id) {
         return editedCounter % tradersIds.size() == tradersIds.indexOf(id);
     }
