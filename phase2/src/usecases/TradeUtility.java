@@ -297,72 +297,72 @@ abstract public class TradeUtility {
     }
 
     /**
-     * Returns the date and time of this oldTrade.
+     * Returns the date and time of this Trade.
      *
-     * @return Date and time of this oldTrade
+     * @return Date and time of this Trade
      */
     public LocalDateTime getDateTime(int tradeID) {
         return getTimePlaceByID(getTradeByID(tradeID).getTimePlaceID()).getTime();
     }
 
     /**
-     * Gets the number of times this oldTrade has been edited.
+     * Gets the number of times this Trade has been edited.
      *
-     * @return The number of times this oldTrade has been edited.
+     * @return The number of times this Trade has been edited.
      */
     public int getEditedCounter(int tradeID) {
         return getTradeByID(tradeID).getEditedCounter();
     }
 
     /**
-     * Returns whether this oldTrade is temporary or permanent.
+     * Returns whether this Trade is temporary or permanent.
      *
-     * @return Whether this oldTrade is temporary or permanent
+     * @return Whether this Trade is temporary or permanent
      */
     public boolean isPermanent(int tradeID) {
         return getTradeByID(tradeID).isPermanent();
     }
 
     /**
-     * Returns if oldTrade is rejected.
+     * Returns if Trade is rejected.
      *
-     * @return Whether the oldTrade is rejected
+     * @return Whether the Trade is rejected
      */
     public boolean isRejected(int tradeID) {
         return getTradeByID(tradeID).getStatus().equals(TradeStatus.REJECTED);
     }
 
     /**
-     * Returns if oldTrade is confirmed.
+     * Returns if Trade is confirmed.
      *
-     * @return Whether oldTrade is confirmed
+     * @return Whether Trade is confirmed
      */
     public boolean isConfirmed(int tradeID) {
         return getTradeByID(tradeID).getStatus().equals(TradeStatus.CONFIRMED);
     }
 
     /**
-     * Returns if oldTrade is unconfirmed.
+     * Returns if Trade is unconfirmed.
      *
-     * @return Whether oldTrade is unconfirmed
+     * @return Whether Trade is unconfirmed
      */
     public boolean isUnconfirmed(int tradeID) {
         return getTradeByID(tradeID).getStatus().equals(TradeStatus.UNCONFIRMED);
     }
 
     /**
-     * Returns if oldTrade is completed.
+     * Returns if Trade is completed.
      *
-     * @return Whether oldTrade is completed.
+     * @return Whether Trade is completed.
      */
     public boolean isCompleted(int tradeID) {
         return getTradeByID(tradeID).getStatus().equals(TradeStatus.COMPLETED);
     }
 
     /**
-     * Gets the status of the oldTrade.
+     * Gets the status of the Trade.
      *
-     * @return Current status of the oldTrade
+     * @return Current status of the Trade
      */
     public TradeStatus getTradeStatus(int tradeID) {
         return getTradeByID(tradeID).getStatus();
