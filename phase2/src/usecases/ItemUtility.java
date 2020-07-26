@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Isaac
  */
 
-public class ItemUtility {
+abstract public class ItemUtility {
 
     /**
      * List of all items in the system

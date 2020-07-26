@@ -79,15 +79,6 @@ public class ItemManager extends ItemUtility{
         return super.findItemById(itemID).toString();
     }
 
-    /**
-     * Gets the ID of an item.
-     *
-     * @param itemId item which information is being returned about
-     * @return ID of an item
-     */
-    public int getItemId(int itemId) {
-        return super.findItemById(itemId).getItemID();
-    }
 
     /**
      * Gets the approval status of the item.
