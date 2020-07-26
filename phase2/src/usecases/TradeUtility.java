@@ -180,21 +180,23 @@ abstract public class TradeUtility {
         List<TimePlace> allTwoWay = new ArrayList<>();
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allTwoWayItems = new ArrayList<>();
-        for (OldTrade oldTrade : getAllTradesAccount(accountID)) {
-            if (oldTrade.getStatus() != TradeStatus.CONFIRMED && oldTrade.getStatus() != TradeStatus.COMPLETED)
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
-            if (!oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
-                TimePlace timePlace = getTimePlaceByID(oldTrade.getId());
+            if (trade.getTraderIds().size() != 2)
+                continue;
+            if (!trade.getItemsIds().get(0).isEmpty() && !trade.getItemsIds().get(1).isEmpty()) {
+                TimePlace timePlace = getTimePlaceByID(trade.getId());
                 allTwoWay.add(timePlace);
             }
         }
         Collections.sort(allTwoWay);
         for (TimePlace tp : allTwoWay) {
-            OldTrade oldTrade = getTradeByID(tp.getId());
-            if (accountID == oldTrade.getTraderOneID()) {
-                allTwoWayItems.addAll(oldTrade.getItemOneIDs());
+            Trade trade = getTradeByID(tp.getId());
+            if (accountID == trade.getTraderIds().get(0)) {
+                allTwoWayItems.addAll(trade.getItemsIds().get(0));
             } else {
-                allTwoWayItems.addAll(oldTrade.getItemTwoIDs());
+                allTwoWayItems.addAll(trade.getItemsIds().get(1));
             }
         }
         int count = 0;
