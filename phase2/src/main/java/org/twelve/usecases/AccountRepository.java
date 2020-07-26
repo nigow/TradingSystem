@@ -108,11 +108,7 @@ public class AccountRepository {
         return account.getAccountID();
     }
 
-    public void removeAccount(int accountID){
-        accounts.remove(accountID);
-    }
-
-    public void updateAccount(Account account){
+    void updateAccount(Account account){
         accountGateway.save(account.getAccountID(), account.getUsername(), account.getPassword(), account.getWishlist(), account.getPermissions());
     }
 }

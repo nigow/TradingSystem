@@ -24,16 +24,16 @@ public class FreezingUtility {
 
     private final RestrictionsGateway restrictionsGateway;
 
-    private TradeUtility tradeUtility;
+    private TradeManager tradeManager;
 
     /**
      * Constructs an instance of FreezingUtility and stores restrictionsGateway.
      *
      */
 
-    public FreezingUtility(AccountRepository accountRepository, TradeUtility tradeUtility, RestrictionsGateway restrictionsGateway) {
+    public FreezingUtility(AccountRepository accountRepository, TradeManager tradeManager, RestrictionsGateway restrictionsGateway) {
         this.accountRepository = accountRepository;
-        this.tradeUtility = tradeUtility;
+        this.tradeManager = tradeManager;
         this.restrictionsGateway = restrictionsGateway;
         restrictionsGateway.populate(this);
     }
@@ -247,10 +247,10 @@ public class FreezingUtility {
      * @param accountID    Unique identifier of an account that is checked if it can be frozen
      * @return Whether the account can be frozen or not
      */
-    public boolean canBeFrozen(int accountID) {
+    private boolean canBeFrozen(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete(accountID) <= restrictions.getMaxIncompleteTrade();
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades(accountID) < restrictions.getMaxWeeklyTrade();
+        boolean withinMaxIncompleteTrades = tradeManager.getTimesIncomplete(accountID) <= restrictions.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = tradeManager.getNumWeeklyTrades(accountID) < restrictions.getMaxWeeklyTrade();
         return !account.getPermissions().contains(Permissions.UNFREEZE) &&
                 !isFrozen(accountID) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
@@ -262,7 +262,7 @@ public class FreezingUtility {
      * @return Whether the current account has lent more than borrowed
      */
     public boolean lentMoreThanBorrowed(int accountID) {
-        return tradeUtility.getTimesLent(accountID) - tradeUtility.getTimesBorrowed(accountID) >=
+        return tradeManager.getTimesLent(accountID) - tradeManager.getTimesBorrowed(accountID) >=
                 restrictions.getLendMoreThanBorrow();
     }
 
@@ -277,7 +277,7 @@ public class FreezingUtility {
         accountRepository.updateAccount(account);
     }
 
-    public void updateRestrictions(Restrictions restrictions){
+    private void updateRestrictions(Restrictions restrictions){
         restrictionsGateway.save(restrictions.getLendMoreThanBorrow(), restrictions.getMaxIncompleteTrade(),
                 restrictions.getMaxWeeklyTrade(), restrictions.getNumberOfDays(), restrictions.getNumberOfEdits(),
                 restrictions.getNumberOfStats());
