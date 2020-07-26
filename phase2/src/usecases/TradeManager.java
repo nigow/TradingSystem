@@ -42,11 +42,14 @@ public class TradeManager extends TradeUtility{
         return generateValidIDCounter++;
     }
 
-    public void addToTrades(int tradeID, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
-                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions) {
-        Trade trade = new Trade(tradeID, isPermanent, traderIDs, itemIDs, editedCounter,
+    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
+                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
+                            String time, String location) {
+        Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
                 TradeStatus.valueOf(tradeStatus), tradeCompletions);
+        TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
         trades.add(trade);
+        timePlaces.add(timePlace);
         updateToGateway(trade);
     }
 
