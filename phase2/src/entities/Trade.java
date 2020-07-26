@@ -141,7 +141,7 @@ public class Trade {
      *
      * @param tradeStatus New status of this trade
      */
-    public void setTradeStatus(TradeStatus tradeStatus) {
+    public void setStatus(TradeStatus tradeStatus) {
         this.tradeStatus = tradeStatus;
     }
 

@@ -103,8 +103,8 @@ public class TradeManager extends TradeUtility{
      * @param tradeStatus New status of the oldTrade
      */
     public void updateStatus(int tradeID, TradeStatus tradeStatus) {
-        OldTrade oldTrade = getTradeByID(tradeID);
-        oldTrade.setStatus(tradeStatus);
+        Trade trade = getTradeByID(tradeID);
+        trade.setStatus(tradeStatus);
         // TODO call gateway save
     }
 
