@@ -238,9 +238,9 @@ abstract public class TradeUtility {
      */
     public Integer getTimesIncomplete(int accountID) {
         Integer timesIncomplete = 0;
-        for (OldTrade oldTrade : getAllTradesAccount(accountID)) {
-            LocalDateTime tradeTime = getTimePlaceByID(oldTrade.getId()).getTime();
-            if (tradeTime.isBefore(LocalDateTime.now()) && oldTrade.getStatus().equals(TradeStatus.CONFIRMED)) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            LocalDateTime tradeTime = getTimePlaceByID(trade.getId()).getTime();
+            if (tradeTime.isBefore(LocalDateTime.now()) && trade.getStatus().equals(TradeStatus.CONFIRMED)) {
                 timesIncomplete++;
             }
         }
