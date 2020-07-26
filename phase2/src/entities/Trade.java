@@ -3,6 +3,8 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO jacadoc should be fixed
+
 /**
  * Represents a one-way or two-way transaction between two users.
  *
@@ -19,8 +21,6 @@ public class Trade {
     private final List<Integer> itemsIds;
 
     private TradeStatus tradeStatus;
-
-    private int lastEditorID;
 
     private int editedCounter;
 
@@ -42,7 +42,6 @@ public class Trade {
         this.itemsIds = itemsIds;
         tradeStatus = TradeStatus.UNCONFIRMED;
         editedCounter = 0;
-        lastEditorID = tradersIds.get(0);
         tradeCompletions = new ArrayList<>();
         for(int i = 0; i < tradersIds.size(); i++) {
             tradeCompletions.add(false);
@@ -70,7 +69,6 @@ public class Trade {
         this.editedCounter = editedCounter;
         this.tradeCompletions = tradeCompletions;
         this.tradeStatus = tradeStatus;
-        lastEditorID = tradersIds.get(0);
     }
 
 
@@ -121,15 +119,6 @@ public class Trade {
     }
 
     /**
-     * Returns the ID of the person who last suggested a meetup.
-     *
-     * @return ID of the person who last suggested a meetup
-     */
-    public int getLastEditorID() {
-        return lastEditorID;
-    }
-
-    /**
      * Returns the number of times a meetup has been suggested.
      *
      * @return Number of times a meetup has been suggested
@@ -157,15 +146,6 @@ public class Trade {
     }
 
     /**
-     * Changes the ID of the last person who suggested a meetup.
-     *
-     * @param lastEditorID ID of the last person who suggested a meetup
-     */
-    public void setLastEditorID(int lastEditorID) {
-        this.lastEditorID = lastEditorID;
-    }
-
-    /**
      * Increments the number of times a meetup has been suggested.
      */
     public void incrementEditedCounter() {
@@ -187,23 +167,4 @@ public class Trade {
     public List<Boolean> getTradeCompletions() {
         return tradeCompletions;
     }
-
-    /**
-     * Creates a string representation of this trade.
-     *
-     * @return String representation of a OldTrade object
-     */
-    @Override
-    public String toString() {
-        return "OldTrade{" +
-                "id=" + id +
-                ", timePlaceID=" + id +
-                ", isPermanent=" + isPermanent +
-                ", status=" + tradeStatus +
-                ", lastEditorID=" + lastEditorID +
-                ", editedCounter=" + editedCounter +
-                '}';
-    }
-
-
 }
