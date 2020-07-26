@@ -74,7 +74,8 @@ abstract public class TradeUtility {
         for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int id = trade.getTraderIds().get(i);
             ans.append("\nUser " + i + ": " + accountRepository.getUsernameFromID(id));
-            ans.append("\nitems being given: ");
+            int j = (i + 1) % trade.getTraderIds().size();
+            ans.append("\nitems being given to user " + j + ": ");
             for (int itemID : trade.itemsOfTrader(id)) {
                 ans.append("\n").append(itemUtility.findItemById(itemID).toString()); // TODO dont access item directly
             }
