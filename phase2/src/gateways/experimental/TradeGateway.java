@@ -9,7 +9,7 @@ public interface TradeGateway {
     void populate(TradeUtility tradeUtility);
 
     // needs storage spec update
-    void save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter,
-              String tradeStatus, List<Boolean> tradeCompletions);
+    void save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<List<Integer>> itemIds, int editedCounter,
+              String tradeStatus, List<Boolean> tradeCompletions, String time, String location);
 
 }
