@@ -1,6 +1,5 @@
 package controllers;
 
-import gateways.UseCasePool;
 import presenters.TradeCreatorPresenter;
 import usecases.*;
 
@@ -41,7 +40,7 @@ public class TradeCreatorController {
     public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
                                   UseCasePool useCasePool, int peerId, int itemId, boolean forceTwoWay) {
 
-        this.tradeManager = useCasePool.getTradeManager();
+        this.tradeManager = useCasePool.getOldTradeManager();
         this.accountManager = useCasePool.getAccountManager();
         this.itemUtility = useCasePool.getItemUtility();
         this.tradeCreatorPresenter = tradeCreatorPresenter;

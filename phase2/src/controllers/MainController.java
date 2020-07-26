@@ -1,7 +1,5 @@
 package controllers;
 
-import gateways.UseCasePool;
-import gateways.CSVUseCasePool;
 import presenters.*;
 
 

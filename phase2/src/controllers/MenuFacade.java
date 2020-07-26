@@ -1,11 +1,9 @@
 package controllers;
 
-import gateways.UseCasePool;
 import presenters.MenuPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
 import usecases.ItemUtility;
-import usecases.TradeUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,7 @@ public class MenuFacade {
                       MenuPresenter menuPresenter) {
         authManager = useCasePool.getAuthManager();
         accountManager = useCasePool.getAccountManager();
-        tradeUtility = useCasePool.getTradeUtility();
+        tradeUtility = useCasePool.getOldTradeUtility();
         itemUtility = useCasePool.getItemUtility();
 
         this.menuPresenter = menuPresenter;

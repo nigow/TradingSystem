@@ -1,6 +1,9 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
+
+// TODO jacadoc should be fixed
 
 /**
  * Represents a one-way or two-way transaction between two users.
@@ -8,100 +11,71 @@ import java.util.List;
  * @author Maryam
  */
 public class Trade {
-    /**
-     * The ID of this trade.
-     */
+
     private final int id;
 
-    /**
-     * The ID of a TimePlace object denoting the meetup for this trade.
-     */
-    private int timePlaceID;
-
-    /**
-     * Stores whether this is a permanent or temporary trade.
-     */
     private boolean isPermanent;
 
-    /**
-     * The ID of the Account of the first person in this trade.
-     */
-    private final int traderOneID;
+    private final List<Integer> tradersIds;
 
-    /**
-     * The ID of the Account of the second person in this trade.
-     */
-    private final int traderTwoID;
+    private final List<Integer> itemsIds;
 
-    /**
-     * List of IDs of items the first person is trading away.
-     * Can be an empty list.
-     */
-    private final List<Integer> itemOneIDs;
+    private TradeStatus tradeStatus;
 
-    /**
-     * List of IDs of items the second person is trading away.
-     * Can be an empty list.
-     */
-    private final List<Integer> itemTwoIDs;
-
-    /**
-     * The status of this trade. (i.e. if it's rejected, unconfirmed, confirmed, or completed)
-     */
-    private TradeStatus status;
-
-    /**
-     * The ID of the last person who suggested a meetup.
-     */
-    private int lastEditorID;
-
-    /**
-     * Keeps track of number of times a new meetup has been suggested.
-     */
     private int editedCounter;
 
-    /**
-     * Whether trader one marked this trade as complete
-     */
-    private boolean traderOneCompleted;
+    private final List<Boolean> tradeCompletions;
 
     /**
-     * Whether trader two marked this trade as complete
-     */
-    private boolean traderTwoCompleted;
-
-    /**
-     * Creates a Trade object based on input. The status is set to unconfirmed.
+     * Creates a new Trade object. The status is set to unconfirmed.
+     * The trade is uncompleted.
      *
      * @param id            ID of this trade
-     * @param timePlaceID   ID of a TimePlace object denoting the meetup for this trade
      * @param isPermanent   Whether this is a permanent or temporary trade
-     * @param traderOneID   ID of the Account of the first person in this trade
-     * @param traderTwoID   ID of the Account of the second person in this trade
-     * @param itemOneIDs    List of IDs of items the first person is trading away
-     * @param itemTwoIDs    List of IDs of items the second person is trading away
-     * @param editedCounter Number of times this trade's TimePlace has been edited
+     * @param tradersIds    A collection of integer storing the ids of all traders.
+     * @param itemsIds      A collection of ids for the items in this trade.
      */
-    public Trade(int id, int timePlaceID, boolean isPermanent, int traderOneID, int traderTwoID,
-                 List<Integer> itemOneIDs, List<Integer> itemTwoIDs, int editedCounter) {
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds, List<Integer> itemsIds) {
         this.id = id;
-        this.timePlaceID = timePlaceID;
         this.isPermanent = isPermanent;
-        this.traderOneID = traderOneID;
-        this.traderTwoID = traderTwoID;
-        this.itemOneIDs = itemOneIDs;
-        this.itemTwoIDs = itemTwoIDs;
-        status = TradeStatus.UNCONFIRMED;
-        this.editedCounter = editedCounter;
-        lastEditorID = traderOneID;
-        traderOneCompleted = false;
-        traderTwoCompleted = false;
+        this.tradersIds = tradersIds;
+        this.itemsIds = itemsIds;
+        tradeStatus = TradeStatus.UNCONFIRMED;
+        editedCounter = 0;
+        tradeCompletions = new ArrayList<>();
+        for(int i = 0; i < tradersIds.size(); i++) {
+            tradeCompletions.add(false);
+        }
     }
+
+    /**
+     * Initializes a Trade object which already exists in the system.
+     *
+     * @param id            ID of this trade
+     * @param isPermanent   Whether this is a permanent or temporary trade
+     * @param tradersIds    A collection of integer storing the ids of all traders.
+     * @param itemsIds      A collection of ids for the items in this trade.
+     * @param editedCounter Number of times this trade's TimePlace has been edited
+     * @param tradeStatus   The status of the trade.
+     * @param tradeCompletions The completions of this trade.
+     */
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds,
+                 List<Integer> itemsIds, int editedCounter, TradeStatus tradeStatus,
+                 List<Boolean> tradeCompletions) {
+        this.id = id;
+        this.isPermanent = isPermanent;
+        this.tradersIds = tradersIds;
+        this.itemsIds = itemsIds;
+        this.editedCounter = editedCounter;
+        this.tradeCompletions = tradeCompletions;
+        this.tradeStatus = tradeStatus;
+    }
+
 
     /**
      * Returns the ID of this trade.
      *
-     * @return ID of this trade
+     * @return The id of this trade
      */
     public int getId() {
         return id;
@@ -113,7 +87,7 @@ public class Trade {
      * @return ID of a TimePlace object denoting the meetup for this trade
      */
     public int getTimePlaceID() {
-        return timePlaceID;
+        return id;
     }
 
     /**
@@ -125,40 +99,14 @@ public class Trade {
         return isPermanent;
     }
 
-    /**
-     * Returns the ID of the account of the first person in this trade.
-     *
-     * @return ID of the Account of the first person in this trade
-     */
-    public int getTraderOneID() {
-        return traderOneID;
-    }
 
     /**
-     * Returns the ID of the account of the second person in this trade.
+     * Get all the item ids.
      *
-     * @return ID of the Account of the second person in this trade
+     * @return A collection of item ids for this trade.
      */
-    public int getTraderTwoID() {
-        return traderTwoID;
-    }
-
-    /**
-     * Returns the list of IDs of items the first person is trading away.
-     *
-     * @return List of IDs of items the first person is trading away
-     */
-    public List<Integer> getItemOneIDs() {
-        return itemOneIDs;
-    }
-
-    /**
-     * Returns the list of IDs of items the second person is trading away.
-     *
-     * @return List of IDs of items the second person is trading away
-     */
-    public List<Integer> getItemTwoIDs() {
-        return itemTwoIDs;
+    public List<Integer> getItemsIds() {
+        return itemsIds;
     }
 
     /**
@@ -167,16 +115,7 @@ public class Trade {
      * @return Status of this trade
      */
     public TradeStatus getStatus() {
-        return status;
-    }
-
-    /**
-     * Returns the ID of the person who last suggested a meetup.
-     *
-     * @return ID of the person who last suggested a meetup
-     */
-    public int getLastEditorID() {
-        return lastEditorID;
+        return tradeStatus;
     }
 
     /**
@@ -186,15 +125,6 @@ public class Trade {
      */
     public int getEditedCounter() {
         return editedCounter;
-    }
-
-    /**
-     * Changes the meetup time and location for this trade.
-     *
-     * @param timePlaceID New ID of a TimePlace object denoting the meetup for this trade
-     */
-    public void setTimePlaceID(int timePlaceID) {
-        this.timePlaceID = timePlaceID;
     }
 
     /**
@@ -209,19 +139,10 @@ public class Trade {
     /**
      * Changes the status of this trade.
      *
-     * @param status New status of this trade
+     * @param tradeStatus New status of this trade
      */
-    public void setStatus(TradeStatus status) {
-        this.status = status;
-    }
-
-    /**
-     * Changes the ID of the last person who suggested a meetup.
-     *
-     * @param lastEditorID ID of the last person who suggested a meetup
-     */
-    public void setLastEditorID(int lastEditorID) {
-        this.lastEditorID = lastEditorID;
+    public void setStatus(TradeStatus tradeStatus) {
+        this.tradeStatus = tradeStatus;
     }
 
     /**
@@ -231,69 +152,38 @@ public class Trade {
         editedCounter++;
     }
 
+
     /**
-     * Creates a string representation of this trade.
-     *
-     * @return String representation of a Trade object
+     * @return The ids of all traders.
      */
-    @Override
-    public String toString() {
-        return "Trade{" +
-                "id=" + id +
-                ", timePlaceID=" + timePlaceID +
-                ", isPermanent=" + isPermanent +
-                ", traderOneID=" + traderOneID +
-                ", traderTwoID=" + traderTwoID +
-                ", itemOneIDs=" + itemOneIDs +
-                ", itemTwoIDs=" + itemTwoIDs +
-                ", status=" + status +
-                ", lastEditorID=" + lastEditorID +
-                ", editedCounter=" + editedCounter +
-                '}';
+    public List<Integer> getTraderIds() {
+        return tradersIds;
     }
 
     /**
-     * Returns whether trader one marked this trade as complete or not.
-     *
-     * @return Whether trader one marked this trade as complete or not
+     * @return An array for whether each user reported trade completion.
      */
-    public boolean isTraderOneCompleted() {
-        return traderOneCompleted;
+    public List<Boolean> getTradeCompletions() {
+        return tradeCompletions;
     }
 
-    /**
-     * Sets whether trader one marked this trade as complete or not, and updates the status
-     * of the trade if it should be updated.
-     *
-     * @param traderOneCompleted Whether trader one marked this trade as complete
-     */
-    public void setTraderOneCompleted(boolean traderOneCompleted) {
-        this.traderOneCompleted = traderOneCompleted;
-        if (this.traderOneCompleted && this.traderTwoCompleted) {
-            this.status = TradeStatus.COMPLETED;
-        }
+    public int getNextTraderID(int accountID) {
+        int index = (tradersIds.indexOf(accountID) + 1) % tradersIds.size();
+        return tradersIds.get(index);
     }
 
-    /**
-     * Returns whether trader two marked this trade as complete or not.
-     *
-     * @return Whether trader two marked this trade as complete or not
-     */
-    public boolean isTraderTwoCompleted() {
-        return traderTwoCompleted;
+    public void setCompletedOfTrader(int accountID, boolean isCompleted) {
+        int index = tradersIds.indexOf(accountID);
+        tradeCompletions.set(index, isCompleted);
+        if (!tradeCompletions.contains(false))
+            setStatus(TradeStatus.COMPLETED);
     }
 
-    /**
-     * Sets whether trader two marked this trade as complete or not, and updates the status
-     * of the trade if it should be updated.
-     *
-     * @param traderTwoCompleted Whether trader two marked this trade as complete
-     */
-    public void setTraderTwoCompleted(boolean traderTwoCompleted) {
-        this.traderTwoCompleted = traderTwoCompleted;
-        if (this.traderOneCompleted && this.traderTwoCompleted) {
-            this.status = TradeStatus.COMPLETED;
-        }
+    public boolean isEditTurn(int accountID) {
+        return editedCounter % tradersIds.size() == tradersIds.indexOf(accountID);
     }
 
+    public boolean isTwoPersonTrade() {
+        return tradersIds.size() == 2;
+    }
 }

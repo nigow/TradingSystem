@@ -8,6 +8,7 @@ import gateways.RestrictionsGateway;
 
 import java.util.List;
 
+//TODO to be removed
 /**
  * Manager responsible for authenticating logging in and authorizing actions.
  *
@@ -56,12 +57,10 @@ public class AuthManager {
      *
      * @param account      Account to add the permission to
      * @param permissionID Unique identifier of permission
-     * @return Whether the permission is successfully added or not
      */
 
-    public boolean addPermissionByID(Account account, Permissions permissionID) {
+    public void addPermissionByID(Account account, Permissions permissionID) {
         account.addPermission(permissionID);
-        return accountGateway.updateAccount(account);
     }
 
     /**
@@ -69,13 +68,11 @@ public class AuthManager {
      *
      * @param account       Account to add the list of permissions to
      * @param permissionIDs List of unique identifiers of permissions
-     * @return Whether the permissions are successfully added or not
      */
-    public boolean addPermissionsByIDs(Account account, List<Permissions> permissionIDs) {
+    public void addPermissionsByIDs(Account account, List<Permissions> permissionIDs) {
         for (Permissions permissionID : permissionIDs) {
             account.addPermission(permissionID);
         }
-        return accountGateway.updateAccount(account);
     }
 
     /**
@@ -83,11 +80,9 @@ public class AuthManager {
      *
      * @param account      Account to remove the permission from
      * @param permissionID Unique identifier of permission
-     * @return Whether the permission is successfully removed or not
      */
-    public boolean removePermissionByID(Account account, Permissions permissionID) {
+    public void removePermissionByID(Account account, Permissions permissionID) {
         account.removePermission(permissionID);
-        return accountGateway.updateAccount(account);
     }
 
     /**
@@ -95,13 +90,11 @@ public class AuthManager {
      *
      * @param account       Account to remove the list of permissions from
      * @param permissionIDs List of unique identifiers of permissions
-     * @return Whether permissions are successfully removed or not
      */
-    public boolean removePermissionsByIDs(Account account, List<Permissions> permissionIDs) {
+    public void removePermissionsByIDs(Account account, List<Permissions> permissionIDs) {
         for (Permissions permissionID : permissionIDs) {
             account.removePermission(permissionID);
         }
-        return accountGateway.updateAccount(account);
     }
 
 //    /**
@@ -247,31 +240,34 @@ public class AuthManager {
     /**
      * Determines whether a given account should be frozen.
      *
-     * @param tradeUtility Utility for getting trade information
+     * @param oldTradeUtility Utility for getting trade information
      * @param account      Account that is checked if it can be frozen
      * @param adminAccount The admin account that is freezing this account
      * @return Whether the account can be frozen or not
      */
-    public boolean canBeFrozen(TradeUtility tradeUtility, Account account, Account adminAccount) {
+    public boolean canBeFrozen(OldTradeUtility oldTradeUtility, Account account, Account adminAccount) {
         Restrictions restrictions = restrictionsGateway.getRestrictions();
-        tradeUtility.setAccount(account);
-        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
-        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
-        tradeUtility.setAccount(adminAccount);
+        oldTradeUtility.setAccount(account);
+
+        //TODO each boolean should be method within OldTradeUtility so AuthManager doesn't depend on restrictionsGateway
+        boolean withinMaxIncompleteTrades = oldTradeUtility.getTimesIncomplete() <= restrictions.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = oldTradeUtility.getNumWeeklyTrades() < restrictionsGateway.getRestrictions().getMaxWeeklyTrade();
+        oldTradeUtility.setAccount(adminAccount);
         return !canUnfreeze(account) && !isFrozen(account) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
-
+    //TODO should be in OldTradeUtility
     /**
      * Determines whether the current account has lent more than borrowed.
      *
-     * @param tradeUtility Utility for getting trade information
+     * @param oldTradeUtility Utility for getting trade information
      * @return Whether the current account has lent more than borrowed
      */
-    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility) {
-        return tradeUtility.getTimesLent() - tradeUtility.getTimesBorrowed() >=
+    public boolean lentMoreThanBorrowed(OldTradeUtility oldTradeUtility) {
+        return oldTradeUtility.getTimesLent() - oldTradeUtility.getTimesBorrowed() >=
                 restrictionsGateway.getRestrictions().getLendMoreThanBorrow();
     }
 
+    //TODO Negation of isFrozen() so useless method
     /**
      * Determines whether a given account can trade.
      *

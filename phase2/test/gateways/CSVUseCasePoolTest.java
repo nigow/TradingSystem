@@ -1,5 +1,6 @@
 package gateways;
 
+import controllers.CSVUseCasePool;
 import junit.framework.TestCase;
 
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class CSVUseCasePoolTest extends TestCase {
     public void testTradeManagerCreation() {
         try {
             CSVUseCasePool mc = new CSVUseCasePool();
-            assertNotNull(mc.getTradeManager());
+            assertNotNull(mc.getOldTradeManager());
         }
         catch (IOException ignored) {
             fail();
@@ -64,7 +65,7 @@ public class CSVUseCasePoolTest extends TestCase {
     public void testWishlistUtilityCreation() {
         try {
             CSVUseCasePool mc = new CSVUseCasePool();
-            assertNotNull(mc.getWishlistUtility());
+            assertNotNull(mc.getWishlistManager());
         }
         catch (IOException ignored) {
             fail();
@@ -86,7 +87,7 @@ public class CSVUseCasePoolTest extends TestCase {
     public void testGetTradeUtility() {
         try {
             CSVUseCasePool mc = new CSVUseCasePool();
-            assertNotNull(mc.getTradeUtility());
+            assertNotNull(mc.getOldTradeUtility());
         }
         catch (IOException ignored) {
             fail();

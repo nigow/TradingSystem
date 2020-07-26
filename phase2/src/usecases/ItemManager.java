@@ -2,30 +2,49 @@ package usecases;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import entities.Item;
 import gateways.ItemsGateway;
 
+// TODO javadoc
 /**
  * Manager for items which creates an item or takes in an item to edit.
  *
  * @author Isaac
  */
 
-public class ItemManager {
+public class ItemManager extends ItemUtility{
 
     /**
      * The gateway which deals with items.
      */
-    private final ItemsGateway itemsGateway;
+    private final gateways.experimental.ItemsGateway itemsGateway;
+
+    private int generateValidIDCounter;
 
     /**
      * Constructor for ItemManager which stores an ItemsGateway.
      *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
-    public ItemManager(ItemsGateway itemsGateway) {
+    public ItemManager(gateways.experimental.ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
+        generateValidIDCounter = 0;
+    }
+
+    public int generateValidID() {
+        return generateValidIDCounter++;
+    }
+
+    public void addToItems(int id, String name, String description, int ownerId) {
+        Item item = new Item(id, name, description, ownerId);
+        items.put(id, item);
+    }
+
+    public void updateToItemsGateway(Item item) {
+        itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
+                item.isApproved(), item.getOwnerID());
     }
 
     /**
@@ -37,102 +56,75 @@ public class ItemManager {
      * @param ownerID     The id of the owner of the item
      */
     public void createItem(String name, String description, int ownerID) {
-        Item item = new Item(itemsGateway.generateValidId(), name, description, ownerID);
-        this.itemsGateway.updateItem(item);
+        int id = generateValidID();
+        Item item = new Item(id, name, description, ownerID);
+        this.items.put(id, item);
+        updateToItemsGateway(item);
     }
 
     /**
      * Deletes an item in the system and returns if item was successfully deleted.
      *
-     * @param item The item to be deleted
+     * @param itemId The item to be deleted
      * @return Whether the deletion was successful
      */
-    public boolean removeItem(Item item) {
+    public boolean removeItem(int itemId) {
         boolean result = false;
-        if (getAllItems().contains(item)) {
-            item.setOwnerID(-1);
+        if (items.containsKey(itemId)) {
+            items.get(itemId).setOwnerID(-1);
             result = true;
-            itemsGateway.updateItem(item);
+            this.items.remove(itemId);
         }
+        updateToItemsGateway(items.get(itemId));
         return result;
     }
 
-    /**
-     * Get the item with the ID entered.
-     *
-     * @param ItemID ID of the item
-     * @return item with the entered Id
-     */
-    public Item getItemById(int ItemID) {
-        return itemsGateway.findById(ItemID);
-    }
 
     /**
      * Get the string representation of item with the id entered.
      *
-     * @param ItemID ID of the item
+     * @param itemID ID of the item
      * @return String of item with the entered ID
      */
-    public String getItemStringById(int ItemID) {
-        return itemsGateway.findById(ItemID).toString();
+    public String getItemStringById(int itemID) {
+        return super.findItemById(itemID).toString();
     }
 
-    /**
-     * Gets the ID of an item.
-     *
-     * @param item item which information is being returned about
-     * @return ID of an item
-     */
-    public int getItemId(Item item) {
-        return item.getItemID();
-    }
 
     /**
      * Gets the approval status of the item.
      *
-     * @param item item which information is being returned about
+     * @param itemId item which information is being returned about
      * @return approval status of the item
      */
-    public boolean isApproved(Item item) {
-        return item.isApproved();
-    }
-
-    /**
-     * Gets the ID of the owner of the item.
-     *
-     * @param itemID ID of the item which information is being returned about
-     * @return ID of the owner of the item (-1 if no item can be found).
-     */
-    public int getOwnerId(int itemID) {
-        Item item = itemsGateway.findById(itemID);
-        if (item != null) return item.getOwnerID();
-        return -1;
+    public boolean isApproved(int itemId) {
+        return items.get(itemId).isApproved();
     }
 
     /**
      * Update the owner of the item.
      *
-     * @param item    item being updated
+     * @param itemId    item being updated
      * @param ownerID new owner of the item
      */
-    public void updateOwner(Item item, int ownerID) {
-        item.setOwnerID(ownerID);
-        itemsGateway.updateItem(item);
+    public void updateOwner(int itemId, int ownerID) {
+        items.get(itemId).setOwnerID(ownerID);
+        updateToItemsGateway(items.get(itemId));
     }
 
     /**
      * Update the approval status of the item.
      *
-     * @param item     item being updated
+     * @param itemId     item being updated
      * @param approval new approval status of the item
      */
-    public void updateApproval(Item item, boolean approval) {
+    public void updateApproval(int itemId, boolean approval) {
         if (approval) {
-            item.approve();
+            items.get(itemId).approve();
         } else {
-            item.disapprove();
+            items.get(itemId).disapprove();
         }
-        itemsGateway.updateItem(item);
+        updateToItemsGateway(items.get(itemId));
     }
 
     /**
@@ -142,9 +134,9 @@ public class ItemManager {
      */
     public List<Item> getAllItems() {
         List<Item> Items = new ArrayList<>();
-        for (Item item : itemsGateway.getAllItems()) {
-            if (item.getOwnerID() != -1) {
-                Items.add(item);
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (items.get(entry.getKey()).getOwnerID() != -1) {
+                Items.add(items.get(entry.getKey()));
             }
         }
         return Items;

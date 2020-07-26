@@ -1,5 +1,6 @@
 package gateways;
 
+import controllers.UseCasePool;
 import entities.*;
 import usecases.*;
 
@@ -10,27 +11,30 @@ public class InMemoryUseCasePool implements UseCasePool {
     private AuthManager authManager;
     private ItemManager itemManager;
     private FreezingUtility freezingUtility;
-    private TradeManager tradeManager;
-    private WishlistUtility wishlistUtility;
+    private OldTradeManager oldTradeManager;
+    private WishlistManager wishlistManager;
     private ItemUtility itemUtility;
-    private TradeUtility tradeUtility;
+    private OldTradeUtility oldTradeUtility;
 
 
     public InMemoryUseCasePool(){
         InMemoryAccountGateway accountGateway = new InMemoryAccountGateway(new HashMap<Integer, Account>());
         InMemoryItemGateway itemGateway = new InMemoryItemGateway(new HashMap<Integer, Item>());
-        InMemoryTradeGateway tradeGateway = new InMemoryTradeGateway(new HashMap<Integer, Trade>(), new HashMap<Integer, TimePlace>());
+        InMemoryTradeGateway tradeGateway = new InMemoryTradeGateway(new HashMap<Integer, OldTrade>(), new HashMap<Integer, TimePlace>());
         InMemoryRestrictionsGateway restrictionsGateway = new InMemoryRestrictionsGateway(new Restrictions(1,1,1));
         // Restrictions are tentative
 
         this.accountManager = new AccountManager(accountGateway);
         this.authManager = new AuthManager(accountGateway, restrictionsGateway);
         this.itemManager = new ItemManager(itemGateway);
-        this.freezingUtility = new FreezingUtility(restrictionsGateway);
-        this.tradeManager = new TradeManager(tradeGateway);
-        this.wishlistUtility = new WishlistUtility(accountGateway, itemGateway);
-        this.itemUtility = new ItemUtility(itemManager);
-        this.tradeUtility = new TradeUtility(tradeManager);
+        // TODO fix this for tests
+        this.freezingUtility = null;
+//      this.freezingUtility = new FreezingUtility(restrictionsGateway);
+        this.oldTradeManager = new OldTradeManager(tradeGateway);
+        this.wishlistManager = null;
+//      this.wishlistManager = new WishlistManager(accountGateway, itemGateway);
+        this.itemUtility = new ItemUtility();
+        this.oldTradeUtility = new OldTradeUtility(oldTradeManager);
 
         if (accountManager.getAccountsList().size() == 0)  {
             accountManager.createAdminAccount("admin", "12345");
@@ -60,13 +64,13 @@ public class InMemoryUseCasePool implements UseCasePool {
     }
 
     @Override
-    public TradeManager getTradeManager() {
-        return this.tradeManager;
+    public OldTradeManager getOldTradeManager() {
+        return this.oldTradeManager;
     }
 
     @Override
-    public WishlistUtility getWishlistUtility() {
-        return this.wishlistUtility;
+    public WishlistManager getWishlistManager() {
+        return this.wishlistManager;
     }
 
     @Override
@@ -75,8 +79,13 @@ public class InMemoryUseCasePool implements UseCasePool {
     }
 
     @Override
-    public TradeUtility getTradeUtility() {
-        return this.tradeUtility;
+    public OldTradeUtility getOldTradeUtility() {
+        return this.oldTradeUtility;
+    }
+
+    @Override
+    public AccountRepository getAccountRepository() {
+        return null;
     }
 
 }

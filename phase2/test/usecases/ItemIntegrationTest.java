@@ -28,13 +28,13 @@ public class ItemIntegrationTest extends TestCase {
 
         itemsGateway = new InMemoryItemGateway(h);
         itemManager = new ItemManager(itemsGateway);
-        itemUtility = new ItemUtility(itemManager);
+        itemUtility = new ItemUtility();
         return itemManager;
     }
 
     private ItemUtility setUpItemUtility() {
         itemManager = setUpItemManager();
-        itemUtility = new ItemUtility(itemManager);
+        itemUtility = new ItemUtility();
         return itemUtility;
     }
 
