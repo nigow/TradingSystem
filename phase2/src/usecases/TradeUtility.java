@@ -276,16 +276,17 @@ abstract public class TradeUtility {
      *
      * @return Number of times the current user has lent items
      */
-    public Integer getTimesLent(AccountManager accountManager, int accountID) {
-        Account account = accountManager.getAccountFromID(accountID);
+    public Integer getTimesLent(int accountID) {
         Integer timesLent = 0;
-        for (OldTrade oldTrade : getAllTradesAccount(accountID)) {
-            if (account.getAccountID() == oldTrade.getTraderTwoID()) {
-                if (oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            if (trade.getTraderIds().size() != 2)
+                continue;
+            if (accountID == trade.getTraderIds().get(1)) {
+                if (trade.getItemsIds().get(0).isEmpty() && !trade.getItemsIds().get(1).isEmpty()) {
                     timesLent++;
                 }
             } else {
-                if (!oldTrade.getItemOneIDs().isEmpty() && oldTrade.getItemTwoIDs().isEmpty()) {
+                if (!trade.getItemsIds().get(0).isEmpty() && trade.getItemsIds().get(1).isEmpty()) {
                     timesLent++;
                 }
             }
@@ -370,10 +371,10 @@ abstract public class TradeUtility {
      *
      * @return List of trades in string format
      */
-    public List<String> getAllTradesString(AccountManager accountManager, ItemUtility itemUtility) {
+    public List<String> getAllTradesString(AccountRepository accountRepository, ItemUtility itemUtility) {
         List<String> StringTrade = new ArrayList<>();
-        for (OldTrade oldTrade : trades) {
-            StringTrade.add(tradeAsString(oldTrade, accountManager, itemUtility));
+        for (Trade trade : trades) {
+            StringTrade.add(tradeAsString(trade, accountRepository, itemUtility));
         }
         return StringTrade;
     }
