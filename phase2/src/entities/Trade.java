@@ -3,6 +3,8 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO jacadoc should be fixed
+
 /**
  * Represents a one-way or two-way transaction between two users.
  *
@@ -14,13 +16,11 @@ public class Trade {
 
     private boolean isPermanent;
 
-    private final int[] tradersIds;
+    private final List<Integer> tradersIds;
 
-    private final int[] itemsIds;
+    private final List< List<Integer> > itemsIds;
 
     private TradeStatus tradeStatus;
-
-    private int lastEditorID;
 
     private int editedCounter;
 
@@ -35,16 +35,15 @@ public class Trade {
      * @param tradersIds    A collection of integer storing the ids of all traders.
      * @param itemsIds      A collection of ids for the items in this trade.
      */
-    public Trade(int id, boolean isPermanent, int[] tradersIds, int[] itemsIds) {
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds, List< List<Integer> > itemsIds) {
         this.id = id;
         this.isPermanent = isPermanent;
         this.tradersIds = tradersIds;
         this.itemsIds = itemsIds;
         tradeStatus = TradeStatus.UNCONFIRMED;
         editedCounter = 0;
-        lastEditorID = tradersIds[0];
         tradeCompletions = new ArrayList<>();
-        for(int i = 1; i <= tradersIds.length; i++) {
+        for(int i = 0; i < tradersIds.size(); i++) {
             tradeCompletions.add(false);
         }
     }
@@ -60,8 +59,8 @@ public class Trade {
      * @param tradeStatus   The status of the trade.
      * @param tradeCompletions The completions of this trade.
      */
-    public Trade(int id, boolean isPermanent, int[] tradersIds,
-                 int[] itemsIds, int editedCounter, TradeStatus tradeStatus,
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds,
+                 List< List<Integer> > itemsIds, int editedCounter, TradeStatus tradeStatus,
                  List<Boolean> tradeCompletions) {
         this.id = id;
         this.isPermanent = isPermanent;
@@ -70,7 +69,6 @@ public class Trade {
         this.editedCounter = editedCounter;
         this.tradeCompletions = tradeCompletions;
         this.tradeStatus = tradeStatus;
-        lastEditorID = tradersIds[0];
     }
 
 
@@ -107,7 +105,7 @@ public class Trade {
      *
      * @return A collection of item ids for this trade.
      */
-    public int[] getItemsIds() {
+    public List< List<Integer> > getItemsIds() {
         return itemsIds;
     }
 
@@ -116,17 +114,8 @@ public class Trade {
      *
      * @return Status of this trade
      */
-    public TradeStatus getTradeStatus() {
+    public TradeStatus getStatus() {
         return tradeStatus;
-    }
-
-    /**
-     * Returns the ID of the person who last suggested a meetup.
-     *
-     * @return ID of the person who last suggested a meetup
-     */
-    public int getLastEditorID() {
-        return lastEditorID;
     }
 
     /**
@@ -152,17 +141,8 @@ public class Trade {
      *
      * @param tradeStatus New status of this trade
      */
-    public void setTradeStatus(TradeStatus tradeStatus) {
+    public void setStatus(TradeStatus tradeStatus) {
         this.tradeStatus = tradeStatus;
-    }
-
-    /**
-     * Changes the ID of the last person who suggested a meetup.
-     *
-     * @param lastEditorID ID of the last person who suggested a meetup
-     */
-    public void setLastEditorID(int lastEditorID) {
-        this.lastEditorID = lastEditorID;
     }
 
     /**
@@ -176,10 +156,9 @@ public class Trade {
     /**
      * @return The ids of all traders.
      */
-    public int[] getTraderIds() {
+    public List<Integer> getTraderIds() {
         return tradersIds;
     }
-
 
     /**
      * @return An array for whether each user reported trade completion.
@@ -188,22 +167,26 @@ public class Trade {
         return tradeCompletions;
     }
 
-    /**
-     * Creates a string representation of this trade.
-     *
-     * @return String representation of a OldTrade object
-     */
-    @Override
-    public String toString() {
-        return "OldTrade{" +
-                "id=" + id +
-                ", timePlaceID=" + id +
-                ", isPermanent=" + isPermanent +
-                ", status=" + tradeStatus +
-                ", lastEditorID=" + lastEditorID +
-                ", editedCounter=" + editedCounter +
-                '}';
+    public int getNextTraderID(int accountID) {
+        int index = (tradersIds.indexOf(accountID) + 1) % tradersIds.size();
+        return tradersIds.get(index);
     }
 
+    public List<Integer> itemsTraderGives(int accountID) {
+        int index = tradersIds.indexOf(accountID);
+        return itemsIds.get(index);
+    }
 
+    public List<Integer> itemsTraderGets(int accountID) {
+        return itemsTraderGives(getNextTraderID(accountID));
+    }
+
+    public void setCompletedOfTrader(int accountID, boolean isCompleted) {
+        int index = tradersIds.indexOf(accountID);
+        tradeCompletions.set(index, isCompleted);
+    }
+
+    public boolean isEditTurn(int accountID) {
+        return editedCounter % tradersIds.size() == tradersIds.indexOf(accountID);
+    }
 }

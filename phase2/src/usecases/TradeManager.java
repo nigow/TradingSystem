@@ -3,9 +3,9 @@ package usecases;
 import entities.*;
 import gateways.TradeGateway;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // TODO javadoc is fucked :D
@@ -22,8 +22,19 @@ public class TradeManager extends TradeUtility{
 
     private int generateValidIDCounter;
 
-    public void TradeManager() {
+    private WishlistManager wishlistManager;
+    private ItemManager itemManager;
+
+    private TradeGateway tradeGateway;
+
+    public void TradeManager(TradeGateway tradeGateway, AccountRepository accountRepository,
+                             ItemManager itemManager, WishlistManager wishlistManager) {
         generateValidIDCounter = 1;
+        this.itemUtility = itemManager;
+        this.accountRepository = accountRepository;
+        this.wishlistManager = wishlistManager;
+        this.itemManager = itemManager;
+        this.tradeGateway = tradeGateway;
     }
 
     public int generateValidID() {
@@ -31,78 +42,68 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Creates a new OldTrade object to be edited.
+     * Creates a new Trade object to be edited.
      *
-     * @param time           Time of the OldTrade
-     * @param place          Location of the OldTrade
-     * @param isPermanent    Whether the oldTrade is permanent or not
-     * @param traderOneID    ID of the first trader
-     * @param traderTwoID    ID of the second trader
-     * @param itemOneID      List of items trader one is offering
-     * @param itemTwoID      List of items trader two is offering
-     * @param accountManager Manager for editing wishlist
+     * @param time           Time of the Trade
+     * @param place          Location of the Trade
+     * @param isPermanent    Whether the Trade is permanent or not
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
-                            int traderOneID, int traderTwoID, List<Integer> itemOneID,
-                            List<Integer> itemTwoID, AccountManager accountManager) {
-        int id = generateValidID();
+                            List<Integer> tradersIds, List< List<Integer> > itemsIds) {
+        int id = generateValidID(); // TODO use the gateway generator
         TimePlace timePlace = new TimePlace(id, time, place);
-        OldTrade oldTrade = new OldTrade(id, id, isPermanent, traderOneID, traderTwoID,
-                itemOneID, itemTwoID, 0);
-        trades.add(oldTrade);
+        Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
+        trades.add(trade);
         timePlaces.add(timePlace);
-        Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(traderTwoID));
-        for (Integer itemId : itemOneID) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
-            }
+        for (int accountID : tradersIds) {
+            for (int itemID : trade.itemsTraderGets(accountID))
+                wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(traderOneID));
-        for (Integer itemId : itemTwoID) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
-            }
-        }
-        accountManager.setCurrAccount(account.getUsername());
+        // TODO call save for gateway
     }
 
     /**
-     * Initiates a reverse oldTrade.
+     * Initiates a reverse Trade.
      *
-     * @param accountManager Manager for editing wishlist
      */
-    public void reverseTrade(AccountManager accountManager, int id) {
+    public void reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
-        OldTrade oldTrade = getTradeByID(id);
-        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS), timePlace.getPlace(), true, oldTrade.getTraderOneID(),
-                oldTrade.getTraderTwoID(), oldTrade.getItemTwoIDs(), oldTrade.getItemOneIDs(), accountManager);
+        Trade trade = getTradeByID(id);
+        List<Integer> reverseTraders = new ArrayList<>();
+        reverseTraders.addAll(trade.getTraderIds());
+        List< List<Integer> > reverseItems = new ArrayList<>();
+        reverseItems.addAll(trade.getItemsIds());
+        Collections.reverse(reverseTraders);
+        Collections.reverse(reverseItems);
+        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS),
+                timePlace.getPlace(), true, reverseTraders, reverseItems);
     }
 
     /**
-     * Changes the TimePlace of the oldTrade and updates last edit info.
+     * Changes the TimePlace of the Trade and updates last edit info.
      *
-     * @param time     New time of the oldTrade
-     * @param place    New place of the oldTrade
-     * @param editorID ID of the person editing the oldTrade
+     * @param time     New time of the Trade
+     * @param place    New place of the Trade
+     * @param editorID ID of the person editing the Trade
      */
     public void editTimePlace(int tradeID, LocalDateTime time, String place, int editorID) {
         TimePlace timePlace = getTimePlaceByID(tradeID);
-        OldTrade oldTrade = getTradeByID(tradeID);
+        Trade trade = getTradeByID(tradeID);
         timePlace.setTime(time);
         timePlace.setPlace(place);
-        oldTrade.setLastEditorID(editorID);
-        oldTrade.incrementEditedCounter();
+        trade.incrementEditedCounter();
+        // TODO call gateway save
     }
 
     /**
-     * Updates the status of the oldTrade.
+     * Updates the status of the Trade.
      *
-     * @param tradeStatus New status of the oldTrade
+     * @param tradeStatus New status of the Trade
      */
     public void updateStatus(int tradeID, TradeStatus tradeStatus) {
-        OldTrade oldTrade = getTradeByID(tradeID);
-        oldTrade.setStatus(tradeStatus);
+        Trade trade = getTradeByID(tradeID);
+        trade.setStatus(tradeStatus);
+        // TODO call gateway save
     }
 
     /**
@@ -111,72 +112,53 @@ public class TradeManager extends TradeUtility{
      * @return Whether it's the account's turn to edit.
      */
     public boolean isEditTurn(int accountID, int tradeID) {
-        return accountID != getTradeByID(tradeID).getLastEditorID();
+        return getTradeByID(tradeID).isEditTurn(accountID);
     }
 
     /**
-     * Updates the completion status of this oldTrade according to the user's ID.
+     * Updates the completion status of this Trade according to the user's ID.
      *
-     * @param accountID The ID of the account who marked this oldTrade as complete
+     * @param accountID The ID of the account who marked this Trade as complete
      */
     public void updateCompletion(int accountID, int tradeID) {
-        OldTrade oldTrade = getTradeByID(tradeID);
-        if (accountID == oldTrade.getTraderOneID())
-            oldTrade.setTraderOneCompleted(true);
-        else if (accountID == oldTrade.getTraderTwoID())
-            oldTrade.setTraderTwoCompleted(true);
+        Trade trade = getTradeByID(tradeID);
+        trade.setCompletedOfTrader(accountID, true);
+        // TODO call gateway save
     }
 
     /**
-     * Completes the action of making a oldTrade.
+     * Completes the action of making a trade.
      *
-     * @param oldTrade          OldTrade object representing the oldTrade about to be made
-     * @param accountManager Manager for accounts
-     * @param itemManager    Manager for items
+     * @param trade          Trade object representing the trade about to be made
      */
-    public void makeTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
-        Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
-        for (Integer itemId : oldTrade.getItemOneIDs()) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
-            }
-            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderOneID()).contains(itemManager.getItemById(itemId))) {
-                itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderTwoID());
+    public void makeTrade(Trade trade) {
+        for (int accountID : trade.getTraderIds()) {
+            for (int itemID : trade.itemsTraderGets(accountID)) {
+                itemManager.updateOwner(itemManager.findItemById(itemID), accountID);
             }
         }
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
-        for (Integer itemId : oldTrade.getItemTwoIDs()) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
-            }
-            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderTwoID()).contains(itemManager.getItemById(itemId))) {
-                itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderOneID());
-            }
-        }
-        accountManager.setCurrAccount(account.getUsername());
     }
 
-    /**
-     * Completes the action of reversing a oldTrade which was rejected.
-     *
-     * @param oldTrade          OldTrade object representing the oldTrade about to be rejected
-     * @param accountManager Object for managing accounts
-     * @param itemManager    Object for managing items
-     */
-    public void rejectedTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
-        Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
-        for (Integer itemId : oldTrade.getItemOneIDs()) {
-            accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderOneID());
-        }
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
-        for (Integer itemId : oldTrade.getItemTwoIDs()) {
-            accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderTwoID());
-        }
-        accountManager.setCurrAccount(account.getUsername());
-    }
-
+    // TODO unused and broken method
+//    /**
+//     * Completes the action of reversing a Trade which was rejected.
+//     *
+//     * @param trade          Trade object representing the Trade about to be rejected
+//     * @param accountManager Object for managing accounts
+//     * @param itemManager    Object for managing items
+//     */
+//    public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
+//        Account account = accountManager.getCurrAccount();
+//        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
+//        for (Integer itemId : trade.getItemOneIDs()) {
+//            accountManager.addItemToWishlist(itemId);
+//            itemManager.updateOwner(itemManager.findItemById(itemId), trade.getTraderOneID());
+//        }
+//        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
+//        for (Integer itemId : trade.getItemTwoIDs()) {
+//            accountManager.addItemToWishlist(itemId);
+//            itemManager.updateOwner(itemManager.findItemById(itemId), trade.getTraderTwoID());
+//        }
+//        accountManager.setCurrAccount(account.getUsername());
+//    }
 }

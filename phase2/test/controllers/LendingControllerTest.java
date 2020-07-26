@@ -9,7 +9,6 @@ import presenters.LendingPresenter;
 import presenters.TradeCreatorPresenter;
 import usecases.AccountManager;
 import usecases.ItemManager;
-import usecases.OldTradeManager;
 
 import java.util.List;
 
