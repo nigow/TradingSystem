@@ -228,4 +228,8 @@ public class ItemUtility {
         return null;
     }
 
+    public String findItemByIdString(int itemId) {
+        return findItemById(itemId).toString();
+    }
+
 }
