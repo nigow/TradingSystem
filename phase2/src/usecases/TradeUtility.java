@@ -247,21 +247,23 @@ abstract public class TradeUtility {
         return timesIncomplete;
     }
 
+    // TODO only checks trades with two people
     /**
      * Retrieves the number of times the current user has borrowed items.
      *
      * @return Number of times the current user has borrowed items
      */
-    public Integer getTimesBorrowed(AccountManager accountManager, int accountID) {
-        Account account = accountManager.getAccountFromID(accountID);
+    public Integer getTimesBorrowed(int accountID) {
         Integer timesBorrowed = 0;
-        for (OldTrade oldTrade : getAllTradesAccount(accountID)) {
-            if (account.getAccountID() == oldTrade.getTraderTwoID()) {
-                if (!oldTrade.getItemOneIDs().isEmpty() && oldTrade.getItemTwoIDs().isEmpty()) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            if (trade.getTraderIds().size() != 2)
+                continue;
+            if (accountID == trade.getTraderIds().get(1)) {
+                if (!trade.getItemsIds().get(0).isEmpty() && trade.getItemsIds().get(1).isEmpty()) {
                     timesBorrowed++;
                 }
             } else {
-                if (oldTrade.getItemOneIDs().isEmpty() && !oldTrade.getItemTwoIDs().isEmpty()) {
+                if (trade.getItemsIds().get(0).isEmpty() && !trade.getItemsIds().get(1).isEmpty()) {
                     timesBorrowed++;
                 }
             }
