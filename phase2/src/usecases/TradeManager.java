@@ -1,7 +1,7 @@
 package usecases;
 
 import entities.*;
-import gateways.TradeGateway;
+import gateways.experimental.TradeGateway;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,6 +41,20 @@ public class TradeManager extends TradeUtility{
         return generateValidIDCounter++;
     }
 
+    public void addToTrades(int tradeID, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
+                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions) {
+        Trade trade = new Trade(tradeID, isPermanent, traderIDs, itemIDs, editedCounter,
+                TradeStatus.valueOf(tradeStatus), tradeCompletions);
+        trades.add(trade);
+        updateToGateway(trade);
+        // TODO getting of timeplaces
+    }
+
+    public void updateToGateway(Trade trade) {
+        tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
+                trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions());
+    }
+
     /**
      * Creates a new Trade object to be edited.
      *
@@ -50,7 +64,7 @@ public class TradeManager extends TradeUtility{
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List< List<Integer> > itemsIds) {
-        int id = generateValidID(); // TODO use the gateway generator
+        int id = generateValidID();
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
         trades.add(trade);
@@ -59,7 +73,8 @@ public class TradeManager extends TradeUtility{
             for (int itemID : trade.itemsTraderGets(accountID))
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
-        // TODO call save for gateway
+        updateToGateway(trade);
+        // TODO update to gateway timeplace
     }
 
     /**
@@ -92,7 +107,8 @@ public class TradeManager extends TradeUtility{
         timePlace.setTime(time);
         timePlace.setPlace(place);
         trade.incrementEditedCounter();
-        // TODO call gateway save
+        updateToGateway(trade);
+        // TODO update to gateway timeplace
     }
 
     /**
@@ -103,7 +119,7 @@ public class TradeManager extends TradeUtility{
     public void updateStatus(int tradeID, TradeStatus tradeStatus) {
         Trade trade = getTradeByID(tradeID);
         trade.setStatus(tradeStatus);
-        // TODO call gateway save
+        updateToGateway(trade);
     }
 
     /**
@@ -123,7 +139,7 @@ public class TradeManager extends TradeUtility{
     public void updateCompletion(int accountID, int tradeID) {
         Trade trade = getTradeByID(tradeID);
         trade.setCompletedOfTrader(accountID, true);
-        // TODO call gateway save
+        updateToGateway(trade);
     }
 
     /**

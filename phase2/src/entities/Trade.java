@@ -184,6 +184,8 @@ public class Trade {
     public void setCompletedOfTrader(int accountID, boolean isCompleted) {
         int index = tradersIds.indexOf(accountID);
         tradeCompletions.set(index, isCompleted);
+        if (!tradeCompletions.contains(false))
+            setStatus(TradeStatus.COMPLETED);
     }
 
     public boolean isEditTurn(int accountID) {
