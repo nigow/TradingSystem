@@ -141,8 +141,8 @@ public class TradeManager extends TradeUtility{
             if (accountManager.getCurrWishlist().contains(itemId)) {
                 accountManager.removeItemFromWishlist(itemId);
             }
-            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderOneID()).contains(itemManager.getItemById(itemId))) {
-                itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderTwoID());
+            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderOneID()).contains(itemManager.findItemById(itemId))) {
+                itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderTwoID());
             }
         }
         accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
@@ -150,8 +150,8 @@ public class TradeManager extends TradeUtility{
             if (accountManager.getCurrWishlist().contains(itemId)) {
                 accountManager.removeItemFromWishlist(itemId);
             }
-            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderTwoID()).contains(itemManager.getItemById(itemId))) {
-                itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderOneID());
+            if (itemManager.getApprovedInventoryOfAccount(oldTrade.getTraderTwoID()).contains(itemManager.findItemById(itemId))) {
+                itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderOneID());
             }
         }
         accountManager.setCurrAccount(account.getUsername());
@@ -169,12 +169,12 @@ public class TradeManager extends TradeUtility{
         accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
         for (Integer itemId : oldTrade.getItemOneIDs()) {
             accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderOneID());
+            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderOneID());
         }
         accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
         for (Integer itemId : oldTrade.getItemTwoIDs()) {
             accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.getItemById(itemId), oldTrade.getTraderTwoID());
+            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderTwoID());
         }
         accountManager.setCurrAccount(account.getUsername());
     }
