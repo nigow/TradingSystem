@@ -7,6 +7,7 @@ import gateways.TradeGateway;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // TODO javadoc is fucked :D
@@ -66,13 +67,18 @@ public class TradeManager extends TradeUtility{
     /**
      * Initiates a reverse oldTrade.
      *
-     * @param accountManager Manager for editing wishlist
      */
     public void reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
-        OldTrade oldTrade = getTradeByID(id);
-        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS), timePlace.getPlace(), true, oldTrade.getTraderOneID(),
-                oldTrade.getTraderTwoID(), oldTrade.getItemTwoIDs(), oldTrade.getItemOneIDs(), accountManager);
+        Trade trade = getTradeByID(id);
+        List<Integer> reverseTraders = new ArrayList<>();
+        reverseTraders.addAll(trade.getTraderIds());
+        List< List<Integer> > reverseItems = new ArrayList<>();
+        reverseItems.addAll(trade.getItemsIds());
+        Collections.reverse(reverseTraders);
+        Collections.reverse(reverseItems);
+        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS),
+                timePlace.getPlace(), true, reverseTraders, reverseItems);
     }
 
     /**
