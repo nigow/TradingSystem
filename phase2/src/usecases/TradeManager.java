@@ -1,5 +1,6 @@
 package usecases;
 
+import controllers.WishlistController;
 import entities.*;
 import gateways.TradeGateway;
 
@@ -22,8 +23,15 @@ public class TradeManager extends TradeUtility{
 
     private int generateValidIDCounter;
 
-    public void TradeManager() {
+    private WishlistManager wishlistManager;
+    private ItemManager itemManager;
+
+    public void TradeManager(AccountRepository accountRepository, ItemManager itemManager, WishlistManager wishlistManager) {
         generateValidIDCounter = 1;
+        this.itemUtility = itemManager;
+        this.accountRepository = accountRepository;
+        this.wishlistManager = wishlistManager;
+        this.itemManager = itemManager;
     }
 
     public int generateValidID() {
@@ -40,31 +48,26 @@ public class TradeManager extends TradeUtility{
      * @param traderTwoID    ID of the second trader
      * @param itemOneID      List of items trader one is offering
      * @param itemTwoID      List of items trader two is offering
-     * @param accountManager Manager for editing wishlist
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             int traderOneID, int traderTwoID, List<Integer> itemOneID,
-                            List<Integer> itemTwoID, AccountManager accountManager) {
+                            List<Integer> itemTwoID) {
         int id = generateValidID();
         TimePlace timePlace = new TimePlace(id, time, place);
         OldTrade oldTrade = new OldTrade(id, id, isPermanent, traderOneID, traderTwoID,
                 itemOneID, itemTwoID, 0);
         trades.add(oldTrade);
         timePlaces.add(timePlace);
-        Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(traderTwoID));
         for (Integer itemId : itemOneID) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
+            if (wishlistManager.getCurrWishlist().contains(itemId)) {
+                wishlistManager.removeItemFromWishlist(itemId);
             }
         }
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(traderOneID));
         for (Integer itemId : itemTwoID) {
-            if (accountManager.getCurrWishlist().contains(itemId)) {
-                accountManager.removeItemFromWishlist(itemId);
+            if (wishlistManager.getCurrWishlist().contains(itemId)) {
+                wishlistManager.removeItemFromWishlist(itemId);
             }
         }
-        accountManager.setCurrAccount(account.getUsername());
     }
 
     /**
@@ -72,7 +75,7 @@ public class TradeManager extends TradeUtility{
      *
      * @param accountManager Manager for editing wishlist
      */
-    public void reverseTrade(AccountManager accountManager, int id) {
+    public void reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
         OldTrade oldTrade = getTradeByID(id);
         createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS), timePlace.getPlace(), true, oldTrade.getTraderOneID(),
@@ -134,7 +137,7 @@ public class TradeManager extends TradeUtility{
      * @param accountManager Manager for accounts
      * @param itemManager    Manager for items
      */
-    public void makeTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
+    public void makeTrade(OldTrade oldTrade) {
         Account account = accountManager.getCurrAccount();
         accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
         for (Integer itemId : oldTrade.getItemOneIDs()) {
@@ -157,26 +160,26 @@ public class TradeManager extends TradeUtility{
         accountManager.setCurrAccount(account.getUsername());
     }
 
-    /**
-     * Completes the action of reversing a oldTrade which was rejected.
-     *
-     * @param oldTrade          OldTrade object representing the oldTrade about to be rejected
-     * @param accountManager Object for managing accounts
-     * @param itemManager    Object for managing items
-     */
-    public void rejectedTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
-        Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
-        for (Integer itemId : oldTrade.getItemOneIDs()) {
-            accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderOneID());
-        }
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
-        for (Integer itemId : oldTrade.getItemTwoIDs()) {
-            accountManager.addItemToWishlist(itemId);
-            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderTwoID());
-        }
-        accountManager.setCurrAccount(account.getUsername());
-    }
-
+    // TODO unused and broken method
+//    /**
+//     * Completes the action of reversing a oldTrade which was rejected.
+//     *
+//     * @param oldTrade          OldTrade object representing the oldTrade about to be rejected
+//     * @param accountManager Object for managing accounts
+//     * @param itemManager    Object for managing items
+//     */
+//    public void rejectedTrade(OldTrade oldTrade, AccountManager accountManager, ItemManager itemManager) {
+//        Account account = accountManager.getCurrAccount();
+//        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
+//        for (Integer itemId : oldTrade.getItemOneIDs()) {
+//            accountManager.addItemToWishlist(itemId);
+//            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderOneID());
+//        }
+//        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
+//        for (Integer itemId : oldTrade.getItemTwoIDs()) {
+//            accountManager.addItemToWishlist(itemId);
+//            itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderTwoID());
+//        }
+//        accountManager.setCurrAccount(account.getUsername());
+//    }
 }
