@@ -22,6 +22,21 @@ public class Restrictions {
     private int maxWeeklyTrade;
 
     /**
+     * Number of days of a trade.
+     */
+    private int numberOfDays;
+
+    /**
+     * Number of stats.
+     */
+    private int numberOfStats;
+
+    /**
+     * Number of edits allowed.
+     */
+    private int numberOfEdits;
+
+    /**
      * Creates Restrictions based on number of items a user has to lend more than borrow to be able to trade, the
      * maximum number of incomplete trades before an account is frozen, and the maximum number of trades a user
      * can have in one week.
@@ -30,10 +45,13 @@ public class Restrictions {
      * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen
      * @param maxWeeklyTrade     Maximum number of trades a user can have in one week
      */
-    public Restrictions(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade) {
+    public Restrictions(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats) {
         this.lendMoreThanBorrow = lendMoreThanBorrow;
         this.maxIncompleteTrade = maxIncompleteTrade;
         this.maxWeeklyTrade = maxWeeklyTrade;
+        this.numberOfDays = numberOfDays;
+        this.numberOfEdits = numberOfEdits;
+        this.numberOfStats = numberOfStats;
     }
 
     /**
@@ -88,5 +106,29 @@ public class Restrictions {
      */
     public void setMaxWeeklyTrade(int maxWeeklyTrade) {
         this.maxWeeklyTrade = maxWeeklyTrade;
+    }
+
+    public int getNumberOfDays() {
+        return numberOfDays;
+    }
+
+    public void setNumberOfDays(int numberOfDays) {
+        this.numberOfDays = numberOfDays;
+    }
+
+    public int getNumberOfStats() {
+        return numberOfStats;
+    }
+
+    public void setNumberOfStats(int numberOfStats) {
+        this.numberOfStats = numberOfStats;
+    }
+
+    public int getNumberOfEdits() {
+        return numberOfEdits;
+    }
+
+    public void setNumberOfEdits(int numberOfEdits) {
+        this.numberOfEdits = numberOfEdits;
     }
 }

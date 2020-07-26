@@ -69,4 +69,44 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
     public void invalidInput() {
         System.out.println("Invalid input, try again.");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String viewWishlist() {
+        String message = "View wishlist.";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String removeItem() {
+        String message = "Remove item from wishlist.";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String startNewTrade() {
+        String message = "Start trade.";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String back() {
+        String message = "Back.";
+        System.out.println(message);
+        return message;
+    }
 }

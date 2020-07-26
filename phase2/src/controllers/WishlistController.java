@@ -83,15 +83,15 @@ public class WishlistController {
 
         Map<String, Runnable> actions = new LinkedHashMap<>();
 
-        actions.put("View wishlist.", this::displayWishlist);
-        actions.put("Remove item from wishlist.", this::removeFromWishlist);
+        actions.put(wishlistPresenter.viewWishlist(), this::displayWishlist);
+        actions.put(wishlistPresenter.removeItem(), this::removeFromWishlist);
 
         // tradecreatorcontroller will handle if initiator has to give item in return
         if (authManager.canTrade(accountManager.getCurrAccount()))
 
-            actions.put("Start trade.", this::startTrade);
+            actions.put(wishlistPresenter.startNewTrade(), this::startTrade);
 
-        actions.put("Back.", () -> {
+        actions.put(wishlistPresenter.back(), () -> {
         });
         return actions;
     }

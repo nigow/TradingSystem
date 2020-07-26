@@ -70,6 +70,11 @@ public class LendingControllerTest {
             }
 
             @Override
+            public void showInventory(List<String> inventory) {
+
+            }
+
+            @Override
             public void showInventory(String username, List<String> inventory) {
                 //pass
             }
