@@ -1,1 +1,0 @@
-javadoc -sourcepath ./src -d ./docs -subpackages .
