@@ -182,4 +182,8 @@ public class Trade {
     public boolean isEditTurn(int accountID) {
         return editedCounter % tradersIds.size() == tradersIds.indexOf(accountID);
     }
+
+    public boolean isTwoPersonTrade() {
+        return tradersIds.size() == 2;
+    }
 }
