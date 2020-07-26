@@ -1,7 +1,6 @@
 package controllers;
 
 import entities.Account;
-import gateways.UseCasePool;
 import presenters.FreezingPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;

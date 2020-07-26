@@ -2,7 +2,6 @@ package controllers;
 
 import entities.Account;
 import entities.Item;
-import gateways.UseCasePool;
 import presenters.LendingPresenter;
 import presenters.TradeCreatorPresenter;
 import usecases.AccountManager;
