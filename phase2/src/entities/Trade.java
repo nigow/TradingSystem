@@ -167,4 +167,11 @@ public class Trade {
     public List<Boolean> getTradeCompletions() {
         return tradeCompletions;
     }
+
+    public int getNextTraderID(int id) {
+        int index = tradersIds.indexOf(id);
+        if (index + 1 < tradersIds.size())
+            return tradersIds.get(index + 1);
+        return tradersIds.get(0);
+    }
 }
