@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  *
  * @author Isaac
  */
-public class TradeUtility {
+abstract public class TradeUtility {
 
     private final int NUMBER_OF_NEEDED_STATS = 3;
 
