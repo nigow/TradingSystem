@@ -4,6 +4,7 @@ import entities.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -12,13 +13,12 @@ import java.util.List;
  * @author Isaac
  */
 
-// TODO add method to parse list of strings to item
 public class ItemUtility {
 
     /**
      * List of all items in the system
      */
-    protected List<Item> items;
+    protected Map<Integer, Item> items;
 
     /**
      * Constructor for ItemUtility.
@@ -33,9 +33,9 @@ public class ItemUtility {
      */
     public List<Item> getApproved() {
         List<Item> approvedItems = new ArrayList<>();
-        for (Item item : items) {
-            if (item.isApproved()) {
-                approvedItems.add(item);
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (items.get(entry.getKey()).isApproved()) {
+                approvedItems.add(items.get(entry.getKey()));
             }
         }
         return approvedItems;
@@ -48,7 +48,7 @@ public class ItemUtility {
      */
     public List<String> getApprovedString() {
         List<String> approvedItems = new ArrayList<>();
-        for (Item item : items) {
+        for (Item item : getApproved()) {
             if (item.isApproved()) {
                 approvedItems.add(item.toString());
             }
@@ -63,9 +63,9 @@ public class ItemUtility {
      */
     public List<Item> getDisapproved() {
         List<Item> disapprovedItems = new ArrayList<>();
-        for (Item item : items) {
-            if (!item.isApproved()) {
-                disapprovedItems.add(item);
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (!items.get(entry.getKey()).isApproved()) {
+                disapprovedItems.add(items.get(entry.getKey()));
             }
         }
         return disapprovedItems;
@@ -78,7 +78,7 @@ public class ItemUtility {
      */
     public List<String> getDisapprovedString() {
         List<String> disapprovedItems = new ArrayList<>();
-        for (Item item : items) {
+        for (Item item : getDisapproved()) {
             if (!item.isApproved()) {
                 disapprovedItems.add(item.toString());
             }
@@ -93,12 +93,12 @@ public class ItemUtility {
      * @return List of items for account
      */
     public List<Item> getAllInventoryOfAccount(int accountID) {
-        List<Item> items = new ArrayList<>();
-        for (Item item : this.items) {
-            if (item.getOwnerID() == accountID)
-                items.add(item);
+        List<Item> inventory = new ArrayList<>();
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (items.get(entry.getKey()).getOwnerID() == accountID)
+                inventory.add(items.get(entry.getKey()));
         }
-        return items;
+        return inventory;
     }
 
     /**
@@ -108,12 +108,12 @@ public class ItemUtility {
      * @return List of items for account
      */
     public List<String> getAllInventoryOfAccountString(int accountID) {
-        List<String> items = new ArrayList<>();
-        for (Item item : this.items) {
+        List<String> inventory = new ArrayList<>();
+        for (Item item : getAllInventoryOfAccount(accountID)) {
             if (item.getOwnerID() == accountID)
-                items.add(item.toString());
+                inventory.add(item.toString());
         }
-        return items;
+        return inventory;
     }
 
     /**
@@ -123,13 +123,13 @@ public class ItemUtility {
      * @return List of items for account
      */
     public List<Item> getApprovedInventoryOfAccount(int accountID) {
-        List<Item> Items = new ArrayList<>();
+        List<Item> inventory = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() == accountID) {
-                Items.add(item);
+                inventory.add(item);
             }
         }
-        return Items;
+        return inventory;
     }
 
     /**
@@ -139,13 +139,13 @@ public class ItemUtility {
      * @return List of items for account in string format
      */
     public List<String> getApprovedInventoryOfAccountString(int accountID) {
-        List<String> Items = new ArrayList<>();
+        List<String> inventory = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() == accountID) {
-                Items.add(item.toString());
+                inventory.add(item.toString());
             }
         }
-        return Items;
+        return inventory;
     }
 
     /**
@@ -155,13 +155,13 @@ public class ItemUtility {
      * @return List of items for account
      */
     public List<Item> getDisprovedInventoryOfAccount(int accountID) {
-        List<Item> Items = new ArrayList<>();
+        List<Item> inventory = new ArrayList<>();
         for (Item item : getDisapproved()) {
             if (item.getOwnerID() == accountID) {
-                Items.add(item);
+                inventory.add(item);
             }
         }
-        return Items;
+        return inventory;
     }
 
     /**
@@ -220,9 +220,9 @@ public class ItemUtility {
      * @return The item with the id in question
      */
     public Item findItemById(int itemId) {
-        for (Item item : items) {
-            if (item.getItemID() == itemId) {
-                return item;
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (items.get(entry.getKey()).getItemID() == itemId) {
+                return entry.getValue();
             }
         }
         return null;
