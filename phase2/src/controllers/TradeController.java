@@ -2,7 +2,6 @@ package controllers;
 
 import entities.OldTrade;
 import entities.TradeStatus;
-import gateways.UseCasePool;
 import presenters.TradePresenter;
 import usecases.*;
 

@@ -1,6 +1,5 @@
 package controllers;
 
-import gateways.UseCasePool;
 import presenters.TradeCreatorPresenter;
 import usecases.*;
 

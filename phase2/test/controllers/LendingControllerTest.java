@@ -3,7 +3,6 @@ package controllers;
 import entities.Account;
 import entities.Item;
 import gateways.InMemoryUseCasePool;
-import gateways.UseCasePool;
 import org.junit.Test;
 import presenters.ConsoleTradeCreatorPresenter;
 import presenters.LendingPresenter;
