@@ -153,7 +153,7 @@ public class TradeManager extends TradeUtility{
     public void makeTrade(Trade trade) {
         for (int accountID : trade.getTraderIds()) {
             for (int itemID : trade.itemsTraderGets(accountID)) {
-                itemManager.updateOwner(itemManager.findItemById(itemID), accountID);
+                itemManager.updateOwner(itemID, accountID);
             }
         }
     }
