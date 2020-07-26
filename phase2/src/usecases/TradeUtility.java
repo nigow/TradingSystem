@@ -2,7 +2,6 @@ package usecases;
 
 import entities.*;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -76,7 +75,7 @@ abstract public class TradeUtility {
             ans.append("\nUser " + i + ": " + accountRepository.getUsernameFromID(id));
             int j = (i + 1) % trade.getTraderIds().size();
             ans.append("\nitems being given to user " + j + ": ");
-            for (int itemID : trade.itemsOfTrader(id)) {
+            for (int itemID : trade.itemsTraderGives(id)) {
                 ans.append("\n").append(itemUtility.findItemById(itemID).toString()); // TODO dont access item directly
             }
         }

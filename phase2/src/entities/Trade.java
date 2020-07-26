@@ -173,13 +173,13 @@ public class Trade {
         return tradersIds.get(index);
     }
 
-    public List<Integer> itemsOfTrader(int id) {
+    public List<Integer> itemsTraderGives(int id) {
         int index = tradersIds.indexOf(id);
         return itemsIds.get(index);
     }
 
     public List<Integer> itemsTraderGets(int id) {
-        return itemsOfTrader(getNextTraderID(id));
+        return itemsTraderGives(getNextTraderID(id));
     }
 
     public void setCompletedOfTrader(int id, boolean isCompleted) {
