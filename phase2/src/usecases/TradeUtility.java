@@ -76,7 +76,7 @@ abstract public class TradeUtility {
             int j = (i + 1) % trade.getTraderIds().size();
             ans.append("\nitems being given to user " + j + ": ");
             for (int itemID : trade.itemsTraderGives(id)) {
-                ans.append("\n").append(itemUtility.itemAsString(itemID));
+                ans.append("\n").append(itemUtility.findItemByIdString(itemID));
             }
         }
 
