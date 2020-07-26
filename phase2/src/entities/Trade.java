@@ -174,4 +174,9 @@ public class Trade {
             return tradersIds.get(index + 1);
         return tradersIds.get(0);
     }
+
+    public List<Integer> itemsOfTrader(int id) {
+        int index = tradersIds.indexOf(id);
+        return itemsIds.get(index);
+    }
 }
