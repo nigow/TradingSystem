@@ -21,7 +21,7 @@ abstract public class TradeUtility {
     /**
      * List of all trades in the system
      */
-    protected List<OldTrade> trades;
+    protected List<Trade> trades;
 
     /**
      * List of all meetings times and places in the system
@@ -36,10 +36,10 @@ abstract public class TradeUtility {
         return null;
     }
 
-    public OldTrade getTradeByID(int tradeID) {
-        for (OldTrade oldTrade : trades) {
-            if (tradeID == oldTrade.getId())
-                return oldTrade;
+    public Trade getTradeByID(int tradeID) {
+        for (Trade trade : trades) {
+            if (tradeID == trade.getId())
+                return trade;
         }
         return null;
     }
@@ -49,77 +49,40 @@ abstract public class TradeUtility {
      *
      * @return List of all of the trades the current account has done
      */
-    public List<OldTrade> getAllTradesAccount(int accountID) {
-        List<OldTrade> accountOldTrades = new ArrayList<>();
-        for (OldTrade oldTrade : trades) {
-            if (oldTrade.getTraderOneID() == accountID) {
-                accountOldTrades.add(oldTrade);
-            } else if (oldTrade.getTraderTwoID() == accountID) {
-                accountOldTrades.add(oldTrade);
-            }
+    public List<Trade> getAllTradesAccount(int accountID) {
+        List<Trade> accountTrades = new ArrayList<>();
+        for (Trade trade : trades) {
+            if (trade.getTraderIds().contains(accountID))
+                accountTrades.add(trade);
         }
-        return accountOldTrades;
+        return accountTrades;
     }
 
     /**
-     * Returns a user-friendly string representation of a oldTrade.
+     * Returns a user-friendly string representation of a trade.
      *
-     * @param oldTrade The Trade whose representation is being returned
-     * @param accountManager Manager for manipulating accounts
+     * @param trade The Trade whose representation is being returned
      * @param itemUtility    Manager for manipulating items
-     * @return An user-friendly representation of a oldTrade
+     * @return An user-friendly representation of a trade
      */
-    public String tradeAsString(OldTrade oldTrade, AccountManager accountManager, ItemUtility itemUtility) {
-        TimePlace timePlace = getTimePlaceByID(oldTrade.getTimePlaceID());
+    public String tradeAsString(Trade trade, AccountRepository accountRepository, ItemUtility itemUtility) {
+        TimePlace timePlace = getTimePlaceByID(trade.getTimePlaceID());
         StringBuilder ans = new StringBuilder();
-        String username1 = accountManager.getAccountFromID(
-                oldTrade.getTraderOneID()).getUsername();
-        String username2 = accountManager.getAccountFromID(
-                oldTrade.getTraderTwoID()).getUsername();
 
-        if (oldTrade.getItemOneIDs().size() > 0 && oldTrade.getItemTwoIDs().size() > 0) {
-            ans.append("Type: Two-way ");
-            ans.append("\nAccount 1: ").append(username1).append("\nAccount 2: ").append(username2);
-        } else {
-            ans.append("Type: One-way ");
-            if (oldTrade.getItemOneIDs().size() > 0) {
-                ans.append("\nBorrower: ").append(username2).append("\nLender: ").append(username1);
-            } else {
-                ans.append("\nBorrower: ").append(username1).append("\nLender: ").append(username2);
+        for (int i = 0; i < trade.getTraderIds().size(); i++) {
+            int id = trade.getTraderIds().get(i);
+            ans.append("\nUser " + i + ": " + accountRepository.getUsernameFromID(id));
+            ans.append("\nitems being given: ");
+            for (int itemID : trade.getItemsIds().get(i)) {
+                ans.append("\n").append(itemUtility.findItemById(itemID).toString()); // TODO dont access item directly
             }
-
         }
-        ans.append("\nStatus: ").append(oldTrade.getStatus().toString()).append(" ");
+
+        ans.append("\nStatus: ").append(trade.getStatus().toString()).append(" ");
         ans.append("\nType: ");
-        ans.append(oldTrade.isPermanent() ? "Permanent " : "Temporary ");
+        ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
         ans.append("\nLocation: ").append(timePlace.getPlace()).append(" ");
         ans.append("\nTime: ").append(timePlace.getTime()).append(" ");
-
-        if (oldTrade.getItemOneIDs().size() > 0 && oldTrade.getItemTwoIDs().size() > 0) {
-            ans.append("\nTrader 1 Items: ");
-            String separator = "";
-            for (Integer tradeId : oldTrade.getItemOneIDs()) {
-                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
-                separator = ", ";
-            }
-            separator = "";
-            ans.append("\nTrader 2 Items: ");
-            for (Integer tradeId : oldTrade.getItemTwoIDs()) {
-                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
-                separator = ", ";
-            }
-        } else {
-            ans.append("\nItem being borrowed/lent: ");
-            String separator = "";
-            for (Integer tradeId : oldTrade.getItemOneIDs()) {
-                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
-                separator = ", ";
-            }
-            for (Integer tradeId : oldTrade.getItemTwoIDs()) {
-                ans.append(separator).append(itemUtility.findItemById(tradeId).toString());
-                separator = ", ";
-            }
-        }
 
         return ans.toString();
     }
@@ -129,10 +92,10 @@ abstract public class TradeUtility {
      *
      * @return List of the trades the current account has done in string format
      */
-    public List<String> getAllTradesAccountString(AccountManager accountManager, ItemManager itemManager, int accountID) {
+    public List<String> getAllTradesAccountString(AccountRepository accountRepository, ItemManager itemManager, int accountID) {
         List<String> accountTrades = new ArrayList<>();
-        for (OldTrade oldTrade : getAllTradesAccount(accountID)) {
-            accountTrades.add(tradeAsString(oldTrade, accountManager, itemManager));
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            accountTrades.add(tradeAsString(trade, accountRepository, itemManager));
         }
         return accountTrades;
     }
@@ -146,14 +109,10 @@ abstract public class TradeUtility {
     public List<Integer> getTopThreePartnersIds(AccountManager accountManager, int accountID) {
         Account account = accountManager.getAccountFromID(accountID);
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
-        for (OldTrade oldTrade : getAllTradesAccount(accountID)) {
-            if (oldTrade.getStatus() != TradeStatus.CONFIRMED && oldTrade.getStatus() != TradeStatus.COMPLETED)
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
-            if (account.getAccountID() == oldTrade.getTraderOneID()) {
-                tradeFrequency.compute(oldTrade.getTraderTwoID(), (k, v) -> v == null ? 1 : v + 1);
-            } else {
-                tradeFrequency.compute(oldTrade.getTraderOneID(), (k, v) -> v == null ? 1 : v + 1);
-            }
+            tradeFrequency.compute(trade.getNextTraderID(accountID), (k, v) -> v == null ? 1 : v + 1);
         }
         Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
