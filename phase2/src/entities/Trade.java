@@ -170,11 +170,15 @@ public class Trade {
 
     public int getNextTraderID(int id) {
         int index = (tradersIds.indexOf(id) + 1) % tradersIds.size();
-        return tradersIds.get(index + 1);
+        return tradersIds.get(index);
     }
 
     public List<Integer> itemsOfTrader(int id) {
         int index = tradersIds.indexOf(id);
         return itemsIds.get(index);
+    }
+
+    public List<Integer> itemsTraderGets(int id) {
+        return itemsOfTrader(getNextTraderID(id));
     }
 }
