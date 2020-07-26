@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
  */
 abstract public class TradeUtility {
 
-    private final int NUMBER_OF_NEEDED_STATS = 3;
-
     protected ItemUtility itemUtility;
     protected AccountRepository accountRepository;
 
@@ -122,7 +120,7 @@ abstract public class TradeUtility {
      * @return List of top three trade partners, if less than three list size is
      * adjusted
      */
-    public List<Integer> getTopThreePartnersIds(int accountID) {
+    public List<Integer> getTopThreePartnersIds(int accountID, Restrictions restrictions) {
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
         for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
@@ -137,7 +135,7 @@ abstract public class TradeUtility {
         List<Integer> partnerIDs = new ArrayList<>();
         int count = 0;
         for (Map.Entry<Integer, Integer> entry : sorted.entrySet()) {
-            if (count >= NUMBER_OF_NEEDED_STATS) break;
+            if (count >= restrictions.getNumberOfStats()) break;
             partnerIDs.add(entry.getKey());
             count++;
         }
@@ -151,7 +149,7 @@ abstract public class TradeUtility {
      * @return List of three most recent one-way trades the current account
      * has made, if less than three list size is adjusted
      */
-    public List<Integer> getRecentOneWay(int accountID) {
+    public List<Integer> getRecentOneWay(int accountID, Restrictions restrictions) {
         List<TimePlace> allOneWay = new ArrayList<>();
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allOneWayItems = new ArrayList<>();
@@ -172,7 +170,7 @@ abstract public class TradeUtility {
         }
         int count = 0;
         for (int tradeId : allOneWayItems) {
-            if (count >= NUMBER_OF_NEEDED_STATS) break;
+            if (count >= restrictions.getNumberOfStats()) break;
             threeRecent.add(tradeId);
             count++;
         }
@@ -186,7 +184,7 @@ abstract public class TradeUtility {
      * @return List of three most recent two-way trades the current account
      * has made, if less than three list size is adjusted
      */
-    public List<Integer> getRecentTwoWay(int accountID) {
+    public List<Integer> getRecentTwoWay(int accountID, Restrictions restrictions) {
         List<TimePlace> allTwoWay = new ArrayList<>();
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allTwoWayItems = new ArrayList<>();
@@ -207,7 +205,7 @@ abstract public class TradeUtility {
         }
         int count = 0;
         for (int tradeId : allTwoWayItems) {
-            if (count >= NUMBER_OF_NEEDED_STATS) break;
+            if (count >= restrictions.getNumberOfStats()) break;
             threeRecent.add(tradeId);
             count++;
         }

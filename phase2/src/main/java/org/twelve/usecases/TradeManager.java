@@ -1,6 +1,7 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.*;
+import org.twelve.gateways.RestrictionsGateway;
 import org.twelve.gateways.experimental.TradeGateway;
 
 import java.sql.Time;
@@ -19,7 +20,6 @@ import java.util.List;
 
 public class TradeManager extends TradeUtility{
 
-    private final int RETURN_TRADE_DAYS = 30;
 
     private int generateValidIDCounter;
 
@@ -28,7 +28,9 @@ public class TradeManager extends TradeUtility{
 
     private TradeGateway tradeGateway;
 
-    public void TradeManager(TradeGateway tradeGateway, AccountRepository accountRepository,
+    private RestrictionsGateway restrictionsGateway;
+
+    public void TradeManager(TradeGateway tradeGateway, RestrictionsGateway restrictionsGateway, AccountRepository accountRepository,
                              ItemManager itemManager, WishlistManager wishlistManager) {
         generateValidIDCounter = 1;
         this.itemUtility = itemManager;
@@ -36,6 +38,7 @@ public class TradeManager extends TradeUtility{
         this.wishlistManager = wishlistManager;
         this.itemManager = itemManager;
         this.tradeGateway = tradeGateway;
+        this.restrictionsGateway = restrictionsGateway;
     }
 
     private int generateValidID() {
@@ -85,7 +88,7 @@ public class TradeManager extends TradeUtility{
      * Initiates a reverse Trade.
      *
      */
-    public void reverseTrade(int id) {
+    public void reverseTrade(int id, Restrictions restrictions) {
         TimePlace timePlace = getTimePlaceByID(id);
         Trade trade = getTradeByID(id);
         List<Integer> reverseTraders = new ArrayList<>();
@@ -93,7 +96,7 @@ public class TradeManager extends TradeUtility{
         List<Integer> reverseItems = new ArrayList<>();
         reverseItems.addAll(trade.getItemsIds());
         Collections.reverse(reverseTraders);
-        createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS),
+        createTrade(timePlace.getTime().plusDays(restrictions.getNumberOfDays()),
                 timePlace.getPlace(), true, reverseTraders, reverseItems);
     }
 
@@ -146,6 +149,14 @@ public class TradeManager extends TradeUtility{
                 itemManager.updateOwner(itemID, accountID);
             }
         }
+    }
+
+    /**
+     * Compares the number of edits done to the trade vs. the restriction limit.
+     * @param accountID ID of person editing trade.
+     */
+    public boolean canEdit(int accountID) {
+        return getEditedCounter(accountID) < restrictionsGateway.getRestrictions().getNumberOfEdits();
     }
 
     // TODO unused and broken method

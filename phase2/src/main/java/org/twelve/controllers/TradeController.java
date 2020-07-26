@@ -31,7 +31,6 @@ public class TradeController {
 
     private final InputHandler inputHandler;
 
-    private final int MAX_ALLOWED_EDITS = 6;
 
     /**
      * Initialized TradeController by setting necessary use cases and presenter.
@@ -155,7 +154,7 @@ public class TradeController {
                 if (tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
                     options.add("Confirm the time and location for this trade");
                 }
-                if (tradeManager.getEditedCounter() < MAX_ALLOWED_EDITS) {
+                if (tradeManager.canEdit()) {
                     options.add("Edit the time and location for this trade");
                 }
             }
@@ -189,7 +188,7 @@ public class TradeController {
             tradePresenter.displayConfirmed();
         } else {
             changeTradeTimePlace();
-            if (tradeManager.getEditedCounter() == MAX_ALLOWED_EDITS) {
+            if (!tradeManager.canEdit()) {
                 tradeManager.updateStatus(TradeStatus.REJECTED);
                 tradePresenter.displayLimitReached();
                 tradePresenter.displayCancelled();
