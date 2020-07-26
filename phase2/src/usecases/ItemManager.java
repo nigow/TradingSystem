@@ -8,7 +8,6 @@ import entities.Item;
 import gateways.ItemsGateway;
 
 // TODO javadoc
-// TODO add method to parse list of strings to item
 /**
  * Manager for items which creates an item or takes in an item to edit.
  *
@@ -20,7 +19,7 @@ public class ItemManager extends ItemUtility{
     /**
      * The gateway which deals with items.
      */
-    private final ItemsGateway itemsGateway;
+    private final gateways.experimental.ItemsGateway itemsGateway;
 
     private int generateValidIDCounter;
 
@@ -29,13 +28,23 @@ public class ItemManager extends ItemUtility{
      *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
-    public ItemManager(ItemsGateway itemsGateway) {
+    public ItemManager(gateways.experimental.ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
         generateValidIDCounter = 0;
     }
 
     public int generateValidID() {
         return generateValidIDCounter++;
+    }
+
+    public void addToItems(int id, String name, String description, int ownerId) {
+        Item item = new Item(id, name, description, ownerId);
+        items.put(id, item);
+    }
+
+    public void updateToItemsGateway(Item item) {
+        itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
+                item.isApproved(), item.getOwnerID());
     }
 
     /**
@@ -50,6 +59,7 @@ public class ItemManager extends ItemUtility{
         int id = generateValidID();
         Item item = new Item(id, name, description, ownerID);
         this.items.put(id, item);
+        updateToItemsGateway(item);
     }
 
     /**
@@ -65,6 +75,7 @@ public class ItemManager extends ItemUtility{
             result = true;
             this.items.remove(itemId);
         }
+        updateToItemsGateway(items.get(itemId));
         return result;
     }
 
@@ -110,6 +121,7 @@ public class ItemManager extends ItemUtility{
      */
     public void updateOwner(int itemId, int ownerID) {
         items.get(itemId).setOwnerID(ownerID);
+        updateToItemsGateway(items.get(itemId));
     }
 
     /**
@@ -124,6 +136,7 @@ public class ItemManager extends ItemUtility{
         } else {
             items.get(itemId).disapprove();
         }
+        updateToItemsGateway(items.get(itemId));
     }
 
     /**
