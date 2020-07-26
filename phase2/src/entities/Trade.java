@@ -18,7 +18,7 @@ public class Trade {
 
     private final List<Integer> tradersIds;
 
-    private final List< List<Integer> > itemsIds;
+    private final List<Integer> itemsIds;
 
     private TradeStatus tradeStatus;
 
@@ -35,7 +35,7 @@ public class Trade {
      * @param tradersIds    A collection of integer storing the ids of all traders.
      * @param itemsIds      A collection of ids for the items in this trade.
      */
-    public Trade(int id, boolean isPermanent, List<Integer> tradersIds, List< List<Integer> > itemsIds) {
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds, List<Integer> itemsIds) {
         this.id = id;
         this.isPermanent = isPermanent;
         this.tradersIds = tradersIds;
@@ -60,7 +60,7 @@ public class Trade {
      * @param tradeCompletions The completions of this trade.
      */
     public Trade(int id, boolean isPermanent, List<Integer> tradersIds,
-                 List< List<Integer> > itemsIds, int editedCounter, TradeStatus tradeStatus,
+                 List<Integer> itemsIds, int editedCounter, TradeStatus tradeStatus,
                  List<Boolean> tradeCompletions) {
         this.id = id;
         this.isPermanent = isPermanent;
@@ -105,7 +105,7 @@ public class Trade {
      *
      * @return A collection of item ids for this trade.
      */
-    public List< List<Integer> > getItemsIds() {
+    public List<Integer> getItemsIds() {
         return itemsIds;
     }
 
@@ -170,15 +170,6 @@ public class Trade {
     public int getNextTraderID(int accountID) {
         int index = (tradersIds.indexOf(accountID) + 1) % tradersIds.size();
         return tradersIds.get(index);
-    }
-
-    public List<Integer> itemsTraderGives(int accountID) {
-        int index = tradersIds.indexOf(accountID);
-        return itemsIds.get(index);
-    }
-
-    public List<Integer> itemsTraderGets(int accountID) {
-        return itemsTraderGives(getNextTraderID(accountID));
     }
 
     public void setCompletedOfTrader(int accountID, boolean isCompleted) {

@@ -46,6 +46,20 @@ abstract public class TradeUtility {
         return null;
     }
 
+    public List<Integer> itemsTraderGives(int accountID, Trade trade) {
+        List<Integer> items = new ArrayList<>();
+        for (int id : trade.getItemsIds()) {
+            // TODO dont access item directly
+            if (itemUtility.findItemById(id).getOwnerID() == accountID)
+                items.add(id);
+        }
+        return items;
+    }
+
+    public List<Integer> itemsTraderGets(int accountID, Trade trade) {
+        return itemsTraderGives(trade.getNextTraderID(accountID), trade);
+    }
+
     /**
      * Retrieves all the trades the current account has.
      *
@@ -75,7 +89,7 @@ abstract public class TradeUtility {
             ans.append("\nUser " + i + ": " + accountRepository.getUsernameFromID(id));
             int j = (i + 1) % trade.getTraderIds().size();
             ans.append("\nitems being given to user " + j + ": ");
-            for (int itemID : trade.itemsTraderGives(id)) {
+            for (int itemID : itemsTraderGives(id, trade)) {
                 ans.append("\n").append(itemUtility.findItemByIdString(itemID));
             }
         }
@@ -114,6 +128,7 @@ abstract public class TradeUtility {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             tradeFrequency.compute(trade.getNextTraderID(accountID), (k, v) -> v == null ? 1 : v + 1);
+            // TODO add previous partner too?
         }
         Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
@@ -144,23 +159,15 @@ abstract public class TradeUtility {
                 continue;
             if (trade.getTraderIds().size() != 2)
                 continue;
-
-            TimePlace timePlace = getTimePlaceByID(trade.getId());
-            if (trade.getTraderIds().get(0) == accountID) {
-                if (!trade.getItemsIds().get(0).isEmpty() && trade.getItemsIds().get(1).isEmpty()) {
-                    allOneWay.add(timePlace);
-                }
-            } else if (trade.getTraderIds().get(1) == accountID) {
-                if (trade.getItemsIds().get(0).isEmpty() && !trade.getItemsIds().get(1).isEmpty()) {
-                    allOneWay.add(timePlace);
-                }
+            if (!itemsTraderGives(accountID, trade).isEmpty() && itemsTraderGets(accountID, trade).isEmpty()) {
+                TimePlace timePlace = getTimePlaceByID(trade.getId());
+                allOneWay.add(timePlace);
             }
         }
         Collections.sort(allOneWay);
         for (TimePlace tp : allOneWay) {
             Trade trade = getTradeByID(tp.getId());
-            allOneWayItems.addAll(trade.getItemsIds().get(0));
-            allOneWayItems.addAll(trade.getItemsIds().get(1));
+            allOneWayItems.addAll(itemsTraderGives(accountID, trade));
         }
         int count = 0;
         for (Integer tradeId : allOneWayItems) {
@@ -187,7 +194,7 @@ abstract public class TradeUtility {
                 continue;
             if (trade.getTraderIds().size() != 2)
                 continue;
-            if (!trade.getItemsIds().get(0).isEmpty() && !trade.getItemsIds().get(1).isEmpty()) {
+            if (!itemsTraderGives(accountID, trade).isEmpty() && !itemsTraderGets(accountID, trade).isEmpty()) {
                 TimePlace timePlace = getTimePlaceByID(trade.getId());
                 allTwoWay.add(timePlace);
             }
@@ -195,11 +202,7 @@ abstract public class TradeUtility {
         Collections.sort(allTwoWay);
         for (TimePlace tp : allTwoWay) {
             Trade trade = getTradeByID(tp.getId());
-            if (accountID == trade.getTraderIds().get(0)) {
-                allTwoWayItems.addAll(trade.getItemsIds().get(0));
-            } else {
-                allTwoWayItems.addAll(trade.getItemsIds().get(1));
-            }
+            allTwoWayItems.addAll(itemsTraderGives(accountID, trade));
         }
         int count = 0;
         for (Integer tradeId : allTwoWayItems) {
@@ -258,17 +261,12 @@ abstract public class TradeUtility {
     public Integer getTimesBorrowed(int accountID) {
         Integer timesBorrowed = 0;
         for (Trade trade : getAllTradesAccount(accountID)) {
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
+                continue;
             if (trade.getTraderIds().size() != 2)
                 continue;
-            if (accountID == trade.getTraderIds().get(1)) {
-                if (!trade.getItemsIds().get(0).isEmpty() && trade.getItemsIds().get(1).isEmpty()) {
-                    timesBorrowed++;
-                }
-            } else {
-                if (trade.getItemsIds().get(0).isEmpty() && !trade.getItemsIds().get(1).isEmpty()) {
-                    timesBorrowed++;
-                }
-            }
+            if (!itemsTraderGets(accountID, trade).isEmpty() && itemsTraderGives(accountID, trade).isEmpty())
+                timesBorrowed++;
         }
         return timesBorrowed;
     }
@@ -281,17 +279,12 @@ abstract public class TradeUtility {
     public Integer getTimesLent(int accountID) {
         Integer timesLent = 0;
         for (Trade trade : getAllTradesAccount(accountID)) {
+            if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
+                continue;
             if (trade.getTraderIds().size() != 2)
                 continue;
-            if (accountID == trade.getTraderIds().get(1)) {
-                if (trade.getItemsIds().get(0).isEmpty() && !trade.getItemsIds().get(1).isEmpty()) {
-                    timesLent++;
-                }
-            } else {
-                if (!trade.getItemsIds().get(0).isEmpty() && trade.getItemsIds().get(1).isEmpty()) {
-                    timesLent++;
-                }
-            }
+            if (itemsTraderGets(accountID, trade).isEmpty() && !itemsTraderGives(accountID, trade).isEmpty())
+                timesLent++;
         }
         return timesLent;
     }

@@ -42,7 +42,7 @@ public class TradeManager extends TradeUtility{
         return generateValidIDCounter++;
     }
 
-    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
+    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
                             int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
                             String time, String location) {
         Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
@@ -68,14 +68,14 @@ public class TradeManager extends TradeUtility{
      * @param isPermanent    Whether the Trade is permanent or not
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
-                            List<Integer> tradersIds, List< List<Integer> > itemsIds) {
+                            List<Integer> tradersIds, List<Integer> itemsIds) {
         int id = generateValidID();
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
         trades.add(trade);
         timePlaces.add(timePlace);
         for (int accountID : tradersIds) {
-            for (int itemID : trade.itemsTraderGets(accountID))
+            for (int itemID : itemsTraderGets(accountID, trade))
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
         updateToGateway(trade);
@@ -90,10 +90,9 @@ public class TradeManager extends TradeUtility{
         Trade trade = getTradeByID(id);
         List<Integer> reverseTraders = new ArrayList<>();
         reverseTraders.addAll(trade.getTraderIds());
-        List< List<Integer> > reverseItems = new ArrayList<>();
+        List<Integer> reverseItems = new ArrayList<>();
         reverseItems.addAll(trade.getItemsIds());
         Collections.reverse(reverseTraders);
-        Collections.reverse(reverseItems);
         createTrade(timePlace.getTime().plusDays(RETURN_TRADE_DAYS),
                 timePlace.getPlace(), true, reverseTraders, reverseItems);
     }
@@ -152,7 +151,7 @@ public class TradeManager extends TradeUtility{
      */
     public void makeTrade(Trade trade) {
         for (int accountID : trade.getTraderIds()) {
-            for (int itemID : trade.itemsTraderGets(accountID)) {
+            for (int itemID : itemsTraderGets(accountID, trade)) {
                 itemManager.updateOwner(itemID, accountID);
             }
         }
