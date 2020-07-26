@@ -3,6 +3,7 @@ package usecases;
 import entities.Account;
 import entities.Permissions;
 import entities.Restrictions;
+import gateways.experimental.AccountGateway;
 import gateways.experimental.RestrictionsGateway;
 
 import java.util.ArrayList;
@@ -20,31 +21,36 @@ public class FreezingUtility {
      */
     private Restrictions restrictions;
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    private RestrictionsGateway restrictionsGateway;
+    private AccountGateway accountGateway;
+
+    private final RestrictionsGateway restrictionsGateway;
+
+    private TradeUtility tradeUtility;
 
     /**
      * Constructs an instance of FreezingUtility and stores restrictionsGateway.
      *
      */
 
-    //TODO how do we want to instantiate restrictions. From existing(like csv) or create a new instance here?
-    public FreezingUtility(AccountRepository accountRepository, RestrictionsGateway restrictionsGateway) {
+    public FreezingUtility(AccountRepository accountRepository, TradeUtility tradeUtility, AccountGateway accountGateway, RestrictionsGateway restrictionsGateway) {
         this.accountRepository = accountRepository;
+        this.tradeUtility = tradeUtility;
+        this.accountGateway = accountGateway;
+        this.restrictionsGateway = restrictionsGateway;
         restrictionsGateway.populate(this);
     }
 
     /**
      * Gets a list of accounts that have broken restrictions and are to be frozen.
      *
-     * @param tradeUtility   Utility for getting trade information
      * @return List of accounts to freeze
      */
-    public List<Integer> getAccountIDsToFreeze(TradeUtility tradeUtility) {
+    public List<Integer> getAccountIDsToFreeze() {
         List<Integer> accountIDsToFreeze = new ArrayList<>();
         for (int accountID : accountRepository.getAccountIDs()) {
-            if (canBeFrozen(tradeUtility, accountID)) {
+            if (canBeFrozen(accountID)) {
                 accountIDsToFreeze.add(accountID);
             }
         }
@@ -54,13 +60,12 @@ public class FreezingUtility {
     /**
      * Gets a list of account usernames that have broken restrictions and are to be frozen.
      *
-     * @param tradeUtility   Utility for getting trade information
      * @return List of account usernames to freeze
      */
-    public List<String> getUsernamesToFreeze(TradeUtility tradeUtility) {
+    public List<String> getUsernamesToFreeze() {
         List<String> accountsToFreeze = new ArrayList<>();
         for (int accountID : accountRepository.getAccountIDs()) {
-            if (canBeFrozen(tradeUtility, accountID)) {
+            if (canBeFrozen(accountID)) {
                 accountsToFreeze.add(accountRepository.getUsernameFromID(accountID));
             }
         }
@@ -100,12 +105,11 @@ public class FreezingUtility {
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
-     * @param tradeUtility Utility for getting trade information
      * @param accountID      Account to freeze
      * @return Whether the given account is successfully frozen or not
      */
-    public boolean freezeAccount(TradeUtility tradeUtility, int accountID) {
-        if (canBeFrozen(tradeUtility, accountID)) {
+    public boolean freezeAccount(int accountID) {
+        if (canBeFrozen(accountID)) {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.BORROW);
             account.removePermission(Permissions.LEND);
@@ -157,6 +161,30 @@ public class FreezingUtility {
      */
     public void setMaxWeeklyTrade(int maxWeeklyTrade) {
         restrictions.setMaxWeeklyTrade(maxWeeklyTrade);
+    }
+
+    public int getNumberOfDays() {
+        return restrictions.getNumberOfDays();
+    }
+
+    public void setNumberOfDays(int numberOfDays) {
+        restrictions.setNumberOfDays(numberOfDays);
+    }
+
+    public int getNumberOfStats() {
+        return restrictions.getNumberOfStats();
+    }
+
+    public void setNumberOfStats(int numberOfStats) {
+        restrictions.setNumberOfStats(numberOfStats);
+    }
+
+    public int getNumberOfEdits() {
+        return restrictions.getNumberOfEdits();
+    }
+
+    public void setNumberOfEdits(int numberOfEdits) {
+        restrictions.setNumberOfEdits(numberOfEdits);
     }
 
     /**
@@ -212,11 +240,10 @@ public class FreezingUtility {
     /**
      * Determines whether a given account should be frozen.
      *
-     * @param tradeUtility Utility for getting trade information
      * @param accountID    Unique identifier of an account that is checked if it can be frozen
      * @return Whether the account can be frozen or not
      */
-    public boolean canBeFrozen(TradeUtility tradeUtility, int accountID) {
+    public boolean canBeFrozen(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete(accountID) <= restrictions.getMaxIncompleteTrade();
         boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades(accountID) < restrictions.getMaxWeeklyTrade();
@@ -224,14 +251,13 @@ public class FreezingUtility {
                 !isFrozen(accountID) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
 
-    //TODO should be in OldTradeUtility?
+
     /**
      * Determines whether the current account has lent more than borrowed.
      *
-     * @param tradeUtility Utility for getting trade information
      * @return Whether the current account has lent more than borrowed
      */
-    public boolean lentMoreThanBorrowed(TradeUtility tradeUtility, int accountID) {
+    public boolean lentMoreThanBorrowed(int accountID) {
         return tradeUtility.getTimesLent(accountID) - tradeUtility.getTimesBorrowed(accountID) >=
                 restrictions.getLendMoreThanBorrow();
     }

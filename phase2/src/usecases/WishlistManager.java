@@ -2,8 +2,7 @@ package usecases;
 
 import entities.Account;
 import entities.Item;
-import gateways.AccountGateway;
-import gateways.ItemsGateway;
+import gateways.experimental.AccountGateway;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +17,18 @@ public class WishlistManager {
 
     private AccountRepository accountRepository;
 
+    private final AccountGateway accountGateway;
+
     private ItemUtility itemUtility;
 
     /**
      * Constructor for WishlistUtility.
      *
      */
-    public WishlistManager(AccountRepository accountRepository, ItemUtility itemsUtility) {
+    public WishlistManager(AccountRepository accountRepository, ItemUtility itemUtility, AccountGateway accountGateway) {
+        this.accountGateway = accountGateway;
         this.accountRepository = accountRepository;
-        this.itemUtility = itemsUtility;
+        this.itemUtility = itemUtility;
     }
 
     /**

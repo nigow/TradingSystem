@@ -12,7 +12,7 @@ import java.util.Map;
 public class AccountRepository {
 
     private Map<Integer, Account> accounts;
-    final AccountGateway accountGateway;
+    private final AccountGateway accountGateway;
 
     public AccountRepository(AccountGateway accountGateway){
         this.accountGateway = accountGateway;
@@ -29,11 +29,14 @@ public class AccountRepository {
      */
     public boolean createAccount(String username, String password, List<Permissions> perms) {
         if (getAccountFromUsername(username) == null) {
-            //TODO remove referencing of list of perms
+            List<Permissions> permsToAdd = new ArrayList<>();
+            for(Permissions perm: perms){
+                permsToAdd.add(perm);
+            }
             int accountID = accounts.size();
-            Account newAccount = new Account(username, password, perms, accountID);
+            Account newAccount = new Account(username, password, permsToAdd, accountID);
             accounts.put(accountID, newAccount);
-            //TODO accountGateway.save(username, password, newAccount.getWishlist(), perms, accountID);
+            //TODO accountGateway.save(username, password, newAccount.getWishlist(), permsToAdd, accountID);
             return true;
         }
         return false;

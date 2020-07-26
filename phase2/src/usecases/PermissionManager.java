@@ -1,6 +1,8 @@
 package usecases;
 
 import entities.Permissions;
+import gateways.experimental.AccountGateway;
+
 
 import java.util.List;
 
@@ -8,8 +10,11 @@ public class PermissionManager {
 
     private AccountRepository accountRepository;
 
-    public PermissionManager(AccountRepository accountRepository){
+    private final AccountGateway accountGateway;
+
+    public PermissionManager(AccountRepository accountRepository, AccountGateway accountGateway){
         this.accountRepository = accountRepository;
+        this.accountGateway = accountGateway;
     }
 
     /**
