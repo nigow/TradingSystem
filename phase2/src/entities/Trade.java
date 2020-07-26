@@ -14,9 +14,9 @@ public class Trade {
 
     private boolean isPermanent;
 
-    private final int[] tradersIds;
+    private final List<Integer> tradersIds;
 
-    private final int[] itemsIds;
+    private final List<Integer> itemsIds;
 
     private TradeStatus tradeStatus;
 
@@ -35,16 +35,16 @@ public class Trade {
      * @param tradersIds    A collection of integer storing the ids of all traders.
      * @param itemsIds      A collection of ids for the items in this trade.
      */
-    public Trade(int id, boolean isPermanent, int[] tradersIds, int[] itemsIds) {
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds, List<Integer> itemsIds) {
         this.id = id;
         this.isPermanent = isPermanent;
         this.tradersIds = tradersIds;
         this.itemsIds = itemsIds;
         tradeStatus = TradeStatus.UNCONFIRMED;
         editedCounter = 0;
-        lastEditorID = tradersIds[0];
+        lastEditorID = tradersIds.get(0);
         tradeCompletions = new ArrayList<>();
-        for(int i = 1; i <= tradersIds.length; i++) {
+        for(int i = 0; i < tradersIds.size(); i++) {
             tradeCompletions.add(false);
         }
     }
@@ -60,8 +60,8 @@ public class Trade {
      * @param tradeStatus   The status of the trade.
      * @param tradeCompletions The completions of this trade.
      */
-    public Trade(int id, boolean isPermanent, int[] tradersIds,
-                 int[] itemsIds, int editedCounter, TradeStatus tradeStatus,
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds,
+                 List<Integer> itemsIds, int editedCounter, TradeStatus tradeStatus,
                  List<Boolean> tradeCompletions) {
         this.id = id;
         this.isPermanent = isPermanent;
@@ -70,7 +70,7 @@ public class Trade {
         this.editedCounter = editedCounter;
         this.tradeCompletions = tradeCompletions;
         this.tradeStatus = tradeStatus;
-        lastEditorID = tradersIds[0];
+        lastEditorID = tradersIds.get(0);
     }
 
 
@@ -107,7 +107,7 @@ public class Trade {
      *
      * @return A collection of item ids for this trade.
      */
-    public int[] getItemsIds() {
+    public List<Integer> getItemsIds() {
         return itemsIds;
     }
 
@@ -176,7 +176,7 @@ public class Trade {
     /**
      * @return The ids of all traders.
      */
-    public int[] getTraderIds() {
+    public List<Integer> getTraderIds() {
         return tradersIds;
     }
 
