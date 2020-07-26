@@ -10,6 +10,8 @@ import java.io.IOException;
  *
  * @author Michael
  */
+
+// TODO: I will add a gateway pool soon to divide responsibilities better.
 public class CSVUseCasePool implements UseCasePool {
     private AccountManager accountManager;
     private AuthManager authManager;
@@ -50,28 +52,20 @@ public class CSVUseCasePool implements UseCasePool {
         File dir = new File(filePath);
         if (!dir.isDirectory() && !dir.mkdirs()) throw new IOException();
 
+        AccountGateway csvAccountGateway =
+                new CSVAccountGateway(filePath + "accounts.csv");
+
         RestrictionsGateway csvRestrictionsGateway =
                 new CSVRestrictionsGateway(filePath + "restrictions.csv");
-        // TODO: We need to decide if we want gateways to know of entities.
-        // TODO: Need to pass an actual list of accounts.
+        // TODO: Comment out second one & remove first one.
         accountRepository = new AccountRepository(null);
+//        accountRepository = new AccountRepository(csvAccountGateway);
 
         freezingUtility = new FreezingUtility(accountRepository , csvRestrictionsGateway.getRestrictions());
         ItemsGateway csvItemsGateway = new CSVItemsGateway(filePath + "items.csv");
         itemManager = new ItemManager(csvItemsGateway);
-        itemUtility = new ItemUtility();
-        // TODO: Need to give ItemUtility all items
 
 
-        AccountGateway csvAccountGateway =
-                new CSVAccountGateway(filePath + "accounts.csv");
-        accountManager = new AccountManager(csvAccountGateway);
-        if (accountManager.getAccountsList().size() == 0) {
-            accountManager.createAdminAccount("admin", "12345");
-        }
-
-
-        authManager = new AuthManager(csvAccountGateway, csvRestrictionsGateway);
         wishlistManager = new WishlistManager(accountRepository, itemUtility);
 
 
@@ -140,5 +134,15 @@ public class CSVUseCasePool implements UseCasePool {
     @Override
     public AccountRepository getAccountRepository() {
         return accountRepository;
+    }
+
+    @Override
+    public PermissionManager getPermissionManager() {
+        return permissionManager;
+    }
+
+    @Override
+    public LoginManager getLoginManager() {
+        return loginManager;
     }
 }
