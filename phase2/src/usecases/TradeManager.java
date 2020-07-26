@@ -26,12 +26,16 @@ public class TradeManager extends TradeUtility{
     private WishlistManager wishlistManager;
     private ItemManager itemManager;
 
-    public void TradeManager(AccountRepository accountRepository, ItemManager itemManager, WishlistManager wishlistManager) {
+    private TradeGateway tradeGateway;
+
+    public void TradeManager(TradeGateway tradeGateway, AccountRepository accountRepository,
+                             ItemManager itemManager, WishlistManager wishlistManager) {
         generateValidIDCounter = 1;
         this.itemUtility = itemManager;
         this.accountRepository = accountRepository;
         this.wishlistManager = wishlistManager;
         this.itemManager = itemManager;
+        this.tradeGateway = tradeGateway;
     }
 
     public int generateValidID() {
@@ -44,30 +48,19 @@ public class TradeManager extends TradeUtility{
      * @param time           Time of the OldTrade
      * @param place          Location of the OldTrade
      * @param isPermanent    Whether the oldTrade is permanent or not
-     * @param traderOneID    ID of the first trader
-     * @param traderTwoID    ID of the second trader
-     * @param itemOneID      List of items trader one is offering
-     * @param itemTwoID      List of items trader two is offering
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
-                            int traderOneID, int traderTwoID, List<Integer> itemOneID,
-                            List<Integer> itemTwoID) {
-        int id = generateValidID();
+                            List<Integer> tradersIds, List< List<Integer> > itemsIds) {
+        int id = generateValidID(); // TODO use the gateway generator
         TimePlace timePlace = new TimePlace(id, time, place);
-        OldTrade oldTrade = new OldTrade(id, id, isPermanent, traderOneID, traderTwoID,
-                itemOneID, itemTwoID, 0);
-        trades.add(oldTrade);
+        Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
+        trades.add(trade);
         timePlaces.add(timePlace);
-        for (Integer itemId : itemOneID) {
-            if (wishlistManager.getCurrWishlist().contains(itemId)) {
-                wishlistManager.removeItemFromWishlist(itemId);
-            }
+        for (int accountID : tradersIds) {
+            for (int itemID : trade.itemsTraderGets(accountID))
+                wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
-        for (Integer itemId : itemTwoID) {
-            if (wishlistManager.getCurrWishlist().contains(itemId)) {
-                wishlistManager.removeItemFromWishlist(itemId);
-            }
-        }
+        // TODO call save for gateway
     }
 
     /**
@@ -96,6 +89,7 @@ public class TradeManager extends TradeUtility{
         timePlace.setPlace(place);
         oldTrade.setLastEditorID(editorID);
         oldTrade.incrementEditedCounter();
+        // TODO call gateway save
     }
 
     /**
@@ -106,6 +100,7 @@ public class TradeManager extends TradeUtility{
     public void updateStatus(int tradeID, TradeStatus tradeStatus) {
         OldTrade oldTrade = getTradeByID(tradeID);
         oldTrade.setStatus(tradeStatus);
+        // TODO call gateway save
     }
 
     /**
@@ -128,18 +123,15 @@ public class TradeManager extends TradeUtility{
             oldTrade.setTraderOneCompleted(true);
         else if (accountID == oldTrade.getTraderTwoID())
             oldTrade.setTraderTwoCompleted(true);
+        // TODO call gateway save
     }
 
     /**
      * Completes the action of making a oldTrade.
      *
      * @param oldTrade          OldTrade object representing the oldTrade about to be made
-     * @param accountManager Manager for accounts
-     * @param itemManager    Manager for items
      */
     public void makeTrade(OldTrade oldTrade) {
-        Account account = accountManager.getCurrAccount();
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderTwoID()).getUsername());
         for (Integer itemId : oldTrade.getItemOneIDs()) {
             if (accountManager.getCurrWishlist().contains(itemId)) {
                 accountManager.removeItemFromWishlist(itemId);
@@ -148,7 +140,6 @@ public class TradeManager extends TradeUtility{
                 itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderTwoID());
             }
         }
-        accountManager.setCurrAccount(accountManager.getAccountFromID(oldTrade.getTraderOneID()).getUsername());
         for (Integer itemId : oldTrade.getItemTwoIDs()) {
             if (accountManager.getCurrWishlist().contains(itemId)) {
                 accountManager.removeItemFromWishlist(itemId);
@@ -157,7 +148,6 @@ public class TradeManager extends TradeUtility{
                 itemManager.updateOwner(itemManager.findItemById(itemId), oldTrade.getTraderOneID());
             }
         }
-        accountManager.setCurrAccount(account.getUsername());
     }
 
     // TODO unused and broken method
