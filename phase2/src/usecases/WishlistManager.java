@@ -2,7 +2,6 @@ package usecases;
 
 import entities.Account;
 import entities.Item;
-import gateways.experimental.AccountGateway;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ public class WishlistManager {
 
     private AccountRepository accountRepository;
 
-    private final AccountGateway accountGateway;
 
     private ItemUtility itemUtility;
 
@@ -25,8 +23,7 @@ public class WishlistManager {
      * Constructor for WishlistUtility.
      *
      */
-    public WishlistManager(AccountRepository accountRepository, ItemUtility itemUtility, AccountGateway accountGateway) {
-        this.accountGateway = accountGateway;
+    public WishlistManager(AccountRepository accountRepository, ItemUtility itemUtility) {
         this.accountRepository = accountRepository;
         this.itemUtility = itemUtility;
     }
@@ -38,7 +35,9 @@ public class WishlistManager {
      * @param itemID Unique identifier of the item
      */
     public void addItemToWishlist(int accountID, int itemID) {
-        accountRepository.getAccountFromID(accountID).addToWishlist(itemID);
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.addToWishlist(itemID);
+        accountRepository.updateAccount(account);
     }
 
     /**
@@ -47,7 +46,9 @@ public class WishlistManager {
      * @param itemID Unique identifier of the item
      */
     public void removeItemFromWishlist(int accountID, int itemID) {
-        accountRepository.getAccountFromID(accountID).removeFromWishList(itemID);
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.removeFromWishList(itemID);
+        accountRepository.updateAccount(account);
     }
 
     /**

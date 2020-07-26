@@ -1,7 +1,7 @@
 package usecases;
 
+import entities.Account;
 import entities.Permissions;
-import gateways.experimental.AccountGateway;
 
 
 import java.util.List;
@@ -10,11 +10,8 @@ public class PermissionManager {
 
     private AccountRepository accountRepository;
 
-    private final AccountGateway accountGateway;
-
-    public PermissionManager(AccountRepository accountRepository, AccountGateway accountGateway){
+    public PermissionManager(AccountRepository accountRepository){
         this.accountRepository = accountRepository;
-        this.accountGateway = accountGateway;
     }
 
     /**
@@ -24,7 +21,9 @@ public class PermissionManager {
      * @param permissionID Unique identifier of permission
      */
     public void addPermissionByID(int accountID, Permissions permissionID) {
-        accountRepository.getAccountFromID(accountID).addPermission(permissionID);
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.addPermission(permissionID);
+        accountRepository.updateAccount(account);
     }
 
     /**
@@ -34,9 +33,11 @@ public class PermissionManager {
      * @param permissionIDs List of unique identifiers of permissions
      */
     public void addPermissionsByIDs(int accountID, List<Permissions> permissionIDs) {
+        Account account = accountRepository.getAccountFromID(accountID);
         for (Permissions permissionID : permissionIDs) {
-            accountRepository.getAccountFromID(accountID).addPermission(permissionID);
+            account.addPermission(permissionID);
         }
+        accountRepository.updateAccount(account);
     }
 
     /**
@@ -46,7 +47,9 @@ public class PermissionManager {
      * @param permissionID Unique identifier of permission
      */
     public void removePermissionByID(int accountID, Permissions permissionID) {
-        accountRepository.getAccountFromID(accountID).removePermission(permissionID);
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.removePermission(permissionID);
+        accountRepository.updateAccount(account);
     }
 
     /**
@@ -56,9 +59,11 @@ public class PermissionManager {
      * @param permissionIDs List of unique identifiers of permissions
      */
     public void removePermissionsByIDs(int accountID, List<Permissions> permissionIDs) {
+        Account account = accountRepository.getAccountFromID(accountID);
         for (Permissions permissionID : permissionIDs) {
-            accountRepository.getAccountFromID(accountID).removePermission(permissionID);
+            account.removePermission(permissionID);
         }
+        accountRepository.updateAccount(account);
     }
 
     /**
