@@ -160,7 +160,6 @@ public class Trade {
         return tradersIds;
     }
 
-
     /**
      * @return An array for whether each user reported trade completion.
      */
@@ -168,26 +167,26 @@ public class Trade {
         return tradeCompletions;
     }
 
-    public int getNextTraderID(int id) {
-        int index = (tradersIds.indexOf(id) + 1) % tradersIds.size();
+    public int getNextTraderID(int accountID) {
+        int index = (tradersIds.indexOf(accountID) + 1) % tradersIds.size();
         return tradersIds.get(index);
     }
 
-    public List<Integer> itemsTraderGives(int id) {
-        int index = tradersIds.indexOf(id);
+    public List<Integer> itemsTraderGives(int accountID) {
+        int index = tradersIds.indexOf(accountID);
         return itemsIds.get(index);
     }
 
-    public List<Integer> itemsTraderGets(int id) {
-        return itemsTraderGives(getNextTraderID(id));
+    public List<Integer> itemsTraderGets(int accountID) {
+        return itemsTraderGives(getNextTraderID(accountID));
     }
 
-    public void setCompletedOfTrader(int id, boolean isCompleted) {
-        int index = tradersIds.indexOf(id);
+    public void setCompletedOfTrader(int accountID, boolean isCompleted) {
+        int index = tradersIds.indexOf(accountID);
         tradeCompletions.set(index, isCompleted);
     }
 
-    public boolean isEditTurn(int id) {
-        return editedCounter % tradersIds.size() == tradersIds.indexOf(id);
+    public boolean isEditTurn(int accountID) {
+        return editedCounter % tradersIds.size() == tradersIds.indexOf(accountID);
     }
 }
