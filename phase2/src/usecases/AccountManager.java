@@ -1,10 +1,14 @@
 package usecases;
 
 import entities.Account;
+import entities.Permissions;
 import gateways.AccountGateway;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+// TODO to be removed
 /**
  * Manager that creates an account or takes in an account and edits the wishlist.
  *
@@ -23,18 +27,12 @@ public class AccountManager {
     private final AccountGateway accountGateway;
 
     /**
-     * Used to create accounts in standardized ways.
-     */
-    private final AccountBuilder accountBuilder;
-
-    /**
      * Constructs an instance of AccountManager and stores accountGateway.
      *
      * @param accountGateway Gateway used to interact with persistent storage of accounts
      */
     public AccountManager(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
-        accountBuilder = new AccountBuilder(accountGateway);
     }
 
     /**
@@ -47,7 +45,14 @@ public class AccountManager {
      */
     public boolean createStandardAccount(String username, String password) {
         if (accountGateway.findByUsername(username) == null) {
-            Account createdAccount = accountBuilder.createStandardAccount(username, password);
+            AccountBuilder accountBuilder = new AccountBuilder();
+            accountBuilder.buildCredentials(username, password);
+            List<Permissions> perms = new ArrayList<>(Arrays.asList(Permissions.LOGIN,
+                    Permissions.BORROW, Permissions.LEND, Permissions.BROWSE_INVENTORY,
+                    Permissions.ADD_TO_WISHLIST, Permissions.CREATE_ITEM));
+            accountBuilder.buildPermissions(perms);
+            accountBuilder.buildID(accountGateway.generateValidId());
+            Account createdAccount = accountBuilder.buildAccount();
             if (accountGateway.updateAccount(createdAccount)) {
                 currAccount = createdAccount;
                 return true;
@@ -57,6 +62,7 @@ public class AccountManager {
         return false;
     }
 
+    // TODO createCustomAccount or createXXXAccount?
     /**
      * Creates a new administrator account with permissions to trade using username and password by determining if characters used are valid.
      *
@@ -66,7 +72,17 @@ public class AccountManager {
      */
     public boolean createAdminAccount(String username, String password) {
         if (accountGateway.findByUsername(username) == null) {
-            Account createdAccount = accountBuilder.createAdminAccount(username, password);
+            AccountBuilder accountBuilder = new AccountBuilder();
+            accountBuilder.buildCredentials(username, password);
+            // TODO this is a jumbled mess for perms. Could have helpers for presets.
+            List<Permissions> perms = new ArrayList<>(Arrays.asList(Permissions.LOGIN,
+                    Permissions.BORROW, Permissions.LEND, Permissions.BROWSE_INVENTORY,
+                    Permissions.ADD_TO_WISHLIST, Permissions.CREATE_ITEM, Permissions.ADD_ADMIN,
+                    Permissions.CHANGE_RESTRICTIONS, Permissions.FREEZE, Permissions.UNFREEZE,
+                    Permissions.CONFIRM_ITEM));
+            accountBuilder.buildPermissions(perms);
+            accountBuilder.buildID(accountGateway.generateValidId());
+            Account createdAccount = accountBuilder.buildAccount();
             if (accountGateway.updateAccount(createdAccount)) {
                 currAccount = createdAccount;
                 return true;
@@ -152,28 +168,18 @@ public class AccountManager {
      * Adds an itemID to the current account's wishlist.
      *
      * @param itemID Unique identifier of the item
-     * @return Whether an item is successfully added to wishlist or not
      */
-    public boolean addItemToWishlist(int itemID) {
-        if (currAccount != null) {
-            currAccount.addToWishlist(itemID);
-            return accountGateway.updateAccount(currAccount);
-        }
-        return false;
+    public void addItemToWishlist(int itemID) {
+        currAccount.addToWishlist(itemID);
     }
 
     /**
      * Removes an itemID from the current account's wishlist.
      *
      * @param itemID Unique identifier of the item
-     * @return Whether an item is successfully removed from wishlist or not
      */
-    public boolean removeItemFromWishlist(int itemID) {
-        if (currAccount != null) {
-            currAccount.removeFromWishList(itemID);
-            return accountGateway.updateAccount(currAccount);
-        }
-        return false;
+    public void removeItemFromWishlist(int itemID) {
+        currAccount.removeFromWishList(itemID);
     }
 
     /**
@@ -195,6 +201,7 @@ public class AccountManager {
         return currAccount.getWishlist().contains(itemID);
     }
 
+    //TODO either this is used or removed(controllers can just call it from gateway)
     /**
      * Updates in persistent storage the account corresponding to the account.
      *

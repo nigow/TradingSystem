@@ -1,7 +1,6 @@
 package controllers;
 
 import gateways.InMemoryUseCasePool;
-import gateways.UseCasePool;
 import org.junit.Assert;
 import presenters.MockMenuPresenter;
 import org.junit.Test;

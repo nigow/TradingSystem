@@ -1,6 +1,5 @@
 package controllers;
 
-import gateways.UseCasePool;
 import presenters.TradeCreatorPresenter;
 import presenters.WishlistPresenter;
 import usecases.*;
@@ -20,7 +19,7 @@ public class WishlistController {
 
     private final UseCasePool useCasePool;
     private final AccountManager accountManager;
-    private final WishlistUtility wishlistUtility;
+    private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
     private final AuthManager authManager;
     private final TradeUtility tradeUtility;
@@ -39,9 +38,9 @@ public class WishlistController {
 
         this.useCasePool = useCasePool;
 
-        this.tradeUtility = useCasePool.getTradeUtility();
+        this.tradeUtility = useCasePool.getOldTradeUtility();
         this.accountManager = useCasePool.getAccountManager();
-        this.wishlistUtility = useCasePool.getWishlistUtility();
+        this.wishlistManager = useCasePool.getWishlistManager();
         this.itemManager = useCasePool.getItemManager();
         this.authManager = useCasePool.getAuthManager();
 
@@ -97,7 +96,7 @@ public class WishlistController {
     }
 
     private void displayWishlist() {
-        List<String> wishlistInfo = wishlistUtility.wishlistToString(accountManager.getCurrAccountID());
+        List<String> wishlistInfo = wishlistManager.getWishlistToString(accountManager.getCurrAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
     }
 

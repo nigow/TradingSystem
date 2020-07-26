@@ -1,7 +1,7 @@
 package gateways;
 
+import entities.OldTrade;
 import entities.TimePlace;
-import entities.Trade;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class CSVTradeGatewayTest {
+public class CSVOldTradeGatewayTest {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
@@ -27,12 +27,12 @@ public class CSVTradeGatewayTest {
 
         int id = tg.generateValidId();
 
-        Trade trade = new Trade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
+        OldTrade oldTrade = new OldTrade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
                                 new ArrayList<>(Arrays.asList(1)), 0);
 
         TimePlace timePlace = new TimePlace(id, LocalDateTime.now(), "skrgk");
 
-        tg.updateTrade(trade, timePlace);
+        tg.updateTrade(oldTrade, timePlace);
 
         assertEquals(tg.findTradeById(id).getId(), id);
         assertTrue(tg.findTradeById(id).isPermanent());
@@ -53,14 +53,14 @@ public class CSVTradeGatewayTest {
 
         int id = tg.generateValidId();
 
-        Trade trade = new Trade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
+        OldTrade oldTrade = new OldTrade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
                 new ArrayList<>(Arrays.asList(1)), 0);
 
         TimePlace timePlace = new TimePlace(id, LocalDateTime.now(), "skrgk");
 
         LocalDateTime time = timePlace.getTime();
 
-        tg.updateTrade(trade, timePlace);
+        tg.updateTrade(oldTrade, timePlace);
 
         assertEquals(tg.findTimePlaceById(id).getTime(), time);
         assertEquals(tg.findTimePlaceById(id).getPlace(), "skrgk");
@@ -76,14 +76,14 @@ public class CSVTradeGatewayTest {
 
         int id = tg.generateValidId();
 
-        Trade trade = new Trade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
+        OldTrade oldTrade = new OldTrade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
                 new ArrayList<>(Arrays.asList(1)), 0);
 
         TimePlace timePlace = new TimePlace(id, LocalDateTime.now(), "skrgk");
 
-        tg.updateTrade(trade, timePlace);
+        tg.updateTrade(oldTrade, timePlace);
 
-        Trade retrieved = tg.findTradeById(id);
+        OldTrade retrieved = tg.findTradeById(id);
 
         retrieved.setPermanent(false);
 
@@ -102,12 +102,12 @@ public class CSVTradeGatewayTest {
 
         int id = tg.generateValidId();
 
-        Trade trade = new Trade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
+        OldTrade oldTrade = new OldTrade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
                 new ArrayList<>(Arrays.asList(1)), 0);
 
         TimePlace timePlace = new TimePlace(id, LocalDateTime.now(), "skrgk");
 
-        tg.updateTrade(trade, timePlace);
+        tg.updateTrade(oldTrade, timePlace);
 
         assertTrue(tg.getAllTrades().get(0).isPermanent());
 
@@ -122,12 +122,12 @@ public class CSVTradeGatewayTest {
 
         int id = tg.generateValidId();
 
-        Trade trade = new Trade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
+        OldTrade oldTrade = new OldTrade(id, id, true, 0, 1, new ArrayList<>(Arrays.asList(0)),
                 new ArrayList<>(Arrays.asList(1)), 0);
 
         TimePlace timePlace = new TimePlace(id, LocalDateTime.now(), "skrgk");
 
-        tg.updateTrade(trade, timePlace);
+        tg.updateTrade(oldTrade, timePlace);
 
         assertEquals(tg.generateValidId(), 1);
 
