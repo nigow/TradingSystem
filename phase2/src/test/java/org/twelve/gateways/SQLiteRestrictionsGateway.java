@@ -32,7 +32,7 @@ public class SQLiteRestrictionsGateway implements RestrictionsGateway{
                 int incomplete_limit = Integer.parseInt(restrictions.getString(2));
                 int weekly_limit = Integer.parseInt(restrictions.getString(3));
 
-                restriction = new Restrictions(lend_limit, incomplete_limit, weekly_limit);
+                //restriction = new Restrictions(lend_limit, incomplete_limit, weekly_limit);
             }
 
         }catch(SQLException e){
@@ -79,12 +79,5 @@ public class SQLiteRestrictionsGateway implements RestrictionsGateway{
             }
 
         }
-    }
-
-    public static void main(String[] args) {
-        SQLiteRestrictionsGateway dbGateway = new SQLiteRestrictionsGateway("jdbc:sqlite:/Users/tairi/Development/CSC207/group_0012/phase2/test/gateways/testdb.db");
-        System.out.println(dbGateway.getRestrictions().getMaxIncompleteTrade());
-        System.out.println(dbGateway.updateRestrictions(new Restrictions(15,20,30)));
-        System.out.println(dbGateway.getRestrictions().getMaxIncompleteTrade());
     }
 }
