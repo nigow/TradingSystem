@@ -181,4 +181,8 @@ public class Trade {
     public List<Integer> itemsTraderGets(int id) {
         return itemsOfTrader(getNextTraderID(id));
     }
+
+    public boolean isEditTurn(int id) {
+        return editedCounter % tradersIds.size() == tradersIds.indexOf(id);
+    }
 }
