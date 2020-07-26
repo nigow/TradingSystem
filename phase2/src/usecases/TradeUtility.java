@@ -18,6 +18,9 @@ abstract public class TradeUtility {
 
     private final int NUMBER_OF_NEEDED_STATS = 3;
 
+    protected ItemUtility itemUtility;
+    protected AccountRepository accountRepository;
+
     /**
      * List of all trades in the system
      */
@@ -62,10 +65,9 @@ abstract public class TradeUtility {
      * Returns a user-friendly string representation of a trade.
      *
      * @param trade The Trade whose representation is being returned
-     * @param itemUtility    Manager for manipulating items
      * @return An user-friendly representation of a trade
      */
-    public String tradeAsString(Trade trade, AccountRepository accountRepository, ItemUtility itemUtility) {
+    public String tradeAsString(Trade trade) {
         TimePlace timePlace = getTimePlaceByID(trade.getTimePlaceID());
         StringBuilder ans = new StringBuilder();
 
@@ -92,10 +94,10 @@ abstract public class TradeUtility {
      *
      * @return List of the trades the current account has done in string format
      */
-    public List<String> getAllTradesAccountString(AccountRepository accountRepository, ItemManager itemManager, int accountID) {
+    public List<String> getAllTradesAccountString(int accountID) {
         List<String> accountTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount(accountID)) {
-            accountTrades.add(tradeAsString(trade, accountRepository, itemManager));
+            accountTrades.add(tradeAsString(trade));
         }
         return accountTrades;
     }
@@ -371,10 +373,10 @@ abstract public class TradeUtility {
      *
      * @return List of trades in string format
      */
-    public List<String> getAllTradesString(AccountRepository accountRepository, ItemUtility itemUtility) {
+    public List<String> getAllTradesString() {
         List<String> StringTrade = new ArrayList<>();
         for (Trade trade : trades) {
-            StringTrade.add(tradeAsString(trade, accountRepository, itemUtility));
+            StringTrade.add(tradeAsString(trade));
         }
         return StringTrade;
     }
