@@ -354,6 +354,15 @@ abstract public class TradeUtility {
     }
 
     /**
+     * Returns if it is a accounts turn to edit.
+     *
+     * @return Whether it's the account's turn to edit.
+     */
+    public boolean isEditTurn(int accountID, int tradeID) {
+        return getTradeByID(tradeID).isEditTurn(accountID);
+    }
+
+    /**
      * Retrieves all trades stored in persistent storage in string format.
      *
      * @return List of trades in string format

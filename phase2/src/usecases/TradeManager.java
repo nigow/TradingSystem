@@ -38,7 +38,7 @@ public class TradeManager extends TradeUtility{
         this.tradeGateway = tradeGateway;
     }
 
-    public int generateValidID() {
+    private int generateValidID() {
         return generateValidIDCounter++;
     }
 
@@ -53,7 +53,7 @@ public class TradeManager extends TradeUtility{
         updateToGateway(trade);
     }
 
-    public void updateToGateway(Trade trade) {
+    private void updateToGateway(Trade trade) {
         TimePlace timePlace = getTimePlaceByID(trade.getId());
         tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
                 trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions(),
@@ -122,15 +122,6 @@ public class TradeManager extends TradeUtility{
         Trade trade = getTradeByID(tradeID);
         trade.setStatus(tradeStatus);
         updateToGateway(trade);
-    }
-
-    /**
-     * Returns if it is a accounts turn to edit.
-     *
-     * @return Whether it's the account's turn to edit.
-     */
-    public boolean isEditTurn(int accountID, int tradeID) {
-        return getTradeByID(tradeID).isEditTurn(accountID);
     }
 
     /**
