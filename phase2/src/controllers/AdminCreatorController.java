@@ -1,6 +1,5 @@
 package controllers;
 
-import gateways.UseCasePool;
 import presenters.AdminCreatorPresenter;
 import usecases.AccountManager;
 

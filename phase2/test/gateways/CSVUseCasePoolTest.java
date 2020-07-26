@@ -1,5 +1,6 @@
 package gateways;
 
+import controllers.CSVUseCasePool;
 import junit.framework.TestCase;
 
 import java.io.IOException;

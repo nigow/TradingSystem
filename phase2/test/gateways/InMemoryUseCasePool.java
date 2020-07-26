@@ -1,5 +1,6 @@
 package gateways;
 
+import controllers.UseCasePool;
 import entities.*;
 import usecases.*;
 

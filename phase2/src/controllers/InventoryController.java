@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import entities.Item;
-import gateways.UseCasePool;
 import presenters.InventoryPresenter;
 import usecases.AuthManager;
 import usecases.ItemManager;
