@@ -41,6 +41,15 @@ public class TradeManager extends TradeUtility{
         return generateValidIDCounter++;
     }
 
+    public void addToTrades(int tradeID, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
+                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions) {
+        Trade trade = new Trade(tradeID, isPermanent, traderIDs, itemIDs, editedCounter,
+                TradeStatus.valueOf(tradeStatus), tradeCompletions);
+        trades.add(trade);
+        updateToGateway(trade);
+        // TODO getting of timeplaces
+    }
+
     public void updateToGateway(Trade trade) {
         tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
                 trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions());
