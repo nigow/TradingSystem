@@ -90,11 +90,10 @@ public class TradeManager extends TradeUtility{
      */
     public void editTimePlace(int tradeID, LocalDateTime time, String place, int editorID) {
         TimePlace timePlace = getTimePlaceByID(tradeID);
-        OldTrade oldTrade = getTradeByID(tradeID);
+        Trade trade = getTradeByID(tradeID);
         timePlace.setTime(time);
         timePlace.setPlace(place);
-        oldTrade.setLastEditorID(editorID);
-        oldTrade.incrementEditedCounter();
+        trade.incrementEditedCounter();
         // TODO call gateway save
     }
 
