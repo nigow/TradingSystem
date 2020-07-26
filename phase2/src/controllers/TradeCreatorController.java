@@ -15,7 +15,7 @@ import java.util.List;
 public class TradeCreatorController {
 
 
-    private final OldTradeManager oldTradeManager;
+    private final TradeManager tradeManager;
     private final AccountManager accountManager;
     private final ItemUtility itemUtility;
 
@@ -40,7 +40,7 @@ public class TradeCreatorController {
     public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
                                   UseCasePool useCasePool, int peerId, int itemId, boolean forceTwoWay) {
 
-        this.oldTradeManager = useCasePool.getOldTradeManager();
+        this.tradeManager = useCasePool.getOldTradeManager();
         this.accountManager = useCasePool.getAccountManager();
         this.itemUtility = useCasePool.getItemUtility();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
@@ -115,7 +115,7 @@ public class TradeCreatorController {
 
         }
 
-        oldTradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, inputHandler.isTrue(isPerm),
+        tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, inputHandler.isTrue(isPerm),
                 traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountManager);
         tradeCreatorPresenter.successMessage();
 

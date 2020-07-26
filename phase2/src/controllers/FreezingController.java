@@ -5,7 +5,6 @@ import presenters.FreezingPresenter;
 import usecases.AccountManager;
 import usecases.AuthManager;
 import usecases.FreezingUtility;
-import usecases.OldTradeUtility;
 
 import java.util.ArrayList;
 import java.util.List;
