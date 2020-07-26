@@ -27,6 +27,18 @@ abstract public class ItemUtility {
     }
 
     /**
+     * Gets the ID of the owner of the item.
+     *
+     * @param itemID ID of the item which information is being returned about
+     * @return ID of the owner of the item (-1 if no item can be found).
+     */
+    public int getOwnerId(int itemID) {
+        Item item = findItemById(itemID);
+        if (item != null) return item.getOwnerID();
+        return -1;
+    }
+
+    /**
      * Retrieves all approved items in the system.
      *
      * @return List of all approved items in the system
