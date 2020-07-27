@@ -19,9 +19,6 @@ import java.util.List;
 
 public class TradeManager extends TradeUtility{
 
-
-    private int generateValidIDCounter;
-
     private WishlistManager wishlistManager;
 
     private TradeGateway tradeGateway;
@@ -30,16 +27,11 @@ public class TradeManager extends TradeUtility{
 
     public void TradeManager(TradeGateway tradeGateway, RestrictionsGateway restrictionsGateway, AccountRepository accountRepository,
                              ItemManager itemManager, WishlistManager wishlistManager) {
-        generateValidIDCounter = 1;
         this.itemManager = itemManager;
         this.accountRepository = accountRepository;
         this.wishlistManager = wishlistManager;
         this.tradeGateway = tradeGateway;
         this.restrictionsGateway = restrictionsGateway;
-    }
-
-    private int generateValidID() {
-        return generateValidIDCounter++;
     }
 
     public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
@@ -69,7 +61,7 @@ public class TradeManager extends TradeUtility{
      */
     public void createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List<Integer> itemsIds) {
-        int id = generateValidID();
+        int id = trades.size() + 1;
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
         trades.add(trade);
