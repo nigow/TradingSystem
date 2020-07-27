@@ -220,10 +220,13 @@ public class InventoryController {
                 isValid = true;
             } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                // TODO we shouldn't access methods that return an entity. i couldn't refactor this on the spot
-                //  please figure it out with isaac  --maryam
-                if (ind < itemManager.getNotInAccount(sessionManager.getCurrAccountID(), wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID())).size()) {
-                    if (wishlistManager.addItemToWishlist(sessionManager.getCurrAccountID(), itemManager.getItemId(itemManager.getNotInAccount(sessionManager.getCurrAccountID(), wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID())).get(ind)))) {
+                List<Integer> notInAccount = itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID(),
+                        wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()));
+                if (ind < notInAccount.size()) {
+
+                    // TODO andrew refactored this so it doesn't have a boolean output. i dont know
+                    //  how you want it fixed.  --maryam
+                    if (wishlistManager.addItemToWishlist(sessionManager.getCurrAccountID(), notInAccount.get(ind))) {
                         inventoryPresenter.itemSuccess();
                         isValid = true;
                     } else {
@@ -255,8 +258,7 @@ public class InventoryController {
                 int ind = Integer.parseInt(option);
 //                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
 //                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
-                // TODO same as above
-                List<Item> items = itemManager.getAllInventoryOfAccount(sessionManager.getCurrAccountID());
+                List<Integer> items = itemManager.getAllInventoryOfAccountIDs(sessionManager.getCurrAccountID());
                 if (ind < items.size()) {
                     boolean removed = itemManager.removeItem(items.get(ind));
                     if (removed) {
