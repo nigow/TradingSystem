@@ -2,8 +2,7 @@ package org.twelve.controllers;
 
 
 import org.twelve.presenters.TradeCreatorPresenter;
-import org.twelve.usecases.ItemUtility;
-import org.twelve.usecases.TradeManager;
+import org.twelve.usecases.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,8 +17,10 @@ public class TradeCreatorController {
 
 
     private final TradeManager tradeManager;
-    private final AccountManager accountManager;
-    private final ItemUtility itemUtility;
+    private final AccountRepository accountRepository;
+    private final ItemManager itemManager;
+    private final WishlistManager wishlistManager;
+    private final SessionManager sessionManager;
 
     private final TradeCreatorPresenter tradeCreatorPresenter;
 
@@ -42,12 +43,14 @@ public class TradeCreatorController {
     public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
                                   UseCasePool useCasePool, int peerId, int itemId, boolean forceTwoWay) {
 
-        this.tradeManager = useCasePool.getOldTradeManager();
-        this.accountManager = useCasePool.getAccountManager();
-        this.itemUtility = useCasePool.getItemUtility();
+        this.tradeManager = useCasePool.getTradeManager();
+        this.accountRepository = useCasePool.getAccountRepository();
+        this.itemManager = useCasePool.getItemManager();
+        this.wishlistManager = useCasePool.getWishlistManager();
+        this.sessionManager = useCasePool.getSessionManager();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-        this.traderOneId = accountManager.getCurrAccountID();
+        this.traderOneId = accountRepository.getCurrAccountID();
         this.traderTwoId = peerId;
         this.itemId = itemId;
         this.forceTwoWay = forceTwoWay;
@@ -64,7 +67,7 @@ public class TradeCreatorController {
         List<Integer> traderOneItems = new ArrayList<>();
         List<Integer> traderTwoItems = new ArrayList<>();
 
-        if (accountManager.isInWishlist(itemId)) {
+        if (wishlistManager.isInWishlist(sessionManager.getCurrAccountID(), itemId)) {
             traderTwoItems.add(itemId);
         } else {
             traderOneItems.add(itemId);
@@ -118,21 +121,21 @@ public class TradeCreatorController {
         }
 
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, inputHandler.isTrue(isPerm),
-                traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountManager);
+                traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountRepository);
         tradeCreatorPresenter.successMessage();
 
     }
 
     private boolean setUpTwoWayTrade(List<Integer> traderOneItems, List<Integer> traderTwoItems) {
 
-        List<String> inventory = traderOneItems.isEmpty() ? itemUtility.getApprovedInventoryOfAccountString(traderOneId) :
-                itemUtility.getApprovedInventoryOfAccountString(traderTwoId);
+        List<String> inventory = traderOneItems.isEmpty() ? itemManager.getApprovedInventoryOfAccountString(traderOneId) :
+                itemManager.getApprovedInventoryOfAccountString(traderTwoId);
 
         if (traderOneItems.isEmpty()) {
             tradeCreatorPresenter.showInventory(inventory);
         }
         else {
-            tradeCreatorPresenter.showInventory(accountManager.getUsernameFromID(traderTwoId), inventory);
+            tradeCreatorPresenter.showInventory(accountRepository.getUsernameFromID(traderTwoId), inventory);
         }
 
         String oppositeItemIndex = tradeCreatorPresenter.getItem();
@@ -146,9 +149,9 @@ public class TradeCreatorController {
         }
 
         if (traderOneItems.isEmpty()) {
-            traderOneItems.add(itemUtility.getApprovedInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+            traderOneItems.add(itemManager.getApprovedInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
         } else {
-            traderTwoItems.add(itemUtility.getApprovedInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+            traderTwoItems.add(itemManager.getApprovedInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
         }
 
         return true;
