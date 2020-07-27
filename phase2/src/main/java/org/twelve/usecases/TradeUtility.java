@@ -380,4 +380,12 @@ abstract public class TradeUtility {
         }
         return stringTrade;
     }
+
+    public List<Integer> getAllTradesIds(){
+        List<Integer> tradeIds = new ArrayList<>();
+        for(Trade trade: trades){
+            tradeIds.add(trade.getId());
+        }
+        return tradeIds;
+    }
 }
