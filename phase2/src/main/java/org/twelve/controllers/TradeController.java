@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.TradeStatus;
 import org.twelve.presenters.TradePresenter;
 import org.twelve.usecases.*;
 
@@ -17,35 +18,31 @@ public class TradeController {
 
     private final TradePresenter tradePresenter;
 
-    private final AuthManager authManager;
+    private final PermissionManager permissionManager;
 
-    private final AccountManager accountManager;
-
-    private final TradeUtility tradeUtility;
+    private final AccountRepository accountRepository;
 
     private final TradeManager tradeManager;
 
     private final ItemManager itemManager;
 
-    private final ItemUtility itemUtility;
-
     private final InputHandler inputHandler;
 
+    private final SessionManager sessionManager;
 
     /**
      * Initialized TradeController by setting necessary use cases and presenter.
      *
-     * @param mc             An instance of ManualConfig to get necessary use cases
+     * @param useCasePool             An instance of ManualConfig to get necessary use cases
      * @param tradePresenter An instance of TradePresenter to display and get information from the user
      */
-    public TradeController(UseCasePool mc, TradePresenter tradePresenter) {
+    public TradeController(UseCasePool useCasePool, TradePresenter tradePresenter) {
         this.tradePresenter = tradePresenter;
-        authManager = mc.getAuthManager();
-        accountManager = mc.getAccountManager();
-        tradeUtility = mc.getTradeUtility();
-        tradeManager = mc.getTradeManager();
-        itemManager = mc.getItemManager();
-        itemUtility = mc.getItemUtility();
+        permissionManager = useCasePool.getPermissionManager();
+        accountRepository = useCasePool.getAccountRepository();
+        sessionManager = useCasePool.getSessionManager();
+        tradeManager = useCasePool.getTradeManager();
+        itemManager = useCasePool.getItemManager();
         inputHandler = new InputHandler();
     }
 
@@ -60,7 +57,8 @@ public class TradeController {
             options.add(tradePresenter.viewTrades());
             methods.add(this::showTrades);
 
-            if (!authManager.isFrozen(accountManager.getCurrAccount())) {
+            // TODO how do we check if someone is frozen?
+            if (!permissionManager.isFrozen(sessionManager.getCurrAccountID())) {
                 options.add(tradePresenter.editTrade());
                 methods.add(this::selectAndChangeTrade);
             }
@@ -92,12 +90,7 @@ public class TradeController {
     }
 
     private void showTrades() {
-        List<String> trades = new ArrayList<>();
-        for (Trade t : tradeUtility.getAllTradesAccount()) {
-            tradeManager.setTrade(t);
-            trades.add(tradeManager.tradeAsString(accountManager, itemManager));
-        }
-        tradePresenter.displayTrades(trades);
+        tradePresenter.displayTrades(tradeManager.getAllTradesAccountString(sessionManager.getCurrAccountID()));
     }
 
     private void selectAndChangeTrade() {
@@ -108,17 +101,17 @@ public class TradeController {
                 return;
             if (inputHandler.isNum(index)) {
                 int ind = Integer.parseInt(index);
-                List<Trade> trades = tradeUtility.getAllTradesAccount();
-                if (0 <= ind && ind < trades.size()) {
-                    tradeManager.setTrade(trades.get(ind));
-                    tradePresenter.displayTrade(tradeManager.tradeAsString(accountManager, itemManager));
-                    if (tradeManager.isRejected()) {
+                List<Integer> tradesID = tradeManager.getAllTradesAccountID(sessionManager.getCurrAccountID());
+                List<String> tradesString = tradeManager.getAllTradesAccountString(sessionManager.getCurrAccountID());
+                if (0 <= ind && ind < tradesID.size()) {
+                    tradePresenter.displayTrade(tradesString.get(ind));
+                    if (tradeManager.isRejected(tradesID.get(ind))) {
                         tradePresenter.displayCancelled();
-                    } else if (tradeManager.isUnconfirmed()) {
-                        changeUnconfirmedTrade();
-                    } else if (tradeManager.isConfirmed()) {
-                        changeConfirmedTrade();
-                    } else if (tradeManager.isCompleted()) {
+                    } else if (tradeManager.isUnconfirmed(tradesID.get(ind))) {
+                        changeUnconfirmedTrade(tradesID.get(ind));
+                    } else if (tradeManager.isConfirmed(tradesID.get(ind))) {
+                        changeConfirmedTrade(tradesID.get(ind));
+                    } else if (tradeManager.isCompleted(tradesID.get(ind))) {
                         tradePresenter.displayCompleted();
                     }
                     return;
@@ -128,14 +121,14 @@ public class TradeController {
         }
     }
 
-    private void changeConfirmedTrade() {
+    private void changeConfirmedTrade(int tradeID) {
         tradePresenter.displayConfirmed();
-        if (tradeManager.getDateTime().isBefore(LocalDateTime.now())) {
+        if (tradeManager.getDateTime(tradeID).isBefore(LocalDateTime.now())) {
             while (true) {
                 String ans = tradePresenter.isTradeCompleted();
                 if (inputHandler.isTrue(ans)) {
                     tradePresenter.displayCompleted();
-                    tradeManager.updateCompletion(accountManager.getCurrAccountID());
+                    tradeManager.updateCompletion(sessionManager.getCurrAccountID(), tradeID);
                     return;
                 } else if (inputHandler.isFalse(ans)) {
                     tradePresenter.displayIncomplete();
@@ -146,15 +139,15 @@ public class TradeController {
         }
     }
 
-    private void changeUnconfirmedTrade() {
+    private void changeUnconfirmedTrade(int tradeID) {
         while (true) {
             List<String> options = new ArrayList<>();
             options.add("Reject or cancel this trade");
-            if (tradeManager.isEditTurn(accountManager.getCurrAccount())) {
-                if (tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
+            if (tradeManager.isEditTurn(sessionManager.getCurrAccountID(), tradeID)) {
+                if (tradeManager.getDateTime(tradeID).isAfter(LocalDateTime.now())) {
                     options.add("Confirm the time and location for this trade");
                 }
-                if (tradeManager.canEdit()) {
+                if (tradeManager.canEdit(tradeID)) {
                     options.add("Edit the time and location for this trade");
                 }
             }
@@ -165,7 +158,7 @@ public class TradeController {
                 if (actionInd == options.size() - 1)
                     return;
                 if (0 <= actionInd && actionInd < options.size()) {
-                    changeUnconfirmedTradeActions(actionInd);
+                    changeUnconfirmedTradeActions(tradeID, actionInd);
                     return;
                 }
             }
@@ -173,30 +166,30 @@ public class TradeController {
         }
     }
 
-    private void changeUnconfirmedTradeActions(int actionInd) {
+    private void changeUnconfirmedTradeActions(int tradeID, int actionInd) {
         if (actionInd == 0) {
-            tradeManager.updateStatus(TradeStatus.REJECTED);
+            tradeManager.updateStatus(tradeID, TradeStatus.REJECTED);
             tradePresenter.displayRejected();
-        } else if (actionInd == 1 && tradeManager.getDateTime().isAfter(LocalDateTime.now())) {
-            tradeManager.updateStatus(TradeStatus.CONFIRMED);
-            tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
-            if (!tradeManager.isPermanent()) {
-                tradeManager.reverseTrade(accountManager);
-                tradeManager.updateStatus(TradeStatus.CONFIRMED);
-                tradeUtility.makeTrade(tradeManager.getTrade(), accountManager, itemManager, itemUtility);
+        } else if (actionInd == 1 && tradeManager.getDateTime(tradeID).isAfter(LocalDateTime.now())) {
+            tradeManager.updateStatus(tradeID, TradeStatus.CONFIRMED);
+            tradeManager.makeTrade(tradeID);
+            if (!tradeManager.isPermanent(tradeID)) {
+                tradeManager.reverseTrade(tradeID, restrictions);
+                tradeManager.updateStatus(tradeID, TradeStatus.CONFIRMED);
+                tradeManager.makeTrade(tradeID);
             }
             tradePresenter.displayConfirmed();
         } else {
-            changeTradeTimePlace();
-            if (!tradeManager.canEdit()) {
-                tradeManager.updateStatus(TradeStatus.REJECTED);
+            changeTradeTimePlace(tradeID);
+            if (!tradeManager.canEdit(tradeID)) {
+                tradeManager.updateStatus(tradeID, TradeStatus.REJECTED);
                 tradePresenter.displayLimitReached();
                 tradePresenter.displayCancelled();
             }
         }
     }
 
-    private void changeTradeTimePlace() {
+    private void changeTradeTimePlace(int tradeID) {
         String location = tradePresenter.editTradeLocation();
         if (inputHandler.isExitStr(location))
             return;
@@ -235,7 +228,7 @@ public class TradeController {
                     LocalDateTime.parse(date + " " + time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
             if (dateTime.isAfter(LocalDateTime.now())) {
-                tradeManager.editTimePlace(dateTime, location, accountManager.getCurrAccountID());
+                tradeManager.editTimePlace(tradeID, dateTime, location);
                 tradePresenter.displaySuggestion();
                 return;
             }
@@ -245,7 +238,7 @@ public class TradeController {
 
     private void recentTwoWayTrades() {
         List<String> items = new ArrayList<>();
-        for (int itemID : tradeUtility.getRecentTwoWay()) {
+        for (int itemID : tradeManager.getRecentTwoWay(sessionManager.getCurrAccountID(), restrictions)) {
             items.add(itemManager.getItemStringById(itemID));
         }
         tradePresenter.displayRecentTwoWayTrade(items);
@@ -253,7 +246,7 @@ public class TradeController {
 
     private void recentOneWayTrades() {
         List<String> items = new ArrayList<>();
-        for (int itemID : tradeUtility.getRecentOneWay()) {
+        for (int itemID : tradeManager.getRecentOneWay(sessionManager.getCurrAccountID(), restrictions)) {
             items.add(itemManager.getItemStringById(itemID));
         }
         tradePresenter.displayRecentOneWayTrade(items);
@@ -261,8 +254,8 @@ public class TradeController {
 
     private void frequentPartners() {
         List<String> partners = new ArrayList<>();
-        for (int id : tradeUtility.getTopThreePartnersIds()) {
-            partners.add(accountManager.getAccountStringFromID(id));
+        for (int id : tradeManager.getTopThreePartnersIds(sessionManager.getCurrAccountID(), restrictions)) {
+            partners.add(accountRepository.getAccountStringFromID(id));
         }
         tradePresenter.displayFrequentPartners(partners);
     }
