@@ -168,17 +168,6 @@ public class FreezingUtility {
                 !isFrozen(accountID) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
 
-
-    /**
-     * Determines whether the current account has lent more than borrowed.
-     *
-     * @return Whether the current account has lent more than borrowed
-     */
-    public boolean lentMoreThanBorrowed(int accountID) {
-        return tradeManager.getTimesLent(accountID) - tradeManager.getTimesBorrowed(accountID) >=
-                thresholdRepository.getLendMoreThanBorrow();
-    }
-
     /**
      * Determines whether a given account can request to unfreeze and requests to unfreeze if it can.
      *
