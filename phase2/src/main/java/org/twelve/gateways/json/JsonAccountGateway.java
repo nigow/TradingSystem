@@ -40,8 +40,7 @@ public class JsonAccountGateway implements AccountGateway {
                 inputStream = urlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
-                String output = null;
-                JsonObject json = null;
+                JsonObject json;
 
                 while((line = bufferedReader.readLine())!=null){
                     try{
