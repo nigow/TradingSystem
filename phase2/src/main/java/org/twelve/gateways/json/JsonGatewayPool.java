@@ -22,21 +22,21 @@ public class JsonGatewayPool implements GatewayPool {
 
     @Override
     public AccountGateway getAccountGateway() {
-        return null;
+        return accountGateway;
     }
 
     @Override
     public ItemsGateway getItemsGateway() {
-        return null;
+        return itemsGateway;
     }
 
     @Override
     public ThresholdsGateway getThresholdsGateway() {
-        return null;
+        return thresholdsGateway;
     }
 
     @Override
     public TradeGateway getTradeGateway() {
-        return null;
+        return tradeGateway;
     }
 }
