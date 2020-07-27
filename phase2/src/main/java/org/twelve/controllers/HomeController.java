@@ -1,8 +1,13 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.Permissions;
 import org.twelve.presenters.HomePresenter;
+import org.twelve.usecases.AccountRepository;
+import org.twelve.usecases.LoginManager;
+import org.twelve.usecases.SessionManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,15 +21,9 @@ public class HomeController {
      */
     private final HomePresenter homePresenter;
 
-    /**
-     * An instance of AccountManager to create an account or get information about an account.
-     */
-    private final AccountManager accountManager;
+    private final AccountRepository accountRepository;
 
-    /**
-     * An instance of AuthManager to check login information or permissions.
-     */
-    private final AuthManager authManager;
+    private final LoginManager loginManager;
 
     /**
      * An instance of MenuFacade to be called according to a user's permissions.
@@ -36,6 +35,8 @@ public class HomeController {
      */
     private final InputHandler inputHandler;
 
+    private final SessionManager sessionManager;
+
     /**
      * Initializes HomeController with the necessary presenter and use cases.
      *
@@ -45,8 +46,9 @@ public class HomeController {
      */
     public HomeController(UseCasePool useCasePool, HomePresenter homePresenter,
                           MenuFacade menuFacade) {
-        accountManager = useCasePool.getAccountManager();
-        authManager = useCasePool.getAuthManager();
+        sessionManager = useCasePool.getSessionManager();
+        loginManager = useCasePool.getLoginManager();
+        accountRepository = useCasePool.getAccountRepository();
         this.menuFacade = menuFacade;
         this.homePresenter = homePresenter;
         inputHandler = new InputHandler();
@@ -91,8 +93,8 @@ public class HomeController {
             if (inputHandler.isExitStr(password))
                 return;
             if (inputHandler.isValidUserPass(username, password) &&
-                    authManager.authenticateLogin(username, password)) {
-                accountManager.setCurrAccount(username);
+                    loginManager.authenticateLogin(username, password)) {
+                sessionManager.login(username);
                 menuFacade.run();
                 return;
             } else
@@ -115,7 +117,15 @@ public class HomeController {
             if (!inputHandler.isValidUserPass(username, password))
                 homePresenter.displayInvalidInfo();
             else {
-                if (accountManager.createStandardAccount(username, password)) {
+                // TODO which permissions to give? (creating standard account)
+                List<Permissions> perms = Arrays.asList(Permissions.LOGIN,
+                        Permissions.CREATE_ITEM,
+                        Permissions.ADD_TO_WISHLIST,
+                        Permissions.LEND,
+                        Permissions.BORROW,
+                        Permissions.BROWSE_INVENTORY,
+                        Permissions.REQUEST_UNFREEZE);
+                if (accountRepository.createAccount(username, password)) {
                     homePresenter.displaySuccessfulAccount();
                     menuFacade.run();
                     return;
