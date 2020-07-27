@@ -29,7 +29,7 @@ public class WindowHandler extends Application {
         for (Scenes scene : Scenes.values()) {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"),
-                    ResourceBundle.getBundle("localization." + scene.toString()));
+                    ResourceBundle.getBundle("org.twelve.presenters." + scene.toString()));
 
             loader.setControllerFactory(v -> viewBuilder.getView(scene));
 
