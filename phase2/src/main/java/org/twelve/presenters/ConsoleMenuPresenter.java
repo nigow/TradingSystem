@@ -74,7 +74,7 @@ public class ConsoleMenuPresenter implements MenuPresenter {
      * {@inheritDoc}
      */
     @Override
-    public String modifyRestrictions() {
+    public String modifyThresholds() {
         String message = "Modify the restriction values of the program";
         System.out.println(message);
         return message;

@@ -6,7 +6,7 @@ public interface GatewayPool {
 
     ItemsGateway getItemsGateway();
 
-    RestrictionsGateway getRestrictionsGateway();
+    ThresholdsGateway getThresholdsGateway();
 
     TradeGateway getTradeGateway();
 }

@@ -63,7 +63,7 @@ public class AdminCreatorController {
                         Permissions.LEND,
                         Permissions.BORROW,
                         Permissions.BROWSE_INVENTORY,
-                        Permissions.CHANGE_RESTRICTIONS,
+                        Permissions.CHANGE_THRESHOLDS,
                         Permissions.ADD_ADMIN,
                         Permissions.REQUEST_UNFREEZE);
                 if (accountRepository.createAccount(username, password, perms)) {

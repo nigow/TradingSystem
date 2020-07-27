@@ -1,6 +1,6 @@
 package org.twelve.gateways;
 
-import org.twelve.entities.Restrictions;
+import org.twelve.entities.Thresholds;
 
 import java.io.*;
 import java.util.regex.Pattern;
@@ -10,12 +10,12 @@ import java.util.regex.Pattern;
  *
  * @author Tairi
  */
-public class CSVRestrictionsGateway implements RestrictionsGateway {
+public class CSVThresholdsGateway implements ThresholdsGateway {
 
     /**
      * The current restrictions of the system consists of lend, weekly trades and incomplete trade limits.
      */
-    private Restrictions currentRestriction;
+    private Thresholds currentThresholds;
 
 
     /**
@@ -30,7 +30,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway {
      * @param filepath the filepath to the csv file
      * @throws IOException If the given csv file cannot be accessed
      */
-    public CSVRestrictionsGateway(String filepath) throws IOException {
+    public CSVThresholdsGateway(String filepath) throws IOException {
         this.filepath = filepath;
 
         //pre-processing of file reading
@@ -51,7 +51,7 @@ public class CSVRestrictionsGateway implements RestrictionsGateway {
             int numberOfEdits = Integer.parseInt(lineArray[4]);
             int numberOfStats = Integer.parseInt(lineArray[5]);
 
-            this.currentRestriction = new Restrictions(lendLimit, incompleteTrade, weeklyTrade, numberOfDays, numberOfEdits, numberOfStats);
+            this.currentThresholds = new Thresholds(lendLimit, incompleteTrade, weeklyTrade, numberOfDays, numberOfEdits, numberOfStats);
 
             line = br.readLine();
 
@@ -60,32 +60,32 @@ public class CSVRestrictionsGateway implements RestrictionsGateway {
         br.close();
 
         // currentRestriction being null here means file was corrupted
-        if (currentRestriction == null) throw new IOException("Restrictions.csv corrupted.");
+        if (currentThresholds == null) throw new IOException("Restrictions.csv corrupted.");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Restrictions getRestrictions() {
-        return this.currentRestriction;
+    public Thresholds getThresholds() {
+        return this.currentThresholds;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean updateRestrictions(Restrictions restrictions) {
+    public boolean updateRestrictions(Thresholds thresholds) {
         try {
-            this.currentRestriction = restrictions;
+            this.currentThresholds = thresholds;
 
             //get the restrictions to the correct csv format
-            String lendLimit = String.valueOf(restrictions.getLendMoreThanBorrow());
-            String incompleteTrade = String.valueOf(restrictions.getMaxIncompleteTrade());
-            String weeklyTrade = String.valueOf(restrictions.getMaxWeeklyTrade());
-            String numberOfDays = String.valueOf(restrictions.getNumberOfDays());
-            String numberOfEdits = String.valueOf(restrictions.getNumberOfEdits());
-            String numberOfStats = String.valueOf(restrictions.getNumberOfStats());
+            String lendLimit = String.valueOf(thresholds.getLendMoreThanBorrow());
+            String incompleteTrade = String.valueOf(thresholds.getMaxIncompleteTrade());
+            String weeklyTrade = String.valueOf(thresholds.getMaxWeeklyTrade());
+            String numberOfDays = String.valueOf(thresholds.getNumberOfDays());
+            String numberOfEdits = String.valueOf(thresholds.getNumberOfEdits());
+            String numberOfStats = String.valueOf(thresholds.getNumberOfStats());
             String newLine = lendLimit + "," + incompleteTrade + "," + weeklyTrade + "," + numberOfDays + "," + numberOfEdits + "," + numberOfStats;
 
             //rewrite the first row and restrictions row

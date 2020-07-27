@@ -6,7 +6,7 @@ public class CSVGatewayPool implements GatewayPool {
     private final String filePath;
     private AccountGateway accountGateway;
     private TradeGateway tradeGateway;
-    private RestrictionsGateway restrictionsGateway;
+    private ThresholdsGateway thresholdsGateway;
     private ItemsGateway itemsGateway;
 
 
@@ -14,7 +14,7 @@ public class CSVGatewayPool implements GatewayPool {
         this.filePath = System.getProperty("user.dir") + "/out/files/";
         buildAccountGateway();
         buildTradeGateway();
-        buildRestrictionsGateway();
+        buildThresholdsGateway();
         buildItemsGateway();
     }
 
@@ -30,8 +30,8 @@ public class CSVGatewayPool implements GatewayPool {
     }
 
     @Override
-    public RestrictionsGateway getRestrictionsGateway() {
-        return restrictionsGateway;
+    public ThresholdsGateway getThresholdsGateway() {
+        return thresholdsGateway;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class CSVGatewayPool implements GatewayPool {
         tradeGateway = new CSVTradeGateway(filePath + "accounts.csv");
     }
 
-    private void buildRestrictionsGateway() throws IOException {
-        restrictionsGateway = new CSVRestrictionsGateway(filePath + "restrictions.csv");
+    private void buildThresholdsGateway() throws IOException {
+        thresholdsGateway = new CSVThresholdsGateway(filePath + "restrictions.csv");
     }
 
     private void buildItemsGateway() throws IOException {

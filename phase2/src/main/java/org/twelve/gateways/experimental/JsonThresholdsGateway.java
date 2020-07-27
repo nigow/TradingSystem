@@ -2,7 +2,7 @@ package org.twelve.gateways.experimental;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.twelve.usecases.FreezingUtility;
+import org.twelve.usecases.ThresholdRepository;
 
 import java.io.IOException;
 import java.net.URI;
@@ -10,12 +10,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class JsonRestrictionsGateway implements RestrictionsGateway {
+public class JsonThresholdsGateway implements ThresholdsGateway {
 
     private HttpClient httpClient;
     private Gson gson;
 
-    public JsonRestrictionsGateway() {
+    public JsonThresholdsGateway() {
 
         httpClient = HttpClient.newHttpClient();
         gson = new Gson();
@@ -23,7 +23,7 @@ public class JsonRestrictionsGateway implements RestrictionsGateway {
     }
 
     @Override
-    public boolean populate(FreezingUtility freezingUtility) {
+    public boolean populate(ThresholdRepository thresholdRepository) {
 
         HttpRequest getRequest = HttpRequest.newBuilder()
                 .GET()
@@ -42,7 +42,7 @@ public class JsonRestrictionsGateway implements RestrictionsGateway {
             int numberOfEdits = json.get("number_of_edits").getAsInt();
             int numberOfStats = json.get("number_of_stats").getAsInt();
 
-            freezingUtility.createRestrictions(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
+            thresholdRepository.createThresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
                     numberOfEdits, numberOfStats);
 
             return true;

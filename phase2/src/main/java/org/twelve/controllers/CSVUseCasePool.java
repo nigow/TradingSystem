@@ -38,7 +38,7 @@ class CSVUseCasePool implements UseCasePool {
     private void initializeUseCases() {
         //TODO: not really a todo but note that these will stop being an error when gatewayPool and usecases are updated
         accountRepository = new AccountRepository(gatewayPool.getAccountGateway());
-        thresholdRepository = new ThresholdRepository(gatewayPool.getRestrictionsGateway());
+        thresholdRepository = new ThresholdRepository(gatewayPool.getThresholdsGateway());
         itemManager = new ItemManager(gatewayPool.getItemsGateway());
         wishlistManager = new WishlistManager(accountRepository, itemManager);
         tradeManager = new TradeManager(gatewayPool.getTradeGateway(), thresholdRepository,

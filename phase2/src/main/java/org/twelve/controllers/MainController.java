@@ -45,8 +45,8 @@ public class MainController {
         AdminCreatorController adminCreator =
                 new AdminCreatorController(useCasePool, new ConsoleAdminCreatorPresenter());
 
-        RestrictionController restrictionsController =
-                new RestrictionController(useCasePool, new ConsoleRestrictionPresenter());
+        ThresholdController restrictionsController =
+                new ThresholdController(useCasePool, new ConsoleThresholdPresenter());
 
         MenuFacade menuFacade = new MenuFacade(
                 useCasePool,

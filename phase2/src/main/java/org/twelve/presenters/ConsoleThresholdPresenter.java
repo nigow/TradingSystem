@@ -8,16 +8,16 @@ import java.util.Scanner;
  *
  * @author Catherine
  */
-public class ConsoleRestrictionPresenter implements RestrictionPresenter {
+public class ConsoleThresholdPresenter implements ThresholdPresenter {
     /**
      * {@inheritDoc}
      */
     @Override
-    public String displayRestrictionOptions(List<String> restrictionOptions) {
+    public String displayThresholdOptions(List<String> thresholdOptions) {
         Scanner input = new Scanner(System.in);
         System.out.println("Choose an option to do:");
-        for (int i = 0; i < restrictionOptions.size(); i++) {
-            System.out.println(i + ". " + restrictionOptions.get(i));
+        for (int i = 0; i < thresholdOptions.size(); i++) {
+            System.out.println(i + ". " + thresholdOptions.get(i));
         }
         return input.nextLine();
     }
@@ -70,7 +70,7 @@ public class ConsoleRestrictionPresenter implements RestrictionPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void displayChangedRestriction() {
+    public void displayChangedThresholds() {
         System.out.println("You changed the restriction threshold.");
     }
 
