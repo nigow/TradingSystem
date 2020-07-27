@@ -18,5 +18,6 @@ public enum Permissions {
     CHANGE_THRESHOLDS,
     ADD_ADMIN,
     REQUEST_UNFREEZE,
-    REQUEST_VACATION
+    REQUEST_VACATION,
+    CAN_BAN
 }
