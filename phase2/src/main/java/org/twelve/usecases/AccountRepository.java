@@ -35,6 +35,7 @@ public class AccountRepository {
             int accountID = accounts.size();
             Account newAccount = new Account(username, password, permsToAdd, accountID);
             accounts.put(accountID, newAccount);
+            updateAccount(newAccount);
             return true;
         }
         return false;
@@ -48,7 +49,6 @@ public class AccountRepository {
         for(String perm: perms) permsToAdd.add(Permissions.valueOf(perm));
         Account newAccount = new Account(username, password, wishlist, permsToAdd, accountId);
         accounts.put(newAccount.getAccountID(), newAccount);
-
     }
 
     /**
