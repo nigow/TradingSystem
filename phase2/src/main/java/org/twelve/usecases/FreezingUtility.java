@@ -190,6 +190,7 @@ public class FreezingUtility {
         accountRepository.updateAccount(account);
     }
 
+    //TODO maybe make new class statusManager or RoleManager or rename this class?
     public boolean isVacationing(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         return !canTrade(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
@@ -209,6 +210,16 @@ public class FreezingUtility {
         account.addPermission(Permissions.LEND);
         account.addPermission(Permissions.BORROW);
         accountRepository.updateAccount(account);
+    }
+
+    public void banAccount(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.removePermission(Permissions.LOGIN);
+    }
+
+    public void unbanAccount(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.addPermission(Permissions.LOGIN);
     }
 
 }
