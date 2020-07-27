@@ -19,20 +19,16 @@ import java.util.List;
 
 public class TradeManager extends TradeUtility{
 
-    private WishlistManager wishlistManager;
+    private final WishlistManager wishlistManager;
+    private final TradeGateway tradeGateway;
 
-    private TradeGateway tradeGateway;
-
-    // TODO this is so bad
-    private RestrictionsGateway restrictionsGateway;
-
-    public void TradeManager(TradeGateway tradeGateway, RestrictionsGateway restrictionsGateway, AccountRepository accountRepository,
+    public TradeManager(TradeGateway tradeGateway, ThresholdRepository thresholdRepository, AccountRepository accountRepository,
                              ItemManager itemManager, WishlistManager wishlistManager) {
         this.itemManager = itemManager;
         this.accountRepository = accountRepository;
         this.wishlistManager = wishlistManager;
         this.tradeGateway = tradeGateway;
-        this.restrictionsGateway = restrictionsGateway;
+        this.thresholdRepository = thresholdRepository;
     }
 
     public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
@@ -79,7 +75,7 @@ public class TradeManager extends TradeUtility{
      * Initiates a reverse Trade.
      *
      */
-    public void reverseTrade(int id, Restrictions restrictions) {
+    public void reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
         Trade trade = getTradeByID(id);
         List<Integer> reverseTraders = new ArrayList<>();
@@ -87,7 +83,7 @@ public class TradeManager extends TradeUtility{
         List<Integer> reverseItems = new ArrayList<>();
         reverseItems.addAll(trade.getItemsIds());
         Collections.reverse(reverseTraders);
-        createTrade(timePlace.getTime().plusDays(restrictions.getNumberOfDays()),
+        createTrade(timePlace.getTime().plusDays(thresholdRepository.getNumberOfDays()),
                 timePlace.getPlace(), true, reverseTraders, reverseItems);
     }
 
@@ -141,14 +137,13 @@ public class TradeManager extends TradeUtility{
         }
     }
 
-    // TODO this is bad, and should also be in TradeUtility
     /**
      * Compares the number of edits done to the trade vs. the restriction limit.
      * @param tradeID ID of the trade.
      */
-    public boolean canEdit(int tradeID) {
+    public boolean canBeEdited(int tradeID) {
         return getEditedCounter(tradeID) <
-                restrictionsGateway.getRestrictions().getNumberOfEdits() * getTradeByID(tradeID).getTraderIds().size();
+                thresholdRepository.getNumberOfEdits() * getTradeByID(tradeID).getTraderIds().size();
     }
 
     // TODO unused and broken method
