@@ -30,6 +30,8 @@ public class TradeController {
 
     private final SessionManager sessionManager;
 
+    private final FreezingUtility freezingUtility;
+
     /**
      * Initialized TradeController by setting necessary use cases and presenter.
      *
@@ -43,6 +45,7 @@ public class TradeController {
         sessionManager = useCasePool.getSessionManager();
         tradeManager = useCasePool.getTradeManager();
         itemManager = useCasePool.getItemManager();
+        freezingUtility = useCasePool.getFreezingUtility();
         inputHandler = new InputHandler();
     }
 
@@ -58,7 +61,7 @@ public class TradeController {
             methods.add(this::showTrades);
 
             // TODO how do we check if someone is frozen?
-            if (!permissionManager.isFrozen(sessionManager.getCurrAccountID())) {
+            if (!freezingUtility.isFrozen(sessionManager.getCurrAccountID())) {
                 options.add(tradePresenter.editTrade());
                 methods.add(this::selectAndChangeTrade);
             }
@@ -147,7 +150,7 @@ public class TradeController {
                 if (tradeManager.getDateTime(tradeID).isAfter(LocalDateTime.now())) {
                     options.add("Confirm the time and location for this trade");
                 }
-                if (tradeManager.canEdit(tradeID)) {
+                if (tradeManager.canBeEdited(tradeID)) {
                     options.add("Edit the time and location for this trade");
                 }
             }
@@ -174,14 +177,14 @@ public class TradeController {
             tradeManager.updateStatus(tradeID, TradeStatus.CONFIRMED);
             tradeManager.makeTrade(tradeID);
             if (!tradeManager.isPermanent(tradeID)) {
-                tradeManager.reverseTrade(tradeID, restrictions);
+                tradeManager.reverseTrade(tradeID);
                 tradeManager.updateStatus(tradeID, TradeStatus.CONFIRMED);
                 tradeManager.makeTrade(tradeID);
             }
             tradePresenter.displayConfirmed();
         } else {
             changeTradeTimePlace(tradeID);
-            if (!tradeManager.canEdit(tradeID)) {
+            if (!tradeManager.canBeEdited(tradeID)) {
                 tradeManager.updateStatus(tradeID, TradeStatus.REJECTED);
                 tradePresenter.displayLimitReached();
                 tradePresenter.displayCancelled();
@@ -238,7 +241,7 @@ public class TradeController {
 
     private void recentTwoWayTrades() {
         List<String> items = new ArrayList<>();
-        for (int itemID : tradeManager.getRecentTwoWay(sessionManager.getCurrAccountID(), restrictions)) {
+        for (int itemID : tradeManager.getRecentTwoWay(sessionManager.getCurrAccountID())) {
             items.add(itemManager.getItemStringById(itemID));
         }
         tradePresenter.displayRecentTwoWayTrade(items);
@@ -246,7 +249,7 @@ public class TradeController {
 
     private void recentOneWayTrades() {
         List<String> items = new ArrayList<>();
-        for (int itemID : tradeManager.getRecentOneWay(sessionManager.getCurrAccountID(), restrictions)) {
+        for (int itemID : tradeManager.getRecentOneWay(sessionManager.getCurrAccountID())) {
             items.add(itemManager.getItemStringById(itemID));
         }
         tradePresenter.displayRecentOneWayTrade(items);
@@ -254,7 +257,7 @@ public class TradeController {
 
     private void frequentPartners() {
         List<String> partners = new ArrayList<>();
-        for (int id : tradeManager.getTopThreePartnersIds(sessionManager.getCurrAccountID(), restrictions)) {
+        for (int id : tradeManager.getTopThreePartnersIds(sessionManager.getCurrAccountID())) {
             partners.add(accountRepository.getAccountStringFromID(id));
         }
         tradePresenter.displayFrequentPartners(partners);
