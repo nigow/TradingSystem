@@ -1,5 +1,6 @@
 package org.twelve.controllers.console;
 //import org.twelve.entities.Account;
+import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.FreezingUtility;
 import org.twelve.usecases.UseCasePool;

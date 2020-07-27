@@ -9,8 +9,14 @@ import java.io.IOException;
 
 public class ViewBuilder {
 
+    private WindowHandler windowHandler;
+
     private GatewayPool gatewayPool;
     private ControllerPool controllerPool;
+
+    public ViewBuilder(WindowHandler windowHandler) {
+        this.windowHandler = windowHandler;
+    }
 
     public boolean buildGateways(String implementation) {
 
@@ -46,10 +52,36 @@ public class ViewBuilder {
 
         switch (scene) {
 
+            case LANDING:
 
+                return new LandingView(windowHandler);
 
+            case LOGIN:
+
+                return new LoginView(windowHandler, controllerPool.getLoginController());
+
+            case MENU:
+
+                return new MenuView(windowHandler);
+
+            case PROFILE:
+
+                return new ProfileView(windowHandler);
+
+            case RESTRICTIONS:
+
+                return new RestrictionsView(windowHandler);
+
+            case TRADE_CREATOR:
+
+                return new TradeCreatorView(windowHandler);
+
+            case WAREHOUSE:
+
+                return new WarehouseView(windowHandler);
         }
 
+        return null;
     }
 
 }

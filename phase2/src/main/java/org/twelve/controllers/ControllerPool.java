@@ -18,8 +18,19 @@ public class ControllerPool {
         // todo: add refactored controllers and their getters
 
         itemApprovalController = new ItemApprovalController(useCasePool, new ItemApprovalPresenter());
-
+        loginController = new LoginController(useCasePool);
         yourInventoryController = new YourInventoryController(useCasePool, new YourInventoryPresenter());
     }
 
+    public ItemApprovalController getItemApprovalController() {
+        return itemApprovalController;
+    }
+
+    public LoginController getLoginController() {
+        return loginController;
+    }
+
+    public YourInventoryController getYourInventoryController() {
+        return yourInventoryController;
+    }
 }

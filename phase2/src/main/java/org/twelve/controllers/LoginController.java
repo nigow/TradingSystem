@@ -1,7 +1,6 @@
 package org.twelve.controllers;
 
 
-import org.twelve.controllers.console.InputHandler;
 import org.twelve.controllers.console.MenuFacade;
 import org.twelve.presenters.HomePresenter;
 import org.twelve.usecases.LoginManager;
@@ -16,11 +15,6 @@ import org.twelve.usecases.UseCasePool;
 public class LoginController {
 
     /**
-     * An instance of HomePresenter to present options.
-     */
-    private final HomePresenter homePresenter;
-
-    /**
      * An instance of SessionManager to create an account or get information about an account.
      */
     private final SessionManager sessionManager;
@@ -31,11 +25,6 @@ public class LoginController {
     private final LoginManager loginManager;
 
     /**
-     * An instance of MenuFacade to be called according to a user's permissions.
-     */
-    private final MenuFacade menuFacade;
-
-    /**
      * An instance of ControllerInputValidator to check a user's input is valid.
      */
     private final InputHandler inputHandler;
@@ -44,15 +33,10 @@ public class LoginController {
      * Initializes LoginController with the necessary presenter and use cases.
      *
      * @param useCasePool   An instance of UseCasePool to get the necessary use cases
-     * @param homePresenter An instance of HomePresenter to display information and interact with the user
-     * @param menuFacade    An instance of MenuFacade to take user's to the next menu
      */
-    public LoginController(UseCasePool useCasePool, HomePresenter homePresenter,
-                           MenuFacade menuFacade) {
+    public LoginController(UseCasePool useCasePool) {
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
-        this.menuFacade = menuFacade;
-        this.homePresenter = homePresenter;
         inputHandler = new InputHandler();
     }
 
@@ -63,15 +47,13 @@ public class LoginController {
      * @param password the password the user enters
      */
     public boolean logIn(String username, String password) {
-        while (true) {
-            if (inputHandler.isValidUserPass(username, password) &&
-                    loginManager.authenticateLogin(username, password)) {
-                sessionManager.login(username);
-                return true;
-            } else
-                // homePresenter.displayIncorrectInfo();
-                return false;
-        }
+        if (inputHandler.isValidUserPass(username, password) &&
+                loginManager.authenticateLogin(username, password)) {
+            sessionManager.login(username);
+            return true;
+        } else
+            return false;
+
     }
 
 }

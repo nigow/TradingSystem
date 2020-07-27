@@ -1,5 +1,6 @@
 package org.twelve.controllers.console;
 
+import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;

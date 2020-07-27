@@ -15,19 +15,28 @@ import java.util.ResourceBundle;
 public class WindowHandler extends Application {
 
     private Stage primaryStage;
-    private final Map<Scenes, Scene> scenes;
+    private Map<Scenes, Scene> scenes;
 
     // don't add parameters to this, Application.launch() will explode if you do
     public WindowHandler() {
 
+        ViewBuilder viewBuilder = new ViewBuilder(this);
+
+        if (!viewBuilder.buildGateways("json")) return; // we can add more flexibility if we want here
+        viewBuilder.buildControllers();
+
         scenes = new HashMap<>();
         for (Scenes scene : Scenes.values()) {
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"),
+                    ResourceBundle.getBundle("localization." + scene.toString()));
+
+            loader.setControllerFactory(v -> viewBuilder.getView(scene));
+
             try {
-                scenes.put(scene, createScene(scene));
+                scenes.put(scene, new Scene(loader.load()));
             } catch (IOException e) {
                 e.printStackTrace();
-                return;
             }
 
         }
@@ -49,18 +58,4 @@ public class WindowHandler extends Application {
         primaryStage.setScene(scenes.get(scene));
     }
 
-    private Scene createScene(Scenes scene) throws IOException {
-
-
-        // todo: make below code adapt to DI when backend changes are done
-        ResourceBundle res = ResourceBundle.getBundle("localization." + scene.toString());
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"), res);
-        Scene newScene = new Scene(loader.load());
-
-        loader.<SceneView>getController().setWindowHandler(this);
-
-        return newScene;
-
-    }
 }

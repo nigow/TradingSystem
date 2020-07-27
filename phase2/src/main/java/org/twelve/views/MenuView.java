@@ -6,8 +6,7 @@ import javafx.scene.control.Button;
 public class MenuView implements SceneView {
     private WindowHandler windowHandler;
 
-    @Override
-    public void setWindowHandler(WindowHandler windowHandler) {
+    public MenuView(WindowHandler windowHandler) {
         this.windowHandler = windowHandler;
     }
 

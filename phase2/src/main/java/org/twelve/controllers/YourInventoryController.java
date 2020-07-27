@@ -1,6 +1,5 @@
 package org.twelve.controllers;
 
-import org.twelve.controllers.console.InputHandler;
 import org.twelve.presenters.experimental.YourInventoryPresenter;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.PermissionManager;

@@ -1,5 +1,6 @@
 package org.twelve.controllers.console;
 
+import org.twelve.controllers.InputHandler;
 import org.twelve.entities.TradeStatus;
 import org.twelve.presenters.TradePresenter;
 import org.twelve.usecases.*;

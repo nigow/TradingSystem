@@ -2,6 +2,7 @@ package org.twelve.controllers.console;
 
 
 
+import org.twelve.controllers.InputHandler;
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.AdminCreatorPresenter;
 import org.twelve.usecases.AccountRepository;

@@ -2,6 +2,7 @@ package org.twelve.controllers.console;
 
 
 
+import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.MenuPresenter;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.PermissionManager;

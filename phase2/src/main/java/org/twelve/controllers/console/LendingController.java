@@ -2,6 +2,7 @@ package org.twelve.controllers.console;
 
 
 
+import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.LendingPresenter;
 import org.twelve.presenters.TradeCreatorPresenter;
 import org.twelve.usecases.AccountRepository;

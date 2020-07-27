@@ -1,4 +1,4 @@
-package org.twelve.controllers.console;
+package org.twelve.controllers;
 
 import java.time.Month;
 import java.time.Year;

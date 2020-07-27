@@ -1,8 +1,11 @@
 package org.twelve.views;
 
 public class RestrictionsView implements SceneView {
-    @Override
-    public void setWindowHandler(WindowHandler windowHandler) {
 
+    private WindowHandler windowHandler;
+
+    public RestrictionsView(WindowHandler windowHandler) {
+        this.windowHandler = windowHandler;
     }
+
 }
