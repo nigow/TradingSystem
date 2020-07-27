@@ -126,13 +126,13 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
      * @return List of all items
      */
     public List<Item> getAllItems() {
-        List<Item> Items = new ArrayList<>();
-        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
-            if (items.get(entry.getKey()).getOwnerID() != -1) {
-                Items.add(items.get(entry.getKey()));
+        List<Item> items = new ArrayList<>();
+        for (Map.Entry<Integer, Item> entry : this.items.entrySet()) {
+            if (this.items.get(entry.getKey()).getOwnerID() != -1) {
+                items.add(this.items.get(entry.getKey()));
             }
         }
-        return Items;
+        return items;
     }
 
     /**
@@ -141,11 +141,11 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
      * @return List of all items in string format
      */
     public List<String> getAllItemsString() {
-        List<String> StringItems = new ArrayList<>();
+        List<String> stringItems = new ArrayList<>();
         for (Item item : getAllItems()) {
-            StringItems.add(item.toString());
+            stringItems.add(item.toString());
         }
-        return StringItems;
+        return stringItems;
     }
 
 }
