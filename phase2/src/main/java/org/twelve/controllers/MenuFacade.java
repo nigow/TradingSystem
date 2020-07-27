@@ -4,7 +4,8 @@ package org.twelve.controllers;
 
 import org.twelve.presenters.MenuPresenter;
 import org.twelve.usecases.ItemUtility;
-import org.twelve.usecases.TradeUtility;
+import org.twelve.usecases.PermissionManager;
+import org.twelve.usecases.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +17,13 @@ import java.util.List;
  */
 public class MenuFacade {
 
-    /**
-     * An instance of AuthManager to access a user's permissions.
-     */
-    private final AuthManager authManager;
+    private final SessionManager sessionManager;
 
-    /**
-     * An instance of MenuPresenter to display options.
-     */
+    private final PermissionManager permissionManager;
+
+    private final ItemUtility itemUtility;
+
     private final MenuPresenter menuPresenter;
-
-    private final AccountManager accountManager;
 
     private final FreezingController freezingController;
 
@@ -42,13 +39,9 @@ public class MenuFacade {
 
     private final AppealController appealController;
 
-    private final AdminCreatorController adminCreator;
+    private final AdminCreatorController adminCreatorController;
 
     private final InputHandler inputHandler;
-
-    private final TradeUtility tradeUtility;
-
-    private final ItemUtility itemUtility;
 
     /**
      * Initializes MenuFacade with the necessary controllers, presenter, and use cases.
@@ -73,10 +66,9 @@ public class MenuFacade {
                       AdminCreatorController adminCreator,
                       RestrictionController restrictionController,
                       MenuPresenter menuPresenter) {
-        authManager = useCasePool.getAuthManager();
-        accountManager = useCasePool.getAccountManager();
-        tradeUtility = useCasePool.getOldTradeUtility();
-        itemUtility = useCasePool.getItemUtility();
+        permissionManager = useCasePool.getPermissionManager();
+        sessionManager = useCasePool.getSessionManager();
+        itemUtility = useCasePool.getItemManager();
 
         this.menuPresenter = menuPresenter;
 
@@ -89,15 +81,13 @@ public class MenuFacade {
         this.wishlistController = wishlistController;
         this.restrictionsController = restrictionController;
         this.appealController = appealController;
-        this.adminCreator = adminCreator;
+        this.adminCreatorController = adminCreator;
     }
 
     /**
      * Calls the presenter with options for the user based on their permission and executes the action.
      */
     public void run() {
-
-        tradeUtility.setAccount(accountManager.getCurrAccount());
 
         while (true) {
             List<String> options = new ArrayList<>();
@@ -106,7 +96,7 @@ public class MenuFacade {
             options.add(menuPresenter.manageTrades());
             method.add(tradeController::run);
 
-            if (authManager.canBrowseInventory(accountManager.getCurrAccount())) {
+            if (permissionManager.canBrowseInventory(sessionManager.getCurrAccountID())) {
                 options.add(menuPresenter.browseInventory());
                 method.add(inventoryController::run);
             }
@@ -114,28 +104,30 @@ public class MenuFacade {
             options.add(menuPresenter.manageWishlist());
             method.add(wishlistController::run);
 
-            if (authManager.canTrade(accountManager.getCurrAccount()) &&
-                    !itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).isEmpty()) {
+            // TODO: how do we check if someone can trade
+            if (permissionManager.canTrade(sessionManager.getCurrAccountID()) &&
+                    !itemUtility.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).isEmpty()) {
                 options.add(menuPresenter.initiateTrade());
                 method.add(lendingController::run);
             }
 
-            if (authManager.canChangeRestrictions(accountManager.getCurrAccount())) {
+            if (permissionManager.canChangeRestrictions(sessionManager.getCurrAccountID())) {
                 options.add(menuPresenter.modifyRestrictions());
                 method.add(restrictionsController::run);
             }
 
-            if (authManager.canFreeze(accountManager.getCurrAccount()) && authManager.canUnfreeze(accountManager.getCurrAccount())) {
+            if (permissionManager.canFreeze(sessionManager.getCurrAccountID()) &&
+                    permissionManager.canUnfreeze(sessionManager.getCurrAccountID())) {
                 options.add(menuPresenter.manageFrozen());
                 method.add(freezingController::run);
             }
 
-            if (authManager.canAddAdmin(accountManager.getCurrAccount())) {
+            if (permissionManager.canAddAdmin(sessionManager.getCurrAccountID())) {
                 options.add(menuPresenter.addAdmin());
-                method.add(adminCreator::run);
+                method.add(adminCreatorController::run);
             }
 
-            if (authManager.canRequestUnfreeze(accountManager.getCurrAccount())) {
+            if (permissionManager.canRequestUnfreeze(sessionManager.getCurrAccountID())) {
                 options.add(menuPresenter.requestUnfreeze());
                 method.add(appealController::run);
             }
