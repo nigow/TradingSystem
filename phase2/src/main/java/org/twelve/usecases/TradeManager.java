@@ -1,7 +1,6 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.*;
-import org.twelve.gateways.RestrictionsGateway;
 import org.twelve.gateways.experimental.TradeGateway;
 
 import java.time.LocalDateTime;

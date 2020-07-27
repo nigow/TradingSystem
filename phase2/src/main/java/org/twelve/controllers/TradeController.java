@@ -18,8 +18,6 @@ public class TradeController {
 
     private final TradePresenter tradePresenter;
 
-    private final PermissionManager permissionManager;
-
     private final AccountRepository accountRepository;
 
     private final TradeManager tradeManager;
@@ -40,7 +38,6 @@ public class TradeController {
      */
     public TradeController(UseCasePool useCasePool, TradePresenter tradePresenter) {
         this.tradePresenter = tradePresenter;
-        permissionManager = useCasePool.getPermissionManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager = useCasePool.getSessionManager();
         tradeManager = useCasePool.getTradeManager();
