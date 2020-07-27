@@ -38,7 +38,8 @@ public class TradeManager extends TradeUtility{
         TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
         trades.add(trade);
         timePlaces.add(timePlace);
-        updateToGateway(trade);
+        // updateToGateway(trade);
+        //I commented it out (Tairi)
     }
 
     private void updateToGateway(Trade trade) {
