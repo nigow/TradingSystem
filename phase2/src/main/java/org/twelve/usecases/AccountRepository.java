@@ -89,6 +89,17 @@ public class AccountRepository {
     }
 
     /**
+     * @return List of all accounts as strings
+     */
+    public List<String> getAccountStrings(){
+        List<String> accountStrins = new ArrayList<>();
+        for (Account account : accounts.values()) {
+            accountStrins.add(account.toString());
+        }
+        return accountStrins;
+    }
+
+    /**
      * Retrieves a formatted string of an account from the given accountID.
      *
      * @param accountID Unique identifier of account
