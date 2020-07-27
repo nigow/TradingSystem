@@ -64,7 +64,7 @@ public class YourInventoryController {
      * Calls the presenter to display a user's inventory
      */
     private void displayAllYourInventory() {
-        List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(sessionManager.getCurrAccountID());
+        List<String> allYourItems = itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID());
         this.yourInventoryPresenter.displayInventory(allYourItems);
     }
 
@@ -90,9 +90,7 @@ public class YourInventoryController {
      * @param ind The index in the list of items in this user's
      */
     private boolean removeFromYourInventory(String ind) {
-        // TODO figure out how this works after talking to isaac to refactor ItemManager.
-        //  should not be touching entities in controllers.  --maryam
-        List<Item> items = itemManager.getAllInventoryOfAccount(sessionManager.getCurrAccountID());
+        List<Integer> items = itemManager.getAllInventoryOfAccountIDs(sessionManager.getCurrAccountID());
         return itemManager.removeItem(items.get(Integer.parseInt(ind)));
     }
 
