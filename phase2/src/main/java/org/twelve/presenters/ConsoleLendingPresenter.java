@@ -17,11 +17,11 @@ public class ConsoleLendingPresenter implements LendingPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void displayAccounts(List<Account> allAccounts) {
+    public void displayAccounts(List<String> allAccounts) {
         System.out.println("Thank you for choosing to lend an item, select an account you wish to lend an item to:");
         for (int i = 0; i < allAccounts.size(); i++) {
 
-            System.out.println(i + ". " + allAccounts.get(i).getUsername());
+            System.out.println(i + ". " + allAccounts.get(i));
 
         }
     }

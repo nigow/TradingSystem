@@ -16,7 +16,7 @@ public interface LendingPresenter {
      *
      * @param allAccounts List of accounts to display
      */
-    void displayAccounts(List<Account> allAccounts);
+    void displayAccounts(List<String> allAccounts);
 
     /**
      * Display all tradable items that the current user possesses.
