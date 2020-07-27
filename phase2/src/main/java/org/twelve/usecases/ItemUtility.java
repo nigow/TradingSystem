@@ -129,6 +129,21 @@ abstract public class ItemUtility {
     }
 
     /**
+     * Retrieves IDs of all items for a certain account.
+     *
+     * @param accountID Account ID which the items are retrieved for
+     * @return List of IDs of items for account
+     */
+    public List<Integer> getAllInventoryOfAccountIDs(int accountID) {
+        List<Integer> inventory = new ArrayList<>();
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (items.get(entry.getKey()).getOwnerID() == accountID)
+                inventory.add(items.get(entry.getKey()).getItemID());
+        }
+        return inventory;
+    }
+
+    /**
      * Retrieves all items for a certain account.
      *
      * @param accountID Account ID which the items are retrieved for
