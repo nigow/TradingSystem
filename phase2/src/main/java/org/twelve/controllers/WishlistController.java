@@ -22,6 +22,7 @@ public class WishlistController {
     private final ItemManager itemManager;
     private final PermissionManager permissionManager;
     private final SessionManager sessionManager;
+    private final FreezingUtility freezingUtility;
 
     private final InputHandler inputHandler;
 
@@ -41,6 +42,7 @@ public class WishlistController {
         this.itemManager = useCasePool.getItemManager();
         this.permissionManager = useCasePool.getPermissionManager();
         this.sessionManager = useCasePool.getSessionManager();
+        this.freezingUtility = useCasePool.getFreezingUtility();
 
         this.wishlistPresenter = wishlistPresenter;
         this.tradeCreatorPresenter = tradeCreatorPresenter;
@@ -118,7 +120,7 @@ public class WishlistController {
 
         // TODO how to check lend more than borrowed?
         new TradeCreatorController(tradeCreatorPresenter, useCasePool, itemManager.getOwnerId(itemId), itemId,
-                !permissionManager.lentMoreThanBorrowed(sessionManager.getCurrAccountID())).run();
+                !freezingUtility.lentMoreThanBorrowed(sessionManager.getCurrAccountID())).run();
 
     }
 
