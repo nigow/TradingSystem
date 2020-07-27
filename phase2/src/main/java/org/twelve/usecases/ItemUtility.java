@@ -84,6 +84,21 @@ abstract public class ItemUtility {
     }
 
     /**
+     * Retrieves IDs of all non-approved items in the system.
+     *
+     * @return List of IDs of all non-approved items in the system
+     */
+    public List<Integer> getDisapprovedIDs() {
+        List<Integer> disapprovedItems = new ArrayList<>();
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (!items.get(entry.getKey()).isApproved()) {
+                disapprovedItems.add(items.get(entry.getKey()).getItemID());
+            }
+        }
+        return disapprovedItems;
+    }
+
+    /**
      * Retrieves a string representation of all non-approved items in the system.
      *
      * @return List of all non-approved items in the system in string format
@@ -134,11 +149,11 @@ abstract public class ItemUtility {
      * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
-    protected List<Item> getApprovedInventoryOfAccount(int accountID) {
-        List<Item> inventory = new ArrayList<>();
+    public List<Integer> getApprovedInventoryOfAccount(int accountID) {
+        List<Integer> inventory = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() == accountID) {
-                inventory.add(item);
+                inventory.add(item.getItemID());
             }
         }
         return inventory;
