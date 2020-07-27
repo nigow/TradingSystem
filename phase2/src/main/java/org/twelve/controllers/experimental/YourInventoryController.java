@@ -6,6 +6,8 @@ import org.twelve.entities.Item;
 import org.twelve.presenters.experimental.YourInventoryPresenter;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.ItemUtility;
+import org.twelve.usecases.PermissionManager;
+import org.twelve.usecases.SessionManager;
 
 import java.util.List;
 
@@ -29,19 +31,14 @@ public class YourInventoryController {
     private final ItemManager itemManager;
 
     /**
-     * An instance of AccountManager to access accounts
+     * An instance of SessionManager to access accounts
      */
-    private final AccountManager accountManager;
+    private final SessionManager sessionManager;
 
     /**
-     * An instance of ItemUtility to utilize items
+     * An instance of PermissionManager to check permissions
      */
-    private final ItemUtility itemUtility;
-
-    /**
-     * An instance of AuthManager to check permissions
-     */
-    private final AuthManager authManager;
+    private final PermissionManager permissionManager;
 
     /**
      * An instance of ControllerHelper for helper methods
@@ -57,10 +54,9 @@ public class YourInventoryController {
      */
     public YourInventoryController(UseCasePool useCasePool, YourInventoryPresenter  yourInventoryPresenter) {
         this.itemManager = useCasePool.getItemManager();
-        this.accountManager = useCasePool.getAccountManager();
-        this.itemUtility = useCasePool.getItemUtility();
+        this.sessionManager = useCasePool.getSessionManager();
         this.yourInventoryPresenter = yourInventoryPresenter;
-        this.authManager = useCasePool.getAuthManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
+        this.permissionManager = useCasePool.getPermissionManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
         this.inputHandler = new InputHandler();
     }
 
@@ -68,7 +64,7 @@ public class YourInventoryController {
      * Calls the presenter to display a user's inventory
      */
     private void displayAllYourInventory() {
-        List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
+        List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(sessionManager.getCurrAccountID());
         this.yourInventoryPresenter.displayInventory(allYourItems);
     }
 
@@ -81,7 +77,7 @@ public class YourInventoryController {
     private boolean createItem(String name, String description) {
 
         if(inputHandler.isValidCSVStr(name) && inputHandler.isValidCSVStr(description)) {
-            itemManager.createItem(name, description, accountManager.getCurrAccountID());
+            itemManager.createItem(name, description, sessionManager.getCurrAccountID());
             return true;
         } else {
             return false;
@@ -94,7 +90,9 @@ public class YourInventoryController {
      * @param ind The index in the list of items in this user's
      */
     private boolean removeFromYourInventory(String ind) {
-        List<Item> items = itemUtility.getAllInventoryOfAccount(accountManager.getCurrAccountID());
+        // TODO figure out how this works after talking to isaac to refactor ItemManager.
+        //  should not be touching entities in controllers.  --maryam
+        List<Item> items = itemManager.getAllInventoryOfAccount(sessionManager.getCurrAccountID());
         return itemManager.removeItem(items.get(Integer.parseInt(ind)));
     }
 
