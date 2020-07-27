@@ -109,6 +109,11 @@ public class AccountRepository {
     }
 
     void updateAccount(Account account){
-        accountGateway.save(account.getAccountID(), account.getUsername(), account.getPassword(), account.getWishlist(), account.getPermissions());
+        List<String> permsAsStrings = new ArrayList<>();
+        for (Permissions perms: account.getPermissions()){
+            permsAsStrings.add(perms.name());
+        }
+        accountGateway.save(account.getAccountID(), account.getUsername(),
+                account.getPassword(), account.getWishlist(), permsAsStrings);
     }
 }
