@@ -3,6 +3,7 @@ package org.twelve.controllers;
 
 
 import org.twelve.presenters.MenuPresenter;
+import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.ItemUtility;
 import org.twelve.usecases.PermissionManager;
 import org.twelve.usecases.SessionManager;
@@ -21,7 +22,7 @@ public class MenuFacade {
 
     private final PermissionManager permissionManager;
 
-    private final ItemUtility itemUtility;
+    private final ItemManager itemManager;
 
     private final MenuPresenter menuPresenter;
 
@@ -68,7 +69,7 @@ public class MenuFacade {
                       MenuPresenter menuPresenter) {
         permissionManager = useCasePool.getPermissionManager();
         sessionManager = useCasePool.getSessionManager();
-        itemUtility = useCasePool.getItemManager();
+        itemManager = useCasePool.getItemManager();
 
         this.menuPresenter = menuPresenter;
 
@@ -106,7 +107,7 @@ public class MenuFacade {
 
             // TODO: how do we check if someone can trade
             if (permissionManager.canTrade(sessionManager.getCurrAccountID()) &&
-                    !itemUtility.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).isEmpty()) {
+                    !itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).isEmpty()) {
                 options.add(menuPresenter.initiateTrade());
                 method.add(lendingController::run);
             }
