@@ -141,9 +141,10 @@ public class MenuFacade {
                 int i = Integer.parseInt(action);
                 if (0 <= i && i < method.size())
                     method.get(i).run();
-                else if (i == method.size())
+                else if (i == method.size()) {
+                    sessionManager.logout();
                     return;
-                else
+                } else
                     menuPresenter.invalidInput();
             } else
                 menuPresenter.invalidInput();
