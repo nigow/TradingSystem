@@ -23,6 +23,7 @@ public class TradeManager extends TradeUtility{
 
     private TradeGateway tradeGateway;
 
+    // TODO this is so bad
     private RestrictionsGateway restrictionsGateway;
 
     public void TradeManager(TradeGateway tradeGateway, RestrictionsGateway restrictionsGateway, AccountRepository accountRepository,
@@ -73,6 +74,7 @@ public class TradeManager extends TradeUtility{
         updateToGateway(trade);
     }
 
+    // TODO this is bad
     /**
      * Initiates a reverse Trade.
      *
@@ -94,9 +96,8 @@ public class TradeManager extends TradeUtility{
      *
      * @param time     New time of the Trade
      * @param place    New place of the Trade
-     * @param editorID ID of the person editing the Trade
      */
-    public void editTimePlace(int tradeID, LocalDateTime time, String place, int editorID) {
+    public void editTimePlace(int tradeID, LocalDateTime time, String place) {
         TimePlace timePlace = getTimePlaceByID(tradeID);
         Trade trade = getTradeByID(tradeID);
         timePlace.setTime(time);
@@ -140,12 +141,14 @@ public class TradeManager extends TradeUtility{
         }
     }
 
+    // TODO this is bad, and should also be in TradeUtility
     /**
      * Compares the number of edits done to the trade vs. the restriction limit.
-     * @param accountID ID of person editing trade.
+     * @param tradeID ID of the trade.
      */
-    public boolean canEdit(int accountID) {
-        return getEditedCounter(accountID) < restrictionsGateway.getRestrictions().getNumberOfEdits();
+    public boolean canEdit(int tradeID) {
+        return getEditedCounter(tradeID) <
+                restrictionsGateway.getRestrictions().getNumberOfEdits() * getTradeByID(tradeID).getTraderIds().size();
     }
 
     // TODO unused and broken method

@@ -121,6 +121,7 @@ abstract public class TradeUtility {
         return accountTrades;
     }
 
+    // TODO this is bad
     /**
      * Retrieves the Ids of the top three trade partners of the current account.
      *
@@ -149,6 +150,7 @@ abstract public class TradeUtility {
         return partnerIDs;
     }
 
+    // TODO this is bad
     /**
      * Retrieves the three most recent one-way trades the current account
      * has made.
@@ -184,6 +186,7 @@ abstract public class TradeUtility {
         return threeRecent;
     }
 
+    // TODO this is bad
     /**
      * Retrieves the three most recent two-way trades the current account has
      * made.
