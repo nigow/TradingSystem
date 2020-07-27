@@ -32,6 +32,10 @@ public class AppealController {
         this.appealPresenter = appealPresenter;
     }
 
+    //TODO perhaps allow users to request for a vacation(automatic) here,
+    // then appealPresenter needs to be updated and there would be options to choose between requesting to unfreeze and vacation
+
+    //TODO new controller for banning/unbanning accounts? or combine it somewhere.
     /**
      * Requests unfreeze appeal and lets user know that the request was made.
      */
