@@ -240,6 +240,23 @@ abstract public class ItemUtility {
     }
 
     /**
+     * Retrieves IDs of all items not in a certain account/the account's wishlist.
+     *
+     * @param accountID       Account ID which the items are not retrieved from
+     * @param currentWishlist List of itemIDs of items in wishlist of the user
+     * @return List of IDs of all items not in a certain account
+     */
+    public List<Integer> getNotInAccountIDs(int accountID, List<Integer> currentWishlist) {
+        List<Integer> Items = new ArrayList<>();
+        for (Item item : getApproved()) {
+            if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
+                Items.add(item.getItemID());
+            }
+        }
+        return Items;
+    }
+
+    /**
      * Retrieves all items not in a certain account in string format.
      *
      * @param accountID       Account ID which the items are not retrieved from
