@@ -1,6 +1,7 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.Account;
+import org.twelve.entities.Permissions;
 
 public class LoginManager {
 
@@ -22,6 +23,7 @@ public class LoginManager {
         if (storedAccount == null) {
             return false;
         }
-        return storedAccount.getPassword().equals(password);
+        return storedAccount.getPassword().equals(password) &&
+                storedAccount.getPermissions().contains(Permissions.LOGIN);
     }
 }
