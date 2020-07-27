@@ -120,6 +120,7 @@ public class TradeCreatorController {
 
         }
 
+        // TODO this should be refactored according to the new Trade design  --maryam
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, inputHandler.isTrue(isPerm),
                 traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountRepository);
         tradeCreatorPresenter.successMessage();
@@ -149,9 +150,9 @@ public class TradeCreatorController {
         }
 
         if (traderOneItems.isEmpty()) {
-            traderOneItems.add(itemManager.getApprovedInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+            traderOneItems.add(itemManager.getApprovedInventoryOfAccount(traderOneId).get(Integer.parseInt(oppositeItemIndex)));
         } else {
-            traderTwoItems.add(itemManager.getApprovedInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)).getItemID());
+            traderTwoItems.add(itemManager.getApprovedInventoryOfAccount(traderTwoId).get(Integer.parseInt(oppositeItemIndex)));
         }
 
         return true;
