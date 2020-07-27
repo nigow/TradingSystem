@@ -16,12 +16,6 @@ import java.util.List;
  */
 public class ItemApprovalController {
 
-
-    /**
-     * An instance of ItemUtility to utilize items
-     */
-    private final ItemUtility itemUtility;
-
     /**
      * An instance of ItemManager to use items
      */
@@ -39,7 +33,6 @@ public class ItemApprovalController {
      * @param itemApprovalPresenter
      */
     public ItemApprovalController(UseCasePool useCasePool, ItemApprovalPresenter itemApprovalPresenter) {
-        this.itemUtility = useCasePool.getItemUtility();
         this.itemManager = useCasePool.getItemManager();
         this.itemApprovalPresenter = itemApprovalPresenter;
     }
@@ -49,12 +42,12 @@ public class ItemApprovalController {
      * Calls the presenter to display all pending items
      */
     private void displayAllPending() {
-        List<String> allPendingItems = itemUtility.getDisapprovedString();
+        List<String> allPendingItems = itemManager.getDisapprovedString();
         itemApprovalPresenter.displayPendingItems(allPendingItems);
     }
 
     private void approveItem(String ind) {
         //TODO: figure out index removal
-        itemManager.updateApproval(itemUtility.getDisapproved().get(Integer.parseInt(ind)), true);
+        itemManager.updateApproval(itemManager.getDisapprovedIDs().get(Integer.parseInt(ind)), true);
     }
 }
