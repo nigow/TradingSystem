@@ -117,15 +117,13 @@ public class HomeController {
             if (!inputHandler.isValidUserPass(username, password))
                 homePresenter.displayInvalidInfo();
             else {
-                // TODO which permissions to give? (creating standard account)
                 List<Permissions> perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
                         Permissions.LEND,
                         Permissions.BORROW,
-                        Permissions.BROWSE_INVENTORY,
-                        Permissions.REQUEST_UNFREEZE);
-                if (accountRepository.createAccount(username, password)) {
+                        Permissions.BROWSE_INVENTORY);
+                if (accountRepository.createAccount(username, password, perms)) {
                     homePresenter.displaySuccessfulAccount();
                     menuFacade.run();
                     return;
