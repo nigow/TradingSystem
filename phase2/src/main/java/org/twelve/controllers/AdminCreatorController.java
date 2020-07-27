@@ -1,7 +1,13 @@
 package org.twelve.controllers;
 
 
+
+import org.twelve.entities.Permissions;
 import org.twelve.presenters.AdminCreatorPresenter;
+import org.twelve.usecases.AccountRepository;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Controller that creates new admin accounts.
@@ -14,9 +20,9 @@ public class AdminCreatorController {
      */
     private final AdminCreatorPresenter adminPresenter;
     /**
-     * An instance of AccountManager to create new account.
+     * An instance of AccountRepository to create new account.
      */
-    private final AccountManager accountManager;
+    private final AccountRepository accountRepository;
     /**
      * An instance of ControllerInputValidator to check for valid input.
      */
@@ -29,7 +35,7 @@ public class AdminCreatorController {
      * @param adminPresenter An instance of AdminPresenter to display information
      */
     public AdminCreatorController(UseCasePool useCasePool, AdminCreatorPresenter adminPresenter) {
-        accountManager = useCasePool.getAccountManager();
+        accountRepository = useCasePool.getAccountRepository();
         this.adminPresenter = adminPresenter;
         inputHandler = new InputHandler();
     }
@@ -48,7 +54,19 @@ public class AdminCreatorController {
             if (!inputHandler.isValidUserPass(username, password))
                 adminPresenter.displayInvalidInfo();
             else {
-                if (accountManager.createAdminAccount(username, password)) {
+                List<Permissions> perms = Arrays.asList(Permissions.LOGIN,
+                        Permissions.FREEZE,
+                        Permissions.UNFREEZE,
+                        Permissions.CREATE_ITEM,
+                        Permissions.CONFIRM_ITEM,
+                        Permissions.ADD_TO_WISHLIST,
+                        Permissions.LEND,
+                        Permissions.BORROW,
+                        Permissions.BROWSE_INVENTORY,
+                        Permissions.CHANGE_RESTRICTIONS,
+                        Permissions.ADD_ADMIN,
+                        Permissions.REQUEST_UNFREEZE);
+                if (accountRepository.createAccount(username, password, perms)) {
                     adminPresenter.displaySuccessfulAccount();
                     return;
                 } else
