@@ -225,14 +225,23 @@ public class InventoryController {
                         wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()));
                 if (ind < notInAccount.size()) {
 
-                    // TODO andrew refactored this so it doesn't have a boolean output. i dont know
-                    //  how you want it fixed.  --maryam
+                    /* TODO andrew refactored this so it doesn't have a boolean output. i dont know how you want it
+                        fixed.  --maryam
+
                     if (wishlistManager.addItemToWishlist(sessionManager.getCurrAccountID(), notInAccount.get(ind))) {
                         inventoryPresenter.itemSuccess();
                         isValid = true;
                     } else {
                         inventoryPresenter.itemError();
                     }
+
+                    temp fix so i can test below, check this over when we refactor this
+
+                    */
+
+                    wishlistManager.addItemToWishlist(sessionManager.getCurrAccountID(), notInAccount.get(ind));
+                    inventoryPresenter.itemSuccess();
+                    isValid = true;
 
                 } else {
                     inventoryPresenter.displayDoesNotCorrespond();

@@ -1,8 +1,9 @@
 package org.twelve.controllers.console;
 
 
+import org.twelve.gateways.csv.CSVGatewayPool;
+import org.twelve.gateways.json.JsonGatewayPool;
 import org.twelve.presenters.*;
-import org.twelve.usecases.CSVUseCasePool;
 import org.twelve.usecases.UseCasePool;
 
 import java.io.IOException;
@@ -18,13 +19,16 @@ public class MainController {
      * Creates an instance of controllers, starts the program, and runs the home page.
      */
     public void run() {
-        UseCasePool useCasePool;
+        UseCasePool useCasePool = new UseCasePool(new JsonGatewayPool());
+
+        /* might be getting deprecated for good
         try {
             useCasePool = new CSVUseCasePool();
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
+        */
 
         InventoryController inventoryController =
                 new InventoryController(useCasePool, new ConsoleInventoryPresenter());

@@ -6,6 +6,7 @@ import org.twelve.gateways.AccountGateway;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class AccountRepository {
 
     public AccountRepository(AccountGateway accountGateway){
         this.accountGateway = accountGateway;
+        accounts = new HashMap<>();
         accountGateway.populate(this);
     }
 
@@ -39,12 +41,14 @@ public class AccountRepository {
     }
 
     // Tairi: created this for JsonAccountGateway
-    public void createAccount(String username, String password, List<String> perms, List<Integer> wishlist) {
+    public void createAccount(int accountId, String username, String password, List<String> perms,
+                              List<Integer> wishlist) {
+
         List<Permissions> permsToAdd = new ArrayList<>();
         for(String perm: perms) permsToAdd.add(Permissions.valueOf(perm));
-        int accountID = accounts.size();
-        Account newAccount = new Account(username, password, wishlist, permsToAdd, accountID);
-        accounts.put(accountID, newAccount);
+        Account newAccount = new Account(username, password, wishlist, permsToAdd, accountId);
+        accounts.put(newAccount.getAccountID(), newAccount);
+
     }
 
     /**
