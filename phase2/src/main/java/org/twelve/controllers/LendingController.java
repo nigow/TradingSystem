@@ -4,7 +4,9 @@ package org.twelve.controllers;
 
 import org.twelve.presenters.LendingPresenter;
 import org.twelve.presenters.TradeCreatorPresenter;
+import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,11 @@ public class LendingController {
     private final LendingPresenter lendingPresenter;
 
     /**
-     * Account manager needed to provide account-related services.
+     * Account repository needed to provide account-related services.
      */
-    private final AccountManager accountManager;
+    private final AccountRepository accountRepository;
+
+    private final SessionManager sessionManager;
 
     /**
      * Item manager needed to provide item-related services.
@@ -53,8 +57,9 @@ public class LendingController {
     public LendingController(LendingPresenter lendingPresenter, UseCasePool useCasePool, TradeCreatorPresenter tradeCreatorPresenter) {
         this.useCasePool = useCasePool;
         this.lendingPresenter = lendingPresenter;
-        this.accountManager = useCasePool.getAccountManager();
+        this.accountRepository = useCasePool.getAccountRepository();
         this.itemManager = useCasePool.getItemManager();
+        this.sessionManager = useCasePool.getSessionManager();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
         this.validator = new InputHandler();
     }
@@ -65,12 +70,12 @@ public class LendingController {
      * @return index of the account in the list of accounts provided
      */
     private int chooseAccount() {
-        List<Account> allAccounts = accountManager.getAccountsList();
+        List<Integer> allAccounts = accountRepository.getAccountIDs();
 
         //remove the current account
-        allAccounts.removeIf(account -> account.getAccountID() == accountManager.getCurrAccountID());
+        allAccounts.removeIf(account -> account == sessionManager.getCurrAccountID());
 
-        lendingPresenter.displayAccounts(allAccounts);
+        lendingPresenter.displayAccounts(accountRepository.getAccountStrings());
         boolean flag = true;
         String temp_index = null;
         while (flag) {
@@ -86,7 +91,7 @@ public class LendingController {
                 else flag = false;
             }
         }
-        return accountManager.getAccountID(allAccounts.get(Integer.parseInt(temp_index)));
+        return allAccounts.get(Integer.parseInt(temp_index));
     }
 
 
@@ -96,15 +101,13 @@ public class LendingController {
      * @return index of the item in the list of accounts provided
      */
     private int chooseItem() {
-        List<Item> myItems = new ArrayList<>();
-        int userId = accountManager.getCurrAccountID();
+        List<Integer> myItemsIDs = itemManager.getTradableItems(sessionManager.getCurrAccountID());
+        List<String> myItemsStrings = new ArrayList<>();
 
-        //list only tradable items
-        for (Item item : itemManager.getAllItems()) {
-            if (item.getOwnerID() == userId && item.isApproved()) myItems.add(item);
-        }
+        for (int itemID : myItemsIDs)
+            myItemsStrings.add(itemManager.getItemStringById(itemID));
 
-        lendingPresenter.displayInventory(myItems);
+        lendingPresenter.displayInventory(myItemsStrings);
 
         boolean flag = true;
         String temp_index = null;
@@ -117,11 +120,11 @@ public class LendingController {
                 invalidInput();
             } else {
                 int index = Integer.parseInt(temp_index);
-                if (index >= myItems.size()) invalidInput();
+                if (index >= myItemsIDs.size()) invalidInput();
                 else flag = false;
             }
         }
-        return itemManager.getItemId(myItems.get(Integer.parseInt(temp_index)));
+        return myItemsIDs.get(Integer.parseInt(temp_index));
     }
 
     private void invalidInput() {
