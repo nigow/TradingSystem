@@ -1,15 +1,11 @@
 package org.twelve.views;
 
-import org.twelve.controllers.HomeController;
-import org.twelve.controllers.experimental.LoginController;
-import org.twelve.gateways.CSVUseCasePool;
+import org.twelve.controllers.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import java.io.IOException;
 
 public class LoginView implements SceneView {
 
@@ -23,10 +19,11 @@ public class LoginView implements SceneView {
     private PasswordField passwordBox;
 
     private WindowHandler windowHandler;
+    private LoginController loginController;
 
-    @Override
-    public void setWindowHandler(WindowHandler windowHandler) {
+    public LoginView(WindowHandler windowHandler, LoginController loginController) {
         this.windowHandler = windowHandler;
+        this.loginController = loginController;
     }
 
     public void loginAttempted(ActionEvent actionEvent) {
@@ -51,22 +48,13 @@ public class LoginView implements SceneView {
 
         */
 
-        try {
-            LoginController loginController = new LoginController(new CSVUseCasePool(), null, null);
-            if (loginController.logIn(usernameBox.getText(), passwordBox.getText())) {
-                windowHandler.changeScene(Scenes.MENU);
-                failMessageLabel.setVisible(false);
-            } else {
+        if (loginController.logIn(usernameBox.getText(), passwordBox.getText())) {
+            windowHandler.changeScene(Scenes.MENU);
+            failMessageLabel.setVisible(false);
+        } else {
 
-                failMessageLabel.setVisible(true);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            failMessageLabel.setVisible(true);
         }
-
-
-
 
     }
 }

@@ -1,7 +1,7 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.Thresholds;
-import org.twelve.gateways.experimental.ThresholdsGateway;
+import org.twelve.gateways.ThresholdsGateway;
 
 // TODO javadoc
 

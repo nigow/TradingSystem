@@ -6,11 +6,9 @@ public class LandingView implements SceneView {
 
     private WindowHandler windowHandler;
 
-    @Override
-    public void setWindowHandler(WindowHandler windowHandler) {
+    public LandingView(WindowHandler windowHandler) {
         this.windowHandler = windowHandler;
     }
-
 
     public void loginClicked(ActionEvent actionEvent) {
 
