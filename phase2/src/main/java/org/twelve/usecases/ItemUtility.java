@@ -43,7 +43,7 @@ abstract public class ItemUtility {
      *
      * @return List of all approved items in the system
      */
-    public List<Item> getApproved() {
+    protected List<Item> getApproved() {
         List<Item> approvedItems = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (items.get(entry.getKey()).isApproved()) {
@@ -73,7 +73,7 @@ abstract public class ItemUtility {
      *
      * @return List of all non-approved items in the system
      */
-    public List<Item> getDisapproved() {
+    protected List<Item> getDisapproved() {
         List<Item> disapprovedItems = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (!items.get(entry.getKey()).isApproved()) {
@@ -104,7 +104,7 @@ abstract public class ItemUtility {
      * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
-    public List<Item> getAllInventoryOfAccount(int accountID) {
+    protected List<Item> getAllInventoryOfAccount(int accountID) {
         List<Item> inventory = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (items.get(entry.getKey()).getOwnerID() == accountID)
@@ -134,7 +134,7 @@ abstract public class ItemUtility {
      * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
-    public List<Item> getApprovedInventoryOfAccount(int accountID) {
+    protected List<Item> getApprovedInventoryOfAccount(int accountID) {
         List<Item> inventory = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() == accountID) {
@@ -166,7 +166,7 @@ abstract public class ItemUtility {
      * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
-    public List<Item> getDisprovedInventoryOfAccount(int accountID) {
+    protected List<Item> getDisprovedInventoryOfAccount(int accountID) {
         List<Item> inventory = new ArrayList<>();
         for (Item item : getDisapproved()) {
             if (item.getOwnerID() == accountID) {
@@ -199,7 +199,7 @@ abstract public class ItemUtility {
      * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account
      */
-    public List<Item> getNotInAccount(int accountID, List<Integer> currentWishlist) {
+    protected List<Item> getNotInAccount(int accountID, List<Integer> currentWishlist) {
         List<Item> Items = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
@@ -231,7 +231,7 @@ abstract public class ItemUtility {
      * @param itemId Id of item to be retrieved
      * @return The item with the id in question
      */
-    public Item findItemById(int itemId) {
+    protected Item findItemById(int itemId) {
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (items.get(entry.getKey()).getItemID() == itemId) {
                 return entry.getValue();

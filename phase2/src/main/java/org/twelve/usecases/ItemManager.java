@@ -125,7 +125,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
      *
      * @return List of all items
      */
-    public List<Item> getAllItems() {
+    protected List<Item> getAllItems() {
         List<Item> items = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : this.items.entrySet()) {
             if (this.items.get(entry.getKey()).getOwnerID() != -1) {
