@@ -133,8 +133,8 @@ public class FreezingUtility {
      */
     public boolean isFrozen(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-        return account.getPermissions().contains(Permissions.LEND) &&
-                !account.getPermissions().contains(Permissions.BORROW);
+        return !account.getPermissions().contains(Permissions.LEND) &&
+                !account.getPermissions().contains(Permissions.BORROW) && account.getPermissions().contains(Permissions.REQUEST_VACATION);
     }
 
     /**
@@ -146,6 +146,12 @@ public class FreezingUtility {
     public boolean isPending(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         return isFrozen(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
+    }
+
+    public boolean canTrade(int accountID){
+        Account account = accountRepository.getAccountFromID(accountID);
+        return account.getPermissions().contains(Permissions.LEND) &&
+                account.getPermissions().contains(Permissions.BORROW);
     }
 
     /**
@@ -183,4 +189,21 @@ public class FreezingUtility {
         account.removePermission(Permissions.REQUEST_UNFREEZE);
         accountRepository.updateAccount(account);
     }
+
+    public void requestVacation(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.removePermission(Permissions.REQUEST_VACATION);
+        account.removePermission(Permissions.LEND);
+        account.removePermission(Permissions.BORROW);
+        accountRepository.updateAccount(account);
+    }
+
+    public void completeVacation(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.addPermission(Permissions.REQUEST_VACATION);
+        account.addPermission(Permissions.LEND);
+        account.addPermission(Permissions.BORROW);
+        accountRepository.updateAccount(account);
+    }
+
 }
