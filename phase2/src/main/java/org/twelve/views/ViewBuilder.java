@@ -24,12 +24,13 @@ public class ViewBuilder {
 
             case "csv":
 
+                /* might be getting deprecated for good
                 try {
                     gatewayPool = new CSVGatewayPool();
                 } catch (IOException e) {
                     return false;
                 }
-
+                */
                 break;
 
             case "json":
@@ -37,6 +38,11 @@ public class ViewBuilder {
                 gatewayPool = new JsonGatewayPool();
                 break;
 
+            case "ram":
+
+                // todo: waiting implementation
+
+                break;
         }
 
         return true;

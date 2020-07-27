@@ -1,6 +1,6 @@
 package org.twelve.gateways.csv;
 
-import org.twelve.gateways.*;
+import org.twelve.gateways.csv.*;
 
 import java.io.IOException;
 
