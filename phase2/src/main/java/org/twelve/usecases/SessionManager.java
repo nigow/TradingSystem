@@ -10,11 +10,11 @@ import org.twelve.entities.Account;
  */
 public class SessionManager {
     Account account;
-    int tradeID;
+//    int tradeID;
     AccountRepository accountRepository;
 
     public SessionManager(AccountRepository accountRepository) {
-        tradeID = -1;
+//        tradeID = -1;
         account = null;
         this.accountRepository = accountRepository;
     }
@@ -25,20 +25,20 @@ public class SessionManager {
 
     public void logout() {
         account = null;
-        tradeID = -1;
+//        tradeID = -1;
     }
 
-    public void setCurrTradeID(int tradeID) {
-        this.tradeID = tradeID;
-    }
+//    public void setCurrTradeID(int tradeID) {
+//        this.tradeID = tradeID;
+//    }
 
-    public void removeCurrTradeID() {
-        tradeID = -1;
-    }
+//    public void removeCurrTradeID() {
+//        tradeID = -1;
+//    }
 
-    public int getCurrTradeID() {
-        return tradeID;
-    }
+//    public int getCurrTradeID() {
+//        return tradeID;
+//    }
 
     public int getCurrAccountID() {
         return account.getAccountID();
