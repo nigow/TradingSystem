@@ -33,11 +33,18 @@ public class AccountRepository {
             int accountID = accounts.size();
             Account newAccount = new Account(username, password, permsToAdd, accountID);
             accounts.put(accountID, newAccount);
-            //updateAccount(newAccount);
-            //Commented out by Tairi
             return true;
         }
         return false;
+    }
+
+    // Tairi: created this for JsonAccountGateway
+    public void createAccount(String username, String password, List<String> perms, List<Integer> wishlist) {
+        List<Permissions> permsToAdd = new ArrayList<>();
+        for(String perm: perms) permsToAdd.add(Permissions.valueOf(perm));
+        int accountID = accounts.size();
+        Account newAccount = new Account(username, password, wishlist, permsToAdd, accountID);
+        accounts.put(accountID, newAccount);
     }
 
     /**
