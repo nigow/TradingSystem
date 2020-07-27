@@ -1,25 +1,25 @@
 package org.twelve.gateways;
 
-import org.twelve.entities.Restrictions;
+import org.twelve.entities.Thresholds;
 
 /**
  * A gateway for interacting with the persistent storage of system restrictions.
  */
-public interface RestrictionsGateway {
+public interface ThresholdsGateway {
 
     /**
      * Retrieve current system restrictions object.
      *
      * @return Current system restrictions.
      */
-    Restrictions getRestrictions();
+    Thresholds getThresholds();
 
     /**
      * Given a system restrictions object, save its information to persistent storage.
      *
-     * @param restrictions Restrictions being saved.
+     * @param thresholds Restrictions being saved.
      * @return Whether restriction's persistent storage was successfully updated or not
      */
-    boolean updateRestrictions(Restrictions restrictions);
+    boolean updateRestrictions(Thresholds thresholds);
 
 }

@@ -3,18 +3,18 @@ package org.twelve.presenters;
 import java.util.List;
 
 /**
- * Interface for managing restrictions.
+ * Interface for managing thresholds.
  *
  * @author Catherine
  */
-public interface RestrictionPresenter {
+public interface ThresholdPresenter {
     /**
      * Displays possible actions.
      *
-     * @param restrictionOptions Possible actions user can choose from
+     * @param thresholdOptions Possible actions user can choose from
      * @return Index of chosen action
      */
-    String displayRestrictionOptions(List<String> restrictionOptions);
+    String displayThresholdOptions(List<String> thresholdOptions);
 
     /**
      * Displays current value for the restriction.
@@ -46,9 +46,9 @@ public interface RestrictionPresenter {
     void invalidInput();
 
     /**
-     * Tells user that the restriction threshhold has changed.
+     * Tells user that the thresholds has changed.
      */
-    void displayChangedRestriction();
+    void displayChangedThresholds();
 
     /**
      * Message letting user known they can adjust the lend vs. borrow limit.

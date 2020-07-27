@@ -4,7 +4,6 @@ package org.twelve.controllers;
 
 import org.twelve.presenters.MenuPresenter;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.ItemUtility;
 import org.twelve.usecases.PermissionManager;
 import org.twelve.usecases.SessionManager;
 
@@ -36,7 +35,7 @@ public class MenuFacade {
 
     private final WishlistController wishlistController;
 
-    private final RestrictionController restrictionsController;
+    private final ThresholdController thresholdController;
 
     private final AppealController appealController;
 
@@ -55,7 +54,7 @@ public class MenuFacade {
      * @param appealController      An instance of AppealController
      * @param tradeController       An instance of TradeController
      * @param adminCreator          An instance of AdminCreator
-     * @param restrictionController An instance of RestrictionController
+     * @param thresholdController An instance of RestrictionController
      * @param menuPresenter         An instance of MenuPresenter to display information and interact with the user
      */
     public MenuFacade(UseCasePool useCasePool, FreezingController freezingController,
@@ -65,7 +64,7 @@ public class MenuFacade {
                       AppealController appealController,
                       TradeController tradeController,
                       AdminCreatorController adminCreator,
-                      RestrictionController restrictionController,
+                      ThresholdController thresholdController,
                       MenuPresenter menuPresenter) {
         permissionManager = useCasePool.getPermissionManager();
         sessionManager = useCasePool.getSessionManager();
@@ -80,7 +79,7 @@ public class MenuFacade {
         this.lendingController = lendingController;
         this.tradeController = tradeController;
         this.wishlistController = wishlistController;
-        this.restrictionsController = restrictionController;
+        this.thresholdController = thresholdController;
         this.appealController = appealController;
         this.adminCreatorController = adminCreator;
     }
@@ -112,9 +111,9 @@ public class MenuFacade {
                 method.add(lendingController::run);
             }
 
-            if (permissionManager.canChangeRestrictions(sessionManager.getCurrAccountID())) {
-                options.add(menuPresenter.modifyRestrictions());
-                method.add(restrictionsController::run);
+            if (permissionManager.canChangeThresholds(sessionManager.getCurrAccountID())) {
+                options.add(menuPresenter.modifyThresholds());
+                method.add(thresholdController::run);
             }
 
             if (permissionManager.canFreeze(sessionManager.getCurrAccountID()) &&

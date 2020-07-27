@@ -46,10 +46,10 @@ public interface MenuPresenter {
     String initiateTrade();
 
     /**
-     * Shows user they can modify restrictions.
+     * Shows user they can modify thresholds.
      * @return the string message
      */
-    String modifyRestrictions();
+    String modifyThresholds();
 
     /**
      * Shows user they can manage frozen users.

@@ -132,8 +132,8 @@ public class PermissionManager {
      * @param accountID Unique identifier of Account that is checked it see if it can change restrictions
      * @return Whether the account can change restrictions
      */
-    public boolean canChangeRestrictions(int accountID) {
-        return accountRepository.getAccountFromID(accountID).getPermissions().contains(Permissions.CHANGE_RESTRICTIONS);
+    public boolean canChangeThresholds(int accountID) {
+        return accountRepository.getAccountFromID(accountID).getPermissions().contains(Permissions.CHANGE_THRESHOLDS);
     }
 
     /**

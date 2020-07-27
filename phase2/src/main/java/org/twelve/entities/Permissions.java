@@ -15,7 +15,7 @@ public enum Permissions {
     LEND,
     BORROW,
     BROWSE_INVENTORY,
-    CHANGE_RESTRICTIONS,
+    CHANGE_THRESHOLDS,
     ADD_ADMIN,
     REQUEST_UNFREEZE
 }

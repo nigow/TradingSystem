@@ -5,7 +5,7 @@ package org.twelve.entities;
  *
  * @author Maryam
  */
-public class Restrictions {
+public class Thresholds {
     /**
      * Number of items a user has to lend more than borrow to be able to make a trade.
      */
@@ -45,7 +45,7 @@ public class Restrictions {
      * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen
      * @param maxWeeklyTrade     Maximum number of trades a user can have in one week
      */
-    public Restrictions(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats) {
+    public Thresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats) {
         this.lendMoreThanBorrow = lendMoreThanBorrow;
         this.maxIncompleteTrade = maxIncompleteTrade;
         this.maxWeeklyTrade = maxWeeklyTrade;

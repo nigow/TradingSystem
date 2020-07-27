@@ -1,7 +1,7 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.Thresholds;
-import org.twelve.gateways.experimental.RestrictionsGateway;
+import org.twelve.gateways.experimental.ThresholdsGateway;
 
 // TODO javadoc
 
@@ -11,11 +11,11 @@ import org.twelve.gateways.experimental.RestrictionsGateway;
  */
 public class ThresholdRepository {
     private Thresholds thresholds;
-    private final RestrictionsGateway restrictionsGateway;
+    private final ThresholdsGateway thresholdsGateway;
 
-    public ThresholdRepository(RestrictionsGateway restrictionsGateway) {
-        this.restrictionsGateway = restrictionsGateway;
-        restrictionsGateway.populate(this);
+    public ThresholdRepository(ThresholdsGateway thresholdsGateway) {
+        this.thresholdsGateway = thresholdsGateway;
+        thresholdsGateway.populate(this);
     }
 
     /**
@@ -25,7 +25,7 @@ public class ThresholdRepository {
      */
     public void setLendMoreThanBorrow(int lendMoreThanBorrow) {
         thresholds.setLendMoreThanBorrow(lendMoreThanBorrow);
-        updateRestrictions(thresholds);
+        updateThresholds();
     }
 
     /**
@@ -35,7 +35,7 @@ public class ThresholdRepository {
      */
     public void setMaxIncompleteTrade(int maxIncompleteTrade) {
         thresholds.setMaxIncompleteTrade(maxIncompleteTrade);
-        updateRestrictions(thresholds);
+        updateThresholds();
     }
 
     /**
@@ -45,7 +45,7 @@ public class ThresholdRepository {
      */
     public void setMaxWeeklyTrade(int maxWeeklyTrade) {
         thresholds.setMaxWeeklyTrade(maxWeeklyTrade);
-        updateRestrictions(thresholds);
+        updateThresholds();
     }
 
     public int getNumberOfDays() {
@@ -54,7 +54,7 @@ public class ThresholdRepository {
 
     public void setNumberOfDays(int numberOfDays) {
         thresholds.setNumberOfDays(numberOfDays);
-        updateRestrictions(thresholds);
+        updateThresholds();
     }
 
     public int getNumberOfStats() {
@@ -63,7 +63,7 @@ public class ThresholdRepository {
 
     public void setNumberOfStats(int numberOfStats) {
         thresholds.setNumberOfStats(numberOfStats);
-        updateRestrictions(thresholds);
+        updateThresholds();
     }
 
     public int getNumberOfEdits() {
@@ -72,7 +72,7 @@ public class ThresholdRepository {
 
     public void setNumberOfEdits(int numberOfEdits) {
         thresholds.setNumberOfEdits(numberOfEdits);
-        updateRestrictions(thresholds);
+        updateThresholds();
     }
 
     /**
@@ -102,16 +102,16 @@ public class ThresholdRepository {
         return thresholds.getMaxWeeklyTrade();
     }
 
-    private void updateRestrictions(Thresholds thresholds) {
-        restrictionsGateway.save(thresholds.getLendMoreThanBorrow(), thresholds.getMaxIncompleteTrade(),
+    private void updateThresholds() {
+        thresholdsGateway.save(thresholds.getLendMoreThanBorrow(), thresholds.getMaxIncompleteTrade(),
                 thresholds.getMaxWeeklyTrade(), thresholds.getNumberOfDays(), thresholds.getNumberOfEdits(),
                 thresholds.getNumberOfStats());
     }
 
-    public void createRestrictions(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                                   int numberOfEdits, int numberOfStats) {
+    public void createThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
+                                 int numberOfEdits, int numberOfStats) {
         thresholds = new Thresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
                 numberOfEdits, numberOfStats);
-        updateRestrictions(thresholds);
+        updateThresholds();
     }
 }
