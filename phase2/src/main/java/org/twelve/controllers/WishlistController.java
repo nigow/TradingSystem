@@ -20,7 +20,6 @@ public class WishlistController {
     private final UseCasePool useCasePool;
     private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
-    private final PermissionManager permissionManager;
     private final SessionManager sessionManager;
     private final FreezingUtility freezingUtility;
 
@@ -40,7 +39,6 @@ public class WishlistController {
 
         this.wishlistManager = useCasePool.getWishlistManager();
         this.itemManager = useCasePool.getItemManager();
-        this.permissionManager = useCasePool.getPermissionManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.freezingUtility = useCasePool.getFreezingUtility();
 
@@ -85,9 +83,8 @@ public class WishlistController {
         actions.put(wishlistPresenter.viewWishlist(), this::displayWishlist);
         actions.put(wishlistPresenter.removeItem(), this::removeFromWishlist);
 
-        // TODO how to check canTrade?
         // tradecreatorcontroller will handle if initiator has to give item in return
-        if (permissionManager.canTrade(sessionManager.getCurrAccountID()))
+        if (!freezingUtility.isFrozen(sessionManager.getCurrAccountID()))
 
             actions.put(wishlistPresenter.startNewTrade(), this::startTrade);
 
