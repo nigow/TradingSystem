@@ -50,7 +50,7 @@ public class TradeCreatorController {
         this.sessionManager = useCasePool.getSessionManager();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-        this.traderOneId = accountRepository.getCurrAccountID();
+        this.traderOneId = sessionManager.getCurrAccountID();
         this.traderTwoId = peerId;
         this.itemId = itemId;
         this.forceTwoWay = forceTwoWay;
