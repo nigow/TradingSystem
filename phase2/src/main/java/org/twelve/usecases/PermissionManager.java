@@ -189,4 +189,8 @@ public class PermissionManager {
     public boolean canRequestVacation(int accountID) {
         return accountRepository.getAccountFromID(accountID).getPermissions().contains(Permissions.REQUEST_VACATION);
     }
+
+    public boolean canBan(int accountID) {
+        return accountRepository.getAccountFromID(accountID).getPermissions().contains(Permissions.CAN_BAN);
+    }
 }
