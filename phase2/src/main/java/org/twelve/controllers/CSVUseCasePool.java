@@ -20,6 +20,7 @@ class CSVUseCasePool implements UseCasePool {
     private AccountRepository accountRepository;
     private PermissionManager permissionManager;
     private LoginManager loginManager;
+    private SessionManager sessionManager;
     private final GatewayPool gatewayPool;
 
     /**
@@ -43,7 +44,7 @@ class CSVUseCasePool implements UseCasePool {
         wishlistManager = new WishlistManager(accountRepository, itemManager);
         permissionManager = new PermissionManager(accountRepository);
         loginManager = new LoginManager(accountRepository);
-
+        sessionManager = new SessionManager(accountRepository);
     }
 
     /**
@@ -101,5 +102,13 @@ class CSVUseCasePool implements UseCasePool {
     @Override
     public LoginManager getLoginManager() {
         return loginManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SessionManager getSessionManager() {
+        return sessionManager;
     }
 }

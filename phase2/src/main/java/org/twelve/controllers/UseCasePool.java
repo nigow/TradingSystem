@@ -46,4 +46,9 @@ public interface UseCasePool {
      * @return An instance of LoginManager use case.
      */
     LoginManager getLoginManager();
+
+    /**
+     * @return An instance of SessionsManager use case.
+     */
+    SessionManager getSessionManager();
 }
