@@ -1,8 +1,7 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.InventoryPresenter;
-import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.ItemUtility;
+import org.twelve.usecases.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,19 +28,13 @@ public class InventoryController {
     private final ItemManager itemManager;
 
     /**
-     * An instance of AccountManager to access accounts
+     * An instance of PermissionManager to check permissions
      */
-    private final AccountManager accountManager;
+    private final PermissionManager permissionManager;
 
-    /**
-     * An instance of ItemUtility to utilize items
-     */
-    private final ItemUtility itemUtility;
+    private final SessionManager sessionManager;
 
-    /**
-     * An instance of AuthManager to check permissions
-     */
-    private final AuthManager authManager;
+    private final WishlistManager wishlistManager;
 
     /**
      * An instance of ControllerHelper for helper methods
@@ -57,10 +50,10 @@ public class InventoryController {
      */
     public InventoryController(UseCasePool useCasePool, InventoryPresenter inventoryPresenter) {
         this.itemManager = useCasePool.getItemManager();
-        this.accountManager = useCasePool.getAccountManager();
-        this.itemUtility = useCasePool.getItemUtility();
         this.inventoryPresenter = inventoryPresenter;
-        this.authManager = useCasePool.getAuthManager();
+        this.permissionManager = useCasePool.getPermissionManager();
+        this.sessionManager = useCasePool.getSessionManager();
+        this.wishlistManager = useCasePool.getWishlistManager();
         this.inputHandler = new InputHandler();
     }
 
@@ -76,14 +69,14 @@ public class InventoryController {
         actions.put(inventoryPresenter.viewYourApproved(), this::displayYourInventory);
         actions.put(inventoryPresenter.viewYourPending(), this::displayYourPending);
         actions.put(inventoryPresenter.viewAllAvailable(), this::displayOthersInventory);
-        if (authManager.canAddToWishlist(accountManager.getCurrAccount())) {
+        if (permissionManager.canAddToWishlist(sessionManager.getCurrAccountID())) {
             actions.put(inventoryPresenter.addItemToWishlist(), this::addToWishlist);
         }
-        if (authManager.canCreateItem(accountManager.getCurrAccount())) {
+        if (permissionManager.canCreateItem(sessionManager.getCurrAccountID())) {
             actions.put(inventoryPresenter.createNewItem(), this::createItem);
         }
         actions.put(inventoryPresenter.removeYourItem(), this::removeFromYourInventory);
-        if (authManager.canConfirmItem(accountManager.getCurrAccount())) {
+        if (permissionManager.canConfirmItem(sessionManager.getCurrAccountID())) {
             actions.put(inventoryPresenter.viewAllPending(), this::displayPending);
             actions.put(inventoryPresenter.approveAnItem(), this::approveItems);
         }
@@ -116,7 +109,7 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all the items
      */
     private void displayFullInventory() {
-        List<String> allItems = itemUtility.getApprovedString();
+        List<String> allItems = itemManager.getApprovedString();
         this.inventoryPresenter.displayAllItems(allItems);
     }
 
@@ -124,7 +117,7 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
     private void displayYourInventory() {
-        List<String> allYourItems = itemUtility.getApprovedInventoryOfAccountString(accountManager.getCurrAccountID());
+        List<String> allYourItems = itemManager.getApprovedInventoryOfAccountString(sessionManager.getCurrAccountID());
         this.inventoryPresenter.displayApprovedItems(allYourItems);
     }
 
@@ -132,7 +125,7 @@ public class InventoryController {
      *Runs the displayInventory method in InventoryPresenter, passing all items
      */
     private void displayAllYourInventory() {
-        List<String> allYourItems = itemUtility.getAllInventoryOfAccountString(accountManager.getCurrAccountID());
+        List<String> allYourItems = itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID());
         this.inventoryPresenter.displayUserPendingItems(allYourItems);
     }
 
@@ -140,7 +133,7 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all items belonging to the user
      */
     private void displayYourPending() {
-        List<String> allYourItems = itemUtility.getDisprovedInventoryOfAccountString(accountManager.getCurrAccountID());
+        List<String> allYourItems = itemManager.getDisprovedInventoryOfAccountString(sessionManager.getCurrAccountID());
         this.inventoryPresenter.displayUserPendingItems(allYourItems);
     }
 
@@ -148,7 +141,8 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all items except for the ones belonging to the user
      */
     private void displayOthersInventory() {
-        List<String> othersItems = itemUtility.getNotInAccountString(accountManager.getCurrAccountID(), accountManager.getCurrWishlist());
+        List<String> othersItems = itemManager.getNotInAccountString(sessionManager.getCurrAccountID(),
+                wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()));
         this.inventoryPresenter.displayOthersItems(othersItems);
     }
 
@@ -156,7 +150,7 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all the items awaiting approval
      */
     private void displayPending() {
-        List<String> all_disapproved = itemUtility.getDisapprovedString();
+        List<String> all_disapproved = itemManager.getDisapprovedString();
         inventoryPresenter.displayAllPendingItems(all_disapproved);
     }
 
@@ -202,7 +196,7 @@ public class InventoryController {
                     nameGiven = false;
                     descriptionGiven = false;
                 } else if (inputHandler.isTrue(confirm)) {
-                    itemManager.createItem(name, description, accountManager.getCurrAccountID());
+                    itemManager.createItem(name, description, sessionManager.getCurrAccountID());
                     inventoryPresenter.itemSuccess();
                     inventoryPresenter.pending();
                     confirmedItem = true;
@@ -226,8 +220,10 @@ public class InventoryController {
                 isValid = true;
             } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).size()) {
-                    if (accountManager.addItemToWishlist(itemManager.getItemId(itemUtility.getNotInAccount(accountManager.getCurrAccountID(), accountManager.getCurrWishlist()).get(ind)))) {
+                // TODO we shouldn't access methods that return an entity. i couldn't refactor this on the spot
+                //  please figure it out with isaac  --maryam
+                if (ind < itemManager.getNotInAccount(sessionManager.getCurrAccountID(), wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID())).size()) {
+                    if (wishlistManager.addItemToWishlist(sessionManager.getCurrAccountID(), itemManager.getItemId(itemManager.getNotInAccount(sessionManager.getCurrAccountID(), wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID())).get(ind)))) {
                         inventoryPresenter.itemSuccess();
                         isValid = true;
                     } else {
@@ -259,7 +255,8 @@ public class InventoryController {
                 int ind = Integer.parseInt(option);
 //                if (ind < itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).size()) {
 //                    boolean removed = itemManager.removeItem(itemUtility.getApprovedInventoryOfAccount(accountManager.getCurrAccountID()).get(ind));
-                List<Item> items = itemUtility.getAllInventoryOfAccount(accountManager.getCurrAccountID());
+                // TODO same as above
+                List<Item> items = itemManager.getAllInventoryOfAccount(sessionManager.getCurrAccountID());
                 if (ind < items.size()) {
                     boolean removed = itemManager.removeItem(items.get(ind));
                     if (removed) {
@@ -291,8 +288,8 @@ public class InventoryController {
                 isValid = true;
             } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                if (ind < itemUtility.getDisapprovedString().size()) {
-                    itemManager.updateApproval(itemUtility.getDisapproved().get(ind), true);
+                if (ind < itemManager.getDisapprovedString().size()) {
+                    itemManager.updateApproval(itemManager.getDisapprovedIDs().get(ind), true);
                     isValid = true;
                     inventoryPresenter.approveItem();
                 } else {
