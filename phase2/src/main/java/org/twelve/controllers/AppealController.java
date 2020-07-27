@@ -1,6 +1,9 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.AppealPresenter;
+import org.twelve.usecases.AccountRepository;
+import org.twelve.usecases.FreezingUtility;
+import org.twelve.usecases.PermissionManager;
 
 /**
  * Controller that makes appeal requests.
@@ -9,17 +12,17 @@ import org.twelve.presenters.AppealPresenter;
  */
 public class AppealController {
     /**
-     * An instance of AuthManager to request unfreeze.
+     * An instance of FreezingUtility to request unfreeze.
      */
-    private final AuthManager authManager;
+    private final FreezingUtility freezingUtility;
     /**
      * An instance of AppealPresenter to display message to user.
      */
     private final AppealPresenter appealPresenter;
     /**
-     * An instance of AccountManager to get current account.
+     * An instance of ???? to get current account. #TODO: How to get current account?
      */
-    private final AccountManager accountManager;
+    private final AccountRepository accountRepository;
 
     /**
      * Initializes constructor with necessary use cases and presenter.
@@ -28,8 +31,8 @@ public class AppealController {
      * @param appealPresenter An instance of AppealPresenter to display information
      */
     public AppealController(UseCasePool useCasePool, AppealPresenter appealPresenter) {
-        authManager = useCasePool.getAuthManager();
-        accountManager = useCasePool.getAccountManager();
+        freezingUtility = useCasePool.getFreezingUtility();
+        accountRepository = useCasePool.getAccountRepository();
         this.appealPresenter = appealPresenter;
     }
 
@@ -37,8 +40,10 @@ public class AppealController {
      * Requests unfreeze appeal and lets user know that the request was made.
      */
     public void run() {
-        authManager.requestUnfreeze(accountManager.getCurrAccount());
-        appealPresenter.displaySuccessfulAppeal(accountManager.getCurrAccountUsername());
+        //TODO: Replace these with the SessionManager usecase when it's written.
+        freezingUtility.requestUnfreeze(accountRepository.getCurrAccount());
+        appealPresenter.displaySuccessfulAppeal(accountRepository.getCurrAccountUsername());
+
     }
 
 }

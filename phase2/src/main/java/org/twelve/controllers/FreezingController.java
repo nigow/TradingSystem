@@ -1,8 +1,10 @@
 package org.twelve.controllers;
-
-import org.twelve.entities.Account;
+//import org.twelve.entities.Account;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.FreezingUtility;
+//import org.twelve.usecases.AccountRepository;
+//import org.twelve.usecases.PermissionManager;
+//import org.twelve.usecases.TradeManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,35 +23,35 @@ public class FreezingController {
      * An instance of FreezingUtility to get qualifying accounts.
      */
     private final FreezingUtility freezingUtility;
-    /**
-     * An instance of AccountManager.
-     */
-    private final AccountManager accountManager;
-    /**
-     * An instance of AuthManager.
-     */
-    private final AuthManager authManager;
-    /**
-     * An instance of oldTradeUtility.
-     */
-    private final OldTradeUtility oldTradeUtility;
+//    /**
+//     * An instance of AccountRepository.
+//     */
+//    private final AccountRepository accountRepository;
+//    /**
+//     * An instance of AuthManager.
+//     */
+//    private final PermissionManager permissionManager;
+//    /**
+//     * An instance of TradeManager.
+//     */
+//    private final TradeManager tradeManager;
     /**
      * An instance of ControllerInputValidator to check if input is valid.
      */
     private final InputHandler inputHandler;
 
     /**
-     * Initializes constructor with necessary use cases and presenter.
+     * Initializes constructor with necessary use cases and presenter. #TODO: make sure all commented code can be removed, and if so, remove it.
      *
      * @param useCasePool       An instance of ManualConfig to get use cases
      * @param freezingPresenter An instance of FreezingPresenter to display information
      */
     public FreezingController(UseCasePool useCasePool, FreezingPresenter freezingPresenter) {
-        oldTradeUtility = useCasePool.getOldTradeUtility();
+//        tradeManager = useCasePool.getTradeManager();
         this.freezingPresenter = freezingPresenter;
         freezingUtility = useCasePool.getFreezingUtility();
-        accountManager = useCasePool.getAccountManager();
-        authManager = useCasePool.getAuthManager();
+//        accountRepository = useCasePool.getAccountRepository();
+//        permissionManager = useCasePool.getPermissionManager();
         inputHandler = new InputHandler();
     }
 
@@ -84,8 +86,8 @@ public class FreezingController {
      */
     private void freeze() {
         // TODO: update to new TradeUtility
-        List<Account> accounts = freezingUtility.getAccountIDsToFreeze(oldTradeUtility);
-        List<String> usernames = freezingUtility.getUsernamesToFreeze(oldTradeUtility);
+        List<Integer> accounts = freezingUtility.getAccountIDsToFreeze();
+        List<String> usernames = freezingUtility.getUsernamesToFreeze();
         freezingPresenter.displayPossibleFreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.freeze();
@@ -96,7 +98,7 @@ public class FreezingController {
             else if (Integer.parseInt(chosenUser) >= accounts.size())
                 freezingPresenter.invalidInput();
             else {
-                freezingUtility.freezeAccount(oldTradeUtility, accounts.get(Integer.parseInt(chosenUser)));
+                freezingUtility.freezeAccount(accounts.get(Integer.parseInt(chosenUser)));
                 freezingPresenter.displaySuccessfulFreeze();
                 return;
             }
