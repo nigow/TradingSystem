@@ -1,10 +1,11 @@
 package org.twelve.gateways;
 
+import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.ItemUtility;
 
 public interface ItemsGateway {
 
-    void populate(ItemUtility itemUtility);
+    void populate(ItemManager itemManager);
 
     // item_id,name,description,is_approved,owner_id
     void save(int itemId, String name, String description, boolean isApproved, int ownerId);

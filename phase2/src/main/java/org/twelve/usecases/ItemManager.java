@@ -30,8 +30,9 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
         this.itemsGateway = itemsGateway;
     }
 
-    public void addToItems(int id, String name, String description, int ownerId) {
+    public void addToItems(int id, String name, String description, int ownerId, boolean isApproved) {
         Item item = new Item(id, name, description, ownerId);
+        if(isApproved) item.approve();
         items.put(id, item);
     }
 
@@ -146,6 +147,10 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
             stringItems.add(item.toString());
         }
         return stringItems;
+    }
+
+    public List<Integer> getAllItemIds(){
+        return new ArrayList<>(items.keySet());
     }
 
 }
