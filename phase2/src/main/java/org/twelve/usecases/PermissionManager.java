@@ -186,4 +186,7 @@ public class PermissionManager {
         return accountRepository.getAccountFromID(accountID).getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
 
+    public boolean canRequestVacation(int accountID) {
+        return accountRepository.getAccountFromID(accountID).getPermissions().contains(Permissions.REQUEST_VACATION);
+    }
 }
