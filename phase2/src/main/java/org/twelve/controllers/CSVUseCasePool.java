@@ -18,6 +18,7 @@ class CSVUseCasePool implements UseCasePool {
     private TradeManager tradeManager;
     private WishlistManager wishlistManager;
     private AccountRepository accountRepository;
+    private ThresholdRepository thresholdRepository;
     private PermissionManager permissionManager;
     private LoginManager loginManager;
     private SessionManager sessionManager;
@@ -37,10 +38,12 @@ class CSVUseCasePool implements UseCasePool {
     private void initializeUseCases() {
         //TODO: not really a todo but note that these will stop being an error when gatewayPool and usecases are updated
         accountRepository = new AccountRepository(gatewayPool.getAccountGateway());
-        tradeManager = new TradeManager();
-        freezingUtility = new FreezingUtility(accountRepository, tradeManager, gatewayPool.getRestrictionsGateway();
+        thresholdRepository = new ThresholdRepository(gatewayPool.getRestrictionsGateway());
         itemManager = new ItemManager(gatewayPool.getItemsGateway());
         wishlistManager = new WishlistManager(accountRepository, itemManager);
+        tradeManager = new TradeManager(gatewayPool.getTradeGateway(), thresholdRepository,
+                accountRepository, itemManager, wishlistManager);
+        freezingUtility = new FreezingUtility(accountRepository, tradeManager, thresholdRepository);
         permissionManager = new PermissionManager(accountRepository);
         loginManager = new LoginManager(accountRepository);
         sessionManager = new SessionManager(accountRepository);
@@ -109,5 +112,13 @@ class CSVUseCasePool implements UseCasePool {
     @Override
     public SessionManager getSessionManager() {
         return sessionManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ThresholdRepository getThresholdRepository() {
+        return thresholdRepository;
     }
 }

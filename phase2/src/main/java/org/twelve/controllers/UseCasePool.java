@@ -51,4 +51,9 @@ public interface UseCasePool {
      * @return An instance of SessionsManager use case.
      */
     SessionManager getSessionManager();
+
+    /**
+     * @return An instance of ThresholdRepository use case.
+     */
+    ThresholdRepository getThresholdRepository();
 }
