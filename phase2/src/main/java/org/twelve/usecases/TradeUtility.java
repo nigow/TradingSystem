@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  */
 abstract public class TradeUtility {
 
-    protected ItemUtility itemUtility;
+    protected ItemManager itemManager;
     protected AccountRepository accountRepository;
 
     /**
@@ -47,7 +47,7 @@ abstract public class TradeUtility {
     protected List<Integer> itemsTraderGives(int accountID, Trade trade) {
         List<Integer> items = new ArrayList<>();
         for (int id : trade.getItemsIds()) {
-            if (itemUtility.getOwnerId(id) == accountID)
+            if (itemManager.getOwnerId(id) == accountID)
                 items.add(id);
         }
         return items;
@@ -87,7 +87,7 @@ abstract public class TradeUtility {
             int j = (i + 1) % trade.getTraderIds().size();
             ans.append("\nitems being given to user " + j + ": ");
             for (int itemID : itemsTraderGives(id, trade)) {
-                ans.append("\n").append(itemUtility.findItemByIdString(itemID));
+                ans.append("\n").append(itemManager.findItemByIdString(itemID));
             }
         }
 

@@ -4,7 +4,6 @@ import org.twelve.entities.*;
 import org.twelve.gateways.RestrictionsGateway;
 import org.twelve.gateways.experimental.TradeGateway;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +23,6 @@ public class TradeManager extends TradeUtility{
     private int generateValidIDCounter;
 
     private WishlistManager wishlistManager;
-    private ItemManager itemManager;
 
     private TradeGateway tradeGateway;
 
@@ -33,10 +31,9 @@ public class TradeManager extends TradeUtility{
     public void TradeManager(TradeGateway tradeGateway, RestrictionsGateway restrictionsGateway, AccountRepository accountRepository,
                              ItemManager itemManager, WishlistManager wishlistManager) {
         generateValidIDCounter = 1;
-        this.itemUtility = itemManager;
+        this.itemManager = itemManager;
         this.accountRepository = accountRepository;
         this.wishlistManager = wishlistManager;
-        this.itemManager = itemManager;
         this.tradeGateway = tradeGateway;
         this.restrictionsGateway = restrictionsGateway;
     }
