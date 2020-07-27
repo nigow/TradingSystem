@@ -113,6 +113,14 @@ abstract public class TradeUtility {
         return accountTrades;
     }
 
+    public List<Integer> getAllTradesAccountID(int accountID) {
+        List<Integer> accountTrades = new ArrayList<>();
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            accountTrades.add(trade.getId());
+        }
+        return accountTrades;
+    }
+
     /**
      * Retrieves the Ids of the top three trade partners of the current account.
      *
