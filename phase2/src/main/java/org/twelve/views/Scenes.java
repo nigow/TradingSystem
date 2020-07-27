@@ -8,7 +8,8 @@ public enum Scenes {
     WAREHOUSE("Warehouse"),
     RESTRICTIONS("Restrictions"),
     PROFILE("Profile"),
-    TRADE_CREATOR("TradeCreator");
+    TRADE_CREATOR("TradeCreator"),
+    REGISTRATION("Registration");
 
     private final String fxml;
 

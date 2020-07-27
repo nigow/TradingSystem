@@ -85,6 +85,10 @@ public class ViewBuilder {
             case WAREHOUSE:
 
                 return new WarehouseView(windowHandler);
+
+            case REGISTRATION:
+
+                return new RegistrationView(windowHandler);
         }
 
         return null;

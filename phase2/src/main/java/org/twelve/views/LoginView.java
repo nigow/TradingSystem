@@ -26,7 +26,8 @@ public class LoginView implements SceneView {
         this.loginController = loginController;
     }
 
-    public void loginAttempted(ActionEvent actionEvent) {
+    @FXML
+    private void loginAttempted(ActionEvent actionEvent) {
 
         /*
         HomeController hc = new HomeController(null, null, null);
@@ -55,6 +56,13 @@ public class LoginView implements SceneView {
 
             failMessageLabel.setVisible(true);
         }
+
+    }
+
+    @FXML
+    private void backClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.LANDING);
 
     }
 }

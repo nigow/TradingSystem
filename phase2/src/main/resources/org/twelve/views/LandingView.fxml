@@ -3,12 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-    prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1"
-    xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.LandingView">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.LandingView">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-      <Label text="%welcomeMessage" />
-      <Button mnemonicParsing="false" onAction="#loginClicked" text="%login" />
-      <Button mnemonicParsing="false" text="%register" />
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="%title" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginClicked" text="%login" GridPane.rowIndex="1" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#registerClicked" text="%register" GridPane.rowIndex="2" />
    </children>
-</VBox>
+</GridPane>
