@@ -61,12 +61,11 @@ public class ConsoleLendingPresenter implements LendingPresenter {
      * {@inheritDoc}
      */
     @Override
-    public void displayInventory(List<Item> inventory) {
+    public void displayInventory(List<String> inventory) {
         System.out.println("Here are your items. Which item would you like to offer?");
         for (int i = 0; i < inventory.size(); i++) {
 
-            System.out.println(i + ". " + inventory.get(i).getName() + " Description: "
-                    + inventory.get(i).getDescription());
+            System.out.println(i + ". " + inventory.get(i));
 
         }
     }

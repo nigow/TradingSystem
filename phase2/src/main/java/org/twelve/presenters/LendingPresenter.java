@@ -23,7 +23,7 @@ public interface LendingPresenter {
      *
      * @param inventory List of items to display
      */
-    void displayInventory(List<Item> inventory);
+    void displayInventory(List<String> inventory);
 
     /**
      * Prompt user to select an account to trade with.
