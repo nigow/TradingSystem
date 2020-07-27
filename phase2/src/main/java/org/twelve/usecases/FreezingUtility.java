@@ -190,6 +190,11 @@ public class FreezingUtility {
         accountRepository.updateAccount(account);
     }
 
+    public boolean isVacationing(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        return !canTrade(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
+    }
+
     public void requestVacation(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_VACATION);
