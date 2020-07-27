@@ -296,6 +296,17 @@ abstract public class TradeUtility {
         return timesLent;
     }
 
+
+    /**
+     * Determines whether the current account has lent more than borrowed.
+     *
+     * @return Whether the current account has lent more than borrowed
+     */
+    public boolean lentMoreThanBorrowed(int accountID) {
+        return getTimesLent(accountID) - getTimesBorrowed(accountID) >=
+                thresholdRepository.getLendMoreThanBorrow();
+    }
+
     /**
      * Returns the date and time of this Trade.
      *

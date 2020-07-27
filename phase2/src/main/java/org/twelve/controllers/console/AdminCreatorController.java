@@ -67,7 +67,9 @@ public class AdminCreatorController {
                         Permissions.BROWSE_INVENTORY,
                         Permissions.CHANGE_THRESHOLDS,
                         Permissions.ADD_ADMIN,
-                        Permissions.REQUEST_UNFREEZE);
+                        Permissions.REQUEST_UNFREEZE,
+                        Permissions.REQUEST_UNFREEZE,
+                        Permissions.CAN_BAN);
                 if (accountRepository.createAccount(username, password, perms)) {
                     adminPresenter.displaySuccessfulAccount();
                     return;

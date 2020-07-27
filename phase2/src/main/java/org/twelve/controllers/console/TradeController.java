@@ -59,7 +59,8 @@ public class TradeController {
             methods.add(this::showTrades);
 
             // TODO how do we check if someone is frozen?
-            if (!freezingUtility.isFrozen(sessionManager.getCurrAccountID())) {
+            // changed to canTrade(), isFrozen() checks if someone is frozen
+            if (freezingUtility.canTrade(sessionManager.getCurrAccountID())) {
                 options.add(tradePresenter.editTrade());
                 methods.add(this::selectAndChangeTrade);
             }
