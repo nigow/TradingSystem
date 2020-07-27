@@ -4,6 +4,7 @@ import org.twelve.presenters.AppealPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.FreezingUtility;
 import org.twelve.usecases.PermissionManager;
+import org.twelve.usecases.SessionManager;
 
 /**
  * Controller that makes appeal requests.
@@ -19,10 +20,8 @@ public class AppealController {
      * An instance of AppealPresenter to display message to user.
      */
     private final AppealPresenter appealPresenter;
-    /**
-     * An instance of ???? to get current account. #TODO: How to get current account?
-     */
-    private final AccountRepository accountRepository;
+
+    private final SessionManager sessionManager;
 
     /**
      * Initializes constructor with necessary use cases and presenter.
@@ -31,8 +30,8 @@ public class AppealController {
      * @param appealPresenter An instance of AppealPresenter to display information
      */
     public AppealController(UseCasePool useCasePool, AppealPresenter appealPresenter) {
+        sessionManager = useCasePool.getSessionManager();
         freezingUtility = useCasePool.getFreezingUtility();
-        accountRepository = useCasePool.getAccountRepository();
         this.appealPresenter = appealPresenter;
     }
 
@@ -40,10 +39,8 @@ public class AppealController {
      * Requests unfreeze appeal and lets user know that the request was made.
      */
     public void run() {
-        //TODO: Replace these with the SessionManager usecase when it's written.
-        freezingUtility.requestUnfreeze(accountRepository.getCurrAccount());
-        appealPresenter.displaySuccessfulAppeal(accountRepository.getCurrAccountUsername());
-
+        freezingUtility.requestUnfreeze(sessionManager.getCurrAccountID());
+        appealPresenter.displaySuccessfulAppeal(sessionManager.getCurrAccountUsername());
     }
 
 }
