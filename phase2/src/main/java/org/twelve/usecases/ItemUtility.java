@@ -244,4 +244,12 @@ abstract public class ItemUtility {
         return findItemById(itemId).toString();
     }
 
+    public List<Integer> getTradableItems(int accountID) {
+        List<Integer> tradableItems = new ArrayList<>();
+        for (Item item : items.values()) {
+            if (item.getOwnerID() == accountID && item.isApproved())
+                tradableItems.add(item.getItemID());
+        }
+        return tradableItems;
+    }
 }
