@@ -38,8 +38,7 @@ class CSVUseCasePool implements UseCasePool {
         //TODO: not really a todo but note that these will stop being an error when gatewayPool and usecases are updated
         accountRepository = new AccountRepository(gatewayPool.getAccountGateway());
         tradeManager = new TradeManager();
-        freezingUtility = new FreezingUtility(accountRepository, tradeManager,
-                gatewayPool.getRestrictionsGateway().getRestrictions());
+        freezingUtility = new FreezingUtility(accountRepository, tradeManager, gatewayPool.getRestrictionsGateway();
         itemManager = new ItemManager(gatewayPool.getItemsGateway());
         wishlistManager = new WishlistManager(accountRepository, itemManager);
         permissionManager = new PermissionManager(accountRepository);
