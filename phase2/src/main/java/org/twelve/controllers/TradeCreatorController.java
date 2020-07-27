@@ -120,9 +120,15 @@ public class TradeCreatorController {
 
         }
 
-        // TODO this should be refactored according to the new Trade design  --maryam
-        tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation, inputHandler.isTrue(isPerm),
-                traderOneId, traderTwoId, traderOneItems, traderTwoItems, accountRepository);
+        // this can be cleaner
+        List<Integer> traderIDs = new ArrayList<>();
+        traderIDs.add(traderOneId);
+        traderIDs.add(traderTwoId);
+        List<Integer> itemIDs = new ArrayList<>();
+        itemIDs.addAll(traderOneItems);
+        itemIDs.addAll(traderTwoItems);
+        tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation,
+                inputHandler.isTrue(isPerm), traderIDs, itemIDs);
         tradeCreatorPresenter.successMessage();
 
     }
