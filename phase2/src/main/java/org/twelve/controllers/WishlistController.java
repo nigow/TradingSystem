@@ -18,11 +18,10 @@ public class WishlistController {
     private final TradeCreatorPresenter tradeCreatorPresenter;
 
     private final UseCasePool useCasePool;
-    private final AccountManager accountManager;
     private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
-    private final AuthManager authManager;
-    private final TradeUtility tradeUtility;
+    private final PermissionManager permissionManager;
+    private final SessionManager sessionManager;
 
     private final InputHandler inputHandler;
 
@@ -30,7 +29,7 @@ public class WishlistController {
      * Create a controller for the wishlist screen.
      *
      * @param wishlistPresenter     A presenter for this controller.
-     * @param tradeCreatorPresenter A presenter for {@link controllers.TradeCreatorController}.
+     * @param tradeCreatorPresenter A presenter for {@link org.twelve.controllers.TradeCreatorController}.
      * @param useCasePool          Repository of use cases.
      */
     public WishlistController(WishlistPresenter wishlistPresenter, TradeCreatorPresenter tradeCreatorPresenter,
@@ -38,11 +37,10 @@ public class WishlistController {
 
         this.useCasePool = useCasePool;
 
-        this.tradeUtility = useCasePool.getOldTradeUtility();
-        this.accountManager = useCasePool.getAccountManager();
         this.wishlistManager = useCasePool.getWishlistManager();
         this.itemManager = useCasePool.getItemManager();
-        this.authManager = useCasePool.getAuthManager();
+        this.permissionManager = useCasePool.getPermissionManager();
+        this.sessionManager = useCasePool.getSessionManager();
 
         this.wishlistPresenter = wishlistPresenter;
         this.tradeCreatorPresenter = tradeCreatorPresenter;
@@ -85,8 +83,9 @@ public class WishlistController {
         actions.put(wishlistPresenter.viewWishlist(), this::displayWishlist);
         actions.put(wishlistPresenter.removeItem(), this::removeFromWishlist);
 
+        // TODO how to check canTrade?
         // tradecreatorcontroller will handle if initiator has to give item in return
-        if (authManager.canTrade(accountManager.getCurrAccount()))
+        if (permissionManager.canTrade(sessionManager.getCurrAccountID()))
 
             actions.put(wishlistPresenter.startNewTrade(), this::startTrade);
 
@@ -96,7 +95,7 @@ public class WishlistController {
     }
 
     private void displayWishlist() {
-        List<String> wishlistInfo = wishlistManager.getWishlistToString(accountManager.getCurrAccountID());
+        List<String> wishlistInfo = wishlistManager.getWishlistToString(sessionManager.getCurrAccountID());
         wishlistPresenter.displayWishlist(wishlistInfo);
     }
 
@@ -105,7 +104,7 @@ public class WishlistController {
         displayWishlist();
 
         String itemIndex = wishlistPresenter.startTrade();
-        List<Integer> wishlistIds = accountManager.getCurrWishlist();
+        List<Integer> wishlistIds = wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID());
 
         while (!inputHandler.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistIds.size()) {
 
@@ -117,8 +116,9 @@ public class WishlistController {
 
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
+        // TODO how to check lend more than borrowed?
         new TradeCreatorController(tradeCreatorPresenter, useCasePool, itemManager.getOwnerId(itemId), itemId,
-                !authManager.lentMoreThanBorrowed(tradeUtility)).run();
+                !permissionManager.lentMoreThanBorrowed(sessionManager.getCurrAccountID())).run();
 
     }
 
@@ -127,7 +127,7 @@ public class WishlistController {
         displayWishlist();
 
         String itemIndex = wishlistPresenter.removeFromWishlist();
-        List<Integer> wishlistIds = accountManager.getCurrWishlist();
+        List<Integer> wishlistIds = wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID());
 
         while (!inputHandler.isNum(itemIndex) || Integer.parseInt(itemIndex) >= wishlistIds.size()) {
 
@@ -137,7 +137,8 @@ public class WishlistController {
 
         }
 
-        accountManager.removeItemFromWishlist(wishlistIds.get(Integer.parseInt(itemIndex)));
+        wishlistManager.removeItemFromWishlist(sessionManager.getCurrAccountID(),
+                wishlistIds.get(Integer.parseInt(itemIndex)));
 
     }
 
