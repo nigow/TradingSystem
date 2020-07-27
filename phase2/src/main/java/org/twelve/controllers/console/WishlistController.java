@@ -23,6 +23,7 @@ public class WishlistController {
     private final ItemManager itemManager;
     private final SessionManager sessionManager;
     private final FreezingUtility freezingUtility;
+    private final TradeManager tradeManager;
 
     private final InputHandler inputHandler;
 
@@ -42,6 +43,7 @@ public class WishlistController {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.freezingUtility = useCasePool.getFreezingUtility();
+        this.tradeManager = useCasePool.getTradeManager();
 
         this.wishlistPresenter = wishlistPresenter;
         this.tradeCreatorPresenter = tradeCreatorPresenter;
@@ -85,7 +87,7 @@ public class WishlistController {
         actions.put(wishlistPresenter.removeItem(), this::removeFromWishlist);
 
         // tradecreatorcontroller will handle if initiator has to give item in return
-        if (!freezingUtility.isFrozen(sessionManager.getCurrAccountID()))
+        if (freezingUtility.canTrade(sessionManager.getCurrAccountID()))
 
             actions.put(wishlistPresenter.startNewTrade(), this::startTrade);
 
@@ -118,7 +120,7 @@ public class WishlistController {
 
         // TODO how to check lend more than borrowed?
         new TradeCreatorController(tradeCreatorPresenter, useCasePool, itemManager.getOwnerId(itemId), itemId,
-                !freezingUtility.lentMoreThanBorrowed(sessionManager.getCurrAccountID())).run();
+                !tradeManager.lentMoreThanBorrowed(sessionManager.getCurrAccountID())).run();
 
     }
 
