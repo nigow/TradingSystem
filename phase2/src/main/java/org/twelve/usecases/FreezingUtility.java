@@ -2,8 +2,6 @@ package org.twelve.usecases;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
-import org.twelve.entities.Restrictions;
-import org.twelve.gateways.experimental.RestrictionsGateway;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +13,8 @@ import java.util.List;
  */
 public class FreezingUtility {
 
-    /**
-     * The current restrictions of the trading system for all users.
-     */
-    private Restrictions restrictions;
-
     private final AccountRepository accountRepository;
-
-    private final RestrictionsGateway restrictionsGateway;
+    private final ThresholdRepository thresholdRepository;
 
     private TradeManager tradeManager;
 
@@ -31,11 +23,10 @@ public class FreezingUtility {
      *
      */
 
-    public FreezingUtility(AccountRepository accountRepository, TradeManager tradeManager, RestrictionsGateway restrictionsGateway) {
+    public FreezingUtility(AccountRepository accountRepository, TradeManager tradeManager, ThresholdRepository thresholdRepository) {
         this.accountRepository = accountRepository;
         this.tradeManager = tradeManager;
-        this.restrictionsGateway = restrictionsGateway;
-        restrictionsGateway.populate(this);
+        this.thresholdRepository = thresholdRepository;
     }
 
     /**
@@ -135,90 +126,6 @@ public class FreezingUtility {
     }
 
     /**
-     * Updates the restriction of the amount of items needed to be lent before borrowing.
-     *
-     * @param lendMoreThanBorrow Amount of items needed to be lent before borrowing
-     */
-    public void setLendMoreThanBorrow(int lendMoreThanBorrow) {
-        restrictions.setLendMoreThanBorrow(lendMoreThanBorrow);
-        updateRestrictions(restrictions);
-    }
-
-    /**
-     * Updates the restriction of the max number of incomplete trades before an account is frozen.
-     *
-     * @param maxIncompleteTrade Max number of incomplete trades
-     */
-    public void setMaxIncompleteTrade(int maxIncompleteTrade) {
-        restrictions.setMaxIncompleteTrade(maxIncompleteTrade);
-        updateRestrictions(restrictions);
-    }
-
-    /**
-     * Updates the restriction of the max number of weekly trades before an account is frozen.
-     *
-     * @param maxWeeklyTrade Max number of weekly trades
-     */
-    public void setMaxWeeklyTrade(int maxWeeklyTrade) {
-        restrictions.setMaxWeeklyTrade(maxWeeklyTrade);
-        updateRestrictions(restrictions);
-    }
-
-    public int getNumberOfDays() {
-        return restrictions.getNumberOfDays();
-    }
-
-    public void setNumberOfDays(int numberOfDays) {
-        restrictions.setNumberOfDays(numberOfDays);
-        updateRestrictions(restrictions);
-    }
-
-    public int getNumberOfStats() {
-        return restrictions.getNumberOfStats();
-    }
-
-    public void setNumberOfStats(int numberOfStats) {
-        restrictions.setNumberOfStats(numberOfStats);
-        updateRestrictions(restrictions);
-    }
-
-    public int getNumberOfEdits() {
-        return restrictions.getNumberOfEdits();
-    }
-
-    public void setNumberOfEdits(int numberOfEdits) {
-        restrictions.setNumberOfEdits(numberOfEdits);
-        updateRestrictions(restrictions);
-    }
-
-    /**
-     * Gets the current restriction for amount of items needed to be lent before borrowing.
-     *
-     * @return Amount of items needed to be lent before borrowing
-     */
-    public int getLendMoreThanBorrow() {
-        return restrictions.getLendMoreThanBorrow();
-    }
-
-    /**
-     * Gets the current restriction of the max number of incomplete trades before an account is frozen.
-     *
-     * @return Max number of incomplete trades
-     */
-    public int getMaxIncompleteTrade() {
-        return restrictions.getMaxIncompleteTrade();
-    }
-
-    /**
-     * Gets the current restriction of the max number of weekly trades before an account is frozen.
-     *
-     * @return Max number of weekly trades
-     */
-    public int getMaxWeeklyTrade() {
-        return restrictions.getMaxWeeklyTrade();
-    }
-
-    /**
      * Determines whether a given account is frozen.
      *
      * @param accountID Account that is checked if it is frozen
@@ -249,8 +156,8 @@ public class FreezingUtility {
      */
     private boolean canBeFrozen(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-        boolean withinMaxIncompleteTrades = tradeManager.getTimesIncomplete(accountID) <= restrictions.getMaxIncompleteTrade();
-        boolean withinWeeklyLimit = tradeManager.getNumWeeklyTrades(accountID) < restrictions.getMaxWeeklyTrade();
+        boolean withinMaxIncompleteTrades = tradeManager.getTimesIncomplete(accountID) <= thresholdRepository.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = tradeManager.getNumWeeklyTrades(accountID) < thresholdRepository.getMaxWeeklyTrade();
         return !account.getPermissions().contains(Permissions.UNFREEZE) &&
                 !isFrozen(accountID) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
@@ -263,7 +170,7 @@ public class FreezingUtility {
      */
     public boolean lentMoreThanBorrowed(int accountID) {
         return tradeManager.getTimesLent(accountID) - tradeManager.getTimesBorrowed(accountID) >=
-                restrictions.getLendMoreThanBorrow();
+                thresholdRepository.getLendMoreThanBorrow();
     }
 
     /**
@@ -275,19 +182,5 @@ public class FreezingUtility {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_UNFREEZE);
         accountRepository.updateAccount(account);
-    }
-
-    private void updateRestrictions(Restrictions restrictions){
-        restrictionsGateway.save(restrictions.getLendMoreThanBorrow(), restrictions.getMaxIncompleteTrade(),
-                restrictions.getMaxWeeklyTrade(), restrictions.getNumberOfDays(), restrictions.getNumberOfEdits(),
-                restrictions.getNumberOfStats());
-    }
-
-    public void createRestrictions(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                                   int numberOfEdits, int numberOfStats) {
-
-        restrictions = new Restrictions(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
-                numberOfEdits, numberOfStats);
-
     }
 }
