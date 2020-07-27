@@ -5,6 +5,8 @@ import org.twelve.controllers.InputHandler;
 import org.twelve.controllers.MenuFacade;
 import org.twelve.controllers.UseCasePool;
 import org.twelve.presenters.HomePresenter;
+import org.twelve.usecases.LoginManager;
+import org.twelve.usecases.SessionManager;
 
 /**
  *  A controller to handle logins
@@ -19,14 +21,14 @@ public class LoginController {
     private final HomePresenter homePresenter;
 
     /**
-     * An instance of AccountManager to create an account or get information about an account.
+     * An instance of SessionManager to create an account or get information about an account.
      */
-    private final AccountManager accountManager;
+    private final SessionManager sessionManager;
 
     /**
-     * An instance of AuthManager to check login information or permissions.
+     * An instance of LoginManager to check login information or permissions.
      */
-    private final AuthManager authManager;
+    private final LoginManager loginManager;
 
     /**
      * An instance of MenuFacade to be called according to a user's permissions.
@@ -47,8 +49,8 @@ public class LoginController {
      */
     public LoginController(UseCasePool useCasePool, HomePresenter homePresenter,
                            MenuFacade menuFacade) {
-        accountManager = useCasePool.getAccountManager();
-        authManager = useCasePool.getAuthManager();
+        sessionManager = useCasePool.getSessionManager();
+        loginManager = useCasePool.getLoginManager();
         this.menuFacade = menuFacade;
         this.homePresenter = homePresenter;
         inputHandler = new InputHandler();
@@ -63,8 +65,8 @@ public class LoginController {
     public boolean logIn(String username, String password) {
         while (true) {
             if (inputHandler.isValidUserPass(username, password) &&
-                    authManager.authenticateLogin(username, password)) {
-                accountManager.setCurrAccount(username);
+                    loginManager.authenticateLogin(username, password)) {
+                sessionManager.login(username);
                 return true;
             } else
                 // homePresenter.displayIncorrectInfo();
