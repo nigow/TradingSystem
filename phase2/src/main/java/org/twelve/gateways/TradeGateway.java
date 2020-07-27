@@ -1,7 +1,7 @@
 package org.twelve.gateways;
 
-import org.twelve.entities.OldTrade;
 import org.twelve.entities.TimePlace;
+import org.twelve.entities.Trade;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import java.util.List;
 public interface TradeGateway {
 
     /**
-     * Given a trade's ID, return the corresponding OldTrade object.
+     * Given a trade's ID, return the corresponding Trade object.
      *
      * @param id ID of desired trade
-     * @return OldTrade possessing the given ID (null if an invalid ID was given)
+     * @return Trade possessing the given ID (null if an invalid ID was given)
      */
-    OldTrade findTradeById(int id);
+    Trade findTradeById(int id);
 
     /**
      * Given a trade's ID, return the time + place it's happening at.
@@ -27,20 +27,20 @@ public interface TradeGateway {
     TimePlace findTimePlaceById(int id);
 
     /**
-     * Given a oldTrade and the time + place it's taking place at, save its information to persistent storage.
+     * Given a trade and the time + place it's taking place at, save its information to persistent storage.
      *
-     * @param oldTrade     OldTrade being saved
-     * @param timePlace Time + place oldTrade is happening at
-     * @return Whether oldTrade's persistent storage was successfully updated or not
+     * @param trade     Trade being saved
+     * @param timePlace Time + place trade is happening at
+     * @return Whether trade's persistent storage was successfully updated or not
      */
-    boolean updateTrade(OldTrade oldTrade, TimePlace timePlace);
+    boolean updateTrade(Trade trade, TimePlace timePlace);
 
     /**
      * Retrieve every trade in the system.
      *
      * @return List of every trade in the system
      */
-    List<OldTrade> getAllTrades();
+    List<Trade> getAllTrades();
 
     /**
      * Return an ID that does not belong to any trade at the time the method is called.
