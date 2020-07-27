@@ -2,11 +2,10 @@ package org.twelve.usecases;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
-import org.twelve.gateways.experimental.AccountGateway;
+import org.twelve.gateways.AccountGateway;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 

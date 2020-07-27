@@ -1,7 +1,7 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.*;
-import org.twelve.gateways.experimental.TradeGateway;
+import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

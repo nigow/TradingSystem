@@ -1,6 +1,6 @@
 package org.twelve;
 
-import org.twelve.controllers.MainController;
+import org.twelve.controllers.console.MainController;
 
 /**
  * Contains the main method that starts the program.

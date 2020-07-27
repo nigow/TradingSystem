@@ -1,7 +1,6 @@
 package org.twelve.views;
 
-import org.twelve.controllers.HomeController;
-import org.twelve.controllers.experimental.LoginController;
+import org.twelve.controllers.LoginController;
 import org.twelve.gateways.CSVUseCasePool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

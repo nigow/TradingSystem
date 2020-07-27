@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.twelve.entities.Item;
-import org.twelve.gateways.experimental.ItemsGateway;
+import org.twelve.gateways.ItemsGateway;
 
 // TODO javadoc
 /**
