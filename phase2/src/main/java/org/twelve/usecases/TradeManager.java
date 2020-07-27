@@ -141,9 +141,9 @@ public class TradeManager extends TradeUtility{
     /**
      * Completes the action of making a trade.
      *
-     * @param trade          Trade object representing the trade about to be made
      */
-    public void makeTrade(Trade trade) {
+    public void makeTrade(int tradeID) {
+        Trade trade = getTradeByID(tradeID);
         for (int accountID : trade.getTraderIds()) {
             for (int itemID : itemsTraderGets(accountID, trade)) {
                 itemManager.updateOwner(itemID, accountID);

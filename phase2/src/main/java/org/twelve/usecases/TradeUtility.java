@@ -47,8 +47,7 @@ abstract public class TradeUtility {
     protected List<Integer> itemsTraderGives(int accountID, Trade trade) {
         List<Integer> items = new ArrayList<>();
         for (int id : trade.getItemsIds()) {
-            // TODO dont access item directly
-            if (itemUtility.findItemById(id).getOwnerID() == accountID)
+            if (itemUtility.getOwnerId(id) == accountID)
                 items.add(id);
         }
         return items;
