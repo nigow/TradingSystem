@@ -33,7 +33,8 @@ public class AccountRepository {
             int accountID = accounts.size();
             Account newAccount = new Account(username, password, permsToAdd, accountID);
             accounts.put(accountID, newAccount);
-            updateAccount(newAccount);
+            //updateAccount(newAccount);
+            //Commented out by Tairi
             return true;
         }
         return false;
