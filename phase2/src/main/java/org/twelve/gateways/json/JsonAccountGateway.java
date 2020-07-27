@@ -57,8 +57,9 @@ public class JsonAccountGateway implements AccountGateway {
                             for(String s: json.get("permissions").getAsString().split(" ")){
                                 permissions.add(s);
                             }
-                            accountRepository.createAccount(username, password, permissions, wishlist);
+                            accountRepository.createAccount(accountRepository.getAccounts().size(), username, password, permissions, wishlist);
                             //TODO HOW CAN I ASSIGN THE ACCOUNT ID FROM DB
+                            // accountRepository.getAccounts.size()?
                         }
 
                     }catch(Exception e){

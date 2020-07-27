@@ -111,7 +111,7 @@ public class MenuFacade {
             method.add(wishlistController::run);
 
             // TODO: how do we check if someone can trade
-            if (!freezingUtility.isFrozen(sessionManager.getCurrAccountID()) &&
+            if (freezingUtility.canTrade(sessionManager.getCurrAccountID()) &&
                     !itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).isEmpty()) {
                 options.add(menuPresenter.initiateTrade());
                 method.add(lendingController::run);
