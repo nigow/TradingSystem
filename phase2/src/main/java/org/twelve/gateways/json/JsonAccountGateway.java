@@ -21,7 +21,7 @@ public class JsonAccountGateway implements AccountGateway {
 
     public JsonAccountGateway(){
         gson = new Gson();
-        getAllAccounts = ""; //Todo
+        getAllAccounts = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts"; //Todo
     }
 
     @Override
