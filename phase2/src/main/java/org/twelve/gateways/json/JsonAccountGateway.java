@@ -85,20 +85,5 @@ public class JsonAccountGateway implements AccountGateway {
 
     }
 
-    public static void main(String[] args) {
-        JsonAccountGateway jsonAccountGateway = new JsonAccountGateway();
-        AccountRepository ar = new AccountRepository(new AccountGateway() {
-            @Override
-            public void populate(AccountRepository accountRepository) {
-
-            }
-
-            @Override
-            public void save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions) {
-
-            }
-        });
-        jsonAccountGateway.populate(ar);
-    }
 
 }
