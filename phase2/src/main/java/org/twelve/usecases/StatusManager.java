@@ -132,9 +132,8 @@ public class StatusManager {
      * @return Whether the account is frozen or not
      */
     public boolean isFrozen(int accountID) {
-        Account account = accountRepository.getAccountFromID(accountID);
-        return !account.getPermissions().contains(Permissions.LEND) &&
-                !account.getPermissions().contains(Permissions.BORROW) && account.getPermissions().contains(Permissions.REQUEST_VACATION);
+        return !hasPermission(accountID, Permissions.LEND) && !hasPermission(accountID, Permissions.BORROW)
+                && hasPermission(accountID, Permissions.REQUEST_VACATION);
     }
 
     /**
@@ -144,14 +143,11 @@ public class StatusManager {
      * @return Whether the account has requested to be unfrozen or not
      */
     public boolean isPending(int accountID) {
-        Account account = accountRepository.getAccountFromID(accountID);
-        return isFrozen(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
+        return isFrozen(accountID) && !hasPermission(accountID, Permissions.REQUEST_UNFREEZE);
     }
 
     public boolean canTrade(int accountID){
-        Account account = accountRepository.getAccountFromID(accountID);
-        return account.getPermissions().contains(Permissions.LEND) &&
-                account.getPermissions().contains(Permissions.BORROW);
+        return hasPermission(accountID, Permissions.LEND) && hasPermission(accountID, Permissions.BORROW);
     }
 
     /**
@@ -161,11 +157,14 @@ public class StatusManager {
      * @return Whether the account can be frozen or not
      */
     private boolean canBeFrozen(int accountID) {
-        Account account = accountRepository.getAccountFromID(accountID);
         boolean withinMaxIncompleteTrades = tradeManager.getTimesIncomplete(accountID) <= thresholdRepository.getMaxIncompleteTrade();
         boolean withinWeeklyLimit = tradeManager.getNumWeeklyTrades(accountID) < thresholdRepository.getMaxWeeklyTrade();
-        return !account.getPermissions().contains(Permissions.UNFREEZE) &&
+        return !hasPermission(accountID, Permissions.UNFREEZE) &&
                 !isFrozen(accountID) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
+    }
+
+    public boolean canVacation(int accountID){
+        return !canBeFrozen(accountID) && canTrade(accountID) && hasPermission(accountID, Permissions.REQUEST_VACATION);
     }
 
     /**
