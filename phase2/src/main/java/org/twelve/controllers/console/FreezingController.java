@@ -1,12 +1,9 @@
 package org.twelve.controllers.console;
-//import org.twelve.entities.Account;
 import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
-//import org.twelve.usecases.AccountRepository;
-//import org.twelve.usecases.PermissionManager;
-//import org.twelve.usecases.TradeManager;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,35 +22,22 @@ public class FreezingController {
      * An instance of StatusManager to get qualifying accounts.
      */
     private final StatusManager statusManager;
-//    /**
-//     * An instance of AccountRepository.
-//     */
-//    private final AccountRepository accountRepository;
-//    /**
-//     * An instance of AuthManager.
-//     */
-//    private final PermissionManager permissionManager;
-//    /**
-//     * An instance of TradeManager.
-//     */
-//    private final TradeManager tradeManager;
+
     /**
-     * An instance of ControllerInputValidator to check if input is valid.
+     * An instance of InputValidator to check if input is valid.
      */
     private final InputHandler inputHandler;
 
     /**
-     * Initializes constructor with necessary use cases and presenter. #TODO: make sure all commented code can be removed, and if so, remove it.
+     * Initializes constructor with necessary use cases and presenter.
      *
      * @param useCasePool       An instance of ManualConfig to get use cases
      * @param freezingPresenter An instance of FreezingPresenter to display information
      */
     public FreezingController(UseCasePool useCasePool, FreezingPresenter freezingPresenter) {
-//        tradeManager = useCasePool.getTradeManager();
         this.freezingPresenter = freezingPresenter;
         statusManager = useCasePool.getStatusManager();
-//        accountRepository = useCasePool.getAccountRepository();
-//        permissionManager = useCasePool.getPermissionManager();
+
         inputHandler = new InputHandler();
     }
 
@@ -87,7 +71,6 @@ public class FreezingController {
      * Freezes an account that should be frozen.
      */
     private void freeze() {
-        // TODO: update to new TradeUtility
         List<Integer> accounts = statusManager.getAccountIDsToFreeze();
         List<String> usernames = statusManager.getUsernamesToFreeze();
         freezingPresenter.displayPossibleFreeze(usernames);
