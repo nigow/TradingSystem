@@ -1,8 +1,8 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.experimental.YourInventoryPresenter;
+import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.PermissionManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
 
@@ -35,7 +35,7 @@ public class YourInventoryController {
     /**
      * An instance of PermissionManager to check permissions
      */
-    private final PermissionManager permissionManager;
+    private final StatusManager statusManager;
 
     /**
      * An instance of ControllerHelper for helper methods
@@ -53,7 +53,7 @@ public class YourInventoryController {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.yourInventoryPresenter = yourInventoryPresenter;
-        this.permissionManager = useCasePool.getPermissionManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
+        this.statusManager = useCasePool.getStatusManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
         this.inputHandler = new InputHandler();
     }
 

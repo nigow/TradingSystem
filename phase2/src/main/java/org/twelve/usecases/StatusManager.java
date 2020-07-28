@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Andrew
  */
-public class FreezingUtility {
+public class StatusManager {
 
     private final AccountRepository accountRepository;
     private final ThresholdRepository thresholdRepository;
@@ -19,11 +19,11 @@ public class FreezingUtility {
     private TradeManager tradeManager;
 
     /**
-     * Constructs an instance of FreezingUtility and stores restrictionsGateway.
+     * Constructs an instance of StatusManager and stores restrictionsGateway.
      *
      */
 
-    public FreezingUtility(AccountRepository accountRepository, TradeManager tradeManager, ThresholdRepository thresholdRepository) {
+    public StatusManager(AccountRepository accountRepository, TradeManager tradeManager, ThresholdRepository thresholdRepository) {
         this.accountRepository = accountRepository;
         this.tradeManager = tradeManager;
         this.thresholdRepository = thresholdRepository;
@@ -179,7 +179,10 @@ public class FreezingUtility {
         accountRepository.updateAccount(account);
     }
 
-    //TODO maybe make new class statusManager or RoleManager or rename this class?
+    public boolean hasPermission(int accountID, Permissions perm){
+        return accountRepository.getAccountFromID(accountID).getPermissions().contains(perm);
+    }
+
     public boolean isVacationing(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         return !canTrade(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);

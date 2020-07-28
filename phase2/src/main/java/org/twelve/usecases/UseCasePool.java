@@ -10,12 +10,11 @@ import org.twelve.gateways.GatewayPool;
 
 public class UseCasePool {
     private ItemManager itemManager;
-    private FreezingUtility freezingUtility;
+    private StatusManager statusManager;
     private TradeManager tradeManager;
     private WishlistManager wishlistManager;
     private AccountRepository accountRepository;
     private ThresholdRepository thresholdRepository;
-    private PermissionManager permissionManager;
     private LoginManager loginManager;
     private SessionManager sessionManager;
     private final GatewayPool gatewayPool;
@@ -37,8 +36,7 @@ public class UseCasePool {
         wishlistManager = new WishlistManager(accountRepository, itemManager);
         tradeManager = new TradeManager(gatewayPool.getTradeGateway(), thresholdRepository,
                 accountRepository, itemManager, wishlistManager);
-        freezingUtility = new FreezingUtility(accountRepository, tradeManager, thresholdRepository);
-        permissionManager = new PermissionManager(accountRepository);
+        statusManager = new StatusManager(accountRepository, tradeManager, thresholdRepository);
         loginManager = new LoginManager(accountRepository);
         sessionManager = new SessionManager(accountRepository);
     }
@@ -51,10 +49,10 @@ public class UseCasePool {
     }
 
     /**
-     * @return an instance of FreezingUtility use case.
+     * @return an instance of StatusManager use case.
      */
-    public FreezingUtility getFreezingUtility() {
-        return freezingUtility;
+    public StatusManager getStatusManager() {
+        return statusManager;
     }
 
     /**
@@ -77,13 +75,6 @@ public class UseCasePool {
      */
     public AccountRepository getAccountRepository() {
         return accountRepository;
-    }
-
-    /**
-     * @return An instance of PermissionManager use case.
-     */
-    public PermissionManager getPermissionManager() {
-        return permissionManager;
     }
 
     /**

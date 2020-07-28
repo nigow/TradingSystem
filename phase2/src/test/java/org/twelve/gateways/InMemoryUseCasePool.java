@@ -29,7 +29,7 @@ public class InMemoryUseCasePool implements UseCasePool {
         this.itemManager = new ItemManager(itemGateway);
         // TODO fix this for tests
         this.freezingUtility = null;
-//      this.freezingUtility = new FreezingUtility(restrictionsGateway);
+//      this.freezingUtility = new StatusManager(restrictionsGateway);
         this.oldTradeManager = new OldTradeManager(tradeGateway);
         this.wishlistManager = null;
 //      this.wishlistManager = new WishlistManager(accountGateway, itemGateway);
@@ -58,8 +58,7 @@ public class InMemoryUseCasePool implements UseCasePool {
         return this.itemManager;
     }
 
-    @Override
-    public FreezingUtility getFreezingUtility() {
+    public FreezingUtility getStatusManager() {
         return this.freezingUtility;
     }
 

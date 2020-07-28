@@ -10,9 +10,9 @@ import org.twelve.usecases.*;
  */
 public class AppealController {
     /**
-     * An instance of FreezingUtility to request unfreeze.
+     * An instance of StatusManager to request unfreeze.
      */
-    private final FreezingUtility freezingUtility;
+    private final StatusManager statusManager;
     /**
      * An instance of AppealPresenter to display message to user.
      */
@@ -28,7 +28,7 @@ public class AppealController {
      */
     public AppealController(UseCasePool useCasePool, AppealPresenter appealPresenter) {
         sessionManager = useCasePool.getSessionManager();
-        freezingUtility = useCasePool.getFreezingUtility();
+        statusManager = useCasePool.getStatusManager();
         this.appealPresenter = appealPresenter;
     }
 
@@ -40,7 +40,7 @@ public class AppealController {
      * Requests unfreeze appeal and lets user know that the request was made.
      */
     public void run() {
-        freezingUtility.requestUnfreeze(sessionManager.getCurrAccountID());
+        statusManager.requestUnfreeze(sessionManager.getCurrAccountID());
         appealPresenter.displaySuccessfulAppeal(sessionManager.getCurrAccountUsername());
     }
 

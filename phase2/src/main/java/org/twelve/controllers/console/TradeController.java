@@ -29,7 +29,7 @@ public class TradeController {
 
     private final SessionManager sessionManager;
 
-    private final FreezingUtility freezingUtility;
+    private final StatusManager statusManager;
 
     /**
      * Initialized TradeController by setting necessary use cases and presenter.
@@ -43,7 +43,7 @@ public class TradeController {
         sessionManager = useCasePool.getSessionManager();
         tradeManager = useCasePool.getTradeManager();
         itemManager = useCasePool.getItemManager();
-        freezingUtility = useCasePool.getFreezingUtility();
+        statusManager = useCasePool.getStatusManager();
         inputHandler = new InputHandler();
     }
 
@@ -60,7 +60,7 @@ public class TradeController {
 
             // TODO how do we check if someone is frozen?
             // changed to canTrade(), isFrozen() checks if someone is frozen
-            if (freezingUtility.canTrade(sessionManager.getCurrAccountID())) {
+            if (statusManager.canTrade(sessionManager.getCurrAccountID())) {
                 options.add(tradePresenter.editTrade());
                 methods.add(this::selectAndChangeTrade);
             }

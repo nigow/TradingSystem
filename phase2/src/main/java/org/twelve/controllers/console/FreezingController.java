@@ -2,7 +2,7 @@ package org.twelve.controllers.console;
 //import org.twelve.entities.Account;
 import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.FreezingPresenter;
-import org.twelve.usecases.FreezingUtility;
+import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
 //import org.twelve.usecases.AccountRepository;
 //import org.twelve.usecases.PermissionManager;
@@ -22,9 +22,9 @@ public class FreezingController {
      */
     private final FreezingPresenter freezingPresenter;
     /**
-     * An instance of FreezingUtility to get qualifying accounts.
+     * An instance of StatusManager to get qualifying accounts.
      */
-    private final FreezingUtility freezingUtility;
+    private final StatusManager statusManager;
 //    /**
 //     * An instance of AccountRepository.
 //     */
@@ -51,7 +51,7 @@ public class FreezingController {
     public FreezingController(UseCasePool useCasePool, FreezingPresenter freezingPresenter) {
 //        tradeManager = useCasePool.getTradeManager();
         this.freezingPresenter = freezingPresenter;
-        freezingUtility = useCasePool.getFreezingUtility();
+        statusManager = useCasePool.getStatusManager();
 //        accountRepository = useCasePool.getAccountRepository();
 //        permissionManager = useCasePool.getPermissionManager();
         inputHandler = new InputHandler();
@@ -88,8 +88,8 @@ public class FreezingController {
      */
     private void freeze() {
         // TODO: update to new TradeUtility
-        List<Integer> accounts = freezingUtility.getAccountIDsToFreeze();
-        List<String> usernames = freezingUtility.getUsernamesToFreeze();
+        List<Integer> accounts = statusManager.getAccountIDsToFreeze();
+        List<String> usernames = statusManager.getUsernamesToFreeze();
         freezingPresenter.displayPossibleFreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.freeze();
@@ -100,7 +100,7 @@ public class FreezingController {
             else if (Integer.parseInt(chosenUser) >= accounts.size())
                 freezingPresenter.invalidInput();
             else {
-                freezingUtility.freezeAccount(accounts.get(Integer.parseInt(chosenUser)));
+                statusManager.freezeAccount(accounts.get(Integer.parseInt(chosenUser)));
                 freezingPresenter.displaySuccessfulFreeze();
                 return;
             }
@@ -111,8 +111,8 @@ public class FreezingController {
      * Unfreezes an account that has requested to be unfrozen.
      */
     private void unfreeze() {
-        List<Integer> accountIDs = freezingUtility.getAccountsToUnfreeze();
-        List<String> usernames = freezingUtility.getUsernamesToUnfreeze();
+        List<Integer> accountIDs = statusManager.getAccountsToUnfreeze();
+        List<String> usernames = statusManager.getUsernamesToUnfreeze();
         freezingPresenter.displayPossibleUnfreeze(usernames);
         while (true) {
             String chosenUser = freezingPresenter.unfreeze();
@@ -123,7 +123,7 @@ public class FreezingController {
             else if (Integer.parseInt(chosenUser) >= accountIDs.size())
                 freezingPresenter.invalidInput();
             else {
-                freezingUtility.unfreezeAccount(accountIDs.get(Integer.parseInt(chosenUser)));
+                statusManager.unfreezeAccount(accountIDs.get(Integer.parseInt(chosenUser)));
                 freezingPresenter.displaySuccessfulUnfreeze();
                 return;
             }

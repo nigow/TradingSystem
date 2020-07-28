@@ -3,10 +3,10 @@ package org.twelve.controllers.console;
 
 
 import org.twelve.controllers.InputHandler;
+import org.twelve.entities.Permissions;
 import org.twelve.presenters.MenuPresenter;
-import org.twelve.usecases.FreezingUtility;
+import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.PermissionManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
 
@@ -22,11 +22,9 @@ public class MenuFacade {
 
     private final SessionManager sessionManager;
 
-    private final PermissionManager permissionManager;
-
     private final ItemManager itemManager;
 
-    private final FreezingUtility freezingUtility;
+    private final StatusManager statusManager;
 
     private final MenuPresenter menuPresenter;
 
@@ -71,10 +69,10 @@ public class MenuFacade {
                       AdminCreatorController adminCreator,
                       ThresholdController thresholdController,
                       MenuPresenter menuPresenter) {
-        permissionManager = useCasePool.getPermissionManager();
+
         sessionManager = useCasePool.getSessionManager();
         itemManager = useCasePool.getItemManager();
-        freezingUtility = useCasePool.getFreezingUtility();
+        statusManager = useCasePool.getStatusManager();
 
         this.menuPresenter = menuPresenter;
 
@@ -102,7 +100,7 @@ public class MenuFacade {
             options.add(menuPresenter.manageTrades());
             method.add(tradeController::run);
 
-            if (permissionManager.canBrowseInventory(sessionManager.getCurrAccountID())) {
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.BROWSE_INVENTORY)) {
                 options.add(menuPresenter.browseInventory());
                 method.add(inventoryController::run);
             }
@@ -111,29 +109,29 @@ public class MenuFacade {
             method.add(wishlistController::run);
 
             // TODO: how do we check if someone can trade
-            if (freezingUtility.canTrade(sessionManager.getCurrAccountID()) &&
+            if (statusManager.canTrade(sessionManager.getCurrAccountID()) &&
                     !itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).isEmpty()) {
                 options.add(menuPresenter.initiateTrade());
                 method.add(lendingController::run);
             }
 
-            if (permissionManager.canChangeThresholds(sessionManager.getCurrAccountID())) {
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.CHANGE_THRESHOLDS)) {
                 options.add(menuPresenter.modifyThresholds());
                 method.add(thresholdController::run);
             }
 
-            if (permissionManager.canFreeze(sessionManager.getCurrAccountID()) &&
-                    permissionManager.canUnfreeze(sessionManager.getCurrAccountID())) {
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.FREEZE) &&
+                    statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.UNFREEZE)) {
                 options.add(menuPresenter.manageFrozen());
                 method.add(freezingController::run);
             }
 
-            if (permissionManager.canAddAdmin(sessionManager.getCurrAccountID())) {
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.ADD_ADMIN)) {
                 options.add(menuPresenter.addAdmin());
                 method.add(adminCreatorController::run);
             }
 
-            if (permissionManager.canRequestUnfreeze(sessionManager.getCurrAccountID())) {
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.REQUEST_UNFREEZE)) {
                 options.add(menuPresenter.requestUnfreeze());
                 method.add(appealController::run);
             }

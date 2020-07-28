@@ -1,6 +1,7 @@
 package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
+import org.twelve.entities.Permissions;
 import org.twelve.presenters.InventoryPresenter;
 import org.twelve.usecases.*;
 
@@ -28,10 +29,7 @@ public class InventoryController {
      */
     private final ItemManager itemManager;
 
-    /**
-     * An instance of PermissionManager to check permissions
-     */
-    private final PermissionManager permissionManager;
+    private final StatusManager statusManager;
 
     private final SessionManager sessionManager;
 
@@ -52,8 +50,8 @@ public class InventoryController {
     public InventoryController(UseCasePool useCasePool, InventoryPresenter inventoryPresenter) {
         this.itemManager = useCasePool.getItemManager();
         this.inventoryPresenter = inventoryPresenter;
-        this.permissionManager = useCasePool.getPermissionManager();
         this.sessionManager = useCasePool.getSessionManager();
+        this.statusManager = useCasePool.getStatusManager();
         this.wishlistManager = useCasePool.getWishlistManager();
         this.inputHandler = new InputHandler();
     }
@@ -70,14 +68,14 @@ public class InventoryController {
         actions.put(inventoryPresenter.viewYourApproved(), this::displayYourInventory);
         actions.put(inventoryPresenter.viewYourPending(), this::displayYourPending);
         actions.put(inventoryPresenter.viewAllAvailable(), this::displayOthersInventory);
-        if (permissionManager.canAddToWishlist(sessionManager.getCurrAccountID())) {
+        if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.ADD_TO_WISHLIST)) {
             actions.put(inventoryPresenter.addItemToWishlist(), this::addToWishlist);
         }
-        if (permissionManager.canCreateItem(sessionManager.getCurrAccountID())) {
+        if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.CREATE_ITEM)) {
             actions.put(inventoryPresenter.createNewItem(), this::createItem);
         }
         actions.put(inventoryPresenter.removeYourItem(), this::removeFromYourInventory);
-        if (permissionManager.canConfirmItem(sessionManager.getCurrAccountID())) {
+        if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.CONFIRM_ITEM)) {
             actions.put(inventoryPresenter.viewAllPending(), this::displayPending);
             actions.put(inventoryPresenter.approveAnItem(), this::approveItems);
         }

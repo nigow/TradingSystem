@@ -14,9 +14,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * An integration test to verify integration of FreezingUtility, RestrictionsGateway, and entities are successful.
+ * An integration test to verify integration of StatusManager, RestrictionsGateway, and entities are successful.
  */
-public class FreezingUtilityIntegrationTest extends TestCase{
+public class StatusManagerIntegrationTest extends TestCase{
 
     private FreezingUtility freezingUtility;
     private RestrictionsGateway restrictionsGateway;

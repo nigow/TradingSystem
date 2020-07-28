@@ -22,7 +22,7 @@ public class WishlistController {
     private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
     private final SessionManager sessionManager;
-    private final FreezingUtility freezingUtility;
+    private final StatusManager statusManager;
     private final TradeManager tradeManager;
 
     private final InputHandler inputHandler;
@@ -42,7 +42,7 @@ public class WishlistController {
         this.wishlistManager = useCasePool.getWishlistManager();
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.freezingUtility = useCasePool.getFreezingUtility();
+        this.statusManager = useCasePool.getStatusManager();
         this.tradeManager = useCasePool.getTradeManager();
 
         this.wishlistPresenter = wishlistPresenter;
@@ -87,7 +87,7 @@ public class WishlistController {
         actions.put(wishlistPresenter.removeItem(), this::removeFromWishlist);
 
         // tradecreatorcontroller will handle if initiator has to give item in return
-        if (freezingUtility.canTrade(sessionManager.getCurrAccountID()))
+        if (statusManager.canTrade(sessionManager.getCurrAccountID()))
 
             actions.put(wishlistPresenter.startNewTrade(), this::startTrade);
 
