@@ -72,6 +72,8 @@ public class RegistrationController {
                         Permissions.ADD_ADMIN,
                         Permissions.REQUEST_UNFREEZE,
                         Permissions.REQUEST_UNFREEZE,
+                        Permissions.REQUEST_VACATION,
+                        Permissions.MAKE_TRUSTED,
                         Permissions.CAN_BAN);
                 break;
             case "Standard":
@@ -79,6 +81,7 @@ public class RegistrationController {
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
                         Permissions.LEND,
+                        Permissions.REQUEST_VACATION,
                         Permissions.BORROW,
                         Permissions.BROWSE_INVENTORY);
                 break;
