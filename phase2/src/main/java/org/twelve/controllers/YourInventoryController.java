@@ -60,7 +60,7 @@ public class YourInventoryController {
     /**
      * Calls the presenter to display a user's inventory
      */
-    private void displayAllYourInventory() {
+    public void displayAllYourInventory() {
         List<String> allYourItems = itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID());
         this.yourInventoryPresenter.displayInventory(allYourItems);
     }
@@ -71,7 +71,7 @@ public class YourInventoryController {
      * @param name The name of the item
      * @param description The description of the item
      */
-    private boolean createItem(String name, String description) {
+    public boolean createItem(String name, String description) {
 
         if(inputHandler.isValidCSVStr(name) && inputHandler.isValidCSVStr(description)) {
             itemManager.createItem(name, description, sessionManager.getCurrAccountID());
@@ -86,7 +86,7 @@ public class YourInventoryController {
      *
      * @param ind The index in the list of items in this user's
      */
-    private boolean removeFromYourInventory(String ind) {
+    public boolean removeFromYourInventory(String ind) {
         List<Integer> items = itemManager.getAllInventoryOfAccountIDs(sessionManager.getCurrAccountID());
         return itemManager.removeItem(items.get(Integer.parseInt(ind)));
     }

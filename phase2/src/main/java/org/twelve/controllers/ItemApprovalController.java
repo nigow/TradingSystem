@@ -40,12 +40,12 @@ public class ItemApprovalController {
     /**
      * Calls the presenter to display all pending items
      */
-    private void displayAllPending() {
+    public void displayAllPending() {
         List<String> allPendingItems = itemManager.getDisapprovedString();
         itemApprovalPresenter.displayPendingItems(allPendingItems);
     }
 
-    private void approveItem(String ind) {
+    public void approveItem(String ind) {
         //TODO: figure out index removal
         itemManager.updateApproval(itemManager.getDisapprovedIDs().get(Integer.parseInt(ind)), true);
     }

@@ -55,7 +55,7 @@ public class RegistrationController {
      * @param accountType the account type of the account
      * @return true if the account has been successfully created.
      */
-    private boolean createAccount(String username, String password, String accountType) {
+    public boolean createAccount(String username, String password, String accountType) {
         List<Permissions> perms = null;
         switch (accountType) {
             case "Admin":
