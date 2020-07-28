@@ -19,5 +19,6 @@ public enum Permissions {
     ADD_ADMIN,
     REQUEST_UNFREEZE,
     REQUEST_VACATION,
-    CAN_BAN
+    CAN_BAN,
+    MAKE_TRUSTED
 }
