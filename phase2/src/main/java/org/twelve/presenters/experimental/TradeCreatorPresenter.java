@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * A class for storing itemInfo and giving it to the view when needed
- * @author Ethan
+ * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  */
 public class TradeCreatorPresenter {
 
