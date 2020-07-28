@@ -174,15 +174,6 @@ abstract public class ItemUtility {
         return inventory;
     }
 
-    public List<Integer> getTradableItems(int accountID) {
-        List<Integer> tradableItems = new ArrayList<>();
-        for (Item item : items.values()) {
-            if (item.getOwnerID() == accountID && item.isApproved())
-                tradableItems.add(item.getItemID());
-        }
-        return tradableItems;
-    }
-
     /**
      * Retrieves all items for a certain account in string format.
      *
