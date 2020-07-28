@@ -124,7 +124,8 @@ public class HomeController {
                         Permissions.ADD_TO_WISHLIST,
                         Permissions.LEND,
                         Permissions.BORROW,
-                        Permissions.BROWSE_INVENTORY);
+                        Permissions.BROWSE_INVENTORY,
+                        Permissions.REQUEST_VACATION);
                 if (accountRepository.createAccount(username, password, perms)) {
                     homePresenter.displaySuccessfulAccount();
                     menuFacade.run();
