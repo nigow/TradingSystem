@@ -28,7 +28,7 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
         HttpRequest getRequest = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://csc207phase2.herokuapp.com/restrictions"))
+                .uri(URI.create("http://csc207phase2.herokuapp.com/thresholds"))
                 .build();
 
         try {
@@ -68,7 +68,7 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(json)))
-                .uri(URI.create("http://csc207phase2.herokuapp.com/restrictions"))
+                .uri(URI.create("http://csc207phase2.herokuapp.com/thresholds"))
                 .build();
 
         try {
