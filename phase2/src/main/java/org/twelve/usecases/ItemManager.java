@@ -7,9 +7,8 @@ import java.util.Map;
 import org.twelve.entities.Item;
 import org.twelve.gateways.ItemsGateway;
 
-// TODO javadoc
 /**
- * Manager for items which creates an item or takes in an item to edit.
+ * Manager for items which edits items in the system.
  *
  * @author Isaac
  */
@@ -30,20 +29,32 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
         this.itemsGateway = itemsGateway;
     }
 
+    /**
+     * Adds a item to the local storage
+     *
+     * @param id          the id of the item to be added
+     * @param name        the name of the item to be added
+     * @param description the description of the item to be added
+     * @param ownerId     the id of the owner of the item to be added
+     */
     public void addToItems(int id, String name, String description, int ownerId, boolean isApproved) {
         Item item = new Item(id, name, description, ownerId);
         if(isApproved) item.approve();
         items.put(id, item);
     }
 
+    /**
+     * Updates the item to the gateway
+     *
+     * @param item  the item being updated to the gateway
+     */
     private void updateToItemsGateway(Item item) {
         itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
                 item.isApproved(), item.getOwnerID());
     }
 
     /**
-     * Creates a new item and stores in the persistent storage and allows for editing of the
-     * new item.
+     * Creates a new item and stores in local storage.
      *
      * @param name        The name of the item
      * @param description The description of the item
@@ -77,7 +88,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
     /**
      * Get the string representation of item with the id entered.
      *
-     * @param itemID ID of the item
+     * @param itemID    ID of the item with info being returned
      * @return String of item with the entered ID
      */
     public String getItemStringById(int itemID) {
@@ -88,7 +99,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
     /**
      * Gets the approval status of the item.
      *
-     * @param itemId item which information is being returned about
+     * @param itemId    Id of the item with info being returned
      * @return approval status of the item
      */
     public boolean isApproved(int itemId) {
@@ -98,8 +109,8 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
     /**
      * Update the owner of the item.
      *
-     * @param itemId    item being updated
-     * @param ownerID new owner of the item
+     * @param itemId    Id of the item with info being returned
+     * @param ownerID   ID of the new owner of the item
      */
     public void updateOwner(int itemId, int ownerID) {
         items.get(itemId).setOwnerID(ownerID);
@@ -109,7 +120,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
     /**
      * Update the approval status of the item.
      *
-     * @param itemId     item being updated
+     * @param itemId     Id of the item with info being returned
      * @param approval new approval status of the item
      */
     public void updateApproval(int itemId, boolean approval) {
@@ -122,7 +133,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
     }
 
     /**
-     * Retrieves all items stored in persistent storage.
+     * Retrieves all items stored in local storage.
      *
      * @return List of all items
      */
@@ -137,7 +148,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
     }
 
     /**
-     * Retrieves all items stored in persistent storage in string format.
+     * Retrieves all items stored in local storage in string format.
      *
      * @return List of all items in string format
      */
