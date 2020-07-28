@@ -8,20 +8,19 @@ import org.twelve.gateways.ItemsGateway;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.ItemUtility;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JsonItemsGateway implements ItemsGateway {
-    private final String getAllItems;
+    private final String getAllItemsUrl;
+    private final String updateItemUrl;
     private final Gson gson;
     public JsonItemsGateway(){
-        getAllItems = "http://csc207phase2.herokuapp.com/items/get_all_items"; //TODO
+        getAllItemsUrl = "http://csc207phase2.herokuapp.com/items/get_all_items";
+        updateItemUrl = "http://csc207phase2.herokuapp.com/items/update_item";
         gson = new Gson();
     }
     @Override
@@ -31,7 +30,7 @@ public class JsonItemsGateway implements ItemsGateway {
         BufferedReader bufferedReader = null;
         List<Integer> existingItemIds = itemManager.getAllItemIds();
         try{
-            URL url = new URL(getAllItems);
+            URL url = new URL(getAllItemsUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             int status = urlConnection.getResponseCode();
@@ -66,11 +65,46 @@ public class JsonItemsGateway implements ItemsGateway {
             }
         }catch(IOException e){
             e.printStackTrace();
+        }finally{
+            try{
+                inputStream.close();
+                bufferedReader.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void save(int itemId, String name, String description, boolean isApproved, int ownerId) {
+        JsonObject json = new JsonObject();
+        json.addProperty("item_id", itemId);
+        json.addProperty("name", name);
+        json.addProperty("is_approved", isApproved);
+        json.addProperty("owner_id", ownerId);
+
+        HttpURLConnection con = null;
+        OutputStream outputStream = null;
+        BufferedWriter bufferedWriter = null;
+        try{
+            URL url = new URL(updateItemUrl);
+            con = (HttpURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.connect();
+            outputStream = con.getOutputStream();
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+            bufferedWriter.write(json.toString());
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                outputStream.close();
+                bufferedWriter.flush();
+                bufferedWriter.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
 
     }
 

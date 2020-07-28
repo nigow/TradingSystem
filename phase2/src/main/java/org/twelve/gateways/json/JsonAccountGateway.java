@@ -8,10 +8,7 @@ import org.twelve.entities.Account;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.usecases.AccountRepository;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,11 +16,13 @@ import java.util.List;
 
 public class JsonAccountGateway implements AccountGateway {
     private final Gson gson;
-    private final String getAllAccounts;
+    private final String getAllAccountsUrl;
+    private final String updateAccountUrl;
 
     public JsonAccountGateway(){
         gson = new Gson();
-        getAllAccounts = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts";
+        getAllAccountsUrl = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts";
+        updateAccountUrl = "http://csc207phase2.herokuapp.com/accounts/update_account";
     }
 
     @Override
@@ -33,7 +32,7 @@ public class JsonAccountGateway implements AccountGateway {
         BufferedReader bufferedReader = null;
         List<Integer> existingAccountIds = accountRepository.getAccountIDs();
         try{
-            URL url = new URL(getAllAccounts);
+            URL url = new URL(getAllAccountsUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             int status = urlConnection.getResponseCode();
@@ -76,12 +75,52 @@ public class JsonAccountGateway implements AccountGateway {
             }
         }catch(IOException e){
             e.printStackTrace();
+        }finally{
+            try{
+                inputStream.close();
+                bufferedReader.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void save(int accountId, String username, String password, List<Integer> wishlist,
                      List<String> permissions) {
+        String wishlistString = "";
+        for(Integer i: wishlist) wishlistString += i.toString() + " ";
+        String permissionsString = "";
+        for(String s: permissions) permissionsString += s + " ";
+        JsonObject json = new JsonObject();
+        json.addProperty("account_id", accountId);
+        json.addProperty("username", username);
+        json.addProperty("password", password);
+        json.addProperty("wishlist", wishlistString);
+        json.addProperty("permissions", permissionsString);
+
+        HttpURLConnection con = null;
+        OutputStream outputStream = null;
+        BufferedWriter bufferedWriter = null;
+        try{
+            URL url = new URL(updateAccountUrl);
+            con = (HttpURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.connect();
+            outputStream = con.getOutputStream();
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+            bufferedWriter.write(json.toString());
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                outputStream.close();
+                bufferedWriter.flush();
+                bufferedWriter.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
 
     }
 

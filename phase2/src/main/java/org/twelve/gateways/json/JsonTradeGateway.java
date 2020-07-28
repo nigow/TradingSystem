@@ -4,20 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.twelve.entities.Trade;
-import org.twelve.entities.TradeStatus;
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.ItemsGateway;
-import org.twelve.gateways.ThresholdsGateway;
 import org.twelve.gateways.TradeGateway;
 import org.twelve.usecases.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +22,8 @@ public class JsonTradeGateway implements TradeGateway {
 
     public JsonTradeGateway(){
         gson = new Gson();
-        getAllTradeUrl = "http://csc207phase2.herokuapp.com/trades/get_all_trades"; //this has to migrate to the parameter
-        updateTradeUrl = ""; //Todo
+        getAllTradeUrl = "http://csc207phase2.herokuapp.com/trades/get_all_trades";
+        updateTradeUrl = "http://csc207phase2.herokuapp.com/trades/update_trade";
 
     }
 
@@ -93,12 +85,59 @@ public class JsonTradeGateway implements TradeGateway {
             }
         }catch(IOException e){
             e.printStackTrace();
+        }finally{
+            try{
+                inputStream.close();
+                bufferedReader.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
+    //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
     public void save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location) {
-        //TODO
+        String traderIdsString = "";
+        for(Integer i: traderIds) traderIdsString += i.toString() + " ";
+        String itemIdsString = "";
+        for(Integer i: itemIds) itemIdsString += i.toString() + " ";
+        String tradeCompletionsString = "";
+        for(Boolean b: tradeCompletions) tradeCompletionsString += b.toString() + " ";
+        JsonObject json = new JsonObject();
+
+        json.addProperty("trade_id", tradeId);
+        json.addProperty("is_permanent", isPermanent);
+        json.addProperty("trader_ids", traderIdsString);
+        json.addProperty("item_ids", itemIdsString);
+        json.addProperty("edited_counter", editedCounter);
+        json.addProperty("trade_status", tradeStatus);
+        json.addProperty("trade_completions", tradeCompletionsString);
+        json.addProperty("time", time);
+        json.addProperty("location", location);
+
+        HttpURLConnection con = null;
+        OutputStream outputStream = null;
+        BufferedWriter bufferedWriter = null;
+        try{
+            URL url = new URL(updateTradeUrl);
+            con = (HttpURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.connect();
+            outputStream = con.getOutputStream();
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+            bufferedWriter.write(json.toString());
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                outputStream.close();
+                bufferedWriter.flush();
+                bufferedWriter.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
 
