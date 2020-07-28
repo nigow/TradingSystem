@@ -1,6 +1,8 @@
 package org.twelve.gateways.json;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.entities.Account;
 import org.twelve.gateways.AccountGateway;
@@ -21,7 +23,7 @@ public class JsonAccountGateway implements AccountGateway {
 
     public JsonAccountGateway(){
         gson = new Gson();
-        getAllAccounts = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts"; //Todo
+        getAllAccounts = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts";
     }
 
     @Override
@@ -41,26 +43,31 @@ public class JsonAccountGateway implements AccountGateway {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 JsonObject json;
+                JsonArray jsonArray;
 
                 while((line = bufferedReader.readLine())!=null){
                     try{
-                        json = gson.fromJson(line, JsonObject.class);
-                        int accountId = json.get("account_id").getAsInt();
-                        if(!existingAccountIds.contains(accountId)){
-                            String username = json.get("username").getAsString();
-                            String password = json.get("password").getAsString();
-                            List<Integer> wishlist = new ArrayList<>();
-                            for(String s: json.get("wishlist").getAsString().split(" ")){
-                                wishlist.add(Integer.parseInt(s));
+                        jsonArray = gson.fromJson(line, JsonObject.class).get("accounts").getAsJsonArray();
+                        for(JsonElement jsonElement: jsonArray){
+                            json = jsonElement.getAsJsonObject();
+                            int accountId = json.get("account_id").getAsInt();
+                            if(!existingAccountIds.contains(accountId)){
+                                String username = json.get("username").getAsString();
+                                String password = json.get("password").getAsString();
+                                List<Integer> wishlist = new ArrayList<>();
+                                for(String s: json.get("wishlist").getAsString().split(" ")){
+                                    wishlist.add(Integer.parseInt(s));
+                                }
+                                List<String> permissions = new ArrayList<>();
+                                for(String s: json.get("permissions").getAsString().split(" ")){
+                                    permissions.add(s);
+                                }
+                                System.out.println(username);
+                                accountRepository.createAccount(accountId, username, password, permissions, wishlist);
+
                             }
-                            List<String> permissions = new ArrayList<>();
-                            for(String s: json.get("permissions").getAsString().split(" ")){
-                                permissions.add(s);
-                            }
-                            accountRepository.createAccount(accountId, username, password, permissions, wishlist);
-                            // HOW CAN I ASSIGN THE ACCOUNT ID FROM DB
-                            // we have accountId here already...
                         }
+
 
                     }catch(Exception e){
                         e.printStackTrace();
@@ -76,6 +83,22 @@ public class JsonAccountGateway implements AccountGateway {
     public void save(int accountId, String username, String password, List<Integer> wishlist,
                      List<String> permissions) {
 
+    }
+
+    public static void main(String[] args) {
+        JsonAccountGateway jsonAccountGateway = new JsonAccountGateway();
+        AccountRepository ar = new AccountRepository(new AccountGateway() {
+            @Override
+            public void populate(AccountRepository accountRepository) {
+
+            }
+
+            @Override
+            public void save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions) {
+
+            }
+        });
+        jsonAccountGateway.populate(ar);
     }
 
 }

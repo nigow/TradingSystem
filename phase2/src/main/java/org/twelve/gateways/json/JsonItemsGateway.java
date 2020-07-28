@@ -1,6 +1,8 @@
 package org.twelve.gateways.json;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.ItemsGateway;
 import org.twelve.usecases.ItemManager;
@@ -19,7 +21,7 @@ public class JsonItemsGateway implements ItemsGateway {
     private final String getAllItems;
     private final Gson gson;
     public JsonItemsGateway(){
-        getAllItems = " "; //TODO
+        getAllItems = "http://csc207phase2.herokuapp.com/items/get_all_items"; //TODO
         gson = new Gson();
     }
     @Override
@@ -39,17 +41,22 @@ public class JsonItemsGateway implements ItemsGateway {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 JsonObject json;
+                JsonArray jsonArray;
 
                 while((line = bufferedReader.readLine())!=null){
                     try{
-                        json = gson.fromJson(line, JsonObject.class);
-                        int itemId = json.get("item_id").getAsInt();
-                        if(!existingItemIds.contains(itemId)){
-                            String name = json.get("name").getAsString();
-                            String description = json.get("description").getAsString();
-                            Boolean isApproved = json.get("is_approved").getAsBoolean();
-                            int ownerID = json.get("owner_id").getAsInt();
-                            itemManager.addToItems(itemId, name, description, ownerID, isApproved);
+                        jsonArray = gson.fromJson(line, JsonObject.class).get("items").getAsJsonArray();
+                        for(JsonElement jsonElement: jsonArray){
+                            json = jsonElement.getAsJsonObject();
+                            int itemId = json.get("item_id").getAsInt();
+                            if(!existingItemIds.contains(itemId)){
+                                String name = json.get("name").getAsString();
+                                String description = json.get("description").getAsString();
+                                Boolean isApproved = json.get("is_approved").getAsBoolean();
+                                int ownerID = json.get("owner_id").getAsInt();
+                                itemManager.addToItems(itemId, name, description, ownerID, isApproved);
+                            }
+
                         }
 
                     }catch(Exception e){
@@ -66,4 +73,5 @@ public class JsonItemsGateway implements ItemsGateway {
     public void save(int itemId, String name, String description, boolean isApproved, int ownerId) {
 
     }
+
 }
