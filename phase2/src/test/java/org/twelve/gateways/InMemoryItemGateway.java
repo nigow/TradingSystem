@@ -1,46 +1,16 @@
-package gateways;
+package test.java.org.twelve.gateways;
 
-import entities.Item;
+import org.twelve.usecases.ItemManager;
 
-import java.util.*;
+public class InMemoryItemGateway implements org.twelve.gateways.ItemsGateway {
 
-public class InMemoryItemGateway implements ItemsGateway{
-    public final Map<Integer, Item> itemMap;
-    public InMemoryItemGateway(Map<Integer, Item> itemMap){
-        this.itemMap = itemMap;
+    @Override
+    public void populate(ItemManager itemManager) {
+
     }
 
     @Override
-    public Item findById(int id){
-        if(itemMap.containsKey(id)) return itemMap.get(id);
-        return null;
-    }
+    public void save(int itemId, String name, String description, boolean isApproved, int ownerId) {
 
-    @Override
-    public boolean updateItem(Item item){
-        itemMap.put(item.getItemID(), item);
-        return true;
-    }
-
-    @Override
-    public List<Item> getAllItems(){
-        List<Item> list = new ArrayList<>();
-        for(Item item: itemMap.values()) list.add(item);
-        return list;
-    }
-
-    @Override
-    public int generateValidId(){
-        if (itemMap.size() == 0) return 0;
-        return Collections.max(itemMap.keySet()) + 1;
-    }
-
-    @Override
-    public boolean deleteItem(Item item) {
-        if(itemMap.containsKey(item.getItemID())){
-            itemMap.remove(item.getItemID());
-            return true;
-        }
-        return false;
     }
 }

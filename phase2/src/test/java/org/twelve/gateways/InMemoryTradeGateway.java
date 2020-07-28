@@ -1,51 +1,17 @@
-package gateways;
+package test.java.org.twelve.gateways;
 
-import entities.OldTrade;
-import entities.TimePlace;
+import org.twelve.usecases.TradeManager;
 
-import java.util.*;
+import java.util.List;
 
-public class InMemoryTradeGateway implements TradeGateway{
-    public final Map<Integer, OldTrade> tradeMap;
-    public final Map<Integer, TimePlace> timePlaceMap;
+public class InMemoryTradeGateway implements org.twelve.gateways.TradeGateway {
+    @Override
+    public void populate(TradeManager tradeManager) {
 
-    public InMemoryTradeGateway(Map<Integer, OldTrade> trades, Map<Integer, TimePlace> timePlace){
-        this.tradeMap = trades;
-        this.timePlaceMap = timePlace;
     }
 
     @Override
-    public OldTrade findTradeById(int id){
-        if(tradeMap.containsKey(id)) return tradeMap.get(id);
-        return null;
-    }
+    public void save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location) {
 
-    @Override
-    public TimePlace findTimePlaceById(int id){
-        if(timePlaceMap.containsKey(id)) return timePlaceMap.get(id);
-        return null;
     }
-
-    @Override
-    public boolean updateTrade(OldTrade oldTrade, TimePlace timePlace){
-        tradeMap.put(oldTrade.getId(), oldTrade);
-        timePlaceMap.put(timePlace.getId(), timePlace);
-        return true;
-    }
-
-    @Override
-    public List<OldTrade> getAllTrades(){
-        List<OldTrade> oldTradeList = new ArrayList<>();
-        for(OldTrade value: tradeMap.values()){
-            oldTradeList.add(value);
-        }
-        return oldTradeList;
-    }
-
-    @Override
-    public int generateValidId(){
-        if (tradeMap.size() == 0) return 0;
-        return Collections.max(tradeMap.keySet()) + 1;
-    }
-
 }
