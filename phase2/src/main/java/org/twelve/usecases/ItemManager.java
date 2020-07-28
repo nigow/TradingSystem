@@ -27,6 +27,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
      */
     public ItemManager(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
+        itemsGateway.populate(this);
     }
 
     /**
