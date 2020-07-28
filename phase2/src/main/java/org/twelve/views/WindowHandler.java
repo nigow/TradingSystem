@@ -2,20 +2,19 @@ package org.twelve.views;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 public class WindowHandler extends Application {
 
     private Stage primaryStage;
-    private Map<Scenes, Scene> scenes;
+    private Map<Scenes, Parent> scenes;
 
     // don't add parameters to this, Application.launch() will explode if you do
     public WindowHandler() {
@@ -34,7 +33,7 @@ public class WindowHandler extends Application {
             loader.setControllerFactory(v -> viewBuilder.getView(scene));
 
             try {
-                scenes.put(scene, new Scene(loader.load()));
+                scenes.put(scene, loader.load());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -55,7 +54,13 @@ public class WindowHandler extends Application {
     }
 
     public void changeScene(Scenes scene) {
-        primaryStage.setScene(scenes.get(scene));
+
+        if (primaryStage.getScene() == null) {
+            primaryStage.setScene(new Scene(scenes.get(scene)));
+        } else {
+            primaryStage.getScene().setRoot(scenes.get(scene));
+        }
+
     }
 
 }
