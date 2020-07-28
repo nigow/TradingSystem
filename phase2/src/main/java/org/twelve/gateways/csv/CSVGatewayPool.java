@@ -46,7 +46,7 @@ public class CSVGatewayPool implements GatewayPool {
     }
 
     private void buildTradeGateway() throws IOException {
-        tradeGateway = new CSVTradeGateway(filePath + "accounts.csv");
+        //tradeGateway = new CSVTradeGateway(filePath + "accounts.csv");
     }
 
     private void buildThresholdsGateway() throws IOException {
