@@ -1,7 +1,8 @@
-package org.twelve.presenters;
+package org.twelve.presenters.console;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Item;
+import org.twelve.presenters.LendingPresenter;
 
 import java.util.List;
 import java.util.Scanner;

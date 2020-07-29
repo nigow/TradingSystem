@@ -1,4 +1,6 @@
-package org.twelve.presenters;
+package org.twelve.presenters.console;
+
+import org.twelve.presenters.WishlistPresenter;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +13,7 @@ public class ConsoleWishlistPresenter implements WishlistPresenter {
     private final Scanner input;
 
     /**
-     * Create a console presenter for {@link controllers.WishlistController}.
+     * Create a console presenter for {@link org.twelve.controllers.console.WishlistController}.
      */
     public ConsoleWishlistPresenter() {
         input = new Scanner(System.in);

@@ -1,12 +1,9 @@
 package org.twelve.controllers.console;
 
 
-import org.twelve.gateways.csv.CSVGatewayPool;
 import org.twelve.gateways.json.JsonGatewayPool;
-import org.twelve.presenters.*;
+import org.twelve.presenters.console.*;
 import org.twelve.usecases.UseCasePool;
-
-import java.io.IOException;
 
 /**
  * Main controller that initiates the program.

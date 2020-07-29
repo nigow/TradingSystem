@@ -1,4 +1,6 @@
-package org.twelve.presenters;
+package org.twelve.presenters.console;
+
+import org.twelve.presenters.TradeCreatorPresenter;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +13,7 @@ public class ConsoleTradeCreatorPresenter implements TradeCreatorPresenter {
     private final Scanner input;
 
     /**
-     * Create a console presenter for {@link controllers.TradeCreatorController}.
+     * Create a console presenter for {@link org.twelve.controllers.console.TradeCreatorController}.
      */
     public ConsoleTradeCreatorPresenter() {
         input = new Scanner(System.in);
