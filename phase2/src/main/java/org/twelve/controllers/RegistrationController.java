@@ -50,14 +50,12 @@ public class RegistrationController {
      * A method for updating if user can create admins
      */
     public void updateAccessMode() {
-        List<AccountType> availableTypes = new ArrayList<>();
-        availableTypes.add(AccountType.DEMO);
-        availableTypes.add(AccountType.USER);
+        List<AccountType> availableTypes = new ArrayList<>(Arrays.asList(AccountType.values()));
 
-        if (sessionManager.getCurrAccountID() != -1 && statusManager.hasPermission(sessionManager.getCurrAccountID(),
+        if (sessionManager.getCurrAccountID() == -1 || !statusManager.hasPermission(sessionManager.getCurrAccountID(),
                 Permissions.ADD_ADMIN)) {
 
-            availableTypes.add(AccountType.ADMIN);
+            availableTypes.remove(AccountType.ADMIN);
 
         }
 
@@ -68,13 +66,13 @@ public class RegistrationController {
      * A method to create an account
      * @param username the username of the account
      * @param password the password of the account
-     * @param accountType the account type of the account
+     * @param typeIndex index corresponding to account type of the account
      * @return true if the account has been successfully created.
      */
-    public boolean createAccount(String username, String password, String accountType) {
+    public boolean createAccount(String username, String password, int typeIndex) {
         List<Permissions> perms = null;
-        switch (accountType) {
-            case "Admin":
+        switch (AccountType.values()[typeIndex]) {
+            case ADMIN:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.FREEZE,
                         Permissions.UNFREEZE,
@@ -92,7 +90,7 @@ public class RegistrationController {
                         Permissions.MAKE_TRUSTED,
                         Permissions.CAN_BAN);
                 break;
-            case "Standard":
+            case USER:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
@@ -101,7 +99,7 @@ public class RegistrationController {
                         Permissions.BORROW,
                         Permissions.BROWSE_INVENTORY);
                 break;
-            case "Demo":
+            case DEMO:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.ADD_TO_WISHLIST,
                         Permissions.BROWSE_INVENTORY);

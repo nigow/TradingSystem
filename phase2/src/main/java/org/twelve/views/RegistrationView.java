@@ -38,7 +38,8 @@ public class RegistrationView implements SceneView {
     private void registerClicked(ActionEvent actionEvent) {
 
         // todo: waiting location changes on registrationController and associated usecase
-        if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(), typeBox.getValue())) {
+        if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(),
+                typeBox.getSelectionModel().getSelectedIndex())) {
             windowHandler.changeScene(Scenes.MENU);
         }
 
