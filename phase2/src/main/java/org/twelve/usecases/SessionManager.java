@@ -26,7 +26,10 @@ public class SessionManager {
     }
 
     public int getCurrAccountID() {
-        return account.getAccountID();
+        if (account != null)
+            return account.getAccountID();
+
+        return -1;
     }
 
     public String getCurrAccountUsername() {
