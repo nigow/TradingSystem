@@ -74,4 +74,8 @@ public class WindowHandler extends Application {
 
     }
 
+    public void changeLanguage() {
+        // todo
+    }
+
 }
