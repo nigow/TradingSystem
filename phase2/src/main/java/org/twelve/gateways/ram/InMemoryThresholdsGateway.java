@@ -1,6 +1,7 @@
-package org.twelve.gateways;
+package org.twelve.gateways.ram;
 
 import org.twelve.entities.Thresholds;
+import org.twelve.gateways.ThresholdsGateway;
 import org.twelve.usecases.ThresholdRepository;
 
 public class InMemoryThresholdsGateway implements ThresholdsGateway {

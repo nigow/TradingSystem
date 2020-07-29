@@ -1,11 +1,12 @@
-package test.java.org.twelve.gateways;
+package org.twelve.gateways.ram;
 
 import org.twelve.entities.Item;
+import org.twelve.gateways.ItemsGateway;
 import org.twelve.usecases.ItemManager;
 
 import java.util.*;
 
-public class InMemoryItemGateway implements org.twelve.gateways.ItemsGateway {
+public class InMemoryItemGateway implements ItemsGateway {
 
     public final Map<Integer, org.twelve.entities.Item> itemMap;
 

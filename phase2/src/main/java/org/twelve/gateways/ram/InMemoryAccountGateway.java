@@ -1,14 +1,15 @@
-package org.twelve.gateways;
+package org.twelve.gateways.ram;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
+import org.twelve.gateways.AccountGateway;
 import org.twelve.usecases.AccountRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryAccountGateway implements AccountGateway{
+public class InMemoryAccountGateway implements AccountGateway {
     public final Map<Integer, Account> accountMap;
 
     public InMemoryAccountGateway(Map<Integer, Account> accountMap) {
