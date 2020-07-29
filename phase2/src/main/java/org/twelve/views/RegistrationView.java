@@ -1,6 +1,5 @@
 package org.twelve.views;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -59,6 +58,6 @@ public class RegistrationView implements SceneView {
     @Override
     public void reload() {
         registrationController.updateAccessMode();
-        typeBox.setItems(FXCollections.observableList(registrationPresenter.getAvailableTypes()));
+        typeBox.getItems().addAll(registrationPresenter.getAvailableTypes());
     }
 }

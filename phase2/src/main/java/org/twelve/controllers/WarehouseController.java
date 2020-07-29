@@ -4,6 +4,9 @@ import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.UseCasePool;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WarehouseController {
 
     private final ItemManager itemManager;
@@ -29,6 +32,20 @@ public class WarehouseController {
 
         warehousePresenter.setSelectedItemName(name);
         warehousePresenter.setSelectedItemDesc(desc);
+
+    }
+
+    public void updatePendingItems() {
+
+        List<String> pendingItems = new ArrayList<>();
+
+        for (int id : itemManager.getDisapprovedIDs()) {
+
+            pendingItems.add(itemManager.getItemNameById(id));
+
+        }
+
+        warehousePresenter.setPendingItems(pendingItems);
 
     }
 }

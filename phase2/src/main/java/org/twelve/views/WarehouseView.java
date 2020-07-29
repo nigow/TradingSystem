@@ -35,6 +35,10 @@ public class WarehouseView implements SceneView {
     @Override
     public void reload() {
 
+        warehouseController.updatePendingItems();
+        pendingItems.getItems().clear();
+        pendingItems.getItems().addAll(warehousePresenter.getPendingItems());
+
     }
 
     @FXML
@@ -50,10 +54,16 @@ public class WarehouseView implements SceneView {
         // there's a feature that allows this to be done in fxml but it's bugged at this time -.-
         pendingItems.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        warehouseController.changeSelectedItem(pendingItems.getSelectionModel().getSelectedIndex());
+        int selectedIndex = pendingItems.getSelectionModel().getSelectedIndex();
 
-        itemNameLabel.setText(warehousePresenter.getSelectedItemName());
-        itemDescLabel.setText(warehousePresenter.getSelectedItemDesc());
+
+        if (selectedIndex != -1) {
+            warehouseController.changeSelectedItem(pendingItems.getSelectionModel().getSelectedIndex());
+
+            itemNameLabel.setText(warehousePresenter.getSelectedItemName());
+            itemDescLabel.setText(warehousePresenter.getSelectedItemDesc());
+        }
+
 
     }
 
