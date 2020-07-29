@@ -58,4 +58,11 @@ public class MenuView implements SceneView {
     public void reload() {
 
     }
+
+    @FXML
+    private void manageWishlistClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.WISHLIST);
+
+    }
 }

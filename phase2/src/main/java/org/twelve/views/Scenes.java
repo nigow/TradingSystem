@@ -9,7 +9,8 @@ public enum Scenes {
     RESTRICTIONS("Restrictions"),
     PROFILE("Profile"),
     TRADE_CREATOR("TradeCreator"),
-    REGISTRATION("Registration");
+    REGISTRATION("Registration"),
+    WISHLIST("Wishlist");
 
     private final String fxml;
 

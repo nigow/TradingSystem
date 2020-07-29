@@ -77,6 +77,10 @@ public class ViewBuilder {
             case REGISTRATION:
 
                 return new RegistrationView(windowHandler, controllerPool.getRegistrationController(), presenterPool.getRegistrationPresenter());
+
+            case WISHLIST:
+
+                return new WishlistView(windowHandler);
         }
 
         return null;
