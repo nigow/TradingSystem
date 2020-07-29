@@ -5,6 +5,7 @@ import org.twelve.entities.Trade;
 import org.twelve.usecases.TradeManager;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,16 @@ public class InMemoryTradeGateway implements org.twelve.gateways.TradeGateway {
 
     @Override
     public void populate(TradeManager tradeManager) {
-
+        List<Integer> existingIds = tradeManager.getAllTradeIds();
+        for (Trade trade : tradeMap.values()) {
+            if (!existingIds.contains(trade.getId())) {
+                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+                tradeManager.addToTrades(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds()
+                        , trade.getEditedCounter(), TradeStatus.trade.getStatus().name(),
+                        trade.getTradeCompletions(), timePlaceMap.get(trade.getId()).getTime().format(formatter),
+                        timePlaceMap.get(trade.getId()).getPlace());
+            }
+        }
     }
 
     @Override
