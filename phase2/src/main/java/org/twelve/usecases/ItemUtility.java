@@ -3,6 +3,7 @@ package org.twelve.usecases;
 import org.twelve.entities.Item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ abstract public class ItemUtility {
      * Constructor for ItemUtility.
      */
     public ItemUtility() {
+        items = new HashMap<>();
     }
 
     /**

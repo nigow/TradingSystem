@@ -13,7 +13,7 @@ import org.twelve.gateways.ItemsGateway;
  * @author Isaac
  */
 
-public class ItemManager extends org.twelve.usecases.ItemUtility {
+public class ItemManager extends ItemUtility {
 
     /**
      * The gateway which deals with items.
@@ -26,6 +26,7 @@ public class ItemManager extends org.twelve.usecases.ItemUtility {
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
     public ItemManager(ItemsGateway itemsGateway) {
+        super();
         this.itemsGateway = itemsGateway;
         itemsGateway.populate(this);
     }
