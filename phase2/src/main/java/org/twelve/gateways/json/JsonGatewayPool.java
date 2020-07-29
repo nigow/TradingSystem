@@ -1,16 +1,13 @@
 package org.twelve.gateways.json;
 
-import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.ItemsGateway;
-import org.twelve.gateways.ThreshholdsGateway;
-import org.twelve.gateways.TradeGateway;
+import org.twelve.gateways.*;
+import org.twelve.gateways.ThresholdsGateway;
 
 public class JsonGatewayPool implements GatewayPool {
 
     private AccountGateway accountGateway;
     private ItemsGateway itemsGateway;
-    private ThreshholdsGateway thresholdsGateway;
+    private ThresholdsGateway thresholdsGateway;
     private TradeGateway tradeGateway;
 
     public JsonGatewayPool() {
@@ -31,7 +28,7 @@ public class JsonGatewayPool implements GatewayPool {
     }
 
     @Override
-    public ThreshholdsGateway getThresholdsGateway() {
+    public ThresholdsGateway getThresholdsGateway() {
         return thresholdsGateway;
     }
 
