@@ -15,7 +15,13 @@ public class InMemoryItemGateway implements org.twelve.gateways.ItemsGateway {
 
     @Override
     public void populate(ItemManager itemManager) {
-
+        List<Integer> existingIds = itemManager.getAllItemIds();
+        for (Item item : this.itemMap.values()) {
+            if (!existingIds.contains(item.getItemID())) {
+                itemManager.addToItems(item.getItemID(), item.getName(), item.getDescription(), item.getOwnerID(),
+                        item.isApproved());
+            }
+        }
     }
 
     @Override
