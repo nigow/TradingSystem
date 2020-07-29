@@ -3,9 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-    minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1"
-    xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.RegistrationView">
+<GridPane alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.RegistrationView">
 
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
@@ -18,16 +16,19 @@
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label text="%username" />
       <Label text="%password" GridPane.rowIndex="1" />
       <Label text="%location" GridPane.rowIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%register" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-      <TextField GridPane.columnIndex="1" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="%failMessage" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%register" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+      <TextField fx:id="usernameBox" GridPane.columnIndex="1" />
+      <TextField fx:id="locationBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <PasswordField fx:id="passwordBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="%failMessage" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+      <Label text="%type" GridPane.rowIndex="3" />
+      <ComboBox fx:id="typeBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>
 </GridPane>

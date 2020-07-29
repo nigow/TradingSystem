@@ -1,11 +1,14 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.AccountType;
 import org.twelve.entities.Permissions;
+import org.twelve.presenters.RegistrationPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,22 +33,35 @@ public class RegistrationController {
      */
     private final StatusManager statusManager;
 
+    private RegistrationPresenter registrationPresenter;
+
     /**
      * Initializer for RegistrationController
      * @param useCasePool used to get all the use cases.
      */
-    public RegistrationController(UseCasePool useCasePool) {
+    public RegistrationController(UseCasePool useCasePool, RegistrationPresenter registrationPresenter) {
         this.accountRepository = useCasePool.getAccountRepository();
         this.sessionManager = useCasePool.getSessionManager();
         this.statusManager = useCasePool.getStatusManager();
+        this.registrationPresenter = registrationPresenter;
     }
 
     /**
-     * A method to return if an account can create admins
-     * @return true if an account can create admins
+     * A method for updating if user can create admins
      */
-    public boolean canAddAdmin() {
-        return statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.ADD_ADMIN);
+    public void updateAccessMode() {
+        List<AccountType> availableTypes = new ArrayList<>();
+        availableTypes.add(AccountType.DEMO);
+        availableTypes.add(AccountType.USER);
+
+        if (sessionManager.getCurrAccountID() != -1 && statusManager.hasPermission(sessionManager.getCurrAccountID(),
+                Permissions.ADD_ADMIN)) {
+
+            availableTypes.add(AccountType.ADMIN);
+
+        }
+
+        registrationPresenter.setAvailableTypes(availableTypes);
     }
 
     /**
@@ -95,4 +111,7 @@ public class RegistrationController {
 
     }
 
+    public void setRegistrationPresenter(RegistrationPresenter registrationPresenter) {
+        this.registrationPresenter = registrationPresenter;
+    }
 }

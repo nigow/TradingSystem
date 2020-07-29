@@ -2,7 +2,6 @@ package org.twelve.controllers;
 
 import org.twelve.presenters.experimental.ItemApprovalPresenter;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.ItemUtility;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.List;

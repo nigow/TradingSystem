@@ -86,17 +86,35 @@ public class ItemManager extends ItemUtility {
         return result;
     }
 
-
     /**
-     * Get the string representation of item with the id entered.
+     * Get the string of item with the id entered.
      *
      * @param itemID    ID of the item with info being returned
      * @return String of item with the entered ID
      */
     public String getItemStringById(int itemID) {
-        return super.findItemById(itemID).toString();
+        return findItemById(itemID).toString();
     }
 
+    /**
+     * Get the name of item with the id entered.
+     *
+     * @param itemID    ID of the item with info being returned
+     * @return Name of item with the entered ID
+     */
+    public String getItemNameById(int itemID) {
+        return findItemById(itemID).getName();
+    }
+
+    /**
+     * Get the desc of item with the id entered.
+     *
+     * @param itemID    ID of the item with info being returned
+     * @return Desc of item with the entered ID
+     */
+    public String getItemDescById(int itemID) {
+        return findItemById(itemID).getDescription();
+    }
 
     /**
      * Gets the approval status of the item.

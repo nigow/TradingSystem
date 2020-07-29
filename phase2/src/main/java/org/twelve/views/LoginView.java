@@ -1,5 +1,6 @@
 package org.twelve.views;
 
+import javafx.fxml.Initializable;
 import org.twelve.controllers.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,6 +64,11 @@ public class LoginView implements SceneView {
     private void backClicked(ActionEvent actionEvent) {
 
         windowHandler.changeScene(Scenes.LANDING);
+
+    }
+
+    @Override
+    public void reload() {
 
     }
 }

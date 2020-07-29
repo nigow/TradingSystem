@@ -15,6 +15,7 @@ public class WindowHandler extends Application {
 
     private Stage primaryStage;
     private Map<Scenes, Parent> scenes;
+    private Map<Scenes, SceneView> views;
 
     // don't add parameters to this, Application.launch() will explode if you do
     public WindowHandler() {
@@ -22,13 +23,18 @@ public class WindowHandler extends Application {
         ViewBuilder viewBuilder = new ViewBuilder(this);
 
         if (!viewBuilder.buildGateways("json")) return; // we can add more flexibility if we want here
+
+        viewBuilder.buildPresenters();
         viewBuilder.buildControllers();
 
         scenes = new HashMap<>();
+        views = new HashMap<>();
+
         for (Scenes scene : Scenes.values()) {
 
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("org.twelve.presenters." + scene.toString());
             FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"),
-                    ResourceBundle.getBundle("org.twelve.presenters." + scene.toString()));
+                    resourceBundle);
 
             loader.setControllerFactory(v -> viewBuilder.getView(scene));
 
@@ -36,7 +42,10 @@ public class WindowHandler extends Application {
                 scenes.put(scene, loader.load());
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
+
+            views.put(scene, loader.getController());
 
         }
 
@@ -54,6 +63,8 @@ public class WindowHandler extends Application {
     }
 
     public void changeScene(Scenes scene) {
+
+        views.get(scene).reload();
 
         if (primaryStage.getScene() == null) {
             primaryStage.setScene(new Scene(scenes.get(scene)));

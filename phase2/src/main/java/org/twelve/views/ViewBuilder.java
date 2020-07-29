@@ -1,17 +1,21 @@
 package org.twelve.views;
 
 import org.twelve.controllers.ControllerPool;
-import org.twelve.gateways.csv.CSVGatewayPool;
+import org.twelve.gateways.GatewayPoolFactory;
 import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.json.JsonGatewayPool;
+import org.twelve.presenters.PresenterPool;
+import org.twelve.presenters.UIPresenterPool;
 
-import java.io.IOException;
+import java.util.Locale;
 
 public class ViewBuilder {
 
-    private WindowHandler windowHandler;
+    private final WindowHandler windowHandler;
 
     private GatewayPool gatewayPool;
+
+    private PresenterPool presenterPool;
+
     private ControllerPool controllerPool;
 
     public ViewBuilder(WindowHandler windowHandler) {
@@ -20,37 +24,21 @@ public class ViewBuilder {
 
     public boolean buildGateways(String implementation) {
 
-        switch (implementation) {
+        gatewayPool = new GatewayPoolFactory().getGatewayPool(implementation);
+        return gatewayPool != null;
 
-            case "csv":
+    }
 
-                /* might be getting deprecated for good
-                try {
-                    gatewayPool = new CSVGatewayPool();
-                } catch (IOException e) {
-                    return false;
-                }
-                */
-                break;
+    public void buildPresenters() {
 
-            case "json":
+        // the param will be useful if we decide to allow language changing at runtime
+        presenterPool = new UIPresenterPool(Locale.getDefault());
 
-                gatewayPool = new JsonGatewayPool();
-                break;
-
-            case "ram":
-
-                // todo: waiting implementation
-
-                break;
-        }
-
-        return true;
     }
 
     public void buildControllers() {
 
-        controllerPool = new ControllerPool(gatewayPool);
+        controllerPool = new ControllerPool(gatewayPool, presenterPool);
 
     }
 
@@ -68,7 +56,7 @@ public class ViewBuilder {
 
             case MENU:
 
-                return new MenuView(windowHandler);
+                return new MenuView(windowHandler, controllerPool.getMenuController());
 
             case PROFILE:
 
@@ -84,11 +72,11 @@ public class ViewBuilder {
 
             case WAREHOUSE:
 
-                return new WarehouseView(windowHandler);
+                return new WarehouseView(windowHandler, controllerPool.getWarehouseController(), presenterPool.getWarehousePresenter());
 
             case REGISTRATION:
 
-                return new RegistrationView(windowHandler);
+                return new RegistrationView(windowHandler, controllerPool.getRegistrationController(), presenterPool.getRegistrationPresenter());
         }
 
         return null;
