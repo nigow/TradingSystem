@@ -2,7 +2,7 @@ package org.twelve.gateways.json;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.twelve.gateways.ThresholdsGateway;
+import org.twelve.gateways.ThreshholdsGateway;
 import org.twelve.usecases.ThresholdRepository;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class JsonThresholdsGateway implements ThresholdsGateway {
+public class JsonThresholdsGateway implements ThreshholdsGateway {
 
     private HttpClient httpClient;
     private Gson gson;

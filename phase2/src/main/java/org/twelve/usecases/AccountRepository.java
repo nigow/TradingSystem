@@ -50,6 +50,11 @@ public class AccountRepository {
         Account newAccount = new Account(username, password, wishlist, permsToAdd, accountId);
         accounts.put(newAccount.getAccountID(), newAccount);
     }
+    //used by inMemoryAccountGateway
+    public void addAccount(Account account) {
+        accounts.put(accounts.size() + 1, account);
+        updateAccount(account);
+    }
 
     /**
      * Gets the account corresponding to the accountID provided.
