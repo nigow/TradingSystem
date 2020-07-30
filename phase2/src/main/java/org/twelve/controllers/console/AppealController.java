@@ -3,6 +3,9 @@ package org.twelve.controllers.console;
 import org.twelve.presenters.AppealPresenter;
 import org.twelve.usecases.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Controller that makes appeal requests.
  *
@@ -40,8 +43,26 @@ public class AppealController {
      * Requests unfreeze appeal and lets user know that the request was made.
      */
     public void run() {
-        statusManager.requestUnfreeze(sessionManager.getCurrAccountID());
-        appealPresenter.displaySuccessfulAppeal(sessionManager.getCurrAccountUsername());
+
+        switch (action) {
+            case "0":
+                statusManager.requestUnfreeze(sessionManager.getCurrAccountID());
+                appealPresenter.displayUnfreezeAppeal(sessionManager.getCurrAccountUsername());
+                break;
+            case "1":
+                statusManager.requestVacation(sessionManager.getCurrAccountID());
+                appealPresenter.displayVacationAppeal(sessionManager.getCurrAccountUsername());
+                break;
+            case "2":
+                statusManager.completeVacation(sessionManager.getCurrAccountID());
+                appealPresenter.displayVacationCompletion(sessionManager.getCurrAccountUsername());
+                break;
+            case "3":
+                return;
+            default:
+                appealPresenter.invalidInput();
+                break;
+        }
     }
 
 }
