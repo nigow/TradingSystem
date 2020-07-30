@@ -50,4 +50,16 @@ public class ThresholdController {
         thresholdRepository.setMaxWeeklyTrade(newNumber);
     }
 
+    public void NumberOfDays(int newNumber) {
+        thresholdRepository.setNumberOfDays(newNumber);
+    }
+
+    public void numberOfStats(int newNumber) {
+        thresholdRepository.setNumberOfStats(newNumber);
+    }
+
+    public void numberOfEdits(int newNumber) {
+        thresholdRepository.setNumberOfEdits(newNumber);
+    }
+
 }

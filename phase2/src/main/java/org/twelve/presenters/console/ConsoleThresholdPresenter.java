@@ -64,6 +64,42 @@ public class ConsoleThresholdPresenter implements ThresholdPresenter {
      * {@inheritDoc}
      */
     @Override
+    public String changeNumberOfDays(int numberOfDays) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Users currently have  " + numberOfDays + " days to return a trade.");
+        System.out.println("Input \"-1\" to go back.");
+        System.out.println("Change this to:");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String changeNumberOfEdits(int numberOfEdits) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("2 users can edit " + numberOfEdits + " times in total.");
+        System.out.println("Input \"-1\" to go back.");
+        System.out.println("Change this to:");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String changeNumberOfStats(int numberOfStats) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("There will be " + numberOfStats + " statistics displayed.");
+        System.out.println("Input \"-1\" to go back.");
+        System.out.println("Change this to:");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
     }
@@ -112,6 +148,36 @@ public class ConsoleThresholdPresenter implements ThresholdPresenter {
     @Override
     public String returnToMainMenu() {
         String message = "Return to main menu";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String numberOfDays() {
+        String message = "Number of days to return a trade";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String numberOfEdits() {
+        String message = "Number of allowed edits to a trade";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String numberOfStats() {
+        String message = "Number of Statistics displayed";
         System.out.println(message);
         return message;
     }

@@ -40,6 +40,12 @@ public interface ThresholdPresenter {
      */
     String changeMaxWeeklyTrades(int weeklyTrades);
 
+    String changeNumberOfDays(int numberOfDays);
+
+    String changeNumberOfEdits(int numberOfEdits);
+
+    String changeNumberOfStats(int numberOfStats);
+
     /**
      * Tells user that their input was invalid.
      */
@@ -73,4 +79,10 @@ public interface ThresholdPresenter {
      * @return the string message
      */
     String returnToMainMenu();
+
+    String numberOfDays();
+
+    String numberOfStats();
+
+    String numberOfEdits();
 }
