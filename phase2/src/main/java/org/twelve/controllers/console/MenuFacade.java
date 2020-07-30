@@ -131,8 +131,10 @@ public class MenuFacade {
                 method.add(adminCreatorController::run);
             }
 
-            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.REQUEST_UNFREEZE)) {
-                options.add(menuPresenter.requestUnfreeze());
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.REQUEST_UNFREEZE) ||
+                    statusManager.canVacation(sessionManager.getCurrAccountID()) ||
+                    statusManager.isVacationing(sessionManager.getCurrAccountID())) {
+                options.add(menuPresenter.requestAppeal());
                 method.add(appealController::run);
             }
 

@@ -104,8 +104,8 @@ public class ConsoleMenuPresenter implements MenuPresenter {
      * {@inheritDoc}
      */
     @Override
-    public String requestUnfreeze() {
-        String message = "Request to be unfrozen";
+    public String requestAppeal() {
+        String message = "Request to be unfrozen or to go on/off vacation";
         System.out.println(message);
         return message;
     }

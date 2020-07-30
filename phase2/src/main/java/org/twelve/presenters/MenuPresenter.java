@@ -64,10 +64,10 @@ public interface MenuPresenter {
     String addAdmin();
 
     /**
-     * Shows user they can request to be unfrozen.
+     * Shows user they can request to be unfrozen or request to go on vacation or to complete a vacation.
      * @return the string message
      */
-    String requestUnfreeze();
+    String requestAppeal();
 
     /**
      * Shows user they can log out.
