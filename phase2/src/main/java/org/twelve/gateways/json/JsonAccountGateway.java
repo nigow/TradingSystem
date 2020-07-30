@@ -11,6 +11,7 @@ import org.twelve.usecases.AccountRepository;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +55,12 @@ public class JsonAccountGateway implements AccountGateway {
                                 String username = json.get("username").getAsString();
                                 String password = json.get("password").getAsString();
                                 List<Integer> wishlist = new ArrayList<>();
-                                for(String s: json.get("wishlist").getAsString().split(" ")){
-                                    wishlist.add(Integer.parseInt(s));
-                                }
+
+                                if (!json.get("wishlist").getAsString().isEmpty()) // todo: remove this when corrupt data gone from DB
+
+                                    for(String s: json.get("wishlist").getAsString().split(" ")){
+                                        wishlist.add(Integer.parseInt(s));
+                                    }
                                 List<String> permissions = new ArrayList<>();
                                 for(String s: json.get("permissions").getAsString().split(" ")){
                                     permissions.add(s);
@@ -88,9 +92,9 @@ public class JsonAccountGateway implements AccountGateway {
     @Override
     public void save(int accountId, String username, String password, List<Integer> wishlist,
                      List<String> permissions) {
-        String wishlistString = "";
+        String wishlistString = wishlist.isEmpty() ? " " : "";
         for(Integer i: wishlist) wishlistString += i.toString() + " ";
-        String permissionsString = "";
+        String permissionsString = permissions.isEmpty() ? " " : "";
         for(String s: permissions) permissionsString += s + " ";
         JsonObject json = new JsonObject();
         json.addProperty("account_id", accountId);
@@ -101,22 +105,36 @@ public class JsonAccountGateway implements AccountGateway {
 
         HttpURLConnection con = null;
         OutputStream outputStream = null;
-        BufferedWriter bufferedWriter = null;
+        // BufferedWriter bufferedWriter = null;
         try{
             URL url = new URL(updateAccountUrl);
             con = (HttpURLConnection) url.openConnection();
+
+            con.setRequestMethod("POST"); // this is needed otherwise 405 error (default is GET)
+            con.setRequestProperty("Content-Type", "application/json; utf-8"); // this is needed otherwise 502 error
             con.setDoOutput(true);
             con.connect();
+
+
             outputStream = con.getOutputStream();
+            outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
+
+            /*
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
             bufferedWriter.write(json.toString());
+            */
+
+            con.getInputStream(); // this is needed otherwise the request doesn't go out
+
         }catch(IOException e){
             e.printStackTrace();
         }finally{
             try{
                 outputStream.close();
+                /*
                 bufferedWriter.flush();
                 bufferedWriter.close();
+                */
             }catch(IOException e){
                 e.printStackTrace();
             }
