@@ -143,17 +143,7 @@ public class JsonTradeGateway implements TradeGateway {
         }
     }
 
-    public static void main(String[] args) {
-        JsonTradeGateway jsonTradeGateway = new JsonTradeGateway();
-        List<Integer> trader_ids = new ArrayList<>();
-        trader_ids.add(2);
-        trader_ids.add(3);
-        List<Integer> item_ids = new ArrayList<>();
-        item_ids.add(1);
-        List<Boolean> tradeCompletions = new ArrayList<>();
-        jsonTradeGateway.save(3,false, trader_ids, item_ids,1,"UNCONFIRMED",tradeCompletions,"fsalj","UTM");
 
-    }
 
 
 }
