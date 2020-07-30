@@ -2,6 +2,7 @@ package org.twelve.controllers;
 
 import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.PresenterPool;
+import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.UseCasePool;
 
 public class ControllerPool {
@@ -10,17 +11,19 @@ public class ControllerPool {
     private final RegistrationController registrationController;
     private final MenuController menuController;
     private final WarehouseController warehouseController;
+    private final WishlistController wishlistController;
 
-    public ControllerPool(GatewayPool gatewayPool, PresenterPool presenterPool) {
+    public ControllerPool(GatewayPool gatewayPool) {
 
         UseCasePool useCasePool = new UseCasePool(gatewayPool);
 
         // todo: add refactored controllers and their getters
 
         loginController = new LoginController(useCasePool);
-        registrationController = new RegistrationController(useCasePool, presenterPool.getRegistrationPresenter());
+        registrationController = new RegistrationController(useCasePool);
         menuController = new MenuController(useCasePool);
-        warehouseController = new WarehouseController(useCasePool, presenterPool.getWarehousePresenter());
+        warehouseController = new WarehouseController(useCasePool);
+        wishlistController = new WishlistController(useCasePool);
 
     }
 
@@ -40,4 +43,7 @@ public class ControllerPool {
         return warehouseController;
     }
 
+    public WishlistController getWishlistController() {
+        return wishlistController;
+    }
 }

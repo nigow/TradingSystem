@@ -1,7 +1,5 @@
 package org.twelve.presenters.console;
 
-import org.twelve.presenters.WishlistPresenter;
-
 import java.util.List;
 import java.util.Scanner;
 

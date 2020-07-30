@@ -75,10 +75,9 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
             httpClient.send(postRequest, HttpResponse.BodyHandlers.discarding());
             return true;
-
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 }
