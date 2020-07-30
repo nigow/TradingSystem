@@ -56,6 +56,23 @@ public class Item {
     }
 
     /**
+     * Initializes an existing item with the given itemID, name, description, ownerID, and isApproved.
+     *
+     * @param itemID      Unique identifier of the item
+     * @param name        Name of the item
+     * @param description Description of the item
+     * @param ownerID     Unique identifier of the owner of the item
+     * @param isApproved  The approval status of the item.
+     */
+    public Item(int itemID, String name, String description, int ownerID, boolean isApproved) {
+        this.itemID = itemID;
+        this.name = name;
+        this.description = description;
+        this.isApproved = isApproved;
+        this.ownerID = ownerID;
+    }
+
+    /**
      * Get the itemID of this item.
      *
      * @return Unique identifier of the item
