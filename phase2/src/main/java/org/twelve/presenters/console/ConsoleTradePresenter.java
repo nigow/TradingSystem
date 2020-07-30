@@ -1,4 +1,6 @@
-package org.twelve.presenters;
+package org.twelve.presenters.console;
+
+import org.twelve.presenters.TradePresenter;
 
 import java.util.List;
 import java.util.Scanner;

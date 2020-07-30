@@ -1,36 +1,68 @@
 package org.twelve.views;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import org.twelve.controllers.MenuController;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class MenuView implements SceneView {
     private WindowHandler windowHandler;
+    private MenuController menuController;
 
-    public MenuView(WindowHandler windowHandler) {
+    public MenuView(WindowHandler windowHandler, MenuController menuController) {
         this.windowHandler = windowHandler;
+        this.menuController = menuController;
     }
 
-    public void logoutClicked(ActionEvent actionEvent) {
+    @FXML
+    private void logoutClicked(ActionEvent actionEvent) {
+
 
         windowHandler.changeScene(Scenes.LANDING);
-
+        menuController.logout();
     }
 
-    public void approveItemsClicked(ActionEvent actionEvent) {
+    @FXML
+    private void approveItemsClicked(ActionEvent actionEvent) {
 
         windowHandler.changeScene(Scenes.WAREHOUSE);
 
     }
 
-    public void modifyRestrictionsClicked(ActionEvent actionEvent) {
+    @FXML
+    private void modifyRestrictionsClicked(ActionEvent actionEvent) {
 
         windowHandler.changeScene(Scenes.RESTRICTIONS);
 
     }
 
-    public void initiateTradeClicked(ActionEvent actionEvent) {
+    @FXML
+    private void initiateTradeClicked(ActionEvent actionEvent) {
 
         windowHandler.changeScene(Scenes.TRADE_CREATOR);
+
+    }
+
+    @FXML
+    private void addAdminClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.REGISTRATION);
+
+    }
+
+    @Override
+    public void reload() {
+
+    }
+
+    @FXML
+    private void manageWishlistClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.WISHLIST);
 
     }
 }

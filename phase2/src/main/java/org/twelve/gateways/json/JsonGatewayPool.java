@@ -1,10 +1,7 @@
 package org.twelve.gateways.json;
 
-import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.ItemsGateway;
+import org.twelve.gateways.*;
 import org.twelve.gateways.ThresholdsGateway;
-import org.twelve.gateways.TradeGateway;
 
 public class JsonGatewayPool implements GatewayPool {
 

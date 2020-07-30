@@ -1,4 +1,6 @@
-package org.twelve.presenters;
+package org.twelve.presenters.console;
+
+import org.twelve.presenters.AppealPresenter;
 
 /**
  * Console presenter for letting user appeal to be unfrozen.

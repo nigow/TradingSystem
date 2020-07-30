@@ -77,8 +77,8 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
             return true;
 
         } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
             return false;
         }
-
     }
 }

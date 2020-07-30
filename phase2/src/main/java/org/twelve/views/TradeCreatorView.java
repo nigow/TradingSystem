@@ -1,5 +1,10 @@
 package org.twelve.views;
 
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class TradeCreatorView implements SceneView {
 
     private WindowHandler windowHandler;
@@ -10,4 +15,8 @@ public class TradeCreatorView implements SceneView {
 
     }
 
+    @Override
+    public void reload() {
+
+    }
 }

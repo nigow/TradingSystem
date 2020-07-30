@@ -97,4 +97,49 @@ public class ThresholdController {
             }
         }
     }
+
+    private void numberOfDays() {
+        while (true) {
+            String newNumber = thresholdPresenter.changeNumberOfDays(thresholdRepository.getNumberOfDays());
+            if (inputHandler.isExitStr(newNumber))
+                return;
+            if (!inputHandler.isNum(newNumber))
+                thresholdPresenter.invalidInput();
+            else {
+                thresholdRepository.setNumberOfDays(Integer.parseInt(newNumber));
+                thresholdPresenter.displayChangedThresholds();
+                return;
+            }
+        }
+    }
+
+    private void numberOfEdits() {
+        while (true) {
+            String newNumber = thresholdPresenter.changeNumberOfEdits(thresholdRepository.getNumberOfEdits());
+            if (inputHandler.isExitStr(newNumber))
+                return;
+            if (!inputHandler.isNum(newNumber))
+                thresholdPresenter.invalidInput();
+            else {
+                thresholdRepository.setNumberOfEdits(Integer.parseInt(newNumber));
+                thresholdPresenter.displayChangedThresholds();
+                return;
+            }
+        }
+    }
+
+    private void numberOfStats() {
+        while (true) {
+            String newNumber = thresholdPresenter.changeNumberOfStats(thresholdRepository.getNumberOfStats());
+            if (inputHandler.isExitStr(newNumber))
+                return;
+            if (!inputHandler.isNum(newNumber))
+                thresholdPresenter.invalidInput();
+            else {
+                thresholdRepository.setNumberOfStats(Integer.parseInt(newNumber));
+                thresholdPresenter.displayChangedThresholds();
+                return;
+            }
+        }
+    }
 }

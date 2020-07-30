@@ -1,7 +1,7 @@
 package controllers;
 
-import entities.Account;
-import entities.Item;
+import org.twelve.entities.Account;
+import org.twelve.entities.Item;
 import gateways.InMemoryUseCasePool;
 import org.junit.Test;
 import presenters.ConsoleTradeCreatorPresenter;

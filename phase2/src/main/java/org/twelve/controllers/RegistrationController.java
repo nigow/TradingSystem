@@ -1,11 +1,14 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.AccountType;
 import org.twelve.entities.Permissions;
+import org.twelve.presenters.RegistrationPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,35 +33,51 @@ public class RegistrationController {
      */
     private final StatusManager statusManager;
 
+    private RegistrationPresenter registrationPresenter;
+
+    private boolean accessedByAdmin;
     /**
      * Initializer for RegistrationController
      * @param useCasePool used to get all the use cases.
      */
-    public RegistrationController(UseCasePool useCasePool) {
+    public RegistrationController(UseCasePool useCasePool, RegistrationPresenter registrationPresenter) {
         this.accountRepository = useCasePool.getAccountRepository();
         this.sessionManager = useCasePool.getSessionManager();
         this.statusManager = useCasePool.getStatusManager();
+        this.registrationPresenter = registrationPresenter;
     }
 
     /**
-     * A method to return if an account can create admins
-     * @return true if an account can create admins
+     * A method for updating if user can create admins
+     * @return Whether user can create admins
      */
-    public boolean canAddAdmin() {
-        return statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.ADD_ADMIN);
+    public boolean updateAccessMode() {
+        List<AccountType> availableTypes = new ArrayList<>(Arrays.asList(AccountType.values()));
+
+        if (sessionManager.getCurrAccountID() == -1 || !statusManager.hasPermission(sessionManager.getCurrAccountID(),
+                Permissions.ADD_ADMIN)) {
+
+            availableTypes.remove(AccountType.ADMIN);
+
+        }
+
+        registrationPresenter.setAvailableTypes(availableTypes);
+
+        accessedByAdmin = availableTypes.contains(AccountType.ADMIN);
+        return accessedByAdmin;
     }
 
     /**
      * A method to create an account
      * @param username the username of the account
      * @param password the password of the account
-     * @param accountType the account type of the account
+     * @param typeIndex index corresponding to account type of the account
      * @return true if the account has been successfully created.
      */
-    private boolean createAccount(String username, String password, String accountType) {
+    public boolean createAccount(String username, String password, int typeIndex) {
         List<Permissions> perms = null;
-        switch (accountType) {
-            case "Admin":
+        switch (AccountType.values()[typeIndex]) {
+            case ADMIN:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.FREEZE,
                         Permissions.UNFREEZE,
@@ -76,7 +95,7 @@ public class RegistrationController {
                         Permissions.MAKE_TRUSTED,
                         Permissions.CAN_BAN);
                 break;
-            case "Standard":
+            case USER:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
@@ -85,14 +104,22 @@ public class RegistrationController {
                         Permissions.BORROW,
                         Permissions.BROWSE_INVENTORY);
                 break;
-            case "Demo":
+            case DEMO:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.ADD_TO_WISHLIST,
                         Permissions.BROWSE_INVENTORY);
                 break;
         }
-        return accountRepository.createAccount(username, password, perms);
 
+        if (accountRepository.createAccount(username, password, perms)) {
+
+            if (!accessedByAdmin) sessionManager.login(username);
+            return true;
+        }
+        return false;
     }
 
+    public void setRegistrationPresenter(RegistrationPresenter registrationPresenter) {
+        this.registrationPresenter = registrationPresenter;
+    }
 }

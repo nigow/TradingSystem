@@ -3,6 +3,7 @@ package org.twelve.usecases;
 import org.twelve.entities.Item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ abstract public class ItemUtility {
      * Constructor for ItemUtility.
      */
     public ItemUtility() {
+        items = new HashMap<>();
     }
 
     /**
@@ -296,13 +298,5 @@ abstract public class ItemUtility {
     public String findItemByIdString(int itemId) {
         return findItemById(itemId).toString();
     }
-    
-    public List<Integer> getTradableItems(int accountID) {
-        List<Integer> tradableItems = new ArrayList<>();
-        for (Item item : items.values()) {
-            if (item.getOwnerID() == accountID && item.isApproved())
-                tradableItems.add(item.getItemID());
-        }
-        return tradableItems;
-    }
+
 }

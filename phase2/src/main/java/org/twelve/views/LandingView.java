@@ -2,6 +2,10 @@ package org.twelve.views;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class LandingView implements SceneView {
 
@@ -22,6 +26,11 @@ public class LandingView implements SceneView {
     private void registerClicked(ActionEvent actionEvent) {
 
         windowHandler.changeScene(Scenes.REGISTRATION);
+
+    }
+
+    @Override
+    public void reload() {
 
     }
 }

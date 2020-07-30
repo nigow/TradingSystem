@@ -103,7 +103,7 @@ public class LendingController {
      * @return index of the item in the list of accounts provided
      */
     private int chooseItem() {
-        List<Integer> myItemsIDs = itemManager.getTradableItems(sessionManager.getCurrAccountID());
+        List<Integer> myItemsIDs = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID());
         List<String> myItemsStrings = new ArrayList<>();
 
         for (int itemID : myItemsIDs)

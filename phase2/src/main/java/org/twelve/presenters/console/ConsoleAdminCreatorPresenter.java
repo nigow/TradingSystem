@@ -1,4 +1,6 @@
-package org.twelve.presenters;
+package org.twelve.presenters.console;
+
+import org.twelve.presenters.AdminCreatorPresenter;
 
 import java.util.Scanner;
 

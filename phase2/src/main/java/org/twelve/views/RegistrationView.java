@@ -2,20 +2,67 @@ package org.twelve.views;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import org.twelve.controllers.RegistrationController;
+import org.twelve.presenters.RegistrationPresenter;
 
 public class RegistrationView implements SceneView {
 
-    private WindowHandler windowHandler;
+    @FXML
+    private TextField usernameBox;
 
-    public RegistrationView(WindowHandler windowHandler) {
+    @FXML
+    private TextField passwordBox;
+
+    @FXML
+    private TextField locationBox;
+
+    @FXML
+    private ComboBox<String> typeBox;
+
+    private final WindowHandler windowHandler;
+    private final RegistrationController registrationController;
+    private final RegistrationPresenter registrationPresenter;
+
+    private boolean accessedByAdmin;
+
+    public RegistrationView(WindowHandler windowHandler, RegistrationController registrationController,
+                            RegistrationPresenter registrationPresenter) {
         this.windowHandler = windowHandler;
+        this.registrationController = registrationController;
+        this.registrationPresenter = registrationPresenter;
+
+    }
+
+    @FXML
+    private void registerClicked(ActionEvent actionEvent) {
+
+        // todo: waiting location changes on registrationController and associated usecase
+        if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(),
+                typeBox.getSelectionModel().getSelectedIndex())) {
+
+            windowHandler.changeScene(Scenes.MENU);
+
+        }
+
     }
 
     @FXML
     private void backClicked(ActionEvent actionEvent) {
 
-        windowHandler.changeScene(Scenes.LANDING);
+        if (accessedByAdmin) {
+            windowHandler.changeScene(Scenes.MENU);
+        } else {
+            windowHandler.changeScene(Scenes.LANDING);
+        }
 
     }
 
+    @Override
+    public void reload() {
+        accessedByAdmin = registrationController.updateAccessMode();
+        typeBox.getItems().clear();
+        typeBox.getItems().addAll(registrationPresenter.getAvailableTypes());
+    }
 }

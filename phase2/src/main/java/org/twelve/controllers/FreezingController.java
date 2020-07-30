@@ -36,7 +36,7 @@ public class FreezingController {
     /**
      * Freezes an account that should be frozen. #TODO: when presenter is figured out, add presenter functionality
      */
-    private void freeze(int chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
+    public void freeze(int chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
         List<Integer> accounts = statusManager.getAccountIDsToFreeze();
         statusManager.freezeAccount(accounts.get(chosenUser));
     }
@@ -44,7 +44,7 @@ public class FreezingController {
     /**
      * Unfreeze an account that has requested to be unfrozen
      */
-    private void unfreeze(int chosenUser) {
+    public void unfreeze(int chosenUser) {
         List<Integer> accounts = statusManager.getAccountsToUnfreeze();
         statusManager.unfreezeAccount(accounts.get(chosenUser));
     }

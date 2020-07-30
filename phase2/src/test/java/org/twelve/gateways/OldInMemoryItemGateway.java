@@ -1,6 +1,6 @@
-package gateways;
+package org.twelve.gateways;
 
-import entities.Item;
+import org.twelve.entities.Item;
 
 import java.util.*;
 
