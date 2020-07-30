@@ -52,7 +52,7 @@ public class AccountRepository {
     }
     //used by inMemoryAccountGateway
     public void addAccount(Account account) {
-        accounts.put(accounts.size() + 1, account);
+        accounts.put(account.getAccountID(), account);
         updateAccount(account);
     }
 

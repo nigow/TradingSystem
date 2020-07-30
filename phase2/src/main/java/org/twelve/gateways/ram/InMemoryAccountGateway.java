@@ -30,10 +30,11 @@ public class InMemoryAccountGateway implements AccountGateway {
     public void save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions) {
         List<Permissions> permissionNames = new ArrayList<>();
         for (Permissions permission: Permissions.values()) {
-            if (permissions.contains(permission)) {
+            if (permissions.contains(permission.name())) {
                 permissionNames.add(permission);
             }
         }
         Account account = new Account(username, password, wishlist, permissionNames, accountId);
+        accountMap.put(account.getAccountID(), account);
     }
 }
