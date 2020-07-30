@@ -27,7 +27,7 @@ public class JsonItemsGateway implements ItemsGateway {
     }
 
     @Override
-    public void populate(ItemManager itemManager) {
+    public boolean populate(ItemManager itemManager) {
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
@@ -69,6 +69,7 @@ public class JsonItemsGateway implements ItemsGateway {
 
         }catch(IOException e){
             e.printStackTrace();
+            return false;
         }finally{
             try{
                 inputStream.close();
@@ -76,6 +77,7 @@ public class JsonItemsGateway implements ItemsGateway {
             }catch(IOException e){
                 e.printStackTrace();
             }finally{
+                return true;
             }
         }
     }

@@ -15,7 +15,7 @@ public class InMemoryItemGateway implements ItemsGateway {
     }
 
     @Override
-    public void populate(ItemManager itemManager) {
+    public boolean populate(ItemManager itemManager) {
         List<Integer> existingIds = itemManager.getAllItemIds();
         for (Item item : this.itemMap.values()) {
             if (!existingIds.contains(item.getItemID())) {
@@ -23,6 +23,7 @@ public class InMemoryItemGateway implements ItemsGateway {
                         item.isApproved());
             }
         }
+        return true;
     }
 
     @Override

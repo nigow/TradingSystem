@@ -29,7 +29,7 @@ public class JsonTradeGateway implements TradeGateway {
 
     //TODO
     @Override
-    public void populate(TradeManager tradeManager) {
+    public boolean populate(TradeManager tradeManager) {
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
@@ -79,7 +79,8 @@ public class JsonTradeGateway implements TradeGateway {
 
 
                     }catch(Exception e){
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        return false;
                     }
                 }
             }
@@ -91,6 +92,8 @@ public class JsonTradeGateway implements TradeGateway {
                 bufferedReader.close();
             }catch(IOException e){
                 e.printStackTrace();
+            }finally{
+                return true;
             }
         }
     }

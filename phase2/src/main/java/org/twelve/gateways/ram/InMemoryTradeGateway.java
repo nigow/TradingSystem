@@ -23,7 +23,7 @@ public class InMemoryTradeGateway implements TradeGateway {
     }
 
     @Override
-    public void populate(TradeManager tradeManager) {
+    public boolean populate(TradeManager tradeManager) {
         List<Integer> existingIds = tradeManager.getAllTradesIds();
         for (Trade trade : tradeMap.values()) {
             if (!existingIds.contains(trade.getId())) {
@@ -34,6 +34,7 @@ public class InMemoryTradeGateway implements TradeGateway {
                         timePlaceMap.get(trade.getId()).getPlace());
             }
         }
+        return true;
     }
 
     @Override

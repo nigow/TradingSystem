@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TradeGateway {
 
-    void populate(TradeManager tradeManager);
+    boolean populate(TradeManager tradeManager);
 
     // needs storage spec update
     boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter,
