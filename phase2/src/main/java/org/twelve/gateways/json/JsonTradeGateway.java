@@ -111,14 +111,13 @@ public class JsonTradeGateway implements TradeGateway {
 
         json.addProperty("trade_id", tradeId);
         json.addProperty("is_permanent", isPermanent);
-        json.addProperty("trader_ids", traderIdsString);
+        json.addProperty("traders_ids", traderIdsString);
         json.addProperty("item_ids", itemIdsString);
-        json.addProperty("edited_counter", editedCounter);
+        json.addProperty("edit_counter", editedCounter);
         json.addProperty("trade_status", tradeStatus);
         json.addProperty("trade_completions", tradeCompletionsString);
         json.addProperty("time", time);
         json.addProperty("location", location);
-        System.out.println(json.toString().getBytes(StandardCharsets.UTF_8));
 
         OutputStream outputStream = null;
         try{
@@ -145,7 +144,6 @@ public class JsonTradeGateway implements TradeGateway {
             }
         }
     }
-
 
 
 
