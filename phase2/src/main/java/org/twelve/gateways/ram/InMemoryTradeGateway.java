@@ -37,7 +37,7 @@ public class InMemoryTradeGateway implements TradeGateway {
     }
 
     @Override
-    public void save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
                      int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                      String location) {
         Trade trade = new Trade(tradeId, isPermanent, traderIds,
@@ -46,5 +46,6 @@ public class InMemoryTradeGateway implements TradeGateway {
         TimePlace timePlace = new TimePlace(tradeId, LocalDateTime.parse(time), location);
         tradeMap.put(tradeId, trade);
         timePlaceMap.put(tradeId, timePlace);
+        return true;
     }
 }

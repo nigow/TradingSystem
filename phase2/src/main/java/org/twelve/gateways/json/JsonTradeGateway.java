@@ -9,8 +9,8 @@ import org.twelve.usecases.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +97,7 @@ public class JsonTradeGateway implements TradeGateway {
 
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
-    public void save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location) {
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location) {
         String traderIdsString = "";
         for(Integer i: traderIds) traderIdsString += i.toString() + " ";
         String itemIdsString = "";
@@ -115,31 +115,45 @@ public class JsonTradeGateway implements TradeGateway {
         json.addProperty("trade_completions", tradeCompletionsString);
         json.addProperty("time", time);
         json.addProperty("location", location);
+        System.out.println(json.toString().getBytes(StandardCharsets.UTF_8));
 
-        HttpURLConnection con = null;
         OutputStream outputStream = null;
-        BufferedWriter bufferedWriter = null;
         try{
             URL url = new URL(updateTradeUrl);
-            con = (HttpURLConnection) url.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setDoOutput(true);
             con.connect();
             outputStream = con.getOutputStream();
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bufferedWriter.write(json.toString());
+            outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
+            con.getInputStream();
         }catch(IOException e){
             e.printStackTrace();
+            return false;
         }finally{
             try{
                 outputStream.close();
-                bufferedWriter.flush();
-                bufferedWriter.close();
             }catch(IOException e){
                 e.printStackTrace();
+            }finally{
+                return true;
             }
         }
     }
 
+    public static void main(String[] args) {
+        JsonTradeGateway jsonTradeGateway = new JsonTradeGateway();
+        List<Integer> trader_ids = new ArrayList<>();
+        trader_ids.add(2);
+        trader_ids.add(3);
+        List<Integer> item_ids = new ArrayList<>();
+        item_ids.add(1);
+        List<Boolean> tradeCompletions = new ArrayList<>();
+        jsonTradeGateway.save(3,false, trader_ids, item_ids,1,"UNCONFIRMED",tradeCompletions,"fsalj","UTM");
+
+    }
 
 
 }
