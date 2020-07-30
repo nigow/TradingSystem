@@ -8,9 +8,9 @@ import java.util.*;
 
 public class InMemoryItemGateway implements ItemsGateway {
 
-    public final Map<Integer, org.twelve.entities.Item> itemMap;
+    public final Map<Integer, Item> itemMap;
 
-    public InMemoryItemGateway(Map<Integer, org.twelve.entities.Item> itemMap) {
+    public InMemoryItemGateway(Map<Integer, Item> itemMap) {
         this.itemMap = itemMap;
     }
 
@@ -27,7 +27,7 @@ public class InMemoryItemGateway implements ItemsGateway {
 
     @Override
     public void save(int itemId, String name, String description, boolean isApproved, int ownerId) {
-        org.twelve.entities.Item item = new Item(itemId, name, description, ownerId);
+        Item item = new Item(itemId, name, description, ownerId);
         if (isApproved) {
             item.approve();
         }

@@ -13,11 +13,11 @@ import java.util.Map;
 
 public class InMemoryTradeGateway implements TradeGateway {
 
-    public final Map<Integer, org.twelve.entities.Trade> tradeMap;
-    public final Map<Integer, org.twelve.entities.TimePlace> timePlaceMap;
+    public final Map<Integer, Trade> tradeMap;
+    public final Map<Integer, TimePlace> timePlaceMap;
 
-    public InMemoryTradeGateway(Map<Integer, org.twelve.entities.Trade> trades,
-                                Map<Integer, org.twelve.entities.TimePlace> timePlace) {
+    public InMemoryTradeGateway(Map<Integer, Trade> trades,
+                                Map<Integer, TimePlace> timePlace) {
         this.timePlaceMap = timePlace;
         this.tradeMap = trades;
     }
