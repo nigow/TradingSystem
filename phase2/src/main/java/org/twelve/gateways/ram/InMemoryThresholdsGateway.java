@@ -19,12 +19,13 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
     }
 
     @Override
-    public void save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats) {
+    public boolean save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats) {
         thresholds.setLendMoreThanBorrow(lendMoreThanBorrow);
         thresholds.setMaxIncompleteTrade(maxIncompleteTrade);
         thresholds.setMaxWeeklyTrade(maxWeeklyTrade);
         thresholds.setNumberOfDays(numberOfDays);
         thresholds.setNumberOfEdits(numberOfEdits);
         thresholds.setNumberOfStats(numberOfStats);
+        return true;
     }
 }
