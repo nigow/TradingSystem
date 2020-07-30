@@ -1,6 +1,6 @@
 package gateways;
 
-import entities.OldTrade;
+import org.twelve.entities.OldTrade;
 import entities.TimePlace;
 
 import java.util.*;

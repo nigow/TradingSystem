@@ -1,7 +1,7 @@
-package gateways;
+package org.twelve.gateways;
 
-import entities.Account;
-import entities.Permissions;
+import org.twelve.entities.Account;
+import org.twelve.entities.Permissions;
 
 import java.sql.*;
 import java.util.ArrayList;

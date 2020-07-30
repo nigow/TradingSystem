@@ -1,8 +1,8 @@
 package controllers;
 
-import gateways.InMemoryUseCasePool;
+import org.twelve.gateways.InMemoryUseCasePool;
 import org.junit.Assert;
-import presenters.MockMenuPresenter;
+import org.twelve.presenters.MockMenuPresenter;
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package gateways;
 
-import entities.Item;
+import org.twelve.entities.Item;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
