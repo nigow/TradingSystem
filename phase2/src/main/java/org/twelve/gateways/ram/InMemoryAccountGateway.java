@@ -17,17 +17,18 @@ public class InMemoryAccountGateway implements AccountGateway {
 
     }
     @Override
-    public void populate(AccountRepository accountRepository) {
+    public boolean populate(AccountRepository accountRepository) {
         List<Integer> existingAccounts = accountRepository.getAccountIDs();
         for (Account account: accountMap.values()) {
             if (!existingAccounts.contains(account.getAccountID())) {
                 accountRepository.addAccount(account);
             }
         }
+        return true;
     }
 
     @Override
-    public void save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions) {
+    public boolean save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions) {
         List<Permissions> permissionNames = new ArrayList<>();
         for (Permissions permission: Permissions.values()) {
             if (permissions.contains(permission.name())) {
@@ -36,5 +37,6 @@ public class InMemoryAccountGateway implements AccountGateway {
         }
         Account account = new Account(username, password, wishlist, permissionNames, accountId);
         accountMap.put(account.getAccountID(), account);
+        return true;
     }
 }

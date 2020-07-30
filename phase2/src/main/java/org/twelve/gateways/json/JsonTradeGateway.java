@@ -9,8 +9,8 @@ import org.twelve.usecases.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class JsonTradeGateway implements TradeGateway {
 
     //TODO
     @Override
-    public void populate(TradeManager tradeManager) {
+    public boolean populate(TradeManager tradeManager) {
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
@@ -79,7 +79,8 @@ public class JsonTradeGateway implements TradeGateway {
 
 
                     }catch(Exception e){
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        return false;
                     }
                 }
             }
@@ -91,13 +92,15 @@ public class JsonTradeGateway implements TradeGateway {
                 bufferedReader.close();
             }catch(IOException e){
                 e.printStackTrace();
+            }finally{
+                return true;
             }
         }
     }
 
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
-    public void save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location) {
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location) {
         String traderIdsString = "";
         for(Integer i: traderIds) traderIdsString += i.toString() + " ";
         String itemIdsString = "";
@@ -108,34 +111,36 @@ public class JsonTradeGateway implements TradeGateway {
 
         json.addProperty("trade_id", tradeId);
         json.addProperty("is_permanent", isPermanent);
-        json.addProperty("trader_ids", traderIdsString);
+        json.addProperty("traders_ids", traderIdsString);
         json.addProperty("item_ids", itemIdsString);
-        json.addProperty("edited_counter", editedCounter);
+        json.addProperty("edit_counter", editedCounter);
         json.addProperty("trade_status", tradeStatus);
         json.addProperty("trade_completions", tradeCompletionsString);
         json.addProperty("time", time);
         json.addProperty("location", location);
 
-        HttpURLConnection con = null;
         OutputStream outputStream = null;
-        BufferedWriter bufferedWriter = null;
         try{
             URL url = new URL(updateTradeUrl);
-            con = (HttpURLConnection) url.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setDoOutput(true);
             con.connect();
             outputStream = con.getOutputStream();
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bufferedWriter.write(json.toString());
+            outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
+            con.getInputStream();
         }catch(IOException e){
             e.printStackTrace();
+            return false;
         }finally{
             try{
                 outputStream.close();
-                bufferedWriter.flush();
-                bufferedWriter.close();
             }catch(IOException e){
                 e.printStackTrace();
+            }finally{
+                return true;
             }
         }
     }

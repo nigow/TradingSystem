@@ -27,7 +27,7 @@ public class JsonAccountGateway implements AccountGateway {
     }
 
     @Override
-    public void populate(AccountRepository accountRepository) {
+    public boolean populate(AccountRepository accountRepository) {
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
@@ -74,6 +74,7 @@ public class JsonAccountGateway implements AccountGateway {
 
                     }catch(Exception e){
                         e.printStackTrace();
+                        return false;
                     }
                 }
             }
@@ -85,12 +86,14 @@ public class JsonAccountGateway implements AccountGateway {
                 bufferedReader.close();
             }catch(IOException e){
                 e.printStackTrace();
+            }finally{
+                return true;
             }
         }
     }
 
     @Override
-    public void save(int accountId, String username, String password, List<Integer> wishlist,
+    public boolean save(int accountId, String username, String password, List<Integer> wishlist,
                      List<String> permissions) {
         String wishlistString = wishlist.isEmpty() ? " " : "";
         for(Integer i: wishlist) wishlistString += i.toString() + " ";
@@ -128,6 +131,7 @@ public class JsonAccountGateway implements AccountGateway {
 
         }catch(IOException e){
             e.printStackTrace();
+            return false;
         }finally{
             try{
                 outputStream.close();
@@ -137,6 +141,8 @@ public class JsonAccountGateway implements AccountGateway {
                 */
             }catch(IOException e){
                 e.printStackTrace();
+            }finally{
+                return true;
             }
         }
 
