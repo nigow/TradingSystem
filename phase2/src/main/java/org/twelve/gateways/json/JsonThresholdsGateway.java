@@ -55,7 +55,7 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
     }
 
     @Override
-    public void save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
+    public boolean save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
                      int numberOfEdits, int numberOfStats) {
 
         JsonObject json = new JsonObject();
@@ -74,9 +74,10 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
         try {
 
             httpClient.send(postRequest, HttpResponse.BodyHandlers.discarding());
-
+            return true;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }
