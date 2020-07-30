@@ -23,6 +23,7 @@ public class TradeManager extends TradeUtility{
 
     public TradeManager(TradeGateway tradeGateway, ThresholdRepository thresholdRepository, AccountRepository accountRepository,
                              ItemManager itemManager, WishlistManager wishlistManager) {
+        super();
         this.itemManager = itemManager;
         this.accountRepository = accountRepository;
         this.wishlistManager = wishlistManager;

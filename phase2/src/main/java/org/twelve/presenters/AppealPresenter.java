@@ -28,6 +28,8 @@ public interface AppealPresenter {
 
     String completeVacation();
 
+    String returnToMainMenu();
+
     void invalidInput();
 
 

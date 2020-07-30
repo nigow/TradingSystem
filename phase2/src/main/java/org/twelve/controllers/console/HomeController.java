@@ -128,6 +128,7 @@ public class HomeController {
                         Permissions.REQUEST_VACATION);
                 if (accountRepository.createAccount(username, password, perms)) {
                     homePresenter.displaySuccessfulAccount();
+                    sessionManager.login(username);
                     menuFacade.run();
                     return;
                 } else

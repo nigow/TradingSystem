@@ -81,6 +81,16 @@ public class ConsoleAppealPresenter implements AppealPresenter {
      * {@inheritDoc}
      */
     @Override
+    public String returnToMainMenu() {
+        String message = "Return to main menu";
+        System.out.println(message);
+        return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
     }

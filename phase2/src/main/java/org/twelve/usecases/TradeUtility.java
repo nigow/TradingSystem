@@ -24,6 +24,9 @@ abstract public class TradeUtility {
      */
     protected List<Trade> trades;
 
+    public TradeUtility(){
+        trades = new ArrayList<>();
+    }
     /**
      * List of all meetings times and places in the system
      */

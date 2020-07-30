@@ -40,10 +40,11 @@ public class AppealController {
      * Requests unfreeze appeal and lets user know that the request was made.
      */
     public void run() {
-        List<String> options = new ArrayList<>();
-        addCorrectOption(options);
-        String action = appealPresenter.displayRequestOptions(options);
+
         while(true){
+            List<String> options = new ArrayList<>();
+            addCorrectOption(options);
+            String action = appealPresenter.displayRequestOptions(options);
             switch (action) {
                 case "0":
                     chooseCorrectOption();
@@ -84,6 +85,7 @@ public class AppealController {
         else {
             options.add(appealPresenter.completeVacation());
         }
+        options.add(appealPresenter.returnToMainMenu());
     }
 
 }
