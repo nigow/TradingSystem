@@ -2,7 +2,7 @@ package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.TradeCreatorPresenter;
-import org.twelve.presenters.WishlistPresenter;
+import org.twelve.presenters.console.WishlistPresenter;
 import org.twelve.usecases.*;
 
 import java.util.ArrayList;

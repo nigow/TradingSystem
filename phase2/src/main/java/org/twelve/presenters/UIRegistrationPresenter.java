@@ -12,8 +12,8 @@ public class UIRegistrationPresenter implements RegistrationPresenter {
     private List<String> availableTypes;
     private final ResourceBundle localizedResources;
 
-    public UIRegistrationPresenter(Locale locale) {
-        localizedResources = ResourceBundle.getBundle("org.twelve.presenters.Registration", locale);
+    public UIRegistrationPresenter(ResourceBundle localizedResources) {
+        this.localizedResources = localizedResources;
     }
 
     @Override

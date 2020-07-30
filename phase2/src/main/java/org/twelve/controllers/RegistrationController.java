@@ -40,11 +40,10 @@ public class RegistrationController {
      * Initializer for RegistrationController
      * @param useCasePool used to get all the use cases.
      */
-    public RegistrationController(UseCasePool useCasePool, RegistrationPresenter registrationPresenter) {
+    public RegistrationController(UseCasePool useCasePool) {
         this.accountRepository = useCasePool.getAccountRepository();
         this.sessionManager = useCasePool.getSessionManager();
         this.statusManager = useCasePool.getStatusManager();
-        this.registrationPresenter = registrationPresenter;
     }
 
     /**

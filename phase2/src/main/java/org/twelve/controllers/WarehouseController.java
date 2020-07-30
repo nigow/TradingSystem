@@ -10,13 +10,16 @@ import java.util.List;
 public class WarehouseController {
 
     private final ItemManager itemManager;
-    private final WarehousePresenter warehousePresenter;
+    private WarehousePresenter warehousePresenter;
 
-    public WarehouseController(UseCasePool useCasePool, WarehousePresenter warehousePresenter) {
+    public WarehouseController(UseCasePool useCasePool) {
 
         itemManager = useCasePool.getItemManager();
-        this.warehousePresenter = warehousePresenter;
 
+    }
+
+    public void setWarehousePresenter(WarehousePresenter warehousePresenter) {
+        this.warehousePresenter = warehousePresenter;
     }
 
     public void approveItem(int itemIndex) {

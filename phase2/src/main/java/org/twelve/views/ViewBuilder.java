@@ -3,18 +3,16 @@ package org.twelve.views;
 import org.twelve.controllers.ControllerPool;
 import org.twelve.gateways.GatewayPoolFactory;
 import org.twelve.gateways.GatewayPool;
-import org.twelve.presenters.PresenterPool;
-import org.twelve.presenters.UIPresenterPool;
+import org.twelve.presenters.*;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ViewBuilder {
 
     private final WindowHandler windowHandler;
 
     private GatewayPool gatewayPool;
-
-    private PresenterPool presenterPool;
 
     private ControllerPool controllerPool;
 
@@ -29,20 +27,13 @@ public class ViewBuilder {
 
     }
 
-    public void buildPresenters() {
-
-        // the param will be useful if we decide to allow language changing at runtime
-        presenterPool = new UIPresenterPool(Locale.getDefault());
-
-    }
-
     public void buildControllers() {
 
-        controllerPool = new ControllerPool(gatewayPool, presenterPool);
+        controllerPool = new ControllerPool(gatewayPool);
 
     }
 
-    public SceneView getView(Scenes scene) {
+    public SceneView getView(Scenes scene, ResourceBundle localizedResources) {
 
         switch (scene) {
 
@@ -72,15 +63,21 @@ public class ViewBuilder {
 
             case WAREHOUSE:
 
-                return new WarehouseView(windowHandler, controllerPool.getWarehouseController(), presenterPool.getWarehousePresenter());
+                UIWarehousePresenter warehousePresenter = new UIWarehousePresenter(localizedResources);
+                controllerPool.getWarehouseController().setWarehousePresenter(warehousePresenter);
+                return new WarehouseView(windowHandler, controllerPool.getWarehouseController(), warehousePresenter);
 
             case REGISTRATION:
 
-                return new RegistrationView(windowHandler, controllerPool.getRegistrationController(), presenterPool.getRegistrationPresenter());
+                UIRegistrationPresenter registrationPresenter = new UIRegistrationPresenter(localizedResources);
+                controllerPool.getRegistrationController().setRegistrationPresenter(registrationPresenter);
+                return new RegistrationView(windowHandler, controllerPool.getRegistrationController(), registrationPresenter);
 
             case WISHLIST:
 
-                return new WishlistView(windowHandler);
+                UIWishlistPresenter wishlistPresenter = new UIWishlistPresenter(localizedResources);
+                controllerPool.getWishlistController().setWishlistPresenter(wishlistPresenter);
+                return new WishlistView(windowHandler, controllerPool.getWishlistController(), wishlistPresenter);
         }
 
         return null;

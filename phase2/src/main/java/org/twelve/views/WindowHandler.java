@@ -24,7 +24,6 @@ public class WindowHandler extends Application {
 
         if (!viewBuilder.buildGateways("json")) return; // we can add more flexibility if we want here
 
-        viewBuilder.buildPresenters();
         viewBuilder.buildControllers();
 
         scenes = new HashMap<>();
@@ -33,10 +32,9 @@ public class WindowHandler extends Application {
         for (Scenes scene : Scenes.values()) {
 
             ResourceBundle resourceBundle = ResourceBundle.getBundle("org.twelve.presenters." + scene.toString());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"),
-                    resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"), resourceBundle);
 
-            loader.setControllerFactory(v -> viewBuilder.getView(scene));
+            loader.setControllerFactory(v -> viewBuilder.getView(scene, resourceBundle));
 
             try {
                 scenes.put(scene, loader.load());
