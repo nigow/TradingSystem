@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.twelve.entities.Account;
 import org.twelve.entities.Item;
 import org.twelve.gateways.AccountGateway;
-import gateways.InMemoryAccountGateway;
+import org.twelve.gateways.ram.InMemoryAccountGateway;
 import org.twelve.gateways.ram.InMemoryItemGateway;
 import org.twelve.gateways.ItemsGateway;
 import junit.framework.TestCase;
@@ -63,7 +63,7 @@ public class ItemIntegrationTest extends TestCase {
         itemManager.createItem("Test", "Testing", 11);
         itemManager.createItem("Jacket", "A Cool Jacket", 12);
         itemManager.createItem("CS Hoodie", "A Cool Hoodie", 12);
-        assertEquals(itemManager.getAllItems().size(), 6);
+        assertEquals(itemManager.getAllItemsString().size(), 6);
         Item item = new Item(10, "Shirt", "A small shirt", 11);
         assertTrue(itemManager.removeItem(itemManager.getAllItems().get(0)));
         assertTrue(itemManager.removeItem(itemManager.getAllItems().get(1)));
