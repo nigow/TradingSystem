@@ -120,10 +120,5 @@ public class JsonItemsGateway implements ItemsGateway {
 
     }
 
-    public static void main(String[] args) {
-        JsonItemsGateway jsonItemsGateway = new JsonItemsGateway();
-        jsonItemsGateway.save(100,"hello","test2", false, 1);
-
-    }
 
 }
