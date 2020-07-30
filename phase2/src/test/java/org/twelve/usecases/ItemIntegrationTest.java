@@ -1,12 +1,15 @@
 package usecases;
 
-import entities.Account;
-import entities.Item;
-import gateways.AccountGateway;
+import org.junit.Test;
+import org.twelve.entities.Account;
+import org.twelve.entities.Item;
+import org.twelve.gateways.AccountGateway;
 import gateways.InMemoryAccountGateway;
-import gateways.InMemoryItemGateway;
-import gateways.ItemsGateway;
+import org.twelve.gateways.ram.InMemoryItemGateway;
+import org.twelve.gateways.ItemsGateway;
 import junit.framework.TestCase;
+import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.ItemUtility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +21,6 @@ import java.util.List;
  */
 public class ItemIntegrationTest extends TestCase {
     private ItemManager itemManager;
-    private ItemUtility itemUtility;
     private ItemsGateway itemsGateway;
 
     private ItemManager setUpItemManager() {
@@ -28,14 +30,7 @@ public class ItemIntegrationTest extends TestCase {
 
         itemsGateway = new InMemoryItemGateway(h);
         itemManager = new ItemManager(itemsGateway);
-        itemUtility = new ItemUtility();
         return itemManager;
-    }
-
-    private ItemUtility setUpItemUtility() {
-        itemManager = setUpItemManager();
-        itemUtility = new ItemUtility();
-        return itemUtility;
     }
 
     /**
@@ -44,9 +39,7 @@ public class ItemIntegrationTest extends TestCase {
      */
     public void testItemInitialization() {
         itemManager = setUpItemManager();
-        itemUtility = setUpItemUtility();
         assertNotNull(this.setUpItemManager());
-        assertNotNull(this.setUpItemUtility());
     }
 
 
@@ -54,7 +47,8 @@ public class ItemIntegrationTest extends TestCase {
         itemManager = setUpItemManager();
         Item item = new Item(1, "Jacket", "A Cool Jacket", 11);
         Item item2 = new Item(2, "CS Hoodie", "A Cool Hoodie", 12);
-        itemsGateway.updateItem(item);
+        itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
+                item.isApproved(), item.getOwnerID());
         assertTrue(itemManager.getAllItems().contains(item));
         assertFalse(itemManager.getAllItems().contains(item2));
     }
@@ -64,7 +58,6 @@ public class ItemIntegrationTest extends TestCase {
      */
     public void testRemoveItems() {
         itemManager = setUpItemManager();
-        itemUtility = setUpItemUtility();
         itemManager.createItem("Tomato", "A Fruit", 11);
         itemManager.createItem("Book", "A Good book", 12);
         itemManager.createItem("Test", "Testing", 11);
@@ -74,11 +67,12 @@ public class ItemIntegrationTest extends TestCase {
         Item item = new Item(10, "Shirt", "A small shirt", 11);
         assertTrue(itemManager.removeItem(itemManager.getAllItems().get(0)));
         assertTrue(itemManager.removeItem(itemManager.getAllItems().get(1)));
-        assertFalse(itemManager.removeItem(item));
+        assertFalse(itemManager.removeItem(item.getItemID()));
         assertEquals(itemManager.getAllItems().size(), 4);
-        itemsGateway.updateItem(item);
+        itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
+                item.isApproved(), item.getOwnerID());
         assertEquals(itemManager.getAllItems().size(), 5);
-        assertTrue(itemManager.removeItem(item));
+        assertTrue(itemManager.removeItem(item.getItemID()));
         assertEquals(itemManager.getAllItems().size(), 4);
     }
 
@@ -107,7 +101,6 @@ public class ItemIntegrationTest extends TestCase {
      */
     public void testApproveItems() {
         itemManager = setUpItemManager();
-        itemUtility = setUpItemUtility();
         itemManager.createItem("Tomato", "A Fruit", 11);
         itemManager.createItem("Book", "A Good book", 12);
         itemManager.createItem("Test", "Testing", 11);
