@@ -25,6 +25,8 @@ public class RegistrationView implements SceneView {
     private final RegistrationController registrationController;
     private final RegistrationPresenter registrationPresenter;
 
+    private boolean accessedByAdmin;
+
     public RegistrationView(WindowHandler windowHandler, RegistrationController registrationController,
                             RegistrationPresenter registrationPresenter) {
         this.windowHandler = windowHandler;
@@ -39,7 +41,9 @@ public class RegistrationView implements SceneView {
         // todo: waiting location changes on registrationController and associated usecase
         if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(),
                 typeBox.getSelectionModel().getSelectedIndex())) {
+
             windowHandler.changeScene(Scenes.MENU);
+
         }
 
     }
@@ -47,7 +51,7 @@ public class RegistrationView implements SceneView {
     @FXML
     private void backClicked(ActionEvent actionEvent) {
 
-        if (typeBox.getItems().size() > 2) {
+        if (accessedByAdmin) {
             windowHandler.changeScene(Scenes.MENU);
         } else {
             windowHandler.changeScene(Scenes.LANDING);
@@ -57,7 +61,8 @@ public class RegistrationView implements SceneView {
 
     @Override
     public void reload() {
-        registrationController.updateAccessMode();
+        accessedByAdmin = registrationController.updateAccessMode();
+        typeBox.getItems().clear();
         typeBox.getItems().addAll(registrationPresenter.getAvailableTypes());
     }
 }

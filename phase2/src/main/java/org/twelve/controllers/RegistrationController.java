@@ -35,6 +35,7 @@ public class RegistrationController {
 
     private RegistrationPresenter registrationPresenter;
 
+    private boolean accessedByAdmin;
     /**
      * Initializer for RegistrationController
      * @param useCasePool used to get all the use cases.
@@ -48,8 +49,9 @@ public class RegistrationController {
 
     /**
      * A method for updating if user can create admins
+     * @return Whether user can create admins
      */
-    public void updateAccessMode() {
+    public boolean updateAccessMode() {
         List<AccountType> availableTypes = new ArrayList<>(Arrays.asList(AccountType.values()));
 
         if (sessionManager.getCurrAccountID() == -1 || !statusManager.hasPermission(sessionManager.getCurrAccountID(),
@@ -60,6 +62,9 @@ public class RegistrationController {
         }
 
         registrationPresenter.setAvailableTypes(availableTypes);
+
+        accessedByAdmin = availableTypes.contains(AccountType.ADMIN);
+        return accessedByAdmin;
     }
 
     /**
@@ -105,8 +110,13 @@ public class RegistrationController {
                         Permissions.BROWSE_INVENTORY);
                 break;
         }
-        return accountRepository.createAccount(username, password, perms);
 
+        if (accountRepository.createAccount(username, password, perms)) {
+
+            if (!accessedByAdmin) sessionManager.login(username);
+            return true;
+        }
+        return false;
     }
 
     public void setRegistrationPresenter(RegistrationPresenter registrationPresenter) {
