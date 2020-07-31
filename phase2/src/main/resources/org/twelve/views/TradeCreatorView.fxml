@@ -65,7 +65,7 @@
          </children>
       </HBox>
       <CheckBox mnemonicParsing="false" text="Permanent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" text="Back" GridPane.rowIndex="5" />
+      <Button mnemonicParsing="false" onAction="#backClicked" text="Back" GridPane.rowIndex="5" />
       <Button mnemonicParsing="false" text="Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
       <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
