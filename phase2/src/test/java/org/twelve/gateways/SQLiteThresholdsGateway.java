@@ -1,24 +1,23 @@
-package gateways;
+package org.twelve.gateways;
 
-import entities.Restrictions;
+import org.twelve.entities.Thresholds;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SQLiteRestrictionsGateway implements RestrictionsGateway{
+public class SQLiteThresholdsGateway{
     private final String DBUri;
 
-    public SQLiteRestrictionsGateway(String DBUri){
+    public SQLiteThresholdsGateway(String DBUri){
         this.DBUri = DBUri;
     }
 
     //source: https://bit.ly/32skkSn
     //needs to add JDBC driver to the class path: https://bitbucket.org/xerial/sqlite-jdbc/downloads/
-    @Override
-    public Restrictions getRestrictions() {
-        Restrictions restriction = null;
+    public Thresholds getThresholds() {
+        Thresholds restriction = null;
         Connection connection = null;
         ResultSet restrictions = null;
         try{
@@ -32,7 +31,7 @@ public class SQLiteRestrictionsGateway implements RestrictionsGateway{
                 int incomplete_limit = Integer.parseInt(restrictions.getString(2));
                 int weekly_limit = Integer.parseInt(restrictions.getString(3));
 
-                //restriction = new Restrictions(lend_limit, incomplete_limit, weekly_limit);
+                //restriction = new Thresholds(lend_limit, incomplete_limit, weekly_limit);
             }
 
         }catch(SQLException e){
@@ -50,12 +49,11 @@ public class SQLiteRestrictionsGateway implements RestrictionsGateway{
         }
     }
 
-    @Override
-    public boolean updateRestrictions(Restrictions restrictions) {
+    public boolean updateThresholds(Thresholds restrictions) {
         String lendLimit = Integer.toString(restrictions.getLendMoreThanBorrow());
         String incompleteLimit = Integer.toString(restrictions.getMaxIncompleteTrade());
         String weeklyLimit = Integer.toString(restrictions.getMaxWeeklyTrade());
-        Restrictions restriction = null;
+        Thresholds restriction = null;
         Connection connection = null;
         try{
             Class.forName("org.sqlite.JDBC");

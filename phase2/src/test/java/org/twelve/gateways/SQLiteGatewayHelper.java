@@ -1,4 +1,4 @@
-package gateways;
+package org.twelve.gateways;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
