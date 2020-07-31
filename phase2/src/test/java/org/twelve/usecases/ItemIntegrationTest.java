@@ -1,4 +1,4 @@
-package usecases;
+package org.twelve.usecases;
 
 import org.junit.Test;
 import org.twelve.entities.Account;
@@ -8,6 +8,7 @@ import org.twelve.gateways.ram.InMemoryAccountGateway;
 import org.twelve.gateways.ram.InMemoryItemGateway;
 import org.twelve.gateways.ItemsGateway;
 import junit.framework.TestCase;
+import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.ItemUtility;
 
@@ -65,15 +66,15 @@ public class ItemIntegrationTest extends TestCase {
         itemManager.createItem("CS Hoodie", "A Cool Hoodie", 12);
         assertEquals(itemManager.getAllItemsString().size(), 6);
         Item item = new Item(10, "Shirt", "A small shirt", 11);
-        assertTrue(itemManager.removeItem(itemManager.getAllItems().get(0)));
-        assertTrue(itemManager.removeItem(itemManager.getAllItems().get(1)));
+        assertTrue(itemManager.removeItem(itemManager.getAllItems().get(0).getItemID()));
+        assertTrue(itemManager.removeItem(itemManager.getAllItems().get(1).getItemID()));
         assertFalse(itemManager.removeItem(item.getItemID()));
-        assertEquals(itemManager.getAllItems().size(), 4);
+        assertEquals(itemManager.getAllItemsString().size(), 4);
         itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
                 item.isApproved(), item.getOwnerID());
-        assertEquals(itemManager.getAllItems().size(), 5);
+        assertEquals(itemManager.getAllItemsString().size(), 5);
         assertTrue(itemManager.removeItem(item.getItemID()));
-        assertEquals(itemManager.getAllItems().size(), 4);
+        assertEquals(itemManager.getAllItemsString().size(), 4);
     }
 
     /**
@@ -81,17 +82,17 @@ public class ItemIntegrationTest extends TestCase {
      */
     public void testGetAllItems() {
         itemManager = setUpItemManager();
-        assertEquals(itemManager.getAllItems().size(), 1);
+        assertEquals(itemManager.getAllItemsString().size(), 1);
         assertEquals(itemManager.getAllItems().get(0).getItemID(), 0);
         assertEquals(itemManager.getAllItems().get(0).getOwnerID(), 10);
         assertEquals(itemManager.getAllItems().get(0).getName(), "Potato");
         assertEquals(itemManager.getAllItems().get(0).getDescription(), "A Vegetable");
         assertFalse(itemManager.getAllItems().get(0).isApproved());
         itemManager.createItem("Tomato", "A Fruit", 11);
-        assertEquals(itemManager.getAllItems().size(), 2);
+        assertEquals(itemManager.getAllItemsString().size(), 2);
         itemManager.createItem("Book", "A Good book", 12);
         itemManager.createItem("Test", "Testing", 11);
-        assertEquals(itemManager.getAllItems().size(), 4);
+        assertEquals(itemManager.getAllItemsString().size(), 4);
         assertEquals(itemManager.getAllItems().get(3).getName(), "Test");
     }
 
@@ -106,11 +107,11 @@ public class ItemIntegrationTest extends TestCase {
         itemManager.createItem("Test", "Testing", 11);
         assertEquals(itemManager.getDisapproved().size(), 4);
         assertEquals(itemManager.getApproved().size(), 0);
-        itemManager.updateApproval(itemManager.getAllItems().get(0),true);
-        itemManager.updateApproval(itemManager.getAllItems().get(2),true);
+        itemManager.updateApproval(itemManager.getAllItems().get(0).getItemID(),true);
+        itemManager.updateApproval(itemManager.getAllItems().get(2).getItemID(),true);
         assertEquals(itemManager.getDisapproved().size(), 2);
         assertEquals(itemManager.getApproved().size(), 2);
-        itemManager.updateApproval(itemManager.getAllItems().get(2),false);
+        itemManager.updateApproval(itemManager.getAllItems().get(2).getItemID(),false);
         assertEquals(itemManager.getDisapproved().size(), 3);
         assertEquals(itemManager.getApproved().size(), 1);
     }
@@ -129,7 +130,8 @@ public class ItemIntegrationTest extends TestCase {
         h.put(11, initial1);
         h.put(12, initial2);
         h.put(14, initial3);
-        AccountManager accountManager = new AccountManager(accountGateway);
+        AccountRepository accountRepository = new AccountRepository(accountGateway);
+        WishlistManager wishlistManager = new WishlistManager(accountRepository, itemManager);
         itemManager = setUpItemManager();
         itemManager.createItem("Tomato", "A Fruit", 11);
         itemManager.createItem("Book", "A Good book", 12);
@@ -138,33 +140,33 @@ public class ItemIntegrationTest extends TestCase {
         assertEquals(itemManager.getDisprovedInventoryOfAccount(12).size(), 1);
         assertEquals(itemManager.getDisprovedInventoryOfAccount(10).size(), 1);
 
-        assertEquals(itemManager.getAllItems().size(), 4);
+        assertEquals(itemManager.getAllItemsString().size(), 4);
         itemManager.createItem("Jacket", "A Cool Jacket", 12);
         itemManager.createItem("CS Hoodie", "A Cool Hoodie", 12);
         assertEquals(itemManager.getDisprovedInventoryOfAccount(12).size(), 3);
         assertEquals(itemManager.getDisprovedInventoryOfAccount(14).size(), 0);
-        itemManager.updateOwner(itemManager.getAllItems().get(5), 11);
-        itemManager.updateOwner(itemManager.getAllItems().get(4), 11);
+        itemManager.updateOwner(itemManager.getAllItems().get(5).getItemID(), 11);
+        itemManager.updateOwner(itemManager.getAllItems().get(4).getItemID(), 11);
         assertEquals(itemManager.getDisprovedInventoryOfAccount(12).size(), 1);
         assertEquals(itemManager.getDisprovedInventoryOfAccount(11).size(), 4);
         assertEquals(itemManager.getDisprovedInventoryOfAccount(10).size(), 1);
         for (Item item: itemManager.getAllItems()) {
-            itemManager.updateApproval(item, true);
+            itemManager.updateApproval(item.getItemID(), true);
         }
         assertEquals(itemManager.getApprovedInventoryOfAccount(12).size(), 1);
         assertEquals(itemManager.getApprovedInventoryOfAccount(11).size(), 4);
         assertEquals(itemManager.getApprovedInventoryOfAccount(10).size(), 1);
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(10));
-        assertEquals(itemManager.getNotInAccount(10, accountManager.getCurrWishlist()).size(), 5);
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(11));
-        assertEquals(itemManager.getNotInAccount(11, accountManager.getCurrWishlist()).size(), 2);
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(12));
-        assertEquals(itemManager.getNotInAccount(12, accountManager.getCurrWishlist()).size(), 5);
-        accountManager.setCurrAccount(accountManager.getUsernameFromID(14));
-        assertEquals(itemManager.getNotInAccount(14, accountManager.getCurrWishlist()).size(), 6);
+        assertEquals(itemManager.getNotInAccount(10, wishlistManager.getWishlistFromID(10)).size()
+                , 5);
+        assertEquals(itemManager.getNotInAccount(11, wishlistManager.getWishlistFromID(10)).size()
+                , 2);
+        assertEquals(itemManager.getNotInAccount(12, wishlistManager.getWishlistFromID(10)).size()
+                , 5);
+        assertEquals(itemManager.getNotInAccount(14, wishlistManager.getWishlistFromID(10)).size()
+                , 6);
         List<Integer> wishlist = new ArrayList<>();
-        wishlist.add(itemManager.getItemId(itemManager.getAllItems().get(1)));
-        wishlist.add(itemManager.getItemId(itemManager.getAllItems().get(2)));
+        wishlist.add(itemManager.findItemById(itemManager.getAllItems().get(1).getItemID()).getItemID());
+        wishlist.add(itemManager.findItemById(itemManager.getAllItems().get(2).getItemID()).getItemID());
         assertEquals(itemManager.getNotInAccount(10, wishlist).size(), 3);
         assertEquals(itemManager.getNotInAccount(11, wishlist).size(), 1);
         assertEquals(itemManager.getNotInAccount(12, wishlist).size(), 4);
