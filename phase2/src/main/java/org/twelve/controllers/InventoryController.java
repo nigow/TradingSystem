@@ -98,11 +98,27 @@ public class InventoryController {
     /**
      * Removes an item from the inventory
      *
-     * @param ind The index in the list of items in this user's
+     * @param itemIndex The index in the list of items in this user's
      */
-    public boolean removeFromYourInventory(String ind) {
+    public boolean removeFromInventory(int itemIndex) {
+
+        if (itemIndex < inventoryPresenter.getApprovedItems().size()) {
+
+            return itemManager.removeItem(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex));
+
+        } else {
+
+            int approvedInvSize = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).size();
+
+            return itemManager.removeItem(itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize));
+
+        }
+
+        /*
         List<Integer> items = itemManager.getAllInventoryOfAccountIDs(sessionManager.getCurrAccountID());
-        return itemManager.removeItem(items.get(Integer.parseInt(ind)));
+        return itemManager.removeItem(items.get(itemIndex));
+
+        */
     }
 
     public void setInventoryPresenter(InventoryPresenter inventoryPresenter) {

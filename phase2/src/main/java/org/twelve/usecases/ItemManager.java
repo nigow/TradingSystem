@@ -80,9 +80,9 @@ public class ItemManager extends ItemUtility {
         if (items.containsKey(itemId)) {
             items.get(itemId).setOwnerID(-1);
             result = true;
+            updateToItemsGateway(items.get(itemId), false);
             this.items.remove(itemId);
         }
-        updateToItemsGateway(items.get(itemId), false);
         return result;
     }
 

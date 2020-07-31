@@ -97,7 +97,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
     @FXML
     private void removeItemClicked(ActionEvent actionEvent) {
 
+        int itemIndex = inventoryItems.getSelectionModel().getSelectedIndex();
 
+        if (itemIndex != -1) inventoryController.removeFromInventory(itemIndex);
 
     }
 }
