@@ -12,6 +12,7 @@ public class ControllerPool {
     private final WarehouseController warehouseController;
     private final WishlistController wishlistController;
     private final ProfileController profileController;
+    private final InventoryController inventoryController;
 
     public ControllerPool(GatewayPool gatewayPool) {
 
@@ -25,6 +26,7 @@ public class ControllerPool {
         warehouseController = new WarehouseController(useCasePool);
         wishlistController = new WishlistController(useCasePool);
         profileController = new ProfileController(useCasePool);
+        inventoryController = new InventoryController(useCasePool);
 
     }
 
@@ -50,5 +52,9 @@ public class ControllerPool {
 
     public ProfileController getProfileController() {
         return profileController;
+    }
+
+    public InventoryController getInventoryController() {
+        return inventoryController;
     }
 }

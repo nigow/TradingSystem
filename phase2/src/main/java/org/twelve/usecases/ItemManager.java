@@ -50,9 +50,9 @@ public class ItemManager extends ItemUtility {
      *
      * @param item  the item being updated to the gateway
      */
-    private void updateToItemsGateway(Item item) {
+    private void updateToItemsGateway(Item item, boolean newItem) {
         itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
-                item.isApproved(), item.getOwnerID());
+                item.isApproved(), item.getOwnerID(), newItem);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ItemManager extends ItemUtility {
         int id = items.size();
         Item item = new Item(id, name, description, ownerID);
         this.items.put(id, item);
-        updateToItemsGateway(item);
+        updateToItemsGateway(item, true);
     }
 
     /**
@@ -82,7 +82,7 @@ public class ItemManager extends ItemUtility {
             result = true;
             this.items.remove(itemId);
         }
-        updateToItemsGateway(items.get(itemId));
+        updateToItemsGateway(items.get(itemId), false);
         return result;
     }
 
@@ -134,7 +134,7 @@ public class ItemManager extends ItemUtility {
      */
     public void updateOwner(int itemId, int ownerID) {
         items.get(itemId).setOwnerID(ownerID);
-        updateToItemsGateway(items.get(itemId));
+        updateToItemsGateway(items.get(itemId), false);
     }
 
     /**
@@ -149,7 +149,7 @@ public class ItemManager extends ItemUtility {
         } else {
             items.get(itemId).disapprove();
         }
-        updateToItemsGateway(items.get(itemId));
+        updateToItemsGateway(items.get(itemId), false);
     }
 
     /**

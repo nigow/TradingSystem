@@ -1,6 +1,6 @@
 package org.twelve.presenters.console;
 
-import org.twelve.presenters.InventoryPresenter;
+import org.twelve.presenters.OldInventoryPresenter;
 
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  */
-public class ConsoleInventoryPresenter implements InventoryPresenter {
+public class ConsoleInventoryPresenter implements OldInventoryPresenter {
     /**
      * {@inheritDoc}
      */

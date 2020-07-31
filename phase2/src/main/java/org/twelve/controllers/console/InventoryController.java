@@ -2,7 +2,7 @@ package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
 import org.twelve.entities.Permissions;
-import org.twelve.presenters.InventoryPresenter;
+import org.twelve.presenters.OldInventoryPresenter;
 import org.twelve.usecases.*;
 
 import java.util.LinkedHashMap;
@@ -22,7 +22,7 @@ public class InventoryController {
     /**
      * The presenter counterpart to this class
      */
-    private final InventoryPresenter inventoryPresenter;
+    private final OldInventoryPresenter inventoryPresenter;
 
     /**
      * An instance of ItemManager to access items
@@ -47,7 +47,7 @@ public class InventoryController {
      * @param useCasePool       the configuration for the program
      * @param inventoryPresenter the presenter for displaying the inventory
      */
-    public InventoryController(UseCasePool useCasePool, InventoryPresenter inventoryPresenter) {
+    public InventoryController(UseCasePool useCasePool, OldInventoryPresenter inventoryPresenter) {
         this.itemManager = useCasePool.getItemManager();
         this.inventoryPresenter = inventoryPresenter;
         this.sessionManager = useCasePool.getSessionManager();

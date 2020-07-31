@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.InventoryView">
    <left>
-      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ListView fx:id="inventoryItems" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets right="10.0" />
          </BorderPane.margin>
@@ -22,10 +22,10 @@
    <bottom>
       <HBox prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="%back" />
+            <Button mnemonicParsing="false" onAction="#backClicked" text="%back" />
             <Separator maxHeight="1.7976931348623157E308" prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="%addItem" />
-            <Button mnemonicParsing="false" text="%saveItem" />
+            <Button mnemonicParsing="false" onAction="#addItemClicked" text="%addItem" />
+            <Button mnemonicParsing="false" onAction="#removeItemClicked" text="%removeItem" />
          </children>
          <BorderPane.margin>
             <Insets top="10.0" />
@@ -43,8 +43,8 @@
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="itemName" GridPane.columnIndex="1" />
+            <TextField fx:id="itemDesc" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="%itemName" />
             <Label text="%itemDesc" GridPane.rowIndex="1" />
          </children>

@@ -18,11 +18,13 @@ import java.util.List;
 public class JsonItemsGateway implements ItemsGateway {
     private final String getAllItemsUrl;
     private final String updateItemUrl;
+    private final String createItemUrl;
     private final Gson gson;
 
     public JsonItemsGateway(){
         getAllItemsUrl = "http://csc207phase2.herokuapp.com/items/get_all_items";
         updateItemUrl = "http://csc207phase2.herokuapp.com/items/update_item";
+        createItemUrl = "http://csc207phase2.herokuapp.com/items/create_item";
         gson = new Gson();
     }
 
@@ -83,7 +85,7 @@ public class JsonItemsGateway implements ItemsGateway {
     }
 
     @Override
-    public boolean save(int itemId, String name, String description, boolean isApproved, int ownerId) {
+    public boolean save(int itemId, String name, String description, boolean isApproved, int ownerId, boolean newItem) {
         JsonObject json = new JsonObject();
         json.addProperty("item_id", itemId);
         json.addProperty("name", name);
@@ -93,8 +95,11 @@ public class JsonItemsGateway implements ItemsGateway {
 
         HttpURLConnection con = null;
         OutputStream outputStream = null;
+        URL url = null;
         try{
-            URL url = new URL(updateItemUrl);
+
+            if(newItem) url = new URL(createItemUrl);
+            else url = new URL(updateItemUrl);
             con = (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("POST"); // this is needed otherwise 405 error (default is GET)

@@ -1,26 +1,25 @@
 package org.twelve.controllers;
 
-import org.twelve.presenters.experimental.YourInventoryPresenter;
+import org.twelve.presenters.InventoryPresenter;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
 
+import java.util.ArrayList;
 import java.util.List;
-
-
 
 /**
  * Controller that deals with your inventory.
  *
  * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
-public class YourInventoryController {
+public class InventoryController {
 
     /**
      * The presenter counterpart to this class
      */
-    private final YourInventoryPresenter yourInventoryPresenter;
+    private InventoryPresenter inventoryPresenter;
 
     /**
      * An instance of ItemManager to access items
@@ -47,12 +46,10 @@ public class YourInventoryController {
      * and add options to actions depending on the user's permissions
      *
      * @param useCasePool       the configuration for the program
-     * @param yourInventoryPresenter the presenter for displaying the inventory
      */
-    public YourInventoryController(UseCasePool useCasePool, YourInventoryPresenter  yourInventoryPresenter) {
+    public InventoryController(UseCasePool useCasePool) {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.yourInventoryPresenter = yourInventoryPresenter;
         this.statusManager = useCasePool.getStatusManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
         this.inputHandler = new InputHandler();
     }
@@ -61,8 +58,24 @@ public class YourInventoryController {
      * Calls the presenter to display a user's inventory
      */
     public void displayAllYourInventory() {
-        List<String> allYourItems = itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID());
-        this.yourInventoryPresenter.displayInventory(allYourItems);
+
+        List<String> approvedItems = new ArrayList<>();
+
+        for (int id : itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID())) {
+
+            approvedItems.add(itemManager.getItemNameById(id));
+
+        }
+
+        List<String> pendingItems = new ArrayList<>();
+
+        for (int id : itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID())) {
+
+            pendingItems.add(itemManager.getItemNameById(id));
+
+        }
+
+        inventoryPresenter.setInventoryItems(approvedItems, pendingItems);
     }
 
     /**
@@ -75,6 +88,7 @@ public class YourInventoryController {
 
         if(inputHandler.isValidCSVStr(name) && inputHandler.isValidCSVStr(description)) {
             itemManager.createItem(name, description, sessionManager.getCurrAccountID());
+            displayAllYourInventory();
             return true;
         } else {
             return false;
@@ -91,4 +105,7 @@ public class YourInventoryController {
         return itemManager.removeItem(items.get(Integer.parseInt(ind)));
     }
 
+    public void setInventoryPresenter(InventoryPresenter inventoryPresenter) {
+        this.inventoryPresenter = inventoryPresenter;
+    }
 }

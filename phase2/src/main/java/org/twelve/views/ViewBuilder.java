@@ -3,6 +3,7 @@ package org.twelve.views;
 import org.twelve.controllers.ControllerPool;
 import org.twelve.gateways.GatewayPoolFactory;
 import org.twelve.gateways.GatewayPool;
+import org.twelve.presenters.ui.UIInventoryPresenter;
 import org.twelve.presenters.ui.UIWarehousePresenter;
 import org.twelve.presenters.ui.UIWishlistPresenter;
 
@@ -75,7 +76,8 @@ public class ViewBuilder {
 
             case INVENTORY:
 
-                return new InventoryView(windowHandler);
+                return new InventoryView<>(windowHandler, controllerPool.getInventoryController(),
+                        new UIInventoryPresenter());
         }
 
         return null;

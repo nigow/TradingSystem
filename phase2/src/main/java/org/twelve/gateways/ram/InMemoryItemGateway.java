@@ -27,7 +27,7 @@ public class InMemoryItemGateway implements ItemsGateway {
     }
 
     @Override
-    public boolean save(int itemId, String name, String description, boolean isApproved, int ownerId) {
+    public boolean save(int itemId, String name, String description, boolean isApproved, int ownerId, boolean newItem) {
         Item item = new Item(itemId, name, description, ownerId, isApproved);
         itemMap.put(item.getItemID(), item);
         return true;
