@@ -19,11 +19,13 @@ public class JsonAccountGateway implements AccountGateway {
     private final Gson gson;
     private final String getAllAccountsUrl;
     private final String updateAccountUrl;
+    private final String createAccountUrl;
 
     public JsonAccountGateway(){
         gson = new Gson();
         getAllAccountsUrl = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts";
-        updateAccountUrl = "http://csc207phase2.herokuapp.com/accounts/create_account";
+        updateAccountUrl = "http://csc207phase2.herokuapp.com/accounts/update_account";
+        createAccountUrl = "http://csc207phase2.herokuapp.com/accounts/create_account";
     }
 
     @Override
@@ -65,7 +67,6 @@ public class JsonAccountGateway implements AccountGateway {
                                 for(String s: json.get("permissions").getAsString().split(" ")){
                                     permissions.add(s);
                                 }
-                                System.out.println(username);
                                 accountRepository.createAccount(accountId, username, password, permissions, wishlist);
 
                             }
@@ -94,7 +95,7 @@ public class JsonAccountGateway implements AccountGateway {
 
     @Override
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
-                     List<String> permissions) {
+                     List<String> permissions, boolean newAccount) {
         String wishlistString = wishlist.isEmpty() ? " " : "";
         for(Integer i: wishlist) wishlistString += i.toString() + " ";
         String permissionsString = permissions.isEmpty() ? " " : "";
@@ -108,9 +109,10 @@ public class JsonAccountGateway implements AccountGateway {
 
         HttpURLConnection con = null;
         OutputStream outputStream = null;
-        // BufferedWriter bufferedWriter = null;
+        URL url = null;
         try{
-            URL url = new URL(updateAccountUrl);
+            if(newAccount) url = new URL(createAccountUrl);
+            else url = new URL(updateAccountUrl);
             con = (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("POST"); // this is needed otherwise 405 error (default is GET)
@@ -118,9 +120,9 @@ public class JsonAccountGateway implements AccountGateway {
             con.setDoOutput(true);
             con.connect();
 
-
             outputStream = con.getOutputStream();
             outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
+
 
             /*
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));

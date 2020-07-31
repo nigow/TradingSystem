@@ -12,5 +12,5 @@ public interface AccountGateway {
     //
     // ask Lindsey if controllers/gateways can interact with enums(I think enums aren't entities)
     // todo: even if we could, i doubt gson would play nice (I'll check later)
-    boolean save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions);
+    boolean save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions, boolean newAccount);
 }
