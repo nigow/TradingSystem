@@ -231,7 +231,7 @@ abstract public class ItemUtility {
      * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account
      */
-    protected List<Item> getNotInAccount(int accountID, List<Integer> currentWishlist) {
+    public List<Item> getNotInAccount(int accountID, List<Integer> currentWishlist) {
         List<Item> Items = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
