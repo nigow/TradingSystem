@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteAccountGateway implements AccountGateway{
+public class SQLiteAccountGateway {
 
     private final String DBUri;
 
@@ -52,19 +52,16 @@ public class SQLiteAccountGateway implements AccountGateway{
         }
     }
 
-    @Override
     public Account findById(int id) {
         String query = "SELECT * FROM accounts WHERE id = " + Integer.toString(id) + ";";
         return findByKey(query);
     }
 
-    @Override
     public Account findByUsername(String username) {
         String query = "SELECT * FROM accounts WHERE username = " + username + ";";
         return findByKey(query);
     }
 
-    @Override
     public boolean updateAccount(Account account) {
         String wishlist = "";
         for(int id: account.getWishlist()) wishlist += Integer.toString(id) + " ";
@@ -80,7 +77,6 @@ public class SQLiteAccountGateway implements AccountGateway{
         return new SQLiteGatewayHelper(DBUri).updateTable(query);
     }
 
-    @Override
     public List<Account> getAllAccounts() {
         Connection connection = null;
         ResultSet resultSet = null;
@@ -119,7 +115,6 @@ public class SQLiteAccountGateway implements AccountGateway{
         }
     }
 
-    @Override
     public int generateValidId() {
         return getAllAccounts().size();
     }

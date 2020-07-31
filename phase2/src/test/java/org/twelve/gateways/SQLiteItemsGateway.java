@@ -1,12 +1,12 @@
-package gateways;
+package org.twelve.gateways;
 
-import entities.Item;
+import org.twelve.entities.Item;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteItemsGateway implements ItemsGateway{
+public class SQLiteItemsGateway {
 
     private final String DBUri;
 
@@ -42,7 +42,6 @@ public class SQLiteItemsGateway implements ItemsGateway{
     }
 
 
-    @Override
     public Item findById(int id) {
         Connection connection = null;
         ResultSet resultSet = null;
@@ -77,7 +76,6 @@ public class SQLiteItemsGateway implements ItemsGateway{
         }
     }
 
-    @Override
     public boolean updateItem(Item item) {
 
         String item_id = Integer.toString(item.getItemID());
@@ -92,7 +90,6 @@ public class SQLiteItemsGateway implements ItemsGateway{
         return updateTable(query);
     }
 
-    @Override
     public List<Item> getAllItems() {
         Connection connection = null;
         ResultSet resultSet = null;
@@ -124,13 +121,11 @@ public class SQLiteItemsGateway implements ItemsGateway{
         }
     }
 
-    @Override
     public int generateValidId() {
         //TODO when theres no items in the database
         return getAllItems().size();
     }
 
-    @Override
     public boolean deleteItem(Item item) {
         String query = "DELETE FROM items WHERE item_id = " + Integer.toString(item.getItemID());
         return updateTable(query);
