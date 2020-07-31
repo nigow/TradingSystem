@@ -140,8 +140,7 @@ public class InventoryController {
      * Runs the displayInventory method in InventoryPresenter, passing in all items except for the ones belonging to the user
      */
     private void displayOthersInventory() {
-        List<String> othersItems = itemManager.getNotInAccountString(sessionManager.getCurrAccountID(),
-                wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()));
+        List<String> othersItems = itemManager.getNotInAccountString(sessionManager.getCurrAccountID());
         this.inventoryPresenter.displayOthersItems(othersItems);
     }
 
@@ -219,8 +218,7 @@ public class InventoryController {
                 isValid = true;
             } else if (inputHandler.isNum(option)) {
                 int ind = Integer.parseInt(option);
-                List<Integer> notInAccount = itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID(),
-                        wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()));
+                List<Integer> notInAccount = itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID());
                 if (ind < notInAccount.size()) {
 
                     /* TODO andrew refactored this so it doesn't have a boolean output. i dont know how you want it

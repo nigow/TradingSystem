@@ -25,8 +25,8 @@ public class ItemManager extends ItemUtility {
      *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
-    public ItemManager(ItemsGateway itemsGateway) {
-        super();
+    public ItemManager(ItemsGateway itemsGateway, AccountRepository accountRepository) {
+        super(accountRepository);
         this.itemsGateway = itemsGateway;
         itemsGateway.populate(this);
     }
