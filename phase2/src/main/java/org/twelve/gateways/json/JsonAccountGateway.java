@@ -23,7 +23,7 @@ public class JsonAccountGateway implements AccountGateway {
     public JsonAccountGateway(){
         gson = new Gson();
         getAllAccountsUrl = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts";
-        updateAccountUrl = "http://csc207phase2.herokuapp.com/accounts/update_account";
+        updateAccountUrl = "http://csc207phase2.herokuapp.com/accounts/create_account";
     }
 
     @Override
