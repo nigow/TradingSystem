@@ -1,5 +1,6 @@
 package org.twelve.views;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -18,5 +19,9 @@ public class TradeCreatorView implements SceneView {
     @Override
     public void reload() {
 
+    }
+
+    public void backClicked(ActionEvent actionEvent) {
+        windowHandler.changeScene(Scenes.MENU);
     }
 }

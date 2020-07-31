@@ -15,7 +15,7 @@
    <bottom>
       <HBox prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="%back" />
+            <Button mnemonicParsing="false" onAction="#backClicked" text="%back" />
             <Separator maxHeight="1.7976931348623157E308" prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" text="%freeze" />
             <Button mnemonicParsing="false" text="%ban" />
