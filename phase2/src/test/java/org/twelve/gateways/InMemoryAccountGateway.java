@@ -1,10 +1,9 @@
-package gateways;
+package org.twelve.gateways;
 
-import entities.Account;
 
 import java.util.*;
 
-public class InMemoryAccountGateway implements AccountGateway {
+public class InMemoryAccountGateway {
     private final Map<Integer, Account> accounts;
 
     public InMemoryAccountGateway(Map<Integer, Account> accounts) {

@@ -1,4 +1,4 @@
-package entities;
+package org.twelve.entities;
 
 import junit.framework.TestCase;
 import java.time.LocalDateTime;

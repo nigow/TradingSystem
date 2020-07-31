@@ -1,14 +1,12 @@
-package gateways;
+package org.twelve.gateways;
 
-import controllers.UseCasePool;
-import entities.*;
-import usecases.*;
+import org.twelve.controllers.UseCasePool;
+import org.twelve.entities.*;
+import org.twelve.usecases.*;
 
 import java.util.HashMap;
 
 public class InMemoryUseCasePool implements UseCasePool {
-    private AccountManager accountManager;
-    private AuthManager authManager;
     private ItemManager itemManager;
     private FreezingUtility freezingUtility;
     private OldTradeManager oldTradeManager;

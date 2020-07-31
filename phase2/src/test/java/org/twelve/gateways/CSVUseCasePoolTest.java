@@ -1,4 +1,4 @@
-package gateways;
+package org.twelve.gateways;
 
 import controllers.CSVUseCasePool;
 import junit.framework.TestCase;
