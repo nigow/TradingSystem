@@ -7,6 +7,8 @@ public interface WishlistPresenter {
     void setItemLists(List<String> wishlistItems, List<String> warehouseItems);
     List<String> getWishlistItems();
     List<String> getWarehouseItems();
-
+    void setSelectedItemInfo(String name, String desc);
+    String getSelectedItemName();
+    String getSelectedItemDesc();
 
 }

@@ -22,7 +22,6 @@ public class WishlistController {
         this.sessionManager = useCasePool.getSessionManager();
         this.itemManager = useCasePool.getItemManager();
 
-
     }
 
     public void updateItems() {
@@ -37,11 +36,9 @@ public class WishlistController {
 
         List<String> warehouseItems = new ArrayList<>();
 
-        for (int id : itemManager.getAllItemIds()) {
+        for (int id : itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID())) {
 
-            if (!wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).contains(id) &&
-                    itemManager.getOwnerId(id) != sessionManager.getCurrAccountID())
-                warehouseItems.add(itemManager.getItemNameById(id));
+            warehouseItems.add(itemManager.getItemNameById(id));
 
         }
 
@@ -51,6 +48,46 @@ public class WishlistController {
 
     public void setWishlistPresenter(WishlistPresenter wishlistPresenter) {
         this.wishlistPresenter = wishlistPresenter;
+    }
+
+    public void addToWishlist(int itemIndex) {
+
+        wishlistManager.addItemToWishlist(sessionManager.getCurrAccountID(),
+                itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex));
+
+        updateItems();
+
+    }
+
+    public void removeFromWishlist(int itemIndex) {
+
+        wishlistManager.removeItemFromWishlist(sessionManager.getCurrAccountID(),
+                wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).get(itemIndex));
+
+        updateItems();
+
+    }
+
+    public void changeSelectedWishlistItem(int itemIndex) {
+
+        String name = itemIndex >= 0 ?
+                itemManager.getItemNameById(wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
+        String desc = itemIndex >= 0 ?
+                itemManager.getItemDescById(wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
+
+        wishlistPresenter.setSelectedItemInfo(name, desc);
+
+    }
+
+    public void changeSelectedWarehouseItem(int itemIndex) {
+
+        String name = itemIndex >= 0 ?
+                itemManager.getItemNameById(itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
+        String desc = itemIndex >= 0 ?
+                itemManager.getItemDescById(itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
+
+        wishlistPresenter.setSelectedItemInfo(name, desc);
+
     }
 
 }

@@ -8,18 +8,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import org.twelve.controllers.WarehouseController;
 import org.twelve.presenters.UIWarehousePresenter;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class WarehouseView implements SceneView {
+public class WarehouseView implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
     private final WarehouseController warehouseController;
-    private final UIWarehousePresenter warehousePresenter;
+    private UIWarehousePresenter warehousePresenter;
 
     @FXML
     private Label itemNameLabel;
@@ -30,16 +33,38 @@ public class WarehouseView implements SceneView {
     @FXML
     private ListView<String> pendingItems;
 
-    public WarehouseView(WindowHandler windowHandler, WarehouseController warehouseController, UIWarehousePresenter warehousePresenter) {
+    public WarehouseView(WindowHandler windowHandler, WarehouseController warehouseController) {
 
         this.windowHandler = windowHandler;
         this.warehouseController = warehouseController;
-        this.warehousePresenter = warehousePresenter;
+
+    }
+
+    @Override
+    public void reload() {
+
+        warehouseController.updatePendingItems();
 
     }
 
     @FXML
-    private void initialize() {
+    private void approveClicked(ActionEvent actionEvent) {
+
+        warehouseController.approveItem(pendingItems.getSelectionModel().getSelectedIndex());
+
+    }
+
+    @FXML
+    private void backClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.MENU);
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        warehousePresenter = new UIWarehousePresenter(resources);
+        warehouseController.setWarehousePresenter(warehousePresenter);
 
         try {
 
@@ -68,26 +93,6 @@ public class WarehouseView implements SceneView {
 
         });
 
-    }
-
-    @Override
-    public void reload() {
-
-        warehouseController.updatePendingItems();
-
-    }
-
-    @FXML
-    private void approveClicked(ActionEvent actionEvent) {
-
-        warehouseController.approveItem(pendingItems.getSelectionModel().getSelectedIndex());
-
-    }
-
-    @FXML
-    private void backClicked(ActionEvent actionEvent) {
-
-        windowHandler.changeScene(Scenes.MENU);
 
     }
 }

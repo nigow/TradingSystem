@@ -33,7 +33,7 @@ public class ViewBuilder {
 
     }
 
-    public SceneView getView(Scenes scene, ResourceBundle localizedResources) {
+    public SceneView getView(Scenes scene) {
 
         switch (scene) {
 
@@ -63,21 +63,15 @@ public class ViewBuilder {
 
             case WAREHOUSE:
 
-                UIWarehousePresenter warehousePresenter = new UIWarehousePresenter(localizedResources);
-                controllerPool.getWarehouseController().setWarehousePresenter(warehousePresenter);
-                return new WarehouseView(windowHandler, controllerPool.getWarehouseController(), warehousePresenter);
+                return new WarehouseView(windowHandler, controllerPool.getWarehouseController());
 
             case REGISTRATION:
 
-                UIRegistrationPresenter registrationPresenter = new UIRegistrationPresenter(localizedResources);
-                controllerPool.getRegistrationController().setRegistrationPresenter(registrationPresenter);
-                return new RegistrationView(windowHandler, controllerPool.getRegistrationController(), registrationPresenter);
+                return new RegistrationView(windowHandler, controllerPool.getRegistrationController());
 
             case WISHLIST:
 
-                UIWishlistPresenter wishlistPresenter = new UIWishlistPresenter(localizedResources);
-                controllerPool.getWishlistController().setWishlistPresenter(wishlistPresenter);
-                return new WishlistView(windowHandler, controllerPool.getWishlistController(), wishlistPresenter);
+                return new WishlistView(windowHandler, controllerPool.getWishlistController());
         }
 
         return null;

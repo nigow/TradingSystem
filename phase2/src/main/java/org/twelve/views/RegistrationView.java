@@ -2,12 +2,16 @@ package org.twelve.views;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.twelve.controllers.RegistrationController;
-import org.twelve.presenters.RegistrationPresenter;
+import org.twelve.presenters.UIRegistrationPresenter;
 
-public class RegistrationView implements SceneView {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class RegistrationView implements SceneView, Initializable {
 
     @FXML
     private TextField usernameBox;
@@ -23,15 +27,13 @@ public class RegistrationView implements SceneView {
 
     private final WindowHandler windowHandler;
     private final RegistrationController registrationController;
-    private final RegistrationPresenter registrationPresenter;
+    private UIRegistrationPresenter registrationPresenter;
 
     private boolean accessedByAdmin;
 
-    public RegistrationView(WindowHandler windowHandler, RegistrationController registrationController,
-                            RegistrationPresenter registrationPresenter) {
+    public RegistrationView(WindowHandler windowHandler, RegistrationController registrationController) {
         this.windowHandler = windowHandler;
         this.registrationController = registrationController;
-        this.registrationPresenter = registrationPresenter;
 
     }
 
@@ -64,5 +66,13 @@ public class RegistrationView implements SceneView {
         accessedByAdmin = registrationController.updateAccessMode();
         typeBox.getItems().clear();
         typeBox.getItems().addAll(registrationPresenter.getAvailableTypes());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        registrationPresenter = new UIRegistrationPresenter(resources);
+        registrationController.setRegistrationPresenter(registrationPresenter);
+
+        // todo
     }
 }
