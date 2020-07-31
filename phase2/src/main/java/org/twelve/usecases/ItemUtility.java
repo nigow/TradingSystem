@@ -196,17 +196,34 @@ abstract public class ItemUtility {
         return inventory;
     }
 
+    //TODO to be deleted cause never used? idk
     /**
      * Retrieves all items for a certain account.
      *
      * @param accountID     Account ID which the items are retrieved for
      * @return List of items for account
      */
-    protected List<Item> getDisprovedInventoryOfAccount(int accountID) {
+    protected List<Item> getDisprovedItemInventoryOfAccount(int accountID) {
         List<Item> inventory = new ArrayList<>();
         for (Item item : getDisapproved()) {
             if (item.getOwnerID() == accountID) {
                 inventory.add(item);
+            }
+        }
+        return inventory;
+    }
+
+    /**
+     * Retrieves all items for a certain account.
+     *
+     * @param accountID     Account ID which the items are retrieved for
+     * @return List of items for account
+     */
+    public List<Integer> getDisprovedInventoryOfAccount(int accountID) {
+        List<Integer> inventory = new ArrayList<>();
+        for (Item item : getDisapproved()) {
+            if (item.getOwnerID() == accountID) {
+                inventory.add(item.getItemID());
             }
         }
         return inventory;
