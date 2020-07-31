@@ -9,18 +9,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import org.twelve.controllers.WishlistController;
-import org.twelve.presenters.UIWishlistPresenter;
+import org.twelve.presenters.WishlistPresenter;
+import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class WishlistView implements SceneView, Initializable {
+public class WishlistView<T extends ObservablePresenter & WishlistPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
     private final WishlistController wishlistController;
@@ -31,7 +30,7 @@ public class WishlistView implements SceneView, Initializable {
     @FXML
     private Label itemDesc;
 
-    private UIWishlistPresenter wishlistPresenter;
+    private final T wishlistPresenter;
 
     @FXML
     private ListView<String> wishlistItems;
@@ -39,9 +38,12 @@ public class WishlistView implements SceneView, Initializable {
     @FXML
     private ListView<String> warehouseItems;
 
-    public WishlistView(WindowHandler windowHandler, WishlistController wishlistController) {
+    public WishlistView(WindowHandler windowHandler, WishlistController wishlistController, T wishlistPresenter) {
         this.windowHandler = windowHandler;
         this.wishlistController = wishlistController;
+        this.wishlistPresenter = wishlistPresenter;
+
+        this.wishlistController.setWishlistPresenter(this.wishlistPresenter);
     }
 
     @FXML
@@ -58,8 +60,6 @@ public class WishlistView implements SceneView, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        wishlistPresenter = new UIWishlistPresenter(resources);
-        wishlistController.setWishlistPresenter(wishlistPresenter);
 
         try {
 

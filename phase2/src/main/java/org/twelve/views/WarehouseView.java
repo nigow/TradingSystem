@@ -12,17 +12,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import org.twelve.controllers.WarehouseController;
-import org.twelve.presenters.UIWarehousePresenter;
+import org.twelve.presenters.WarehousePresenter;
+import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class WarehouseView implements SceneView, Initializable {
+public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
     private final WarehouseController warehouseController;
-    private UIWarehousePresenter warehousePresenter;
+    private final T warehousePresenter;
 
     @FXML
     private Label itemNameLabel;
@@ -33,10 +34,13 @@ public class WarehouseView implements SceneView, Initializable {
     @FXML
     private ListView<String> pendingItems;
 
-    public WarehouseView(WindowHandler windowHandler, WarehouseController warehouseController) {
+    public WarehouseView(WindowHandler windowHandler, WarehouseController warehouseController, T warehousePresenter) {
 
         this.windowHandler = windowHandler;
         this.warehouseController = warehouseController;
+        this.warehousePresenter = warehousePresenter;
+
+        this.warehouseController.setWarehousePresenter(this.warehousePresenter);
 
     }
 
@@ -63,8 +67,6 @@ public class WarehouseView implements SceneView, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        warehousePresenter = new UIWarehousePresenter(resources);
-        warehouseController.setWarehousePresenter(warehousePresenter);
 
         try {
 
@@ -84,7 +86,7 @@ public class WarehouseView implements SceneView, Initializable {
                     .bean(warehousePresenter).name("selectedItemDesc").build());
 
         } catch (NoSuchMethodException ignored) {
-            // impossible, im enforcing presence of methods via interface
+            // impossible, im enforcing presence of methods via generics
         }
 
         pendingItems.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -92,7 +94,6 @@ public class WarehouseView implements SceneView, Initializable {
             warehouseController.changeSelectedItem(newValue.intValue());
 
         });
-
 
     }
 }

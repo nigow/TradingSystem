@@ -1,13 +1,14 @@
-package org.twelve.presenters;
+package org.twelve.presenters.ui;
 
 import org.twelve.entities.AccountType;
+import org.twelve.presenters.RegistrationPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class UIRegistrationPresenter implements RegistrationPresenter {
+public class UIRegistrationPresenter extends ObservablePresenter implements RegistrationPresenter {
 
     private List<String> availableTypes;
     private final ResourceBundle localizedResources;

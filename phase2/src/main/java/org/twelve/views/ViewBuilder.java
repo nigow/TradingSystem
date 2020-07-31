@@ -3,17 +3,15 @@ package org.twelve.views;
 import org.twelve.controllers.ControllerPool;
 import org.twelve.gateways.GatewayPoolFactory;
 import org.twelve.gateways.GatewayPool;
-import org.twelve.presenters.*;
+import org.twelve.presenters.ui.UIWarehousePresenter;
+import org.twelve.presenters.ui.UIWishlistPresenter;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ViewBuilder {
 
     private final WindowHandler windowHandler;
-
     private GatewayPool gatewayPool;
-
     private ControllerPool controllerPool;
 
     public ViewBuilder(WindowHandler windowHandler) {
@@ -33,7 +31,7 @@ public class ViewBuilder {
 
     }
 
-    public SceneView getView(Scenes scene) {
+    public SceneView getView(Scenes scene, ResourceBundle localizedResources) {
 
         switch (scene) {
 
@@ -51,7 +49,7 @@ public class ViewBuilder {
 
             case PROFILE:
 
-                return new ProfileView(windowHandler);
+                return new ProfileView(windowHandler, controllerPool.getProfileController());
 
             case RESTRICTIONS:
 
@@ -63,7 +61,8 @@ public class ViewBuilder {
 
             case WAREHOUSE:
 
-                return new WarehouseView(windowHandler, controllerPool.getWarehouseController());
+                return new WarehouseView<>(windowHandler, controllerPool.getWarehouseController(),
+                        new UIWarehousePresenter(localizedResources));
 
             case REGISTRATION:
 
@@ -71,7 +70,12 @@ public class ViewBuilder {
 
             case WISHLIST:
 
-                return new WishlistView(windowHandler, controllerPool.getWishlistController());
+                return new WishlistView<>(windowHandler, controllerPool.getWishlistController(),
+                        new UIWishlistPresenter(localizedResources));
+
+            case INVENTORY:
+
+                return new InventoryView(windowHandler);
         }
 
         return null;

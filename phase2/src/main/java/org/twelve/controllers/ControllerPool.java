@@ -1,7 +1,6 @@
 package org.twelve.controllers;
 
 import org.twelve.gateways.GatewayPool;
-import org.twelve.presenters.PresenterPool;
 import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.UseCasePool;
 
@@ -12,6 +11,7 @@ public class ControllerPool {
     private final MenuController menuController;
     private final WarehouseController warehouseController;
     private final WishlistController wishlistController;
+    private final ProfileController profileController;
 
     public ControllerPool(GatewayPool gatewayPool) {
 
@@ -24,6 +24,7 @@ public class ControllerPool {
         menuController = new MenuController(useCasePool);
         warehouseController = new WarehouseController(useCasePool);
         wishlistController = new WishlistController(useCasePool);
+        profileController = new ProfileController(useCasePool);
 
     }
 
@@ -45,5 +46,9 @@ public class ControllerPool {
 
     public WishlistController getWishlistController() {
         return wishlistController;
+    }
+
+    public ProfileController getProfileController() {
+        return profileController;
     }
 }

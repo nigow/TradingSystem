@@ -1,4 +1,6 @@
-package org.twelve.presenters;
+package org.twelve.presenters.ui;
+
+import org.twelve.presenters.WarehousePresenter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -13,18 +15,18 @@ import java.util.ResourceBundle;
  *
  * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
-public class UIWarehousePresenter implements WarehousePresenter {
+public class UIWarehousePresenter extends ObservablePresenter implements WarehousePresenter {
 
     private List<String> pendingItems;
     private String selectedItemName;
     private String selectedItemDesc;
 
     private final ResourceBundle localizedResources;
-    private final PropertyChangeSupport propertyChangeSupport;
 
     public UIWarehousePresenter(ResourceBundle localizedResources) {
+
+        super();
         this.localizedResources = localizedResources;
-        propertyChangeSupport = new PropertyChangeSupport(this);
 
         setSelectedItemName("");
         setSelectedItemDesc("");
@@ -72,7 +74,4 @@ public class UIWarehousePresenter implements WarehousePresenter {
         return selectedItemDesc;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
 }

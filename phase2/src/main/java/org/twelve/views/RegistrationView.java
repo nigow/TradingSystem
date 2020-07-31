@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.twelve.controllers.RegistrationController;
-import org.twelve.presenters.UIRegistrationPresenter;
+import org.twelve.presenters.ui.UIRegistrationPresenter;
 
 import java.net.URL;
 import java.util.ResourceBundle;

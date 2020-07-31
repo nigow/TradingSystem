@@ -1,13 +1,14 @@
-package org.twelve.presenters;
+package org.twelve.presenters.ui;
+
+import org.twelve.presenters.WishlistPresenter;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UIWishlistPresenter implements WishlistPresenter {
+public class UIWishlistPresenter extends ObservablePresenter implements WishlistPresenter {
 
     private List<String> wishlistItems;
     private List<String> warehouseItems;
@@ -15,12 +16,12 @@ public class UIWishlistPresenter implements WishlistPresenter {
     private String selectedItemDesc;
 
     private final ResourceBundle localizedResources;
-    private final PropertyChangeSupport propertyChangeSupport;
 
     public UIWishlistPresenter(ResourceBundle localizedResources) {
+        super();
         this.localizedResources = localizedResources;
-        propertyChangeSupport = new PropertyChangeSupport(this);
         setItemLists(new ArrayList<>(), new ArrayList<>());
+        setSelectedItemInfo("", "");
     }
 
     @Override
@@ -69,7 +70,4 @@ public class UIWishlistPresenter implements WishlistPresenter {
         return selectedItemDesc;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
 }

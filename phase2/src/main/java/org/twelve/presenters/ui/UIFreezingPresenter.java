@@ -1,4 +1,6 @@
-package org.twelve.presenters;
+package org.twelve.presenters.ui;
+
+import org.twelve.presenters.FreezingPresenter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UIFreezingPresenter implements FreezingPresenter {
+public class UIFreezingPresenter extends ObservablePresenter implements FreezingPresenter {
     private List<String> allAccounts;
     private List<String> allFrozenAccounts;
     private List<String> allBannedAccounts;
@@ -15,12 +17,11 @@ public class UIFreezingPresenter implements FreezingPresenter {
     private String selectedAccountName;
 
     private final ResourceBundle localizedResources;
-    private final PropertyChangeSupport propertyChangeSupport;
 
     public UIFreezingPresenter(ResourceBundle localizedResources) {
+        super();
         this.localizedResources = localizedResources;
-        propertyChangeSupport = new PropertyChangeSupport(this);
-        allAccounts = new ArrayList<>();
+        setAllAccounts(new ArrayList<>());
     }
 
     @Override
@@ -69,8 +70,4 @@ public class UIFreezingPresenter implements FreezingPresenter {
     @Override
     public String getSelectedAccountName() {return selectedAccountName;}
 
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
 }

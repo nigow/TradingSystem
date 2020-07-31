@@ -34,7 +34,7 @@ public class WindowHandler extends Application {
             ResourceBundle resourceBundle = ResourceBundle.getBundle("org.twelve.presenters." + scene.toString());
             FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.toString() + "View.fxml"), resourceBundle);
 
-            loader.setControllerFactory(v -> viewBuilder.getView(scene));
+            loader.setControllerFactory(v -> viewBuilder.getView(scene, resourceBundle));
 
             try {
                 scenes.put(scene, loader.load());

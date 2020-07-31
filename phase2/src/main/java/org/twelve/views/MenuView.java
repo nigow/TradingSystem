@@ -21,9 +21,9 @@ public class MenuView implements SceneView {
     @FXML
     private void logoutClicked(ActionEvent actionEvent) {
 
-
         windowHandler.changeScene(Scenes.LANDING);
         menuController.logout();
+
     }
 
     @FXML
@@ -63,6 +63,20 @@ public class MenuView implements SceneView {
     private void manageWishlistClicked(ActionEvent actionEvent) {
 
         windowHandler.changeScene(Scenes.WISHLIST);
+
+    }
+
+    @FXML
+    private void manageAccountClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.PROFILE);
+
+    }
+
+    @FXML
+    private void manageInventoryClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.INVENTORY);
 
     }
 }
