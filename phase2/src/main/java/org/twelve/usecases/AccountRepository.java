@@ -35,7 +35,7 @@ public class AccountRepository {
             int accountID = accounts.size();
             Account newAccount = new Account(username, password, permsToAdd, accountID);
             accounts.put(accountID, newAccount);
-            updateAccount(newAccount);
+            updateCreateAccount(newAccount);
             return true;
         }
         return false;
@@ -53,7 +53,7 @@ public class AccountRepository {
     //used by inMemoryAccountGateway
     public void addAccount(Account account) {
         accounts.put(account.getAccountID(), account);
-        updateAccount(account);
+        updateCreateAccount(account);
     }
 
     /**
@@ -141,6 +141,15 @@ public class AccountRepository {
             permsAsStrings.add(perms.name());
         }
         accountGateway.save(account.getAccountID(), account.getUsername(),
-                account.getPassword(), account.getWishlist(), permsAsStrings);
+                account.getPassword(), account.getWishlist(), permsAsStrings, false);
+    }
+
+    void updateCreateAccount(Account account){
+        List<String> permsAsStrings = new ArrayList<>();
+        for (Permissions perms: account.getPermissions()){
+            permsAsStrings.add(perms.name());
+        }
+        accountGateway.save(account.getAccountID(), account.getUsername(),
+                account.getPassword(), account.getWishlist(), permsAsStrings, true);
     }
 }
