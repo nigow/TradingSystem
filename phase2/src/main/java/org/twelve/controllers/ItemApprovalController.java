@@ -44,8 +44,13 @@ public class ItemApprovalController {
         itemApprovalPresenter.displayPendingItems(allPendingItems);
     }
 
+    /**
+     * Approve a pending item
+     * @param ind the index of the item to be removed
+     */
     public void approveItem(String ind) {
         //TODO: figure out index removal
         itemManager.updateApproval(itemManager.getDisapprovedIDs().get(Integer.parseInt(ind)), true);
     }
+
 }

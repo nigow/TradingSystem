@@ -1,6 +1,6 @@
 package org.twelve.presenters.console;
 
-import org.twelve.presenters.FreezingPresenter;
+import org.twelve.presenters.console.FreezingPresenter;
 
 import java.util.List;
 import java.util.Scanner;

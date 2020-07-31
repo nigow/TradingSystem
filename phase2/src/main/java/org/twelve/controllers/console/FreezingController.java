@@ -1,6 +1,6 @@
 package org.twelve.controllers.console;
 import org.twelve.controllers.InputHandler;
-import org.twelve.presenters.FreezingPresenter;
+import org.twelve.presenters.console.FreezingPresenter;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
