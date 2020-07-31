@@ -1,10 +1,8 @@
 package gateways;
 
-import entities.Account;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import usecases.AccountBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;

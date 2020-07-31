@@ -1,9 +1,10 @@
-package gateways;
+package org.twelve.gateways;
 
 import org.twelve.entities.Item;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.twelve.gateways.csv.CSVItemsGateway;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,14 +21,14 @@ public class CSVItemsGatewayTest {
     @Test
     public void findByIdNullTest() throws IOException{
         File csv = temporaryFolder.newFile("test.csv");
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
         assert(gateway.findById(1) == null);
     }
 
     @Test
     public void findByIdNotNullTest() throws IOException {
         File csv = temporaryFolder.newFile("test.csv");
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         Item item = new Item(1,"Test","Hoge",114514);
 
@@ -38,7 +39,7 @@ public class CSVItemsGatewayTest {
     @Test
     public void updateItemNew() throws IOException{
         File csv = temporaryFolder.newFile("test.csv");
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         Item item = new Item(1,"Test","Hoge",114514);
 
@@ -50,7 +51,7 @@ public class CSVItemsGatewayTest {
     @Test
     public void updateItemExisting() throws IOException{
         File csv = temporaryFolder.newFile("test.csv");
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         Item old = new Item(1,"Foo","Bar",810);
         gateway.updateItem(old);
@@ -70,7 +71,7 @@ public class CSVItemsGatewayTest {
     @Test
     public void getAllItemsNoItem() throws IOException{
         File csv = temporaryFolder.newFile("test.csv");
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         assert(gateway.getAllItems().isEmpty()==true);
     }
@@ -90,7 +91,7 @@ public class CSVItemsGatewayTest {
         fw.flush();
         fw.close();
 
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         assert(gateway.getAllItems().get(0).getOwnerID()==item1.getOwnerID());
         assert(gateway.getAllItems().get(1).getOwnerID()==item2.getOwnerID());
@@ -99,7 +100,7 @@ public class CSVItemsGatewayTest {
     @Test
     public void generateValidId0() throws IOException{
         File csv = temporaryFolder.newFile("test.csv");
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         int id = gateway.generateValidId();
         assert(id==1);
@@ -117,7 +118,7 @@ public class CSVItemsGatewayTest {
         fw.flush();
         fw.close();
 
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         int id = gateway.generateValidId();
         assert(id==3);
@@ -137,7 +138,7 @@ public class CSVItemsGatewayTest {
         fw.flush();
         fw.close();
 
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         boolean removed = gateway.deleteItem(item);
 
@@ -147,7 +148,7 @@ public class CSVItemsGatewayTest {
     @Test
     public void deleteItemNone() throws IOException{
         File csv = temporaryFolder.newFile("test.csv");
-        ItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
+        CSVItemsGateway gateway = new CSVItemsGateway(csv.getAbsolutePath());
 
         Item item = new Item(1,"Test","Hoge",114514);
 

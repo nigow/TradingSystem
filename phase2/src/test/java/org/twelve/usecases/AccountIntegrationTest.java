@@ -1,8 +1,8 @@
 package usecases;
 
-import entities.Account;
-import gateways.AccountGateway;
-import gateways.InMemoryAccountGateway;
+import org.twelve.entities.Account;
+import org.twelve.gateways.AccountGateway;
+import org.twelve.gateways.InMemoryAccountGateway;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;

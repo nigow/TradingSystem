@@ -1,4 +1,4 @@
-package controllers;
+package org.twelve.controllers;
 
 import org.junit.Assert;
 import org.junit.Test;

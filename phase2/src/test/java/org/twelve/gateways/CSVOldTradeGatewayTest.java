@@ -1,4 +1,4 @@
-package gateways;
+package org.twelve.gateways;
 
 import entities.OldTrade;
 import entities.TimePlace;

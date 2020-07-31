@@ -1,4 +1,4 @@
-package gateways;
+package org.twelve.gateways;
 
 import entities.Restrictions;
 import org.junit.Rule;
