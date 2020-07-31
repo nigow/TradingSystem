@@ -22,9 +22,15 @@
             <Label text="%lendVsBorrow" />
             <Label text="%maxIncomplete" GridPane.rowIndex="1" />
             <Label text="%maxWeekly" GridPane.rowIndex="2" />
+             <Label text="%numOfDays" GridPane.rowIndex="3" />
+             <Label text="%numOfEdits" GridPane.rowIndex="4" />
+             <Label text="%numOfStats" GridPane.rowIndex="5" />
             <TextField GridPane.columnIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+             <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </center>
