@@ -1,5 +1,6 @@
 package org.twelve.usecases;
 
+import org.twelve.entities.Account;
 import org.twelve.entities.Item;
 
 import java.util.ArrayList;
@@ -21,10 +22,13 @@ abstract public class ItemUtility {
      */
     protected Map<Integer, Item> items;
 
+    protected AccountRepository accountRepository;
+
     /**
      * Constructor for ItemUtility.
      */
-    public ItemUtility() {
+    public ItemUtility(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
         items = new HashMap<>();
     }
 
@@ -215,64 +219,64 @@ abstract public class ItemUtility {
      * @return List of items for account in string format
      */
     public List<String> getDisprovedInventoryOfAccountString(int accountID) {
-        List<String> Items = new ArrayList<>();
+        List<String> items = new ArrayList<>();
         for (Item item : getDisapproved()) {
             if (item.getOwnerID() == accountID) {
-                Items.add(item.toString());
+                items.add(item.toString());
             }
         }
-        return Items;
+        return items;
     }
 
     /**
      * Retrieves all items not in a certain account/the account's wishlist.
      *
      * @param accountID       Account ID which the items are not retrieved from
-     * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account
      */
-    public List<Item> getNotInAccount(int accountID, List<Integer> currentWishlist) {
-        List<Item> Items = new ArrayList<>();
+    protected List<Item> getNotInAccount(int accountID) {
+        List<Integer> currentWishlist = accountRepository.getAccountFromID(accountID).getWishlist();
+        List<Item> items = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
-                Items.add(item);
+                items.add(item);
             }
         }
-        return Items;
+        return items;
     }
 
     /**
      * Retrieves IDs of all items not in a certain account/the account's wishlist.
      *
      * @param accountID       Account ID which the items are not retrieved from
-     * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of IDs of all items not in a certain account
      */
-    public List<Integer> getNotInAccountIDs(int accountID, List<Integer> currentWishlist) {
-        List<Integer> Items = new ArrayList<>();
+    public List<Integer> getNotInAccountIDs(int accountID) {
+        List<Integer> currentWishlist = accountRepository.getAccountFromID(accountID).getWishlist();
+        List<Integer> items = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
-                Items.add(item.getItemID());
+                items.add(item.getItemID());
             }
         }
-        return Items;
+        return items;
     }
 
     /**
      * Retrieves all items not in a certain account in string format.
      *
      * @param accountID       Account ID which the items are not retrieved from
-     * @param currentWishlist List of itemIDs of items in wishlist of the user
      * @return List of all items not in a certain account string format
      */
-    public List<String> getNotInAccountString(int accountID, List<Integer> currentWishlist) {
-        List<String> Items = new ArrayList<>();
+    public List<String> getNotInAccountString(int accountID) {
+        List<Integer> currentWishlist = accountRepository.getAccountFromID(accountID).getWishlist();
+        List<String> items = new ArrayList<>();
         for (Item item : getApproved()) {
             if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
-                Items.add(item.toString());
+                items.add(item.toString());
             }
         }
-        return Items;
+        return items;
     }
 
     /**
