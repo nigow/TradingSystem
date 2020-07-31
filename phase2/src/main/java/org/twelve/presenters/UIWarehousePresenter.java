@@ -29,6 +29,7 @@ public class UIWarehousePresenter implements WarehousePresenter {
         setSelectedItemName("");
         setSelectedItemDesc("");
         setPendingItems(new ArrayList<>());
+
     }
 
     @Override

@@ -39,7 +39,7 @@
       </GridPane>
    </bottom>
    <left>
-      <ListView fx:id="pendingItems" onMouseClicked="#selectedItemChanged" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ListView fx:id="pendingItems" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" />
          </BorderPane.margin>

@@ -25,13 +25,14 @@ public class WarehouseController {
     public void approveItem(int itemIndex) {
 
         itemManager.updateApproval(itemManager.getDisapprovedIDs().get(itemIndex), true);
+        updatePendingItems();
 
     }
 
     public void changeSelectedItem(int itemIndex) {
 
-        String name = itemManager.getItemNameById(itemManager.getDisapprovedIDs().get(itemIndex));
-        String desc = itemManager.getItemDescById(itemManager.getDisapprovedIDs().get(itemIndex));
+        String name = itemIndex >= 0 ? itemManager.getItemNameById(itemManager.getDisapprovedIDs().get(itemIndex)) : "";
+        String desc = itemIndex >= 0 ? itemManager.getItemDescById(itemManager.getDisapprovedIDs().get(itemIndex)) : "";
 
         warehousePresenter.setSelectedItemName(name);
         warehousePresenter.setSelectedItemDesc(desc);

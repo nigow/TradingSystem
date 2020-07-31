@@ -10,8 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.input.MouseEvent;
 import org.twelve.controllers.WarehouseController;
 import org.twelve.presenters.UIWarehousePresenter;
 
@@ -40,7 +38,8 @@ public class WarehouseView implements SceneView {
 
     }
 
-    public void initialize() {
+    @FXML
+    private void initialize() {
 
         try {
 
@@ -63,8 +62,11 @@ public class WarehouseView implements SceneView {
             // impossible, im enforcing presence of methods via interface
         }
 
-        // there's a feature that allows this to be done in fxml but it's bugged at this time -.-
-        pendingItems.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        pendingItems.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+
+            warehouseController.changeSelectedItem(newValue.intValue());
+
+        });
 
     }
 
@@ -72,8 +74,6 @@ public class WarehouseView implements SceneView {
     public void reload() {
 
         warehouseController.updatePendingItems();
-        // pendingItems.getItems().clear();
-        // pendingItems.getItems().addAll(warehousePresenter.getPendingItems());
 
     }
 
@@ -81,20 +81,6 @@ public class WarehouseView implements SceneView {
     private void approveClicked(ActionEvent actionEvent) {
 
         warehouseController.approveItem(pendingItems.getSelectionModel().getSelectedIndex());
-
-    }
-
-    @FXML
-    private void selectedItemChanged(MouseEvent mouseEvent) {
-
-        int selectedIndex = pendingItems.getSelectionModel().getSelectedIndex();
-
-        if (selectedIndex != -1) {
-            warehouseController.changeSelectedItem(pendingItems.getSelectionModel().getSelectedIndex());
-
-            // itemNameLabel.setText(warehousePresenter.getSelectedItemName());
-            // itemDescLabel.setText(warehousePresenter.getSelectedItemDesc());
-        }
 
     }
 
