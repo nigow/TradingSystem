@@ -89,6 +89,66 @@ public class StatusManager {
         return accountsToUnfreeze;
     }
 
+    public List<Account> getAccountsToBan(){
+        List<Account> accountsToBan = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(hasPermission(accountID, Permissions.LOGIN) && !hasPermission(accountID, Permissions.CAN_BAN)){
+                accountsToBan.add(accountRepository.getAccountFromID(accountID));
+            }
+        }
+        return accountsToBan;
+    }
+
+    public List<Integer> getAccountIDsToBan(){
+        List<Integer> accountIDsToBan = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(hasPermission(accountID, Permissions.LOGIN) && !hasPermission(accountID, Permissions.CAN_BAN)){
+                accountIDsToBan.add(accountID);
+            }
+        }
+        return accountIDsToBan;
+    }
+
+    public List<String> getUsernamesToBan(){
+        List<String> usernamesToBan = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(hasPermission(accountID, Permissions.LOGIN) && !hasPermission(accountID, Permissions.CAN_BAN)){
+                usernamesToBan.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return usernamesToBan;
+    }
+
+    public List<Account> getAccountsToUnBan(){
+        List<Account> accountsToUnBan = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(!hasPermission(accountID, Permissions.LOGIN)){
+                accountsToUnBan.add(accountRepository.getAccountFromID(accountID));
+            }
+        }
+        return accountsToUnBan;
+    }
+
+    public List<Integer> getAccountIDsToUnBan(){
+        List<Integer> accountIDsToUnBan = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(!hasPermission(accountID, Permissions.LOGIN)){
+                accountIDsToUnBan.add(accountID);
+            }
+        }
+        return accountIDsToUnBan;
+    }
+
+    public List<String> getUsernamesToUnBan(){
+        List<String> usernamesToUnBan = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(!hasPermission(accountID, Permissions.LOGIN)){
+                usernamesToUnBan.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return usernamesToUnBan;
+    }
+
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
@@ -212,5 +272,6 @@ public class StatusManager {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.LOGIN);
     }
+
 
 }
