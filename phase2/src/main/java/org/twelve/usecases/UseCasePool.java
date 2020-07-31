@@ -32,7 +32,7 @@ public class UseCasePool {
         //TODO: not really a todo but note that these will stop being an error when gatewayPool and usecases are updated
         accountRepository = new AccountRepository(gatewayPool.getAccountGateway());
         thresholdRepository = new ThresholdRepository(gatewayPool.getThresholdsGateway());
-        itemManager = new ItemManager(gatewayPool.getItemsGateway());
+        itemManager = new ItemManager(gatewayPool.getItemsGateway(), accountRepository);
         wishlistManager = new WishlistManager(accountRepository, itemManager);
         tradeManager = new TradeManager(gatewayPool.getTradeGateway(), thresholdRepository,
                 accountRepository, itemManager, wishlistManager);
