@@ -126,7 +126,7 @@ public class HomeController {
                         Permissions.BORROW,
                         Permissions.BROWSE_INVENTORY,
                         Permissions.REQUEST_VACATION);
-                if (accountRepository.createAccount(username, password, perms)) {
+                if (accountRepository.createAccount(username, password, perms, "placeholder")) {
                     homePresenter.displaySuccessfulAccount();
                     sessionManager.login(username);
                     menuFacade.run();

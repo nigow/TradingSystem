@@ -110,7 +110,7 @@ public class RegistrationController {
                 break;
         }
 
-        if (accountRepository.createAccount(username, password, perms)) {
+        if (accountRepository.createAccount(username, password, perms, "placeholder")) {
 
             if (!accessedByAdmin) sessionManager.login(username);
             return true;

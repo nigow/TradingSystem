@@ -72,7 +72,7 @@ public class AdminCreatorController {
                         Permissions.CAN_BAN,
                         Permissions.MAKE_TRUSTED);
 
-                if (accountRepository.createAccount(username, password, perms)) {
+                if (accountRepository.createAccount(username, password, perms, "placeholder")) {
                     adminPresenter.displaySuccessfulAccount();
                     return;
                 } else
