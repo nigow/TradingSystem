@@ -40,10 +40,7 @@ public class TradeManager extends TradeUtility{
     }
 
     private void updateToGateway(Trade trade) {
-        TimePlace timePlace = getTimePlaceByID(trade.getId());
-        tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
-                trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions(),
-                timePlace.getTime().toString(), timePlace.getPlace(), false);
+        updateToGateway(trade, false);
     }
 
     private void updateToGateway(Trade trade, boolean newTrade) {
