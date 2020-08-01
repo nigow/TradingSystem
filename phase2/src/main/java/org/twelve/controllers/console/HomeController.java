@@ -126,7 +126,7 @@ public class HomeController {
                         Permissions.BORROW,
                         Permissions.BROWSE_INVENTORY,
                         Permissions.REQUEST_VACATION);
-                if (accountRepository.createAccount(username, password, perms)) {
+                if (accountRepository.createAccount(username, password, perms, "")) { // todo: put actual location
                     homePresenter.displaySuccessfulAccount();
                     sessionManager.login(username);
                     menuFacade.run();

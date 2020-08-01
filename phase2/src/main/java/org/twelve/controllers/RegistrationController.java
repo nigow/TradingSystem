@@ -73,7 +73,7 @@ public class RegistrationController {
      * @param typeIndex index corresponding to account type of the account
      * @return true if the account has been successfully created.
      */
-    public boolean createAccount(String username, String password, int typeIndex) {
+    public boolean createAccount(String username, String password, String location, int typeIndex) {
         List<Permissions> perms = null;
         switch (AccountType.values()[typeIndex]) {
             case ADMIN:
@@ -110,7 +110,7 @@ public class RegistrationController {
                 break;
         }
 
-        if (accountRepository.createAccount(username, password, perms)) {
+        if (accountRepository.createAccount(username, password, perms, location)) {
 
             if (!accessedByAdmin) sessionManager.login(username);
             return true;
