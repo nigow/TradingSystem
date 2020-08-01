@@ -43,7 +43,14 @@ public class TradeManager extends TradeUtility{
         TimePlace timePlace = getTimePlaceByID(trade.getId());
         tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
                 trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions(),
-                timePlace.getTime().toString(), timePlace.getPlace());
+                timePlace.getTime().toString(), timePlace.getPlace(), false);
+    }
+
+    private void createToGateway(Trade trade) {
+        TimePlace timePlace = getTimePlaceByID(trade.getId());
+        tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
+                trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions(),
+                timePlace.getTime().toString(), timePlace.getPlace(), true);
     }
 
     /**
@@ -64,7 +71,7 @@ public class TradeManager extends TradeUtility{
             for (int itemID : itemsOfNextTrader(accountID, trade))
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
-        updateToGateway(trade);
+        createToGateway(trade);
         return id;
     }
 
