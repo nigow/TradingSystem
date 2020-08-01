@@ -23,12 +23,10 @@ public class TradeManager extends TradeUtility{
 
     public TradeManager(TradeGateway tradeGateway, ThresholdRepository thresholdRepository, AccountRepository accountRepository,
                              ItemManager itemManager, WishlistManager wishlistManager) {
-        super();
-        this.itemManager = itemManager;
-        this.accountRepository = accountRepository;
+        super(itemManager, accountRepository, thresholdRepository);
         this.wishlistManager = wishlistManager;
         this.tradeGateway = tradeGateway;
-        this.thresholdRepository = thresholdRepository;
+        tradeGateway.populate(this);
     }
 
     public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
@@ -39,8 +37,6 @@ public class TradeManager extends TradeUtility{
         TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
         trades.add(trade);
         timePlaces.add(timePlace);
-        // updateToGateway(trade);
-        //I commented it out (Tairi)
     }
 
     private void updateToGateway(Trade trade) {
@@ -71,7 +67,6 @@ public class TradeManager extends TradeUtility{
         updateToGateway(trade);
     }
 
-    // TODO this is bad
     /**
      * Initiates a reverse Trade.
      *

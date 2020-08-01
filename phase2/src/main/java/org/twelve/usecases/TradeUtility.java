@@ -24,13 +24,18 @@ abstract public class TradeUtility {
      */
     protected List<Trade> trades;
 
-    public TradeUtility(){
-        trades = new ArrayList<>();
-    }
     /**
      * List of all meetings times and places in the system
      */
     protected List<TimePlace> timePlaces;
+
+    public TradeUtility(ItemManager itemManager, AccountRepository accountRepository, ThresholdRepository thresholdRepository){
+        trades = new ArrayList<>();
+        timePlaces = new ArrayList<>();
+        this.itemManager = itemManager;
+        this.accountRepository = accountRepository;
+        this.thresholdRepository = thresholdRepository;
+    }
 
     protected TimePlace getTimePlaceByID(int timePlaceID) {
         for (TimePlace timePlace : timePlaces) {
