@@ -21,7 +21,6 @@ public class ThresholdController {
     private ThresholdPresenter thresholdPresenter;
     
     private final InputHandler inputHandler;
-    // #TODO: add presenter functionality (?)
 
     /**
      * Initializes the class with thresholdRepository from useCasePool
@@ -79,26 +78,15 @@ public class ThresholdController {
             thresholdRepository.setNumberOfEdits(Integer.parseInt(newNumber));
         }
     }
-    public List<Integer> getThresholds() {
-        List<Integer> thresholdValues = new ArrayList<>();
-        thresholdValues.add(thresholdRepository.getLendMoreThanBorrow());
-        thresholdValues.add(thresholdRepository.getMaxIncompleteTrade());
-        thresholdValues.add(thresholdRepository.getMaxWeeklyTrade());
-        thresholdValues.add(thresholdRepository.getNumberOfDays());
-        thresholdValues.add(thresholdRepository.getNumberOfEdits());
-        thresholdValues.add(thresholdRepository.getNumberOfStats());
-        return thresholdValues;
-    }
 
     public void setThresholdPresenter(ThresholdPresenter thresholdPresenter) {
         this.thresholdPresenter = thresholdPresenter;
     }
 
     public void displayThresholds() {
-        List<String> thresholdValues = new ArrayList<>();
-        for (int i: getThresholds()) {
-            thresholdValues.add(String.valueOf(i));
-        }
-        thresholdPresenter.setThresholds(thresholdValues);
+        thresholdPresenter.setThresholds(thresholdRepository.getLendMoreThanBorrow(),
+                thresholdRepository.getMaxIncompleteTrade(), thresholdRepository.getMaxWeeklyTrade(),
+                thresholdRepository.getNumberOfDays(), thresholdRepository.getNumberOfStats(),
+                thresholdRepository.getNumberOfEdits());
     }
 }

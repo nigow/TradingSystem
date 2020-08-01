@@ -10,7 +10,14 @@ import java.util.List;
  * @author Catherine
  */
 public interface ThresholdPresenter {
-    List<String> getThresholds();
-    void setThresholds(List<String> thresholdValues);
+    void setThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
+                       int numberOfStats, int numberOfEdits);
+
+    String getLendMoreThanBorrow();
+    String getMaxIncompleteTrade();
+    String getMaxWeeklyTrade();
+    String getNumberOfDays();
+    String getNumberOfStats();
+    String getNumberOfEdits();
 
 }

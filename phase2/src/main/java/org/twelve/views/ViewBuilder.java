@@ -6,6 +6,7 @@ import org.twelve.gateways.GatewayPoolFactory;
 import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.presenters.ui.UIInventoryPresenter;
+import org.twelve.presenters.ui.UIThresholdsPresenter;
 import org.twelve.presenters.ui.UIWarehousePresenter;
 import org.twelve.presenters.ui.UIWishlistPresenter;
 
@@ -57,17 +58,8 @@ public class ViewBuilder {
 
             case RESTRICTIONS:
 
-                return new RestrictionsView(windowHandler, controllerPool.getThresholdController(), new ThresholdPresenter() {
-                    @Override
-                    public List<String> getThresholds() {
-                        return null;
-                    }
-
-                    @Override
-                    public void setThresholds(List<String> thresholds) {
-
-                    }
-                });
+                return new RestrictionsView<>(windowHandler, controllerPool.getThresholdController(),
+                        new UIThresholdsPresenter());
 
             case TRADE_CREATOR:
 
