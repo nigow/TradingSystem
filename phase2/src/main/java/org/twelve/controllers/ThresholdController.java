@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;
 
@@ -16,6 +17,10 @@ public class ThresholdController {
      * An instance of ThresholdRepository to set new limits
      */
     private final ThresholdRepository thresholdRepository;
+
+    private ThresholdPresenter thresholdPresenter;
+    
+    private final InputHandler inputHandler;
     // #TODO: add presenter functionality (?)
 
     /**
@@ -24,42 +29,76 @@ public class ThresholdController {
      */
     public ThresholdController(UseCasePool useCasePool) {
         thresholdRepository = useCasePool.getThresholdRepository();
+        inputHandler = new InputHandler();
     }
 
     /**
      * Calls thresholdRepository and sets LendMoreThanBorrow to the newNumber
      * @param newNumber the new number of items you need to lend more than borrow
      */
-    public void lendMoreThanBorrow(int newNumber) {
-        thresholdRepository.setLendMoreThanBorrow(newNumber);
+    public void lendMoreThanBorrow(String newNumber) {
+        if (inputHandler.isNum(newNumber)) {
+            thresholdRepository.setLendMoreThanBorrow(Integer.parseInt(newNumber));
+        }
     }
 
     /**
      * Calls thresholdRepository and sets maxIncompleteTrades to the newNumber
      * @param newNumber the new number of max incomplete trades you can have
      */
-    public void maxIncompleteTrades(int newNumber) {
-        thresholdRepository.setMaxIncompleteTrade(newNumber);
+    public void maxIncompleteTrades(String newNumber) {
+        if (inputHandler.isNum(newNumber)) {
+            thresholdRepository.setMaxIncompleteTrade(Integer.parseInt(newNumber));
+        }
     }
 
     /**
      * Calls thresholdRepository and sets maxWeeklyTrades to the newNumber
      * @param newNumber the new number of max weekly trades you can have
      */
-    public void maxWeeklyTrades(int newNumber) {
-        thresholdRepository.setMaxWeeklyTrade(newNumber);
+    public void maxWeeklyTrades(String newNumber) {
+        if (inputHandler.isNum(newNumber)) {
+            thresholdRepository.setMaxWeeklyTrade(Integer.parseInt(newNumber));
+        }
     }
 
-    public void NumberOfDays(int newNumber) {
-        thresholdRepository.setNumberOfDays(newNumber);
+    public void numberOfDays(String newNumber) {
+        if (inputHandler.isNum(newNumber)) {
+            thresholdRepository.setNumberOfDays(Integer.parseInt(newNumber));
+        }
     }
 
-    public void numberOfStats(int newNumber) {
-        thresholdRepository.setNumberOfStats(newNumber);
+    public void numberOfStats(String newNumber) {
+        if (inputHandler.isNum(newNumber)) {
+            thresholdRepository.setNumberOfStats(Integer.parseInt(newNumber));
+        }
     }
 
-    public void numberOfEdits(int newNumber) {
-        thresholdRepository.setNumberOfEdits(newNumber);
+    public void numberOfEdits(String newNumber) {
+        if (inputHandler.isNum(newNumber)) {
+            thresholdRepository.setNumberOfEdits(Integer.parseInt(newNumber));
+        }
+    }
+    public List<Integer> getThresholds() {
+        List<Integer> thresholdValues = new ArrayList<>();
+        thresholdValues.add(thresholdRepository.getLendMoreThanBorrow());
+        thresholdValues.add(thresholdRepository.getMaxIncompleteTrade());
+        thresholdValues.add(thresholdRepository.getMaxWeeklyTrade());
+        thresholdValues.add(thresholdRepository.getNumberOfDays());
+        thresholdValues.add(thresholdRepository.getNumberOfEdits());
+        thresholdValues.add(thresholdRepository.getNumberOfStats());
+        return thresholdValues;
     }
 
+    public void setThresholdPresenter(ThresholdPresenter thresholdPresenter) {
+        this.thresholdPresenter = thresholdPresenter;
+    }
+
+    public void displayThresholds() {
+        List<String> thresholdValues = new ArrayList<>();
+        for (int i: getThresholds()) {
+            thresholdValues.add(String.valueOf(i));
+        }
+        thresholdPresenter.setThresholds(thresholdValues);
+    }
 }

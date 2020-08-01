@@ -13,6 +13,7 @@ public class ControllerPool {
     private final WishlistController wishlistController;
     private final ProfileController profileController;
     private final InventoryController inventoryController;
+    private final ThresholdController thresholdController;
 
     public ControllerPool(GatewayPool gatewayPool) {
 
@@ -27,6 +28,7 @@ public class ControllerPool {
         wishlistController = new WishlistController(useCasePool);
         profileController = new ProfileController(useCasePool);
         inventoryController = new InventoryController(useCasePool);
+        thresholdController = new ThresholdController(useCasePool);
 
     }
 
@@ -57,4 +59,6 @@ public class ControllerPool {
     public InventoryController getInventoryController() {
         return inventoryController;
     }
+
+    public ThresholdController getThresholdController() {return thresholdController;}
 }

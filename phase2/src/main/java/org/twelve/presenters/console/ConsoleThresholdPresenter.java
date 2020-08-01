@@ -1,5 +1,6 @@
 package org.twelve.presenters.console;
 
+import org.twelve.presenters.OldThresholdPresenter;
 import org.twelve.presenters.ThresholdPresenter;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Catherine
  */
-public class ConsoleThresholdPresenter implements ThresholdPresenter {
+public class ConsoleThresholdPresenter implements OldThresholdPresenter {
     /**
      * {@inheritDoc}
      */
