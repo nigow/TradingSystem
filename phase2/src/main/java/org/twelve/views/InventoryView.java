@@ -9,8 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import org.twelve.controllers.InventoryController;
 import org.twelve.presenters.InventoryPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -77,6 +80,21 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
             inventoryItems.itemsProperty().bind(inventoryBinding);
 
         } catch (NoSuchMethodException ignored) {}
+
+        inventoryItems.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (inventoryPresenter.getPendingItems().contains(item))
+                            setTextFill(Color.GRAY);
+                        setText(item);
+                    }
+                };
+            }
+        });
 
     }
 
