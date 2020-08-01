@@ -32,11 +32,11 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
 
         List<String> oldApprovedItems = this.approvedItems;
         this.approvedItems = approvedItems;
-        propertyChangeSupport.firePropertyChange("approvedItems", oldApprovedItems, approvedItems);
+        propertyChangeSupport.firePropertyChange("approvedItems", oldApprovedItems, this.approvedItems);
 
         List<String> oldPendingItems = this.pendingItems;
         this.pendingItems = pendingItems;
-        propertyChangeSupport.firePropertyChange("pendingItems", oldPendingItems, pendingItems);
+        propertyChangeSupport.firePropertyChange("pendingItems", oldPendingItems, this.pendingItems);
     }
 
     @Override

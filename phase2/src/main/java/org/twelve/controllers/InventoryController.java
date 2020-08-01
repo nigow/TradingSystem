@@ -102,23 +102,23 @@ public class InventoryController {
      */
     public boolean removeFromInventory(int itemIndex) {
 
+        // todo: clean up this atrocity when i wake up
         if (itemIndex < inventoryPresenter.getApprovedItems().size()) {
 
-            return itemManager.removeItem(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex));
+            boolean ret = itemManager.removeItem(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex));
+            displayAllYourInventory();
+            return ret;
 
         } else {
 
             int approvedInvSize = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).size();
 
-            return itemManager.removeItem(itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize));
+            boolean ret = itemManager.removeItem(itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize));
+            displayAllYourInventory();
+            return ret;
 
         }
 
-        /*
-        List<Integer> items = itemManager.getAllInventoryOfAccountIDs(sessionManager.getCurrAccountID());
-        return itemManager.removeItem(items.get(itemIndex));
-
-        */
     }
 
     public void setInventoryPresenter(InventoryPresenter inventoryPresenter) {
