@@ -36,7 +36,7 @@ public class SQLiteAccountGateway {
                 for(String permission: resultSet.getString(5).split(" ")) permissions.add(Permissions.valueOf(permission));
                 int account_id = Integer.parseInt(resultSet.getString(2));
 
-                account = new Account(username, password, wishlist, permissions, account_id);
+                account = new Account(username, password, wishlist, permissions, account_id, "placeholder");
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -98,7 +98,7 @@ public class SQLiteAccountGateway {
                 for(String permission: resultSet.getString(5).split(" ")) permissions.add(Permissions.valueOf(permission));
                 int account_id = Integer.parseInt(resultSet.getString(2));
 
-                account = new Account(username, password, wishlist, permissions, account_id);
+                account = new Account(username, password, wishlist, permissions, account_id, "placeholder");
                 accounts.add(account);
             }
         }catch(SQLException e){
