@@ -28,14 +28,15 @@ public class InMemoryAccountGateway implements AccountGateway {
     }
 
     @Override
-    public boolean save(int accountId, String username, String password, List<Integer> wishlist, List<String> permissions, boolean newAccount) {
+    public boolean save(int accountId, String username, String password, List<Integer> wishlist,
+                        List<String> permissions, String location, boolean newAccount) {
         List<Permissions> permissionNames = new ArrayList<>();
         for (Permissions permission: Permissions.values()) {
             if (permissions.contains(permission.name())) {
                 permissionNames.add(permission);
             }
         }
-        Account account = new Account(username, password, wishlist, permissionNames, accountId);
+        Account account = new Account(username, password, wishlist, permissionNames, accountId, location);
         accountMap.put(account.getAccountID(), account);
         return true;
     }

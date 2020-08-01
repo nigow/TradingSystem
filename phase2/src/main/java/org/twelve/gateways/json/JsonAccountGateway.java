@@ -58,16 +58,17 @@ public class JsonAccountGateway implements AccountGateway {
                                 String password = json.get("password").getAsString();
                                 List<Integer> wishlist = new ArrayList<>();
 
-                                if (!json.get("wishlist").getAsString().isEmpty()) // todo: remove this when corrupt data gone from DB
 
-                                    for(String s: json.get("wishlist").getAsString().split(" ")){
-                                        wishlist.add(Integer.parseInt(s));
-                                    }
+                                for(String s: json.get("wishlist").getAsString().split(" ")){
+                                    wishlist.add(Integer.parseInt(s));
+                                }
                                 List<String> permissions = new ArrayList<>();
                                 for(String s: json.get("permissions").getAsString().split(" ")){
                                     permissions.add(s);
                                 }
-                                accountRepository.createAccount(accountId, username, password, permissions, wishlist);
+
+                                // todo: add the actual location when server is updated
+                                accountRepository.createAccount(accountId, username, password, permissions, wishlist, "TBD");
 
                             }
                         }
@@ -95,7 +96,7 @@ public class JsonAccountGateway implements AccountGateway {
 
     @Override
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
-                     List<String> permissions, boolean newAccount) {
+                     List<String> permissions, String location, boolean newAccount) {
         String wishlistString = wishlist.isEmpty() ? " " : "";
         for(Integer i: wishlist) wishlistString += i.toString() + " ";
         String permissionsString = permissions.isEmpty() ? " " : "";
@@ -106,6 +107,9 @@ public class JsonAccountGateway implements AccountGateway {
         json.addProperty("password", password);
         json.addProperty("wishlist", wishlistString);
         json.addProperty("permissions", permissionsString);
+
+        // todo: uncomment when server is updated
+        // json.addProperty("location", location);
 
         HttpURLConnection con = null;
         OutputStream outputStream = null;

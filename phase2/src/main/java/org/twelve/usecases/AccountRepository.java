@@ -29,11 +29,11 @@ public class AccountRepository {
      * @param perms List of permissions for the new account
      * @return Whether the new account is created successfully
      */
-    public boolean createAccount(String username, String password, List<Permissions> perms) {
+    public boolean createAccount(String username, String password, List<Permissions> perms, String location) {
         if (getAccountFromUsername(username) == null) {
             List<Permissions> permsToAdd = new ArrayList<>(perms);
             int accountID = accounts.size();
-            Account newAccount = new Account(username, password, permsToAdd, accountID);
+            Account newAccount = new Account(username, password, permsToAdd, accountID, location);
             accounts.put(accountID, newAccount);
             updateCreateAccount(newAccount);
             return true;
@@ -43,11 +43,11 @@ public class AccountRepository {
 
     // Tairi: created this for JsonAccountGateway
     public void createAccount(int accountId, String username, String password, List<String> perms,
-                              List<Integer> wishlist) {
+                              List<Integer> wishlist, String location) {
 
         List<Permissions> permsToAdd = new ArrayList<>();
         for(String perm: perms) permsToAdd.add(Permissions.valueOf(perm));
-        Account newAccount = new Account(username, password, wishlist, permsToAdd, accountId);
+        Account newAccount = new Account(username, password, wishlist, permsToAdd, accountId, location);
         accounts.put(newAccount.getAccountID(), newAccount);
     }
     //used by inMemoryAccountGateway
@@ -141,7 +141,7 @@ public class AccountRepository {
             permsAsStrings.add(perms.name());
         }
         accountGateway.save(account.getAccountID(), account.getUsername(),
-                account.getPassword(), account.getWishlist(), permsAsStrings, false);
+                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), false);
     }
 
     void updateCreateAccount(Account account){
@@ -150,6 +150,6 @@ public class AccountRepository {
             permsAsStrings.add(perms.name());
         }
         accountGateway.save(account.getAccountID(), account.getUsername(),
-                account.getPassword(), account.getWishlist(), permsAsStrings, true);
+                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), true);
     }
 }

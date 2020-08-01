@@ -110,7 +110,7 @@ public class CSVAccountGateway implements AccountGateway {
             List<Integer> wishlist = Arrays.stream(col[headers.get("wishlist")].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
             List<Permissions> permissions = Arrays.stream(col[headers.get("permissions")].split(" ")).map(Permissions::valueOf).collect(Collectors.toList());
 
-            return new Account(username, password, wishlist, permissions, id);
+            return new Account(username, password, wishlist, permissions, id, "");
         }
 
         return null;
