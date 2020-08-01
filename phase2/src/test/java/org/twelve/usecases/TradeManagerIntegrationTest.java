@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TradeIntegrationTest extends TestCase {
+public class TradeManagerIntegrationTest extends TestCase {
     GatewayPool inMemoryGatewayPool;
     AccountRepository accountRepository;
     ItemManager itemManager;
