@@ -102,22 +102,22 @@ public class InventoryController {
      */
     public boolean removeFromInventory(int itemIndex) {
 
-        // todo: clean up this atrocity when i wake up
-        if (itemIndex < inventoryPresenter.getApprovedItems().size()) {
+        boolean wasSuccessful;
+        int approvedInvSize = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).size();
 
-            boolean ret = itemManager.removeItem(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex));
-            displayAllYourInventory();
-            return ret;
+        if (itemIndex < approvedInvSize) {
+
+            wasSuccessful = itemManager.removeItem(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex));
+
 
         } else {
 
-            int approvedInvSize = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).size();
-
-            boolean ret = itemManager.removeItem(itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize));
-            displayAllYourInventory();
-            return ret;
+            wasSuccessful = itemManager.removeItem(itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize));
 
         }
+
+        displayAllYourInventory();
+        return wasSuccessful;
 
     }
 
