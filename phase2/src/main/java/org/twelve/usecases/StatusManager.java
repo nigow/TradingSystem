@@ -16,16 +16,16 @@ public class StatusManager {
     private final AccountRepository accountRepository;
     private final ThresholdRepository thresholdRepository;
 
-    private TradeManager tradeManager;
+    private TradeUtility tradeUtility;
 
     /**
      * Constructs an instance of StatusManager and stores restrictionsGateway.
      *
      */
 
-    public StatusManager(AccountRepository accountRepository, TradeManager tradeManager, ThresholdRepository thresholdRepository) {
+    public StatusManager(AccountRepository accountRepository, TradeUtility tradeUtility, ThresholdRepository thresholdRepository) {
         this.accountRepository = accountRepository;
-        this.tradeManager = tradeManager;
+        this.tradeUtility = tradeUtility;
         this.thresholdRepository = thresholdRepository;
     }
 
@@ -217,8 +217,8 @@ public class StatusManager {
      * @return Whether the account can be frozen or not
      */
     private boolean canBeFrozen(int accountID) {
-        boolean withinMaxIncompleteTrades = tradeManager.getTimesIncomplete(accountID) <= thresholdRepository.getMaxIncompleteTrade();
-        boolean withinWeeklyLimit = tradeManager.getNumWeeklyTrades(accountID) < thresholdRepository.getMaxWeeklyTrade();
+        boolean withinMaxIncompleteTrades = tradeUtility.getTimesIncomplete(accountID) <= thresholdRepository.getMaxIncompleteTrade();
+        boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades(accountID) < thresholdRepository.getMaxWeeklyTrade();
         return !hasPermission(accountID, Permissions.UNFREEZE) &&
                 !isFrozen(accountID) && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
