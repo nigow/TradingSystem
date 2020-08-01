@@ -311,6 +311,24 @@ abstract public class ItemUtility {
     }
 
     /**
+     * Retrieves all items with the same home location as the account with the id entered
+     *
+     * @param accountId The Id of the account
+     * @return A list of all item Ids in the same location
+     */
+    public List<Integer> getLocalItems(int accountId) {
+        List<Integer> localItems = new ArrayList<>();
+        Account account = accountRepository.getAccountFromID(accountId);
+        for (Item item : items.values()) {
+            Account account2 = accountRepository.getAccountFromID(item.getOwnerID());
+            if (account.getLocation().equals(account2.getLocation())) {
+                localItems.add(item.getItemID());
+            }
+        }
+        return localItems;
+    }
+
+    /**
      * Retrieves an item with a certain id in string format, if item does not
      * exist return null
      * @param itemId    Id of item to be retrieved
