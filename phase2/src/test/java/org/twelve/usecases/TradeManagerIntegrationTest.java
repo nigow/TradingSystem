@@ -45,8 +45,8 @@ public class TradeManagerIntegrationTest extends TestCase {
      */
     public void testTradeAsString() {
         setTradeManager();
-        accountRepository.createAccount("test", "12345", new ArrayList<>());
-        accountRepository.createAccount("test2", "12345", new ArrayList<>());
+        accountRepository.createAccount("test", "12345", new ArrayList<>(), "placeholder");
+        accountRepository.createAccount("test2", "12345", new ArrayList<>(), "placeholder");
         itemManager.createItem("chess", "A chess board", 1);
 
         ArrayList<Integer> tradeIds = new ArrayList<>();

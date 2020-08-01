@@ -9,6 +9,7 @@ import java.util.List;
 @SuppressWarnings({"unchecked"})
 public class AccountTest extends TestCase {
 
+
     public void testCreation() {
         ArrayList<Permissions> permissions = new ArrayList<>();
         permissions.add(Permissions.LOGIN);
@@ -23,7 +24,8 @@ public class AccountTest extends TestCase {
         wishlist.add(1);
         wishlist.add(2);
         new Account("Ethan", "1234",
-                (ArrayList<Integer>) wishlist.clone(), (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Integer>) wishlist.clone(),
+                (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
     }
 
 
@@ -38,7 +40,8 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
 
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1,
+                "placeholder");
         TestCase.assertEquals(user.getUsername(), "Ethan");
     }
 
@@ -54,7 +57,8 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
         
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1,
+                "placeholder");
         TestCase.assertEquals(user.getPassword(), "1234");
     }
 
@@ -69,7 +73,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
         
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
         user.setPassword("4321");
         TestCase.assertEquals(user.getPassword(), "4321");
     }
@@ -85,7 +89,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
         
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
         ArrayList<Integer> lst = new ArrayList<>();
         TestCase.assertEquals(user.getWishlist(), lst);
     }
@@ -101,7 +105,8 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
         
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1,
+                "placeholder");
         TestCase.assertEquals(user.getPermissions(), permissions);
     }
 
@@ -116,7 +121,8 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
         
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1,
+                "placeholder");
         TestCase.assertEquals(user.getAccountID(), 1);
     }
 
@@ -124,7 +130,8 @@ public class AccountTest extends TestCase {
         ArrayList<Permissions> permissions = new ArrayList<>();
         permissions.add(Permissions.LOGIN);
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1,
+                "placeholder");
         user.addPermission(Permissions.FREEZE);
         permissions.add(Permissions.FREEZE);
         TestCase.assertEquals(user.getPermissions(), permissions);
@@ -141,7 +148,8 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
 
         Account user = new Account("Ethan", "1234",
-                (List<Permissions>) permissions.clone(), 1);
+                (List<Permissions>) permissions.clone(), 1,
+                "placeholder");
         TestCase.assertTrue(user.removePermission(Permissions.LOGIN));
         permissions.remove(Permissions.LOGIN);
         TestCase.assertEquals(user.getPermissions(), permissions);
@@ -151,7 +159,8 @@ public class AccountTest extends TestCase {
         ArrayList<Permissions> permissions = new ArrayList<>();
         permissions.add(Permissions.LOGIN);
         Account user = new Account("Ethan", "1234",
-                (List<Permissions>) permissions.clone(), 1);
+                (List<Permissions>) permissions.clone(), 1,
+                "placeholder");
         user.removePermission(Permissions.CREATE_ITEM);
         TestCase.assertEquals(user.getPermissions(), permissions);
     }
@@ -161,7 +170,8 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.FREEZE);
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1,
+                "placeholder");
         List<Integer> lst = new ArrayList<>();
         lst.add(1);
         lst.add(2);
@@ -181,7 +191,8 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
 
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1,
+                "placeholder");
         ArrayList<Integer> lst = new ArrayList<>();
         lst.add(1);
         user.addToWishlist(1);
@@ -202,7 +213,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
 
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1);
+                (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
         ArrayList<Integer> lst = new ArrayList<>();
         lst.add(1);
         user.addToWishlist(1);
@@ -215,7 +226,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.FREEZE);
         Account user = new Account("Ethan", "1234",
-                (List<Permissions>) permissions.clone(), 1);
+                (List<Permissions>) permissions.clone(), 1, "placeholder");
         TestCase.assertTrue(user.toString().contains("Ethan"));
     }
 }
