@@ -36,6 +36,11 @@ public class Account {
     private final int accountID;
 
     /**
+     * The location of the user of the account
+     */
+    private String location;
+
+    /**
      * Creates a new account with the given username, password, and rolesID.
      * The wishlist is initialized as an empty Arraylist.
      *
@@ -43,13 +48,15 @@ public class Account {
      * @param password    Password for this account
      * @param permissions What this account is allowed to do
      * @param accountID   Unique identifier of this account
+     * @param location    The location of the user of this account
      */
-    public Account(String username, String password, List<Permissions> permissions, int accountID) {
+    public Account(String username, String password, List<Permissions> permissions, int accountID, String location) {
         this.username = username;
         this.password = password;
         this.wishlist = new ArrayList<>();
         this.permissions = permissions;
         this.accountID = accountID;
+        this.location = location;
     }
 
     /**
@@ -62,8 +69,9 @@ public class Account {
      * @param permissions What this account is allowed to do
      * @param accountID   Unique identifier of this account
      */
-    public Account(String username, String password, List<Integer> wishlist, List<Permissions> permissions, int accountID) {
-        this(username, password, permissions, accountID);
+    public Account(String username, String password, List<Integer> wishlist, List<Permissions> permissions,
+                   int accountID, String location) {
+        this(username, password, permissions, accountID, location);
         this.wishlist.addAll(wishlist);
     }
 
@@ -161,6 +169,23 @@ public class Account {
         return wishlist.remove(Integer.valueOf(itemID));
     }
 
+    /**
+     * Get the location of the account user
+     *
+     * @return location
+     */
+    public String getLocation() {
+        return this.location;
+    }
+
+    /**
+     * Sets a new location
+     *
+     * @param location the new location to be set
+     */
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     /**
      * Creates a string representation of this Account.
