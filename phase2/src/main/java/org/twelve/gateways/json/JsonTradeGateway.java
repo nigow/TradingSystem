@@ -19,12 +19,13 @@ public class JsonTradeGateway implements TradeGateway {
     private final Gson gson;
     private final String getAllTradeUrl;
     private final String updateTradeUrl;
+    private final String createTradeUrl;
 
     public JsonTradeGateway(){
         gson = new Gson();
         getAllTradeUrl = "http://csc207phase2.herokuapp.com/trades/get_all_trades";
         updateTradeUrl = "http://csc207phase2.herokuapp.com/trades/update_trade";
-
+        createTradeUrl = "http://csc207phase2.herokuapp.com/trades/create_trade";
     }
 
     //TODO
@@ -100,7 +101,7 @@ public class JsonTradeGateway implements TradeGateway {
 
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
-    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location) {
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location, boolean newTrade) {
         String traderIdsString = "";
         for(Integer i: traderIds) traderIdsString += i.toString() + " ";
         String itemIdsString = "";
@@ -120,8 +121,10 @@ public class JsonTradeGateway implements TradeGateway {
         json.addProperty("location", location);
 
         OutputStream outputStream = null;
+        URL url = null;
         try{
-            URL url = new URL(updateTradeUrl);
+            if (newTrade) url = new URL(createTradeUrl);
+            else url = new URL(updateTradeUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("POST");
