@@ -53,7 +53,7 @@ public class TradeManager extends TradeUtility{
      * @param place          Location of the Trade
      * @param isPermanent    Whether the Trade is permanent or not
      */
-    public void createTrade(LocalDateTime time, String place, boolean isPermanent,
+    public int createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List<Integer> itemsIds) {
         int id = trades.size() + 1;
         TimePlace timePlace = new TimePlace(id, time, place);
@@ -61,17 +61,18 @@ public class TradeManager extends TradeUtility{
         trades.add(trade);
         timePlaces.add(timePlace);
         for (int accountID : tradersIds) {
-            for (int itemID : itemsTraderGets(accountID, trade))
+            for (int itemID : itemsOfNextTrader(accountID, trade))
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
         updateToGateway(trade);
+        return id;
     }
 
     /**
      * Initiates a reverse Trade.
      *
      */
-    public void reverseTrade(int id) {
+    public int reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
         Trade trade = getTradeByID(id);
         List<Integer> reverseTraders = new ArrayList<>();
@@ -79,7 +80,7 @@ public class TradeManager extends TradeUtility{
         List<Integer> reverseItems = new ArrayList<>();
         reverseItems.addAll(trade.getItemsIds());
         Collections.reverse(reverseTraders);
-        createTrade(timePlace.getTime().plusDays(thresholdRepository.getNumberOfDays()),
+        return createTrade(timePlace.getTime().plusDays(thresholdRepository.getNumberOfDays()),
                 timePlace.getPlace(), true, reverseTraders, reverseItems);
     }
 
@@ -98,14 +99,20 @@ public class TradeManager extends TradeUtility{
         updateToGateway(trade);
     }
 
-    /**
-     * Updates the status of the Trade.
-     *
-     * @param tradeStatus New status of the Trade
-     */
-    public void updateStatus(int tradeID, TradeStatus tradeStatus) {
+    public void rejectTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
-        trade.setStatus(tradeStatus);
+        trade.setStatus(TradeStatus.REJECTED);
+        updateToGateway(trade);
+    }
+
+    public void confirmTrade(int tradeID) {
+        Trade trade = getTradeByID(tradeID);
+        trade.setStatus(TradeStatus.CONFIRMED);
+        makeTrade(tradeID);
+        if (!isPermanent(tradeID)) {
+            int new_id = reverseTrade(tradeID);
+            confirmTrade(new_id);
+        }
         updateToGateway(trade);
     }
 
@@ -114,10 +121,17 @@ public class TradeManager extends TradeUtility{
      *
      * @param accountID The ID of the account who marked this Trade as complete
      */
-    public void updateCompletion(int accountID, int tradeID) {
+    public void completeTrade(int accountID, int tradeID) {
         Trade trade = getTradeByID(tradeID);
         trade.setCompletedOfTrader(accountID, true);
         updateToGateway(trade);
+    }
+
+    public void adminCancelTrade(int tradeID) {
+        Trade trade = getTradeByID(tradeID);
+        if (isConfirmed(tradeID) || isCompleted(tradeID))
+            unmakeTrade(tradeID);
+        trade.setStatus(TradeStatus.ADMIN_CANCELLED);
     }
 
     /**
@@ -126,11 +140,16 @@ public class TradeManager extends TradeUtility{
      */
     public void makeTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
-        for (int accountID : trade.getTraderIds()) {
-            for (int itemID : itemsTraderGets(accountID, trade)) {
+        List<Integer> firstAccountItems = itemsTraderHas(trade.getTraderIds().get(0), trade);
+        for (int i = 0; i < trade.getTraderIds().size() - 1; i++) {
+            int accountID = trade.getTraderIds().get(i);
+            for (int itemID : itemsOfNextTrader(accountID, trade)) {
                 itemManager.updateOwner(itemID, accountID);
             }
         }
+        int lastID = trade.getTraderIds().get(trade.getTraderIds().size() - 1);
+        for (int itemID : firstAccountItems)
+            itemManager.updateOwner(itemID, lastID);
     }
 
     /**
@@ -142,26 +161,17 @@ public class TradeManager extends TradeUtility{
                 thresholdRepository.getNumberOfEdits() * getTradeByID(tradeID).getTraderIds().size();
     }
 
-    // TODO unused and broken method
-//    /**
-//     * Completes the action of reversing a Trade which was rejected.
-//     *
-//     * @param trade          Trade object representing the Trade about to be rejected
-//     * @param accountManager Object for managing accounts
-//     * @param itemManager    Object for managing items
-//     */
-//    public void rejectedTrade(Trade trade, AccountManager accountManager, ItemManager itemManager) {
-//        Account account = accountManager.getCurrAccount();
-//        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderTwoID()).getUsername());
-//        for (Integer itemId : trade.getItemOneIDs()) {
-//            accountManager.addItemToWishlist(itemId);
-//            itemManager.updateOwner(itemManager.findItemById(itemId), trade.getTraderOneID());
-//        }
-//        accountManager.setCurrAccount(accountManager.getAccountFromID(trade.getTraderOneID()).getUsername());
-//        for (Integer itemId : trade.getItemTwoIDs()) {
-//            accountManager.addItemToWishlist(itemId);
-//            itemManager.updateOwner(itemManager.findItemById(itemId), trade.getTraderTwoID());
-//        }
-//        accountManager.setCurrAccount(account.getUsername());
-//    }
+    public void unmakeTrade(int tradeID) {
+        Trade trade = getTradeByID(tradeID);
+        int lastID = trade.getTraderIds().get(trade.getTraderIds().size() - 1);
+        List<Integer> lastAccountItems = itemsTraderHas(lastID, trade);
+        for (int i = trade.getTraderIds().size() - 1; i > 0; i--) {
+            int accountID = trade.getTraderIds().get(i);
+            for (int itemID : itemsOfPreviousTrader(accountID, trade)) {
+                itemManager.updateOwner(itemID, accountID);
+            }
+        }
+        for (int itemID : lastAccountItems)
+            itemManager.updateOwner(itemID, trade.getTraderIds().get(0));
+    }
 }
