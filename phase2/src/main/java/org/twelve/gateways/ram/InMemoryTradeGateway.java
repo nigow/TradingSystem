@@ -40,7 +40,7 @@ public class InMemoryTradeGateway implements TradeGateway {
     @Override
     public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
                      int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
-                     String location) {
+                     String location, boolean newTrade) {
         Trade trade = new Trade(tradeId, isPermanent, traderIds,
                 itemIds, editedCounter, TradeStatus.valueOf(tradeStatus),
                 tradeCompletions);
