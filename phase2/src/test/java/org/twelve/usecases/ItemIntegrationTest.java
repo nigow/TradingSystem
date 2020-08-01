@@ -123,10 +123,10 @@ public class ItemIntegrationTest extends TestCase {
      * Verifies Items can be properly retrieved from a users inventory
      */
     public void testInventory() {
-        Account initial = new Account("admin", "1234", new ArrayList<>(), 10);
-        Account initial1 = new Account("admin2", "1234", new ArrayList<>(), 11);
-        Account initial2 = new Account("admin3", "1234", new ArrayList<>(), 12);
-        Account initial3 = new Account("admin4", "1234", new ArrayList<>(), 14);
+        Account initial = new Account("admin", "1234", new ArrayList<>(), 10, "M");
+        Account initial1 = new Account("admin2", "1234", new ArrayList<>(), 11, "M");
+        Account initial2 = new Account("admin3", "1234", new ArrayList<>(), 12, "M");
+        Account initial3 = new Account("admin4", "1234", new ArrayList<>(), 14, "M");
         HashMap<Integer, Account> h = new HashMap<>();
         AccountGateway accountGateway = new InMemoryAccountGateway(h);
         h.put(10, initial);
@@ -167,9 +167,6 @@ public class ItemIntegrationTest extends TestCase {
                 , 5);
         assertEquals(itemManager.getNotInAccount(14).size()
                 , 6);
-        List<Integer> wishlist = new ArrayList<>();
-        wishlist.add(itemManager.findItemById(itemManager.getAllItems().get(1).getItemID()).getItemID());
-        wishlist.add(itemManager.findItemById(itemManager.getAllItems().get(2).getItemID()).getItemID());
         assertEquals(itemManager.getNotInAccount(10).size(), 3);
         assertEquals(itemManager.getNotInAccount(11).size(), 1);
         assertEquals(itemManager.getNotInAccount(12).size(), 4);
