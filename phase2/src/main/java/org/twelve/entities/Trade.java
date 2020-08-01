@@ -167,6 +167,11 @@ public class Trade {
         return tradeCompletions;
     }
 
+    public int getPreviousTraderID(int accountID) {
+        int index = (tradersIds.indexOf(accountID) - 1 + tradersIds.size()) % tradersIds.size();
+        return tradersIds.get(index);
+    }
+
     public int getNextTraderID(int accountID) {
         int index = (tradersIds.indexOf(accountID) + 1) % tradersIds.size();
         return tradersIds.get(index);

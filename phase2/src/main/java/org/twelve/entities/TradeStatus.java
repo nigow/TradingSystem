@@ -9,5 +9,6 @@ public enum TradeStatus {
     REJECTED,
     UNCONFIRMED,
     CONFIRMED,
-    COMPLETED
+    COMPLETED,
+    ADMIN_CANCELLED
 }

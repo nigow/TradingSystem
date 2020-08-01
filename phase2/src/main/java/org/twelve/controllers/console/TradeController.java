@@ -130,7 +130,7 @@ public class TradeController {
                 String ans = tradePresenter.isTradeCompleted();
                 if (inputHandler.isTrue(ans)) {
                     tradePresenter.displayCompleted();
-                    tradeManager.updateCompletion(sessionManager.getCurrAccountID(), tradeID);
+                    tradeManager.completeTrade(sessionManager.getCurrAccountID(), tradeID);
                     return;
                 } else if (inputHandler.isFalse(ans)) {
                     tradePresenter.displayIncomplete();
@@ -170,21 +170,15 @@ public class TradeController {
 
     private void changeUnconfirmedTradeActions(int tradeID, int actionInd) {
         if (actionInd == 0) {
-            tradeManager.updateStatus(tradeID, TradeStatus.REJECTED);
+            tradeManager.rejectTrade(tradeID);
             tradePresenter.displayRejected();
         } else if (actionInd == 1 && tradeManager.getDateTime(tradeID).isAfter(LocalDateTime.now())) {
-            tradeManager.updateStatus(tradeID, TradeStatus.CONFIRMED);
-            tradeManager.makeTrade(tradeID);
-            if (!tradeManager.isPermanent(tradeID)) {
-                tradeManager.reverseTrade(tradeID);
-                tradeManager.updateStatus(tradeID, TradeStatus.CONFIRMED);
-                tradeManager.makeTrade(tradeID);
-            }
+            tradeManager.confirmTrade(tradeID);
             tradePresenter.displayConfirmed();
         } else {
             changeTradeTimePlace(tradeID);
             if (!tradeManager.canBeEdited(tradeID)) {
-                tradeManager.updateStatus(tradeID, TradeStatus.REJECTED);
+                tradeManager.rejectTrade(tradeID);
                 tradePresenter.displayLimitReached();
                 tradePresenter.displayCancelled();
             }
