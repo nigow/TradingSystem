@@ -6,5 +6,7 @@ public interface ProfilePresenter {
     boolean getVacationStatus();
     void setCanVacation(boolean canVacation);
     boolean getCanVacation();
+    void setCanRequestUnfreeze(boolean canRequestUnfreeze);
+    boolean getCanRequestUnfreeze();
 
 }

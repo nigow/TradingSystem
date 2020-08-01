@@ -26,14 +26,14 @@
         </rowConstraints>
          <children>
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changePassword" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%updatePassword" GridPane.columnIndex="1" />
-            <PasswordField promptText="%oldPassword" GridPane.rowIndex="1" />
-            <PasswordField promptText="%newPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updatePasswordClicked" text="%updatePassword" GridPane.columnIndex="1" />
+            <PasswordField fx:id="oldPassword" promptText="%oldPassword" GridPane.rowIndex="1" />
+            <PasswordField fx:id="newPassword" promptText="%newPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <CheckBox fx:id="onVacation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVacationClicked" text="%onVacation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%requestUnfreeze" GridPane.rowIndex="2" />
+            <Button fx:id="requestUnfreezeBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#requestUnfreezeClicked" text="%requestUnfreeze" GridPane.rowIndex="2" />
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changeLocation" GridPane.rowIndex="3" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%updateLocation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateLocationClicked" text="%updateLocation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="locationBox" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </center>
