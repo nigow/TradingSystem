@@ -29,7 +29,10 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
 
         setItemsToReceive(new ArrayList<>());
         setItemsToGive(new ArrayList<>());
-
+        setAllUsers(new ArrayList<>());
+        setSelectedUser("");
+        setSelectedItemToBorrow("");
+        setSelectedItemToLend("");
     }
 
     public void setItemsToReceive(List<String> itemsToReceive) {
