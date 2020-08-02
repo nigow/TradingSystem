@@ -37,7 +37,8 @@ public class ThresholdController {
      * @param newNumber the new number of items you need to lend more than borrow
      */
     public void lendMoreThanBorrow(int newNumber) {
-        thresholdRepository.setLendMoreThanBorrow(newNumber);
+        if (newNumber != thresholdRepository.getLendMoreThanBorrow())
+            thresholdRepository.setLendMoreThanBorrow(newNumber);
     }
 
     /**
@@ -45,7 +46,8 @@ public class ThresholdController {
      * @param newNumber the new number of max incomplete trades you can have
      */
     public void maxIncompleteTrades(int newNumber) {
-        thresholdRepository.setMaxIncompleteTrade(newNumber);
+        if (newNumber != thresholdRepository.getMaxIncompleteTrade())
+            thresholdRepository.setMaxIncompleteTrade(newNumber);
     }
 
     /**
@@ -53,19 +55,23 @@ public class ThresholdController {
      * @param newNumber the new number of max weekly trades you can have
      */
     public void maxWeeklyTrades(int newNumber) {
-        thresholdRepository.setMaxWeeklyTrade(newNumber);
+        if (newNumber != thresholdRepository.getMaxWeeklyTrade())
+            thresholdRepository.setMaxWeeklyTrade(newNumber);
     }
 
     public void numberOfDays(int newNumber) {
-        thresholdRepository.setNumberOfDays(newNumber);
+        if (newNumber != thresholdRepository.getNumberOfDays())
+            thresholdRepository.setNumberOfDays(newNumber);
     }
 
     public void numberOfStats(int newNumber) {
-       thresholdRepository.setNumberOfStats(newNumber);
+        if (newNumber != thresholdRepository.getNumberOfStats())
+            thresholdRepository.setNumberOfStats(newNumber);
     }
 
     public void numberOfEdits(int newNumber) {
-       thresholdRepository.setNumberOfEdits(newNumber);
+        if (newNumber != thresholdRepository.getNumberOfEdits())
+            thresholdRepository.setNumberOfEdits(newNumber);
     }
 
     public void setThresholdPresenter(ThresholdPresenter thresholdPresenter) {
