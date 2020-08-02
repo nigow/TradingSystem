@@ -2,76 +2,71 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.ThresholdPresenter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
-
 public class UIThresholdsPresenter extends ObservablePresenter implements ThresholdPresenter {
 
-    private String lendMoreThanBorrow;
-    private String maxIncompleteTrade;
-    private String maxWeeklyTrade;
-    private String numberOfDays;
-    private String numberOfStats;
-    private String numberOfEdits;
+    private int lendMoreThanBorrow;
+    private int maxIncompleteTrade;
+    private int maxWeeklyTrade;
+    private int numberOfDays;
+    private int numberOfStats;
+    private int numberOfEdits;
 
     @Override
-    public void setThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfStats, int numberOfEdits) {
-
-        String oldLendMoreThanBorrow = this.lendMoreThanBorrow;
-        this.lendMoreThanBorrow = String.valueOf(lendMoreThanBorrow);
+    public void setThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
+                              int numberOfStats, int numberOfEdits) {
+        int oldLendMoreThanBorrow = this.lendMoreThanBorrow;
+        this.lendMoreThanBorrow = lendMoreThanBorrow;
         propertyChangeSupport.firePropertyChange("lendMoreThanBorrow", oldLendMoreThanBorrow, this.lendMoreThanBorrow);
 
-        String oldMaxIncompleteTrade = this.maxIncompleteTrade;
-        this.maxIncompleteTrade = String.valueOf(maxIncompleteTrade);
-        propertyChangeSupport.firePropertyChange("maxIncompleteTrade", oldMaxIncompleteTrade, this.maxIncompleteTrade);
-
-        String oldMaxWeeklyTrade = this.maxWeeklyTrade;
-        this.maxWeeklyTrade = String.valueOf(maxWeeklyTrade);
+        int oldMaxWeeklyTrade = this.maxWeeklyTrade;
+        this.maxWeeklyTrade = maxWeeklyTrade;
         propertyChangeSupport.firePropertyChange("maxWeeklyTrade", oldMaxWeeklyTrade, this.maxWeeklyTrade);
 
-        String oldNumberOfDays = this.numberOfDays;
-        this.numberOfDays = String.valueOf(numberOfDays);
+        int oldMaxIncompleteTrade = this.maxIncompleteTrade;
+        this.maxIncompleteTrade = maxIncompleteTrade;
+        propertyChangeSupport.firePropertyChange("maxIncompleteTrade", oldMaxIncompleteTrade, this.maxIncompleteTrade);
+
+        int oldNumberOfDays = this.numberOfDays;
+        this.numberOfDays = numberOfDays;
         propertyChangeSupport.firePropertyChange("numberOfDays", oldNumberOfDays, this.numberOfDays);
 
-        String oldNumberOfStats = this.numberOfStats;
-        this.numberOfStats = String.valueOf(numberOfStats);
+        int oldNumberOfStats = this.numberOfStats;
+        this.numberOfStats = numberOfStats;
         propertyChangeSupport.firePropertyChange("numberOfStats", oldNumberOfStats, this.numberOfStats);
 
-        String oldNumberOfEdits = this.numberOfEdits;
-        this.numberOfEdits = String.valueOf(numberOfEdits);
+        int oldNumberOfEdits = this.numberOfEdits;
+        this.numberOfEdits = numberOfEdits;
         propertyChangeSupport.firePropertyChange("numberOfEdits", oldNumberOfEdits, this.numberOfEdits);
-
     }
 
     @Override
-    public String getLendMoreThanBorrow() {
+    public int getLendMoreThanBorrow() {
         return lendMoreThanBorrow;
     }
 
     @Override
-    public String getMaxIncompleteTrade() {
+    public int getMaxIncompleteTrade() {
         return maxIncompleteTrade;
     }
 
     @Override
-    public String getMaxWeeklyTrade() {
+    public int getMaxWeeklyTrade() {
         return maxWeeklyTrade;
     }
 
     @Override
-    public String getNumberOfDays() {
+    public int getNumberOfDays() {
         return numberOfDays;
     }
 
     @Override
-    public String getNumberOfStats() {
+    public int getNumberOfStats() {
         return numberOfStats;
     }
 
     @Override
-    public String getNumberOfEdits() {
+    public int getNumberOfEdits() {
         return numberOfEdits;
     }
+
 }

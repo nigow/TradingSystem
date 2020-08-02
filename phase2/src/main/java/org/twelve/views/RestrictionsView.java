@@ -1,44 +1,37 @@
 package org.twelve.views;
 
-import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.adapter.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import org.twelve.controllers.ThresholdController;
-import org.twelve.entities.Thresholds;
 import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.ParsePosition;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
-
     private final ThresholdController thresholdController;
-
     private final T thresholdPresenter;
 
     @FXML
-    private TextField lendNum;
+    private Spinner<Integer> lendVsBorrow;
     @FXML
-    private TextField incompleteNum;
+    private Spinner<Integer> maxIncomplete;
     @FXML
-    private TextField weeklyNum;
+    private Spinner<Integer> maxWeekly;
     @FXML
-    private TextField dayNum;
+    private Spinner<Integer> numOfDays;
     @FXML
-    private TextField editNum;
+    private Spinner<Integer> numOfEdits;
     @FXML
-    private TextField statNum;
+    private Spinner<Integer> numOfStats;
 
     public RestrictionsView(WindowHandler windowHandler, ThresholdController thresholdController, T thresholdPresenter) {
         this.windowHandler = windowHandler;
@@ -58,12 +51,12 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
     }
 
     public void saveClicked(ActionEvent actionEvent) {
-        thresholdController.lendMoreThanBorrow(lendNum.getText());
-        thresholdController.maxIncompleteTrades(incompleteNum.getText());
-        thresholdController.maxWeeklyTrades(weeklyNum.getText());
-        thresholdController.numberOfDays(dayNum.getText());
-        thresholdController.numberOfEdits(editNum.getText());
-        thresholdController.numberOfStats(statNum.getText());
+        thresholdController.lendMoreThanBorrow(lendVsBorrow.getValue());
+        thresholdController.maxIncompleteTrades(maxIncomplete.getValue());
+        thresholdController.maxWeeklyTrades(maxWeekly.getValue());
+        thresholdController.numberOfDays(numOfDays.getValue());
+        thresholdController.numberOfEdits(numOfEdits.getValue());
+        thresholdController.numberOfStats(numOfStats.getValue());
     }
 
     @Override
@@ -71,26 +64,43 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
 
         try {
 
-            lendNum.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(thresholdPresenter).name("lendMoreThanBorrow").build());
+            lendVsBorrow.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
 
-            incompleteNum.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(thresholdPresenter).name("maxIncompleteTrade").build());
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getLendMoreThanBorrow());
 
-            weeklyNum.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(thresholdPresenter).name("maxWeeklyTrade").build());
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("lendMoreThanBorrow").build()));
 
-            dayNum.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(thresholdPresenter).name("numberOfDays").build());
+            maxIncomplete.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
 
-            editNum.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(thresholdPresenter).name("numberOfEdits").build());
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxIncompleteTrade());
 
-            statNum.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(thresholdPresenter).name("numberOfStats").build());
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxIncompleteTrade").build()));
+
+            maxWeekly.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxWeeklyTrade());
+
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxWeeklyTrade").build()));
+
+            numOfDays.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfDays());
+
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfDays").build()));
+
+            numOfEdits.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfEdits());
+
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfEdits").build()));
+
+            numOfStats.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfStats());
+
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfStats").build()));
 
         } catch (NoSuchMethodException ignored) {}
 
-        // todo (enhancement): prevent users from entering non number chars
     }
 }
