@@ -81,6 +81,10 @@ public class ViewBuilder {
 
                 return new InventoryView<>(windowHandler, controllerPool.getInventoryController(),
                         new UIInventoryPresenter());
+
+            case ACCOUNTS:
+
+                return new AccountsView(windowHandler);
         }
 
         return null;
