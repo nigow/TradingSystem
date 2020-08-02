@@ -24,8 +24,11 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
 
     @Override
     public void setCanVacation(boolean canVacation) {
-        propertyChangeSupport.firePropertyChange("canVacation", this.canVacation, canVacation);
+
+        boolean oldCanVacation = this.canVacation;
         this.canVacation = canVacation;
+        propertyChangeSupport.firePropertyChange("canVacation", oldCanVacation, this.canVacation);
+
     }
 
     @Override

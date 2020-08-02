@@ -1,6 +1,8 @@
 package org.twelve.views;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,7 +40,7 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         this.profilePresenter = profilePresenter;
 
         this.profileController = profileController;
-        this.profileController.setProfilePresenter(profilePresenter);
+        this.profileController.setProfilePresenter(this.profilePresenter);
     }
 
     @Override
@@ -55,9 +57,10 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
         try {
 
-            onVacation.selectedProperty().bind(JavaBeanBooleanPropertyBuilder.create().bean(profilePresenter).name("onVacation").build());
-            onVacation.disableProperty().bind(JavaBeanBooleanPropertyBuilder.create().bean(profilePresenter).name("canVacation").build());
-            requestUnfreezeBtn.disableProperty().bind(JavaBeanBooleanPropertyBuilder.create().bean(profilePresenter).name("canRequestUnfreeze").build());
+            onVacation.selectedProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(profilePresenter).name("vacationStatus").build());
+
+            onVacation.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(profilePresenter).name("canVacation").build().not());
+            requestUnfreezeBtn.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(profilePresenter).name("canRequestUnfreeze").build().not());
 
         } catch (NoSuchMethodException ignored) {}
 
