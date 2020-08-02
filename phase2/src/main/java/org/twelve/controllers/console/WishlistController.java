@@ -1,7 +1,7 @@
 package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
-import org.twelve.presenters.TradeCreatorPresenter;
+import org.twelve.presenters.OldTradeCreatorPresenter;
 import org.twelve.presenters.console.WishlistPresenter;
 import org.twelve.usecases.*;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 public class WishlistController {
 
     private final WishlistPresenter wishlistPresenter;
-    private final TradeCreatorPresenter tradeCreatorPresenter;
+    private final OldTradeCreatorPresenter oldTradeCreatorPresenter;
 
     private final UseCasePool useCasePool;
     private final WishlistManager wishlistManager;
@@ -31,10 +31,10 @@ public class WishlistController {
      * Create a controller for the wishlist screen.
      *
      * @param wishlistPresenter     A presenter for this controller.
-     * @param tradeCreatorPresenter A presenter for {@link TradeCreatorController}.
+     * @param oldTradeCreatorPresenter A presenter for {@link TradeCreatorController}.
      * @param useCasePool          Repository of use cases.
      */
-    public WishlistController(WishlistPresenter wishlistPresenter, TradeCreatorPresenter tradeCreatorPresenter,
+    public WishlistController(WishlistPresenter wishlistPresenter, OldTradeCreatorPresenter oldTradeCreatorPresenter,
                               UseCasePool useCasePool) {
 
         this.useCasePool = useCasePool;
@@ -46,7 +46,7 @@ public class WishlistController {
         this.tradeManager = useCasePool.getTradeManager();
 
         this.wishlistPresenter = wishlistPresenter;
-        this.tradeCreatorPresenter = tradeCreatorPresenter;
+        this.oldTradeCreatorPresenter = oldTradeCreatorPresenter;
 
         inputHandler = new InputHandler();
 
@@ -119,7 +119,7 @@ public class WishlistController {
         int itemId = wishlistIds.get(Integer.parseInt(itemIndex));
 
         // TODO how to check lend more than borrowed?
-        new TradeCreatorController(tradeCreatorPresenter, useCasePool, itemManager.getOwnerId(itemId), itemId,
+        new TradeCreatorController(oldTradeCreatorPresenter, useCasePool, itemManager.getOwnerId(itemId), itemId,
                 !tradeManager.lentMoreThanBorrowed(sessionManager.getCurrAccountID())).run();
 
     }

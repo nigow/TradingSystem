@@ -4,7 +4,7 @@ package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
 import org.twelve.presenters.LendingPresenter;
-import org.twelve.presenters.TradeCreatorPresenter;
+import org.twelve.presenters.OldTradeCreatorPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.SessionManager;
@@ -46,7 +46,7 @@ public class LendingController {
     /**
      * Presenter that initiates trades.
      */
-    private final TradeCreatorPresenter tradeCreatorPresenter;
+    private final OldTradeCreatorPresenter oldTradeCreatorPresenter;
 
 
     /**
@@ -54,15 +54,15 @@ public class LendingController {
      *
      * @param lendingPresenter      Presenter for lending services
      * @param useCasePool          Collection of gateways
-     * @param tradeCreatorPresenter Presenter for suggesting trades
+     * @param oldTradeCreatorPresenter Presenter for suggesting trades
      */
-    public LendingController(LendingPresenter lendingPresenter, UseCasePool useCasePool, TradeCreatorPresenter tradeCreatorPresenter) {
+    public LendingController(LendingPresenter lendingPresenter, UseCasePool useCasePool, OldTradeCreatorPresenter oldTradeCreatorPresenter) {
         this.useCasePool = useCasePool;
         this.lendingPresenter = lendingPresenter;
         this.accountRepository = useCasePool.getAccountRepository();
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.tradeCreatorPresenter = tradeCreatorPresenter;
+        this.oldTradeCreatorPresenter = oldTradeCreatorPresenter;
         this.validator = new InputHandler();
     }
 
@@ -148,7 +148,7 @@ public class LendingController {
         if (tradingItemId == -1) return;
 
         TradeCreatorController startTrade;
-        startTrade = new TradeCreatorController(tradeCreatorPresenter, useCasePool, toAccountId, tradingItemId, false);
+        startTrade = new TradeCreatorController(oldTradeCreatorPresenter, useCasePool, toAccountId, tradingItemId, false);
         startTrade.run();
     }
 
