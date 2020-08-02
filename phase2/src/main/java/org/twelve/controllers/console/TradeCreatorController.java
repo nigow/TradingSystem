@@ -2,7 +2,7 @@ package org.twelve.controllers.console;
 
 
 import org.twelve.controllers.InputHandler;
-import org.twelve.presenters.TradeCreatorPresenter;
+import org.twelve.presenters.OldTradeCreatorPresenter;
 import org.twelve.usecases.*;
 
 import java.time.LocalDate;
@@ -23,7 +23,7 @@ public class TradeCreatorController {
     private final WishlistManager wishlistManager;
     private final SessionManager sessionManager;
 
-    private final TradeCreatorPresenter tradeCreatorPresenter;
+    private final OldTradeCreatorPresenter oldTradeCreatorPresenter;
 
     private final int traderOneId;
     private final int traderTwoId;
@@ -35,13 +35,13 @@ public class TradeCreatorController {
     /**
      * Create a controller for the trade creation screen.
      *
-     * @param tradeCreatorPresenter A presenter for this controller.
+     * @param oldTradeCreatorPresenter A presenter for this controller.
      * @param useCasePool          Repository of use cases.
      * @param peerId                Id of account trade is being conducted with.
      * @param itemId                Id of item being offered or asked for.
      * @param forceTwoWay           Whether two way trade should be forced.
      */
-    public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
+    public TradeCreatorController(OldTradeCreatorPresenter oldTradeCreatorPresenter,
                                   UseCasePool useCasePool, int peerId, int itemId, boolean forceTwoWay) {
 
         this.tradeManager = useCasePool.getTradeManager();
@@ -49,7 +49,7 @@ public class TradeCreatorController {
         this.itemManager = useCasePool.getItemManager();
         this.wishlistManager = useCasePool.getWishlistManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.tradeCreatorPresenter = tradeCreatorPresenter;
+        this.oldTradeCreatorPresenter = oldTradeCreatorPresenter;
 
         this.traderOneId = sessionManager.getCurrAccountID();
         this.traderTwoId = peerId;
@@ -74,50 +74,50 @@ public class TradeCreatorController {
             traderOneItems.add(itemId);
         }
 
-        String twoWayTrade = forceTwoWay ? inputHandler.getTrue() : tradeCreatorPresenter.getTwoWayTrade();
+        String twoWayTrade = forceTwoWay ? inputHandler.getTrue() : oldTradeCreatorPresenter.getTwoWayTrade();
 
         while (!inputHandler.isBool(twoWayTrade)) {
 
             if (inputHandler.isExitStr(twoWayTrade)) return;
-            tradeCreatorPresenter.invalidInput();
-            twoWayTrade = tradeCreatorPresenter.getTwoWayTrade();
+            oldTradeCreatorPresenter.invalidInput();
+            twoWayTrade = oldTradeCreatorPresenter.getTwoWayTrade();
 
         }
 
         if (inputHandler.isTrue(twoWayTrade) && !setUpTwoWayTrade(traderOneItems, traderTwoItems)) return;
 
-        String tradeLocation = tradeCreatorPresenter.getLocation();
+        String tradeLocation = oldTradeCreatorPresenter.getLocation();
 
         if (inputHandler.isExitStr(tradeLocation)) return;
 
-        String date = tradeCreatorPresenter.getDate();
+        String date = oldTradeCreatorPresenter.getDate();
 
         while (!inputHandler.isDate(date) || LocalDate.parse(date).isBefore(LocalDate.now())) {
 
             if (inputHandler.isExitStr(date)) return;
-            tradeCreatorPresenter.invalidInput();
-            date = tradeCreatorPresenter.getDate();
+            oldTradeCreatorPresenter.invalidInput();
+            date = oldTradeCreatorPresenter.getDate();
 
         }
 
-        String time = tradeCreatorPresenter.getTime();
+        String time = oldTradeCreatorPresenter.getTime();
 
         while (!inputHandler.isTime(time) ||
                 !LocalDate.parse(date).atTime(LocalTime.parse(time)).isAfter(LocalDateTime.now())) {
 
             if (inputHandler.isExitStr(time)) return;
-            tradeCreatorPresenter.invalidInput();
-            time = tradeCreatorPresenter.getTime();
+            oldTradeCreatorPresenter.invalidInput();
+            time = oldTradeCreatorPresenter.getTime();
 
         }
 
-        String isPerm = tradeCreatorPresenter.getIsPerm();
+        String isPerm = oldTradeCreatorPresenter.getIsPerm();
 
         while (!inputHandler.isBool(isPerm)) {
 
             if (inputHandler.isExitStr(isPerm)) return;
-            tradeCreatorPresenter.invalidInput();
-            isPerm = tradeCreatorPresenter.getIsPerm();
+            oldTradeCreatorPresenter.invalidInput();
+            isPerm = oldTradeCreatorPresenter.getIsPerm();
 
         }
 
@@ -130,7 +130,7 @@ public class TradeCreatorController {
         itemIDs.addAll(traderTwoItems);
         tradeManager.createTrade(LocalDateTime.parse(date + "T" + time), tradeLocation,
                 inputHandler.isTrue(isPerm), traderIDs, itemIDs);
-        tradeCreatorPresenter.successMessage();
+        oldTradeCreatorPresenter.successMessage();
 
     }
 
@@ -140,19 +140,19 @@ public class TradeCreatorController {
                 itemManager.getApprovedInventoryOfAccountString(traderTwoId);
 
         if (traderOneItems.isEmpty()) {
-            tradeCreatorPresenter.showInventory(inventory);
+            oldTradeCreatorPresenter.showInventory(inventory);
         }
         else {
-            tradeCreatorPresenter.showInventory(accountRepository.getUsernameFromID(traderTwoId), inventory);
+            oldTradeCreatorPresenter.showInventory(accountRepository.getUsernameFromID(traderTwoId), inventory);
         }
 
-        String oppositeItemIndex = tradeCreatorPresenter.getItem();
+        String oppositeItemIndex = oldTradeCreatorPresenter.getItem();
 
         while (!inputHandler.isNum(oppositeItemIndex) || Integer.parseInt(oppositeItemIndex) >= inventory.size()) {
 
             if (inputHandler.isExitStr(oppositeItemIndex)) return false;
-            tradeCreatorPresenter.invalidInput();
-            oppositeItemIndex = tradeCreatorPresenter.getItem();
+            oldTradeCreatorPresenter.invalidInput();
+            oppositeItemIndex = oldTradeCreatorPresenter.getItem();
 
         }
 

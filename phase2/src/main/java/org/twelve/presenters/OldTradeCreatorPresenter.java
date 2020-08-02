@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Catherine
  */
-public interface TradeCreatorPresenter {
+public interface OldTradeCreatorPresenter {
 
     /**
      * Tells user that their input was invalid.

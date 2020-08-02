@@ -1,7 +1,7 @@
 package org.twelve.controllers;
 
 
-import org.twelve.presenters.TradeCreatorPresenter;
+import org.twelve.presenters.OldTradeCreatorPresenter;
 import org.twelve.usecases.*;
 
 /**
@@ -15,7 +15,7 @@ public class TradeCreatorController {
     private final WishlistManager wishlistManager;
     private final SessionManager sessionManager;
 
-    private final TradeCreatorPresenter tradeCreatorPresenter;
+    private final OldTradeCreatorPresenter oldTradeCreatorPresenter;
 
     private final int traderOneId;
     private final int traderTwoId;
@@ -27,13 +27,13 @@ public class TradeCreatorController {
     /**
      * Create a controller for the trade creation screen.
      *
-     * @param tradeCreatorPresenter A presenter for this controller.
+     * @param oldTradeCreatorPresenter A presenter for this controller.
      * @param useCasePool           Repository of use cases.
      * @param peerId                Id of account trade is being conducted with.
      * @param itemId                Id of item being offered or asked for.
      * @param forceTwoWay           Whether two way trade should be forced.
      */
-    public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
+    public TradeCreatorController(OldTradeCreatorPresenter oldTradeCreatorPresenter,
                                   UseCasePool useCasePool, int peerId, int itemId, boolean forceTwoWay) {
 
         this.tradeManager = useCasePool.getTradeManager();
@@ -41,7 +41,7 @@ public class TradeCreatorController {
         this.itemManager = useCasePool.getItemManager();
         this.wishlistManager = useCasePool.getWishlistManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.tradeCreatorPresenter = tradeCreatorPresenter;
+        this.oldTradeCreatorPresenter = oldTradeCreatorPresenter;
 
         this.traderOneId = sessionManager.getCurrAccountID();
         this.traderTwoId = peerId;
