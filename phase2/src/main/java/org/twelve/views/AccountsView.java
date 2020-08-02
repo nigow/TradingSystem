@@ -1,9 +1,15 @@
 package org.twelve.views;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableView;
 
-public class AccountsView implements SceneView {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AccountsView implements SceneView, Initializable {
     private final WindowHandler windowHandler;
+    private TableView accountsTable;
 
     public AccountsView(WindowHandler windowHandler) {
         this.windowHandler = windowHandler;
@@ -17,5 +23,10 @@ public class AccountsView implements SceneView {
 
     public void backClicked(ActionEvent actionEvent) {
         windowHandler.changeScene(Scenes.MENU);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

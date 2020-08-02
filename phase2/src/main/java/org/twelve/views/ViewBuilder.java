@@ -1,12 +1,13 @@
 package org.twelve.views;
 
 import org.twelve.controllers.ControllerPool;
+import org.twelve.entities.Thresholds;
 import org.twelve.gateways.GatewayPoolFactory;
 import org.twelve.gateways.GatewayPool;
-import org.twelve.presenters.ui.UIInventoryPresenter;
-import org.twelve.presenters.ui.UIWarehousePresenter;
-import org.twelve.presenters.ui.UIWishlistPresenter;
+import org.twelve.presenters.ThresholdPresenter;
+import org.twelve.presenters.ui.*;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ViewBuilder {
@@ -50,11 +51,13 @@ public class ViewBuilder {
 
             case PROFILE:
 
-                return new ProfileView(windowHandler, controllerPool.getProfileController());
+                return new ProfileView<>(windowHandler, controllerPool.getProfileController(),
+                        new UIProfilePresenter());
 
             case RESTRICTIONS:
 
-                return new RestrictionsView(windowHandler);
+                return new RestrictionsView<>(windowHandler, controllerPool.getThresholdController(),
+                        new UIThresholdsPresenter());
 
             case TRADE_CREATOR:
 
@@ -78,6 +81,10 @@ public class ViewBuilder {
 
                 return new InventoryView<>(windowHandler, controllerPool.getInventoryController(),
                         new UIInventoryPresenter());
+
+            case ACCOUNTS:
+
+                return new AccountsView(windowHandler);
         }
 
         return null;

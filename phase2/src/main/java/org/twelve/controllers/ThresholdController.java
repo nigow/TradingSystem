@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;
 
@@ -16,7 +17,8 @@ public class ThresholdController {
      * An instance of ThresholdRepository to set new limits
      */
     private final ThresholdRepository thresholdRepository;
-    // #TODO: add presenter functionality (?)
+
+    private ThresholdPresenter thresholdPresenter;
 
     /**
      * Initializes the class with thresholdRepository from useCasePool
@@ -50,16 +52,28 @@ public class ThresholdController {
         thresholdRepository.setMaxWeeklyTrade(newNumber);
     }
 
-    public void NumberOfDays(int newNumber) {
+    public void numberOfDays(int newNumber) {
         thresholdRepository.setNumberOfDays(newNumber);
     }
 
     public void numberOfStats(int newNumber) {
-        thresholdRepository.setNumberOfStats(newNumber);
+       thresholdRepository.setNumberOfStats(newNumber);
     }
 
     public void numberOfEdits(int newNumber) {
-        thresholdRepository.setNumberOfEdits(newNumber);
+       thresholdRepository.setNumberOfEdits(newNumber);
     }
 
+    public void setThresholdPresenter(ThresholdPresenter thresholdPresenter) {
+        this.thresholdPresenter = thresholdPresenter;
+    }
+
+    public void displayThresholds() {
+
+        thresholdPresenter.setThresholds(thresholdRepository.getLendMoreThanBorrow(),
+                thresholdRepository.getMaxIncompleteTrade(), thresholdRepository.getMaxWeeklyTrade(),
+                thresholdRepository.getNumberOfDays(), thresholdRepository.getNumberOfStats(),
+                thresholdRepository.getNumberOfEdits());
+
+    }
 }

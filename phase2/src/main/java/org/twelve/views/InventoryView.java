@@ -96,6 +96,11 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
             }
         });
 
+        // force recolor every time inventory is updated (doesn't happen by default if the contents are the same)
+        inventoryItems.itemsProperty().addListener((observable, oldValue, newValue) -> {
+            inventoryItems.refresh();
+        });
+
     }
 
     @FXML

@@ -67,16 +67,21 @@ public class MenuView implements SceneView {
     }
 
     @FXML
-    private void manageAccountClicked(ActionEvent actionEvent) {
-
-        windowHandler.changeScene(Scenes.PROFILE);
-
-    }
-
-    @FXML
     private void manageInventoryClicked(ActionEvent actionEvent) {
 
         windowHandler.changeScene(Scenes.INVENTORY);
 
+    }
+
+    public void manageAccountsClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.ACCOUNTS);
+
+    }
+
+    @FXML
+    private void accountSettingsClicked(ActionEvent actionEvent) {
+
+        windowHandler.changeScene(Scenes.PROFILE);
     }
 }

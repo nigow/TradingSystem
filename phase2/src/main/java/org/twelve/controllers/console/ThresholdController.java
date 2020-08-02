@@ -1,6 +1,7 @@
 package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
+import org.twelve.presenters.OldThresholdPresenter;
 import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;
@@ -15,11 +16,11 @@ public class ThresholdController {
 
     private final ThresholdRepository thresholdRepository;
 
-    private final ThresholdPresenter thresholdPresenter;
+    private final OldThresholdPresenter thresholdPresenter;
 
     private final InputHandler inputHandler;
 
-    public ThresholdController(UseCasePool useCasePool, ThresholdPresenter thresholdPresenter) {
+    public ThresholdController(UseCasePool useCasePool, OldThresholdPresenter thresholdPresenter) {
         thresholdRepository = useCasePool.getThresholdRepository();
         this.thresholdPresenter = thresholdPresenter;
         inputHandler = new InputHandler();

@@ -17,6 +17,9 @@
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
         </rowConstraints>
          <children>
             <Label text="%lendVsBorrow" />
@@ -25,12 +28,12 @@
              <Label text="%numOfDays" GridPane.rowIndex="3" />
              <Label text="%numOfEdits" GridPane.rowIndex="4" />
              <Label text="%numOfStats" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-             <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+             <Spinner fx:id="lendVsBorrow" GridPane.columnIndex="1" />
+            <Spinner fx:id="maxIncomplete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Spinner fx:id="maxWeekly" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Spinner fx:id="numOfDays" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Spinner fx:id="numOfEdits" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Spinner fx:id="numOfStats" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </center>
@@ -48,7 +51,7 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></Button>
-            <Button mnemonicParsing="false" text="%save" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+            <Button mnemonicParsing="false" onAction="#saveClicked" text="%save" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></Button>

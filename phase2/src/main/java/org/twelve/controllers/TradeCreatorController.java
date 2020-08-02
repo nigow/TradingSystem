@@ -16,7 +16,6 @@ public class TradeCreatorController {
     private final SessionManager sessionManager;
 
     private final TradeCreatorPresenter tradeCreatorPresenter;
-
     private final int traderOneId;
     private final int traderTwoId;
     private final int itemId;
@@ -33,7 +32,7 @@ public class TradeCreatorController {
      * @param itemId                Id of item being offered or asked for.
      * @param forceTwoWay           Whether two way trade should be forced.
      */
-    public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter,
+    public TradeCreatorController(TradeCreatorPresenter tradeCreatorPresenter ,
                                   UseCasePool useCasePool, int peerId, int itemId, boolean forceTwoWay) {
 
         this.tradeManager = useCasePool.getTradeManager();
@@ -42,7 +41,6 @@ public class TradeCreatorController {
         this.wishlistManager = useCasePool.getWishlistManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.tradeCreatorPresenter = tradeCreatorPresenter;
-
         this.traderOneId = sessionManager.getCurrAccountID();
         this.traderTwoId = peerId;
         this.itemId = itemId;

@@ -21,17 +21,23 @@ public class ProfileController {
 
         profilePresenter.setVacationStatus(statusManager.isVacationing(sessionManager.getCurrAccountID()));
         profilePresenter.setCanVacation(statusManager.canVacation(sessionManager.getCurrAccountID()));
+        profilePresenter.setCanRequestUnfreeze(statusManager.isFrozen(sessionManager.getCurrAccountID()));
 
     }
 
     public void setProfilePresenter(ProfilePresenter profilePresenter) {
 
         this.profilePresenter = profilePresenter;
-        // updateProfile();
 
     }
 
     public void changePassword(String oldPassword, String newPassword) {
+
+        // todo: waiting for use case support
+
+    }
+
+    public void changeLocation(String newLocation) {
 
         // todo: waiting for use case support
 
@@ -44,6 +50,12 @@ public class ProfileController {
         } else {
             statusManager.completeVacation(sessionManager.getCurrAccountID());
         }
+
+    }
+
+    public void requestUnfreeze() {
+
+        statusManager.requestUnfreeze(sessionManager.getCurrAccountID());
 
     }
 
