@@ -67,13 +67,14 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
         json.addProperty("number_of_stats", numberOfStats);
 
         HttpRequest postRequest = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(json)))
                 .uri(URI.create("http://csc207phase2.herokuapp.com/thresholds"))
                 .build();
 
         try {
 
-            httpClient.send(postRequest, HttpResponse.BodyHandlers.discarding());
+            HttpResponse<String> response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
             return true;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

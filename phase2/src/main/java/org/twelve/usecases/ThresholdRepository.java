@@ -112,6 +112,5 @@ public class ThresholdRepository {
                                  int numberOfEdits, int numberOfStats) {
         thresholds = new Thresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
                 numberOfEdits, numberOfStats);
-        updateThresholds();
     }
 }

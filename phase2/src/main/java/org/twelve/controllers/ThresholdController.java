@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.gateways.ThresholdsGateway;
 import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;
@@ -18,14 +19,17 @@ public class ThresholdController {
      */
     private final ThresholdRepository thresholdRepository;
 
+    private final ThresholdsGateway thresholdsGateway;
+
     private ThresholdPresenter thresholdPresenter;
 
     /**
      * Initializes the class with thresholdRepository from useCasePool
      * @param useCasePool the useCasePool for getting thresholdRepository
      */
-    public ThresholdController(UseCasePool useCasePool) {
+    public ThresholdController(UseCasePool useCasePool, ThresholdsGateway thresholdsGateway) {
         thresholdRepository = useCasePool.getThresholdRepository();
+        this.thresholdsGateway = thresholdsGateway;
     }
 
     /**
@@ -69,6 +73,8 @@ public class ThresholdController {
     }
 
     public void displayThresholds() {
+
+        thresholdsGateway.populate(thresholdRepository);
 
         thresholdPresenter.setThresholds(thresholdRepository.getLendMoreThanBorrow(),
                 thresholdRepository.getMaxIncompleteTrade(), thresholdRepository.getMaxWeeklyTrade(),

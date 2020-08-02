@@ -29,7 +29,7 @@ public class ControllerPool {
         wishlistController = new WishlistController(useCasePool);
         profileController = new ProfileController(useCasePool);
         inventoryController = new InventoryController(useCasePool);
-        thresholdController = new ThresholdController(useCasePool);
+        thresholdController = new ThresholdController(useCasePool, gatewayPool.getThresholdsGateway());
         freezingController = new FreezingController(useCasePool);
 
     }
