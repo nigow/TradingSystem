@@ -189,6 +189,26 @@ public class StatusManager {
         return vacationAccountUsernames;
     }
 
+    public List<Integer> getTrustedAccountIDs(){
+        List<Integer> trustedAccountIDs = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(isTrusted(accountID)){
+                trustedAccountIDs.add(accountID);
+            }
+        }
+        return trustedAccountIDs;
+    }
+
+    public List<String> getTrustedUsernames(){
+        List<String> trustedUsernames = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(isTrusted(accountID)){
+                trustedUsernames.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return trustedUsernames;
+    }
+
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
@@ -201,7 +221,7 @@ public class StatusManager {
             account.removePermission(Permissions.BORROW);
             account.removePermission(Permissions.LEND);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
-            accountRepository.updateAccount(account);
+            accountRepository.updateToAccountGateway(account);
             return true;
         }
         return false;
@@ -219,7 +239,7 @@ public class StatusManager {
             account.removePermission(Permissions.REQUEST_UNFREEZE);
             account.addPermission(Permissions.LEND);
             account.addPermission(Permissions.BORROW);
-            accountRepository.updateAccount(account);
+            accountRepository.updateToAccountGateway(account);
             return true;
         }
         return false;
@@ -275,7 +295,7 @@ public class StatusManager {
     public void requestUnfreeze(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_UNFREEZE);
-        accountRepository.updateAccount(account);
+        accountRepository.updateToAccountGateway(account);
     }
 
     public boolean hasPermission(int accountID, Permissions perm){
@@ -287,12 +307,16 @@ public class StatusManager {
         return !canTrade(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
     }
 
+    public boolean isTrusted(int accountID) {
+        return hasPermission(accountID, Permissions.CONFIRM_ITEM);
+    }
+
     public void requestVacation(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_VACATION);
         account.removePermission(Permissions.LEND);
         account.removePermission(Permissions.BORROW);
-        accountRepository.updateAccount(account);
+        accountRepository.updateToAccountGateway(account);
     }
 
     public void completeVacation(int accountID) {
@@ -300,7 +324,7 @@ public class StatusManager {
         account.addPermission(Permissions.REQUEST_VACATION);
         account.addPermission(Permissions.LEND);
         account.addPermission(Permissions.BORROW);
-        accountRepository.updateAccount(account);
+        accountRepository.updateToAccountGateway(account);
     }
 
     public void banAccount(int accountID) {
@@ -312,6 +336,17 @@ public class StatusManager {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.LOGIN);
     }
+
+    public void trustAccount(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.addPermission(Permissions.CONFIRM_ITEM);
+    }
+
+    public void unTrustAccount(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.removePermission(Permissions.CONFIRM_ITEM);
+    }
+
 
 
 }

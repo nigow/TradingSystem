@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Repository for storing all accounts in the system.
+ */
 public class AccountRepository {
 
     private Map<Integer, Account> accounts;
@@ -135,7 +138,7 @@ public class AccountRepository {
         return account.getAccountID();
     }
 
-    void updateAccount(Account account){
+    void updateToAccountGateway(Account account){
         List<String> permsAsStrings = new ArrayList<>();
         for (Permissions perms: account.getPermissions()){
             permsAsStrings.add(perms.name());

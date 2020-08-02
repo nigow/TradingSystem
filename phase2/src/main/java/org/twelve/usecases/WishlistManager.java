@@ -37,7 +37,7 @@ public class WishlistManager {
     public void addItemToWishlist(int accountID, int itemID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addToWishlist(itemID);
-        accountRepository.updateAccount(account);
+        accountRepository.updateToAccountGateway(account);
     }
 
     /**
@@ -48,7 +48,7 @@ public class WishlistManager {
     public void removeItemFromWishlist(int accountID, int itemID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removeFromWishList(itemID);
-        accountRepository.updateAccount(account);
+        accountRepository.updateToAccountGateway(account);
     }
 
     /**
