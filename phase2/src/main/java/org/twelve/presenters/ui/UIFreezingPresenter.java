@@ -2,28 +2,124 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.FreezingPresenter;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UIFreezingPresenter extends ObservablePresenter implements FreezingPresenter {
-    private List<String> allAccounts;
-    private List<String> allFrozenAccounts;
-    private List<String> allBannedAccounts;
+    // private List<String> allAccounts;
 
-    private String selectedAccountName;
+    private List<Map<String, String>> bannedAccounts;
+    private List<Map<String, String>> frozenAccounts;
+    private List<Map<String, String>> unfreezeAccounts;
+    private List<Map<String, String>> toFreezeAccounts;
+
+    private List<Map<String, String>> vacationingAccounts;
+
+    private List<Map<String, String>> adminAccounts;
 
     private final ResourceBundle localizedResources;
 
     public UIFreezingPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
-        setAllAccounts(new ArrayList<>());
+
+        setBannedAccounts(new ArrayList<>());
+        setFrozenAccounts(new ArrayList<>());
+        setUnfreezeAccounts(new ArrayList<>());
+        setToFreezeAccounts(new ArrayList<>());
+
+        setVacationingAccounts(new ArrayList<>());
+
+
+        setAdminAccounts(new ArrayList<>());
     }
 
+    @Override
+    public void setBannedAccounts(List<String> bannedAccounts) {
+        List<Map<String, String>> oldBannedAccounts = this.bannedAccounts;
+        this.bannedAccounts = new ArrayList<>();
+        for (String bannedAccount : bannedAccounts) {
+
+            this.bannedAccounts.add(Map.of("username", bannedAccount, "role", localizedResources.getString("banned")));
+
+        }
+        propertyChangeSupport.firePropertyChange("bannedAccounts", oldBannedAccounts, this.bannedAccounts);
+    }
+
+    @Override
+    public List<Map<String, String>> getBannedAccounts() {
+        return bannedAccounts;
+    }
+
+    @Override
+    public void setFrozenAccounts(List<String> frozenAccounts) {
+        List<Map<String, String>> oldFrozenAccounts = this.frozenAccounts;
+        this.frozenAccounts = new ArrayList<>();
+        for (String frozenAccount : frozenAccounts) {
+
+            this.frozenAccounts.add(Map.of("username", frozenAccount, "role", localizedResources.getString("frozen")));
+
+        }
+        propertyChangeSupport.firePropertyChange("frozenAccounts", oldFrozenAccounts, this.frozenAccounts);
+    }
+
+    @Override
+    public List<Map<String, String>> getFrozenAccounts() {
+        return frozenAccounts;
+    }
+
+    @Override
+    public void setUnfreezeAccounts(List<String> unfreezeAccounts) {
+        List<Map<String, String>> oldUnfreezeAccounts = this.unfreezeAccounts;
+        this.unfreezeAccounts = new ArrayList<>();
+        for (String unfreezeAccount : unfreezeAccounts) {
+
+            this.unfreezeAccounts.add(Map.of("username", unfreezeAccount, "role",
+                    localizedResources.getString("requested")));
+
+        }
+        propertyChangeSupport.firePropertyChange("unfreezeAccounts", oldUnfreezeAccounts, this.unfreezeAccounts);
+    }
+
+    @Override
+    public List<Map<String, String>> getUnfreezeAccounts() {
+        return unfreezeAccounts;
+    }
+
+    @Override
+    public void setToFreezeAccounts(List<String> toFreezeAccounts) {
+        List<Map<String, String>> oldToFreezeAccounts = this.toFreezeAccounts;
+        this.toFreezeAccounts = new ArrayList<>();
+        for (String toFreezeAccount: toFreezeAccounts) {
+
+            this.toFreezeAccounts.add(Map.of("username", toFreezeAccount, "role", localizedResources.getString("pending")));
+
+        }
+        propertyChangeSupport.firePropertyChange("toFreezeAccounts", oldToFreezeAccounts, this.toFreezeAccounts);
+    }
+
+    @Override
+    public List<Map<String, String>> getToFreezeAccounts() {
+        return toFreezeAccounts;
+    }
+
+    @Override
+    public void setVacationingAccounts(List<String> vacationingAccounts) {
+        List<Map<String, String>> oldVacationingAccounts = this.vacationingAccounts;
+        this.vacationingAccounts = new ArrayList<>();
+        for (String vacationingAccount: vacationingAccounts) {
+
+            this.vacationingAccounts.add(Map.of("username", vacationingAccount, "role", localizedResources.getString("vacationing")));
+
+        }
+        propertyChangeSupport.firePropertyChange("vacationingAccounts", oldVacationingAccounts, this.vacationingAccounts);
+    }
+
+    @Override
+    public List<Map<String, String>> getVacationingAccounts() {
+        return vacationingAccounts;
+    }
+
+    /*
     @Override
     public void setAllAccounts(List<String> allAccounts) {
         List<String> oldAllAccounts = this.allAccounts;
@@ -35,39 +131,22 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
     public List<String> getAllAccounts() {
         return allAccounts;
     }
+    */
 
     @Override
-    public void setAllFrozenAccounts(List<String> allFrozenAccounts) {
-        List<String> oldAllFrozenAccounts = this.allFrozenAccounts;
-        this.allFrozenAccounts = allFrozenAccounts;
-        propertyChangeSupport.firePropertyChange("allFrozenAccounts", oldAllFrozenAccounts, allFrozenAccounts);
+    public void setAdminAccounts(List<String> adminAccounts) {
+        List<Map<String, String>> oldAdminAccounts = this.adminAccounts;
+        this.adminAccounts = new ArrayList<>();
+        for (String adminAccount : adminAccounts) {
+
+            this.adminAccounts.add(Map.of("username", adminAccount, "role", localizedResources.getString("admin")));
+
+        }
+        propertyChangeSupport.firePropertyChange("adminAccounts", oldAdminAccounts, this.adminAccounts);
     }
 
     @Override
-    public List<String> getAllFrozenAccounts() {
-        return allFrozenAccounts;
+    public List<Map<String, String>> getAdminAccounts() {
+        return adminAccounts;
     }
-
-    @Override
-    public void setAllBannedAccounts(List<String> allBannedAccounts) {
-        List<String> oldAllBannedAccounts = this.allBannedAccounts;
-        this.allBannedAccounts = allBannedAccounts;
-        propertyChangeSupport.firePropertyChange("allBannedAccounts", oldAllBannedAccounts, allBannedAccounts);
-    }
-
-    @Override
-    public List<String> getAllBannedAccounts() {
-        return allBannedAccounts;
-    }
-
-    @Override
-    public void setSelectedAccountName(String name) {
-        String oldSelectedAccountName = name;
-        selectedAccountName = MessageFormat.format(localizedResources.getString("accountName"), name);
-        propertyChangeSupport.firePropertyChange("selectedAccountName", oldSelectedAccountName, selectedAccountName);
-    }
-
-    @Override
-    public String getSelectedAccountName() {return selectedAccountName;}
-
 }

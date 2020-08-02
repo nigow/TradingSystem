@@ -14,6 +14,7 @@ public class ControllerPool {
     private final ProfileController profileController;
     private final InventoryController inventoryController;
     private final ThresholdController thresholdController;
+    private final FreezingController freezingController;
 
     public ControllerPool(GatewayPool gatewayPool) {
 
@@ -29,6 +30,7 @@ public class ControllerPool {
         profileController = new ProfileController(useCasePool);
         inventoryController = new InventoryController(useCasePool);
         thresholdController = new ThresholdController(useCasePool);
+        freezingController = new FreezingController(useCasePool);
 
     }
 
@@ -61,4 +63,8 @@ public class ControllerPool {
     }
 
     public ThresholdController getThresholdController() {return thresholdController;}
+
+    public FreezingController getFreezingController() {
+        return freezingController;
+    }
 }

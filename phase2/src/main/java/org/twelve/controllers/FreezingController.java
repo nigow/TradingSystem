@@ -71,12 +71,9 @@ public class FreezingController {
         statusManager.unbanAccount(accounts.get(chosenUser));
     }
 
-    public void changeSelectedAccount(int accountIndex) {
-        String name = accountIndex >= 0 ? accountRepository.getAccountStrings().get(accountIndex) : "";
-        freezingPresenter.setSelectedAccountName(name);
-    }
-
     public void updateAccountLists() {
+
+        /*
         List<String> accountList = new ArrayList<>();
         List<String> frozenAccountList = new ArrayList<>();
         List<String> bannedAccountList = new ArrayList<>();
@@ -94,5 +91,32 @@ public class FreezingController {
         freezingPresenter.setAllBannedAccounts(bannedAccountList);
         freezingPresenter.setAllFrozenAccounts(frozenAccountList);
         freezingPresenter.setAllAccounts(accountList);
+
+         */
+
+        // demo (don't plan on including since they're not permanent anyways)
+
+        // banned
+        freezingPresenter.setBannedAccounts(statusManager.getUsernamesToUnBan());
+        // frozen (todo)
+
+        // frozen (req)
+        freezingPresenter.setUnfreezeAccounts(statusManager.getUsernamesToUnfreeze());
+        // to freeze
+        freezingPresenter.setToFreezeAccounts(statusManager.getUsernamesToFreeze());
+
+        // regular (todo)
+
+        // on vacation
+        freezingPresenter.setVacationingAccounts(statusManager.getVacationUsernames());
+
+        // tcm (todo)
+
+        // mod (todo)
+
+        // admin
+        freezingPresenter.setAdminAccounts(statusManager.getAdminUsernames());
+
+
     }
 }

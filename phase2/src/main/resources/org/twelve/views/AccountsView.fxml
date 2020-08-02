@@ -41,8 +41,8 @@
    <center>
       <TableView fx:id="accountsTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="usernameCol" prefWidth="75.0" text="%username" />
+          <TableColumn fx:id="roleCol" prefWidth="75.0" text="%role" />
         </columns>
       </TableView>
    </center>

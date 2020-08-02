@@ -84,7 +84,8 @@ public class ViewBuilder {
 
             case ACCOUNTS:
 
-                return new AccountsView(windowHandler);
+                return new AccountsView<>(windowHandler, controllerPool.getFreezingController(),
+                        new UIFreezingPresenter(localizedResources));
         }
 
         return null;
