@@ -23,10 +23,6 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
 
     }
 
-    public void displayInventory(List<String> items) {
-        //TODO: figure out how to make the view observe this.
-    }
-
     @Override
     public void setInventoryItems(List<String> approvedItems, List<String> pendingItems) {
 
