@@ -1,0 +1,26 @@
+package org.twelve.presenters;
+
+
+import java.util.List;
+
+/**
+ * Interface for presenter that deals with the trade creation view.
+ * @author Ethan (follow @ethannomiddlenamelam on instagram)
+ */
+public interface TradeCreatorPresenter {
+    void setItemsToReceive(List<String> itemsToReceive);
+    List<String> getItemsToReceive();
+    void setItemsToGive(List<String> itemsToGive);
+    List<String> getItemsToGive();
+    void setAllUsers(List<String> allUsers);
+    List<String> getAllUsers();
+    void setSelectedUser(String user);
+    String getSelectedUser();
+    void setSelectedItemToLend(String itemToLend);
+    String getSelectedItemToLend();
+    void setSelectedItemToBorrow(String itemToBorrow);
+    String getSelectedItemToBorrow();
+
+
+
+}
