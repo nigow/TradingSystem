@@ -149,6 +149,46 @@ public class StatusManager {
         return usernamesToUnBan;
     }
 
+    public List<Integer> getAdminAccountIDs(){
+        List<Integer> adminAccountIDs = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(!hasPermission(accountID, Permissions.ADD_ADMIN)){
+                adminAccountIDs.add(accountID);
+            }
+        }
+        return adminAccountIDs;
+    }
+
+    public List<String> getAdminUsernames(){
+        List<String> adminAccountUsernames = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(!hasPermission(accountID, Permissions.ADD_ADMIN)){
+                adminAccountUsernames.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return adminAccountUsernames;
+    }
+
+    public List<Integer> getVacationAccountIDs(){
+        List<Integer> vacationAccountIDs = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(isVacationing(accountID)){
+                vacationAccountIDs.add(accountID);
+            }
+        }
+        return vacationAccountIDs;
+    }
+
+    public List<String> getVacationUsernames(){
+        List<String> vacationAccountUsernames = new ArrayList<>();
+        for(int accountID: accountRepository.getAccountIDs()){
+            if(isVacationing(accountID)){
+                vacationAccountUsernames.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return vacationAccountUsernames;
+    }
+
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
