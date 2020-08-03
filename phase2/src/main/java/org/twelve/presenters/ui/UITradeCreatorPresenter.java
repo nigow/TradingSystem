@@ -2,7 +2,6 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.TradeCreatorPresenter;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,6 +19,7 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     private String selectedUser;
     private String itemToLend;
     private String itemToBorrow;
+    private boolean createdTrade;
 
     private final ResourceBundle localizedResources;
 
@@ -49,13 +49,20 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
         propertyChangeSupport.firePropertyChange("itemsToGive", oldItems, itemsToGive);
     }
 
-    public List<String> getItemsToGive() {return itemsToGive;}
+    public boolean getCreatedTrade() {return createdTrade;}
 
+    public void setCreatedTrade(boolean createdTrade) {
+        boolean oldCreatedTrade = this.createdTrade;
+        this.createdTrade = createdTrade;
+        propertyChangeSupport.firePropertyChange("createdTrade", oldCreatedTrade, this.createdTrade);
+    }
+
+    public List<String> getItemsToGive() {return itemsToGive;}
 
     public void setAllUsers(List<String> allUsers) {
         List<String> oldUsers = this.allUsers;
         this.allUsers = allUsers;
-        propertyChangeSupport.firePropertyChange("itemToGive", oldUsers, allUsers);
+        propertyChangeSupport.firePropertyChange("allUsers", oldUsers, allUsers);
     }
 
     public List<String> getAllUsers() {return allUsers;}
@@ -73,7 +80,6 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
         this.itemToLend = item;
         propertyChangeSupport.firePropertyChange("itemToLend", oldItemtoLend, item);
     }
-
 
     public String getSelectedItemToLend() {return itemToLend;}
 

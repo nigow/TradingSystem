@@ -20,7 +20,8 @@ public interface TradeCreatorPresenter {
     String getSelectedItemToLend();
     void setSelectedItemToBorrow(String itemToBorrow);
     String getSelectedItemToBorrow();
-
+    boolean getCreatedTrade();
+    void setCreatedTrade(boolean createdTrade);
 
 
 }

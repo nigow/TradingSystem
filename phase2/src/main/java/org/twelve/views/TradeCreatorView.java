@@ -2,11 +2,15 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanStringProperty;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import org.twelve.controllers.TradeCreatorController;
 import org.twelve.presenters.TradeCreatorPresenter;
 import org.twelve.presenters.TradePresenter;
@@ -14,6 +18,7 @@ import org.twelve.presenters.ui.ObservablePresenter;
 
 import javafx.scene.control.ListView;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView,
@@ -31,6 +36,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     private ListView<String> yourItems;
     @FXML
     private ListView<String> peerItems;
+    @FXML
+    private TextField initiatorField;
 
     public TradeCreatorView(WindowHandler windowHandler, TradeCreatorController tradeCreatorController,
                             T tradeCreatorPresenter) {
@@ -52,14 +59,41 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            ObjectBinding<ObservableList<String>> tradeCreatorBinding = Bindings.createObjectBinding(() -> {
-                return FXCollections.observableArrayList(tradeCreatorPresenter.get)
-            })
+            ObjectBinding<ObservableList<String>> yourItemsBinding = Bindings.createObjectBinding(() -> {
 
-        }
+                return FXCollections.observableArrayList(tradeCreatorPresenter.getItemsToGive());
+
+            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("itemsToGive").build());
+
+            yourItems.itemsProperty().bind(yourItemsBinding);
+
+            ObjectBinding<ObservableList<String>> peerItemsBinding = Bindings.createObjectBinding(() -> {
+
+                return FXCollections.observableArrayList(tradeCreatorPresenter.getItemsToReceive());
+
+            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("itemsToReceive").build());
+
+            peerItems.itemsProperty().bind(peerItemsBinding);
+
+            ObjectBinding<ObservableList<String>> allAccounts = Bindings.createObjectBinding(() -> {
+
+                return FXCollections.observableArrayList(tradeCreatorPresenter.getAllUsers());
+
+            }, ReadOnlyJavaBeanStringPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
+
+            initiatorField.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                .bean(tradeCreatorPresenter).name("createdTrade").build());
+
+        } catch (NoSuchMethodException ignored) {}
+
+
+
     }
 
+    @FXML
     public void backClicked(ActionEvent actionEvent) {
         windowHandler.changeScene(Scenes.MENU);
     }
+
+
 }
