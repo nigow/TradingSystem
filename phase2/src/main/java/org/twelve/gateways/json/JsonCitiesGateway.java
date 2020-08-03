@@ -48,7 +48,7 @@ public class JsonCitiesGateway implements CitiesGateway {
                             json = jsonElement.getAsJsonObject();
                             int cityId = json.get("city_id").getAsInt();
                             String cityName = json.get("city_name").getAsString();
-                            cityManager.createCity(cityId, cityName);
+                            cityManager.addToCities(cityId, cityName);
                         }
                     }catch(Exception e){
                         e.printStackTrace();

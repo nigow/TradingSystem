@@ -14,7 +14,7 @@ public class InMemoryCitiesGateway implements CitiesGateway {
     @Override
     public boolean populate(CityManager cityManager) {
         for(int id: cities.keySet()){
-            cityManager.createCity(id, cities.get(id));
+            cityManager.addToCities(id, cities.get(id));
         }
         return true;
     }
