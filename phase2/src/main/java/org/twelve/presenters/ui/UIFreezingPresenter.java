@@ -157,7 +157,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         List<Map<String, String>> oldTrustedAccounts = this.trustedAccounts;
         this.trustedAccounts = new ArrayList<>();
         for (String trustedAccount: trustedAccounts) {
-            this.vacationingAccounts.add(Map.of("username", trustedAccount, "role", localizedResources.getString("Trusted")));
+            this.vacationingAccounts.add(Map.of("username", trustedAccount, "role", localizedResources.getString("trusted")));
 
         }
         propertyChangeSupport.firePropertyChange("vacationingAccounts", oldTrustedAccounts, this.trustedAccounts);
