@@ -81,6 +81,16 @@ public class FreezingController {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unTrustAccount(chosenUserID);
     }
+
+    public void modAccount(String chosenUser) {
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.modAccount(chosenUserID);
+    }
+
+    public void unmodAccount(String chosenUser) {
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.unmodAccount(chosenUserID);
+    }
     public void updateAccountLists() {
 
         /*
@@ -120,10 +130,10 @@ public class FreezingController {
         // on vacation
         freezingPresenter.setVacationingAccounts(statusManager.getVacationUsernames());
 
-        // tcm (todo)
-
-        // mod (todo)
-
+        // tcm
+        freezingPresenter.setTrustedAccounts(statusManager.getTrustedUsernames());
+        // mod
+        freezingPresenter.setModAccounts(statusManager.getModeratorUsernames());
         // admin
         freezingPresenter.setAdminAccounts(statusManager.getAdminUsernames());
 

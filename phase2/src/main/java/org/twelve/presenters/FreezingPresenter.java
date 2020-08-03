@@ -32,4 +32,7 @@ public interface FreezingPresenter {
 
     void setTrustedAccounts(List<String> trustedAccounts);
     List<Map<String, String>> getTrustedAccounts();
+
+    void setModAccounts(List<String> modAccounts);
+    List<Map<String, String>> getModAccounts();
 }
