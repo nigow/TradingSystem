@@ -16,10 +16,15 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
     private List<String> approvedItems;
     private List<String> pendingItems;
 
+    private String selectedItemName;
+    private String selectedItemDesc;
+
     public UIInventoryPresenter() {
 
         super();
-        setInventoryItems(new ArrayList<>(), new ArrayList<>()); // todo: figure out if we can initialize somewhere else
+        setSelectedItemName("");
+        setSelectedItemDesc("");
+        setInventoryItems(new ArrayList<>(), new ArrayList<>());
 
     }
 
@@ -43,5 +48,29 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
     @Override
     public List<String> getPendingItems() {
         return pendingItems;
+    }
+
+    @Override
+    public void setSelectedItemName(String name) {
+        String oldSelectedItemName = this.selectedItemName;
+        this.selectedItemName = name;
+        propertyChangeSupport.firePropertyChange("selectedItemName", oldSelectedItemName, this.selectedItemName);
+    }
+
+    @Override
+    public String getSelectedItemName() {
+        return selectedItemName;
+    }
+
+    @Override
+    public void setSelectedItemDesc(String desc) {
+        String oldSelectedItemDesc = this.selectedItemDesc;
+        this.selectedItemDesc = desc;
+        propertyChangeSupport.firePropertyChange("selectedItemDesc", oldSelectedItemDesc, this.selectedItemDesc);
+    }
+
+    @Override
+    public String getSelectedItemDesc() {
+        return selectedItemDesc;
     }
 }

@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -62,10 +63,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
         try {
 
-            // don't inline this, it won't work
-            ReadOnlyJavaBeanObjectProperty<List<String>> prop1 = ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create()
+            ReadOnlyJavaBeanObjectProperty<List<String>> approved = ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create()
                     .bean(inventoryPresenter).name("approvedItems").build();
-            ReadOnlyJavaBeanObjectProperty<List<String>> prop2 = ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create()
+            ReadOnlyJavaBeanObjectProperty<List<String>> pending = ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create()
                     .bean(inventoryPresenter).name("pendingItems").build();
 
             ObjectBinding<ObservableList<String>> inventoryBinding = Bindings.<ObservableList<String>>createObjectBinding(() -> {
@@ -75,9 +75,15 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
                 return FXCollections.observableArrayList(allItems);
 
-            }, prop1, prop2);
+            }, approved, pending);
 
             inventoryItems.itemsProperty().bind(inventoryBinding);
+
+            itemName.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(inventoryPresenter).name("selectedItemName").build());
+
+            itemDesc.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(inventoryPresenter).name("selectedItemDesc").build());
 
         } catch (NoSuchMethodException ignored) {}
 
@@ -99,6 +105,13 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
         // force recolor every time inventory is updated (doesn't happen by default if the contents are the same)
         inventoryItems.itemsProperty().addListener((observable, oldValue, newValue) -> {
             inventoryItems.refresh();
+        });
+
+        inventoryItems.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (newValue.intValue() != -1)
+                inventoryController.setSelectedItem(newValue.intValue());
+
         });
 
     }

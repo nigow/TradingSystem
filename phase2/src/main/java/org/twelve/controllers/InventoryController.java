@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.InventoryPresenter;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.ItemManager;
@@ -41,23 +42,28 @@ public class InventoryController {
      */
     private final InputHandler inputHandler;
 
+    private final ItemsGateway itemsGateway;
+
     /**
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
      *
      * @param useCasePool       the configuration for the program
      */
-    public InventoryController(UseCasePool useCasePool) {
+    public InventoryController(UseCasePool useCasePool, ItemsGateway itemsGateway) {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.statusManager = useCasePool.getStatusManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
         this.inputHandler = new InputHandler();
+        this.itemsGateway = itemsGateway;
     }
 
     /**
      * Calls the presenter to display a user's inventory
      */
     public void displayAllYourInventory() {
+
+        itemsGateway.populate(itemManager);
 
         List<String> approvedItems = new ArrayList<>();
 
@@ -116,12 +122,32 @@ public class InventoryController {
 
         }
 
-        displayAllYourInventory();
+        if (wasSuccessful) displayAllYourInventory();
         return wasSuccessful;
 
     }
 
     public void setInventoryPresenter(InventoryPresenter inventoryPresenter) {
         this.inventoryPresenter = inventoryPresenter;
+    }
+
+    public void setSelectedItem(int itemIndex) {
+
+        int approvedInvSize = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).size();
+        int itemId;
+
+        if (itemIndex < approvedInvSize) {
+
+            itemId = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex);
+
+        } else {
+
+            itemId = itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize);
+
+        }
+
+        inventoryPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
+        inventoryPresenter.setSelectedItemDesc(itemManager.getItemDescById(itemId));
+
     }
 }

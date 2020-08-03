@@ -28,7 +28,7 @@ public class ControllerPool {
         warehouseController = new WarehouseController(useCasePool);
         wishlistController = new WishlistController(useCasePool);
         profileController = new ProfileController(useCasePool);
-        inventoryController = new InventoryController(useCasePool);
+        inventoryController = new InventoryController(useCasePool, gatewayPool.getItemsGateway());
         thresholdController = new ThresholdController(useCasePool, gatewayPool.getThresholdsGateway());
         freezingController = new FreezingController(useCasePool);
 
