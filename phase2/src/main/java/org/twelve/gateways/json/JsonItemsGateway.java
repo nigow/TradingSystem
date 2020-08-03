@@ -53,13 +53,13 @@ public class JsonItemsGateway implements ItemsGateway {
                         for(JsonElement jsonElement: jsonArray){
                             json = jsonElement.getAsJsonObject();
                             int itemId = json.get("item_id").getAsInt();
-                            if(!existingItemIds.contains(itemId)){
+                            //if(!existingItemIds.contains(itemId)){
                                 String name = json.get("name").getAsString();
                                 String description = json.get("description").getAsString();
                                 Boolean isApproved = json.get("is_approved").getAsBoolean();
                                 int ownerID = json.get("owner_id").getAsInt();
                                 itemManager.addToItems(itemId, name, description, ownerID, isApproved);
-                            }
+                            //}
 
                         }
 

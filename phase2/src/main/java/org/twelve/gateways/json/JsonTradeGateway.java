@@ -55,7 +55,7 @@ public class JsonTradeGateway implements TradeGateway {
                         for(JsonElement jsonElement: jsonArray){
                             JsonObject json = jsonElement.getAsJsonObject();
                             int tradeId = json.get("trade_id").getAsInt();
-                            if(!existingTradeIds.contains(tradeId)){
+                            // if(!existingTradeIds.contains(tradeId)){
                                 boolean isPermanent = json.get("is_permanent").getAsBoolean();
                                 List<Integer> tradersIds = new ArrayList<>();
                                 for(String s: json.get("traders_ids").getAsString().split(" ")){
@@ -75,7 +75,7 @@ public class JsonTradeGateway implements TradeGateway {
                                 String time = json.get("time").getAsString();
                                 System.out.println(time);
                                 tradeManager.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, "a", location);
-                            }
+                            //}
                         }
 
 

@@ -53,7 +53,7 @@ public class JsonAccountGateway implements AccountGateway {
                         for(JsonElement jsonElement: jsonArray){
                             json = jsonElement.getAsJsonObject();
                             int accountId = json.get("account_id").getAsInt();
-                            if(!existingAccountIds.contains(accountId)){
+                            // if(!existingAccountIds.contains(accountId)){
                                 String username = json.get("username").getAsString();
                                 String password = json.get("password").getAsString();
                                 List<Integer> wishlist = new ArrayList<>();
@@ -70,7 +70,7 @@ public class JsonAccountGateway implements AccountGateway {
                                 // todo: add the actual location when server is updated
                                 accountRepository.createAccount(accountId, username, password, permissions, wishlist, "TBD");
 
-                            }
+                            //}
                         }
 
 
