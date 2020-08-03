@@ -65,11 +65,13 @@ public class FreezingController {
     public void ban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.banAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void unban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unbanAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void trust(String chosenUser) {
@@ -93,50 +95,49 @@ public class FreezingController {
     }
     public void updateAccountLists() {
 
-        /*
-        List<String> accountList = new ArrayList<>();
-        List<String> frozenAccountList = new ArrayList<>();
-        List<String> bannedAccountList = new ArrayList<>();
-
-        for (String s : accountRepository.getAccountStrings()) {
-            accountList.add(s);
-        }
-        for (String s : statusManager.getUsernamesToFreeze()) {
-            frozenAccountList.add(s);
-        }
-        for (String s : statusManager.getUsernamesToUnBan()) {
-            bannedAccountList.add(s);
-        }
-
-        freezingPresenter.setAllBannedAccounts(bannedAccountList);
-        freezingPresenter.setAllFrozenAccounts(frozenAccountList);
-        freezingPresenter.setAllAccounts(accountList);
-
-         */
-
         // demo (don't plan on including since they're not permanent anyways)
 
         // banned
-        freezingPresenter.setBannedAccounts(statusManager.getUsernamesToUnBan());
-        // frozen (todo)
+        List<String> bannedAccounts = statusManager.getUsernamesToUnBan();
+        freezingPresenter.setBannedAccounts(bannedAccounts);
 
         // frozen (req)
-        freezingPresenter.setUnfreezeAccounts(statusManager.getUsernamesToUnfreeze());
+        List<String> unfreezeAccounts = statusManager.getUsernamesToUnfreeze();
+        unfreezeAccounts.removeAll(bannedAccounts);
+        freezingPresenter.setUnfreezeAccounts(unfreezeAccounts);
+
+        // frozen
+        List<String> frozenAccounts = statusManager.getFrozenUsernames();
+        freezingPresenter.setFrozenAccounts(frozenAccounts);
+
         // to freeze
-        freezingPresenter.setToFreezeAccounts(statusManager.getUsernamesToFreeze());
+        List<String> toFreezeAccounts = statusManager.getUsernamesToFreeze();
+        freezingPresenter.setToFreezeAccounts(toFreezeAccounts);
 
-        // regular (todo)
+        // on vacation (we are not displaying this anymore)
+        // freezingPresenter.setVacationingAccounts(statusManager.getVacationUsernames());
 
-        // on vacation
-        freezingPresenter.setVacationingAccounts(statusManager.getVacationUsernames());
-
+        // we can't display all of these at once right now without duplication because an admin is recognized to be a mod, trusted, etc
         // tcm
-        freezingPresenter.setTrustedAccounts(statusManager.getTrustedUsernames());
+        // freezingPresenter.setTrustedAccounts(statusManager.getTrustedUsernames());
         // mod
-        freezingPresenter.setModAccounts(statusManager.getModeratorUsernames());
+        // freezingPresenter.setModAccounts(statusManager.getModeratorUsernames());
         // admin
-        freezingPresenter.setAdminAccounts(statusManager.getAdminUsernames());
+        List<String> adminAccounts = statusManager.getAdminUsernames();
+        adminAccounts.removeAll(bannedAccounts);
+        freezingPresenter.setAdminAccounts(adminAccounts);
 
+        // regular (todo: we need a better way of distinguishing accounts)
+        List<String> regularAccounts = new ArrayList<>();
+        for (int accountId : accountRepository.getAccountIDs()) {
+            regularAccounts.add(accountRepository.getUsernameFromID(accountId));
+        }
+        regularAccounts.removeAll(bannedAccounts);
+        regularAccounts.removeAll(unfreezeAccounts);
+        regularAccounts.removeAll(frozenAccounts);
+        regularAccounts.removeAll(toFreezeAccounts);
+        regularAccounts.removeAll(adminAccounts);
 
+        freezingPresenter.setRegularAccounts(regularAccounts);
     }
 }

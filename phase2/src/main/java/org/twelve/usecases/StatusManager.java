@@ -364,31 +364,43 @@ public class StatusManager {
     public void banAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.LOGIN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void unbanAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.LOGIN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void trustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.CONFIRM_ITEM);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void unTrustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CONFIRM_ITEM);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void modAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.CAN_BAN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void unmodAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CAN_BAN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
 }

@@ -9,13 +9,14 @@ import java.util.Map;
  * @author Ethan
  */
 public interface FreezingPresenter {
-    // void setAllAccounts(List<String> allAccounts);
-    // List<String> getAllAccounts();
 
-    void setBannedAccounts(List<String> allBannedAccounts);
+    void setRegularAccounts(List<String> regularAccounts);
+    List<Map<String, String>> getRegularAccounts();
+
+    void setBannedAccounts(List<String> bannedAccounts);
     List<Map<String, String>> getBannedAccounts();
 
-    void setFrozenAccounts(List<String> allFrozenAccounts);
+    void setFrozenAccounts(List<String> frozenAccounts);
     List<Map<String, String>> getFrozenAccounts();
 
     void setUnfreezeAccounts(List<String> unfreezeAccounts);

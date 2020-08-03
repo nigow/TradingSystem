@@ -5,13 +5,13 @@ import org.twelve.presenters.FreezingPresenter;
 import java.util.*;
 
 public class UIFreezingPresenter extends ObservablePresenter implements FreezingPresenter {
-    // private List<String> allAccounts;
 
     private List<Map<String, String>> bannedAccounts;
     private List<Map<String, String>> frozenAccounts;
     private List<Map<String, String>> unfreezeAccounts;
     private List<Map<String, String>> toFreezeAccounts;
     private List<Map<String, String>> trustedAccounts;
+    private List<Map<String, String>> regularAccounts;
 
     private List<Map<String, String>> vacationingAccounts;
     private List<Map<String, String>> modAccounts;
@@ -35,6 +35,25 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         setAdminAccounts(new ArrayList<>());
         setTrustedAccounts(new ArrayList<>());
         setModAccounts(new ArrayList<>());
+
+        setRegularAccounts(new ArrayList<>());
+    }
+
+    @Override
+    public void setRegularAccounts(List<String> regularAccounts) {
+        List<Map<String, String>> oldRegularAccounts = this.regularAccounts;
+        this.regularAccounts = new ArrayList<>();
+        for (String regularAccount : regularAccounts) {
+
+            this.regularAccounts.add(Map.of("username", regularAccount, "role", localizedResources.getString("regular")));
+
+        }
+        propertyChangeSupport.firePropertyChange("regularAccounts", oldRegularAccounts, this.regularAccounts);
+    }
+
+    @Override
+    public List<Map<String, String>> getRegularAccounts() {
+        return regularAccounts;
     }
 
     @Override
