@@ -61,7 +61,8 @@ public class ViewBuilder {
 
             case TRADE_CREATOR:
 
-                //return new TradeCreatorView(windowHandler);
+                //Tairi: I edited this
+                return new TradeCreatorView(windowHandler, controllerPool.getTradeCreatorController(), new UITradeCreatorPresenter(localizedResources));
 
             case WAREHOUSE:
 

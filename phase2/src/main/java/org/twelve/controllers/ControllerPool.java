@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.controllers.console.TradeController;
 import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.UseCasePool;
@@ -15,6 +16,7 @@ public class ControllerPool {
     private final InventoryController inventoryController;
     private final ThresholdController thresholdController;
     private final FreezingController freezingController;
+    private final TradeCreatorController tradeCreatorController;
 
     public ControllerPool(GatewayPool gatewayPool) {
 
@@ -31,7 +33,7 @@ public class ControllerPool {
         inventoryController = new InventoryController(useCasePool, gatewayPool);
         thresholdController = new ThresholdController(useCasePool, gatewayPool);
         freezingController = new FreezingController(useCasePool);
-
+        tradeCreatorController = new TradeCreatorController(useCasePool);
     }
 
     public LoginController getLoginController() {
@@ -67,4 +69,6 @@ public class ControllerPool {
     public FreezingController getFreezingController() {
         return freezingController;
     }
+
+    public TradeCreatorController getTradeCreatorController() {return tradeCreatorController;}
 }
