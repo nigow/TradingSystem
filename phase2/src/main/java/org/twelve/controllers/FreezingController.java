@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.Account;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.StatusManager;
@@ -48,29 +49,38 @@ public class FreezingController {
     /**
      * Freezes an account that should be frozen.
      */
-    public void freeze(int chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
-        List<Integer> accounts = statusManager.getAccountIDsToFreeze();
-        statusManager.freezeAccount(accounts.get(chosenUser));
+    public void freeze(String chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.freezeAccount(chosenUserID);
     }
 
     /**
      * Unfreeze an account that has requested to be unfrozen
      */
-    public void unfreeze(int chosenUser) {
-        List<Integer> accounts = statusManager.getAccountsToUnfreeze();
-        statusManager.unfreezeAccount(accounts.get(chosenUser));
+    public void unfreeze(String chosenUser) {
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.unfreezeAccount(chosenUserID);
     }
 
-    public void ban(int chosenUser) {
-        List<Integer> accounts = statusManager.getAccountIDsToBan();
-        statusManager.banAccount(accounts.get(chosenUser));
+    public void ban(String chosenUser) {
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.banAccount(chosenUserID);
     }
 
-    public void unban(int chosenUser) {
-        List<Integer> accounts = statusManager.getAccountIDsToUnBan();
-        statusManager.unbanAccount(accounts.get(chosenUser));
+    public void unban(String chosenUser) {
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.unbanAccount(chosenUserID);
     }
 
+    public void trust(String chosenUser) {
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.trustAccount(chosenUserID);
+    }
+    
+    public void untrustAccount(String chosenUser) {
+        int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
+        statusManager.unTrustAccount(chosenUserID);
+    }
     public void updateAccountLists() {
 
         /*

@@ -30,4 +30,6 @@ public interface FreezingPresenter {
     void setAdminAccounts(List<String> adminAccounts);
     List<Map<String, String>> getAdminAccounts();
 
+    void setTrustedAccounts(List<String> trustedAccounts);
+    List<Map<String, String>> getTrustedAccounts();
 }

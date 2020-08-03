@@ -95,4 +95,46 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         }
 
     }
+    @FXML
+    public void trustClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.trust(trusted);
+    }
+    @FXML
+    public void banClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.ban(trusted);
+    }
+    @FXML
+    public void untrustClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.untrustAccount(trusted);
+    }
+    @FXML
+    public void modClicked(ActionEvent actionEvent) {
+    }
+    @FXML
+    public void unmodClicked(ActionEvent actionEvent) {
+    }
+    @FXML
+    public void freezeClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.freeze(trusted);
+    }
+    @FXML
+    public void unfreezeClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.unfreeze(trusted);
+    }
+    @FXML
+    public void unbanClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.unban(trusted);
+    }
 }

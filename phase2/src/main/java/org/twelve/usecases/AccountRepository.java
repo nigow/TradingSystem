@@ -155,4 +155,14 @@ public class AccountRepository {
         accountGateway.save(account.getAccountID(), account.getUsername(),
                 account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), true);
     }
+
+    public int getIDFromUsername(String username) {
+        int userID = 0;
+        for (Account account: accounts.values()) {
+            if (username.equals(account.getUsername())) {
+                userID = account.getAccountID();
+            }
+        }
+        return userID;
+    }
 }

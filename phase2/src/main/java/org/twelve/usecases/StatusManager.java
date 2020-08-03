@@ -59,6 +59,16 @@ public class StatusManager {
         return accountsToFreeze;
     }
 
+    public List<Account> getAccountsToFreeze() {
+        List<Account> accountsToFreeze = new ArrayList<>();
+        for (Account account: accountRepository.getAccounts()) {
+            if (canBeFrozen(account.getAccountID())) {
+                accountsToFreeze.add(account);
+            }
+        }
+        return accountsToFreeze;
+    }
+
     /**
      * Gets a list of accounts that have been frozen and have requested to be unfrozen.
      *
