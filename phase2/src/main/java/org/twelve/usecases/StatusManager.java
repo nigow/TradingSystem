@@ -162,7 +162,7 @@ public class StatusManager {
     public List<Integer> getAdminAccountIDs(){
         List<Integer> adminAccountIDs = new ArrayList<>();
         for(int accountID: accountRepository.getAccountIDs()){
-            if(!hasPermission(accountID, Permissions.ADD_ADMIN)){
+            if(hasPermission(accountID, Permissions.ADD_ADMIN)){
                 adminAccountIDs.add(accountID);
             }
         }
@@ -172,7 +172,7 @@ public class StatusManager {
     public List<String> getAdminUsernames(){
         List<String> adminAccountUsernames = new ArrayList<>();
         for(int accountID: accountRepository.getAccountIDs()){
-            if(!hasPermission(accountID, Permissions.ADD_ADMIN)){
+            if(hasPermission(accountID, Permissions.ADD_ADMIN)){
                 adminAccountUsernames.add(accountRepository.getUsernameFromID(accountID));
             }
         }
