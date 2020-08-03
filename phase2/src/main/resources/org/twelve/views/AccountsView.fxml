@@ -6,34 +6,21 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.AccountsView">
    <bottom>
-      <GridPane hgap="10.0" BorderPane.alignment="CENTER">
+      <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="10.0" />
          </BorderPane.margin>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
          <children>
             <Button mnemonicParsing="false" text="%trust" />
-            <Button mnemonicParsing="false" text="%ban" GridPane.columnIndex="6" />
-            <Button mnemonicParsing="false" text="%untrust" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" text="%mod" GridPane.columnIndex="2" />
-            <Button mnemonicParsing="false" text="%unmod" GridPane.columnIndex="3" />
-            <Button mnemonicParsing="false" text="%freeze" GridPane.columnIndex="4" />
-            <Button mnemonicParsing="false" text="%unfreeze" GridPane.columnIndex="5" />
-            <Button mnemonicParsing="false" text="%unban" GridPane.columnIndex="7" />
+            <Button mnemonicParsing="false" text="%untrust" />
+            <Button mnemonicParsing="false" text="%mod" />
+            <Button mnemonicParsing="false" text="%unmod" />
+            <Button mnemonicParsing="false" text="%freeze" />
+            <Button mnemonicParsing="false" text="%unfreeze" />
+            <Button mnemonicParsing="false" text="%ban" />
+            <Button mnemonicParsing="false" text="%unban" />
          </children>
-      </GridPane>
+      </HBox>
    </bottom>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
