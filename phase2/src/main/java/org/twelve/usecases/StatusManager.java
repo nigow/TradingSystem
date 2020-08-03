@@ -229,6 +229,16 @@ public class StatusManager {
         return moderatorUsernames;
     }
 
+    public List<String> getFrozenUsernames() {
+        List<String> frozenUsernames = new ArrayList<>();
+        for (int accountID:accountRepository.getAccountIDs()){
+            if (isFrozen(accountID) && !isPending(accountID)){
+                frozenUsernames.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return frozenUsernames;
+    }
+
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
