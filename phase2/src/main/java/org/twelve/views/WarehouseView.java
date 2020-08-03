@@ -72,7 +72,7 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
             // workaround for lack of casting (or custom return) in JavaBean*PropertyBuilder
             // there is a type incompatibility between native observer classes and javafx controls (javafx controls will ONLY work with its own observer classes)
-            ObjectBinding<ObservableList<String>> binding = Bindings.<ObservableList<String>>createObjectBinding(() -> {
+            ObjectBinding<ObservableList<String>> binding = Bindings.createObjectBinding(() -> {
 
                 return FXCollections.observableArrayList(warehousePresenter.getPendingItems());
 
@@ -85,9 +85,7 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
             itemDescLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(warehousePresenter).name("selectedItemDesc").build());
 
-        } catch (NoSuchMethodException ignored) {
-            // impossible, im enforcing presence of methods via generics
-        }
+        } catch (NoSuchMethodException ignored) {} // impossible, im enforcing presence of methods via generics
 
         pendingItems.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
 

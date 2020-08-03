@@ -63,7 +63,7 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
         try {
 
-            ObjectBinding<ObservableList<String>> wishlistBinding = Bindings.<ObservableList<String>>createObjectBinding(() -> {
+            ObjectBinding<ObservableList<String>> wishlistBinding = Bindings.createObjectBinding(() -> {
 
                 return FXCollections.observableArrayList(wishlistPresenter.getWishlistItems());
 
@@ -71,7 +71,7 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
             wishlistItems.itemsProperty().bind(wishlistBinding);
 
-            ObjectBinding<ObservableList<String>> warehouseBinding = Bindings.<ObservableList<String>>createObjectBinding(() -> {
+            ObjectBinding<ObservableList<String>> warehouseBinding = Bindings.createObjectBinding(() -> {
 
                 return FXCollections.observableArrayList(wishlistPresenter.getWarehouseItems());
 

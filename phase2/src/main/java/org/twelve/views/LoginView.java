@@ -30,26 +30,6 @@ public class LoginView implements SceneView {
     @FXML
     private void loginAttempted(ActionEvent actionEvent) {
 
-        /*
-        HomeController hc = new HomeController(null, null, null);
-
-        hc. ? we can't pass info from view to controller RIPPPPP
-
-        solution 1: augment presenters with ability to pass info from view to controller (more responsbility in presenters)
-        solution 2: make controller methods take in parameters (sounds more reasonable tbh)
-
-        Presenter presenter = new Presenter();
-
-        String username = usernameBox.getText();
-
-        presenter.setUsername(username);
-
-        // inside controller
-
-        loginUseCase.login(presenter.getUsername(), etc...)
-
-        */
-
         if (loginController.logIn(usernameBox.getText(), passwordBox.getText())) {
             windowHandler.changeScene(Scenes.MENU);
             failMessageLabel.setVisible(false);

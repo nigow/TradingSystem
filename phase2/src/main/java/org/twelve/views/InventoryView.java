@@ -68,7 +68,7 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
             ReadOnlyJavaBeanObjectProperty<List<String>> pending = ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create()
                     .bean(inventoryPresenter).name("pendingItems").build();
 
-            ObjectBinding<ObservableList<String>> inventoryBinding = Bindings.<ObservableList<String>>createObjectBinding(() -> {
+            ObjectBinding<ObservableList<String>> inventoryBinding = Bindings.createObjectBinding(() -> {
 
                 List<String> allItems = new ArrayList<>(inventoryPresenter.getApprovedItems());
                 allItems.addAll(inventoryPresenter.getPendingItems());
@@ -87,7 +87,7 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
         } catch (NoSuchMethodException ignored) {}
 
-        inventoryItems.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        inventoryItems.setCellFactory(new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> param) {
                 return new ListCell<>() {
