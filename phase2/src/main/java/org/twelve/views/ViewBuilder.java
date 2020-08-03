@@ -61,7 +61,7 @@ public class ViewBuilder {
 
             case TRADE_CREATOR:
 
-                return new TradeCreatorView(windowHandler);
+                //return new TradeCreatorView(windowHandler);
 
             case WAREHOUSE:
 
