@@ -1,5 +1,9 @@
 package org.twelve.views;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +49,13 @@ public class TradeCreatorView<T extends ObservablePresenter & TradePresenter> im
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        try {
+            ObjectBinding<ObservableList<String>> tradeCreatorBinding = Bindings.createObjectBinding(() -> {
+                return FXCollections.observableArrayList(tradeCreatorPresenter.get)
+            })
+
+        }
     }
 
     public void backClicked(ActionEvent actionEvent) {
