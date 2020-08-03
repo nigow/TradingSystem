@@ -119,9 +119,15 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     }
     @FXML
     public void modClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.modAccount(trusted);
     }
     @FXML
     public void unmodClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.unmodAccount(trusted);
     }
     @FXML
     public void freezeClicked(ActionEvent actionEvent) {

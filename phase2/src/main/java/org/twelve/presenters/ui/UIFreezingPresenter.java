@@ -175,10 +175,10 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         List<Map<String, String>> oldModAccounts = this.modAccounts;
         this.modAccounts = new ArrayList<>();
         for (String modAccount: modAccounts) {
-            this.vacationingAccounts.add(Map.of("username", modAccount, "role", localizedResources.getString("Moderator")));
+            this.modAccounts.add(Map.of("username", modAccount, "role", localizedResources.getString("mod")));
 
         }
-        propertyChangeSupport.firePropertyChange("modAccounts", oldModAccounts, this.trustedAccounts);
+        propertyChangeSupport.firePropertyChange("modAccounts", oldModAccounts, this.modAccounts);
     }
 
     @Override
