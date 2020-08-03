@@ -25,11 +25,11 @@ public class ControllerPool {
         loginController = new LoginController(useCasePool);
         registrationController = new RegistrationController(useCasePool);
         menuController = new MenuController(useCasePool);
-        warehouseController = new WarehouseController(useCasePool);
-        wishlistController = new WishlistController(useCasePool);
+        warehouseController = new WarehouseController(useCasePool, gatewayPool);
+        wishlistController = new WishlistController(useCasePool, gatewayPool);
         profileController = new ProfileController(useCasePool);
-        inventoryController = new InventoryController(useCasePool, gatewayPool.getItemsGateway());
-        thresholdController = new ThresholdController(useCasePool, gatewayPool.getThresholdsGateway());
+        inventoryController = new InventoryController(useCasePool, gatewayPool);
+        thresholdController = new ThresholdController(useCasePool, gatewayPool);
         freezingController = new FreezingController(useCasePool);
 
     }

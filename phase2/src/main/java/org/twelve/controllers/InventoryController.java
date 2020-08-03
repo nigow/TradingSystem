@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.gateways.GatewayPool;
 import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.InventoryPresenter;
 import org.twelve.usecases.StatusManager;
@@ -50,12 +51,12 @@ public class InventoryController {
      *
      * @param useCasePool       the configuration for the program
      */
-    public InventoryController(UseCasePool useCasePool, ItemsGateway itemsGateway) {
+    public InventoryController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.statusManager = useCasePool.getStatusManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
         this.inputHandler = new InputHandler();
-        this.itemsGateway = itemsGateway;
+        this.itemsGateway = gatewayPool.getItemsGateway();
     }
 
     /**

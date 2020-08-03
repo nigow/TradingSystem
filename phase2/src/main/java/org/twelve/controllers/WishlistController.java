@@ -1,10 +1,10 @@
 package org.twelve.controllers;
 
+import org.twelve.gateways.AccountGateway;
+import org.twelve.gateways.GatewayPool;
+import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.WishlistPresenter;
-import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.SessionManager;
-import org.twelve.usecases.UseCasePool;
-import org.twelve.usecases.WishlistManager;
+import org.twelve.usecases.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +15,26 @@ public class WishlistController {
     private SessionManager sessionManager;
     private ItemManager itemManager;
     private WishlistPresenter wishlistPresenter;
+    private AccountRepository accountRepository;
 
-    public WishlistController(UseCasePool useCasePool) {
+    private AccountGateway accountGateway;
+    private ItemsGateway itemsGateway;
+
+    public WishlistController(UseCasePool useCasePool, GatewayPool gatewayPool) {
 
         this.wishlistManager = useCasePool.getWishlistManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.itemManager = useCasePool.getItemManager();
+        this.accountRepository = useCasePool.getAccountRepository();
+        this.accountGateway = gatewayPool.getAccountGateway();
+        this.itemsGateway = gatewayPool.getItemsGateway();
 
     }
 
     public void updateItems() {
+
+        accountGateway.populate(accountRepository);
+        itemsGateway.populate(itemManager);
 
         List<String> wishlistItems = new ArrayList<>();
 

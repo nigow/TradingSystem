@@ -1,5 +1,7 @@
 package org.twelve.controllers;
 
+import org.twelve.gateways.GatewayPool;
+import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.UseCasePool;
@@ -11,10 +13,12 @@ public class WarehouseController {
 
     private final ItemManager itemManager;
     private WarehousePresenter warehousePresenter;
+    private final ItemsGateway itemsGateway;
 
-    public WarehouseController(UseCasePool useCasePool) {
+    public WarehouseController(UseCasePool useCasePool, GatewayPool gatewayPool) {
 
         itemManager = useCasePool.getItemManager();
+        this.itemsGateway = gatewayPool.getItemsGateway();
 
     }
 
@@ -40,6 +44,8 @@ public class WarehouseController {
     }
 
     public void updatePendingItems() {
+
+        itemsGateway.populate(itemManager);
 
         List<String> pendingItems = new ArrayList<>();
 

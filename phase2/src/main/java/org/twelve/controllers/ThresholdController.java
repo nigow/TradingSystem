@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.gateways.GatewayPool;
 import org.twelve.gateways.ThresholdsGateway;
 import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.ThresholdRepository;
@@ -27,9 +28,9 @@ public class ThresholdController {
      * Initializes the class with thresholdRepository from useCasePool
      * @param useCasePool the useCasePool for getting thresholdRepository
      */
-    public ThresholdController(UseCasePool useCasePool, ThresholdsGateway thresholdsGateway) {
+    public ThresholdController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         thresholdRepository = useCasePool.getThresholdRepository();
-        this.thresholdsGateway = thresholdsGateway;
+        this.thresholdsGateway = gatewayPool.getThresholdsGateway();
     }
 
     /**
