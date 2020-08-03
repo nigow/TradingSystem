@@ -94,9 +94,15 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
                     @Override
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
-                        if (inventoryPresenter.getPendingItems().contains(item))
-                            setTextFill(Color.GRAY);
-                        setText(item);
+
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            if (inventoryPresenter.getPendingItems().contains(item))
+                                setTextFill(Color.GRAY);
+                            setText(item);
+                        }
                     }
                 };
             }
