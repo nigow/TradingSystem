@@ -27,10 +27,12 @@ public class LoginManager {
                 storedAccount.getPermissions().contains(Permissions.LOGIN);
     }
 
-    public void changePassword(int accountID, String newPassword){
+    public boolean changePassword(int accountID, String oldPassword, String newPassword){
         Account account = accountRepository.getAccountFromID(accountID);
         account.setPassword(newPassword);
+        return account.getPassword().equals(oldPassword);
     }
+
 
 
 
