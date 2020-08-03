@@ -26,4 +26,12 @@ public class LoginManager {
         return storedAccount.getPassword().equals(password) &&
                 storedAccount.getPermissions().contains(Permissions.LOGIN);
     }
+
+    public void changePassword(int accountID, String newPassword){
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.setPassword(newPassword);
+    }
+
+
+
 }
