@@ -6,14 +6,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.ItemsGateway;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.ItemUtility;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JsonItemsGateway implements ItemsGateway {
     private final String getAllItemsUrl;
@@ -30,10 +27,10 @@ public class JsonItemsGateway implements ItemsGateway {
 
     @Override
     public boolean populate(ItemManager itemManager) {
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection urlConnection;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
-        List<Integer> existingItemIds = itemManager.getAllItemIds();
+        //List<Integer> existingItemIds = itemManager.getAllItemIds();
         try{
             URL url = new URL(getAllItemsUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -56,7 +53,7 @@ public class JsonItemsGateway implements ItemsGateway {
                             //if(!existingItemIds.contains(itemId)){
                                 String name = json.get("name").getAsString();
                                 String description = json.get("description").getAsString();
-                                Boolean isApproved = json.get("is_approved").getAsBoolean();
+                                boolean isApproved = json.get("is_approved").getAsBoolean();
                                 int ownerID = json.get("owner_id").getAsInt();
                                 itemManager.addToItems(itemId, name, description, ownerID, isApproved);
                             //}
@@ -72,16 +69,17 @@ public class JsonItemsGateway implements ItemsGateway {
         }catch(IOException e){
             e.printStackTrace();
             return false;
-        }finally{
-            try{
-                inputStream.close();
-                bufferedReader.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }finally{
-                return true;
-            }
         }
+        try{
+            assert inputStream != null;
+            inputStream.close();
+            bufferedReader.close();
+            return true;
+        }catch(IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     @Override
@@ -93,9 +91,9 @@ public class JsonItemsGateway implements ItemsGateway {
         json.addProperty("is_approved", isApproved);
         json.addProperty("owner_id", ownerId);
 
-        HttpURLConnection con = null;
-        OutputStream outputStream = null;
-        URL url = null;
+        HttpURLConnection con;
+        OutputStream outputStream;
+        URL url;
         try{
 
             if(newItem) url = new URL(createItemUrl);
@@ -115,14 +113,13 @@ public class JsonItemsGateway implements ItemsGateway {
         }catch(IOException e){
             e.printStackTrace();
             return false;
-        }finally{
-            try{
-                outputStream.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }finally{
-                return true;
-            }
+        }
+        try{
+            outputStream.close();
+            return true;
+        }catch(IOException e){
+            e.printStackTrace();
+            return false;
         }
 
     }

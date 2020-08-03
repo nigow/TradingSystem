@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.twelve.entities.Account;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.usecases.AccountRepository;
 
@@ -13,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JsonAccountGateway implements AccountGateway {
@@ -30,10 +30,10 @@ public class JsonAccountGateway implements AccountGateway {
 
     @Override
     public boolean populate(AccountRepository accountRepository) {
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection urlConnection;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
-        List<Integer> existingAccountIds = accountRepository.getAccountIDs();
+        //List<Integer> existingAccountIds = accountRepository.getAccountIDs();
         try{
             URL url = new URL(getAllAccountsUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -53,24 +53,20 @@ public class JsonAccountGateway implements AccountGateway {
                         for(JsonElement jsonElement: jsonArray){
                             json = jsonElement.getAsJsonObject();
                             int accountId = json.get("account_id").getAsInt();
-                            // if(!existingAccountIds.contains(accountId)){
-                                String username = json.get("username").getAsString();
-                                String password = json.get("password").getAsString();
-                                List<Integer> wishlist = new ArrayList<>();
+                            String username = json.get("username").getAsString();
+                            String password = json.get("password").getAsString();
+                            List<Integer> wishlist = new ArrayList<>();
 
 
-                                for(String s: json.get("wishlist").getAsString().split(" ")){
-                                    wishlist.add(Integer.parseInt(s));
-                                }
-                                List<String> permissions = new ArrayList<>();
-                                for(String s: json.get("permissions").getAsString().split(" ")){
-                                    permissions.add(s);
-                                }
+                            for(String s: json.get("wishlist").getAsString().split(" ")){
+                                wishlist.add(Integer.parseInt(s));
+                            }
+                            List<String> permissions = new ArrayList<>();
+                            Collections.addAll(permissions, json.get("permissions").getAsString().split(" "));
 
-                                // todo: add the actual location when server is updated
-                                accountRepository.createAccount(accountId, username, password, permissions, wishlist, "TBD");
+                            // todo: add the actual location when server is updated
+                            accountRepository.createAccount(accountId, username, password, permissions, wishlist, "TBD");
 
-                            //}
                         }
 
 
@@ -80,17 +76,19 @@ public class JsonAccountGateway implements AccountGateway {
                     }
                 }
             }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+            return false;
+        }
+        try{
+            assert inputStream != null;
+            inputStream.close();
+            bufferedReader.close();
+            return true;
         }catch(IOException e){
             e.printStackTrace();
-        }finally{
-            try{
-                inputStream.close();
-                bufferedReader.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }finally{
-                return true;
-            }
+            return false;
         }
     }
 
@@ -109,11 +107,11 @@ public class JsonAccountGateway implements AccountGateway {
         json.addProperty("permissions", permissionsString);
 
         // todo: uncomment when server is updated
-        // json.addProperty("location", location);
+        // json.addProperty("city", city);
 
-        HttpURLConnection con = null;
-        OutputStream outputStream = null;
-        URL url = null;
+        HttpURLConnection con;
+        OutputStream outputStream;
+        URL url;
         try{
             if(newAccount) url = new URL(createAccountUrl);
             else url = new URL(updateAccountUrl);
@@ -138,18 +136,13 @@ public class JsonAccountGateway implements AccountGateway {
         }catch(IOException e){
             e.printStackTrace();
             return false;
-        }finally{
-            try{
-                outputStream.close();
-                /*
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                */
-            }catch(IOException e){
-                e.printStackTrace();
-            }finally{
-                return true;
-            }
+        }
+        try{
+            outputStream.close();
+            return true;
+        }catch(IOException e){
+            e.printStackTrace();
+            return false;
         }
 
     }
