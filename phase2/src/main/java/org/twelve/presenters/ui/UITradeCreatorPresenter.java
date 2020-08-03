@@ -62,7 +62,7 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
 
     public void setSelectedUser(String user) {
         String oldSelectedUser = this.selectedUser;
-        this.selectedUser = MessageFormat.format(localizedResources.getString("User name"), user);
+        this.selectedUser = user;
         propertyChangeSupport.firePropertyChange("selectedUser", oldSelectedUser, user);
     }
 
@@ -70,7 +70,7 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
 
     public void setSelectedItemToLend(String item) {
         String oldItemtoLend = this.itemToLend;
-        this.itemToLend = MessageFormat.format(localizedResources.getString("Item to lend"), item);
+        this.itemToLend = item;
         propertyChangeSupport.firePropertyChange("itemToLend", oldItemtoLend, item);
     }
 

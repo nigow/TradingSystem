@@ -16,7 +16,8 @@ import javafx.scene.control.ListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TradeCreatorView<T extends ObservablePresenter & TradePresenter> implements SceneView, Initializable {
+public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView,
+        Initializable {
 
     private WindowHandler windowHandler;
 
@@ -38,7 +39,7 @@ public class TradeCreatorView<T extends ObservablePresenter & TradePresenter> im
         this.tradeCreatorController = tradeCreatorController;
         this.tradeCreatorPresenter = tradeCreatorPresenter;
 
-        this.tradeCreatorController.setTradeCreatorPresenter((TradeCreatorPresenter) this.tradeCreatorPresenter);
+        this.tradeCreatorController.setTradeCreatorPresenter(this.tradeCreatorPresenter);
 
     }
 
