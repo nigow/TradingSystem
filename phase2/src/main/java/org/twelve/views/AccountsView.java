@@ -74,6 +74,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> admin =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("adminAccounts").build();
 
+            ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> mod =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("modAccounts").build();
+
             accountsTable.itemsProperty().bind(Bindings.createObjectBinding(() -> {
 
                 List<Map<String, String>> accounts = new ArrayList<>(banned.get());
@@ -82,10 +85,11 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
                 accounts.addAll(toFreeze.get());
                 accounts.addAll(vacationing.get());
                 accounts.addAll(admin.get());
+                accounts.addAll(mod.get());
 
                 return FXCollections.observableArrayList(accounts);
 
-            }, banned, frozen, unfreeze, toFreeze, vacationing, admin));
+            }, banned, frozen, unfreeze, toFreeze, vacationing, admin, mod));
 
             usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
             roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
@@ -115,9 +119,15 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     }
     @FXML
     public void modClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.modAccount(trusted);
     }
     @FXML
     public void unmodClicked(ActionEvent actionEvent) {
+        Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
+        String trusted = selected.get("username");
+        freezingController.unmodAccount(trusted);
     }
     @FXML
     public void freezeClicked(ActionEvent actionEvent) {

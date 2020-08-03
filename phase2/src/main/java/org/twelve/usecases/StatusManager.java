@@ -219,6 +219,16 @@ public class StatusManager {
         return trustedUsernames;
     }
 
+    public List<String> getModeratorUsernames() {
+        List<String> moderatorUsernames = new ArrayList<>();
+        for (int accountID:accountRepository.getAccountIDs()){
+            if (isMod(accountID)){
+                moderatorUsernames.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return moderatorUsernames;
+    }
+
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
@@ -321,6 +331,10 @@ public class StatusManager {
         return hasPermission(accountID, Permissions.CONFIRM_ITEM);
     }
 
+    public boolean isMod(int accountID){
+        return hasPermission(accountID,Permissions.CAN_BAN);
+    }
+
     public void requestVacation(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_VACATION);
@@ -357,6 +371,14 @@ public class StatusManager {
         account.removePermission(Permissions.CONFIRM_ITEM);
     }
 
+    public void modAccount(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.addPermission(Permissions.CAN_BAN);
+    }
 
+    public void unmodAccount(int accountID) {
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.removePermission(Permissions.CAN_BAN);
+    }
 
 }
