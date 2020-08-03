@@ -9,12 +9,14 @@ public class JsonGatewayPool implements GatewayPool {
     private ItemsGateway itemsGateway;
     private ThresholdsGateway thresholdsGateway;
     private TradeGateway tradeGateway;
+    private CitiesGateway citiesGateway;
 
     public JsonGatewayPool() {
         accountGateway = new JsonAccountGateway();
         itemsGateway = new JsonItemsGateway();
         thresholdsGateway = new JsonThresholdsGateway();
         tradeGateway = new JsonTradeGateway();
+        citiesGateway = new JsonCitiesGateway();
     }
 
     @Override
@@ -36,4 +38,7 @@ public class JsonGatewayPool implements GatewayPool {
     public TradeGateway getTradeGateway() {
         return tradeGateway;
     }
+
+    @Override
+    public CitiesGateway getCitiesGateway() { return citiesGateway; }
 }

@@ -9,4 +9,7 @@ public interface GatewayPool {
     ThresholdsGateway getThresholdsGateway();
 
     TradeGateway getTradeGateway();
+
+    CitiesGateway getCitiesGateway();
+
 }

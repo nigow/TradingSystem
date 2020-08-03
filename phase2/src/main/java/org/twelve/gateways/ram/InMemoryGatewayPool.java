@@ -11,6 +11,7 @@ public class InMemoryGatewayPool implements GatewayPool {
     private final ItemsGateway itemsGateway;
     private final ThresholdsGateway thresholdsGateway;
     private final TradeGateway tradeGateway;
+    private final CitiesGateway citiesGateway;
 
     // maybe i'll look into factory pattern for this
     public InMemoryGatewayPool() {
@@ -19,22 +20,30 @@ public class InMemoryGatewayPool implements GatewayPool {
         itemsGateway = new InMemoryItemGateway(new HashMap<>());
         thresholdsGateway = new InMemoryThresholdsGateway(new Thresholds(1, 5, 10, 30, 3, 6));
         tradeGateway = new InMemoryTradeGateway(new HashMap<>(), new HashMap<>());
+        citiesGateway = new InMemoryCitiesGateway(new HashMap<>());
 
     }
 
+    @Override
     public AccountGateway getAccountGateway() {
         return accountGateway;
     }
 
+    @Override
     public ItemsGateway getItemsGateway() {
         return itemsGateway;
     }
 
+    @Override
     public ThresholdsGateway getThresholdsGateway() {
         return thresholdsGateway;
     }
 
+    @Override
     public TradeGateway getTradeGateway() {
         return tradeGateway;
     }
+
+    @Override
+    public CitiesGateway getCitiesGateway() { return citiesGateway; }
 }
