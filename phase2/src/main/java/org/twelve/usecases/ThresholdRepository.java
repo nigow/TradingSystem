@@ -75,6 +75,17 @@ public class ThresholdRepository {
         updateThresholds();
     }
 
+    // TODO gateways and controllers should be updated to reflect this
+
+    public int getRequiredTradesForTrusted() {
+        return thresholds.getRequiredTradesForTrusted();
+    }
+
+    public void setRequiredTradesForTrusted(int requiredTradesForTrusted) {
+        thresholds.setNumberOfEdits(requiredTradesForTrusted);
+        updateThresholds();
+    }
+
     /**
      * Gets the current restriction for amount of items needed to be lent before borrowing.
      *
