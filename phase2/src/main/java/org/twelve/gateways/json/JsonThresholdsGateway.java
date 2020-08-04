@@ -13,8 +13,8 @@ import java.net.http.HttpResponse;
 
 public class JsonThresholdsGateway implements ThresholdsGateway {
 
-    private HttpClient httpClient;
-    private Gson gson;
+    private final  HttpClient httpClient;
+    private final Gson gson;
 
     public JsonThresholdsGateway() {
 
@@ -74,7 +74,8 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
         try {
 
-            HttpResponse<String> response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+            //HttpResponse<String> response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+            httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
             return true;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

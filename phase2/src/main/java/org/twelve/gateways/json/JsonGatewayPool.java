@@ -5,11 +5,11 @@ import org.twelve.gateways.ThresholdsGateway;
 
 public class JsonGatewayPool implements GatewayPool {
 
-    private AccountGateway accountGateway;
-    private ItemsGateway itemsGateway;
-    private ThresholdsGateway thresholdsGateway;
-    private TradeGateway tradeGateway;
-    private CitiesGateway citiesGateway;
+    private final AccountGateway accountGateway;
+    private final ItemsGateway itemsGateway;
+    private final ThresholdsGateway thresholdsGateway;
+    private final TradeGateway tradeGateway;
+    private final CitiesGateway citiesGateway;
 
     public JsonGatewayPool() {
         accountGateway = new JsonAccountGateway();
