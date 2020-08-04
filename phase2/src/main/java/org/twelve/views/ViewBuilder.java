@@ -43,7 +43,8 @@ public class ViewBuilder {
 
             case LOGIN:
 
-                return new LoginView(windowHandler, controllerPool.getLoginController());
+                return new LoginView<>(windowHandler, controllerPool.getLoginController(),
+                        new UILoginPresenter(localizedResources));
 
             case MENU:
 
