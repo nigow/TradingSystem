@@ -52,6 +52,7 @@ public class FreezingController {
     public void freeze(String chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.freezeAccount(chosenUserID);
+        updateAccountLists();
     }
 
     /**
@@ -60,6 +61,7 @@ public class FreezingController {
     public void unfreeze(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unfreezeAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void ban(String chosenUser) {
@@ -77,22 +79,27 @@ public class FreezingController {
     public void trust(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.trustAccount(chosenUserID);
+        updateAccountLists();
     }
     
     public void untrustAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unTrustAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void modAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.modAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void unmodAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unmodAccount(chosenUserID);
+        updateAccountLists();
     }
+
     public void updateAccountLists() {
 
         // demo (don't plan on including since they're not permanent anyways)
@@ -118,25 +125,34 @@ public class FreezingController {
         // freezingPresenter.setVacationingAccounts(statusManager.getVacationUsernames());
 
         // we can't display all of these at once right now without duplication because an admin is recognized to be a mod, trusted, etc
-        // tcm
-        // freezingPresenter.setTrustedAccounts(statusManager.getTrustedUsernames());
-        // mod
-        // freezingPresenter.setModAccounts(statusManager.getModeratorUsernames());
-        // admin
         List<String> adminAccounts = statusManager.getAdminUsernames();
         adminAccounts.removeAll(bannedAccounts);
         freezingPresenter.setAdminAccounts(adminAccounts);
+
+        List<String> modAccounts = statusManager.getModeratorUsernames();
+        modAccounts.removeAll(adminAccounts);
+        modAccounts.removeAll(bannedAccounts);
+        freezingPresenter.setModAccounts(modAccounts);
+
+        List<String> trustedAccounts = statusManager.getTrustedUsernames();
+        trustedAccounts.removeAll(adminAccounts);
+        trustedAccounts.removeAll(modAccounts);
+        trustedAccounts.removeAll(bannedAccounts);
+        freezingPresenter.setTrustedAccounts(trustedAccounts);
 
         // regular (todo: we need a better way of distinguishing accounts)
         List<String> regularAccounts = new ArrayList<>();
         for (int accountId : accountRepository.getAccountIDs()) {
             regularAccounts.add(accountRepository.getUsernameFromID(accountId));
         }
+
         regularAccounts.removeAll(bannedAccounts);
         regularAccounts.removeAll(unfreezeAccounts);
         regularAccounts.removeAll(frozenAccounts);
         regularAccounts.removeAll(toFreezeAccounts);
         regularAccounts.removeAll(adminAccounts);
+        regularAccounts.removeAll(modAccounts);
+        regularAccounts.removeAll(trustedAccounts);
 
         freezingPresenter.setRegularAccounts(regularAccounts);
     }

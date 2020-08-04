@@ -33,9 +33,9 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
 
         setAdminAccounts(new ArrayList<>());
-        setTrustedAccounts(new ArrayList<>());
-        setModAccounts(new ArrayList<>());
 
+        setModAccounts(new ArrayList<>());
+        setTrustedAccounts(new ArrayList<>());
         setRegularAccounts(new ArrayList<>());
     }
 
@@ -142,20 +142,6 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         return vacationingAccounts;
     }
 
-    /*
-    @Override
-    public void setAllAccounts(List<String> allAccounts) {
-        List<String> oldAllAccounts = this.allAccounts;
-        this.allAccounts = allAccounts;
-        propertyChangeSupport.firePropertyChange("allAccounts", oldAllAccounts, allAccounts);
-    }
-
-    @Override
-    public List<String> getAllAccounts() {
-        return allAccounts;
-    }
-    */
-
     @Override
     public void setAdminAccounts(List<String> adminAccounts) {
         List<Map<String, String>> oldAdminAccounts = this.adminAccounts;
@@ -178,7 +164,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         List<Map<String, String>> oldTrustedAccounts = this.trustedAccounts;
         this.trustedAccounts = new ArrayList<>();
         for (String trustedAccount: trustedAccounts) {
-            this.vacationingAccounts.add(Map.of("username", trustedAccount, "role", localizedResources.getString("trusted")));
+            this.trustedAccounts.add(Map.of("username", trustedAccount, "role", localizedResources.getString("trusted")));
 
         }
         propertyChangeSupport.firePropertyChange("trustedAccounts", oldTrustedAccounts, this.trustedAccounts);

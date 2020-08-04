@@ -59,11 +59,11 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> banned =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("bannedAccounts").build();
 
-            ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> frozen =
-                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("frozenAccounts").build();
-
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> unfreeze =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("unfreezeAccounts").build();
+
+            ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> frozen =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("frozenAccounts").build();
 
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> toFreeze =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("toFreezeAccounts").build();
@@ -77,23 +77,27 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> mod =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("modAccounts").build();
 
+            ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> trusted =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("trustedAccounts").build();
+
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> regular =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("regularAccounts").build();
 
             accountsTable.itemsProperty().bind(Bindings.createObjectBinding(() -> {
 
                 List<Map<String, String>> accounts = new ArrayList<>(banned.get());
-                accounts.addAll(frozen.get());
                 accounts.addAll(unfreeze.get());
+                accounts.addAll(frozen.get());
                 accounts.addAll(toFreeze.get());
                 accounts.addAll(vacationing.get());
                 accounts.addAll(admin.get());
                 accounts.addAll(mod.get());
+                accounts.addAll(trusted.get());
                 accounts.addAll(regular.get());
 
                 return FXCollections.observableArrayList(accounts);
 
-            }, banned, frozen, unfreeze, toFreeze, vacationing, admin, mod, regular));
+            }, banned, unfreeze, frozen, toFreeze, vacationing, admin, mod, trusted, regular));
 
             usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
             roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
@@ -102,11 +106,6 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
             e.printStackTrace();
         }
 
-        /*
-        accountsTable.itemsProperty().addListener((observable, oldValue, newValue) -> {
-            accountsTable.refresh();
-        });
-        */
     }
     @FXML
     public void trustClicked(ActionEvent actionEvent) {
