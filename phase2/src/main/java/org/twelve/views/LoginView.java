@@ -40,7 +40,9 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
     @FXML
     private void loginAttempted(ActionEvent actionEvent) {
 
-        loginController.logIn(usernameBox.getText(), passwordBox.getText());
+        if (loginController.logIn(usernameBox.getText(), passwordBox.getText())) {
+            windowHandler.changeScene(Scenes.MENU);
+        }
 
     }
 
