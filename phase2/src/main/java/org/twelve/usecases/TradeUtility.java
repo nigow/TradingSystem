@@ -77,7 +77,7 @@ abstract public class TradeUtility {
     protected List<Trade> getAllTradesAccount(int accountID) {
         List<Trade> accountTrades = new ArrayList<>();
         for (Trade trade : trades) {
-            if (trade.getTraderIds().contains(accountID))
+            if (trade.getTraderIds().contains(accountID) && trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
                 accountTrades.add(trade);
         }
         return accountTrades;
