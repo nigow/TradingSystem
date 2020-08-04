@@ -133,7 +133,7 @@ public class TradeManager extends TradeUtility{
 
     public void adminCancelTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
-        if (isConfirmed(tradeID) || isCompleted(tradeID))
+        if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED)
             unmakeTrade(tradeID);
         trade.setStatus(TradeStatus.ADMIN_CANCELLED);
     }
