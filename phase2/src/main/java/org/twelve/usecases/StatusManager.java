@@ -162,7 +162,7 @@ public class StatusManager {
     public List<Integer> getAdminAccountIDs(){
         List<Integer> adminAccountIDs = new ArrayList<>();
         for(int accountID: accountRepository.getAccountIDs()){
-            if(!hasPermission(accountID, Permissions.ADD_ADMIN)){
+            if(hasPermission(accountID, Permissions.ADD_ADMIN)){
                 adminAccountIDs.add(accountID);
             }
         }
@@ -172,7 +172,7 @@ public class StatusManager {
     public List<String> getAdminUsernames(){
         List<String> adminAccountUsernames = new ArrayList<>();
         for(int accountID: accountRepository.getAccountIDs()){
-            if(!hasPermission(accountID, Permissions.ADD_ADMIN)){
+            if(hasPermission(accountID, Permissions.ADD_ADMIN)){
                 adminAccountUsernames.add(accountRepository.getUsernameFromID(accountID));
             }
         }
@@ -227,6 +227,16 @@ public class StatusManager {
             }
         }
         return moderatorUsernames;
+    }
+
+    public List<String> getFrozenUsernames() {
+        List<String> frozenUsernames = new ArrayList<>();
+        for (int accountID:accountRepository.getAccountIDs()){
+            if (isFrozen(accountID) && !isPending(accountID)){
+                frozenUsernames.add(accountRepository.getUsernameFromID(accountID));
+            }
+        }
+        return frozenUsernames;
     }
 
     /**
@@ -354,31 +364,43 @@ public class StatusManager {
     public void banAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.LOGIN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void unbanAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.LOGIN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void trustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.CONFIRM_ITEM);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void unTrustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CONFIRM_ITEM);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void modAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.CAN_BAN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
     public void unmodAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CAN_BAN);
+        accountRepository.updateToAccountGateway(account);
+
     }
 
 }

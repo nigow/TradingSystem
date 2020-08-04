@@ -12,7 +12,8 @@ public enum Scenes {
     REGISTRATION("Registration"),
     WISHLIST("Wishlist"),
     INVENTORY("Inventory"),
-    ACCOUNTS("Accounts");
+    ACCOUNTS("Accounts"),
+    TRADE_COLLECTION("TradeCollection");
 
     private final String fxml;
 

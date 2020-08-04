@@ -56,6 +56,10 @@ public class TradeCreatorController {
         }
     }
 
+    public void createdTrade(boolean isCreator) {
+        tradeCreatorPresenter.setCreatedTrade(isCreator);
+    }
+
     public void changeSelectedUser(int accountIndex) {
         String name = accountIndex >= 0 ? accountRepository.getAccountStrings().get(accountIndex) : "";
         tradeCreatorPresenter.setSelectedUser(name);

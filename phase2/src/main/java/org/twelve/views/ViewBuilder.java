@@ -88,6 +88,11 @@ public class ViewBuilder {
 
                 return new AccountsView<>(windowHandler, controllerPool.getFreezingController(),
                         new UIFreezingPresenter(localizedResources));
+
+            case TRADE_COLLECTION:
+
+                return new TradeCollectionView<>(windowHandler, controllerPool.getTradeCollectionController(),
+                        new UITradeCollectionPresenter(localizedResources));
         }
 
         return null;

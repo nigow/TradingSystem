@@ -17,6 +17,7 @@ public class ControllerPool {
     private final ThresholdController thresholdController;
     private final FreezingController freezingController;
     private final TradeCreatorController tradeCreatorController;
+    private final TradeCollectionController tradeCollectionController;
 
     public ControllerPool(GatewayPool gatewayPool) {
 
@@ -34,6 +35,8 @@ public class ControllerPool {
         thresholdController = new ThresholdController(useCasePool, gatewayPool);
         freezingController = new FreezingController(useCasePool);
         tradeCreatorController = new TradeCreatorController(useCasePool);
+        tradeCollectionController = new TradeCollectionController(useCasePool);
+
     }
 
     public LoginController getLoginController() {
@@ -71,4 +74,8 @@ public class ControllerPool {
     }
 
     public TradeCreatorController getTradeCreatorController() {return tradeCreatorController;}
+
+    public TradeCollectionController getTradeCollectionController() {
+        return tradeCollectionController;
+    }
 }
