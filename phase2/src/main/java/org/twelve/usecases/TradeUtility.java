@@ -53,7 +53,7 @@ abstract public class TradeUtility {
         return null;
     }
 
-    protected List<Integer> itemsTraderHas(int accountID, Trade trade) {
+    protected List<Integer> itemsTraderOwns(int accountID, Trade trade) {
         List<Integer> items = new ArrayList<>();
         for (int id : trade.getItemsIds()) {
             if (itemManager.getOwnerId(id) == accountID)
@@ -62,12 +62,11 @@ abstract public class TradeUtility {
         return items;
     }
 
-    protected List<Integer> itemsOfNextTrader(int accountID, Trade trade) {
-        return itemsTraderHas(trade.getNextTraderID(accountID), trade);
-    }
-
-    protected List<Integer> itemsOfPreviousTrader(int accountID, Trade trade) {
-        return itemsTraderHas(trade.getPreviousTraderID(accountID), trade);
+    protected List<Integer> itemsTraderGives(int accountID, Trade trade) {
+        if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED) {
+            accountID = trade.getNextTraderID(accountID);
+        }
+        return itemsTraderOwns(accountID, trade);
     }
 
     /**
@@ -98,8 +97,8 @@ abstract public class TradeUtility {
             int id = trade.getTraderIds().get(i);
             ans.append("\nUser " + i + ": " + accountRepository.getUsernameFromID(id));
             int j = (i + 1) % trade.getTraderIds().size();
-            ans.append("\nitems being given to user " + j + ": ");
-            for (int itemID : itemsTraderHas(id, trade)) {
+            ans.append("\nitems being traded to user " + j + ": ");
+            for (int itemID : itemsTraderGives(id, trade)) {
                 ans.append("\n").append(itemManager.findItemByIdString(itemID));
             }
         }
@@ -178,7 +177,7 @@ abstract public class TradeUtility {
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (!itemsTraderHas(accountID, trade).isEmpty() && itemsOfNextTrader(accountID, trade).isEmpty()) {
+            if (!itemsTraderGives(accountID, trade).isEmpty() && itemsTraderGives(trade.getNextTraderID(accountID), trade).isEmpty()) {
                 TimePlace timePlace = getTimePlaceByID(trade.getId());
                 allOneWay.add(timePlace);
             }
@@ -186,7 +185,7 @@ abstract public class TradeUtility {
         Collections.sort(allOneWay);
         for (TimePlace tp : allOneWay) {
             Trade trade = getTradeByID(tp.getId());
-            allOneWayItems.addAll(itemsTraderHas(accountID, trade));
+            allOneWayItems.addAll(itemsTraderGives(accountID, trade));
         }
         int count = 0;
         for (int tradeId : allOneWayItems) {
@@ -213,7 +212,7 @@ abstract public class TradeUtility {
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (!itemsTraderHas(accountID, trade).isEmpty() && !itemsOfNextTrader(accountID, trade).isEmpty()) {
+            if (!itemsTraderGives(accountID, trade).isEmpty() && !itemsTraderGives(trade.getNextTraderID(accountID), trade).isEmpty()) {
                 TimePlace timePlace = getTimePlaceByID(trade.getId());
                 allTwoWay.add(timePlace);
             }
@@ -221,7 +220,7 @@ abstract public class TradeUtility {
         Collections.sort(allTwoWay);
         for (TimePlace tp : allTwoWay) {
             Trade trade = getTradeByID(tp.getId());
-            allTwoWayItems.addAll(itemsTraderHas(accountID, trade));
+            allTwoWayItems.addAll(itemsTraderGives(accountID, trade));
         }
         int count = 0;
         for (int tradeId : allTwoWayItems) {
@@ -284,7 +283,7 @@ abstract public class TradeUtility {
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (!itemsOfNextTrader(accountID, trade).isEmpty() && itemsTraderHas(accountID, trade).isEmpty())
+            if (!itemsTraderGives(trade.getNextTraderID(accountID), trade).isEmpty() && itemsTraderGives(accountID, trade).isEmpty())
                 timesBorrowed++;
         }
         return timesBorrowed;
@@ -302,7 +301,7 @@ abstract public class TradeUtility {
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (itemsOfNextTrader(accountID, trade).isEmpty() && !itemsTraderHas(accountID, trade).isEmpty())
+            if (itemsTraderGives(trade.getNextTraderID(accountID), trade).isEmpty() && !itemsTraderGives(accountID, trade).isEmpty())
                 timesLent++;
         }
         return timesLent;

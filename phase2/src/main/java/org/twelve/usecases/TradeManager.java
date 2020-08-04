@@ -65,7 +65,7 @@ public class TradeManager extends TradeUtility{
         trades.add(trade);
         timePlaces.add(timePlace);
         for (int accountID : tradersIds) {
-            for (int itemID : itemsOfNextTrader(accountID, trade))
+            for (int itemID : itemsTraderGives(trade.getNextTraderID(accountID), trade))
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
         updateToGateway(trade, true);
@@ -144,16 +144,16 @@ public class TradeManager extends TradeUtility{
      */
     public void makeTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
-        List<Integer> firstAccountItems = itemsTraderHas(trade.getTraderIds().get(0), trade);
-        for (int i = 0; i < trade.getTraderIds().size() - 1; i++) {
+        List <Integer> prev_items = itemsTraderOwns(trade.getTraderIds().get(0), trade);
+        for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int accountID = trade.getTraderIds().get(i);
-            for (int itemID : itemsOfNextTrader(accountID, trade)) {
-                itemManager.updateOwner(itemID, accountID);
+            int nextAccountID = trade.getNextTraderID(accountID);
+            List<Integer> temp = itemsTraderOwns(nextAccountID, trade);
+            for (int itemID : prev_items) {
+                itemManager.updateOwner(itemID, nextAccountID);
             }
+            prev_items = temp;
         }
-        int lastID = trade.getTraderIds().get(trade.getTraderIds().size() - 1);
-        for (int itemID : firstAccountItems)
-            itemManager.updateOwner(itemID, lastID);
     }
 
     /**
@@ -168,14 +168,15 @@ public class TradeManager extends TradeUtility{
     public void unmakeTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         int lastID = trade.getTraderIds().get(trade.getTraderIds().size() - 1);
-        List<Integer> lastAccountItems = itemsTraderHas(lastID, trade);
-        for (int i = trade.getTraderIds().size() - 1; i > 0; i--) {
+        List <Integer> prev_items = itemsTraderOwns(lastID, trade);
+        for (int i = trade.getTraderIds().size() - 1; i >= 0; i--) {
             int accountID = trade.getTraderIds().get(i);
-            for (int itemID : itemsOfPreviousTrader(accountID, trade)) {
-                itemManager.updateOwner(itemID, accountID);
+            int prevAccountID = trade.getPreviousTraderID(accountID);
+            List<Integer> temp = itemsTraderOwns(prevAccountID, trade);
+            for (int itemID : prev_items) {
+                itemManager.updateOwner(itemID, prevAccountID);
             }
+            prev_items = temp;
         }
-        for (int itemID : lastAccountItems)
-            itemManager.updateOwner(itemID, trade.getTraderIds().get(0));
     }
 }
