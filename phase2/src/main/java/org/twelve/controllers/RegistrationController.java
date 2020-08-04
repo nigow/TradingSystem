@@ -3,10 +3,7 @@ package org.twelve.controllers;
 import org.twelve.entities.AccountType;
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.RegistrationPresenter;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.SessionManager;
-import org.twelve.usecases.StatusManager;
-import org.twelve.usecases.UseCasePool;
+import org.twelve.usecases.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +32,10 @@ public class RegistrationController {
 
     private RegistrationPresenter registrationPresenter;
 
-    private boolean accessedByAdmin;
+    private List<AccountType> availableTypes;
+
+    private CityManager cityManager;
+
     /**
      * Initializer for RegistrationController
      * @param useCasePool used to get all the use cases.
@@ -44,26 +44,31 @@ public class RegistrationController {
         this.accountRepository = useCasePool.getAccountRepository();
         this.sessionManager = useCasePool.getSessionManager();
         this.statusManager = useCasePool.getStatusManager();
+        this.cityManager = useCasePool.getCityManager();
     }
 
     /**
      * A method for updating if user can create admins
      * @return Whether user can create admins
      */
-    public boolean updateAccessMode() {
-        List<AccountType> availableTypes = new ArrayList<>(Arrays.asList(AccountType.values()));
+    public void updateOptions() {
+        availableTypes = new ArrayList<>();
 
-        if (sessionManager.getCurrAccountID() == -1 || !statusManager.hasPermission(sessionManager.getCurrAccountID(),
-                Permissions.ADD_ADMIN)) {
+        if (sessionManager.getCurrAccountID() == -1) {
 
+            availableTypes.addAll(Arrays.asList(AccountType.values()));
             availableTypes.remove(AccountType.ADMIN);
+
+        } else {
+
+            availableTypes.add(AccountType.ADMIN);
 
         }
 
         registrationPresenter.setAvailableTypes(availableTypes);
 
-        accessedByAdmin = availableTypes.contains(AccountType.ADMIN);
-        return accessedByAdmin;
+        registrationPresenter.setExistingCities(cityManager.getAllCities());
+
     }
 
     /**
@@ -75,7 +80,7 @@ public class RegistrationController {
      */
     public boolean createAccount(String username, String password, String location, int typeIndex) {
         List<Permissions> perms = null;
-        switch (AccountType.values()[typeIndex]) {
+        switch (availableTypes.get(typeIndex)) {
             case ADMIN:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.FREEZE,
@@ -110,11 +115,15 @@ public class RegistrationController {
                 break;
         }
 
+        if (!cityManager.getAllCities().contains(location)) cityManager.createCity(location);
+
         if (accountRepository.createAccount(username, password, perms, location)) {
 
-            if (!accessedByAdmin) sessionManager.login(username);
+            if (sessionManager.getCurrAccountID() == -1) sessionManager.login(username);
             return true;
+
         }
+
         return false;
     }
 

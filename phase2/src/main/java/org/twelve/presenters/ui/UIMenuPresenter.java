@@ -4,17 +4,16 @@ import org.twelve.presenters.MenuPresenter;
 
 public class UIMenuPresenter extends ObservablePresenter implements MenuPresenter {
 
-
-    boolean initiateTrade;
-    boolean modifyRestrictions;
-    boolean manageAccounts;
-    boolean addAdmin;
-    boolean approveItems;
+    private boolean initiateTrade;
+    private boolean modifyRestrictions;
+    private boolean manageAccounts;
+    private boolean addAdmin;
+    private boolean approveItems;
 
     public void setInitiateTrade(boolean initiateTrade){
-        boolean oldInitiateTrade = initiateTrade;
-        propertyChangeSupport.firePropertyChange("initiateTrade", oldInitiateTrade, initiateTrade);
+        boolean oldInitiateTrade = this.initiateTrade;
         this.initiateTrade = initiateTrade;
+        propertyChangeSupport.firePropertyChange("initiateTrade", oldInitiateTrade, initiateTrade);
     }
 
     @Override
@@ -24,9 +23,9 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
 
     @Override
     public void setModifyRestrictions(boolean modifyRestrictions) {
-        boolean oldModifyRestrictions = modifyRestrictions;
-        propertyChangeSupport.firePropertyChange("modifyRestrictions", oldModifyRestrictions, modifyRestrictions);
+        boolean oldModifyRestrictions = this.modifyRestrictions;
         this.modifyRestrictions = modifyRestrictions;
+        propertyChangeSupport.firePropertyChange("modifyRestrictions", oldModifyRestrictions, modifyRestrictions);
     }
 
     @Override
@@ -36,9 +35,9 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
 
     @Override
     public void setManageAccounts(boolean manageAccounts) {
-        boolean oldManageAccounts = manageAccounts;
-        propertyChangeSupport.firePropertyChange("manageAccounts", oldManageAccounts, manageAccounts);
+        boolean oldManageAccounts = this.manageAccounts;
         this.manageAccounts = manageAccounts;
+        propertyChangeSupport.firePropertyChange("manageAccounts", oldManageAccounts, manageAccounts);
     }
 
     @Override
@@ -48,9 +47,9 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
 
     @Override
     public void setAddAdmin(boolean addAdmin) {
-        boolean oldAddAdmin = addAdmin;
-        propertyChangeSupport.firePropertyChange("addAdmin", oldAddAdmin, addAdmin);
+        boolean oldAddAdmin = this.addAdmin;
         this.addAdmin = addAdmin;
+        propertyChangeSupport.firePropertyChange("addAdmin", oldAddAdmin, addAdmin);
     }
 
     @Override
@@ -60,9 +59,9 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
 
     @Override
     public void setApproveItems(boolean approveItems) {
-        boolean oldApproveItems = approveItems;
-        propertyChangeSupport.firePropertyChange("approveItems", oldApproveItems, approveItems);
+        boolean oldApproveItems = this.approveItems;
         this.approveItems = approveItems;
+        propertyChangeSupport.firePropertyChange("approveItems", oldApproveItems, approveItems);
     }
 
     @Override

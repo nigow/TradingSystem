@@ -47,7 +47,7 @@ public class ViewBuilder {
 
             case MENU:
 
-                return new MenuView(windowHandler, controllerPool.getMenuController(), new UIMenuPresenter());
+                return new MenuView<>(windowHandler, controllerPool.getMenuController(), new UIMenuPresenter());
 
             case PROFILE:
 
@@ -72,7 +72,8 @@ public class ViewBuilder {
 
             case REGISTRATION:
 
-                return new RegistrationView(windowHandler, controllerPool.getRegistrationController());
+                return new RegistrationView<>(windowHandler, controllerPool.getRegistrationController(),
+                        new UIRegistrationPresenter(localizedResources));
 
             case WISHLIST:
 

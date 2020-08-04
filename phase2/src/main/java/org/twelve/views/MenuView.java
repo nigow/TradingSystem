@@ -17,6 +17,7 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
     private WindowHandler windowHandler;
     private MenuController menuController;
     private MenuPresenter menuPresenter;
+
     @FXML
     private Button initiateTrade;
     @FXML
@@ -31,13 +32,15 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
 
     public MenuView(WindowHandler windowHandler, MenuController menuController, MenuPresenter menuPresenter) {
         this.windowHandler = windowHandler;
-        this.menuController = menuController;
         this.menuPresenter = menuPresenter;
+        this.menuController = menuController;
+        this.menuController.setMenuPresenter(this.menuPresenter);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+
             initiateTrade.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                 .bean(menuPresenter).name("initiateTrade").build());
             modifyRestrictions.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
@@ -48,6 +51,7 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
                     .bean(menuPresenter).name("addAdmin").build().not());
             approveItems.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("approveItems").build().not());
+
     } catch (NoSuchMethodException ignored) {}
     }
 
@@ -89,7 +93,7 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
 
     @Override
     public void reload() {
-
+        menuController.displayButtons();
     }
 
     @FXML
