@@ -105,12 +105,12 @@ public class ThresholdRepository {
     private void updateThresholds() {
         thresholdsGateway.save(thresholds.getLendMoreThanBorrow(), thresholds.getMaxIncompleteTrade(),
                 thresholds.getMaxWeeklyTrade(), thresholds.getNumberOfDays(), thresholds.getNumberOfEdits(),
-                thresholds.getNumberOfStats());
+                thresholds.getNumberOfStats(), thresholds.getRequiredTradesForTrusted());
     }
 
     public void createThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                                 int numberOfEdits, int numberOfStats) {
+                                 int numberOfEdits, int numberOfStats, int requireTradesForTrusted) {
         thresholds = new Thresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
-                numberOfEdits, numberOfStats);
+                numberOfEdits, numberOfStats, requireTradesForTrusted);
     }
 }
