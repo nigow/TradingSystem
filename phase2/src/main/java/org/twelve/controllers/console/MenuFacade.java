@@ -5,6 +5,7 @@ package org.twelve.controllers.console;
 import org.twelve.controllers.InputHandler;
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.MenuPresenter;
+import org.twelve.presenters.OldMenuPresenter;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.SessionManager;
@@ -26,7 +27,7 @@ public class MenuFacade {
 
     private final StatusManager statusManager;
 
-    private final MenuPresenter menuPresenter;
+    private final OldMenuPresenter menuPresenter;
 
     private final FreezingController freezingController;
 
@@ -68,7 +69,7 @@ public class MenuFacade {
                       TradeController tradeController,
                       AdminCreatorController adminCreator,
                       ThresholdController thresholdController,
-                      MenuPresenter menuPresenter) {
+                      OldMenuPresenter menuPresenter) {
 
         sessionManager = useCasePool.getSessionManager();
         itemManager = useCasePool.getItemManager();

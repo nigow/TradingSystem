@@ -1,8 +1,8 @@
 package org.twelve.presenters.ui;
 
-import java.util.ResourceBundle;
+import org.twelve.presenters.MenuPresenter;
 
-public class UIMenuPresenter extends ObservablePresenter implements MenuPresenter{
+public class UIMenuPresenter extends ObservablePresenter implements MenuPresenter {
 
 
     boolean initiateTrade;
@@ -59,7 +59,7 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     }
 
     @Override
-    public void approveItems(boolean approveItems) {
+    public void setApproveItems(boolean approveItems) {
         boolean oldApproveItems = approveItems;
         propertyChangeSupport.firePropertyChange("approveItems", oldApproveItems, approveItems);
         this.approveItems = approveItems;

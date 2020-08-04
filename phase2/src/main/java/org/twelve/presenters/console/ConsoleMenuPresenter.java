@@ -1,6 +1,7 @@
 package org.twelve.presenters.console;
 
 import org.twelve.presenters.MenuPresenter;
+import org.twelve.presenters.OldMenuPresenter;
 
 import java.util.Scanner;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * @author Catherine
  */
-public class ConsoleMenuPresenter implements MenuPresenter {
+public class ConsoleMenuPresenter implements OldMenuPresenter {
     /**
      * {@inheritDoc}
      */

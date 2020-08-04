@@ -1,14 +1,13 @@
 package org.twelve.views;
 
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
-import javafx.collections.ObservableArrayBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import org.twelve.controllers.MenuController;
 import org.twelve.presenters.ProfilePresenter;
-import org.twelve.presenters.ui.MenuPresenter;
+import org.twelve.presenters.MenuPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
