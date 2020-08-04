@@ -19,12 +19,12 @@
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageExistingTrades" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageInventoryClicked" text="%manageInventory" GridPane.columnIndex="1" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageWishlistClicked" text="%manageWishlist" GridPane.columnIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#initiateTradeClicked" text="%initiateTrade" GridPane.rowIndex="1" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyRestrictionsClicked" text="%modifyRestrictions" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageAccountsClicked" text="%manageAccounts" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addAdminClicked" text="%addAdmin" GridPane.rowIndex="2" />
+      <Button fx:id="initiateTrade" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#initiateTradeClicked" text="%initiateTrade" GridPane.rowIndex="1" />
+      <Button fx:id="modifyRestrictions" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyRestrictionsClicked" text="%modifyRestrictions" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="manageAccounts" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageAccountsClicked" text="%manageAccounts" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Button fx:id="addAdmin" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addAdminClicked" text="%addAdmin" GridPane.rowIndex="2" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#accountSettingsClicked" text="%accountSettings" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#logoutClicked" text="%logout" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%approveItems" GridPane.rowIndex="3" />
+      <Button fx:id="approveItems" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%approveItems" GridPane.rowIndex="3" />
    </children>
 </GridPane>

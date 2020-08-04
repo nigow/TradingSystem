@@ -47,7 +47,7 @@ public class ViewBuilder {
 
             case MENU:
 
-                return new MenuView(windowHandler, controllerPool.getMenuController());
+                return new MenuView(windowHandler, controllerPool.getMenuController(), new UIMenuPresenter());
 
             case PROFILE:
 
