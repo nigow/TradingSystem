@@ -25,16 +25,13 @@ public class RegistrationController {
      */
     private final SessionManager sessionManager;
 
-    /**
-     * An instance of StatusManager to get if an account has a permission
-     */
-    private final StatusManager statusManager;
-
     private RegistrationPresenter registrationPresenter;
 
     private List<AccountType> availableTypes;
 
     private CityManager cityManager;
+
+    private InputHandler inputHandler;
 
     /**
      * Initializer for RegistrationController
@@ -43,8 +40,8 @@ public class RegistrationController {
     public RegistrationController(UseCasePool useCasePool) {
         this.accountRepository = useCasePool.getAccountRepository();
         this.sessionManager = useCasePool.getSessionManager();
-        this.statusManager = useCasePool.getStatusManager();
         this.cityManager = useCasePool.getCityManager();
+        inputHandler = new InputHandler();
     }
 
     /**
@@ -113,8 +110,10 @@ public class RegistrationController {
 
         if (!cityManager.getAllCities().contains(location)) cityManager.createCity(location);
 
-        if (accountRepository.createAccount(username, password, perms, location)) {
+        // i added the input handler stuff  --maryam
+        if (inputHandler.isValidUserPass(username, password) && accountRepository.createAccount(username, password, perms, location)) {
 
+            // TODO why is this checked?  --maryam
             if (sessionManager.getCurrAccountID() == -1) sessionManager.login(username);
             return true;
 
