@@ -1,35 +1,23 @@
 package org.twelve.views;
 
 import org.twelve.controllers.ControllerPool;
-import org.twelve.entities.Thresholds;
-import org.twelve.gateways.GatewayPoolFactory;
-import org.twelve.gateways.GatewayPool;
-import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.presenters.ui.*;
 
-import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ViewBuilder {
 
     private final WindowHandler windowHandler;
-    private GatewayPool gatewayPool;
     private ControllerPool controllerPool;
 
     public ViewBuilder(WindowHandler windowHandler) {
         this.windowHandler = windowHandler;
     }
 
-    public boolean buildGateways(String implementation) {
+    public void buildControllers(Locale selectedLanguage, boolean demoMode) {
 
-        gatewayPool = new GatewayPoolFactory().getGatewayPool(implementation);
-        return gatewayPool != null;
-
-    }
-
-    public void buildControllers() {
-
-        controllerPool = new ControllerPool(gatewayPool);
+        controllerPool = new ControllerPool(selectedLanguage, demoMode);
 
     }
 
@@ -39,7 +27,8 @@ public class ViewBuilder {
 
             case LANDING:
 
-                return new LandingView(windowHandler);
+                return new LandingView<>(windowHandler, controllerPool.getLandingController(),
+                        new UILandingPresenter());
 
             case LOGIN:
 
@@ -48,7 +37,8 @@ public class ViewBuilder {
 
             case MENU:
 
-                return new MenuView<>(windowHandler, controllerPool.getMenuController(), new UIMenuPresenter());
+                return new MenuView<>(windowHandler, controllerPool.getMenuController(),
+                        new UIMenuPresenter());
 
             case PROFILE:
 
@@ -62,7 +52,6 @@ public class ViewBuilder {
 
             case TRADE_CREATOR:
 
-                //Tairi: I edited this
                 return new TradeCreatorView<>(windowHandler, controllerPool.getTradeCreatorController(),
                         new UITradeCreatorPresenter(localizedResources));
 
