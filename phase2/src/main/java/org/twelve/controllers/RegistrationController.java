@@ -88,8 +88,7 @@ public class RegistrationController {
                         Permissions.CREATE_ITEM,
                         Permissions.CONFIRM_ITEM,
                         Permissions.ADD_TO_WISHLIST,
-                        Permissions.LEND,
-                        Permissions.BORROW,
+                        Permissions.TRADE,
                         Permissions.BROWSE_INVENTORY,
                         Permissions.CHANGE_THRESHOLDS,
                         Permissions.ADD_ADMIN,
@@ -103,9 +102,8 @@ public class RegistrationController {
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
-                        Permissions.LEND,
+                        Permissions.TRADE,
                         Permissions.REQUEST_VACATION,
-                        Permissions.BORROW,
                         Permissions.BROWSE_INVENTORY);
                 break;
             case DEMO:

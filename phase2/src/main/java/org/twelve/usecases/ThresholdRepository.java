@@ -120,8 +120,8 @@ public class ThresholdRepository {
     }
 
     public void createThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                                 int numberOfEdits, int numberOfStats, int requireTradesForTrusted) {
+                                 int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
         thresholds = new Thresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
-                numberOfEdits, numberOfStats, requireTradesForTrusted);
+                numberOfEdits, numberOfStats, requiredTradesForTrusted);
     }
 }

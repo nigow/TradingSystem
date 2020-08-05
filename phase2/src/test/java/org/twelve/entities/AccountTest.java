@@ -1,6 +1,5 @@
 package org.twelve.entities;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -34,7 +33,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -51,7 +50,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -67,7 +66,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -83,7 +82,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -99,7 +98,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -115,7 +114,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -142,7 +141,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -185,7 +184,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
@@ -207,7 +206,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.CREATE_ITEM);
         permissions.add(Permissions.CONFIRM_ITEM);
-        permissions.add(Permissions.LEND);
+        permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BORROW);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);

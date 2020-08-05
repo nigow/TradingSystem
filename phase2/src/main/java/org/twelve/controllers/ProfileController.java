@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.Roles;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
@@ -19,9 +20,10 @@ public class ProfileController {
 
     public void updateProfile() {
 
-        profilePresenter.setVacationStatus(statusManager.isVacationing(sessionManager.getCurrAccountID()));
+        profilePresenter.setVacationStatus(statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.VACATION);
         profilePresenter.setCanVacation(statusManager.canVacation(sessionManager.getCurrAccountID()));
-        profilePresenter.setCanRequestUnfreeze(statusManager.isFrozen(sessionManager.getCurrAccountID()));
+        profilePresenter.setCanRequestUnfreeze(!statusManager.isPending(sessionManager.getCurrAccountID())
+                && statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.FROZEN);
 
     }
 

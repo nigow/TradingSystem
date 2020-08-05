@@ -4,6 +4,7 @@ package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
 import org.twelve.entities.Permissions;
+import org.twelve.entities.Roles;
 import org.twelve.presenters.MenuPresenter;
 import org.twelve.presenters.OldMenuPresenter;
 import org.twelve.usecases.StatusManager;
@@ -109,8 +110,7 @@ public class MenuFacade {
             options.add(menuPresenter.manageWishlist());
             method.add(wishlistController::run);
 
-            // TODO: how do we check if someone can trade
-            if (statusManager.canTrade(sessionManager.getCurrAccountID()) &&
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.TRADE) &&
                     !itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).isEmpty()) {
                 options.add(menuPresenter.initiateTrade());
                 method.add(lendingController::run);
@@ -134,7 +134,7 @@ public class MenuFacade {
 
             if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.REQUEST_UNFREEZE) ||
                     statusManager.canVacation(sessionManager.getCurrAccountID()) ||
-                    statusManager.isVacationing(sessionManager.getCurrAccountID())) {
+                    statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.VACATION) {
                 options.add(menuPresenter.requestAppeal());
                 method.add(appealController::run);
             }

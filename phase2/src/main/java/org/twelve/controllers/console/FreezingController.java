@@ -94,7 +94,7 @@ public class FreezingController {
      * Unfreezes an account that has requested to be unfrozen.
      */
     private void unfreeze() {
-        List<Integer> accountIDs = statusManager.getAccountsToUnfreeze();
+        List<Integer> accountIDs = statusManager.getAccountIDsToUnfreeze();
         List<String> usernames = statusManager.getUsernamesToUnfreeze();
         freezingPresenter.displayPossibleUnfreeze(usernames);
         while (true) {
