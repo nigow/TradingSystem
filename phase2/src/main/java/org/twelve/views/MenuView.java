@@ -4,7 +4,9 @@ import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import org.twelve.controllers.MenuController;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.presenters.MenuPresenter;
@@ -14,6 +16,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuView<T extends ObservablePresenter & ProfilePresenter> implements SceneView, Initializable{
+
+    @FXML
+    private GridPane graphic;
+
     private WindowHandler windowHandler;
     private MenuController menuController;
     private MenuPresenter menuPresenter;
@@ -94,6 +100,11 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
     @Override
     public void reload() {
         menuController.displayButtons();
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     @FXML

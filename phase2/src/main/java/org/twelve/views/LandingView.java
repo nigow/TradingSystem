@@ -3,11 +3,16 @@ package org.twelve.views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LandingView implements SceneView {
+
+    @FXML
+    private GridPane graphic;
 
     private WindowHandler windowHandler;
 
@@ -32,5 +37,10 @@ public class LandingView implements SceneView {
     @Override
     public void reload() {
 
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 }

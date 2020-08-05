@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 public class WindowHandler extends Application {
 
     private Stage primaryStage;
-    private Map<Scenes, Parent> scenes;
     private Map<Scenes, SceneView> views;
 
     // don't add parameters to this, Application.launch() will explode if you do
@@ -26,7 +25,6 @@ public class WindowHandler extends Application {
 
         viewBuilder.buildControllers();
 
-        scenes = new HashMap<>();
         views = new HashMap<>();
 
         for (Scenes scene : Scenes.values()) {
@@ -37,7 +35,7 @@ public class WindowHandler extends Application {
             loader.setControllerFactory(v -> viewBuilder.getView(scene, resourceBundle));
 
             try {
-                scenes.put(scene, loader.load());
+                loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
@@ -62,12 +60,13 @@ public class WindowHandler extends Application {
 
     public void changeScene(Scenes scene) {
 
-        views.get(scene).reload();
+        SceneView sceneView = views.get(scene);
+        sceneView.reload();
 
         if (primaryStage.getScene() == null) {
-            primaryStage.setScene(new Scene(scenes.get(scene)));
+            primaryStage.setScene(new Scene(sceneView.getGraphic()));
         } else {
-            primaryStage.getScene().setRoot(scenes.get(scene));
+            primaryStage.getScene().setRoot(sceneView.getGraphic());
         }
 
     }

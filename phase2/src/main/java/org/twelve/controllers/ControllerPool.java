@@ -1,8 +1,6 @@
 package org.twelve.controllers;
 
-import org.twelve.controllers.console.TradeController;
 import org.twelve.gateways.GatewayPool;
-import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.UseCasePool;
 
 public class ControllerPool {

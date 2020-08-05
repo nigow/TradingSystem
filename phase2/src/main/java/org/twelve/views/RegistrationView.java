@@ -8,8 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import org.twelve.controllers.RegistrationController;
 import org.twelve.presenters.RegistrationPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -18,8 +20,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class RegistrationView<T extends ObservablePresenter & RegistrationPresenter> implements SceneView,
-        Initializable {
+public class RegistrationView<T extends ObservablePresenter & RegistrationPresenter> implements SceneView, Initializable {
+
+    @FXML
+    private GridPane graphic;
 
     @FXML
     private TextField usernameBox;
@@ -71,6 +75,11 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     @Override
     public void reload() {
         registrationController.updateOptions();
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     @Override

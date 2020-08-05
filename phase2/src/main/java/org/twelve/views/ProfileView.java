@@ -7,10 +7,12 @@ import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import org.twelve.controllers.ProfileController;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -24,7 +26,8 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     private final ProfileController profileController;
     private final T profilePresenter;
 
-
+    @FXML
+    private BorderPane graphic;
     @FXML
     private PasswordField oldPassword;
     @FXML
@@ -47,6 +50,11 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     @Override
     public void reload() {
         profileController.updateProfile();
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     public void backClicked(ActionEvent actionEvent) {
