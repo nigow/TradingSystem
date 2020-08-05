@@ -24,11 +24,11 @@ public class MenuController {
 
     public void displayButtons() {
         int accountID = sessionManager.getCurrAccountID();
-        menuPresenter.setInitiateTrade(statusManager.hasPermission(accountID, Permissions.FREEZE));
+        menuPresenter.setInitiateTrade(statusManager.hasPermission(accountID, Permissions.TRADE));
         menuPresenter.setModifyRestrictions(statusManager.hasPermission(accountID, Permissions.CHANGE_THRESHOLDS));
         menuPresenter.setManageAccounts(statusManager.hasPermission(accountID, Permissions.CAN_BAN));
         menuPresenter.setAddAdmin(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
-        menuPresenter.setApproveItems(statusManager.hasPermission(accountID, Permissions.MAKE_TRUSTED));
+        menuPresenter.setApproveItems(statusManager.hasPermission(accountID, Permissions.CONFIRM_ITEM));
     }
 
     public void logout() {
