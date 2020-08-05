@@ -18,7 +18,7 @@ public class InMemoryGatewayPool implements GatewayPool {
 
         accountGateway = new InMemoryAccountGateway(new HashMap<>());
         itemsGateway = new InMemoryItemGateway(new HashMap<>());
-        thresholdsGateway = new InMemoryThresholdsGateway(new Thresholds(1, 5, 10, 30, 3, 6));
+        thresholdsGateway = new InMemoryThresholdsGateway(new Thresholds(1, 5, 10, 30, 3, 6, 10));
         tradeGateway = new InMemoryTradeGateway(new HashMap<>(), new HashMap<>());
         citiesGateway = new InMemoryCitiesGateway(new HashMap<>());
 

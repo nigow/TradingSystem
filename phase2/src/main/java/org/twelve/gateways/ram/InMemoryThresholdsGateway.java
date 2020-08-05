@@ -14,18 +14,19 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
     public boolean populate(ThresholdRepository thresholdRepository) {
         thresholdRepository.createThresholds(thresholds.getLendMoreThanBorrow(), thresholds.getMaxIncompleteTrade(),
                 thresholds.getLendMoreThanBorrow(), thresholds.getNumberOfDays(), thresholds.getNumberOfEdits(),
-                thresholds.getNumberOfStats());
+                thresholds.getNumberOfStats(), thresholds.getRequiredTradesForTrusted());
         return true;
     }
 
     @Override
-    public boolean save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats) {
+    public boolean save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
         thresholds.setLendMoreThanBorrow(lendMoreThanBorrow);
         thresholds.setMaxIncompleteTrade(maxIncompleteTrade);
         thresholds.setMaxWeeklyTrade(maxWeeklyTrade);
         thresholds.setNumberOfDays(numberOfDays);
         thresholds.setNumberOfEdits(numberOfEdits);
         thresholds.setNumberOfStats(numberOfStats);
+        thresholds.setRequiredTradesForTrusted(requiredTradesForTrusted);
         return true;
     }
 }
