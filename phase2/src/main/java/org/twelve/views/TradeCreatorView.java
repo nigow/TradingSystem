@@ -75,21 +75,17 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
             peerItems.itemsProperty().bind(peerItemsBinding);
 
-            /*
+
             ObjectBinding<ObservableList<String>> allAccounts = Bindings.createObjectBinding(() -> {
 
                 return FXCollections.observableArrayList(tradeCreatorPresenter.getAllUsers());
 
-            }, ReadOnlyJavaBeanStringPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
+            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
 
+//            initiatorField.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+//                .bean(tradeCreatorPresenter).name("createdTrade").build());
 
-            initiatorField.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                .bean(tradeCreatorPresenter).name("createdTrade").build());
-            */
-        } catch (NoSuchMethodException ignored) {}
-
-
-
+        } catch (NoSuchMethodException ignored) { System.out.println("fail");}
     }
 
     @FXML
@@ -97,5 +93,15 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    @FXML
+    public void peerSwitch(ActionEvent actionEvent) {
+        tradeCreatorController.changeSelectedUser(allAccounts.getSelectionModel().getSelectedIndex());
+    }
+
+
+    public void saveClicked(ActionEvent actionEvent) {
+//        tradeCreatorController.createTrade(allAccounts.getSelectionModel().getSelectedIndex(), yourItems.getSelectionModel().getSelectedIndex(),
+//                peerItems.getSelectionModel().getSelectedIndex(), );
+    }
 
 }

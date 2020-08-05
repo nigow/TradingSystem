@@ -33,6 +33,7 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
         setSelectedUser("");
         setSelectedItemToBorrow("");
         setSelectedItemToLend("");
+        setCreatedTrade(true);
     }
 
     public void setItemsToReceive(List<String> itemsToReceive) {

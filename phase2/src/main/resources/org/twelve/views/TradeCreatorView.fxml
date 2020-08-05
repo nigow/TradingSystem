@@ -25,7 +25,7 @@
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></Label>
-            <ComboBox prefWidth="150.0" />
+            <ComboBox onAction="#peerSwitch" prefWidth="150.0" />
          </children>
       </HBox>
       <CheckBox mnemonicParsing="false" text="Two Way" GridPane.rowIndex="1" />
@@ -64,7 +64,7 @@
       </HBox>
       <CheckBox mnemonicParsing="false" text="Permanent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button mnemonicParsing="false" onAction="#backClicked" text="Back" GridPane.rowIndex="5" />
-      <Button mnemonicParsing="false" text="Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+      <Button mnemonicParsing="false" onAction="#saveClicked" text="Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
       <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
             <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Time">

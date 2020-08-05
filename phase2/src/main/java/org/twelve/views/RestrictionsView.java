@@ -66,7 +66,7 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
 
             lendVsBorrow.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
 
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getLendMoreThanBorrow());
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE, thresholdPresenter.getLendMoreThanBorrow());
 
             }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("lendMoreThanBorrow").build()));
 

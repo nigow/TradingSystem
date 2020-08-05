@@ -31,4 +31,20 @@ public class AccountIntegrationTest extends TestCase {
         setUpAccountRepository();
         assertNotNull(accountRepository);
     }
+
+    public void testSavingItems() {
+        setUpAccountRepository();
+        List<Permissions> Perm = new ArrayList<>();
+        Account account = new Account("User2", "12345", Perm, 1, "UTM");
+        Account account2 = new Account("User3", "12345", Perm, 2, "UTM");
+        List<String> permsAsStrings = new ArrayList<>();
+        for (Permissions perms: account.getPermissions()){
+            permsAsStrings.add(perms.name());
+        }
+        inMemoryAccountGateway.save(account.getAccountID(), account.getUsername(), account.getPassword(),
+                account.getWishlist(), permsAsStrings, account.getLocation(), true);
+        inMemoryAccountGateway.populate(accountRepository);
+        assertEquals(accountRepository.getAccountFromID(1).getUsername(), account.getUsername());
+        assertNull(accountRepository.getAccountFromID(2));
+    }
 }
