@@ -318,6 +318,14 @@ abstract public class TradeUtility {
                 thresholdRepository.getLendMoreThanBorrow();
     }
 
+    public boolean canBeTrusted(int accountID) {
+        int counter = 0;
+        for (Trade trade : getAllTradesAccount(accountID))
+            if (trade.getStatus() == TradeStatus.COMPLETED)
+                counter++;
+        return counter >= thresholdRepository.getRequiredTradesForTrusted();
+    }
+
     /**
      * Returns the date and time of this Trade.
      *
