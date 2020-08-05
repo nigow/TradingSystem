@@ -99,8 +99,20 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
                             setText(null);
                             setGraphic(null);
                         } else {
-                            if (inventoryPresenter.getPendingItems().contains(item))
-                                setTextFill(Color.GRAY);
+                            for (int i = 0; i < inventoryItems.getItems().size(); i++) {
+
+                                if (inventoryItems.getItems().get(i) == item) {
+
+                                    if (i < inventoryPresenter.getApprovedItems().size()) {
+                                        setTextFill(Color.BLACK);
+                                    } else {
+                                        setTextFill(Color.GRAY);
+                                    }
+
+                                }
+
+
+                            }
                             setText(item);
                         }
                     }
