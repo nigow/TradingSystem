@@ -65,7 +65,7 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     }
 
     @Override
-    public boolean approveItems() {
+    public boolean getApproveItems() {
         return approveItems;
     }
 }
