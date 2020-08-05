@@ -45,6 +45,13 @@ public interface HomePresenter {
     String newAccountPassword();
 
     /**
+     * Gets desired location
+     *
+     * @return Location of new account
+     */
+    String newAccountLocation();
+
+    /**
      * Tells user that their input was invalid.
      */
     void invalidInput();

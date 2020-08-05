@@ -69,6 +69,16 @@ public class ConsoleHomePresenter implements HomePresenter {
      * {@inheritDoc}
      */
     @Override
+    public String newAccountLocation() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter your desired location (-1 to go back): ");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void invalidInput() {
         System.out.println("Your input was invalid. Please try again.");
     }
