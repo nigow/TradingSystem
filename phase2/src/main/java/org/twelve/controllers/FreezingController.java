@@ -102,58 +102,63 @@ public class FreezingController {
 
     public void updateAccountLists() {
 
-        // demo (don't plan on including since they're not permanent anyways)
-
-        // banned
-        List<String> bannedAccounts = statusManager.getUsernamesToUnBan();
-        freezingPresenter.setBannedAccounts(bannedAccounts);
-
-        // frozen (req)
-        List<String> unfreezeAccounts = statusManager.getUsernamesToUnfreeze();
-        unfreezeAccounts.removeAll(bannedAccounts);
-        freezingPresenter.setUnfreezeAccounts(unfreezeAccounts);
-
-        // frozen
-        List<String> frozenAccounts = statusManager.getFrozenUsernames();
-        freezingPresenter.setFrozenAccounts(frozenAccounts);
-
-        // to freeze
-        List<String> toFreezeAccounts = statusManager.getUsernamesToFreeze();
-        freezingPresenter.setToFreezeAccounts(toFreezeAccounts);
-
-        // on vacation (we are not displaying this anymore)
-        // freezingPresenter.setVacationingAccounts(statusManager.getVacationUsernames());
-
-        // we can't display all of these at once right now without duplication because an admin is recognized to be a mod, trusted, etc
-        List<String> adminAccounts = statusManager.getAdminUsernames();
-        adminAccounts.removeAll(bannedAccounts);
-        freezingPresenter.setAdminAccounts(adminAccounts);
-
-        List<String> modAccounts = statusManager.getModeratorUsernames();
-        modAccounts.removeAll(adminAccounts);
-        modAccounts.removeAll(bannedAccounts);
-        freezingPresenter.setModAccounts(modAccounts);
-
-        List<String> trustedAccounts = statusManager.getTrustedUsernames();
-        trustedAccounts.removeAll(adminAccounts);
-        trustedAccounts.removeAll(modAccounts);
-        trustedAccounts.removeAll(bannedAccounts);
-        freezingPresenter.setTrustedAccounts(trustedAccounts);
-
-        // regular (todo: we need a better way of distinguishing accounts)
+        List<String> bannedAccounts = new ArrayList<>();
+        List<String> unfreezeAccounts = new ArrayList<>();
+        List<String> frozenAccounts = new ArrayList<>();
+        List<String> toFreezeAccounts = new ArrayList<>();
+        List<String> adminAccounts = new ArrayList<>();
+        List<String> modAccounts = new ArrayList<>();
+        List<String> trustedAccounts = new ArrayList<>();
         List<String> regularAccounts = new ArrayList<>();
-        for (int accountId : accountRepository.getAccountIDs()) {
-            regularAccounts.add(accountRepository.getUsernameFromID(accountId));
+
+        for (int id : accountRepository.getAccountIDs()) {
+
+            String username = accountRepository.getUsernameFromID(id);
+
+            if (statusManager.getUsernamesToFreeze().contains(username)) {
+                toFreezeAccounts.add(username);
+                continue;
+            }
+
+            switch (statusManager.getRoleOfAccount(id)) {
+
+                case ADMIN:
+                    adminAccounts.add(username);
+                    break;
+                case BANNED:
+                    bannedAccounts.add(username);
+                    break;
+                case FROZEN:
+                    if (statusManager.isPending(id)) {
+                        unfreezeAccounts.add(username);
+                    } else {
+                        frozenAccounts.add(username);
+                    }
+                    break;
+                case MOD:
+                    modAccounts.add(username);
+                    break;
+                case NORMAL:
+                    regularAccounts.add(username);
+                    break;
+                case TRUSTED:
+                    trustedAccounts.add(username);
+                    break;
+                // there's like no point in displaying these
+                case DEMO:
+                case VACATION:
+
+            }
+
         }
 
-        regularAccounts.removeAll(bannedAccounts);
-        regularAccounts.removeAll(unfreezeAccounts);
-        regularAccounts.removeAll(frozenAccounts);
-        regularAccounts.removeAll(toFreezeAccounts);
-        regularAccounts.removeAll(adminAccounts);
-        regularAccounts.removeAll(modAccounts);
-        regularAccounts.removeAll(trustedAccounts);
-
+        freezingPresenter.setModAccounts(modAccounts);
         freezingPresenter.setRegularAccounts(regularAccounts);
+        freezingPresenter.setFrozenAccounts(frozenAccounts);
+        freezingPresenter.setToFreezeAccounts(toFreezeAccounts);
+        freezingPresenter.setUnfreezeAccounts(unfreezeAccounts);
+        freezingPresenter.setBannedAccounts(bannedAccounts);
+        freezingPresenter.setAdminAccounts(adminAccounts);
+        freezingPresenter.setTrustedAccounts(trustedAccounts);
     }
 }

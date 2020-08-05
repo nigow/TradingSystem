@@ -92,19 +92,17 @@ public class RegistrationController {
                         Permissions.BROWSE_INVENTORY,
                         Permissions.CHANGE_THRESHOLDS,
                         Permissions.ADD_ADMIN,
-                        Permissions.REQUEST_UNFREEZE,
-                        Permissions.REQUEST_UNFREEZE,
                         Permissions.REQUEST_VACATION,
-                        Permissions.MAKE_TRUSTED,
-                        Permissions.CAN_BAN);
+                        Permissions.CAN_BAN,
+                        Permissions.MAKE_TRUSTED);
                 break;
             case USER:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
                         Permissions.TRADE,
-                        Permissions.REQUEST_VACATION,
-                        Permissions.BROWSE_INVENTORY);
+                        Permissions.BROWSE_INVENTORY,
+                        Permissions.REQUEST_VACATION);
                 break;
             case DEMO:
                 perms = Arrays.asList(Permissions.LOGIN,
