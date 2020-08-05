@@ -63,9 +63,10 @@ public class JsonAccountGateway implements AccountGateway {
                             }
                             List<String> permissions = new ArrayList<>();
                             Collections.addAll(permissions, json.get("permissions").getAsString().split(" "));
+                            String location = json.get("city").getAsString();
 
                             // todo: add the actual location when server is updated
-                            accountRepository.createAccount(accountId, username, password, permissions, wishlist, "TBD");
+                            accountRepository.createAccount(accountId, username, password, permissions, wishlist, location);
 
                         }
 
@@ -105,6 +106,7 @@ public class JsonAccountGateway implements AccountGateway {
         json.addProperty("password", password);
         json.addProperty("wishlist", wishlistString);
         json.addProperty("permissions", permissionsString);
+        json.addProperty("city", location);
 
         // todo: uncomment when server is updated
         // json.addProperty("city", city);
