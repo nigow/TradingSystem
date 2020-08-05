@@ -82,16 +82,10 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
             }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
 
-            initiatorField.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                .bean(tradeCreatorPresenter).name("createdTrade").build());
-
-        } catch (NoSuchMethodException ignored) { System.out.println("fail");}
-
 //            initiatorField.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
 //                .bean(tradeCreatorPresenter).name("createdTrade").build());
-//
 
-
+        } catch (NoSuchMethodException ignored) { System.out.println("fail");}
     }
 
     @FXML
@@ -99,5 +93,15 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    @FXML
+    public void peerSwitch(ActionEvent actionEvent) {
+        tradeCreatorController.changeSelectedUser(allAccounts.getSelectionModel().getSelectedIndex());
+    }
+
+
+    public void saveClicked(ActionEvent actionEvent) {
+//        tradeCreatorController.createTrade(allAccounts.getSelectionModel().getSelectedIndex(), yourItems.getSelectionModel().getSelectedIndex(),
+//                peerItems.getSelectionModel().getSelectedIndex(), );
+    }
 
 }
