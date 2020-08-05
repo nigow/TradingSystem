@@ -11,10 +11,35 @@ import java.util.ResourceBundle;
 public class UIRegistrationPresenter extends ObservablePresenter implements RegistrationPresenter {
 
     private List<String> availableTypes;
+    private List<String> existingCities;
     private final ResourceBundle localizedResources;
 
     public UIRegistrationPresenter(ResourceBundle localizedResources) {
         this.localizedResources = localizedResources;
+        setAvailableTypes(new ArrayList<>());
+        setExistingCities(new ArrayList<>());
+    }
+
+    @Override
+    public void setExistingCities(List<String> existingCities) {
+        List<String> oldExistingCities = this.existingCities;
+        this.existingCities = existingCities;
+        propertyChangeSupport.firePropertyChange("existingCities", oldExistingCities, this.existingCities);
+    }
+
+    @Override
+    public List<String> getExistingCities() {
+        return existingCities;
+    }
+
+    @Override
+    public void setAvailableTypes(List<AccountType> types) {
+        List<String> oldAvailableTypes = this.availableTypes;
+        this.availableTypes = new ArrayList<>();
+        for (AccountType type : types) {
+            availableTypes.add(localizedResources.getString(type.name()));
+        }
+        propertyChangeSupport.firePropertyChange("availableTypes", oldAvailableTypes, this.availableTypes);
     }
 
     @Override
@@ -22,12 +47,4 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
         return availableTypes;
     }
 
-    @Override
-    public void setAvailableTypes(List<AccountType> types) {
-        availableTypes = new ArrayList<>();
-        for (AccountType type : types) {
-            String localizedName = localizedResources.getString(type.name());
-            availableTypes.add(localizedName);
-        }
-    }
 }

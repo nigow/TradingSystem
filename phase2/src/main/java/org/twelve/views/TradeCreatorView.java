@@ -75,6 +75,7 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
             peerItems.itemsProperty().bind(peerItemsBinding);
 
+
             ObjectBinding<ObservableList<String>> allAccounts = Bindings.createObjectBinding(() -> {
 
                 return FXCollections.observableArrayList(tradeCreatorPresenter.getAllUsers());
@@ -86,6 +87,9 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
         } catch (NoSuchMethodException ignored) { System.out.println("fail");}
 
+//            initiatorField.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+//                .bean(tradeCreatorPresenter).name("createdTrade").build());
+//
 
 
     }

@@ -31,10 +31,9 @@ public class JsonTradeGateway implements TradeGateway {
     //TODO
     @Override
     public boolean populate(TradeManager tradeManager) {
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection urlConnection;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
-        List<Integer> existingTradeIds = tradeManager.getAllTradesIds();
         try{
             URL url = new URL(getAllTradeUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -49,37 +48,35 @@ public class JsonTradeGateway implements TradeGateway {
                 JsonArray jsonArray;
 
                 while((line = bufferedReader.readLine())!=null){
-                    try{
+                    try {
                         jsonObj = gson.fromJson(line, JsonObject.class);
                         jsonArray = jsonObj.get("trades").getAsJsonArray();
-                        for(JsonElement jsonElement: jsonArray){
+                        for (JsonElement jsonElement : jsonArray) {
                             JsonObject json = jsonElement.getAsJsonObject();
                             int tradeId = json.get("trade_id").getAsInt();
-                            // if(!existingTradeIds.contains(tradeId)){
-                                boolean isPermanent = json.get("is_permanent").getAsBoolean();
-                                List<Integer> tradersIds = new ArrayList<>();
-                                for(String s: json.get("traders_ids").getAsString().split(" ")){
-                                    tradersIds.add(Integer.parseInt(s));
-                                }
-                                List<Integer> itemIds = new ArrayList<>();
-                                for(String s: json.get("item_ids").getAsString().split(" ")){
-                                    itemIds.add(Integer.parseInt(s));
-                                }
-                                String tradeStatus = json.get("trade_status").getAsString();
-                                int editCounter = json.get("edit_counter").getAsInt();
-                                List<Boolean> tradeCompletions = new ArrayList<>();
-                                for(String s: json.get("trade_completions").getAsString().split(" ")){
-                                    tradeCompletions.add(Boolean.valueOf(s));
-                                }
-                                String location = json.get("location").getAsString();
-                                String time = json.get("time").getAsString();
-                                System.out.println(time);
-                                tradeManager.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, "a", location);
-                            //}
+                            boolean isPermanent = json.get("is_permanent").getAsBoolean();
+                            List<Integer> tradersIds = new ArrayList<>();
+                            for (String s : json.get("traders_ids").getAsString().split(" ")) {
+                                tradersIds.add(Integer.parseInt(s));
+                            }
+                            List<Integer> itemIds = new ArrayList<>();
+                            for (String s : json.get("item_ids").getAsString().split(" ")) {
+                                itemIds.add(Integer.parseInt(s));
+                            }
+                            String tradeStatus = json.get("trade_status").getAsString();
+                            int editCounter = json.get("edit_counter").getAsInt();
+                            List<Boolean> tradeCompletions = new ArrayList<>();
+                            for (String s : json.get("trade_completions").getAsString().split(" ")) {
+                                tradeCompletions.add(Boolean.valueOf(s));
+                            }
+                            String location = json.get("location").getAsString();
+                            String time = json.get("time").getAsString();
+                            System.out.println(time);
+                            tradeManager.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, "a", location);
                         }
 
 
-                    }catch(Exception e){
+                    } catch (RuntimeException e) {
                         //e.printStackTrace();
                         return false;
                     }
@@ -87,21 +84,25 @@ public class JsonTradeGateway implements TradeGateway {
             }
         }catch(IOException e){
             e.printStackTrace();
-        }finally{
-            try{
-                inputStream.close();
-                bufferedReader.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }finally{
-                return true;
-            }
+            return false;
+
+        }
+        try{
+            assert inputStream != null;
+            inputStream.close();
+            bufferedReader.close();
+            return true;
+        }catch(IOException e){
+            e.printStackTrace();
+            return false;
         }
     }
 
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
-    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time, String location, boolean newTrade) {
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
+                        int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
+                        String location, boolean newTrade) {
         String traderIdsString = "";
         for(Integer i: traderIds) traderIdsString += i.toString() + " ";
         String itemIdsString = "";
@@ -120,12 +121,14 @@ public class JsonTradeGateway implements TradeGateway {
         json.addProperty("time", time);
         json.addProperty("location", location);
 
-        OutputStream outputStream = null;
-        URL url = null;
+        OutputStream outputStream;
+        URL url;
+        HttpURLConnection con;
         try{
             if (newTrade) url = new URL(createTradeUrl);
             else url = new URL(updateTradeUrl);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            con = (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -137,14 +140,13 @@ public class JsonTradeGateway implements TradeGateway {
         }catch(IOException e){
             e.printStackTrace();
             return false;
-        }finally{
-            try{
-                outputStream.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }finally{
-                return true;
-            }
+        }
+        try{
+            outputStream.close();
+            return true;
+        }catch(IOException e){
+            e.printStackTrace();
+            return false;
         }
     }
 

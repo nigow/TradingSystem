@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface RegistrationPresenter {
 
-    List<String> getAvailableTypes();
     void setAvailableTypes(List<AccountType> types);
+    List<String> getAvailableTypes();
+    void setExistingCities(List<String> existingCities);
+    List<String> getExistingCities();
 
 }

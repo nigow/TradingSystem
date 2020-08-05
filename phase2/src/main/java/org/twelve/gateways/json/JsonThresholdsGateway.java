@@ -13,8 +13,8 @@ import java.net.http.HttpResponse;
 
 public class JsonThresholdsGateway implements ThresholdsGateway {
 
-    private HttpClient httpClient;
-    private Gson gson;
+    private final  HttpClient httpClient;
+    private final Gson gson;
 
     public JsonThresholdsGateway() {
 
@@ -42,9 +42,10 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
             int numberOfDays = json.get("number_of_days").getAsInt();
             int numberOfEdits = json.get("number_of_edits").getAsInt();
             int numberOfStats = json.get("number_of_stats").getAsInt();
+            int requiredTradesForTrusted = json.get("required_trades_for_trusted").getAsInt();
 
             thresholdRepository.createThresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
-                    numberOfEdits, numberOfStats);
+                    numberOfEdits, numberOfStats, requiredTradesForTrusted);
 
             return true;
 
@@ -56,7 +57,7 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
     @Override
     public boolean save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                     int numberOfEdits, int numberOfStats) {
+                     int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
 
         JsonObject json = new JsonObject();
         json.addProperty("lend_limit", lendMoreThanBorrow);
@@ -65,6 +66,7 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
         json.addProperty("number_of_days", numberOfDays);
         json.addProperty("number_of_edits", numberOfEdits);
         json.addProperty("number_of_stats", numberOfStats);
+        json.addProperty("required_trades_for_trusted", requiredTradesForTrusted);
 
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
@@ -74,7 +76,8 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
         try {
 
-            HttpResponse<String> response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+            //HttpResponse<String> response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+            httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
             return true;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

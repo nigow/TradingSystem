@@ -75,6 +75,17 @@ public class ThresholdRepository {
         updateThresholds();
     }
 
+    // TODO gateways and controllers should be updated to reflect this
+
+    public int getRequiredTradesForTrusted() {
+        return thresholds.getRequiredTradesForTrusted();
+    }
+
+    public void setRequiredTradesForTrusted(int requiredTradesForTrusted) {
+        thresholds.setNumberOfEdits(requiredTradesForTrusted);
+        updateThresholds();
+    }
+
     /**
      * Gets the current restriction for amount of items needed to be lent before borrowing.
      *
@@ -105,12 +116,12 @@ public class ThresholdRepository {
     private void updateThresholds() {
         thresholdsGateway.save(thresholds.getLendMoreThanBorrow(), thresholds.getMaxIncompleteTrade(),
                 thresholds.getMaxWeeklyTrade(), thresholds.getNumberOfDays(), thresholds.getNumberOfEdits(),
-                thresholds.getNumberOfStats());
+                thresholds.getNumberOfStats(), thresholds.getRequiredTradesForTrusted());
     }
 
     public void createThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                                 int numberOfEdits, int numberOfStats) {
+                                 int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
         thresholds = new Thresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
-                numberOfEdits, numberOfStats);
+                numberOfEdits, numberOfStats, requiredTradesForTrusted);
     }
 }

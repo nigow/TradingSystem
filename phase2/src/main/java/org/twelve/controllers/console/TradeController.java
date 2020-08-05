@@ -1,6 +1,7 @@
 package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
+import org.twelve.entities.Permissions;
 import org.twelve.entities.TradeStatus;
 import org.twelve.presenters.TradePresenter;
 import org.twelve.usecases.*;
@@ -60,7 +61,7 @@ public class TradeController {
 
             // TODO how do we check if someone is frozen?
             // changed to canTrade(), isFrozen() checks if someone is frozen
-            if (statusManager.canTrade(sessionManager.getCurrAccountID())) {
+            if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.TRADE)) {
                 options.add(tradePresenter.editTrade());
                 methods.add(this::selectAndChangeTrade);
             }

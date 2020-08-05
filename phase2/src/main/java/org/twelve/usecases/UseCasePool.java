@@ -10,6 +10,7 @@ import org.twelve.gateways.GatewayPool;
 
 public class UseCasePool {
     private ItemManager itemManager;
+    private CityManager cityManager;
     private StatusManager statusManager;
     private TradeManager tradeManager;
     private WishlistManager wishlistManager;
@@ -39,6 +40,7 @@ public class UseCasePool {
         statusManager = new StatusManager(accountRepository, tradeManager, thresholdRepository);
         loginManager = new LoginManager(accountRepository);
         sessionManager = new SessionManager(accountRepository);
+        cityManager = new CityManager(gatewayPool.getCitiesGateway());
     }
 
     /**
@@ -96,5 +98,12 @@ public class UseCasePool {
      */
     public ThresholdRepository getThresholdRepository() {
         return thresholdRepository;
+    }
+
+    /**
+     * @return An instance of CityManager use case.
+     */
+    public CityManager getCityManager() {
+        return cityManager;
     }
 }

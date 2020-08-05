@@ -41,7 +41,7 @@ public class CSVThresholdsGateway implements ThresholdsGateway {
         //skip the first row
         line = br.readLine();
 
-        while (line != null && Pattern.matches("^[0-9]+,[0-9]+,[0-9]+,[0-9]+,[0-9]+,[0-9]+$", line)) {
+        while (line != null && Pattern.matches("^[0-9]+,[0-9]+,[0-9]+,[0-9]+,[0-9]+,[0-9]+,[0-9]+$", line)) {
             //only the second line consists of restrictions separated by commas
             String[] lineArray = line.split(",");
             int lendLimit = Integer.parseInt(lineArray[0]);
@@ -50,8 +50,9 @@ public class CSVThresholdsGateway implements ThresholdsGateway {
             int numberOfDays = Integer.parseInt(lineArray[3]);
             int numberOfEdits = Integer.parseInt(lineArray[4]);
             int numberOfStats = Integer.parseInt(lineArray[5]);
+            int requiredTradesForTrusted = Integer.parseInt(lineArray[6]);
 
-            this.currentThresholds = new Thresholds(lendLimit, incompleteTrade, weeklyTrade, numberOfDays, numberOfEdits, numberOfStats);
+            this.currentThresholds = new Thresholds(lendLimit, incompleteTrade, weeklyTrade, numberOfDays, numberOfEdits, numberOfStats, requiredTradesForTrusted);
 
             line = br.readLine();
 

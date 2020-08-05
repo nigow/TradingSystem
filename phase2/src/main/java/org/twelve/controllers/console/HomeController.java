@@ -122,8 +122,7 @@ public class HomeController {
                 List<Permissions> perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
-                        Permissions.LEND,
-                        Permissions.BORROW,
+                        Permissions.TRADE,
                         Permissions.BROWSE_INVENTORY,
                         Permissions.REQUEST_VACATION);
                 if (accountRepository.createAccount(username, password, perms, "")) { // todo: put actual location

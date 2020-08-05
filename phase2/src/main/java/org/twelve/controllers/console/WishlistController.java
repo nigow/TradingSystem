@@ -1,6 +1,7 @@
 package org.twelve.controllers.console;
 
 import org.twelve.controllers.InputHandler;
+import org.twelve.entities.Permissions;
 import org.twelve.presenters.OldTradeCreatorPresenter;
 import org.twelve.presenters.console.WishlistPresenter;
 import org.twelve.usecases.*;
@@ -87,7 +88,7 @@ public class WishlistController {
         actions.put(wishlistPresenter.removeItem(), this::removeFromWishlist);
 
         // tradecreatorcontroller will handle if initiator has to give item in return
-        if (statusManager.canTrade(sessionManager.getCurrAccountID()))
+        if (statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.TRADE))
 
             actions.put(wishlistPresenter.startNewTrade(), this::startTrade);
 

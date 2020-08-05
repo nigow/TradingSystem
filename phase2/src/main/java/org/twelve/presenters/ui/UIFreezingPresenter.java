@@ -5,13 +5,13 @@ import org.twelve.presenters.FreezingPresenter;
 import java.util.*;
 
 public class UIFreezingPresenter extends ObservablePresenter implements FreezingPresenter {
-    // private List<String> allAccounts;
 
     private List<Map<String, String>> bannedAccounts;
     private List<Map<String, String>> frozenAccounts;
     private List<Map<String, String>> unfreezeAccounts;
     private List<Map<String, String>> toFreezeAccounts;
     private List<Map<String, String>> trustedAccounts;
+    private List<Map<String, String>> regularAccounts;
 
     private List<Map<String, String>> vacationingAccounts;
     private List<Map<String, String>> modAccounts;
@@ -33,8 +33,27 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
 
         setAdminAccounts(new ArrayList<>());
-        setTrustedAccounts(new ArrayList<>());
+
         setModAccounts(new ArrayList<>());
+        setTrustedAccounts(new ArrayList<>());
+        setRegularAccounts(new ArrayList<>());
+    }
+
+    @Override
+    public void setRegularAccounts(List<String> regularAccounts) {
+        List<Map<String, String>> oldRegularAccounts = this.regularAccounts;
+        this.regularAccounts = new ArrayList<>();
+        for (String regularAccount : regularAccounts) {
+
+            this.regularAccounts.add(Map.of("username", regularAccount, "role", localizedResources.getString("regular")));
+
+        }
+        propertyChangeSupport.firePropertyChange("regularAccounts", oldRegularAccounts, this.regularAccounts);
+    }
+
+    @Override
+    public List<Map<String, String>> getRegularAccounts() {
+        return regularAccounts;
     }
 
     @Override
@@ -123,20 +142,6 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         return vacationingAccounts;
     }
 
-    /*
-    @Override
-    public void setAllAccounts(List<String> allAccounts) {
-        List<String> oldAllAccounts = this.allAccounts;
-        this.allAccounts = allAccounts;
-        propertyChangeSupport.firePropertyChange("allAccounts", oldAllAccounts, allAccounts);
-    }
-
-    @Override
-    public List<String> getAllAccounts() {
-        return allAccounts;
-    }
-    */
-
     @Override
     public void setAdminAccounts(List<String> adminAccounts) {
         List<Map<String, String>> oldAdminAccounts = this.adminAccounts;
@@ -159,7 +164,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         List<Map<String, String>> oldTrustedAccounts = this.trustedAccounts;
         this.trustedAccounts = new ArrayList<>();
         for (String trustedAccount: trustedAccounts) {
-            this.vacationingAccounts.add(Map.of("username", trustedAccount, "role", localizedResources.getString("trusted")));
+            this.trustedAccounts.add(Map.of("username", trustedAccount, "role", localizedResources.getString("trusted")));
 
         }
         propertyChangeSupport.firePropertyChange("trustedAccounts", oldTrustedAccounts, this.trustedAccounts);

@@ -43,11 +43,12 @@ public class ViewBuilder {
 
             case LOGIN:
 
-                return new LoginView(windowHandler, controllerPool.getLoginController());
+                return new LoginView<>(windowHandler, controllerPool.getLoginController(),
+                        new UILoginPresenter(localizedResources));
 
             case MENU:
 
-                return new MenuView(windowHandler, controllerPool.getMenuController());
+                return new MenuView<>(windowHandler, controllerPool.getMenuController(), new UIMenuPresenter());
 
             case PROFILE:
 
@@ -72,7 +73,8 @@ public class ViewBuilder {
 
             case REGISTRATION:
 
-                return new RegistrationView(windowHandler, controllerPool.getRegistrationController());
+                return new RegistrationView<>(windowHandler, controllerPool.getRegistrationController(),
+                        new UIRegistrationPresenter(localizedResources));
 
             case WISHLIST:
 
@@ -88,6 +90,11 @@ public class ViewBuilder {
 
                 return new AccountsView<>(windowHandler, controllerPool.getFreezingController(),
                         new UIFreezingPresenter(localizedResources));
+
+            case TRADE_COLLECTION:
+
+                return new TradeCollectionView<>(windowHandler, controllerPool.getTradeCollectionController(),
+                        new UITradeCollectionPresenter(localizedResources));
         }
 
         return null;

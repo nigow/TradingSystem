@@ -34,6 +34,10 @@ public class CityManager {
         cities.put(cityId, cityName);
     }
 
+    public List<String> getAllCities() {
+        return new ArrayList<>(cities.values());
+    }
+
     //For debugging
     //public List<Integer> getAllCityIds() {return new ArrayList<>(cities.keySet());}
 

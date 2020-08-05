@@ -52,6 +52,7 @@ public class FreezingController {
     public void freeze(String chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.freezeAccount(chosenUserID);
+        updateAccountLists();
     }
 
     /**
@@ -60,83 +61,104 @@ public class FreezingController {
     public void unfreeze(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unfreezeAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void ban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.banAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void unban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unbanAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void trust(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.trustAccount(chosenUserID);
+        updateAccountLists();
     }
     
     public void untrustAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unTrustAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void modAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.modAccount(chosenUserID);
+        updateAccountLists();
     }
 
     public void unmodAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unmodAccount(chosenUserID);
+        updateAccountLists();
     }
+
     public void updateAccountLists() {
 
-        /*
-        List<String> accountList = new ArrayList<>();
-        List<String> frozenAccountList = new ArrayList<>();
-        List<String> bannedAccountList = new ArrayList<>();
+        List<String> bannedAccounts = new ArrayList<>();
+        List<String> unfreezeAccounts = new ArrayList<>();
+        List<String> frozenAccounts = new ArrayList<>();
+        List<String> toFreezeAccounts = new ArrayList<>();
+        List<String> adminAccounts = new ArrayList<>();
+        List<String> modAccounts = new ArrayList<>();
+        List<String> trustedAccounts = new ArrayList<>();
+        List<String> regularAccounts = new ArrayList<>();
 
-        for (String s : accountRepository.getAccountStrings()) {
-            accountList.add(s);
+        for (int id : accountRepository.getAccountIDs()) {
+
+            String username = accountRepository.getUsernameFromID(id);
+
+            if (statusManager.getUsernamesToFreeze().contains(username)) {
+                toFreezeAccounts.add(username);
+                continue;
+            }
+
+            switch (statusManager.getRoleOfAccount(id)) {
+
+                case ADMIN:
+                    adminAccounts.add(username);
+                    break;
+                case BANNED:
+                    bannedAccounts.add(username);
+                    break;
+                case FROZEN:
+                    if (statusManager.isPending(id)) {
+                        unfreezeAccounts.add(username);
+                    } else {
+                        frozenAccounts.add(username);
+                    }
+                    break;
+                case MOD:
+                    modAccounts.add(username);
+                    break;
+                case NORMAL:
+                    regularAccounts.add(username);
+                    break;
+                case TRUSTED:
+                    trustedAccounts.add(username);
+                    break;
+                // there's like no point in displaying these
+                case DEMO:
+                case VACATION:
+
+            }
+
         }
-        for (String s : statusManager.getUsernamesToFreeze()) {
-            frozenAccountList.add(s);
-        }
-        for (String s : statusManager.getUsernamesToUnBan()) {
-            bannedAccountList.add(s);
-        }
 
-        freezingPresenter.setAllBannedAccounts(bannedAccountList);
-        freezingPresenter.setAllFrozenAccounts(frozenAccountList);
-        freezingPresenter.setAllAccounts(accountList);
-
-         */
-
-        // demo (don't plan on including since they're not permanent anyways)
-
-        // banned
-        freezingPresenter.setBannedAccounts(statusManager.getUsernamesToUnBan());
-        // frozen (todo)
-
-        // frozen (req)
-        freezingPresenter.setUnfreezeAccounts(statusManager.getUsernamesToUnfreeze());
-        // to freeze
-        freezingPresenter.setToFreezeAccounts(statusManager.getUsernamesToFreeze());
-
-        // regular (todo)
-
-        // on vacation
-        freezingPresenter.setVacationingAccounts(statusManager.getVacationUsernames());
-
-        // tcm
-        freezingPresenter.setTrustedAccounts(statusManager.getTrustedUsernames());
-        // mod
-        freezingPresenter.setModAccounts(statusManager.getModeratorUsernames());
-        // admin
-        freezingPresenter.setAdminAccounts(statusManager.getAdminUsernames());
-
-
+        freezingPresenter.setModAccounts(modAccounts);
+        freezingPresenter.setRegularAccounts(regularAccounts);
+        freezingPresenter.setFrozenAccounts(frozenAccounts);
+        freezingPresenter.setToFreezeAccounts(toFreezeAccounts);
+        freezingPresenter.setUnfreezeAccounts(unfreezeAccounts);
+        freezingPresenter.setBannedAccounts(bannedAccounts);
+        freezingPresenter.setAdminAccounts(adminAccounts);
+        freezingPresenter.setTrustedAccounts(trustedAccounts);
     }
 }

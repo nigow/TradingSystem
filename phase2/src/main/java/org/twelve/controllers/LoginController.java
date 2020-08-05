@@ -3,6 +3,7 @@ package org.twelve.controllers;
 
 import org.twelve.controllers.console.MenuFacade;
 import org.twelve.presenters.HomePresenter;
+import org.twelve.presenters.LoginPresenter;
 import org.twelve.usecases.LoginManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
@@ -29,6 +30,8 @@ public class LoginController {
      */
     private final InputHandler inputHandler;
 
+    private LoginPresenter loginPresenter;
+
     /**
      * Initializes LoginController with the necessary presenter and use cases.
      *
@@ -40,6 +43,9 @@ public class LoginController {
         inputHandler = new InputHandler();
     }
 
+    public void setLoginPresenter(LoginPresenter loginPresenter) {
+        this.loginPresenter = loginPresenter;
+    }
 
     /**
      * Takes in the username and password from the view and logs in the user
@@ -47,13 +53,13 @@ public class LoginController {
      * @param password the password the user enters
      */
     public boolean logIn(String username, String password) {
-        if (inputHandler.isValidUserPass(username, password) &&
-                loginManager.authenticateLogin(username, password)) {
+        if (inputHandler.isValidUserPass(username, password) && loginManager.authenticateLogin(username, password)) {
             sessionManager.login(username);
             return true;
-        } else
+        } else {
+            loginPresenter.setError("failMessage"); // we can add more specific errors if we want here
             return false;
-
+        }
     }
 
 }
