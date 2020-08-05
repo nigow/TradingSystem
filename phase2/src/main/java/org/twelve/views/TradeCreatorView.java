@@ -79,12 +79,12 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
                 return FXCollections.observableArrayList(tradeCreatorPresenter.getAllUsers());
 
-            }, ReadOnlyJavaBeanStringPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
+            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
 
-            initiatorField.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+            initiatorField.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                 .bean(tradeCreatorPresenter).name("createdTrade").build());
 
-        } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) { System.out.println("fail");}
 
 
 

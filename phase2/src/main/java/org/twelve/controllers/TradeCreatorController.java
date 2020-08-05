@@ -48,12 +48,15 @@ public class TradeCreatorController {
         for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getAccountIDs().get(accountIndex))) {
             itemsToReceive.add(s);
         }
+        tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
         for (String s : itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID())) {
             itemsToGive.add(s);
         }
+        tradeCreatorPresenter.setItemsToGive(itemsToGive);
         for (String s : accountRepository.getAccountStrings()) {
             allUsers.add(s);
         }
+        tradeCreatorPresenter.setAllUsers(allUsers);
     }
 
     public void createdTrade(boolean isCreator) {
