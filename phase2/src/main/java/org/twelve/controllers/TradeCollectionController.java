@@ -1,9 +1,7 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.TradeCollectionPresenter;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.TradeManager;
-import org.twelve.usecases.UseCasePool;
+import org.twelve.usecases.*;
 
 public class TradeCollectionController {
 
@@ -11,10 +9,16 @@ public class TradeCollectionController {
 
     private final TradeManager tradeManager;
     private final AccountRepository accountRepository;
+    private final SessionManager sessionManager;
+    private final ItemManager itemManager;
+    private final StatusManager statusManager;
 
     public TradeCollectionController(UseCasePool useCasePool){
-        this.tradeManager = useCasePool.getTradeManager();
-        this.accountRepository = useCasePool.getAccountRepository();
+        tradeManager = useCasePool.getTradeManager();
+        accountRepository = useCasePool.getAccountRepository();
+        sessionManager = useCasePool.getSessionManager();
+        itemManager = useCasePool.getItemManager();
+        statusManager = useCasePool.getStatusManager();
     }
 
     public void setTradeCollectionPresenter(TradeCollectionPresenter tradeCollectionPresenter) {
