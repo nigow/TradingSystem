@@ -26,12 +26,14 @@
              <Label text="%numOfDays" GridPane.rowIndex="3" />
              <Label text="%numOfEdits" GridPane.rowIndex="4" />
              <Label text="%numOfStats" GridPane.rowIndex="5" />
+             <Label text="%numForTrusted" GridPane.rowIndex="5" />
              <Spinner fx:id="lendVsBorrow" GridPane.columnIndex="1" />
             <Spinner fx:id="maxIncomplete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Spinner fx:id="maxWeekly" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Spinner fx:id="numOfDays" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Spinner fx:id="numOfEdits" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Spinner fx:id="numOfStats" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+             <Spinner fx:id="numForTrusted" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
    </center>

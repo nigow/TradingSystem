@@ -36,6 +36,8 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
     private Spinner<Integer> numOfEdits;
     @FXML
     private Spinner<Integer> numOfStats;
+    @FXML
+    private Spinner<Integer> numForTrusted;
 
     public RestrictionsView(WindowHandler windowHandler, ThresholdController thresholdController, T thresholdPresenter) {
         this.windowHandler = windowHandler;
@@ -66,6 +68,7 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
         thresholdController.numberOfDays(numOfDays.getValue());
         thresholdController.numberOfEdits(numOfEdits.getValue());
         thresholdController.numberOfStats(numOfStats.getValue());
+        thresholdController.numberOfTradesUntilTrusted(numForTrusted.getValue());
     }
 
     @Override
@@ -108,6 +111,12 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
                 return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfStats());
 
             }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfStats").build()));
+
+            numForTrusted.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfTradesUntilTrusted());
+
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfTradesUntilTrusted").build()));
 
         } catch (NoSuchMethodException ignored) {}
 

@@ -10,10 +10,11 @@ public class UIThresholdsPresenter extends ObservablePresenter implements Thresh
     private int numberOfDays;
     private int numberOfStats;
     private int numberOfEdits;
+    private int numberOfTradesUntilTrusted;
 
     @Override
     public void setThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                              int numberOfStats, int numberOfEdits) {
+                              int numberOfStats, int numberOfEdits, int numberOfTradesUntilTrusted) {
         int oldLendMoreThanBorrow = this.lendMoreThanBorrow;
         this.lendMoreThanBorrow = lendMoreThanBorrow;
         propertyChangeSupport.firePropertyChange("lendMoreThanBorrow", oldLendMoreThanBorrow, this.lendMoreThanBorrow);
@@ -37,6 +38,10 @@ public class UIThresholdsPresenter extends ObservablePresenter implements Thresh
         int oldNumberOfEdits = this.numberOfEdits;
         this.numberOfEdits = numberOfEdits;
         propertyChangeSupport.firePropertyChange("numberOfEdits", oldNumberOfEdits, this.numberOfEdits);
+
+        int oldNumberOfTradesUntilTrusted = this.numberOfTradesUntilTrusted;
+        this.numberOfTradesUntilTrusted = numberOfTradesUntilTrusted;
+        propertyChangeSupport.firePropertyChange("numberOfTradesUntilTrusted", oldNumberOfTradesUntilTrusted, this.numberOfTradesUntilTrusted);
     }
 
     @Override
@@ -67,6 +72,11 @@ public class UIThresholdsPresenter extends ObservablePresenter implements Thresh
     @Override
     public int getNumberOfEdits() {
         return numberOfEdits;
+    }
+
+    @Override
+    public int getNumberOfTradesUntilTrusted() {
+        return numberOfTradesUntilTrusted;
     }
 
 }
