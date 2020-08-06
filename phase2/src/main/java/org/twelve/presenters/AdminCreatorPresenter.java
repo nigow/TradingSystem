@@ -22,6 +22,13 @@ public interface AdminCreatorPresenter {
     String createAdminPassword();
 
     /**
+     * Create admin location.
+     *
+     * @return Location of admin
+     */
+    String createAdminLocation();
+
+    /**
      * tells user their username and/or password is invalid
      */
     void displayInvalidInfo();
