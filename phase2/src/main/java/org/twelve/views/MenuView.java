@@ -49,14 +49,14 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
 
             initiateTrade.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                 .bean(menuPresenter).name("initiateTrade").build());
-            modifyRestrictions.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("modifyRestrictions").build().not());
-            manageAccounts.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("manageAccounts").build().not());
-            addAdmin.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("addAdmin").build().not());
-            approveItems.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("approveItems").build().not());
+            modifyRestrictions.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("modifyRestrictions").build());
+            manageAccounts.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("manageAccounts").build());
+            addAdmin.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("addAdmin").build());
+            approveItems.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("approveItems").build());
 
     } catch (NoSuchMethodException ignored) {}
     }
