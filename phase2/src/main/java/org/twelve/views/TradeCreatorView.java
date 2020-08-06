@@ -9,6 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.Parent;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import org.twelve.controllers.TradeCreatorController;
 import org.twelve.presenters.TradeCreatorPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -19,14 +22,17 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView,
-        Initializable {
+public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView, Initializable {
+
 
     private WindowHandler windowHandler;
 
     private final TradeCreatorController tradeCreatorController;
     private final T tradeCreatorPresenter;
 
+
+    @FXML
+    private GridPane graphic;
 
     @FXML
     private ListView<String> yourItems;
@@ -61,6 +67,11 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     @Override
     public void reload() {
         tradeCreatorController.updateLists(peerBox.getSelectionModel().getSelectedIndex());
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     @Override

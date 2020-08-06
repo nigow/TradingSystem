@@ -75,6 +75,11 @@ public class ThresholdController {
             thresholdRepository.setNumberOfEdits(newNumber);
     }
 
+    public void numberOfTradesUntilTrusted(int newNumber) {
+        if (newNumber != thresholdRepository.getNumberOfEdits())
+            thresholdRepository.setRequiredTradesForTrusted(newNumber);
+    }
+
     public void setThresholdPresenter(ThresholdPresenter thresholdPresenter) {
         this.thresholdPresenter = thresholdPresenter;
     }
@@ -86,7 +91,7 @@ public class ThresholdController {
         thresholdPresenter.setThresholds(thresholdRepository.getLendMoreThanBorrow(),
                 thresholdRepository.getMaxIncompleteTrade(), thresholdRepository.getMaxWeeklyTrade(),
                 thresholdRepository.getNumberOfDays(), thresholdRepository.getNumberOfStats(),
-                thresholdRepository.getNumberOfEdits());
+                thresholdRepository.getNumberOfEdits(), thresholdRepository.getRequiredTradesForTrusted());
 
     }
 }

@@ -3,10 +3,7 @@ package org.twelve.controllers.console;
 import org.twelve.controllers.InputHandler;
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.HomePresenter;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.LoginManager;
-import org.twelve.usecases.SessionManager;
-import org.twelve.usecases.UseCasePool;
+import org.twelve.usecases.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +23,8 @@ public class HomeController {
     private final AccountRepository accountRepository;
 
     private final LoginManager loginManager;
+
+    private final CityManager cityManager;
 
     /**
      * An instance of MenuFacade to be called according to a user's permissions.
@@ -51,6 +50,7 @@ public class HomeController {
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
         accountRepository = useCasePool.getAccountRepository();
+        cityManager = useCasePool.getCityManager();
         this.menuFacade = menuFacade;
         this.homePresenter = homePresenter;
         inputHandler = new InputHandler();
@@ -116,6 +116,12 @@ public class HomeController {
             String password = homePresenter.newAccountPassword();
             if (inputHandler.isExitStr(password))
                 return;
+            String location = homePresenter.newAccountLocation();
+            if (inputHandler.isExitStr(password))
+                return;
+            if (!cityManager.getAllCities().contains(location)) {
+                cityManager.createCity(location);
+            }
             if (!inputHandler.isValidUserPass(username, password))
                 homePresenter.displayInvalidInfo();
             else {
@@ -125,7 +131,7 @@ public class HomeController {
                         Permissions.TRADE,
                         Permissions.BROWSE_INVENTORY,
                         Permissions.REQUEST_VACATION);
-                if (accountRepository.createAccount(username, password, perms, "")) { // todo: put actual location
+                if (accountRepository.createAccount(username, password, perms, location)) {
                     homePresenter.displaySuccessfulAccount();
                     sessionManager.login(username);
                     menuFacade.run();

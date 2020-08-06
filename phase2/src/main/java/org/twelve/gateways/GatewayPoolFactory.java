@@ -9,17 +9,6 @@ public class GatewayPoolFactory {
 
         switch (implementation) {
 
-            case "csv":
-
-                /* might be getting deprecated for good
-                try {
-                    gatewayPool = new CSVGatewayPool();
-                } catch (IOException e) {
-                    return false;
-                }
-                */
-                break;
-
             case "json":
 
                 return new JsonGatewayPool();

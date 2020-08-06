@@ -10,9 +10,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.twelve.controllers.InventoryController;
@@ -30,6 +32,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     private final InventoryController inventoryController;
     private final T inventoryPresenter;
+
+    @FXML
+    private BorderPane graphic;
 
     @FXML
     private TextField itemName;
@@ -55,6 +60,11 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
         inventoryController.displayAllYourInventory();
 
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
 

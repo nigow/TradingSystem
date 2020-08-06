@@ -1,9 +1,10 @@
 package org.twelve.controllers;
 
-import org.twelve.controllers.console.TradeController;
 import org.twelve.gateways.GatewayPool;
-import org.twelve.presenters.WarehousePresenter;
+import org.twelve.gateways.GatewayPoolFactory;
 import org.twelve.usecases.UseCasePool;
+
+import java.util.Locale;
 
 public class ControllerPool {
 
@@ -18,13 +19,14 @@ public class ControllerPool {
     private final FreezingController freezingController;
     private final TradeCreatorController tradeCreatorController;
     private final TradeCollectionController tradeCollectionController;
+    private final LandingController landingController;
 
-    public ControllerPool(GatewayPool gatewayPool) {
+    public ControllerPool(Locale selectedLanguage, boolean demoMode) {
 
+        GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool(demoMode ? "ram" : "json");
         UseCasePool useCasePool = new UseCasePool(gatewayPool);
 
-        // todo: add refactored controllers and their getters
-
+        landingController = new LandingController(selectedLanguage, demoMode);
         loginController = new LoginController(useCasePool);
         registrationController = new RegistrationController(useCasePool);
         menuController = new MenuController(useCasePool);
@@ -77,5 +79,9 @@ public class ControllerPool {
 
     public TradeCollectionController getTradeCollectionController() {
         return tradeCollectionController;
+    }
+
+    public LandingController getLandingController() {
+        return landingController;
     }
 }
