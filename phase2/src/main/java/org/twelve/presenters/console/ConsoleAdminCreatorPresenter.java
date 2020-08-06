@@ -36,6 +36,17 @@ public class ConsoleAdminCreatorPresenter implements AdminCreatorPresenter {
      * {@inheritDoc}
      */
     @Override
+    public String createAdminLocation() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter your desired location:");
+        System.out.println("Enter \"-1\" to go back.");
+        return input.nextLine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void displayInvalidInfo() {
         System.out.println("The characters in that username and password are illegal.");
     }

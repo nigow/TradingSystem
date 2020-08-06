@@ -53,6 +53,10 @@ public class AdminCreatorController {
             String password = adminPresenter.createAdminPassword();
             if (inputHandler.isExitStr(password))
                 return;
+            String location = adminPresenter.createAdminLocation();
+            if (inputHandler.isExitStr(password))
+                return;
+            // todo: check if location exist
             if (!inputHandler.isValidUserPass(username, password))
                 adminPresenter.displayInvalidInfo();
             else {
@@ -71,7 +75,7 @@ public class AdminCreatorController {
                         Permissions.CAN_BAN,
                         Permissions.MAKE_TRUSTED);
 
-                if (accountRepository.createAccount(username, password, perms, "")) { // todo: put actual location
+                if (accountRepository.createAccount(username, password, perms, location)) {
                     adminPresenter.displaySuccessfulAccount();
                     return;
                 } else
