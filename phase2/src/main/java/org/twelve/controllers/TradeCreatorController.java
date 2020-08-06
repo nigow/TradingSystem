@@ -37,26 +37,33 @@ public class TradeCreatorController {
         this.traderOneId = sessionManager.getCurrAccountID();
     }
 
+
+    public void changePermanentStatus(boolean isPermanent) {
+        tradeCreatorPresenter.isPermanent(isPermanent);
+    }
+
     public void setTradeCreatorPresenter(TradeCreatorPresenter tradeCreatorPresenter) {
         this.tradeCreatorPresenter = tradeCreatorPresenter;
     }
 
     public void updateLists(int accountIndex) {
-        List<String> itemsToReceive = new ArrayList<>();
-        List<String> itemsToGive = new ArrayList<>();
-        List<String> allUsers = new ArrayList<>();
-        for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getAccountIDs().get(accountIndex))) {
-            itemsToReceive.add(s);
+        if (accountIndex != -1) {
+            List<String> itemsToReceive = new ArrayList<>();
+            List<String> itemsToGive = new ArrayList<>();
+            List<String> allUsers = new ArrayList<>();
+            for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getAccountIDs().get(accountIndex))) {
+                itemsToReceive.add(s);
+            }
+            tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
+            for (String s : itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID())) {
+                itemsToGive.add(s);
+            }
+            tradeCreatorPresenter.setItemsToGive(itemsToGive);
+            for (String s : accountRepository.getAccountStrings()) {
+                allUsers.add(s);
+            }
+            tradeCreatorPresenter.setAllUsers(allUsers);
         }
-        tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
-        for (String s : itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID())) {
-            itemsToGive.add(s);
-        }
-        tradeCreatorPresenter.setItemsToGive(itemsToGive);
-        for (String s : accountRepository.getAccountStrings()) {
-            allUsers.add(s);
-        }
-        tradeCreatorPresenter.setAllUsers(allUsers);
     }
 
     public void createdTrade(boolean isCreator) {

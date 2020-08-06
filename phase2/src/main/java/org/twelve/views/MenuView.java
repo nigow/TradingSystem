@@ -42,7 +42,7 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
         try {
 
             initiateTrade.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                .bean(menuPresenter).name("initiateTrade").build());
+                .bean(menuPresenter).name("initiateTrade").build().not());
             modifyRestrictions.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("modifyRestrictions").build().not());
             manageAccounts.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()

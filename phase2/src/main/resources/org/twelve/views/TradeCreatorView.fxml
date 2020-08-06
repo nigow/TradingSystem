@@ -25,7 +25,7 @@
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></Label>
-            <ComboBox onAction="#peerSwitch" prefWidth="150.0" />
+            <ComboBox fx:id="peerBox" prefWidth="150.0" />
          </children>
       </HBox>
       <CheckBox mnemonicParsing="false" text="Two Way" GridPane.rowIndex="1" />
@@ -50,28 +50,35 @@
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></Label>
-            <TextField HBox.hgrow="ALWAYS" />
+            <TextField fx:id="locationBox" prefHeight="27.0" prefWidth="470.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
+      <HBox alignment="BASELINE_RIGHT" prefHeight="6.0" prefWidth="285.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <children>
+             <Button mnemonicParsing="false" onAction="#cancelTrade" text="Cancel Trade">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin></Button>
+            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#saveClicked" text="Save" />
+         </children></HBox>
       <HBox prefWidth="200.0" GridPane.rowIndex="4">
          <children>
             <Label maxHeight="1.7976931348623157E308" text="Date">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></Label>
-            <DatePicker editable="false" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <DatePicker fx:id="dateBox" editable="false" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <CheckBox mnemonicParsing="false" text="Permanent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <CheckBox fx:id="isPermanent" mnemonicParsing="false" text="Permanent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button mnemonicParsing="false" onAction="#backClicked" text="Back" GridPane.rowIndex="5" />
-      <Button mnemonicParsing="false" onAction="#saveClicked" text="Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
       <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
             <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Time">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin></Label>
-            <Spinner>
+            <Spinner fx:id="hourChosen">
                 <valueFactory>
                     <SpinnerValueFactory.IntegerSpinnerValueFactory max="23" min="0" />
                 </valueFactory>
@@ -79,13 +86,14 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Spinner>
-            <Spinner>
+            <Spinner fx:id="minuteChosen">
                  <valueFactory>
                      <SpinnerValueFactory.IntegerSpinnerValueFactory max="59" min="0" />
                  </valueFactory>
             </Spinner>
          </children>
       </HBox>
+
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

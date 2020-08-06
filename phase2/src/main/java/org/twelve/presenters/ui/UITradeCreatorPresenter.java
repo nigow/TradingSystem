@@ -20,6 +20,9 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     private String itemToLend;
     private String itemToBorrow;
     private boolean createdTrade;
+    private boolean isPermanent;
+    private int hourChosen;
+    private int minuteChosen;
 
     private final ResourceBundle localizedResources;
 
@@ -34,7 +37,33 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
         setSelectedItemToBorrow("");
         setSelectedItemToLend("");
         setCreatedTrade(true);
+        isPermanent = false;
     }
+
+    public void isPermanent(boolean isPermanent) {
+
+        boolean oldIsPermanent = this.isPermanent;
+        this.isPermanent = isPermanent;
+        propertyChangeSupport.firePropertyChange("isPermanent", oldIsPermanent, isPermanent);
+    }
+
+    public boolean getIsPermanent() {return isPermanent;}
+
+    public void setHourChosen(int i) {
+        int oldHourChosen = hourChosen;
+        hourChosen = i;
+        propertyChangeSupport.firePropertyChange("hourChosen", oldHourChosen, i);
+    }
+
+    public int getHourChosen() {return hourChosen;}
+
+    public void setMinuteChosen(int i) {
+        int oldMinuteChosen = minuteChosen;
+        minuteChosen = i;
+        propertyChangeSupport.firePropertyChange("minuteChosen", oldMinuteChosen, i);
+    }
+
+    public int getMinuteChosen() {return minuteChosen;}
 
     public void setItemsToReceive(List<String> itemsToReceive) {
         List<String> oldItems = this.itemsToReceive;
@@ -77,9 +106,9 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     public String getSelectedUser() {return selectedUser;}
 
     public void setSelectedItemToLend(String item) {
-        String oldItemtoLend = this.itemToLend;
+        String oldItemToLend = this.itemToLend;
         this.itemToLend = item;
-        propertyChangeSupport.firePropertyChange("itemToLend", oldItemtoLend, item);
+        propertyChangeSupport.firePropertyChange("itemToLend", oldItemToLend, item);
     }
 
     public String getSelectedItemToLend() {return itemToLend;}

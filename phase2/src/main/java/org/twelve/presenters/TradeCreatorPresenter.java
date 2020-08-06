@@ -8,6 +8,12 @@ import java.util.List;
  * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public interface TradeCreatorPresenter {
+    void isPermanent(boolean isPermanent);
+    boolean getIsPermanent();
+    void setHourChosen(int i);
+    int getHourChosen();
+    void setMinuteChosen(int i);
+    int getMinuteChosen();
     void setItemsToReceive(List<String> itemsToReceive);
     List<String> getItemsToReceive();
     void setItemsToGive(List<String> itemsToGive);
