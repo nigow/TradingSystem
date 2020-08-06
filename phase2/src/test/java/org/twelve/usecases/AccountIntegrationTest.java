@@ -2,11 +2,9 @@ package org.twelve.usecases;
 
 import junit.framework.TestCase;
 import org.twelve.entities.Account;
-import org.twelve.entities.Item;
 import org.twelve.entities.Permissions;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ram.InMemoryAccountGateway;
-import org.twelve.gateways.ram.InMemoryGatewayPool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +34,6 @@ public class AccountIntegrationTest extends TestCase {
         setUpAccountRepository();
         List<Permissions> Perm = new ArrayList<>();
         Account account = new Account("User2", "12345", Perm, 1, "UTM");
-        Account account2 = new Account("User3", "12345", Perm, 2, "UTM");
         List<String> permsAsStrings = new ArrayList<>();
         for (Permissions perms: account.getPermissions()){
             permsAsStrings.add(perms.name());
