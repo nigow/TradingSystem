@@ -9,8 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.GridPane;
 import org.twelve.controllers.WishlistController;
 import org.twelve.presenters.WishlistPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -23,6 +25,9 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
     private final WindowHandler windowHandler;
     private final WishlistController wishlistController;
+
+    @FXML
+    private GridPane graphic;
 
     @FXML
     private Label itemName;
@@ -56,6 +61,11 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
         wishlistController.updateItems();
 
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     @Override

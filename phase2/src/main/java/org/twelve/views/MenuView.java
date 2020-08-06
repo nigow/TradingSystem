@@ -4,7 +4,9 @@ import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import org.twelve.controllers.MenuController;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.presenters.MenuPresenter;
@@ -14,6 +16,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuView<T extends ObservablePresenter & ProfilePresenter> implements SceneView, Initializable{
+
+    @FXML
+    private GridPane graphic;
+
     private WindowHandler windowHandler;
     private MenuController menuController;
     private MenuPresenter menuPresenter;
@@ -43,14 +49,14 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
 
             initiateTrade.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                 .bean(menuPresenter).name("initiateTrade").build());
-            modifyRestrictions.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("modifyRestrictions").build().not());
-            manageAccounts.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("manageAccounts").build().not());
-            addAdmin.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("addAdmin").build().not());
-            approveItems.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("approveItems").build().not());
+            modifyRestrictions.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("modifyRestrictions").build());
+            manageAccounts.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("manageAccounts").build());
+            addAdmin.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("addAdmin").build());
+            approveItems.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("approveItems").build());
 
     } catch (NoSuchMethodException ignored) {}
     }
@@ -94,6 +100,11 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
     @Override
     public void reload() {
         menuController.displayButtons();
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     @FXML

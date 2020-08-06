@@ -116,6 +116,10 @@ public class HomeController {
             String password = homePresenter.newAccountPassword();
             if (inputHandler.isExitStr(password))
                 return;
+            String location = homePresenter.newAccountLocation();
+            if (inputHandler.isExitStr(password))
+                return;
+            // todo: check if location exist
             if (!inputHandler.isValidUserPass(username, password))
                 homePresenter.displayInvalidInfo();
             else {
@@ -125,7 +129,7 @@ public class HomeController {
                         Permissions.TRADE,
                         Permissions.BROWSE_INVENTORY,
                         Permissions.REQUEST_VACATION);
-                if (accountRepository.createAccount(username, password, perms, "")) { // todo: put actual location
+                if (accountRepository.createAccount(username, password, perms, location)) {
                     homePresenter.displaySuccessfulAccount();
                     sessionManager.login(username);
                     menuFacade.run();

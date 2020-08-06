@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.MenuView">
+<GridPane fx:id="graphic" alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.MenuView">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
@@ -20,11 +20,31 @@
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageInventoryClicked" text="%manageInventory" GridPane.columnIndex="1" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageWishlistClicked" text="%manageWishlist" GridPane.columnIndex="2" />
       <Button fx:id="initiateTrade" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#initiateTradeClicked" text="%initiateTrade" GridPane.rowIndex="1" />
-      <Button fx:id="modifyRestrictions" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyRestrictionsClicked" text="%modifyRestrictions" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button fx:id="manageAccounts" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageAccountsClicked" text="%manageAccounts" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button fx:id="addAdmin" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addAdminClicked" text="%addAdmin" GridPane.rowIndex="2" />
+      <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%accessDenied" />
+            <Button fx:id="modifyRestrictions" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyRestrictionsClicked" text="%modifyRestrictions" />
+         </children>
+      </StackPane>
+      <StackPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <children>
+            <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%accessDenied" />
+            <Button fx:id="manageAccounts" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#manageAccountsClicked" text="%manageAccounts" />
+         </children>
+      </StackPane>
+      <StackPane GridPane.rowIndex="2">
+         <children>
+            <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%accessDenied" />
+            <Button fx:id="addAdmin" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addAdminClicked" text="%addAdmin" />
+         </children>
+      </StackPane>
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#accountSettingsClicked" text="%accountSettings" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#logoutClicked" text="%logout" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <Button fx:id="approveItems" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%approveItems" GridPane.rowIndex="3" />
+      <StackPane GridPane.rowIndex="3">
+         <children>
+            <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%accessDenied" />
+            <Button fx:id="approveItems" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%approveItems" />
+         </children>
+      </StackPane>
    </children>
 </GridPane>

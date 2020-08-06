@@ -10,7 +10,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import org.twelve.controllers.TradeCreatorController;
 import org.twelve.presenters.TradeCreatorPresenter;
 import org.twelve.presenters.TradePresenter;
@@ -21,8 +23,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView,
-        Initializable {
+public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView, Initializable {
+
 
     private WindowHandler windowHandler;
 
@@ -30,6 +32,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     private final T tradeCreatorPresenter;
     private int peerIndex;
 
+    @FXML
+    private GridPane graphic;
     @FXML
     private ListView<String> allAccounts;
     @FXML
@@ -53,6 +57,11 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     @Override
     public void reload() {
         tradeCreatorController.updateLists(peerIndex);
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     @Override

@@ -2,6 +2,8 @@ package org.twelve.views;
 
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.layout.GridPane;
 import org.twelve.controllers.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +17,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginView<T extends ObservablePresenter & LoginPresenter> implements SceneView, Initializable {
+
+    @FXML
+    private GridPane graphic;
 
     @FXML
     private Label failMessageLabel;
@@ -57,6 +62,11 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
     public void reload() {
         usernameBox.clear();
         passwordBox.clear();
+    }
+
+    @Override
+    public Parent getGraphic() {
+        return graphic;
     }
 
     @Override
