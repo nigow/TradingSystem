@@ -6,6 +6,7 @@ import org.twelve.controllers.InputHandler;
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.AdminCreatorPresenter;
 import org.twelve.usecases.AccountRepository;
+import org.twelve.usecases.CityManager;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.Arrays;
@@ -26,6 +27,10 @@ public class AdminCreatorController {
      */
     private final AccountRepository accountRepository;
     /**
+     * An instance of AccountRepository to create new account.
+     */
+    private final CityManager cityManager;
+    /**
      * An instance of ControllerInputValidator to check for valid input.
      */
     private final InputHandler inputHandler;
@@ -38,6 +43,7 @@ public class AdminCreatorController {
      */
     public AdminCreatorController(UseCasePool useCasePool, AdminCreatorPresenter adminPresenter) {
         accountRepository = useCasePool.getAccountRepository();
+        cityManager = useCasePool.getCityManager();
         this.adminPresenter = adminPresenter;
         inputHandler = new InputHandler();
     }
@@ -56,7 +62,9 @@ public class AdminCreatorController {
             String location = adminPresenter.createAdminLocation();
             if (inputHandler.isExitStr(password))
                 return;
-            // todo: check if location exist
+            if (!cityManager.getAllCities().contains(location)) {
+                cityManager.createCity(location);
+            }
             if (!inputHandler.isValidUserPass(username, password))
                 adminPresenter.displayInvalidInfo();
             else {
