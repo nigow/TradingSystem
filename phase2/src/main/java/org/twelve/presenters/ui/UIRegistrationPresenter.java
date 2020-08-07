@@ -5,7 +5,6 @@ import org.twelve.presenters.RegistrationPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class UIRegistrationPresenter extends ObservablePresenter implements RegistrationPresenter {
@@ -37,7 +36,7 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
         List<String> oldAvailableTypes = this.availableTypes;
         this.availableTypes = new ArrayList<>();
         for (AccountType type : types) {
-            availableTypes.add(localizedResources.getString(type.name()));
+            availableTypes.add(localizedResources.getString(type.name().toLowerCase()));
         }
         propertyChangeSupport.firePropertyChange("availableTypes", oldAvailableTypes, this.availableTypes);
     }

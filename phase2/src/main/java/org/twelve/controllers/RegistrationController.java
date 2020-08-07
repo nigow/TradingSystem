@@ -2,6 +2,9 @@ package org.twelve.controllers;
 
 import org.twelve.entities.AccountType;
 import org.twelve.entities.Permissions;
+import org.twelve.gateways.AccountGateway;
+import org.twelve.gateways.CitiesGateway;
+import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.RegistrationPresenter;
 import org.twelve.usecases.*;
 
@@ -29,18 +32,25 @@ public class RegistrationController {
 
     private List<AccountType> availableTypes;
 
-    private CityManager cityManager;
+    private final CityManager cityManager;
 
-    private InputHandler inputHandler;
+    private final InputHandler inputHandler;
+
+    private final AccountGateway accountGateway;
+
+    private final CitiesGateway citiesGateway;
 
     /**
      * Initializer for RegistrationController
      * @param useCasePool used to get all the use cases.
      */
-    public RegistrationController(UseCasePool useCasePool) {
+    public RegistrationController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         this.accountRepository = useCasePool.getAccountRepository();
         this.sessionManager = useCasePool.getSessionManager();
         this.cityManager = useCasePool.getCityManager();
+        this.accountGateway = gatewayPool.getAccountGateway();
+        this.citiesGateway = gatewayPool.getCitiesGateway();
+
         inputHandler = new InputHandler();
     }
 
@@ -63,7 +73,6 @@ public class RegistrationController {
         }
 
         registrationPresenter.setAvailableTypes(availableTypes);
-
         registrationPresenter.setExistingCities(cityManager.getAllCities());
 
     }
@@ -108,9 +117,11 @@ public class RegistrationController {
                 break;
         }
 
+        citiesGateway.populate(cityManager);
         if (!cityManager.getAllCities().contains(location)) cityManager.createCity(location);
 
         // i added the input handler stuff  --maryam
+        accountGateway.populate(accountRepository);
         if (inputHandler.isValidUserPass(username, password) && accountRepository.createAccount(username, password, perms, location)) {
 
             // TODO why is this checked?  --maryam

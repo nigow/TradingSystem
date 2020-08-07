@@ -1,9 +1,9 @@
 package org.twelve.controllers;
 
-
-import org.twelve.controllers.console.MenuFacade;
-import org.twelve.presenters.HomePresenter;
+import org.twelve.gateways.AccountGateway;
+import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.LoginPresenter;
+import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.LoginManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
@@ -32,15 +32,21 @@ public class LoginController {
 
     private LoginPresenter loginPresenter;
 
+    private final AccountGateway accountGateway;
+
+    private final AccountRepository accountRepository;
+
     /**
      * Initializes LoginController with the necessary presenter and use cases.
      *
      * @param useCasePool   An instance of UseCasePool to get the necessary use cases
      */
-    public LoginController(UseCasePool useCasePool) {
+    public LoginController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
+        accountRepository = useCasePool.getAccountRepository();
         inputHandler = new InputHandler();
+        accountGateway = gatewayPool.getAccountGateway();
     }
 
     public void setLoginPresenter(LoginPresenter loginPresenter) {
@@ -53,6 +59,9 @@ public class LoginController {
      * @param password the password the user enters
      */
     public boolean logIn(String username, String password) {
+
+        accountGateway.populate(accountRepository);
+
         if (inputHandler.isValidUserPass(username, password) && loginManager.authenticateLogin(username, password)) {
             sessionManager.login(username);
             return true;
