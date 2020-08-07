@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 public class UIWarehousePresenter extends ObservablePresenter implements WarehousePresenter {
 
     private List<String> pendingItems;
+    private List<String> approvedItems;
     private String selectedItemName;
     private String selectedItemDesc;
 
@@ -31,6 +32,7 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
         setSelectedItemName("");
         setSelectedItemDesc("");
         setPendingItems(new ArrayList<>());
+        setApprovedItems(new ArrayList<>());
 
     }
 
@@ -44,6 +46,18 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
     @Override
     public List<String> getPendingItems() {
         return pendingItems;
+    }
+
+    @Override
+    public void setApprovedItems(List<String> approvedItems) {
+        List<String> oldApprovedItems = this.approvedItems;
+        this.approvedItems = approvedItems;
+        propertyChangeSupport.firePropertyChange("approvedItems", oldApprovedItems, this.approvedItems);
+    }
+
+    @Override
+    public List<String> getApprovedItems() {
+        return approvedItems;
     }
 
     @Override

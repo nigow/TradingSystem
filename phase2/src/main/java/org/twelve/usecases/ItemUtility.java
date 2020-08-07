@@ -60,6 +60,21 @@ abstract public class ItemUtility {
     }
 
     /**
+     * Retrieves all approved item ids in the system.
+     *
+     * @return List of all approved item ids in the system.
+     */
+    public List<Integer> getApprovedIDs() {
+        List<Integer> approvedItems = new ArrayList<>();
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            if (items.get(entry.getKey()).isApproved() && items.get(entry.getKey()).getOwnerID() != -1) {
+                approvedItems.add(items.get(entry.getKey()).getItemID());
+            }
+        }
+        return approvedItems;
+    }
+
+    /**
      * Retrieves a string representation of all approved items in the system.
      *
      * @return List of all approved items in the system in string format
