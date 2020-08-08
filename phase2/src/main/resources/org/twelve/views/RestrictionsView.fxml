@@ -18,6 +18,7 @@
             <RowConstraints />
             <RowConstraints />
             <RowConstraints />
+            <RowConstraints />
         </rowConstraints>
          <children>
             <Label text="%lendVsBorrow" />
@@ -26,7 +27,7 @@
              <Label text="%numOfDays" GridPane.rowIndex="3" />
              <Label text="%numOfEdits" GridPane.rowIndex="4" />
              <Label text="%numOfStats" GridPane.rowIndex="5" />
-             <Label text="%numForTrusted" GridPane.rowIndex="5" />
+             <Label text="%numForTrusted" GridPane.rowIndex="6" />
              <Spinner fx:id="lendVsBorrow" GridPane.columnIndex="1" />
             <Spinner fx:id="maxIncomplete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Spinner fx:id="maxWeekly" GridPane.columnIndex="1" GridPane.rowIndex="2" />
