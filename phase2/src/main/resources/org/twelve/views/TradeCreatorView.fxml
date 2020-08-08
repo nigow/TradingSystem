@@ -75,17 +75,11 @@
                   <Insets right="5.0" />
                </HBox.margin></Label>
             <Spinner fx:id="hourChosen">
-                <valueFactory>
-                    <SpinnerValueFactory.IntegerSpinnerValueFactory max="23" min="0" />
-                </valueFactory>
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Spinner>
             <Spinner fx:id="minuteChosen">
-                 <valueFactory>
-                     <SpinnerValueFactory.IntegerSpinnerValueFactory max="59" min="0" />
-                 </valueFactory>
             </Spinner>
          </children>
       </HBox>
