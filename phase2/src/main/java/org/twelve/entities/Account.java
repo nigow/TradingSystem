@@ -10,34 +10,11 @@ import java.util.List;
  */
 public class Account {
 
-    /**
-     * Username of this account (cannot be changed).
-     */
     private final String username;
-
-    /**
-     * Password of this account.
-     */
     private String password;
-
-    /**
-     * User's wishlist (stores itemID of the items).
-     */
     private final List<Integer> wishlist;
-
-    /**
-     * List of permissions of the user.
-     */
     private final List<Permissions> permissions;
-
-    /**
-     * Unique identifier of this account (cannot be changed).
-     */
     private final int accountID;
-
-    /**
-     * The location of the user of the account
-     */
     private String location;
 
     /**
