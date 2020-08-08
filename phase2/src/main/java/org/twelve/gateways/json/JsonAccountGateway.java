@@ -15,12 +15,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A gateway for Accounts that interacts with a Postgres database using a JSON object
+ */
 public class JsonAccountGateway implements AccountGateway {
+
+    /**
+     * GSON object that handles JSON objects between the client and the endpoints
+     */
     private final Gson gson;
+
+    /**
+     * Endpoint url for getting all accounts
+     */
     private final String getAllAccountsUrl;
+
+    /**
+     * Endpoint url for updating an account
+     */
     private final String updateAccountUrl;
+
+    /**
+     * Endpoint url for creating an account
+     */
     private final String createAccountUrl;
 
+
+    /**
+     * Define the endpoints and the JSON objects to interact with the database
+     */
     public JsonAccountGateway(){
         gson = new Gson();
         getAllAccountsUrl = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts";
@@ -28,6 +51,9 @@ public class JsonAccountGateway implements AccountGateway {
         createAccountUrl = "http://csc207phase2.herokuapp.com/accounts/create_account";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(AccountRepository accountRepository) {
         HttpURLConnection urlConnection;
@@ -93,6 +119,9 @@ public class JsonAccountGateway implements AccountGateway {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
                      List<String> permissions, String location, boolean newAccount) {

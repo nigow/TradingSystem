@@ -10,12 +10,24 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryAccountGateway implements AccountGateway {
+
+    /**
+     * pseudo-external storage of accounts
+     */
     public final Map<Integer, Account> accountMap;
 
+    /**
+     * Initialize the gateway
+     * @param accountMap a key-pair set of an account id and account object
+     */
     public InMemoryAccountGateway(Map<Integer, Account> accountMap) {
         this.accountMap = accountMap;
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(AccountRepository accountRepository) {
         List<Integer> existingAccounts = accountRepository.getAccountIDs();
@@ -27,6 +39,9 @@ public class InMemoryAccountGateway implements AccountGateway {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
                         List<String> permissions, String location, boolean newAccount) {

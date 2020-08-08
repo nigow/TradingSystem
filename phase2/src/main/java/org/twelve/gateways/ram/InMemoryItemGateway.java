@@ -8,12 +8,22 @@ import java.util.*;
 
 public class InMemoryItemGateway implements ItemsGateway {
 
+    /**
+     * pseudo-external storage of items
+     */
     public final Map<Integer, Item> itemMap;
 
+    /**
+     * Initialize the gateway
+     * @param itemMap a key-pair set of an item id and item object
+     */
     public InMemoryItemGateway(Map<Integer, Item> itemMap) {
         this.itemMap = itemMap;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(ItemManager itemManager) {
         List<Integer> existingIds = itemManager.getAllItemIds();
@@ -26,6 +36,9 @@ public class InMemoryItemGateway implements ItemsGateway {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean save(int itemId, String name, String description, boolean isApproved, int ownerId, boolean newItem) {
         Item item = new Item(itemId, name, description, ownerId, isApproved);

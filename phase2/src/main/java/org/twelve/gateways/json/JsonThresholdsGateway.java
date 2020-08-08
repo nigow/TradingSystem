@@ -11,11 +11,24 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+/**
+ * A gateway for Thresholds that interacts with a Postgres database using a JSON object
+ */
 public class JsonThresholdsGateway implements ThresholdsGateway {
 
+    /**
+     * HTTP Client object that handles HTTP requests
+     */
     private final  HttpClient httpClient;
+
+    /**
+     * GSON object that handles JSON objects between the client and the endpoints
+     */
     private final Gson gson;
 
+    /**
+     * Define the JSON object and http objects to interact with the DB
+     */
     public JsonThresholdsGateway() {
 
         httpClient = HttpClient.newHttpClient();
@@ -23,6 +36,9 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(ThresholdRepository thresholdRepository) {
 
@@ -55,6 +71,9 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
                      int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {

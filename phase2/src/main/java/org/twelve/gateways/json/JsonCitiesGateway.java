@@ -12,11 +12,29 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * A gateway for Cities that interacts with a Postgres database using a JSON object
+ */
 public class JsonCitiesGateway implements CitiesGateway {
+
+    /**
+     * GSON object that handles JSON objects between the client and the endpoints
+     */
     private final Gson gson;
+
+    /**
+     * Endpoint url for getting all cities
+     */
     private final String getAllCitiesUrl;
+
+    /**
+     * Endpoint url for updating a city
+     */
     private final String updateCityUrl;
 
+    /**
+     * Define the endpoints and the JSON objects to interact with the database
+     */
     public JsonCitiesGateway(){
         gson = new Gson();
         getAllCitiesUrl = "http://csc207phase2.herokuapp.com/cities/get_all_cities";
@@ -24,6 +42,9 @@ public class JsonCitiesGateway implements CitiesGateway {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(CityManager cityManager) {
         HttpURLConnection urlConnection;
@@ -72,7 +93,9 @@ public class JsonCitiesGateway implements CitiesGateway {
 
     }
 
-    //Todo Figure out why 502 error happens
+    /**
+     * {@inheritDoc}
+     */
     //Todo Make error log on the server side
     @Override
     public boolean save(int cityId, String cityName) {

@@ -13,15 +13,30 @@ import java.util.Map;
 
 public class InMemoryTradeGateway implements TradeGateway {
 
+    /**
+     * pseudo-external storage of trades
+     */
     public final Map<Integer, Trade> tradeMap;
+
+    /**
+     * pseudo-external storage of timePlace objects
+     */
     public final Map<Integer, TimePlace> timePlaceMap;
 
+    /**
+     * Initialize the gateway
+     * @param timePlace a key-pair set of a timePlace id and timePlace object
+     * @param timePlace a key-pair set of a trade id and trade object
+     */
     public InMemoryTradeGateway(Map<Integer, Trade> trades,
                                 Map<Integer, TimePlace> timePlace) {
         this.timePlaceMap = timePlace;
         this.tradeMap = trades;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(TradeManager tradeManager) {
         List<Integer> existingIds = tradeManager.getAllTradesIds();
@@ -37,6 +52,9 @@ public class InMemoryTradeGateway implements TradeGateway {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
                      int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,

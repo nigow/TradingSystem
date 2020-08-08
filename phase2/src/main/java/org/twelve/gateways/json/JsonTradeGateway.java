@@ -14,13 +14,34 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A gateway for Trades that interacts with a Postgres database using a JSON object
+ */
 public class JsonTradeGateway implements TradeGateway {
 
+    /**
+     * GSON object that handles JSON objects between the client and the endpoints
+     */
     private final Gson gson;
+
+    /**
+     * Endpoint url for getting all trades
+     */
     private final String getAllTradeUrl;
+
+    /**
+     * Endpoint url for updating a trade
+     */
     private final String updateTradeUrl;
+
+    /**
+     * Endpoint url for creating a trade
+     */
     private final String createTradeUrl;
 
+    /**
+     * Define the endpoints and the JSON objects to interact with the database
+     */
     public JsonTradeGateway(){
         gson = new Gson();
         getAllTradeUrl = "http://csc207phase2.herokuapp.com/trades/get_all_trades";
@@ -28,7 +49,9 @@ public class JsonTradeGateway implements TradeGateway {
         createTradeUrl = "http://csc207phase2.herokuapp.com/trades/create_trade";
     }
 
-    //TODO
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(TradeManager tradeManager) {
         HttpURLConnection urlConnection;
@@ -98,6 +121,9 @@ public class JsonTradeGateway implements TradeGateway {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
     public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,

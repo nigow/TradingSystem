@@ -12,12 +12,34 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * A gateway for Items that interacts with a Postgres database using a JSON object
+ */
 public class JsonItemsGateway implements ItemsGateway {
+
+    /**
+     * Endpoint url for getting all items
+     */
     private final String getAllItemsUrl;
+
+    /**
+     * Endpoint url for updating an item
+     */
     private final String updateItemUrl;
+
+    /**
+     * Endpoint url for creating an item
+     */
     private final String createItemUrl;
+
+    /**
+     * GSON object that handles JSON objects between the client and the endpoints
+     */
     private final Gson gson;
 
+    /**
+     * Define the endpoints and the JSON objects to interact with the database
+     */
     public JsonItemsGateway(){
         getAllItemsUrl = "http://csc207phase2.herokuapp.com/items/get_all_items";
         updateItemUrl = "http://csc207phase2.herokuapp.com/items/update_item";
@@ -25,6 +47,9 @@ public class JsonItemsGateway implements ItemsGateway {
         gson = new Gson();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean populate(ItemManager itemManager) {
         HttpURLConnection urlConnection;
@@ -82,6 +107,9 @@ public class JsonItemsGateway implements ItemsGateway {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean save(int itemId, String name, String description, boolean isApproved, int ownerId, boolean newItem) {
         JsonObject json = new JsonObject();
