@@ -46,38 +46,32 @@ public class TradeCreatorController {
         this.tradeCreatorPresenter = tradeCreatorPresenter;
     }
 
-    public void updateLists(int accountIndex) {
-        System.out.println(accountIndex);
-        if (accountIndex == -1) {
-            accountIndex = 0;
+    public void updateLists(String username) {
+        if (username != null) {
+            List<String> itemsToReceive = new ArrayList<>();
+            for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getIDFromUsername(username))) {
+                itemsToReceive.add(s);
+            }
+            tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
         }
-        List<String> itemsToReceive = new ArrayList<>();
         List<String> itemsToGive = new ArrayList<>();
         List<String> allUsers = new ArrayList<>();
-        for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getAccountIDs().get(accountIndex))) {
-            itemsToReceive.add(s);
-        }
-        tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
         for (String s : itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID())) {
             itemsToGive.add(s);
         }
-        System.out.println(itemsToReceive);
         tradeCreatorPresenter.setItemsToGive(itemsToGive);
         for (String s : accountRepository.getAccountStrings()) {
-            allUsers.add(s);
+            if (!s.equals(sessionManager.getCurrAccountUsername())) {
+                allUsers.add(s);
+            }
         }
-
         tradeCreatorPresenter.setAllUsers(allUsers);
 
     }
 
-    public void createdTrade(boolean isCreator) {
-        tradeCreatorPresenter.setCreatedTrade(isCreator);
-    }
 
-    public void changeSelectedUser(int accountIndex) {
-        String name = accountIndex >= 0 ? accountRepository.getAccountStrings().get(accountIndex) : "";
-        tradeCreatorPresenter.setSelectedUser(name);
+    public void changeSelectedUser(String username) {
+        if (username != null) {tradeCreatorPresenter.setSelectedUser(username);}
     }
 
     public void changeSelectedItemToLend(int itemIndex) {
@@ -85,16 +79,16 @@ public class TradeCreatorController {
         tradeCreatorPresenter.setSelectedItemToLend(name);
     }
 
-    public void changeSelectedItemToBorrow(int itemIndex, int accountIndex) {
-        String name = itemIndex >= 0 ? itemManager.getAllInventoryOfAccountString(accountIndex).get(itemIndex) : "";
+    public void changeSelectedItemToBorrow(int itemIndex, String username) {
+        String name = itemIndex >= 0 ? itemManager.getAllInventoryOfAccountString(accountRepository.getIDFromUsername(username)).get(itemIndex) : "";
         tradeCreatorPresenter.setSelectedItemToBorrow(name);
     }
 
-    public void createTrade(int accountIndex, int itemLendIndex, int itemBorrowIndex,
+    public void createTrade(String username, int itemLendIndex, int itemBorrowIndex,
                             boolean isPermanent, String location, LocalDateTime time) {
         List<Integer> itemIDs = new ArrayList<>();
         List<Integer> accountIDs = new ArrayList<>();
-        int peerID = accountRepository.getAccountIDs().get(accountIndex);
+        int peerID = accountRepository.getIDFromUsername(username);
         if (itemLendIndex >= 0) {
             itemIDs.add(itemManager.getAllInventoryOfAccountIDs(sessionManager.getCurrAccountID()).get(itemLendIndex));
         }
