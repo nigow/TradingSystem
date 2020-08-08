@@ -47,23 +47,28 @@ public class TradeCreatorController {
     }
 
     public void updateLists(int accountIndex) {
-        if (accountIndex != -1) {
-            List<String> itemsToReceive = new ArrayList<>();
-            List<String> itemsToGive = new ArrayList<>();
-            List<String> allUsers = new ArrayList<>();
-            for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getAccountIDs().get(accountIndex))) {
-                itemsToReceive.add(s);
-            }
-            tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
-            for (String s : itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID())) {
-                itemsToGive.add(s);
-            }
-            tradeCreatorPresenter.setItemsToGive(itemsToGive);
-            for (String s : accountRepository.getAccountStrings()) {
-                allUsers.add(s);
-            }
-            tradeCreatorPresenter.setAllUsers(allUsers);
+        System.out.println(accountIndex);
+        if (accountIndex == -1) {
+            accountIndex = 0;
         }
+        List<String> itemsToReceive = new ArrayList<>();
+        List<String> itemsToGive = new ArrayList<>();
+        List<String> allUsers = new ArrayList<>();
+        for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getAccountIDs().get(accountIndex))) {
+            itemsToReceive.add(s);
+        }
+        tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
+        for (String s : itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID())) {
+            itemsToGive.add(s);
+        }
+        System.out.println(itemsToReceive);
+        tradeCreatorPresenter.setItemsToGive(itemsToGive);
+        for (String s : accountRepository.getAccountStrings()) {
+            allUsers.add(s);
+        }
+
+        tradeCreatorPresenter.setAllUsers(allUsers);
+
     }
 
     public void createdTrade(boolean isCreator) {
@@ -96,7 +101,8 @@ public class TradeCreatorController {
         if (itemBorrowIndex >= 0) {
             itemIDs.add(itemManager.getAllInventoryOfAccountIDs(peerID).get(itemBorrowIndex));
         }
-        accountIDs.add(peerID, sessionManager.getCurrAccountID());
+        accountIDs.add(peerID);
+        accountIDs.add(sessionManager.getCurrAccountID());
         tradeManager.createTrade(time, location, isPermanent, accountIDs, itemIDs);
     }
 

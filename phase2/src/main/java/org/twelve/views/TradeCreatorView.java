@@ -17,6 +17,7 @@ import org.twelve.presenters.TradeCreatorPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -38,8 +39,6 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     private ListView<String> yourItems;
     @FXML
     private ListView<String> peerItems;
-    @FXML
-    private TextField initiatorField;
     @FXML
     private TextField locationBox;
     @FXML
@@ -67,6 +66,11 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     @Override
     public void reload() {
         tradeCreatorController.updateLists(peerBox.getSelectionModel().getSelectedIndex());
+        locationBox.clear();
+        isPermanent.setSelected(false);
+        hourChosen.getValueFactory().setValue(0);
+        minuteChosen.getValueFactory().setValue(0);
+        dateBox.setValue(LocalDate.now());
     }
 
     @Override
@@ -87,13 +91,6 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
             }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
             peerBox.itemsProperty().bind(allAccounts);
             //========================
-
-
-            //The "Permanent" checkbox
-            JavaBeanBooleanProperty permanentProp = JavaBeanBooleanPropertyBuilder.create()
-                    .bean(tradeCreatorPresenter).name("isPermanent").build();
-            isPermanent.selectedProperty().bindBidirectional(permanentProp);
-            //================
 
 
             //The "Give" list
@@ -129,10 +126,7 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
             //=================
 
 
-//            initiatorField.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-//                .bean(tradeCreatorPresenter).name("createdTrade").build());
-
-        } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) {System.out.println("failure");}
     }
 
     @FXML
@@ -159,7 +153,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     public void saveClicked(ActionEvent actionEvent) {
         LocalDateTime time = LocalDateTime.of(dateBox.getValue(), LocalTime.of(hourChosen.getValue(), minuteChosen.getValue()));
         tradeCreatorController.createTrade(peerBox.getSelectionModel().getSelectedIndex(), yourItems.getSelectionModel().getSelectedIndex(),
-                peerItems.getSelectionModel().getSelectedIndex(), tradeCreatorPresenter.getIsPermanent(), locationBox.getText(), time);
+                peerItems.getSelectionModel().getSelectedIndex(), isPermanent.isSelected(), locationBox.getText(), time);
+        windowHandler.changeScene(Scenes.MENU);
     }
 
 }
