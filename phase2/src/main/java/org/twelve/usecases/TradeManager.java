@@ -136,7 +136,7 @@ public class TradeManager extends TradeUtility{
      */
     public void completeTrade(int accountID, int tradeID) {
         Trade trade = getTradeByID(tradeID);
-        trade.setCompletedOfTrader(accountID, true);
+        trade.setCompletedOfTrader(accountID);
         updateToGateway(trade);
     }
 

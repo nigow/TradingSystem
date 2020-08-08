@@ -9,19 +9,8 @@ import java.time.*;
  */
 public class TimePlace implements Comparable<TimePlace> {
 
-    /**
-     * The ID of this meetup.
-     */
     private final int id;
-
-    /**
-     * The time of this meetup.
-     */
     private LocalDateTime time;
-
-    /**
-     * The location of this meetup.
-     */
     private String place;
 
     /**

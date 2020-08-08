@@ -6,55 +6,36 @@ package org.twelve.entities;
  * @author Maryam
  */
 public class Thresholds {
-    /**
-     * Number of items a user has to lend more than borrow to be able to make a trade.
-     */
+
     private int lendMoreThanBorrow;
-
-    /**
-     * Maximum number of incomplete trades before a user's account is frozen.
-     */
     private int maxIncompleteTrade;
-
-    /**
-     * Maximum number of trades a user can have in one week.
-     */
     private int maxWeeklyTrade;
-
-    /**
-     * Number of days of a trade.
-     */
     private int numberOfDays;
-
-    /**
-     * Number of stats.
-     */
     private int numberOfStats;
-
-    /**
-     * Number of edits allowed.
-     */
     private int numberOfEdits;
-
-    private int requiredTradesForTrusted;
+    private int TradesForTrusted;
 
     /**
-     * Creates Restrictions based on number of items a user has to lend more than borrow to be able to trade, the
-     * maximum number of incomplete trades before an account is frozen, and the maximum number of trades a user
-     * can have in one week.
+     * Creates Thresholds used throughout the system.
      *
      * @param lendMoreThanBorrow Number of items a user has to lend more than borrow to be able to make a trade
      * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen
      * @param maxWeeklyTrade     Maximum number of trades a user can have in one week
+     * @param numberOfDays       Number of days for when a reverse trade is set up after a temporary trade
+     * @param numberOfEdits      Number of edits an account can do with a Trade
+     * @param numberOfStats      Number of trading statistics an account should see
+     * @param TradesForTrusted   The number of trades required to make an account trusted.
+     *
      */
-    public Thresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays, int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
+    public Thresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade,
+                      int numberOfDays, int numberOfEdits, int numberOfStats, int TradesForTrusted) {
         this.lendMoreThanBorrow = lendMoreThanBorrow;
         this.maxIncompleteTrade = maxIncompleteTrade;
         this.maxWeeklyTrade = maxWeeklyTrade;
         this.numberOfDays = numberOfDays;
         this.numberOfEdits = numberOfEdits;
         this.numberOfStats = numberOfStats;
-        this.requiredTradesForTrusted = requiredTradesForTrusted;
+        this.TradesForTrusted = TradesForTrusted;
     }
 
     /**
@@ -111,36 +92,75 @@ public class Thresholds {
         this.maxWeeklyTrade = maxWeeklyTrade;
     }
 
+    /**
+     * Get the number of days for when a second trade is set after an initial trade.
+     *
+     * @return The number of days for when a reverse trade is set up after a temporary trade.
+     */
     public int getNumberOfDays() {
         return numberOfDays;
     }
 
+    /**
+     * Set the number of days for when a second trade is set after an initial trade.
+     *
+     * @param numberOfDays The new number of days for when a reverse trade is set up after a temporary trade
+     */
     public void setNumberOfDays(int numberOfDays) {
         this.numberOfDays = numberOfDays;
     }
 
+    /** Get the number of statistics an account should see.
+     * This includes two-way trades, one-way trades, top-trading partners.
+     *
+     * @return The number of stats that an account should see
+     */
     public int getNumberOfStats() {
         return numberOfStats;
     }
 
+    /**
+     * Sets how many trading statistics can an account see.
+     *
+     * @param numberOfStats The new number of stats an account should see
+     */
     public void setNumberOfStats(int numberOfStats) {
         this.numberOfStats = numberOfStats;
     }
 
+    /**
+     * Get the number of edits accounts can perform before a trade is cancelled.
+     * @return The number of edits an account can do with a Trade.
+     */
     public int getNumberOfEdits() {
         return numberOfEdits;
     }
 
+    /**
+     * Set the number of edits accounts can do when trading between users.
+     *
+     * @param numberOfEdits The number of edits an account can do with a Trade.
+     */
     public void setNumberOfEdits(int numberOfEdits) {
         this.numberOfEdits = numberOfEdits;
     }
 
+    /**
+     * Get the number of trades it takes for an account to become a trusted community member.
+     *
+     * @return The number of trades it takes for an account to become a trusted community members.
+     */
     public int getRequiredTradesForTrusted() {
-        return requiredTradesForTrusted;
+        return TradesForTrusted;
     }
 
+    /**
+     * Set the number of trades required for an account to become a trusted community member.
+     *
+     * @param requiredTradesForTrusted number of trades required for an account to become trusted.
+     */
     public void setRequiredTradesForTrusted(int requiredTradesForTrusted) {
-        this.requiredTradesForTrusted = requiredTradesForTrusted;
+        this.TradesForTrusted = requiredTradesForTrusted;
     }
 }
 

@@ -6,35 +6,12 @@ package org.twelve.entities;
  * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Item {
-    /**
-     * Unique identifier of this item. (cannot be changed).
-     */
+
     private final int itemID;
-
-    /**
-     * Name of this item.
-     */
     private String name;
-
-    /**
-     * Description of this item.
-     */
     private String description;
-
-    /**
-     * Whether or not this item has been approved by an admin to add to a list.
-     */
     private boolean isApproved;
-
-    /**
-     * The unique identifier of the owner of this item.
-     */
     private int ownerID;
-
-//    /**
-//     * The accountIDs of users with this item in their wishlist
-//     */
-//    private final List<Integer> accountsWithItemInWishlist;
 
     /**
      * Creates a new item with the given itemID, name, description, and ownerID.
@@ -52,7 +29,6 @@ public class Item {
         this.description = description;
         this.isApproved = false;
         this.ownerID = ownerID;
-//        this.accountsWithItemInWishlist = new ArrayList<>();
     }
 
     /**
@@ -117,14 +93,6 @@ public class Item {
         return ownerID;
     }
 
-//    /**
-//     * Get the list of accountIDs of users with this item in their wishlist
-//     * @return accountsWithItemInWishlist
-//     */
-//    public List<Integer> getAccountsWithItemInWishlist() {
-//        return accountsWithItemInWishlist;
-//    }
-
     /**
      * Set the name of this item.
      *
@@ -165,23 +133,6 @@ public class Item {
     public void setOwnerID(int ownerID) {
         this.ownerID = ownerID;
     }
-
-//    /**
-//     * Add an accountID to accountsWithItemInWishlist
-//     * @param accountID the ID of the account added
-//     */
-//    public void addToAccountsWithItemsInWishlist(int accountID) {
-//        accountsWithItemInWishlist.add(accountID);
-//    }
-
-//    /**
-//     * Remove given accountID from the accountsWithItemInWishlist list
-//     * @param accountID the ID of the account that should be removed
-//     * @return true if the accountID has been removed
-//     */
-//    public boolean removeFromAccountsWithItemsInWishlist(int accountID) {
-//       return accountsWithItemInWishlist.remove(Integer.valueOf(accountID));
-//    }
 
     /**
      * Creates a string representation of this item.

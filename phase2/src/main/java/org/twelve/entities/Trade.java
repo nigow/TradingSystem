@@ -13,17 +13,12 @@ import java.util.List;
 public class Trade {
 
     private final int id;
-
-    private boolean isPermanent;
-
+    private final boolean isPermanent;
+    // Accounts are ordered by Account id, Account2 id, etc.
     private final List<Integer> tradersIds;
-
     private final List<Integer> itemsIds;
-
     private TradeStatus tradeStatus;
-
     private int editedCounter;
-
     private final List<Boolean> tradeCompletions;
 
     /**
@@ -99,7 +94,6 @@ public class Trade {
         return isPermanent;
     }
 
-
     /**
      * Get all the item ids.
      *
@@ -125,15 +119,6 @@ public class Trade {
      */
     public int getEditedCounter() {
         return editedCounter;
-    }
-
-    /**
-     * Sets whether this trade is temporary or permanent.
-     *
-     * @param permanent Whether this is a permanent or temporary trade
-     */
-    public void setPermanent(boolean permanent) {
-        isPermanent = permanent;
     }
 
     /**
@@ -167,27 +152,53 @@ public class Trade {
         return tradeCompletions;
     }
 
-    public int getPreviousTraderID(int accountID) {
-        int index = (tradersIds.indexOf(accountID) - 1 + tradersIds.size()) % tradersIds.size();
-        return tradersIds.get(index);
-    }
-
+    /**
+     * @param accountID The current account id.
+     * @return The account after this account.
+     */
     public int getNextTraderID(int accountID) {
+        // Using % because the last trader has the 0th trader next.
         int index = (tradersIds.indexOf(accountID) + 1) % tradersIds.size();
         return tradersIds.get(index);
     }
 
-    public void setCompletedOfTrader(int accountID, boolean isCompleted) {
+    /**
+     * Gets the trader before the trader with an accountID.
+     * @param accountID An account participating in this trade.
+     * @return The previous account in this trade, based on the ordering.
+     */
+    public int getPreviousTraderID(int accountID) {
+        // Using + size because the 0th trader's previous trader is the last trader.
+        int index = (tradersIds.indexOf(accountID) - 1 + tradersIds.size()) % tradersIds.size();
+        return tradersIds.get(index);
+    }
+
+
+    /**
+     * Mark that an account confirmed completion of a trade, and if all
+     * accounts marked completion
+     * @param accountID An if reference to an account confirming completion.
+     */
+    public void setCompletedOfTrader(int accountID) {
         int index = tradersIds.indexOf(accountID);
-        tradeCompletions.set(index, isCompleted);
+        tradeCompletions.set(index, true);
         if (!tradeCompletions.contains(false))
             setStatus(TradeStatus.COMPLETED);
     }
 
+    /**
+     * Check if it's the turn of a given account to edit a trade.
+     * @param accountID An id reference to the account.
+     * @return Whether the account is able to edit the trade right now.
+     */
     public boolean isEditTurn(int accountID) {
         return editedCounter % tradersIds.size() == tradersIds.indexOf(accountID);
     }
 
+    /**
+     * Check whether this is a trade between two accounts.
+     * @return Whether there are are two traders involved in this trade.
+     */
     public boolean isTwoPersonTrade() {
         return tradersIds.size() == 2;
     }
