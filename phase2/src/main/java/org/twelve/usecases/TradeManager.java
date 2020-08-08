@@ -112,6 +112,15 @@ public class TradeManager extends TradeUtility{
     public void confirmTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         trade.setStatus(TradeStatus.CONFIRMED);
+        for (Trade t : trades) {
+            if (t.getStatus() == TradeStatus.ADMIN_CANCELLED)
+                continue;
+            for (int item : t.getItemsIds())
+                if (trade.getItemsIds().contains(item)) {
+                    adminCancelTrade(t.getId());
+                    break;
+                }
+        }
         makeTrade(tradeID);
         if (!isPermanent(tradeID)) {
             int new_id = reverseTrade(tradeID);
