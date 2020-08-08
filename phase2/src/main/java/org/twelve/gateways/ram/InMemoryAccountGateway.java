@@ -14,7 +14,7 @@ public class InMemoryAccountGateway implements AccountGateway {
     /**
      * pseudo-external storage of accounts
      */
-    public final Map<Integer, Account> accountMap;
+    private final Map<Integer, Account> accountMap;
 
     /**
      * Initialize the gateway

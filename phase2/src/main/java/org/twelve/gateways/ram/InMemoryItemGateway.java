@@ -11,7 +11,7 @@ public class InMemoryItemGateway implements ItemsGateway {
     /**
      * pseudo-external storage of items
      */
-    public final Map<Integer, Item> itemMap;
+    private final Map<Integer, Item> itemMap;
 
     /**
      * Initialize the gateway

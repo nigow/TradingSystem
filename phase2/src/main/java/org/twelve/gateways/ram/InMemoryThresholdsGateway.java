@@ -9,7 +9,7 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
     /**
      * pseudo-external storage of thresholds
      */
-    public final Thresholds thresholds;
+    private final Thresholds thresholds;
 
     /**
      * Initialize the gateway

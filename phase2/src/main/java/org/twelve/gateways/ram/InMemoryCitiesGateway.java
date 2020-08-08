@@ -10,7 +10,7 @@ public class InMemoryCitiesGateway implements CitiesGateway {
     /**
      * pseudo-external storage of cities
      */
-    public final Map<Integer, String> cities;
+    private final Map<Integer, String> cities;
 
     /**
      * Initializes the gateway

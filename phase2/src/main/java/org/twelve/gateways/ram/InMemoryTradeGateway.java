@@ -16,12 +16,12 @@ public class InMemoryTradeGateway implements TradeGateway {
     /**
      * pseudo-external storage of trades
      */
-    public final Map<Integer, Trade> tradeMap;
+    private final Map<Integer, Trade> tradeMap;
 
     /**
      * pseudo-external storage of timePlace objects
      */
-    public final Map<Integer, TimePlace> timePlaceMap;
+    private final Map<Integer, TimePlace> timePlaceMap;
 
     /**
      * Initialize the gateway
