@@ -1,6 +1,6 @@
 package org.twelve.presenters.ui;
 
-import org.twelve.entities.AccountType;
+import org.twelve.entities.RegistrationTypes;
 import org.twelve.presenters.RegistrationPresenter;
 
 import java.util.ArrayList;
@@ -32,10 +32,10 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
     }
 
     @Override
-    public void setAvailableTypes(List<AccountType> types) {
+    public void setAvailableTypes(List<RegistrationTypes> types) {
         List<String> oldAvailableTypes = this.availableTypes;
         this.availableTypes = new ArrayList<>();
-        for (AccountType type : types) {
+        for (RegistrationTypes type : types) {
             availableTypes.add(localizedResources.getString(type.name().toLowerCase()));
         }
         propertyChangeSupport.firePropertyChange("availableTypes", oldAvailableTypes, this.availableTypes);

@@ -1,6 +1,6 @@
 package org.twelve.controllers;
 
-import org.twelve.entities.AccountType;
+import org.twelve.entities.RegistrationTypes;
 import org.twelve.entities.Permissions;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.CitiesGateway;
@@ -30,7 +30,7 @@ public class RegistrationController {
 
     private RegistrationPresenter registrationPresenter;
 
-    private List<AccountType> availableTypes;
+    private List<RegistrationTypes> availableTypes;
 
     private final CityManager cityManager;
 
@@ -56,19 +56,18 @@ public class RegistrationController {
 
     /**
      * A method for updating if user can create admins
-     * @return Whether user can create admins
      */
     public void updateOptions() {
         availableTypes = new ArrayList<>();
 
         if (sessionManager.getCurrAccountID() == -1) {
 
-            availableTypes.addAll(Arrays.asList(AccountType.values()));
-            availableTypes.remove(AccountType.ADMIN);
+            availableTypes.addAll(Arrays.asList(RegistrationTypes.values()));
+            availableTypes.remove(RegistrationTypes.ADMIN);
 
         } else {
 
-            availableTypes.add(AccountType.ADMIN);
+            availableTypes.add(RegistrationTypes.ADMIN);
 
         }
 
