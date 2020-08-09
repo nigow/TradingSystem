@@ -83,14 +83,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
                     .bean(freezingPresenter).name("canMod").build());
             unmodButton.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(freezingPresenter).name("canUnmod").build());
-/**
- *
 
- freezeButton.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
- .bean(freezingPresenter).name("canFreeze").build());
- unfreezeButton.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
- .bean(freezingPresenter).name("canUnfreeze").build());
- */
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> banned =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("bannedAccounts").build();
 

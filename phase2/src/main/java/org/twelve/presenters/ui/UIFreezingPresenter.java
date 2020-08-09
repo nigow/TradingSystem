@@ -199,8 +199,9 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
     @Override
     public void setCanMod(boolean canMod) {
-        propertyChangeSupport.firePropertyChange("modUser", this.canMod, canMod);
+        boolean oldMod = this.canMod;
         this.canMod = canMod;
+        propertyChangeSupport.firePropertyChange("canMod", oldMod, this.canMod);
     }
 
     @Override
@@ -210,8 +211,9 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
     @Override
     public void setCanUnmod(boolean canUnmod) {
-        propertyChangeSupport.firePropertyChange("unmodUser", this.canUnmod, canUnmod);
+        boolean oldUnmod = this.canUnmod;
         this.canUnmod = canUnmod;
+        propertyChangeSupport.firePropertyChange("canUnmod", oldUnmod, this.canUnmod);
     }
 
     @Override
