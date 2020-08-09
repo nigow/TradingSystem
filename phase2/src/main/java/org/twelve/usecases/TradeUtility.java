@@ -55,6 +55,12 @@ abstract public class TradeUtility {
         this.thresholdRepository = thresholdRepository;
     }
 
+    /**
+     * Return the timeplace object with the given id
+     *
+     * @param timePlaceID the id of the timeplace object
+     * @return timeplace object with id given id
+     */
     protected TimePlace getTimePlaceByID(int timePlaceID) {
         for (TimePlace timePlace : timePlaces) {
             if (timePlaceID == timePlace.getId())
@@ -63,6 +69,12 @@ abstract public class TradeUtility {
         return null;
     }
 
+    /**
+     * Return the trade object with the given id
+     *
+     * @param tradeID the id of the trade object
+     * @return trade object with given id
+     */
     protected Trade getTradeByID(int tradeID) {
         for (Trade trade : trades) {
             if (tradeID == trade.getId())
