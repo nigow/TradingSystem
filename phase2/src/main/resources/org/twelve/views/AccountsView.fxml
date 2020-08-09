@@ -11,14 +11,14 @@
             <Insets top="10.0" />
          </BorderPane.margin>
          <children>
-            <Button mnemonicParsing="false" onAction="#trustClicked" text="%trust" />
-            <Button mnemonicParsing="false" onAction="#untrustClicked" text="%untrust" />
-            <Button mnemonicParsing="false" onAction="#modClicked" text="%mod" />
-            <Button mnemonicParsing="false" onAction="#unmodClicked" text="%unmod" />
-            <Button mnemonicParsing="false" onAction="#freezeClicked" text="%freeze" />
-            <Button mnemonicParsing="false" onAction="#unfreezeClicked" text="%unfreeze" />
             <Button mnemonicParsing="false" onAction="#banClicked" text="%ban" />
             <Button mnemonicParsing="false" onAction="#unbanClicked" text="%unban" />
+            <Button mnemonicParsing="false" onAction="#trustClicked" text="%trust" />
+            <Button mnemonicParsing="false" onAction="#untrustClicked" text="%untrust" />
+            <Button fx:id="freezeButton" mnemonicParsing="false" onAction="#freezeClicked" text="%freeze" />
+            <Button fx:id="unfreezeButton" mnemonicParsing="false" onAction="#unfreezeClicked" text="%unfreeze" />
+            <Button fx:id="modButton" mnemonicParsing="false" onAction="#modClicked" text="%mod" />
+            <Button fx:id="unmodButton" mnemonicParsing="false" onAction="#unmodClicked" text="%unmod" />
          </children>
       </HBox>
    </bottom>

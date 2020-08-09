@@ -36,4 +36,16 @@ public interface FreezingPresenter {
 
     void setModAccounts(List<String> modAccounts);
     List<Map<String, String>> getModAccounts();
+
+    void setCanMod(boolean canMod);
+    boolean getCanMod();
+
+    void setCanUnmod(boolean canUnmod);
+    boolean getCanUnmod();
+
+    void setCanFreeze(boolean canFreeze);
+    boolean getCanFreeze();
+
+    void setCanUnfreeze(boolean canUnfreeze);
+    boolean getCanUnfreeze();
 }

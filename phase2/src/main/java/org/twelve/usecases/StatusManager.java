@@ -373,7 +373,7 @@ public class StatusManager {
 
     public void modAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-//        account.addPermission(Permissions.CAN_BAN);
+        account.addPermission(Permissions.CAN_BAN);
         account.addPermission(Permissions.FREEZE);
         account.addPermission(Permissions.UNFREEZE);
         accountRepository.updateToAccountGateway(account);
@@ -382,7 +382,7 @@ public class StatusManager {
 
     public void unmodAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-//        account.removePermission(Permissions.CAN_BAN);
+        account.removePermission(Permissions.CAN_BAN);
         account.removePermission(Permissions.FREEZE);
         account.removePermission(Permissions.UNFREEZE);
         accountRepository.updateToAccountGateway(account);

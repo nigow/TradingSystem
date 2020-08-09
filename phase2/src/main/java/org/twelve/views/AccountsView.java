@@ -2,12 +2,15 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -38,6 +41,19 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     @FXML
     private TableColumn<Map<String, String>, String> roleCol;
 
+    @FXML
+    private Button modButton;
+
+    @FXML
+    private Button unmodButton;
+
+    @FXML
+    private Button freezeButton;
+
+    @FXML
+    private Button unfreezeButton;
+
+
     public AccountsView(WindowHandler windowHandler, FreezingController freezingController, T freezingPresenter) {
         this.windowHandler = windowHandler;
         this.freezingPresenter = freezingPresenter;
@@ -55,8 +71,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         return graphic;
     }
 
-    @FXML
-    private void backClicked() {
+    public void backClicked(ActionEvent actionEvent) {
         windowHandler.changeScene(Scenes.MENU);
     }
 
@@ -64,7 +79,18 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
+            modButton.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(freezingPresenter).name("canMod").build());
+            unmodButton.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(freezingPresenter).name("canUnmod").build());
+/**
+ *
 
+ freezeButton.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+ .bean(freezingPresenter).name("canFreeze").build());
+ unfreezeButton.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+ .bean(freezingPresenter).name("canUnfreeze").build());
+ */
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> banned =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("bannedAccounts").build();
 
@@ -110,56 +136,55 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
 
             usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
             roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
-
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
     }
     @FXML
-    private void trustClicked() {
+    public void trustClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.trust(trusted);
     }
     @FXML
-    private void banClicked() {
+    public void banClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.ban(trusted);
     }
     @FXML
-    private void untrustClicked() {
+    public void untrustClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.untrustAccount(trusted);
     }
     @FXML
-    private void modClicked() {
+    public void modClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.modAccount(trusted);
     }
     @FXML
-    private void unmodClicked() {
+    public void unmodClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.unmodAccount(trusted);
     }
     @FXML
-    private void freezeClicked() {
+    public void freezeClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.freeze(trusted);
     }
     @FXML
-    private void unfreezeClicked() {
+    public void unfreezeClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.unfreeze(trusted);
     }
     @FXML
-    private void unbanClicked() {
+    public void unbanClicked(ActionEvent actionEvent) {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
         freezingController.unban(trusted);

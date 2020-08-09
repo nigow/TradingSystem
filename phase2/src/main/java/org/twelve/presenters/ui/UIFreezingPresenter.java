@@ -18,6 +18,11 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
     private List<Map<String, String>> adminAccounts;
 
+    private boolean canMod;
+    private boolean canUnmod;
+    private boolean canFreeze;
+    private boolean canUnfreeze;
+
     private final ResourceBundle localizedResources;
 
     public UIFreezingPresenter(ResourceBundle localizedResources) {
@@ -37,6 +42,11 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         setModAccounts(new ArrayList<>());
         setTrustedAccounts(new ArrayList<>());
         setRegularAccounts(new ArrayList<>());
+
+        canMod = false;
+        canUnmod = false;
+        canFreeze = false;
+        canUnfreeze = false;
     }
 
     @Override
@@ -189,5 +199,49 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
     @Override
     public List<Map<String, String>> getModAccounts() {
         return modAccounts;
+    }
+
+    @Override
+    public void setCanMod(boolean canMod) {
+        propertyChangeSupport.firePropertyChange("modUser", this.canMod, canMod);
+        this.canMod = canMod;
+    }
+
+    @Override
+    public boolean getCanMod() {
+        return canMod;
+    }
+
+    @Override
+    public void setCanUnmod(boolean canUnmod) {
+        propertyChangeSupport.firePropertyChange("unmodUser", this.canUnmod, canUnmod);
+        this.canUnmod = canUnmod;
+    }
+
+    @Override
+    public boolean getCanUnmod() {
+        return canUnmod;
+    }
+
+    @Override
+    public void setCanFreeze(boolean canFreeze) {
+        propertyChangeSupport.firePropertyChange("freezeUser", this.canFreeze, canFreeze);
+        this.canFreeze = canFreeze;
+    }
+
+    @Override
+    public boolean getCanFreeze() {
+        return canFreeze;
+    }
+
+    @Override
+    public void setCanUnfreeze(boolean canUnfreeze) {
+        propertyChangeSupport.firePropertyChange("unfreezeUser", this.canUnfreeze, canUnfreeze);
+        this.canUnfreeze = canUnfreeze;
+    }
+
+    @Override
+    public boolean getCanUnfreeze() {
+        return canUnfreeze;
     }
 }

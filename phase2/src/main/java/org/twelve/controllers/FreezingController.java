@@ -1,8 +1,10 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Account;
+import org.twelve.entities.Permissions;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.AccountRepository;
+import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
@@ -32,6 +34,8 @@ public class FreezingController {
      */
     private final AccountRepository accountRepository;
 
+    private final SessionManager sessionManager;
+
     /**
      * Initializes constructor with necessary use cases
      *
@@ -40,6 +44,7 @@ public class FreezingController {
     public FreezingController(UseCasePool useCasePool) {
         statusManager = useCasePool.getStatusManager();
         accountRepository = useCasePool.getAccountRepository();
+        sessionManager  = useCasePool.getSessionManager();
     }
 
     public void setFreezingPresenter(FreezingPresenter freezingPresenter) {
@@ -160,5 +165,9 @@ public class FreezingController {
         freezingPresenter.setBannedAccounts(bannedAccounts);
         freezingPresenter.setAdminAccounts(adminAccounts);
         freezingPresenter.setTrustedAccounts(trustedAccounts);
+
+        int accountID = sessionManager.getCurrAccountID();
+        freezingPresenter.setCanMod(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
+        freezingPresenter.setCanUnmod(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
     }
 }
