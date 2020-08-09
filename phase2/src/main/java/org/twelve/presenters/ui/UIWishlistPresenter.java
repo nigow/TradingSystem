@@ -2,7 +2,6 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.WishlistPresenter;
 
-import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,27 +19,29 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
     public UIWishlistPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
-        setItemLists(new ArrayList<>(), new ArrayList<>());
+        setWishlistItems(new ArrayList<>());
+        setWarehouseItems(new ArrayList<>());
         setSelectedItemName("");
         setSelectedItemDesc("");
     }
 
     @Override
-    public void setItemLists(List<String> wishlistItems, List<String> warehouseItems) {
-
+    public void setWishlistItems(List<String> wishlistItems) {
         List<String> oldWishlistItems = this.wishlistItems;
         this.wishlistItems = wishlistItems;
         propertyChangeSupport.firePropertyChange("wishlistItems", oldWishlistItems, this.wishlistItems);
-
-        List<String> oldWarehouseItems = this.warehouseItems;
-        this.warehouseItems = warehouseItems;
-        propertyChangeSupport.firePropertyChange("warehouseItems", oldWarehouseItems, this.warehouseItems);
-
     }
 
     @Override
     public List<String> getWishlistItems() {
         return wishlistItems;
+    }
+
+    @Override
+    public void setWarehouseItems(List<String> warehouseItems) {
+        List<String> oldWarehouseItems = this.warehouseItems;
+        this.warehouseItems = warehouseItems;
+        propertyChangeSupport.firePropertyChange("warehouseItems", oldWarehouseItems, this.warehouseItems);
     }
 
     @Override

@@ -52,7 +52,8 @@ public class WishlistController {
 
         }
 
-        wishlistPresenter.setItemLists(wishlistItems, warehouseItems);
+        wishlistPresenter.setWishlistItems(wishlistItems);
+        wishlistPresenter.setWarehouseItems(warehouseItems);
 
     }
 
