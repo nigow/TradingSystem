@@ -23,7 +23,7 @@ public class AccountTest extends TestCase {
         wishlist.add(2);
         new Account("Ethan", "1234",
                 (ArrayList<Integer>) wishlist.clone(),
-                (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
+                (ArrayList<Permissions>) permissions.clone(), 1, "Mississauga");
     }
 
 
@@ -68,7 +68,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
         
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
+                (ArrayList<Permissions>) permissions.clone(), 1, "Mississauga");
         user.setPassword("4321");
         TestCase.assertEquals(user.getPassword(), "4321");
     }
@@ -123,7 +123,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1,
-                "placeholder");
+                "Mississauga");
         user.addPermission(Permissions.FREEZE);
         permissions.add(Permissions.FREEZE);
         TestCase.assertEquals(user.getPermissions(), permissions);
@@ -140,7 +140,7 @@ public class AccountTest extends TestCase {
 
         Account user = new Account("Ethan", "1234",
                 (List<Permissions>) permissions.clone(), 1,
-                "placeholder");
+                "Mississauga");
         TestCase.assertTrue(user.removePermission(Permissions.LOGIN));
         permissions.remove(Permissions.LOGIN);
         TestCase.assertEquals(user.getPermissions(), permissions);
@@ -151,7 +151,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         Account user = new Account("Ethan", "1234",
                 (List<Permissions>) permissions.clone(), 1,
-                "placeholder");
+                "Mississauga");
         user.removePermission(Permissions.CREATE_ITEM);
         TestCase.assertEquals(user.getPermissions(), permissions);
     }
@@ -162,7 +162,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.FREEZE);
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1,
-                "placeholder");
+                "Mississauga");
         List<Integer> lst = new ArrayList<>();
         lst.add(1);
         lst.add(2);
@@ -182,7 +182,7 @@ public class AccountTest extends TestCase {
 
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1,
-                "placeholder");
+                "Mississauga");
         ArrayList<Integer> lst = new ArrayList<>();
         lst.add(1);
         user.addToWishlist(1);
@@ -202,7 +202,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.REQUEST_UNFREEZE);
 
         Account user = new Account("Ethan", "1234",
-                (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
+                (ArrayList<Permissions>) permissions.clone(), 1, "Mississauga");
         ArrayList<Integer> lst = new ArrayList<>();
         lst.add(1);
         user.addToWishlist(1);
@@ -215,7 +215,26 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.LOGIN);
         permissions.add(Permissions.FREEZE);
         Account user = new Account("Ethan", "1234",
-                (List<Permissions>) permissions.clone(), 1, "placeholder");
+                (List<Permissions>) permissions.clone(), 1, "Mississauga");
         TestCase.assertTrue(user.toString().contains("Ethan"));
+    }
+
+    public void testGetLocation() {
+        ArrayList<Permissions> permissions = new ArrayList<>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.FREEZE);
+        Account user = new Account("Ethan", "1234",
+                (List<Permissions>) permissions.clone(), 1, "Mississauga");
+        assertEquals(user.getLocation(), "Mississauga");
+    }
+
+    public void testSetLocation() {
+        ArrayList<Permissions> permissions = new ArrayList<>();
+        permissions.add(Permissions.LOGIN);
+        permissions.add(Permissions.FREEZE);
+        Account user = new Account("Ethan", "1234",
+                (List<Permissions>) permissions.clone(), 1, "Mississauga");
+        user.setLocation("Home");
+        assertEquals(user.getLocation(), "Home");
     }
 }
