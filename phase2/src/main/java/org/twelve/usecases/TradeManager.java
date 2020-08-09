@@ -18,9 +18,25 @@ import java.util.List;
 
 public class TradeManager extends TradeUtility{
 
+    /**
+     * The Manager dealing with the wishlist of a user
+     */
     private final WishlistManager wishlistManager;
+
+    /**
+     * The gateway dealing with trades
+     */
     private final TradeGateway tradeGateway;
 
+    /**
+     * The Constructor for TradeManager
+     *
+     * @param tradeGateway the gateway dealing with trades
+     * @param thresholdRepository Repository for storing all threshold values of the program.
+     * @param accountRepository Repository for storing all accounts in the system.
+     * @param itemManager the manager dealing with items
+     * @param wishlistManager the manager dealing with the wishlist of a user
+     */
     public TradeManager(TradeGateway tradeGateway, ThresholdRepository thresholdRepository, AccountRepository accountRepository,
                              ItemManager itemManager, WishlistManager wishlistManager) {
         super(itemManager, accountRepository, thresholdRepository);
@@ -29,6 +45,19 @@ public class TradeManager extends TradeUtility{
         tradeGateway.populate(this);
     }
 
+    /**
+     * Adds a new trade and its timeplace to local storage
+     *
+     * @param id id of trade and timeplace
+     * @param isPermanent if the trade is permanent
+     * @param traderIDs list of all ids of the traders
+     * @param itemIDs list of all the ids of the items
+     * @param editedCounter counter for how many edits were made
+     * @param tradeStatus status of the trade
+     * @param tradeCompletions The Completion status of the trades
+     * @param time the time of the trade
+     * @param location the location of the trade
+     */
     public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
                             int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
                             String time, String location) {
@@ -39,10 +68,21 @@ public class TradeManager extends TradeUtility{
         timePlaces.add(timePlace);
     }
 
+    /**
+     * Updates the given trade to the tradeGateway as a new trade
+     *
+     * @param trade the object representing a trade
+     */
     private void updateToGateway(Trade trade) {
         updateToGateway(trade, false);
     }
 
+    /**
+     * Updates the given trade and if it is a new trade to the tradeGateway
+     *
+     * @param trade the object representing a trade
+     * @param newTrade if the trade is a new trade
+     */
     private void updateToGateway(Trade trade, boolean newTrade) {
         TimePlace timePlace = getTimePlaceByID(trade.getId());
         tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),

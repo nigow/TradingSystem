@@ -15,8 +15,19 @@ import java.util.stream.Collectors;
  */
 abstract public class TradeUtility {
 
+    /**
+     * The Manager dealing with items
+     */
     protected ItemManager itemManager;
+
+    /**
+     *  Repository for storing all accounts in the system.
+     */
     protected AccountRepository accountRepository;
+
+    /**
+     *  Repository for storing all accounts threshold values of the program.
+     */
     protected ThresholdRepository thresholdRepository;
 
     /**
@@ -29,6 +40,13 @@ abstract public class TradeUtility {
      */
     protected List<TimePlace> timePlaces;
 
+    /**
+     * Constructor for TradeUtility
+     *
+     * @param itemManager the manager dealing with items
+     * @param accountRepository Repository for storing all accounts in the system.
+     * @param thresholdRepository Repository for storing all accounts threshold values of the program.
+     */
     public TradeUtility(ItemManager itemManager, AccountRepository accountRepository, ThresholdRepository thresholdRepository){
         trades = new ArrayList<>();
         timePlaces = new ArrayList<>();
