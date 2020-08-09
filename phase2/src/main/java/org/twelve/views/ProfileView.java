@@ -3,13 +3,11 @@ package org.twelve.views;
 import javafx.beans.property.adapter.JavaBeanBooleanProperty;
 import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.twelve.controllers.ProfileController;
 import org.twelve.presenters.ProfilePresenter;
@@ -24,6 +22,12 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     private final ProfileController profileController;
     private final T profilePresenter;
 
+    @FXML
+    private Button updateLocationBtn;
+    @FXML
+    private Label updatePasswordError;
+    @FXML
+    private Button updatePasswordBtn;
     @FXML
     private BorderPane graphic;
     @FXML
@@ -74,7 +78,15 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
             requestUnfreezeBtn.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(profilePresenter).name("canRequestUnfreeze").build().not());
 
+            updatePasswordError.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(profilePresenter).name("error").build());
+
         } catch (NoSuchMethodException ignored) {}
+
+        updatePasswordBtn.disableProperty().bind(oldPassword.textProperty().isEmpty()
+                .or(newPassword.textProperty().isEmpty()));
+
+        updateLocationBtn.disableProperty().bind(locationBox.textProperty().isEmpty());
 
     }
 

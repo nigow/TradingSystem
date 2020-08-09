@@ -2,20 +2,24 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Roles;
 import org.twelve.presenters.ProfilePresenter;
+import org.twelve.usecases.LoginManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
 public class ProfileController {
 
-    private StatusManager statusManager;
+    private final StatusManager statusManager;
     private ProfilePresenter profilePresenter;
-    private SessionManager sessionManager;
+    private final SessionManager sessionManager;
+    private final LoginManager loginManager;
 
     public ProfileController(UseCasePool useCasePool) {
 
         statusManager = useCasePool.getStatusManager();
         sessionManager = useCasePool.getSessionManager();
+        loginManager = useCasePool.getLoginManager();
+
     }
 
     public void updateProfile() {
@@ -35,7 +39,11 @@ public class ProfileController {
 
     public void changePassword(String oldPassword, String newPassword) {
 
-        // todo: waiting for use case support
+        if (loginManager.changePassword(sessionManager.getCurrAccountID(), oldPassword, newPassword)) {
+            profilePresenter.setError("");
+        } else {
+            profilePresenter.setError("pwdError");
+        }
 
     }
 

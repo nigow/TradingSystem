@@ -43,7 +43,7 @@ public class ViewBuilder {
             case PROFILE:
 
                 return new ProfileView<>(windowHandler, controllerPool.getProfileController(),
-                        new UIProfilePresenter());
+                        new UIProfilePresenter(localizedResources));
 
             case RESTRICTIONS:
 

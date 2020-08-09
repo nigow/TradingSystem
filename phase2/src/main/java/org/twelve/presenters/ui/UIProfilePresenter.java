@@ -2,11 +2,34 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.ProfilePresenter;
 
+import java.util.ResourceBundle;
+
 public class UIProfilePresenter extends ObservablePresenter implements ProfilePresenter {
 
+    private final ResourceBundle localizedResources;
+
+    private String errorMsg;
     private boolean vacationStatus;
     private boolean canVacation;
     private boolean canRequestUnfreeze;
+
+    public UIProfilePresenter(ResourceBundle localizedResources) {
+        super();
+        this.localizedResources = localizedResources;
+        setError("");
+    }
+
+    @Override
+    public void setError(String errorKey) {
+        String oldErrorMsg = this.errorMsg;
+        this.errorMsg = localizedResources.containsKey(errorKey) ? localizedResources.getString(errorKey) : "";
+        propertyChangeSupport.firePropertyChange("error", oldErrorMsg, this.errorMsg);
+    }
+
+    @Override
+    public String getError() {
+        return errorMsg;
+    }
 
     @Override
     public void setVacationStatus(boolean vacationStatus) {

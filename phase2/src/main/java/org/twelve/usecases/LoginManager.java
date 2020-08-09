@@ -29,7 +29,7 @@ public class LoginManager {
 
     public boolean changePassword(int accountID, String oldPassword, String newPassword){
         Account account = accountRepository.getAccountFromID(accountID);
-        if (account.getPassword() != oldPassword)
+        if (!account.getPassword().equals(oldPassword))
             return false;
         account.setPassword(newPassword);
         accountRepository.updateToAccountGateway(account);

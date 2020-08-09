@@ -63,6 +63,7 @@ public class LoginController {
         accountGateway.populate(accountRepository);
 
         if (inputHandler.isValidUserPass(username, password) && loginManager.authenticateLogin(username, password)) {
+            loginPresenter.setError("");
             sessionManager.login(username);
             return true;
         } else {
