@@ -2,9 +2,7 @@ package org.twelve.views;
 
 import javafx.beans.property.adapter.JavaBeanBooleanProperty;
 import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
-import javafx.beans.property.adapter.JavaBeanStringProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -57,7 +55,7 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         return graphic;
     }
 
-    public void backClicked(ActionEvent actionEvent) {
+    public void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
@@ -81,21 +79,24 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     }
 
     @FXML
-    private void onVacationClicked(ActionEvent actionEvent) {
+    private void onVacationClicked() {
 
         profileController.changeVacationStatus(onVacation.isSelected());
 
     }
 
-    public void updatePasswordClicked(ActionEvent actionEvent) {
+    @FXML
+    private void updatePasswordClicked() {
         profileController.changePassword(oldPassword.getText(), newPassword.getText());
     }
 
-    public void requestUnfreezeClicked(ActionEvent actionEvent) {
+    @FXML
+    private void requestUnfreezeClicked() {
         profileController.requestUnfreeze();
     }
 
-    public void updateLocationClicked(ActionEvent actionEvent) {
+    @FXML
+    private void updateLocationClicked() {
 
     }
 }

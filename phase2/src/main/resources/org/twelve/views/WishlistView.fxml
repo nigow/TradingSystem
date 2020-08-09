@@ -20,9 +20,9 @@
       <Label text="%warehouse" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
       <ListView fx:id="wishlistItems" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
       <ListView fx:id="warehouseItems" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeFromWishlistClicked" text="%remove" GridPane.rowIndex="2" />
+      <Button fx:id="removeFromWishlistBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeFromWishlistClicked" text="%remove" GridPane.rowIndex="2" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addToWishlistClicked" text="%add" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Button fx:id="addToWishlistBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addToWishlistClicked" text="%add" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label fx:id="itemName" text="%itemName" />

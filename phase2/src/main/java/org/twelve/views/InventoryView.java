@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -32,6 +33,12 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     private final InventoryController inventoryController;
     private final T inventoryPresenter;
+
+    @FXML
+    private Button addItemBtn;
+
+    @FXML
+    private Button removeItemBtn;
 
     @FXML
     private BorderPane graphic;
@@ -111,6 +118,8 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
                         } else {
                             for (int i = 0; i < inventoryItems.getItems().size(); i++) {
 
+                                // comparison by reference is intentional to determine which specific item it is
+                                //noinspection StringEquality
                                 if (inventoryItems.getItems().get(i) == item) {
 
                                     if (i < inventoryPresenter.getApprovedItems().size()) {
@@ -131,39 +140,39 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
         });
 
         // force recolor every time inventory is updated (doesn't happen by default if the contents are the same)
-        inventoryItems.itemsProperty().addListener((observable, oldValue, newValue) -> {
-            inventoryItems.refresh();
-        });
+        inventoryItems.itemsProperty().addListener((observable, oldValue, newValue) -> inventoryItems.refresh());
 
         inventoryItems.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
 
-            if (newValue.intValue() != -1)
-                inventoryController.setSelectedItem(newValue.intValue());
+            if (newValue.intValue() != -1) inventoryController.setSelectedItem(newValue.intValue());
 
         });
+
+        addItemBtn.disableProperty().bind(itemName.textProperty().isEmpty()
+                .or(itemDesc.textProperty().isEmpty()));
+
+        removeItemBtn.disableProperty().bind(inventoryItems.getSelectionModel().selectedItemProperty().isNull());
 
     }
 
     @FXML
-    private void backClicked(ActionEvent actionEvent) {
+    private void backClicked() {
 
         windowHandler.changeScene(Scenes.MENU);
 
     }
 
     @FXML
-    private void addItemClicked(ActionEvent actionEvent) {
+    private void addItemClicked() {
 
         inventoryController.createItem(itemName.getText(), itemDesc.getText());
 
     }
 
     @FXML
-    private void removeItemClicked(ActionEvent actionEvent) {
+    private void removeItemClicked() {
 
-        int itemIndex = inventoryItems.getSelectionModel().getSelectedIndex();
-
-        if (itemIndex != -1) inventoryController.removeFromInventory(itemIndex);
+        inventoryController.removeFromInventory(inventoryItems.getSelectionModel().getSelectedIndex());
 
     }
 }

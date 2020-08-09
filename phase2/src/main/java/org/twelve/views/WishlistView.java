@@ -2,6 +2,7 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
@@ -25,6 +27,12 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
     private final WindowHandler windowHandler;
     private final WishlistController wishlistController;
+
+    @FXML
+    private Button removeFromWishlistBtn;
+
+    @FXML
+    private Button addToWishlistBtn;
 
     @FXML
     private GridPane graphic;
@@ -52,7 +60,7 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
     }
 
     @FXML
-    private void backClicked(ActionEvent actionEvent) {
+    private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
@@ -73,19 +81,19 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
         try {
 
-            ObjectBinding<ObservableList<String>> wishlistBinding = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> wishlistItemsBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(wishlistPresenter).name("wishlistItems").build();
 
-                return FXCollections.observableArrayList(wishlistPresenter.getWishlistItems());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(wishlistPresenter).name("wishlistItems").build());
+            ObjectBinding<ObservableList<String>> wishlistBinding = Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(wishlistItemsBinding.get()), wishlistItemsBinding);
 
             wishlistItems.itemsProperty().bind(wishlistBinding);
 
-            ObjectBinding<ObservableList<String>> warehouseBinding = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> warehouseItemsBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(wishlistPresenter).name("warehouseItems").build();
 
-                return FXCollections.observableArrayList(wishlistPresenter.getWarehouseItems());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(wishlistPresenter).name("warehouseItems").build());
+            ObjectBinding<ObservableList<String>> warehouseBinding = Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(warehouseItemsBinding.get()), warehouseItemsBinding);
 
             warehouseItems.itemsProperty().bind(warehouseBinding);
 
@@ -115,23 +123,23 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
         });
 
-    }
-
-    @FXML
-    private void addToWishlistClicked(ActionEvent actionEvent) {
-
-        int itemIndex = warehouseItems.getSelectionModel().getSelectedIndex();
-
-        if (itemIndex != -1) wishlistController.addToWishlist(itemIndex);
+        addToWishlistBtn.disableProperty().bind(warehouseItems.getSelectionModel().selectedItemProperty().isNull());
+        removeFromWishlistBtn.disableProperty().bind(wishlistItems.getSelectionModel().selectedItemProperty().isNull());
 
     }
 
     @FXML
-    private void removeFromWishlistClicked(ActionEvent actionEvent) {
+    private void addToWishlistClicked() {
 
-        int itemIndex = wishlistItems.getSelectionModel().getSelectedIndex();
+        wishlistController.addToWishlist(warehouseItems.getSelectionModel().getSelectedIndex());
 
-        if (itemIndex != -1) wishlistController.removeFromWishlist(itemIndex);
+    }
+
+    @FXML
+    private void removeFromWishlistClicked() {
+
+        wishlistController.removeFromWishlist(wishlistItems.getSelectionModel().getSelectedIndex());
+
     }
 
 }

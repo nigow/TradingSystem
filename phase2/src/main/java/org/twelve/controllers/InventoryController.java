@@ -3,7 +3,6 @@ package org.twelve.controllers;
 import org.twelve.gateways.GatewayPool;
 import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.InventoryPresenter;
-import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
@@ -33,16 +32,6 @@ public class InventoryController {
      */
     private final SessionManager sessionManager;
 
-    /**
-     * An instance of PermissionManager to check permissions
-     */
-    private final StatusManager statusManager;
-
-    /**
-     * An instance of ControllerHelper for helper methods
-     */
-    private final InputHandler inputHandler;
-
     private final ItemsGateway itemsGateway;
 
     /**
@@ -54,8 +43,6 @@ public class InventoryController {
     public InventoryController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.statusManager = useCasePool.getStatusManager(); //TODO: figure out how we're using permissions to dictate what the view shows the user
-        this.inputHandler = new InputHandler();
         this.itemsGateway = gatewayPool.getItemsGateway();
     }
 
@@ -82,7 +69,8 @@ public class InventoryController {
 
         }
 
-        inventoryPresenter.setInventoryItems(approvedItems, pendingItems);
+        inventoryPresenter.setApprovedItems(approvedItems);
+        inventoryPresenter.setPendingItems(pendingItems);
     }
 
     /**
@@ -91,15 +79,11 @@ public class InventoryController {
      * @param name The name of the item
      * @param description The description of the item
      */
-    public boolean createItem(String name, String description) {
+    public void createItem(String name, String description) {
 
-        if(inputHandler.isValidCSVStr(name) && inputHandler.isValidCSVStr(description)) {
-            itemManager.createItem(name, description, sessionManager.getCurrAccountID());
-            displayAllYourInventory();
-            return true;
-        } else {
-            return false;
-        }
+        itemManager.createItem(name, description, sessionManager.getCurrAccountID());
+        displayAllYourInventory();
+
     }
 
     /**
@@ -107,24 +91,21 @@ public class InventoryController {
      *
      * @param itemIndex The index in the list of items in this user's
      */
-    public boolean removeFromInventory(int itemIndex) {
+    public void removeFromInventory(int itemIndex) {
 
-        boolean wasSuccessful;
         int approvedInvSize = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).size();
 
         if (itemIndex < approvedInvSize) {
 
-            wasSuccessful = itemManager.removeItem(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex));
-
+            itemManager.removeItem(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex));
 
         } else {
 
-            wasSuccessful = itemManager.removeItem(itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize));
+            itemManager.removeItem(itemManager.getDisprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemIndex - approvedInvSize));
 
         }
 
-        if (wasSuccessful) displayAllYourInventory();
-        return wasSuccessful;
+        displayAllYourInventory();
 
     }
 

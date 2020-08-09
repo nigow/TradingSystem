@@ -24,25 +24,28 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
         super();
         setSelectedItemName("");
         setSelectedItemDesc("");
-        setInventoryItems(new ArrayList<>(), new ArrayList<>());
+        setApprovedItems(new ArrayList<>());
+        setPendingItems(new ArrayList<>());
 
     }
 
     @Override
-    public void setInventoryItems(List<String> approvedItems, List<String> pendingItems) {
-
+    public void setApprovedItems(List<String> approvedItems) {
         List<String> oldApprovedItems = this.approvedItems;
         this.approvedItems = approvedItems;
         propertyChangeSupport.firePropertyChange("approvedItems", oldApprovedItems, this.approvedItems);
-
-        List<String> oldPendingItems = this.pendingItems;
-        this.pendingItems = pendingItems;
-        propertyChangeSupport.firePropertyChange("pendingItems", oldPendingItems, this.pendingItems);
     }
 
     @Override
     public List<String> getApprovedItems() {
         return approvedItems;
+    }
+
+    @Override
+    public void setPendingItems(List<String> pendingItems) {
+        List<String> oldPendingItems = this.pendingItems;
+        this.pendingItems = pendingItems;
+        propertyChangeSupport.firePropertyChange("pendingItems", oldPendingItems, this.pendingItems);
     }
 
     @Override

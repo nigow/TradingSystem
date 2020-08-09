@@ -2,10 +2,10 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -50,7 +50,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     }
 
     @FXML
-    private void registerClicked(ActionEvent actionEvent) {
+    private void registerClicked() {
 
         if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(), locationBox.getValue(),
                 typeBox.getSelectionModel().getSelectedIndex())) {
@@ -62,7 +62,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     }
 
     @FXML
-    private void backClicked(ActionEvent actionEvent) {
+    private void backClicked() {
 
         if (typeBox.getItems().size() > 1) {
             windowHandler.changeScene(Scenes.LANDING);
@@ -87,19 +87,19 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
         try {
 
-            ObjectBinding<ObservableList<String>> typesBinding = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> availableTypesBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("availableTypes").build();
 
-                return FXCollections.observableArrayList(registrationPresenter.getAvailableTypes());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("availableTypes").build());
+            ObjectBinding<ObservableList<String>> typesBinding = Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(availableTypesBinding.get()), availableTypesBinding);
 
             typeBox.itemsProperty().bind(typesBinding);
 
-            ObjectBinding<ObservableList<String>> citiesBinding = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> existingCitiesBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("existingCities").build();
 
-                return FXCollections.observableArrayList(registrationPresenter.getExistingCities());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("existingCities").build());
+            ObjectBinding<ObservableList<String>> citiesBinding = Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(existingCitiesBinding.get()), existingCitiesBinding);
 
             locationBox.itemsProperty().bind(citiesBinding);
 

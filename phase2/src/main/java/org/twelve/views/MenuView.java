@@ -1,29 +1,26 @@
 package org.twelve.views;
 
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import org.twelve.controllers.MenuController;
-import org.twelve.presenters.ProfilePresenter;
 import org.twelve.presenters.MenuPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MenuView<T extends ObservablePresenter & ProfilePresenter> implements SceneView, Initializable{
+public class MenuView<T extends ObservablePresenter & MenuPresenter> implements SceneView, Initializable{
+
+    private final WindowHandler windowHandler;
+    private final MenuController menuController;
+    private final T menuPresenter;
 
     @FXML
     private GridPane graphic;
-
-    private WindowHandler windowHandler;
-    private MenuController menuController;
-    private MenuPresenter menuPresenter;
-
     @FXML
     private Button initiateTrade;
     @FXML
@@ -35,8 +32,7 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
     @FXML
     private Button approveItems;
 
-
-    public MenuView(WindowHandler windowHandler, MenuController menuController, MenuPresenter menuPresenter) {
+    public MenuView(WindowHandler windowHandler, MenuController menuController, T menuPresenter) {
         this.windowHandler = windowHandler;
         this.menuPresenter = menuPresenter;
         this.menuController = menuController;
@@ -63,7 +59,7 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
     }
 
     @FXML
-    private void logoutClicked(ActionEvent actionEvent) {
+    private void logoutClicked() {
 
         windowHandler.changeScene(Scenes.LANDING);
         menuController.logout();
@@ -71,28 +67,28 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
     }
 
     @FXML
-    private void approveItemsClicked(ActionEvent actionEvent) {
+    private void approveItemsClicked() {
 
         windowHandler.changeScene(Scenes.WAREHOUSE);
 
     }
 
     @FXML
-    private void modifyRestrictionsClicked(ActionEvent actionEvent) {
+    private void modifyRestrictionsClicked() {
 
         windowHandler.changeScene(Scenes.RESTRICTIONS);
 
     }
 
     @FXML
-    private void initiateTradeClicked(ActionEvent actionEvent) {
+    private void initiateTradeClicked() {
 
         windowHandler.changeScene(Scenes.TRADE_CREATOR);
 
     }
 
     @FXML
-    private void addAdminClicked(ActionEvent actionEvent) {
+    private void addAdminClicked() {
 
         windowHandler.changeScene(Scenes.REGISTRATION);
 
@@ -109,27 +105,27 @@ public class MenuView<T extends ObservablePresenter & ProfilePresenter> implemen
     }
 
     @FXML
-    private void manageWishlistClicked(ActionEvent actionEvent) {
+    private void manageWishlistClicked() {
 
         windowHandler.changeScene(Scenes.WISHLIST);
 
     }
 
     @FXML
-    private void manageInventoryClicked(ActionEvent actionEvent) {
+    private void manageInventoryClicked() {
 
         windowHandler.changeScene(Scenes.INVENTORY);
 
     }
 
-    public void manageAccountsClicked(ActionEvent actionEvent) {
+    public void manageAccountsClicked() {
 
         windowHandler.changeScene(Scenes.ACCOUNTS);
 
     }
 
     @FXML
-    private void accountSettingsClicked(ActionEvent actionEvent) {
+    private void accountSettingsClicked() {
 
         windowHandler.changeScene(Scenes.PROFILE);
     }

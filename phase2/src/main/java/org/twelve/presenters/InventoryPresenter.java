@@ -4,8 +4,9 @@ import java.util.List;
 
 public interface InventoryPresenter {
 
-    void setInventoryItems(List<String> approvedItems, List<String> pendingItems);
+    void setApprovedItems(List<String> approvedItems);
     List<String> getApprovedItems();
+    void setPendingItems(List<String> pendingItems);
     List<String> getPendingItems();
     void setSelectedItemName(String name);
     String getSelectedItemName();

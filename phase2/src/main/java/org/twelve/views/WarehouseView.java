@@ -7,7 +7,6 @@ import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -74,22 +73,21 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
     }
 
     @FXML
-    private void approveClicked(ActionEvent actionEvent) {
+    private void approveClicked() {
 
         warehouseController.approveItem(warehouseItems.getSelectionModel().getSelectedIndex());
 
     }
 
-
     @FXML
-    private void denyClicked(ActionEvent actionEvent) {
+    private void denyClicked() {
 
         warehouseController.denyItem(warehouseItems.getSelectionModel().getSelectedIndex());
 
     }
 
     @FXML
-    private void backClicked(ActionEvent actionEvent) {
+    private void backClicked() {
 
         windowHandler.changeScene(Scenes.MENU);
 
@@ -138,6 +136,8 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
                         } else {
                             for (int i = 0; i < warehouseItems.getItems().size(); i++) {
 
+                                // comparison by reference is intentional to determine which specific item it is
+                                //noinspection StringEquality
                                 if (warehouseItems.getItems().get(i) == item) {
 
                                     if (i < warehousePresenter.getPendingItems().size()) {
@@ -158,13 +158,11 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
         });
 
         // force recolor every time inventory is updated (doesn't happen by default if the contents are the same)
-        warehouseItems.itemsProperty().addListener((observable, oldValue, newValue) -> {
-            warehouseItems.refresh();
-        });
+        warehouseItems.itemsProperty().addListener((observable, oldValue, newValue) -> warehouseItems.refresh());
 
         warehouseItems.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
 
-            warehouseController.changeSelectedItem(newValue.intValue());
+            if (newValue.intValue() != -1) warehouseController.changeSelectedItem(newValue.intValue());
 
         });
 

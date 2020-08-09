@@ -11,14 +11,14 @@ import java.util.List;
 
 public class WishlistController {
 
-    private WishlistManager wishlistManager;
-    private SessionManager sessionManager;
-    private ItemManager itemManager;
+    private final WishlistManager wishlistManager;
+    private final SessionManager sessionManager;
+    private final ItemManager itemManager;
     private WishlistPresenter wishlistPresenter;
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    private AccountGateway accountGateway;
-    private ItemsGateway itemsGateway;
+    private final AccountGateway accountGateway;
+    private final ItemsGateway itemsGateway;
 
     public WishlistController(UseCasePool useCasePool, GatewayPool gatewayPool) {
 
@@ -80,23 +80,19 @@ public class WishlistController {
 
     public void changeSelectedWishlistItem(int itemIndex) {
 
-        String name = itemIndex >= 0 ?
-                itemManager.getItemNameById(wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
-        String desc = itemIndex >= 0 ?
-                itemManager.getItemDescById(wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
+        int itemId = wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).get(itemIndex);
 
-        wishlistPresenter.setSelectedItemInfo(name, desc);
+        wishlistPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
+        wishlistPresenter.setSelectedItemDesc(itemManager.getItemDescById(itemId));
 
     }
 
     public void changeSelectedWarehouseItem(int itemIndex) {
 
-        String name = itemIndex >= 0 ?
-                itemManager.getItemNameById(itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
-        String desc = itemIndex >= 0 ?
-                itemManager.getItemDescById(itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex)) : "";
+        int itemId = itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex);
 
-        wishlistPresenter.setSelectedItemInfo(name, desc);
+        wishlistPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
+        wishlistPresenter.setSelectedItemDesc(itemManager.getItemDescById(itemId));
 
     }
 

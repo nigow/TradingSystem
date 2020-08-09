@@ -2,6 +2,7 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import org.twelve.presenters.LandingPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -41,14 +43,14 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
     }
 
     @FXML
-    private void loginClicked(ActionEvent actionEvent) {
+    private void loginClicked() {
 
         windowHandler.changeScene(Scenes.LOGIN);
 
     }
 
     @FXML
-    private void registerClicked(ActionEvent actionEvent) {
+    private void registerClicked() {
 
         windowHandler.changeScene(Scenes.REGISTRATION);
 
@@ -69,11 +71,11 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
         try {
 
-            languages.itemsProperty().bind(Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<Locale>> availableLanguagesBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<Locale>>create().bean(landingPresenter).name("availableLanguages").build();
 
-                return FXCollections.observableArrayList(landingPresenter.getAvailableLanguages());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.create().bean(landingPresenter).name("availableLanguages").build()));
+            languages.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(availableLanguagesBinding.get()), availableLanguagesBinding));
 
             languages.getSelectionModel().select(landingPresenter.getSelectedLanguage());
 
@@ -87,14 +89,14 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
     }
 
     @FXML
-    private void languageChanged(ActionEvent actionEvent) {
+    private void languageChanged() {
 
         windowHandler.restart(languages.getSelectionModel().getSelectedItem(), demoMode.isSelected());
 
     }
 
     @FXML
-    private void demoModeChanged(ActionEvent actionEvent) {
+    private void demoModeChanged() {
 
         windowHandler.restart(languages.getSelectionModel().getSelectedItem(), demoMode.isSelected());
 

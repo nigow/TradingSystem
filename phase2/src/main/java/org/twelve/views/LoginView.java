@@ -43,7 +43,7 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
     }
 
     @FXML
-    private void loginAttempted(ActionEvent actionEvent) {
+    private void loginAttempted() {
 
         if (loginController.logIn(usernameBox.getText(), passwordBox.getText())) {
             windowHandler.changeScene(Scenes.MENU);
@@ -52,7 +52,7 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
     }
 
     @FXML
-    private void backClicked(ActionEvent actionEvent) {
+    private void backClicked() {
 
         windowHandler.changeScene(Scenes.LANDING);
 

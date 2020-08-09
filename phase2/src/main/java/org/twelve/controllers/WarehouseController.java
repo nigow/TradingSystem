@@ -4,7 +4,6 @@ import org.twelve.gateways.GatewayPool;
 import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.ArrayList;
@@ -13,14 +12,12 @@ import java.util.List;
 public class WarehouseController {
 
     private final ItemManager itemManager;
-    private final SessionManager sessionManager;
     private WarehousePresenter warehousePresenter;
     private final ItemsGateway itemsGateway;
 
     public WarehouseController(UseCasePool useCasePool, GatewayPool gatewayPool) {
 
         itemManager = useCasePool.getItemManager();
-        sessionManager = useCasePool.getSessionManager();
         this.itemsGateway = gatewayPool.getItemsGateway();
 
     }
@@ -56,27 +53,20 @@ public class WarehouseController {
 
     public void changeSelectedItem(int itemIndex) {
 
-        String name;
-        String desc;
+        int itemId;
 
-        if (itemIndex < 0) {
+        if (itemIndex < itemManager.getDisapprovedIDs().size()) {
 
-            name = desc = "";
-
-        } else if (itemIndex < itemManager.getDisapprovedIDs().size()) {
-
-            name = itemManager.getItemNameById(itemManager.getDisapprovedIDs().get(itemIndex));
-            desc = itemManager.getItemDescById(itemManager.getDisapprovedIDs().get(itemIndex));
+            itemId = itemManager.getDisapprovedIDs().get(itemIndex);
 
         } else {
 
-            name = itemManager.getItemNameById(itemManager.getApprovedIDs().get(itemIndex - itemManager.getDisapprovedIDs().size()));
-            desc = itemManager.getItemDescById(itemManager.getApprovedIDs().get(itemIndex - itemManager.getDisapprovedIDs().size()));
+            itemId = itemManager.getApprovedIDs().get(itemIndex - itemManager.getDisapprovedIDs().size());
 
         }
 
-        warehousePresenter.setSelectedItemName(name);
-        warehousePresenter.setSelectedItemDesc(desc);
+        warehousePresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
+        warehousePresenter.setSelectedItemDesc(itemManager.getItemDescById(itemId));
 
     }
 

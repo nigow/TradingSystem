@@ -2,7 +2,6 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.adapter.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -57,11 +56,11 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
         return graphic;
     }
 
-    public void backClicked(ActionEvent actionEvent) {
+    public void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
-    public void saveClicked(ActionEvent actionEvent) {
+    public void saveClicked() {
         thresholdController.lendMoreThanBorrow(lendVsBorrow.getValue());
         thresholdController.maxIncompleteTrades(maxIncomplete.getValue());
         thresholdController.maxWeeklyTrades(maxWeekly.getValue());
@@ -76,47 +75,33 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
 
         try {
 
-            lendVsBorrow.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+            lendVsBorrow.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE, thresholdPresenter.getLendMoreThanBorrow()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("lendMoreThanBorrow").build()));
 
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE, thresholdPresenter.getLendMoreThanBorrow());
+            maxIncomplete.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxIncompleteTrade()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxIncompleteTrade").build()));
 
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("lendMoreThanBorrow").build()));
+            maxWeekly.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxWeeklyTrade()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxWeeklyTrade").build()));
 
-            maxIncomplete.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+            numOfDays.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfDays()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfDays").build()));
 
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxIncompleteTrade());
+            numOfEdits.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfEdits()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfEdits").build()));
 
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxIncompleteTrade").build()));
+            numOfStats.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfStats()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfStats").build()));
 
-            maxWeekly.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxWeeklyTrade());
-
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxWeeklyTrade").build()));
-
-            numOfDays.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfDays());
-
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfDays").build()));
-
-            numOfEdits.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfEdits());
-
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfEdits").build()));
-
-            numOfStats.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfStats());
-
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfStats").build()));
-
-            numForTrusted.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfTradesUntilTrusted());
-
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfTradesUntilTrusted").build()));
+            numForTrusted.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfTradesUntilTrusted()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfTradesUntilTrusted").build()));
 
         } catch (NoSuchMethodException ignored) {}
 

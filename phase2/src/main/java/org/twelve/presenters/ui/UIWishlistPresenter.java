@@ -21,7 +21,8 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         super();
         this.localizedResources = localizedResources;
         setItemLists(new ArrayList<>(), new ArrayList<>());
-        setSelectedItemInfo("", "");
+        setSelectedItemName("");
+        setSelectedItemDesc("");
     }
 
     @Override
@@ -48,21 +49,22 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
     }
 
     @Override
-    public void setSelectedItemInfo(String name, String desc) {
-
+    public void setSelectedItemName(String name) {
         String oldItemName = this.selectedItemName;
         this.selectedItemName = MessageFormat.format(localizedResources.getString("itemName"), name);
         propertyChangeSupport.firePropertyChange("selectedItemName", oldItemName, this.selectedItemName);
-
-        String oldItemDesc = this.selectedItemDesc;
-        this.selectedItemDesc = MessageFormat.format(localizedResources.getString("itemDesc"), desc);
-        propertyChangeSupport.firePropertyChange("selectedItemDesc", oldItemDesc, this.selectedItemDesc);
-
     }
 
     @Override
     public String getSelectedItemName() {
         return selectedItemName;
+    }
+
+    @Override
+    public void setSelectedItemDesc(String desc) {
+        String oldItemDesc = this.selectedItemDesc;
+        this.selectedItemDesc = MessageFormat.format(localizedResources.getString("itemDesc"), desc);
+        propertyChangeSupport.firePropertyChange("selectedItemDesc", oldItemDesc, this.selectedItemDesc);
     }
 
     @Override
