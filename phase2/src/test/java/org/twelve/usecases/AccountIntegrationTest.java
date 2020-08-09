@@ -53,5 +53,15 @@ public class AccountIntegrationTest extends TestCase {
                 account.getPermissions(), account.getLocation()));
         assertFalse(accountRepository.createAccount(account.getUsername(), account.getPassword(),
                 account.getPermissions(), account.getLocation()));
+        assertEquals(accountRepository.getAccountFromID(1).getUsername(), "User2");
+    }
+
+    public void testGetAccountsString() {
+        setUpAccountRepository();
+        List<Permissions> Perm = new ArrayList<>();
+        Account account = new Account("User2", "12345", Perm, 1, "UTM");
+        assertTrue(accountRepository.createAccount(account.getUsername(), account.getPassword(),
+                account.getPermissions(), account.getLocation()));
+        assertTrue(accountRepository.getAccountStrings().contains("User2"));
     }
 }
