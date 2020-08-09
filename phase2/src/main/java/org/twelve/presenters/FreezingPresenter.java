@@ -42,10 +42,4 @@ public interface FreezingPresenter {
 
     void setCanUnmod(boolean canUnmod);
     boolean getCanUnmod();
-
-    void setCanFreeze(boolean canFreeze);
-    boolean getCanFreeze();
-
-    void setCanUnfreeze(boolean canUnfreeze);
-    boolean getCanUnfreeze();
 }

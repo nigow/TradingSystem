@@ -20,8 +20,6 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
     private boolean canMod;
     private boolean canUnmod;
-    private boolean canFreeze;
-    private boolean canUnfreeze;
 
     private final ResourceBundle localizedResources;
 
@@ -43,10 +41,8 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         setTrustedAccounts(new ArrayList<>());
         setRegularAccounts(new ArrayList<>());
 
-        canMod = false;
-        canUnmod = false;
-        canFreeze = false;
-        canUnfreeze = false;
+        canMod = true;
+        canUnmod = true;
     }
 
     @Override
@@ -223,25 +219,4 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         return canUnmod;
     }
 
-    @Override
-    public void setCanFreeze(boolean canFreeze) {
-        propertyChangeSupport.firePropertyChange("freezeUser", this.canFreeze, canFreeze);
-        this.canFreeze = canFreeze;
-    }
-
-    @Override
-    public boolean getCanFreeze() {
-        return canFreeze;
-    }
-
-    @Override
-    public void setCanUnfreeze(boolean canUnfreeze) {
-        propertyChangeSupport.firePropertyChange("unfreezeUser", this.canUnfreeze, canUnfreeze);
-        this.canUnfreeze = canUnfreeze;
-    }
-
-    @Override
-    public boolean getCanUnfreeze() {
-        return canUnfreeze;
-    }
 }

@@ -26,7 +26,7 @@ public class MenuController {
         int accountID = sessionManager.getCurrAccountID();
         menuPresenter.setInitiateTrade(statusManager.hasPermission(accountID, Permissions.TRADE));
         menuPresenter.setModifyRestrictions(statusManager.hasPermission(accountID, Permissions.CHANGE_THRESHOLDS));
-        menuPresenter.setManageAccounts(statusManager.hasPermission(accountID, Permissions.CAN_BAN));
+        menuPresenter.setManageAccounts(statusManager.hasPermission(accountID, Permissions.FREEZE));
         menuPresenter.setAddAdmin(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
         menuPresenter.setApproveItems(statusManager.hasPermission(accountID, Permissions.CONFIRM_ITEM));
     }
