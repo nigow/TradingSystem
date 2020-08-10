@@ -18,6 +18,7 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
         this.localizedResources = localizedResources;
         setAvailableTypes(new ArrayList<>());
         setExistingCities(new ArrayList<>());
+        setError("");
     }
 
     @Override

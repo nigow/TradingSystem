@@ -12,6 +12,7 @@ public class UILoginPresenter extends ObservablePresenter implements LoginPresen
     public UILoginPresenter(ResourceBundle localizedResources) {
 
         this.localizedResources = localizedResources;
+        setError("");
 
     }
 

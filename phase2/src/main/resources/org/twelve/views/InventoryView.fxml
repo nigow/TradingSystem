@@ -23,7 +23,7 @@
       <HBox prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#backClicked" text="%back" />
-            <Separator maxHeight="1.7976931348623157E308" prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" />
+            <Label fx:id="errorLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
             <Button fx:id="addItemBtn" mnemonicParsing="false" onAction="#addItemClicked" text="%addItem" />
             <Button fx:id="removeItemBtn" mnemonicParsing="false" onAction="#removeItemClicked" text="%removeItem" />
          </children>

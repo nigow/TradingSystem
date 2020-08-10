@@ -157,7 +157,7 @@ public class AccountRepository {
     }
 
     public int getIDFromUsername(String username) {
-        int userID = 0;
+        int userID = -1;
         for (Account account: accounts.values()) {
             if (username.equals(account.getUsername())) {
                 userID = account.getAccountID();

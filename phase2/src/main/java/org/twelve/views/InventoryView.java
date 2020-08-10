@@ -11,10 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
@@ -33,6 +30,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     private final InventoryController inventoryController;
     private final T inventoryPresenter;
+
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private Button addItemBtn;
@@ -102,6 +102,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
             itemDesc.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(inventoryPresenter).name("selectedItemDesc").build());
 
+            errorLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(inventoryPresenter).name("error").build());
+
         } catch (NoSuchMethodException ignored) {}
 
         inventoryItems.setCellFactory(new Callback<>() {
@@ -147,9 +150,6 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
             if (newValue.intValue() != -1) inventoryController.setSelectedItem(newValue.intValue());
 
         });
-
-        addItemBtn.disableProperty().bind(itemName.textProperty().isEmpty()
-                .or(itemDesc.textProperty().isEmpty()));
 
         removeItemBtn.disableProperty().bind(inventoryItems.getSelectionModel().selectedItemProperty().isNull());
 

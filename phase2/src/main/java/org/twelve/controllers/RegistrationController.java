@@ -122,14 +122,27 @@ public class RegistrationController {
         }
 
         accountGateway.populate(accountRepository);
-        if (!accountRepository.createAccount(username, password, perms, location)) {
+        if (accountRepository.getIDFromUsername(username) != -1) {
             registrationPresenter.setError("usernameTaken");
             return false;
         }
 
-        citiesGateway.populate(cityManager);
-        if (!cityManager.getAllCities().contains(location)) cityManager.createCity(location);
+        if (password.isBlank()) {
+            registrationPresenter.setError("badPassword");
+            return false;
+        }
 
+        citiesGateway.populate(cityManager);
+        if (!cityManager.getAllCities().contains(location)) {
+            if (inputHandler.isValidLocation(location)) {
+                cityManager.createCity(location);
+            } else {
+                registrationPresenter.setError("badLocation");
+                return false;
+            }
+        }
+
+        accountRepository.createAccount(username, password, perms, location);
         if (sessionManager.getCurrAccountID() == -1) sessionManager.login(username);
         registrationPresenter.setError("");
         return true;

@@ -5,6 +5,7 @@ import org.twelve.presenters.InventoryPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Presenter for displaying your inventory
@@ -18,15 +19,31 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
 
     private String selectedItemName;
     private String selectedItemDesc;
+    private String errorMsg;
 
-    public UIInventoryPresenter() {
+    private final ResourceBundle localizedResources;
+
+    public UIInventoryPresenter(ResourceBundle localizedResources) {
 
         super();
+        this.localizedResources = localizedResources;
         setSelectedItemName("");
         setSelectedItemDesc("");
         setApprovedItems(new ArrayList<>());
         setPendingItems(new ArrayList<>());
+        setError("");
+    }
 
+    @Override
+    public void setError(String errorKey) {
+        String oldErrorMsg = this.errorMsg;
+        this.errorMsg = localizedResources.containsKey(errorKey) ? localizedResources.getString(errorKey) : "";
+        propertyChangeSupport.firePropertyChange("error", oldErrorMsg, this.errorMsg);
+    }
+
+    @Override
+    public String getError() {
+        return errorMsg;
     }
 
     @Override

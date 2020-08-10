@@ -81,8 +81,18 @@ public class InventoryController {
      */
     public void createItem(String name, String description) {
 
-        itemManager.createItem(name, description, sessionManager.getCurrAccountID());
-        displayAllYourInventory();
+        if (!name.isBlank() && !description.isBlank()) {
+
+            itemManager.createItem(name, description, sessionManager.getCurrAccountID());
+            displayAllYourInventory();
+            inventoryPresenter.setError("");
+
+        } else {
+
+            inventoryPresenter.setError("badItemInfo");
+
+        }
+
 
     }
 

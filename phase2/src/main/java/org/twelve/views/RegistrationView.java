@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -42,6 +43,9 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private Button registerBtn;
+
     private final WindowHandler windowHandler;
     private final RegistrationController registrationController;
     private final T registrationPresenter;
@@ -58,8 +62,8 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     @FXML
     private void registerClicked() {
 
-        if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(), locationBox.getValue(),
-                typeBox.getSelectionModel().getSelectedIndex())) {
+        if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(),
+                locationBox.getEditor().getText(), typeBox.getSelectionModel().getSelectedIndex())) {
 
             windowHandler.changeScene(Scenes.MENU);
 
@@ -115,5 +119,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+
+        registerBtn.disableProperty().bind(typeBox.getSelectionModel().selectedItemProperty().isNull());
     }
 }

@@ -149,6 +149,15 @@ public class InputHandler {
      * @return Whether given username contains only acceptable characters.
      */
     public boolean isValidUsername(String username) {
-        return username.matches("^[a-zA-Z0-9_]*$");
+        return username.matches("[a-zA-Z0-9_]+");
+    }
+
+    /**
+     * Determines if location contains only acceptable characters.
+     * @param location String of a location.
+     * @return Whether given location contains only acceptable characters.
+     */
+    public boolean isValidLocation(String location) {
+        return location.matches("[a-zA-Z]+");
     }
 }

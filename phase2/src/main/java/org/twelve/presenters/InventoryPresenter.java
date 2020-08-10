@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface InventoryPresenter {
 
+    void setError(String errorKey);
+    String getError();
     void setApprovedItems(List<String> approvedItems);
     List<String> getApprovedItems();
     void setPendingItems(List<String> pendingItems);
