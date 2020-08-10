@@ -94,7 +94,8 @@ public class JsonTradeGateway implements TradeGateway {
                             }
                             String location = json.get("location").getAsString();
                             String time = json.get("time").getAsString();
-                            tradeManager.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, "a", location);
+
+                            tradeManager.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, time, location);
                         }
 
 
@@ -163,7 +164,6 @@ public class JsonTradeGateway implements TradeGateway {
             outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
             con.getInputStream();
         }catch(IOException e){
-            System.out.println(json.toString());
             e.printStackTrace();
             return false;
         }
