@@ -30,11 +30,12 @@ public class InMemoryAccountGateway implements AccountGateway {
      */
     @Override
     public boolean populate(AccountRepository accountRepository) {
-        List<Integer> existingAccounts = accountRepository.getAccountIDs();
-        for (Account account: accountMap.values()) {
-            if (!existingAccounts.contains(account.getAccountID())) {
-                accountRepository.addAccount(account);
+        for(Account account: accountMap.values()){
+            List<String> permissions = new ArrayList<>();
+            for(Permissions permission: account.getPermissions()){
+                permissions.add(permission.toString());
             }
+            accountRepository.createAccount(account.getAccountID(), account.getUsername(),account.getPassword(),permissions,account.getWishlist(), account.getLocation());
         }
         return true;
     }
