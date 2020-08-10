@@ -83,6 +83,7 @@ public class InventoryController {
 
         if (!name.isBlank() && !description.isBlank()) {
 
+            itemsGateway.populate(itemManager);
             itemManager.createItem(name, description, sessionManager.getCurrAccountID());
             displayAllYourInventory();
             inventoryPresenter.setError("");
