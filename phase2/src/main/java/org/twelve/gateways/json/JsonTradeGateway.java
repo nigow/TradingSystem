@@ -163,6 +163,7 @@ public class JsonTradeGateway implements TradeGateway {
             outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
             con.getInputStream();
         }catch(IOException e){
+            System.out.println(json.toString());
             e.printStackTrace();
             return false;
         }
