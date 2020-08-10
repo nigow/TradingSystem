@@ -39,10 +39,12 @@ public class ProfileController {
 
     public void changePassword(String oldPassword, String newPassword) {
 
-        if (loginManager.changePassword(sessionManager.getCurrAccountID(), oldPassword, newPassword)) {
-            profilePresenter.setError("");
+        if (newPassword.isBlank()) {
+            profilePresenter.setError("newPwdError");
+        } else if (!loginManager.changePassword(sessionManager.getCurrAccountID(), oldPassword, newPassword)) {
+            profilePresenter.setError("oldPwdError");
         } else {
-            profilePresenter.setError("pwdError");
+            profilePresenter.setError("");
         }
 
     }

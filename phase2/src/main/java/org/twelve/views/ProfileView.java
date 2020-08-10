@@ -83,9 +83,6 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
         } catch (NoSuchMethodException ignored) {}
 
-        updatePasswordBtn.disableProperty().bind(oldPassword.textProperty().isEmpty()
-                .or(newPassword.textProperty().isEmpty()));
-
         updateLocationBtn.disableProperty().bind(locationBox.textProperty().isEmpty());
 
     }
