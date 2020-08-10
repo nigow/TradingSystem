@@ -131,6 +131,7 @@ public class RegistrationController {
         if (!cityManager.getAllCities().contains(location)) cityManager.createCity(location);
 
         if (sessionManager.getCurrAccountID() == -1) sessionManager.login(username);
+        registrationPresenter.setError("");
         return true;
     }
 
