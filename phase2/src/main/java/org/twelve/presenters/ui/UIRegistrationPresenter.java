@@ -1,6 +1,6 @@
 package org.twelve.presenters.ui;
 
-import org.twelve.entities.RegistrationTypes;
+import org.twelve.entities.Roles;
 import org.twelve.presenters.RegistrationPresenter;
 
 import java.util.ArrayList;
@@ -45,10 +45,10 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
     }
 
     @Override
-    public void setAvailableTypes(List<RegistrationTypes> types) {
+    public void setAvailableTypes(List<Roles> types) {
         List<String> oldAvailableTypes = this.availableTypes;
         this.availableTypes = new ArrayList<>();
-        for (RegistrationTypes type : types) {
+        for (Roles type : types) {
             availableTypes.add(localizedResources.getString(type.name().toLowerCase()));
         }
         propertyChangeSupport.firePropertyChange("availableTypes", oldAvailableTypes, this.availableTypes);

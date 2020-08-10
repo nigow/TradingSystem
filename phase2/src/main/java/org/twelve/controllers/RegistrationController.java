@@ -1,7 +1,7 @@
 package org.twelve.controllers;
 
-import org.twelve.entities.RegistrationTypes;
 import org.twelve.entities.Permissions;
+import org.twelve.entities.Roles;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.CitiesGateway;
 import org.twelve.gateways.GatewayPool;
@@ -30,7 +30,7 @@ public class RegistrationController {
 
     private RegistrationPresenter registrationPresenter;
 
-    private List<RegistrationTypes> availableTypes;
+    private List<Roles> availableTypes;
 
     private final CityManager cityManager;
 
@@ -62,12 +62,12 @@ public class RegistrationController {
 
         if (sessionManager.getCurrAccountID() == -1) {
 
-            availableTypes.addAll(Arrays.asList(RegistrationTypes.values()));
-            availableTypes.remove(RegistrationTypes.ADMIN);
+            availableTypes.add(Roles.DEMO);
+            availableTypes.add(Roles.NORMAL);
 
         } else {
 
-            availableTypes.add(RegistrationTypes.ADMIN);
+            availableTypes.add(Roles.ADMIN);
 
         }
 
@@ -101,7 +101,7 @@ public class RegistrationController {
                         Permissions.CAN_BAN,
                         Permissions.MAKE_TRUSTED);
                 break;
-            case USER:
+            case NORMAL:
                 perms = Arrays.asList(Permissions.LOGIN,
                         Permissions.CREATE_ITEM,
                         Permissions.ADD_TO_WISHLIST,
