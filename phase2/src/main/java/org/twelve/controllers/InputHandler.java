@@ -142,4 +142,13 @@ public class InputHandler {
         return isValidCSVStr(username) && isValidCSVStr(password) &&
                 username.matches("^[a-zA-Z0-9_]*$") && password.matches("^[ -~]*$");
     }
+
+    /**
+     * Determines if username contains only acceptable characters.
+     * @param username Username of an account.
+     * @return Whether given username contains only acceptable characters.
+     */
+    public boolean isValidUsername(String username) {
+        return username.matches("^[a-zA-Z0-9_]*$");
+    }
 }

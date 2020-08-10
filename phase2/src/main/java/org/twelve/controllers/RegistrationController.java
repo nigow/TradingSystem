@@ -116,20 +116,22 @@ public class RegistrationController {
                 break;
         }
 
+        if (!inputHandler.isValidUsername(username)) {
+            registrationPresenter.setError("badUsername");
+            return false;
+        }
+
+        accountGateway.populate(accountRepository);
+        if (!accountRepository.createAccount(username, password, perms, location)) {
+            registrationPresenter.setError("usernameTaken");
+            return false;
+        }
+
         citiesGateway.populate(cityManager);
         if (!cityManager.getAllCities().contains(location)) cityManager.createCity(location);
 
-        // i added the input handler stuff  --maryam
-        accountGateway.populate(accountRepository);
-        if (inputHandler.isValidUserPass(username, password) && accountRepository.createAccount(username, password, perms, location)) {
-
-            // TODO why is this checked?  --maryam
-            if (sessionManager.getCurrAccountID() == -1) sessionManager.login(username);
-            return true;
-
-        }
-
-        return false;
+        if (sessionManager.getCurrAccountID() == -1) sessionManager.login(username);
+        return true;
     }
 
     public void setRegistrationPresenter(RegistrationPresenter registrationPresenter) {

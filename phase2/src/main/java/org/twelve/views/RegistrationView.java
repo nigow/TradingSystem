@@ -4,12 +4,14 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.twelve.controllers.RegistrationController;
@@ -37,6 +39,9 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     @FXML
     private ComboBox<String> typeBox;
 
+    @FXML
+    private Label errorLabel;
+
     private final WindowHandler windowHandler;
     private final RegistrationController registrationController;
     private final T registrationPresenter;
@@ -47,6 +52,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
         this.registrationController = registrationController;
         this.registrationController.setRegistrationPresenter(this.registrationPresenter);
+
     }
 
     @FXML
@@ -102,6 +108,9 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
                     FXCollections.observableArrayList(existingCitiesBinding.get()), existingCitiesBinding);
 
             locationBox.itemsProperty().bind(citiesBinding);
+
+            errorLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(registrationPresenter).name("error").build());
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

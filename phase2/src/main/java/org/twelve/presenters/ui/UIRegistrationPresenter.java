@@ -12,6 +12,7 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
     private List<String> availableTypes;
     private List<String> existingCities;
     private final ResourceBundle localizedResources;
+    private String errorMsg;
 
     public UIRegistrationPresenter(ResourceBundle localizedResources) {
         this.localizedResources = localizedResources;
@@ -29,6 +30,18 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
     @Override
     public List<String> getExistingCities() {
         return existingCities;
+    }
+
+    @Override
+    public void setError(String errorKey) {
+        String oldErrorMsg = this.errorMsg;
+        this.errorMsg = localizedResources.containsKey(errorKey) ? localizedResources.getString(errorKey) : "";
+        propertyChangeSupport.firePropertyChange("error", oldErrorMsg, this.errorMsg);
+    }
+
+    @Override
+    public String getError() {
+        return errorMsg;
     }
 
     @Override
