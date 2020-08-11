@@ -30,8 +30,6 @@ public class RegistrationController {
 
     private RegistrationPresenter registrationPresenter;
 
-    private List<Roles> availableTypes;
-
     private final CityManager cityManager;
 
     private final InputHandler inputHandler;
@@ -58,20 +56,16 @@ public class RegistrationController {
      * A method for updating if user can create admins
      */
     public void updateOptions() {
-        availableTypes = new ArrayList<>();
 
         if (sessionManager.getCurrAccountID() == -1) {
-
-            availableTypes.add(Roles.DEMO);
-            availableTypes.add(Roles.NORMAL);
+            registrationPresenter.setAvailableTypes(Roles.NORMAL);
 
         } else {
 
-            availableTypes.add(Roles.ADMIN);
+            registrationPresenter.setAvailableTypes(Roles.ADMIN);
 
         }
 
-        registrationPresenter.setAvailableTypes(availableTypes);
         registrationPresenter.setExistingCities(cityManager.getAllCities());
 
     }
@@ -80,40 +74,32 @@ public class RegistrationController {
      * A method to create an account
      * @param username the username of the account
      * @param password the password of the account
-     * @param typeIndex index corresponding to account type of the account
      * @return true if the account has been successfully created.
      */
-    public boolean createAccount(String username, String password, String location, int typeIndex) {
-        List<Permissions> perms = null;
-        switch (availableTypes.get(typeIndex)) {
-            case ADMIN:
-                perms = Arrays.asList(Permissions.LOGIN,
-                        Permissions.FREEZE,
-                        Permissions.UNFREEZE,
-                        Permissions.CREATE_ITEM,
-                        Permissions.CONFIRM_ITEM,
-                        Permissions.ADD_TO_WISHLIST,
-                        Permissions.TRADE,
-                        Permissions.BROWSE_INVENTORY,
-                        Permissions.CHANGE_THRESHOLDS,
-                        Permissions.ADD_ADMIN,
-                        Permissions.REQUEST_VACATION,
-                        Permissions.CAN_BAN,
-                        Permissions.MAKE_TRUSTED);
-                break;
-            case NORMAL:
-                perms = Arrays.asList(Permissions.LOGIN,
-                        Permissions.CREATE_ITEM,
-                        Permissions.ADD_TO_WISHLIST,
-                        Permissions.TRADE,
-                        Permissions.BROWSE_INVENTORY,
-                        Permissions.REQUEST_VACATION);
-                break;
-            case DEMO:
-                perms = Arrays.asList(Permissions.LOGIN,
-                        Permissions.ADD_TO_WISHLIST,
-                        Permissions.BROWSE_INVENTORY);
-                break;
+    public boolean createAccount(String username, String password, String location) {
+        List<Permissions> perms;
+        if (sessionManager.getCurrAccountID() == -1) {
+            perms = Arrays.asList(Permissions.LOGIN,
+                    Permissions.FREEZE,
+                    Permissions.UNFREEZE,
+                    Permissions.CREATE_ITEM,
+                    Permissions.CONFIRM_ITEM,
+                    Permissions.ADD_TO_WISHLIST,
+                    Permissions.TRADE,
+                    Permissions.BROWSE_INVENTORY,
+                    Permissions.CHANGE_THRESHOLDS,
+                    Permissions.ADD_ADMIN,
+                    Permissions.REQUEST_VACATION,
+                    Permissions.CAN_BAN,
+                    Permissions.MAKE_TRUSTED);
+        }
+        else {
+            perms = Arrays.asList(Permissions.LOGIN,
+                    Permissions.CREATE_ITEM,
+                    Permissions.ADD_TO_WISHLIST,
+                    Permissions.TRADE,
+                    Permissions.BROWSE_INVENTORY,
+                    Permissions.REQUEST_VACATION);
         }
 
         if (!inputHandler.isValidUsername(username)) {

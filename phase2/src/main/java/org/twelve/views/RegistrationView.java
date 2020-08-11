@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.twelve.controllers.RegistrationController;
+import org.twelve.entities.Roles;
 import org.twelve.presenters.RegistrationPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
@@ -42,7 +43,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     private ComboBox<String> locationBox;
 
     @FXML
-    private ComboBox<String> typeBox;
+    private Label typeBox;
 
     @FXML
     private Label errorLabel;
@@ -73,7 +74,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     private void registerClicked() {
 
         if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(),
-                locationBox.getEditor().getText(), typeBox.getSelectionModel().getSelectedIndex())) {
+                locationBox.getEditor().getText())) {
 
             windowHandler.changeScene(Scenes.MENU);
 
@@ -84,7 +85,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     @FXML
     private void backClicked() {
 
-        if (typeBox.getItems().size() > 1) {
+        if (typeBox.getText().equals(Roles.NORMAL.name().toLowerCase())) {
             windowHandler.changeScene(Scenes.LANDING);
         } else {
             windowHandler.changeScene(Scenes.MENU);
@@ -116,13 +117,8 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
         try {
 
-            ReadOnlyJavaBeanObjectProperty<List<String>> availableTypesBinding =
-                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("availableTypes").build();
 
-            ObjectBinding<ObservableList<String>> typesBinding = Bindings.createObjectBinding(() ->
-                    FXCollections.observableArrayList(availableTypesBinding.get()), availableTypesBinding);
-
-            typeBox.itemsProperty().bind(typesBinding);
+            typeBox.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create().bean(registrationPresenter).name("availableTypes").build());
 
             ReadOnlyJavaBeanObjectProperty<List<String>> existingCitiesBinding =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("existingCities").build();
@@ -139,6 +135,5 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
             e.printStackTrace();
         }
 
-        registerBtn.disableProperty().bind(typeBox.getSelectionModel().selectedItemProperty().isNull());
     }
 }

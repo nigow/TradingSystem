@@ -8,8 +8,8 @@ public interface RegistrationPresenter {
 
     void setError(String errorKey);
     String getError();
-    void setAvailableTypes(List<Roles> types);
-    List<String> getAvailableTypes();
+    void setAvailableTypes(Roles types);
+    String getAvailableTypes();
     void setExistingCities(List<String> existingCities);
     List<String> getExistingCities();
 
