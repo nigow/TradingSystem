@@ -2,6 +2,8 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Roles;
 import org.twelve.entities.Trade;
+import org.twelve.gateways.CitiesGateway;
+import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.usecases.*;
 
@@ -13,14 +15,19 @@ public class ProfileController {
     private final LoginManager loginManager;
     private final CityManager cityManager;
     private final TradeManager tradeManager;
+    private final InputHandler inputHandler;
+    private final CitiesGateway citiesGateway;
 
-    public ProfileController(UseCasePool useCasePool) {
+    public ProfileController(UseCasePool useCasePool, GatewayPool gatewayPool) {
 
         statusManager = useCasePool.getStatusManager();
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
         tradeManager = useCasePool.getTradeManager();
         cityManager = useCasePool.getCityManager();
+        inputHandler = new InputHandler();
+        citiesGateway = gatewayPool.getCitiesGateway();
+
     }
 
     public void updateProfile() {
@@ -30,7 +37,10 @@ public class ProfileController {
         profilePresenter.setCanBecomeTrusted(tradeManager.canBeTrusted(sessionManager.getCurrAccountID()));
         profilePresenter.setCanRequestUnfreeze(!statusManager.isPending(sessionManager.getCurrAccountID())
                 && statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.FROZEN);
+
+        citiesGateway.populate(cityManager);
         profilePresenter.setExistingCities(cityManager.getAllCities());
+        profilePresenter.setCurrentLocation(cityManager.getLocationOfAccount(sessionManager.getCurrAccountID()));
 
     }
 
@@ -43,18 +53,26 @@ public class ProfileController {
     public void changePassword(String oldPassword, String newPassword) {
 
         if (newPassword.isBlank()) {
-            profilePresenter.setError("newPwdError");
+            profilePresenter.setPasswordError("newPwdError");
         } else if (!loginManager.changePassword(sessionManager.getCurrAccountID(), oldPassword, newPassword)) {
-            profilePresenter.setError("oldPwdError");
+            profilePresenter.setPasswordError("oldPwdError");
         } else {
-            profilePresenter.setError("");
+            profilePresenter.setPasswordError("");
         }
 
     }
 
-    public void changeLocation(String newLocation) {
+    public void changeLocation(String location) {
 
-        // todo: waiting for use case support
+        citiesGateway.populate(cityManager);
+        if (!cityManager.getAllCities().contains(location)) {
+            if (inputHandler.isValidLocation(location)) {
+                cityManager.createCity(location);
+                cityManager.changeAccountLocation(sessionManager.getCurrAccountID(), location);
+            } else {
+                profilePresenter.setLocationError("badLocation");
+            }
+        }
 
     }
 

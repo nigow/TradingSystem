@@ -10,7 +10,9 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
 
     private final ResourceBundle localizedResources;
 
-    private String errorMsg;
+    private String location;
+    private String passwordError;
+    private String locationError;
     private boolean vacationStatus;
     private boolean canVacation;
     private boolean canRequestUnfreeze;
@@ -21,19 +23,45 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         super();
         this.localizedResources = localizedResources;
         setExistingCities(new ArrayList<>());
-        setError("");
+        setPasswordError("");
+        setLocationError("");
+        setCurrentLocation("");
     }
 
     @Override
-    public void setError(String errorKey) {
-        String oldErrorMsg = this.errorMsg;
-        this.errorMsg = localizedResources.containsKey(errorKey) ? localizedResources.getString(errorKey) : "";
-        propertyChangeSupport.firePropertyChange("error", oldErrorMsg, this.errorMsg);
+    public void setPasswordError(String errorKey) {
+        String oldErrorMsg = this.passwordError;
+        this.passwordError = localizedResources.containsKey(errorKey) ? localizedResources.getString(errorKey) : "";
+        propertyChangeSupport.firePropertyChange("passwordError", oldErrorMsg, this.passwordError);
     }
 
     @Override
-    public String getError() {
-        return errorMsg;
+    public String getPasswordError() {
+        return passwordError;
+    }
+
+    @Override
+    public void setLocationError(String errorKey) {
+        String oldErrorMsg = this.locationError;
+        this.locationError = localizedResources.containsKey(errorKey) ? localizedResources.getString(errorKey) : "";
+        propertyChangeSupport.firePropertyChange("locationError", oldErrorMsg, this.locationError);
+    }
+
+    @Override
+    public String getLocationError() {
+        return locationError;
+    }
+
+    @Override
+    public void setCurrentLocation(String location) {
+        String oldLocation = this.location;
+        this.location = location;
+        propertyChangeSupport.firePropertyChange("currentLocation", oldLocation, this.location);
+    }
+
+    @Override
+    public String getCurrentLocation() {
+        return location;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ControllerPool {
         menuController = new MenuController(useCasePool);
         warehouseController = new WarehouseController(useCasePool, gatewayPool);
         wishlistController = new WishlistController(useCasePool, gatewayPool);
-        profileController = new ProfileController(useCasePool);
+        profileController = new ProfileController(useCasePool, gatewayPool);
         inventoryController = new InventoryController(useCasePool, gatewayPool);
         thresholdController = new ThresholdController(useCasePool, gatewayPool);
         freezingController = new FreezingController(useCasePool);

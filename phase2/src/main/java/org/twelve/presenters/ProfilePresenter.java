@@ -4,8 +4,15 @@ import java.util.List;
 
 public interface ProfilePresenter {
 
-    void setError(String errorKey);
-    String getError();
+    void setPasswordError(String errorKey);
+    String getPasswordError();
+
+    void setLocationError(String errorKey);
+    String getLocationError();
+
+    void setCurrentLocation(String location);
+    String getCurrentLocation();
+
     void setVacationStatus(boolean vacationStatus);
     boolean getVacationStatus();
     void setCanVacation(boolean canVacation);

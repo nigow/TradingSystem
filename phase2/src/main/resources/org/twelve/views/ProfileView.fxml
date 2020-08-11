@@ -21,22 +21,25 @@
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changePassword" />
-            <Button fx:id="updatePasswordBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updatePasswordClicked" text="%updatePassword" GridPane.columnIndex="1" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updatePasswordClicked" text="%updatePassword" GridPane.columnIndex="1" />
             <PasswordField fx:id="oldPassword" promptText="%oldPassword" GridPane.rowIndex="1" />
             <PasswordField fx:id="newPassword" promptText="%newPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <CheckBox fx:id="onVacation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVacationClicked" text="%onVacation" GridPane.rowIndex="2" />
-            <Button fx:id="becomeTrustedBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#becomeTrustedClicked" text="%becomeTrusted" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button fx:id="requestUnfreezeBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#requestUnfreezeClicked" text="%requestUnfreeze" GridPane.rowIndex="3" />
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changeLocation" GridPane.rowIndex="4" />
-            <Button fx:id="updateLocationBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateLocationClicked" text="%updateLocation" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <ComboBox fx:id="locationBox" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <CheckBox fx:id="onVacation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVacationClicked" text="%onVacation" GridPane.rowIndex="3" />
+            <Button fx:id="becomeTrustedBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#becomeTrustedClicked" text="%becomeTrusted" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="requestUnfreezeBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#requestUnfreezeClicked" text="%requestUnfreeze" GridPane.rowIndex="4" />
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changeLocation" GridPane.rowIndex="5" />
+            <Button fx:id="updateLocationBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateLocationClicked" text="%updateLocation" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="locationBox" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="6" />
             <Label fx:id="updatePasswordError" alignment="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <Label fx:id="updateLocationError" alignment="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="7" />
          </children>
       </GridPane>
    </center>

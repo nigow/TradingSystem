@@ -5,7 +5,6 @@ import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -30,11 +29,11 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     private final T profilePresenter;
 
     @FXML
+    private Label updateLocationError;
+    @FXML
     private Button updateLocationBtn;
     @FXML
     private Label updatePasswordError;
-    @FXML
-    private Button updatePasswordBtn;
     @FXML
     private BorderPane graphic;
     @FXML
@@ -107,7 +106,13 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
                     .bean(profilePresenter).name("canBecomeTrusted").build().not());
 
             updatePasswordError.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(profilePresenter).name("error").build());
+                    .bean(profilePresenter).name("passwordError").build());
+
+            updateLocationError.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(profilePresenter).name("locationError").build());
+
+            locationBox.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(profilePresenter).name("currentLocation").build());
 
             ReadOnlyJavaBeanObjectProperty<List<String>> existingCitiesBinding =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(profilePresenter).name("existingCities").build();
@@ -117,10 +122,8 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
             locationBox.itemsProperty().bind(citiesBinding);
 
-        } catch (NoSuchMethodException ignored) {
-        }
+        } catch (NoSuchMethodException ignored) {}
 
-        updateLocationBtn.disableProperty().bind(locationBox.getSelectionModel().selectedItemProperty().isNull());
     }
 
     @FXML
