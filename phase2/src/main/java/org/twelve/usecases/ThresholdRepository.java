@@ -48,19 +48,37 @@ public class ThresholdRepository {
         updateThresholds();
     }
 
+    /**
+     * Get the number of days for when a reverse trade is set up after a temporary trade.
+     * @return number of days for when a reverse trade is set up after a temporary trade.
+     */
     public int getNumberOfDays() {
         return thresholds.getNumberOfDays();
     }
 
+    /**
+     * Set number of days for when a reverse trade is set up after a temporary trade
+     * @param numberOfDays New number of days for when a reverse trade is set after a temporary trade.
+     */
     public void setNumberOfDays(int numberOfDays) {
         thresholds.setNumberOfDays(numberOfDays);
         updateThresholds();
     }
 
+    /**
+     * Get the number of one-way trades, two-way trades, and top-trading partners that
+     * an account should see in their trading dashboard.
+     * @return Number of trading statistics an account should see.
+     */
     public int getNumberOfStats() {
         return thresholds.getNumberOfStats();
     }
 
+    /**
+     * Set the number of one-way trades, two-way trades, and top-trading partners that
+     * an account should see in their trading dashboard.
+     * @param numberOfStats The new number of trading statistics an account should see.
+     */
     public void setNumberOfStats(int numberOfStats) {
         thresholds.setNumberOfStats(numberOfStats);
         updateThresholds();
@@ -77,12 +95,18 @@ public class ThresholdRepository {
 
     // TODO gateways and controllers should be updated to reflect this
 
+    /**
+     * @return number of trades required to make an account trusted
+     */
     public int getRequiredTradesForTrusted() {
         return thresholds.getRequiredTradesForTrusted();
     }
 
+    /**
+     * @param requiredTradesForTrusted number of trades required to make an account trusted
+     */
     public void setRequiredTradesForTrusted(int requiredTradesForTrusted) {
-        thresholds.setNumberOfEdits(requiredTradesForTrusted);
+        thresholds.setRequiredTradesForTrusted(requiredTradesForTrusted);
         updateThresholds();
     }
 
@@ -113,15 +137,27 @@ public class ThresholdRepository {
         return thresholds.getMaxWeeklyTrade();
     }
 
+    /**
+     * Create the tresholds for this program.
+     * @param lendMoreThanBorrow Number of items a user has to lend more than borrow to be able to make a trade
+     * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen
+     * @param maxWeeklyTrade     Maximum number of trades a user can have in one week
+     * @param numberOfDays       Number of days for when a reverse trade is set up after a temporary trade
+     * @param numberOfEdits      Number of edits an account can do with a Trade
+     * @param numberOfStats      Number of trading statistics an account should see
+     * @param requiredTradesForTrusted   The number of trades required to make an account trusted.
+     */
+    public void createThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
+                                 int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
+        thresholds = new Thresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
+                numberOfEdits, numberOfStats, requiredTradesForTrusted);
+    }
+
     private void updateThresholds() {
         thresholdsGateway.save(thresholds.getLendMoreThanBorrow(), thresholds.getMaxIncompleteTrade(),
                 thresholds.getMaxWeeklyTrade(), thresholds.getNumberOfDays(), thresholds.getNumberOfEdits(),
                 thresholds.getNumberOfStats(), thresholds.getRequiredTradesForTrusted());
     }
 
-    public void createThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                                 int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
-        thresholds = new Thresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
-                numberOfEdits, numberOfStats, requiredTradesForTrusted);
-    }
+
 }

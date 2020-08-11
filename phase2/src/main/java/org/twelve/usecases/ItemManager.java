@@ -15,9 +15,6 @@ import org.twelve.gateways.ItemsGateway;
 
 public class ItemManager extends ItemUtility {
 
-    /**
-     * The gateway which deals with items.
-     */
     private final ItemsGateway itemsGateway;
 
     /**
@@ -38,6 +35,7 @@ public class ItemManager extends ItemUtility {
      * @param name        the name of the item to be added
      * @param description the description of the item to be added
      * @param ownerId     the id of the owner of the item to be added
+     * @param isApproved  whether this item was approved by an admin
      */
     public void addToItems(int id, String name, String description, int ownerId, boolean isApproved) {
         Item item = new Item(id, name, description, ownerId);

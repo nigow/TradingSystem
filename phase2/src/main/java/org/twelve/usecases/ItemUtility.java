@@ -17,9 +17,6 @@ import java.util.Map;
 
 abstract public class ItemUtility {
 
-    /**
-     * Map of all itemIds in the system to their respective items.
-     */
     protected Map<Integer, Item> items;
 
     protected AccountRepository accountRepository;

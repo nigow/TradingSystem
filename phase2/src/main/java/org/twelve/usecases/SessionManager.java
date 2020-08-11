@@ -2,29 +2,41 @@ package org.twelve.usecases;
 
 import org.twelve.entities.Account;
 
-// TODO javadoc
-
 /**
  * A class for managing the current session.
  * @author Maryam
  */
 public class SessionManager {
-    Account account;
-    AccountRepository accountRepository;
+    private Account account;
+    private final AccountRepository accountRepository;
 
+    /**
+     * @param accountRepository A repository storing all account entities in the system.
+     */
     public SessionManager(AccountRepository accountRepository) {
         account = null;
         this.accountRepository = accountRepository;
     }
 
+    /**
+     * Store the account entity in this Session to know what account is currently logged in.
+     * @param username The username of the account login in.
+     */
     public void login(String username) {
         account = accountRepository.getAccountFromUsername(username);
     }
 
+    /**
+     * Logout the currently logged in account
+     */
     public void logout() {
         account = null;
     }
 
+    /**
+     * Get the id of the currently logged in account.
+     * @return The id of current account, or -1 if no account is logged in.
+     */
     public int getCurrAccountID() {
         if (account != null)
             return account.getAccountID();
@@ -32,6 +44,10 @@ public class SessionManager {
         return -1;
     }
 
+    /**
+     * Get the username of the currently logged in account.
+     * @return The username of the currently logged in account.
+     */
     public String getCurrAccountUsername() {
         return account.getUsername();
     }

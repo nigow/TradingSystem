@@ -5,7 +5,7 @@ import org.twelve.entities.Permissions;
 
 public class LoginManager {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     public LoginManager(AccountRepository accountRepository){
         this.accountRepository = accountRepository;

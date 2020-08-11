@@ -1,7 +1,5 @@
 package org.twelve.usecases;
 
-import org.twelve.entities.TimePlace;
-import org.twelve.entities.Trade;
 import org.twelve.gateways.CitiesGateway;
 
 import java.util.ArrayList;
@@ -10,15 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CityManager {
-
-    /**
-     * Map of all cityId in the system to their city.
-     */
-    private Map<Integer, String> cities;
-
-    /**
-     * The gateway dealing with cites
-     */
+    private final Map<Integer, String> cities;
     private final CitiesGateway citiesGateway;
 
     /**
@@ -30,7 +20,6 @@ public class CityManager {
         this.cities = new HashMap<>();
         this.citiesGateway = citiesGateway;
         citiesGateway.populate(this);
-        //Do something
     }
 
     /**
@@ -71,10 +60,4 @@ public class CityManager {
     public List<String> getAllCities() {
         return new ArrayList<>(cities.values());
     }
-
-    //For debugging
-    //public List<Integer> getAllCityIds() {return new ArrayList<>(cities.keySet());}
-
-    //For debugging
-    //public String cityName(int id){ return cities.get(id);}
 }

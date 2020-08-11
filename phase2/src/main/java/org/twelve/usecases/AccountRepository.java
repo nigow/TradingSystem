@@ -44,7 +44,15 @@ public class AccountRepository {
         return false;
     }
 
-    // Tairi: created this for JsonAccountGateway
+    /**
+     * Create an account instance for an account that already exists in the database.
+     * @param accountId The account's id
+     * @param username The account's username
+     * @param password The account's password
+     * @param perms The account's permissions
+     * @param wishlist The account's wishlist
+     * @param location The account's location.
+     */
     public void createAccount(int accountId, String username, String password, List<String> perms,
                               List<Integer> wishlist, String location) {
 
@@ -54,6 +62,7 @@ public class AccountRepository {
         accounts.put(newAccount.getAccountID(), newAccount);
     }
     //used by inMemoryAccountGateway
+    // TODO: This needs to be removed.
     public void addAccount(Account account) {
         accounts.put(account.getAccountID(), account);
         updateCreateAccount(account);
@@ -103,6 +112,11 @@ public class AccountRepository {
         return (List<Account>) accounts.values();
     }
 
+    /**
+     * Retrieves the ids of all accounts in the system
+     *
+     * @return A list of account ids in the system.
+     */
     public List<Integer> getAccountIDs(){
         return new ArrayList<>(accounts.keySet());
     }
@@ -138,6 +152,10 @@ public class AccountRepository {
         return account.getAccountID();
     }
 
+    /**
+     * Save program changes with an account instance to an account gateway.
+     * @param account An account instance that is being changed.
+     */
     void updateToAccountGateway(Account account){
         List<String> permsAsStrings = new ArrayList<>();
         for (Permissions perms: account.getPermissions()){
@@ -147,6 +165,10 @@ public class AccountRepository {
                 account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), false);
     }
 
+    /**
+     * Update an account in accountGateway. Used for both new accounts/updated accounts.
+     * @param account An account to update.
+     */
     void updateCreateAccount(Account account){
         List<String> permsAsStrings = new ArrayList<>();
         for (Permissions perms: account.getPermissions()){
@@ -156,6 +178,11 @@ public class AccountRepository {
                 account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), true);
     }
 
+    /**
+     * Given an account username, return the account ids.
+     * @param username The username of the account
+     * @return An integer representing the account id.
+     */
     public int getIDFromUsername(String username) {
         int userID = -1;
         for (Account account: accounts.values()) {
