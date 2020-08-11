@@ -125,16 +125,16 @@ public class JsonAccountGateway implements AccountGateway {
     @Override
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
                      List<String> permissions, String location, boolean newAccount) {
-        String wishlistString = wishlist.isEmpty() ? " " : "";
-        for(Integer i: wishlist) wishlistString += i.toString() + " ";
-        String permissionsString = permissions.isEmpty() ? " " : "";
-        for(String s: permissions) permissionsString += s + " ";
+        StringBuilder wishlistString = new StringBuilder(wishlist.isEmpty() ? " " : "");
+        for(Integer i: wishlist) wishlistString.append(i.toString()).append(" ");
+        StringBuilder permissionsString = new StringBuilder(permissions.isEmpty() ? " " : "");
+        for(String s: permissions) permissionsString.append(s).append(" ");
         JsonObject json = new JsonObject();
         json.addProperty("account_id", accountId);
         json.addProperty("username", username);
         json.addProperty("password", password);
-        json.addProperty("wishlist", wishlistString);
-        json.addProperty("permissions", permissionsString);
+        json.addProperty("wishlist", wishlistString.toString());
+        json.addProperty("permissions", permissionsString.toString());
         json.addProperty("city", location);
 
         // todo: uncomment when server is updated

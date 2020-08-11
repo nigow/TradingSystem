@@ -129,21 +129,21 @@ public class JsonTradeGateway implements TradeGateway {
     public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
                         int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                         String location, boolean newTrade) {
-        String traderIdsString = "";
-        for(Integer i: traderIds) traderIdsString += i.toString() + " ";
-        String itemIdsString = "";
-        for(Integer i: itemIds) itemIdsString += i.toString() + " ";
-        String tradeCompletionsString = "";
-        for(Boolean b: tradeCompletions) tradeCompletionsString += b.toString() + " ";
+        StringBuilder traderIdsString = new StringBuilder();
+        for(Integer i: traderIds) traderIdsString.append(i.toString()).append(" ");
+        StringBuilder itemIdsString = new StringBuilder();
+        for(Integer i: itemIds) itemIdsString.append(i.toString()).append(" ");
+        StringBuilder tradeCompletionsString = new StringBuilder();
+        for(Boolean b: tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
         JsonObject json = new JsonObject();
 
         json.addProperty("trade_id", tradeId);
         json.addProperty("is_permanent", isPermanent);
-        json.addProperty("traders_ids", traderIdsString);
-        json.addProperty("item_ids", itemIdsString);
+        json.addProperty("traders_ids", traderIdsString.toString());
+        json.addProperty("item_ids", itemIdsString.toString());
         json.addProperty("edit_counter", editedCounter);
         json.addProperty("trade_status", tradeStatus);
-        json.addProperty("trade_completions", tradeCompletionsString);
+        json.addProperty("trade_completions", tradeCompletionsString.toString());
         json.addProperty("time", time);
         json.addProperty("location", location);
 
