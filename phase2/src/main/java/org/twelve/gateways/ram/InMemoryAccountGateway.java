@@ -27,6 +27,8 @@ public class InMemoryAccountGateway implements AccountGateway {
 
 //    Account properties are stored as a String representation.
 //    String separated by a random string <bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>
+//    example:
+//    1: "demouser<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>hogehoge<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E> <bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>LOGIN ADD_TO_WISHLIST BROWSE_INVENTORY<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>utm"
     private final Map<Integer, String> accounts;
 
 
@@ -96,6 +98,7 @@ public class InMemoryAccountGateway implements AccountGateway {
         value.append("<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
         value.append(location);
         accounts.put(accountId, value.toString());
+        System.out.print(value.toString());
         return true;
     }
 }
