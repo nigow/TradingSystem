@@ -5,6 +5,7 @@ import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -40,6 +41,8 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     private PasswordField oldPassword;
     @FXML
     private Button requestUnfreezeBtn;
+    @FXML
+    private Button becomeTrustedBtn;
     @FXML
     private PasswordField newPassword;
     @FXML
@@ -100,6 +103,9 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
             requestUnfreezeBtn.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(profilePresenter).name("canRequestUnfreeze").build().not());
 
+            becomeTrustedBtn.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(profilePresenter).name("canBecomeTrusted").build().not());
+
             updatePasswordError.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(profilePresenter).name("error").build());
 
@@ -137,5 +143,10 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     @FXML
     private void updateLocationClicked() {
         profileController.changeLocation(locationBox.getEditor().getText());
+    }
+
+    @FXML
+    public void becomeTrustedClicked() {
+        profileController.becomeTrusted();
     }
 }
