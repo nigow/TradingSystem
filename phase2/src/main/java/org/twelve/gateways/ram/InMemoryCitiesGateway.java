@@ -5,16 +5,18 @@ import org.twelve.usecases.CityManager;
 
 import java.util.Map;
 
+/**
+ * pseudo-external storage of cities and gateway
+ * @author Tairi
+ */
 public class InMemoryCitiesGateway implements CitiesGateway {
 
-    /**
-     * pseudo-external storage of cities
-     */
+
     private final Map<Integer, String> cities;
 
     /**
-     * Initializes the gateway
-     * @param cities a key-pair set of a city id and city object
+     * Initializes the external storage
+     * @param cities pseudo-external storage of cities
      */
     public InMemoryCitiesGateway(Map<Integer, String> cities){
         this.cities = cities;
