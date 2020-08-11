@@ -126,6 +126,7 @@ public class UseCasePool {
         cityManager.switchToDemoMode(gatewayPool.getCitiesGateway());
         accountRepository.switchToDemoMode(gatewayPool.getAccountGateway());
         thresholdRepository.switchToDemoMode(gatewayPool.getThresholdsGateway());
+        tradeManager.switchToDemoMode(gatewayPool.getTradeGateway());
     }
 
     private void switchToNormalMode() {
@@ -133,6 +134,7 @@ public class UseCasePool {
         cityManager.switchToNormalMode(gatewayPool.getCitiesGateway());
         accountRepository.switchToNormalMode(gatewayPool.getAccountGateway());
         thresholdRepository.switchToNormalMode(gatewayPool.getThresholdsGateway());
+        tradeManager.switchToNormalMode(gatewayPool.getTradeGateway());
     }
 
 }
