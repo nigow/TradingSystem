@@ -14,6 +14,7 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
     private boolean vacationStatus;
     private boolean canVacation;
     private boolean canRequestUnfreeze;
+    private boolean canBecomeTrusted;
     private List<String> existingCities;
 
     public UIProfilePresenter(ResourceBundle localizedResources) {
@@ -87,4 +88,15 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         return existingCities;
     }
 
+    @Override
+    public boolean getCanBecomeTrusted() {
+        return canBecomeTrusted;
+    }
+
+    @Override
+    public void setCanBecomeTrusted(boolean canBecomeTrusted) {
+        boolean oldCanBecomeTrusted = this.canBecomeTrusted;
+        this.canBecomeTrusted = canBecomeTrusted;
+        propertyChangeSupport.firePropertyChange("canBecomeTrusted", oldCanBecomeTrusted, this.canBecomeTrusted);
+    }
 }

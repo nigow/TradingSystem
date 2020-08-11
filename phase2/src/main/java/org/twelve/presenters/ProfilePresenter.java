@@ -12,6 +12,8 @@ public interface ProfilePresenter {
     boolean getCanVacation();
     void setCanRequestUnfreeze(boolean canRequestUnfreeze);
     boolean getCanRequestUnfreeze();
+    void setCanBecomeTrusted(boolean canBecomeTrusted);
+    boolean getCanBecomeTrusted();
 
     void setExistingCities(List<String> existingCities);
     List<String> getExistingCities();

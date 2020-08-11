@@ -1,6 +1,7 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Roles;
+import org.twelve.entities.Trade;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.usecases.*;
 
@@ -11,12 +12,14 @@ public class ProfileController {
     private final SessionManager sessionManager;
     private final LoginManager loginManager;
     private final CityManager cityManager;
+    private final TradeManager tradeManager;
 
     public ProfileController(UseCasePool useCasePool) {
 
         statusManager = useCasePool.getStatusManager();
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
+        tradeManager = useCasePool.getTradeManager();
         cityManager = useCasePool.getCityManager();
     }
 
@@ -24,6 +27,7 @@ public class ProfileController {
 
         profilePresenter.setVacationStatus(statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.VACATION);
         profilePresenter.setCanVacation(statusManager.canVacation(sessionManager.getCurrAccountID()));
+        profilePresenter.setCanBecomeTrusted(tradeManager.canBeTrusted(sessionManager.getCurrAccountID()));
         profilePresenter.setCanRequestUnfreeze(!statusManager.isPending(sessionManager.getCurrAccountID())
                 && statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.FROZEN);
         profilePresenter.setExistingCities(cityManager.getAllCities());
@@ -70,4 +74,7 @@ public class ProfileController {
 
     }
 
+    public void becomeTrusted() {
+        statusManager.trustAccount(sessionManager.getCurrAccountID());
+    }
 }
