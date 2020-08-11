@@ -22,5 +22,6 @@
       <Label text="%language" GridPane.rowIndex="3" />
       <ComboBox fx:id="languages" onAction="#languageChanged" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <CheckBox fx:id="demoMode" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#demoModeChanged" text="Demo Mode" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+      <Button fx:id="demoLogin" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#demoLoginClicked" text="%demoLogin" GridPane.columnSpan="2" GridPane.rowIndex="5" />
    </children>
 </GridPane>

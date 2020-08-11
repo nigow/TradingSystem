@@ -2,12 +2,15 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
@@ -32,6 +35,8 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
     private ComboBox<Locale> languages;
     @FXML
     private GridPane graphic;
+    @FXML
+    private Button demoLogin;
 
     private final WindowHandler windowHandler;
     private final LandingController landingController;
@@ -100,6 +105,8 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
             demoMode.selectedProperty().bindBidirectional(JavaBeanBooleanPropertyBuilder.create()
                     .bean(landingPresenter).name("demoMode").build());
 
+            demoLogin.disableProperty().bind(demoMode.selectedProperty().not());
+
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -118,5 +125,11 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
         windowHandler.restart(languages.getSelectionModel().getSelectedItem(), demoMode.isSelected());
 
+    }
+
+    @FXML
+    public void demoLoginClicked() {
+        landingController.createDemoAccount();
+        windowHandler.changeScene(Scenes.MENU);
     }
 }

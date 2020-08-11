@@ -29,7 +29,7 @@ public class ControllerPool {
             useCasePool.switchMode(gatewayPool, true);
         }
 
-        landingController = new LandingController(selectedLanguage, demoMode);
+        landingController = new LandingController(selectedLanguage, demoMode, useCasePool);
         loginController = new LoginController(useCasePool, gatewayPool);
         registrationController = new RegistrationController(useCasePool, gatewayPool);
         menuController = new MenuController(useCasePool);
