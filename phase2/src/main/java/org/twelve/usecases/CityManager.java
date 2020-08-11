@@ -12,15 +12,17 @@ import java.util.Map;
 public class CityManager {
     private Map<Integer, String> cities;
     private CitiesGateway citiesGateway;
+    private AccountRepository accountRepository;
 
     /**
      * Constructor for cityManager which stores a cityGateway.
      *
      * @param citiesGateway the gateway dealing with cities.
      */
-    public CityManager(CitiesGateway citiesGateway){
+    public CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository){
         this.cities = new HashMap<>();
         this.citiesGateway = citiesGateway;
+        this.accountRepository = accountRepository;
         citiesGateway.populate(this);
     }
 
@@ -35,6 +37,18 @@ public class CityManager {
         this.citiesGateway = citiesGateway;
         cities.clear();
         citiesGateway.populate(this);
+    }
+
+    public String getLocationOfAccount(int accountID) {
+        return accountRepository.getAccountFromID(accountID).getLocation();
+    }
+
+    public void changeAccountLocation(int accountID, String newCity) {
+        if (!cities.values().contains(newCity))
+            createCity(newCity);
+        Account account = accountRepository.getAccountFromID(accountID);
+        account.setLocation(newCity);
+        accountRepository.updateToAccountGateway(account);
     }
 
     /**
