@@ -20,7 +20,7 @@ public class InMemoryAccountGateway implements AccountGateway {
      * Initialize the external storage
      * @param accounts pseudo-external storage of accounts
      */
-    public InMemoryAccountGateway(Map<Integer, String> accounts) {
+    public InMemoryAccountGateway(Map<Integer, String[]> accounts) {
         this.accounts = accounts;
 
     }
@@ -29,7 +29,9 @@ public class InMemoryAccountGateway implements AccountGateway {
 //    String separated by a random string <bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>
 //    example:
 //    1: "demouser<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>hogehoge<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E> <bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>LOGIN ADD_TO_WISHLIST BROWSE_INVENTORY<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>utm"
-    private final Map<Integer, String> accounts;
+    //private final Map<Integer, String> accounts;
+
+    private final Map<Integer, String[]> accounts;
 
 
     /**
@@ -38,14 +40,15 @@ public class InMemoryAccountGateway implements AccountGateway {
     @Override
     public boolean populate(AccountRepository accountRepository) {
         for(Integer accountId: accounts.keySet()){
-            String[] account = accounts.get(accountId).split("<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
+            String[] account = accounts.get(accountId);
+
             String username = account[0];
             String password = account[1];
             String[] wishlistString = account[2].split(" ");
             List<Integer> wishlist = new ArrayList<>();
-            for(String itemId: wishlistString){
-                wishlist.add(Integer.parseInt(itemId));
-            }
+
+            for(String itemId: wishlistString) wishlist.add(Integer.parseInt(itemId));
+
             List<String> perms = new ArrayList<>(Arrays.asList(account[3].split(" ")));
             String city = account[4];
             accountRepository.createAccount(accountId, username,password,perms,wishlist,city);
@@ -67,37 +70,32 @@ public class InMemoryAccountGateway implements AccountGateway {
     @Override
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
                         List<String> permissions, String location, boolean newAccount) {
-//        List<Permissions> permissionNames = new ArrayList<>();
-//        for (Permissions permission: Permissions.values()) {
-//            if (permissions.contains(permission.name())) {
-//                permissionNames.add(permission);
-//            }
-//        }
-//        Account account = new Account(username, password, wishlist, permissionNames, accountId, location);
-//        accountMap.put(account.getAccountID(), account);
-        StringBuilder value = new StringBuilder();
-        value.append(username).append("<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
-        value.append(password).append("<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
+
+        System.out.println("hi");
+        String[] account = new String[5];
+        account[0] = username;
+        account[1] = password;
+
         if(wishlist.size() == 0){
-            value.append(" " + "<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
+            account[2] = " ";
         }
         else{
-            for(int wishlistId: wishlist) value.append(wishlistId).append(" ");
-            value = new StringBuilder(value.substring(0, value.length() - 1));
-            value.append("<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
+            StringBuilder wishlistString = new StringBuilder();
+            for(int wishlistId: wishlist) wishlistString.append(wishlistId).append(" ");
+            account[2] = wishlistString.toString().substring(0, wishlistString.toString().length() - 1);
         }
+
+
         if(permissions.size() == 0){
-            value.append(" ");
+            account[3] = " ";
         }
         else{
-            for(String permission: permissions) {
-                value.append(permission).append(" ");
-            }
-            value = new StringBuilder(value.substring(0, value.length() - 1));
+            StringBuilder permString = new StringBuilder();
+            for(String permission: permissions) permString.append(permission).append(" ");
+            account[3] = permString.toString().substring(0, permString.toString().length() - 1);
         }
-        value.append("<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
-        value.append(location);
-        accounts.put(accountId, value.toString());
+        account[4] = location;
+        accounts.put(accountId, account);
         return true;
     }
 }
