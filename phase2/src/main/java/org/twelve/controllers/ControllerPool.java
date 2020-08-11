@@ -25,8 +25,8 @@ public class ControllerPool {
         GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("json");
         UseCasePool useCasePool = new UseCasePool(gatewayPool);
         if (demoMode) {
-            GatewayPool newGatewayPool = new GatewayPoolFactory().getGatewayPool("ram");
-            useCasePool.switchMode(newGatewayPool, true);
+            gatewayPool = new GatewayPoolFactory().getGatewayPool("ram");
+            useCasePool.switchMode(gatewayPool, true);
         }
 
         landingController = new LandingController(selectedLanguage, demoMode);
