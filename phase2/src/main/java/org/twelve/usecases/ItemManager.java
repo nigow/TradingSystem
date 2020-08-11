@@ -1,10 +1,13 @@
 package org.twelve.usecases;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.twelve.entities.Account;
 import org.twelve.entities.Item;
+import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ItemsGateway;
 
 /**
@@ -15,7 +18,7 @@ import org.twelve.gateways.ItemsGateway;
 
 public class ItemManager extends ItemUtility {
 
-    private final ItemsGateway itemsGateway;
+    private ItemsGateway itemsGateway;
 
     /**
      * Constructor for ItemManager which stores an ItemsGateway.
@@ -25,6 +28,19 @@ public class ItemManager extends ItemUtility {
     public ItemManager(ItemsGateway itemsGateway, AccountRepository accountRepository) {
         super(accountRepository);
         this.itemsGateway = itemsGateway;
+        itemsGateway.populate(this);
+    }
+
+    public void switchToDemoMode(ItemsGateway itemsGateway) {
+        this.itemsGateway = itemsGateway;
+        for (Item item : items.values()) {
+            updateToItemsGateway(item, true);
+        }
+    }
+
+    public void switchToNormalMode(ItemsGateway itemsGateway) {
+        this.itemsGateway = itemsGateway;
+        items.clear();
         itemsGateway.populate(this);
     }
 

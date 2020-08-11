@@ -1,6 +1,8 @@
 package org.twelve.usecases;
 
+import org.twelve.entities.Account;
 import org.twelve.entities.Thresholds;
+import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ThresholdsGateway;
 
 // TODO javadoc
@@ -11,10 +13,21 @@ import org.twelve.gateways.ThresholdsGateway;
  */
 public class ThresholdRepository {
     private Thresholds thresholds;
-    private final ThresholdsGateway thresholdsGateway;
+    private ThresholdsGateway thresholdsGateway;
 
     public ThresholdRepository(ThresholdsGateway thresholdsGateway) {
         this.thresholdsGateway = thresholdsGateway;
+        thresholdsGateway.populate(this);
+    }
+
+    public void switchToDemoMode(ThresholdsGateway thresholdsGateway) {
+        this.thresholdsGateway = thresholdsGateway;
+        updateThresholds();
+    }
+
+    public void switchToNormalMode(ThresholdsGateway thresholdsGateway) {
+        this.thresholdsGateway = thresholdsGateway;
+        thresholds = null;
         thresholdsGateway.populate(this);
     }
 

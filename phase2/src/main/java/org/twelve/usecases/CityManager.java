@@ -1,5 +1,7 @@
 package org.twelve.usecases;
 
+import org.twelve.entities.Account;
+import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.CitiesGateway;
 
 import java.util.ArrayList;
@@ -8,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CityManager {
-    private final Map<Integer, String> cities;
-    private final CitiesGateway citiesGateway;
+    private Map<Integer, String> cities;
+    private CitiesGateway citiesGateway;
 
     /**
      * Constructor for cityManager which stores a cityGateway.
@@ -19,6 +21,19 @@ public class CityManager {
     public CityManager(CitiesGateway citiesGateway){
         this.cities = new HashMap<>();
         this.citiesGateway = citiesGateway;
+        citiesGateway.populate(this);
+    }
+
+    public void switchToDemoMode(CitiesGateway citiesGateway) {
+        this.citiesGateway = citiesGateway;
+        for (int city : cities.keySet()) {
+            updateToGateway(city);
+        }
+    }
+
+    public void switchToNormalMode(CitiesGateway citiesGateway) {
+        this.citiesGateway = citiesGateway;
+        cities.clear();
         citiesGateway.populate(this);
     }
 

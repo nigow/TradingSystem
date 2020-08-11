@@ -1,6 +1,7 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.*;
+import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class TradeManager extends TradeUtility{
     /**
      * The gateway dealing with trades
      */
-    private final TradeGateway tradeGateway;
+    private TradeGateway tradeGateway;
 
     /**
      * The Constructor for TradeManager
@@ -42,6 +43,20 @@ public class TradeManager extends TradeUtility{
         super(itemManager, accountRepository, thresholdRepository);
         this.wishlistManager = wishlistManager;
         this.tradeGateway = tradeGateway;
+        tradeGateway.populate(this);
+    }
+
+    public void switchToDemoMode(TradeGateway tradeGateway) {
+        this.tradeGateway = tradeGateway;
+        for (Trade trade : trades) {
+            updateToGateway(trade, true);
+        }
+    }
+
+    public void switchToNormalMode(TradeGateway tradeGateway) {
+        this.tradeGateway = tradeGateway;
+        trades.clear();
+        timePlaces.clear();
         tradeGateway.populate(this);
     }
 
@@ -69,7 +84,7 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Updates the given trade to the tradeGateway as a new trade
+     * Updates the given trade to the tradeGateway as an old trade
      *
      * @param trade the object representing a trade
      */

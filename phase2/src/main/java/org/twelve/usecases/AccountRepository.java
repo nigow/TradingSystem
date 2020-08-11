@@ -16,11 +16,24 @@ import java.util.Map;
 public class AccountRepository {
 
     private Map<Integer, Account> accounts;
-    private final AccountGateway accountGateway;
+    private AccountGateway accountGateway;
 
     public AccountRepository(AccountGateway accountGateway){
         this.accountGateway = accountGateway;
         accounts = new HashMap<>();
+        accountGateway.populate(this);
+    }
+
+    public void switchToDemoMode(AccountGateway accountGateway) {
+        this.accountGateway = accountGateway;
+        for (Account account : accounts.values()) {
+            updateCreateAccount(account);
+        }
+    }
+
+    public void switchToNormalMode(AccountGateway accountGateway) {
+        this.accountGateway = accountGateway;
+        accounts.clear();
         accountGateway.populate(this);
     }
 
@@ -151,6 +164,8 @@ public class AccountRepository {
     public int getAccountID(Account account) {
         return account.getAccountID();
     }
+
+    // TODO merge these two methods  --maryam
 
     /**
      * Save program changes with an account instance to an account gateway.
