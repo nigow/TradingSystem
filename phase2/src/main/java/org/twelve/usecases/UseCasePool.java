@@ -18,7 +18,7 @@ public class UseCasePool {
     private ThresholdRepository thresholdRepository;
     private LoginManager loginManager;
     private SessionManager sessionManager;
-    private final GatewayPool gatewayPool;
+    private GatewayPool gatewayPool;
 
     /**
      * Creates all the required use cases for the program.
@@ -105,4 +105,34 @@ public class UseCasePool {
     public CityManager getCityManager() {
         return cityManager;
     }
+
+    /**
+     * @param gatewayPool An instance of gateway pool storing all gateways
+     * @param demoMode Whether we should be able to switch to demo mode
+     */
+    // TODO: Look into strategy pattern for this.
+    public void switchMode(GatewayPool gatewayPool, boolean demoMode) {
+        this.gatewayPool = gatewayPool;
+        if (demoMode) {
+            switchToDemoMode();
+        }
+        else {
+            switchToNormalMode();
+        }
+    }
+
+    private void switchToDemoMode() {
+        itemManager.switchToDemoMode(gatewayPool.getItemsGateway());
+        cityManager.switchToDemoMode(gatewayPool.getCitiesGateway());
+        accountRepository.switchToDemoMode(gatewayPool.getAccountGateway());
+        thresholdRepository.switchToDemoMode(gatewayPool.getThresholdsGateway());
+    }
+
+    private void switchToNormalMode() {
+        itemManager.switchToNormalMode(gatewayPool.getItemsGateway());
+        cityManager.switchToNormalMode(gatewayPool.getCitiesGateway());
+        accountRepository.switchToNormalMode(gatewayPool.getAccountGateway());
+        thresholdRepository.switchToNormalMode(gatewayPool.getThresholdsGateway());
+    }
+
 }
