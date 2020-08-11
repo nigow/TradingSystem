@@ -19,7 +19,7 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
     public UIProfilePresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
-        existingCities = new ArrayList<String>();
+        setExistingCities(new ArrayList<>());
         setError("");
     }
 
