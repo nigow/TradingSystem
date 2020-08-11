@@ -13,6 +13,10 @@ import org.twelve.presenters.ui.ObservablePresenter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * View for post login menu.
+ * @param <T> Presenter.
+ */
 public class MenuView<T extends ObservablePresenter & MenuPresenter> implements SceneView, Initializable{
 
     private final WindowHandler windowHandler;
@@ -32,6 +36,12 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     @FXML
     private Button approveItems;
 
+    /**
+     * Constructor of view for post login menu.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param menuController Controller for managing access to further features.
+     * @param menuPresenter Presenter for displaying access errors.
+     */
     public MenuView(WindowHandler windowHandler, MenuController menuController, T menuPresenter) {
         this.windowHandler = windowHandler;
         this.menuPresenter = menuPresenter;
@@ -39,6 +49,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
         this.menuController.setMenuPresenter(this.menuPresenter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -55,7 +68,7 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
                     .bean(menuPresenter).name("approveItems").build());
 
 
-    } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) {}
     }
 
     @FXML
@@ -94,11 +107,17 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         menuController.displayButtons();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;

@@ -11,12 +11,18 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Class responsible for spawning and managing the JavaFX window.
+ */
 public class WindowHandler extends Application {
 
     private Stage primaryStage;
     private ViewBuilder viewBuilder;
     private Map<Scenes, SceneView> views;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -30,6 +36,10 @@ public class WindowHandler extends Application {
 
     }
 
+    /**
+     * Changes currently displayed scene.
+     * @param scene Scene to change to.
+     */
     public void changeScene(Scenes scene) {
 
         SceneView sceneView = views.get(scene);
@@ -43,6 +53,11 @@ public class WindowHandler extends Application {
 
     }
 
+    /**
+     * Restarts the program based on given local preferences.
+     * @param language Language program should be in.
+     * @param demoMode Whether demo mode is active.
+     */
     public void restart(Locale language, boolean demoMode) {
 
         viewBuilder.buildControllers(language, demoMode);

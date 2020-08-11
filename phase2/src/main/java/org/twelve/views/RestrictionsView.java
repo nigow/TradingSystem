@@ -15,6 +15,10 @@ import org.twelve.presenters.ui.ObservablePresenter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing system threshold values.
+ * @param <T> Presenter.
+ */
 public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -38,6 +42,12 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
     @FXML
     private Spinner<Integer> numForTrusted;
 
+    /**
+     * Constructor of view for managing system threshold values.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param thresholdController Controller for managing system threshold values.
+     * @param thresholdPresenter Presenter for displaying current threshold values.
+     */
     public RestrictionsView(WindowHandler windowHandler, ThresholdController thresholdController, T thresholdPresenter) {
         this.windowHandler = windowHandler;
         this.thresholdPresenter = thresholdPresenter;
@@ -46,21 +56,29 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
         this.thresholdController.setThresholdPresenter(thresholdPresenter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         thresholdController.displayThresholds();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
-    public void backClicked() {
+    @FXML
+    private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
-    public void saveClicked() {
+    @FXML
+    private void saveClicked() {
         thresholdController.lendMoreThanBorrow(lendVsBorrow.getValue());
         thresholdController.maxIncompleteTrades(maxIncomplete.getValue());
         thresholdController.maxWeeklyTrades(maxWeekly.getValue());
@@ -70,6 +88,9 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
         thresholdController.numberOfTradesUntilTrusted(numForTrusted.getValue());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

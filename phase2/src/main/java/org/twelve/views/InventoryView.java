@@ -7,7 +7,6 @@ import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -24,6 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing personal inventory.
+ * @param <T> Presenter.
+ */
 public class InventoryView<T extends ObservablePresenter & InventoryPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -33,9 +36,6 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     @FXML
     private Label errorLabel;
-
-    @FXML
-    private Button addItemBtn;
 
     @FXML
     private Button removeItemBtn;
@@ -52,6 +52,12 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
     @FXML
     private ListView<String> inventoryItems;
 
+    /**
+     * Constructor of view for managing personal inventory.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param inventoryController Controller for managing personal inventory.
+     * @param inventoryPresenter Presenter for displaying inventory items.
+     */
     public InventoryView(WindowHandler windowHandler, InventoryController inventoryController, T inventoryPresenter) {
 
         this.windowHandler = windowHandler;
@@ -62,6 +68,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
 
@@ -69,12 +78,17 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

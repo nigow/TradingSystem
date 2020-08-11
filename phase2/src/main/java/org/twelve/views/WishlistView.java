@@ -7,7 +7,6 @@ import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -23,6 +22,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing personal wishlist.
+ * @param <T> Presenter.
+ */
 public class WishlistView<T extends ObservablePresenter & WishlistPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -51,6 +54,12 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
     @FXML
     private ListView<String> warehouseItems;
 
+    /**
+     * Constructor of view for managing personal wishlist.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param wishlistController Controller for adding/removing items from personal wishlist.
+     * @param wishlistPresenter Presenter for displaying wishlist and system items.
+     */
     public WishlistView(WindowHandler windowHandler, WishlistController wishlistController, T wishlistPresenter) {
         this.windowHandler = windowHandler;
         this.wishlistController = wishlistController;
@@ -64,6 +73,9 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
 
@@ -71,11 +83,17 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

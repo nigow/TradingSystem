@@ -6,21 +6,39 @@ import org.twelve.presenters.ui.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Builder responsible for constructing views.
+ */
 public class ViewBuilder {
 
     private final WindowHandler windowHandler;
     private ControllerPool controllerPool;
 
+    /**
+     * Constructor of builder responsible for constructing views.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     */
     public ViewBuilder(WindowHandler windowHandler) {
         this.windowHandler = windowHandler;
     }
 
+    /**
+     * Builds controllers that views depend on.
+     * @param selectedLanguage Language views should be in.
+     * @param demoMode Whether demo mode is active.
+     */
     public void buildControllers(Locale selectedLanguage, boolean demoMode) {
 
         controllerPool = new ControllerPool(selectedLanguage, demoMode);
 
     }
 
+    /**
+     * Builds individual views.
+     * @param scene Scene the view belongs to.
+     * @param localizedResources Any localized resources.
+     * @return View for the given scene.
+     */
     public SceneView getView(Scenes scene, ResourceBundle localizedResources) {
 
         switch (scene) {

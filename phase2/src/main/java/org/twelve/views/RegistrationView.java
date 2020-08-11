@@ -23,6 +23,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for registering accounts.
+ * @param <T> Presenter.
+ */
 public class RegistrationView<T extends ObservablePresenter & RegistrationPresenter> implements SceneView, Initializable {
 
     @FXML
@@ -50,6 +54,12 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     private final RegistrationController registrationController;
     private final T registrationPresenter;
 
+    /**
+     * Constructor of view for registering accounts.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param registrationController Controller for orchestrating registration of accounts.
+     * @param registrationPresenter Presenter for displaying registration errors.
+     */
     public RegistrationView(WindowHandler windowHandler, RegistrationController registrationController, T registrationPresenter) {
         this.windowHandler = windowHandler;
         this.registrationPresenter = registrationPresenter;
@@ -82,16 +92,25 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         registrationController.updateOptions();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

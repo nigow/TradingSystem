@@ -5,7 +5,6 @@ import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -21,6 +20,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * View for landing page.
+ * @param <T> Presenter.
+ */
 public class LandingView<T extends ObservablePresenter & LandingPresenter> implements SceneView, Initializable {
 
     @FXML
@@ -34,6 +37,12 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
     private final LandingController landingController;
     private final T landingPresenter;
 
+    /**
+     * Constructor of view for landing page.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param landingController Controller for managing local preferences such as display language.
+     * @param landingPresenter Presenter for displaying current local preferences.
+     */
     public LandingView(WindowHandler windowHandler, LandingController landingController, T landingPresenter) {
         this.windowHandler = windowHandler;
         this.landingPresenter = landingPresenter;
@@ -56,16 +65,25 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

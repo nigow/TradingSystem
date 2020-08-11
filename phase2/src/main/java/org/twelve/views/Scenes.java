@@ -1,5 +1,8 @@
 package org.twelve.views;
 
+/**
+ * Constants representing each JavaFX scene.
+ */
 public enum Scenes {
 
     LANDING("Landing"),
@@ -17,10 +20,14 @@ public enum Scenes {
 
     private final String fxml;
 
+    // enum constructors are private thus this doesn't need a JavaDoc
     Scenes(String fxml) {
         this.fxml = fxml;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return this.fxml;

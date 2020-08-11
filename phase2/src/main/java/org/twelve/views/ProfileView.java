@@ -18,6 +18,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing personal account.
+ * @param <T> Presenter.
+ */
 public class ProfileView<T extends ObservablePresenter & ProfilePresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -43,6 +47,12 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     @FXML
     private CheckBox onVacation;
 
+    /**
+     * Constructor of view for managing personal account.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param profileController Controller for managing account settings.
+     * @param profilePresenter Presenter for displaying account status and current settings.
+     */
     public ProfileView(WindowHandler windowHandler, ProfileController profileController, T profilePresenter) {
         this.windowHandler = windowHandler;
         this.profilePresenter = profilePresenter;
@@ -51,20 +61,30 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         this.profileController.setProfilePresenter(this.profilePresenter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         profileController.updateProfile();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
-    public void backClicked() {
+    @FXML
+    private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

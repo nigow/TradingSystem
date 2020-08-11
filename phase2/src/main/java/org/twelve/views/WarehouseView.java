@@ -26,6 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing the warehouse.
+ * @param <T> Presenter.
+ */
 public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -50,6 +54,12 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
     @FXML
     private ListView<String> warehouseItems;
 
+    /**
+     * Constructor of view for managing the warehouse.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param warehouseController Controller for managing items inside the system.
+     * @param warehousePresenter Presenter for displaying item info.
+     */
     public WarehouseView(WindowHandler windowHandler, WarehouseController warehouseController, T warehousePresenter) {
 
         this.windowHandler = windowHandler;
@@ -60,6 +70,9 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
 
@@ -67,6 +80,9 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
@@ -93,6 +109,9 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

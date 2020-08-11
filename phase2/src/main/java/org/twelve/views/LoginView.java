@@ -16,6 +16,10 @@ import org.twelve.presenters.ui.ObservablePresenter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * View for logging in.
+ * @param <T> Presenter.
+ */
 public class LoginView<T extends ObservablePresenter & LoginPresenter> implements SceneView, Initializable {
 
     @FXML
@@ -34,6 +38,12 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
     private final LoginController loginController;
     private final T loginPresenter;
 
+    /**
+     * Constructor of view for logging in.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param loginController Controller for managing login process.
+     * @param loginPresenter Presenter for displaying login errors.
+     */
     public LoginView(WindowHandler windowHandler, LoginController loginController, T loginPresenter) {
         this.windowHandler = windowHandler;
         this.loginPresenter = loginPresenter;
@@ -58,17 +68,26 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         usernameBox.clear();
         passwordBox.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
