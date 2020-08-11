@@ -1,7 +1,6 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.Account;
-import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.CitiesGateway;
 
 import java.util.ArrayList;
@@ -9,10 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Stores all cities in the program, and provides abilities
+ * to get city info, add cities, and change cities for an account.
+ */
 public class CityManager {
-    private Map<Integer, String> cities;
+    private final Map<Integer, String> cities;
     private CitiesGateway citiesGateway;
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     /**
      * Constructor for cityManager which stores a cityGateway.
@@ -26,23 +29,41 @@ public class CityManager {
         citiesGateway.populate(this);
     }
 
-    public void switchToDemoMode(CitiesGateway citiesGateway) {
+    /**
+     * Switch cities gateway to a demo mode gateway.
+     * @param citiesGateway A new CitiesGateway.
+     */
+    void switchToDemoMode(CitiesGateway citiesGateway) {
         this.citiesGateway = citiesGateway;
         for (int city : cities.keySet()) {
             updateToGateway(city);
         }
     }
 
-    public void switchToNormalMode(CitiesGateway citiesGateway) {
+    /**
+     * Switch cities gateway to a normal gateway.
+     * @param citiesGateway A new CitiesGateway.
+     */
+    void switchToNormalMode(CitiesGateway citiesGateway) {
         this.citiesGateway = citiesGateway;
         cities.clear();
         citiesGateway.populate(this);
     }
 
+    /**
+     * Get the location where an account is located.
+     * @param accountID The account id.
+     * @return An account's location.
+     */
     public String getLocationOfAccount(int accountID) {
         return accountRepository.getAccountFromID(accountID).getLocation();
     }
 
+    /**
+     * Change the location of an account.
+     * @param accountID An account id.
+     * @param newCity The new city of the account.
+     */
     public void changeAccountLocation(int accountID, String newCity) {
         if (!cities.values().contains(newCity))
             createCity(newCity);
