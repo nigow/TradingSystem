@@ -11,6 +11,7 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
 
     private List<String> wishlistItems;
     private List<String> warehouseItems;
+    private List<String> localItems;
     private String selectedItemName;
     private String selectedItemDesc;
 
@@ -21,6 +22,7 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         this.localizedResources = localizedResources;
         setWishlistItems(new ArrayList<>());
         setWarehouseItems(new ArrayList<>());
+        setLocalItems(new ArrayList<>());
         setSelectedItemName("");
         setSelectedItemDesc("");
     }
@@ -47,6 +49,18 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
     @Override
     public List<String> getWarehouseItems() {
         return warehouseItems;
+    }
+
+    @Override
+    public void setLocalItems(List<String> localItems) {
+        List<String> oldLocalItems = this.wishlistItems;
+        this.localItems = localItems;
+        propertyChangeSupport.firePropertyChange("localItems", oldLocalItems, this.localItems);
+    }
+
+    @Override
+    public List<String> getLocalItems() {
+        return localItems;
     }
 
     @Override

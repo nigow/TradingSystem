@@ -8,6 +8,8 @@ public interface WishlistPresenter {
     List<String> getWishlistItems();
     void setWarehouseItems(List<String> warehouseItems);
     List<String> getWarehouseItems();
+    void setLocalItems(List<String> localItems);
+    List<String> getLocalItems();
     void setSelectedItemName(String name);
     String getSelectedItemName();
     void setSelectedItemDesc(String desc);
