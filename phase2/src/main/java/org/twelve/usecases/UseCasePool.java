@@ -39,7 +39,7 @@ public class UseCasePool {
         statusManager = new StatusManager(accountRepository, tradeManager, thresholdRepository);
         loginManager = new LoginManager(accountRepository);
         sessionManager = new SessionManager(accountRepository);
-        cityManager = new CityManager(gatewayPool.getCitiesGateway());
+        cityManager = new CityManager(gatewayPool.getCitiesGateway(), accountRepository);
     }
 
     /**
