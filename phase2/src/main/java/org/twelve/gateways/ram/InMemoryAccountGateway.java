@@ -98,7 +98,6 @@ public class InMemoryAccountGateway implements AccountGateway {
         value.append("<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>");
         value.append(location);
         accounts.put(accountId, value.toString());
-        System.out.print(value.toString());
         return true;
     }
 }
