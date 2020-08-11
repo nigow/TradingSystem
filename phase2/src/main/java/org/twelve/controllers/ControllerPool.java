@@ -22,9 +22,12 @@ public class ControllerPool {
     private final LandingController landingController;
 
     public ControllerPool(Locale selectedLanguage, boolean demoMode) {
-
-        GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool(demoMode ? "ram" : "json");
+        GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("json");
         UseCasePool useCasePool = new UseCasePool(gatewayPool);
+        if (demoMode) {
+            GatewayPool newGatewayPool = new GatewayPoolFactory().getGatewayPool("ram");
+            useCasePool.switchMode(newGatewayPool, true);
+        }
 
         landingController = new LandingController(selectedLanguage, demoMode);
         loginController = new LoginController(useCasePool, gatewayPool);
