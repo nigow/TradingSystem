@@ -2,6 +2,8 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.ProfilePresenter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class UIProfilePresenter extends ObservablePresenter implements ProfilePresenter {
@@ -12,10 +14,12 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
     private boolean vacationStatus;
     private boolean canVacation;
     private boolean canRequestUnfreeze;
+    private List<String> existingCities;
 
     public UIProfilePresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
+        existingCities = new ArrayList<String>();
         setError("");
     }
 
@@ -69,6 +73,18 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
     @Override
     public boolean getCanRequestUnfreeze() {
         return canRequestUnfreeze;
+    }
+
+    @Override
+    public void setExistingCities(List<String> existingCities) {
+        List<String> oldExistingCities = this.existingCities;
+        this.existingCities = existingCities;
+        propertyChangeSupport.firePropertyChange("existingCities", oldExistingCities, this.existingCities);
+    }
+
+    @Override
+    public List<String> getExistingCities() {
+        return existingCities;
     }
 
 }

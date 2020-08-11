@@ -2,10 +2,7 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Roles;
 import org.twelve.presenters.ProfilePresenter;
-import org.twelve.usecases.LoginManager;
-import org.twelve.usecases.SessionManager;
-import org.twelve.usecases.StatusManager;
-import org.twelve.usecases.UseCasePool;
+import org.twelve.usecases.*;
 
 public class ProfileController {
 
@@ -13,13 +10,14 @@ public class ProfileController {
     private ProfilePresenter profilePresenter;
     private final SessionManager sessionManager;
     private final LoginManager loginManager;
+    private final CityManager cityManager;
 
     public ProfileController(UseCasePool useCasePool) {
 
         statusManager = useCasePool.getStatusManager();
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
-
+        cityManager = useCasePool.getCityManager();
     }
 
     public void updateProfile() {
@@ -28,6 +26,7 @@ public class ProfileController {
         profilePresenter.setCanVacation(statusManager.canVacation(sessionManager.getCurrAccountID()));
         profilePresenter.setCanRequestUnfreeze(!statusManager.isPending(sessionManager.getCurrAccountID())
                 && statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.FROZEN);
+        profilePresenter.setExistingCities(cityManager.getAllCities());
 
     }
 

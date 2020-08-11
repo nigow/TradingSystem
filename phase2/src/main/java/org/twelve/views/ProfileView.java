@@ -1,9 +1,10 @@
 package org.twelve.views;
 
-import javafx.beans.property.adapter.JavaBeanBooleanProperty;
-import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.adapter.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ import org.twelve.presenters.ProfilePresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProfileView<T extends ObservablePresenter & ProfilePresenter> implements SceneView, Initializable {
@@ -37,7 +39,7 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     @FXML
     private PasswordField newPassword;
     @FXML
-    private TextField locationBox;
+    private ComboBox<String> locationBox;
     @FXML
     private CheckBox onVacation;
 
@@ -81,10 +83,18 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
             updatePasswordError.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(profilePresenter).name("error").build());
 
-        } catch (NoSuchMethodException ignored) {}
+            ReadOnlyJavaBeanObjectProperty<List<String>> existingCitiesBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(profilePresenter).name("existingCities").build();
 
-        updateLocationBtn.disableProperty().bind(locationBox.textProperty().isEmpty());
+            ObjectBinding<ObservableList<String>> citiesBinding = Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(existingCitiesBinding.get()), existingCitiesBinding);
 
+            locationBox.itemsProperty().bind(citiesBinding);
+
+        } catch (NoSuchMethodException ignored) {
+        }
+
+        updateLocationBtn.disableProperty().bind(locationBox.getSelectionModel().selectedItemProperty().isNull());
     }
 
     @FXML
@@ -106,6 +116,6 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
     @FXML
     private void updateLocationClicked() {
-
+        profileController.changeLocation(locationBox.getEditor().getText());
     }
 }

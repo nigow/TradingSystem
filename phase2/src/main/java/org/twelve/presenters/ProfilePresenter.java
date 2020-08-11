@@ -1,5 +1,7 @@
 package org.twelve.presenters;
 
+import java.util.List;
+
 public interface ProfilePresenter {
 
     void setError(String errorKey);
@@ -11,4 +13,6 @@ public interface ProfilePresenter {
     void setCanRequestUnfreeze(boolean canRequestUnfreeze);
     boolean getCanRequestUnfreeze();
 
+    void setExistingCities(List<String> existingCities);
+    List<String> getExistingCities();
 }
