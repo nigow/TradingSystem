@@ -1,162 +1,70 @@
 package org.twelve.presenters;
 
-import org.twelve.entities.Account;
 
 import java.util.List;
 
 public interface TradeCollectionPresenter {
 
-    /**
-     * Displays possible actions.
-     *
-     * @param tradeOptions Possible actions user can choose from
-     * @return Index of chosen action
-     */
-    String displayTradeOptions(List<String> tradeOptions);
+    List<String> getAllUsers();
 
-    /**
-     * Displays user's ongoing trades.
-     *
-     * @param trades List of ongoing trades
-     */
-    void displayTrades(List<String> trades);
+    void setAllUsers(List<String> allUsers);
 
-    /**
-     * Select trade to edit.
-     *
-     * @return Index of selected trade
-     */
-    String selectTrade();
+    List<String> getAllTrades();
 
-    /**
-     * Edit trade's meetup time.
-     *
-     * @return Information for trade's new meetup time
-     */
-    String editTradeTime();
+    void setAllTrades(List<String> allTrades);
 
-    /**
-     * Edit trade's meetup date.
-     *
-     * @return Information for trade's new meetup date
-     */
-    String editTradeDate();
+    int getHourChosen();
 
-    /**
-     * Edit trade's meetup location.
-     *
-     * @return Information for trade's new meetup location
-     */
-    String editTradeLocation();
+    void setHourChosen(int i);
 
-    /**
-     * Displays user's 3 most recent traded items in a one way trade.
-     *
-     * @param recentOneWayTrade User's recent items in a one way trades
-     */
-    void displayRecentOneWayTrade(List<String> recentOneWayTrade);
+    int getMinuteChosen();
 
-    /**
-     * Displays user's 3 most recent traded items in a two way trade.
-     *
-     * @param recentTwoWayTrade User's recent items in a two way trades
-     */
-    void displayRecentTwoWayTrade(List<String> recentTwoWayTrade);
+    void setMinuteChosen(int i);
 
-    /**
-     * Displays user's 3 most frequent trading partners.
-     *
-     * @param frequentPartners User's 3 most frequent trading partners
-     */
-    void displayFrequentPartners(List<String> frequentPartners);
+    String getLocationChosen();
 
+    void setLocationChosen(String location);
 
+    String getDateChosen();
 
-    /**
-     * Lets user say if a trade has been completed.
-     *
-     * @return User's input y/n
-     */
-    String isTradeCompleted();
+    void setDateChosen(String date);
 
-    /**
-     * Displays a trade.
-     * @param trade a string representation of a string
-     */
-    void displayTrade(String trade);
+    List<String> getRecentOneWays();
 
-    /**
-     *Tells user that the trade has been cancelled.
-     */
-    void displayCancelled();
+    void setRecentOneWays(List<String> recentOneWays);
 
-    /**
-     * Tells user that a trade has been completed.
-     */
-    void displayCompleted();
+    List<String> getRecentTwoWays();
 
-    /**
-     * Tells user that a trade time and place has been confirmed.
-     */
-    void displayConfirmed();
+    void setRecentTwoWays(List<String> recentTwoWays);
 
-    /**
-     * Tells user that the trade has been rejected.
-     */
-    void displayRejected();
-
-    /**
-     * Tells user that the trade is still incomplete.
-     */
-    void displayIncomplete();
-
-    /**
-     * Tells user that their edit limit has been reached.
-     */
-    void displayLimitReached();
-
-    /**
-     * Tells user that their date/time must be in the future.
-     */
-    void displayFuture();
-
-    /**
-     * Tells user that a new time/date has been suggested.
-     */
-    void displaySuggestion();
-
-    /**
-     * Shows user they have the option to see their trades.
-     * @return string message
-     */
-    String viewTrades();
-
-    /**
-     * Shows user they can select a trade to edit.
-     * @return string message
-     */
-    String editTrade();
-
-    /**
-     * Shows user they can see recently given away items in two way traces.
-     * @return string message
-     */
-    String twoWayRecent();
-
-    /**
-     * Shows user they can see recently given away items in one way traces.
-     * @return string message
-     */
-    String oneWayRecent();
-
-    /**
-     * Shows user their most frequent trade partners.
-     * @return string message
-     */
-    String frequentPartners();
+    String getSelectedUser();
 
     void setSelectedUser(String user);
 
-    String getSelectedUser();
+    String getTradingPartner();
+
+    void setTradingPartner(String tradingPartner);
+
+    String getYourItems();
+
+    void setYourItems(List<String> yourItems);
+
+    String getTheirItems();
+
+    void setTheirItems(List<String> theirItems);
+
+    String getTopTradingPartners();
+
+    void setTopTradingPartners(List<String> topTradingPartners);
+
+    String getSelectedTrade();
+
+    void setSelectedTrade(String selectedTrade);
+
+
+
+
+
+
 
 }
