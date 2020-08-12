@@ -4,22 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.AdminWishlistView">
+<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.AdminWishlistView">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <HBox prefWidth="200.0" GridPane.columnIndex="1" />
-        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+        <VBox prefHeight="200.0" prefWidth="100.0">
             <children>
                 <Label text="%accounts">
                     <VBox.margin>
@@ -28,21 +24,19 @@
                 <ListView fx:id="allUsers" prefWidth="200.0" />
             </children>
         </VBox>
-        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
             <children>
                 <Label text="%wishlist" />
                 <ListView fx:id="wishlistOfUser" prefWidth="200.0" />
             </children>
         </VBox>
 
-        <Label fx:id="itemDescription" maxWidth="1.7976931348623157E308" text="%itemDescription" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-        <HBox alignment="BASELINE_RIGHT" prefHeight="6.0" prefWidth="285.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Label fx:id="itemDescription" maxWidth="1.7976931348623157E308" text="%itemDescription" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+        <HBox alignment="BASELINE_RIGHT" prefHeight="6.0" prefWidth="285.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <children>
                 <Button fx:id="removeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#removeClicked" text="%remove" />
             </children></HBox>
-        <HBox prefWidth="200.0" GridPane.rowIndex="4" />
-        <Button mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.rowIndex="5" />
-        <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Button mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.rowIndex="2" />
 
     </children>
     <padding>
