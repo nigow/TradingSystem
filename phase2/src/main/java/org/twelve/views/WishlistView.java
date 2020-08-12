@@ -108,7 +108,7 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
             wishlistItems.itemsProperty().bind(wishlistBinding);
 
             ReadOnlyJavaBeanObjectProperty<List<String>> warehouseItemsBinding =
-                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(wishlistPresenter).name("warehouseItems").build();
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(wishlistPresenter).name("localItems").build();
 
             ObjectBinding<ObservableList<String>> warehouseBinding = Bindings.createObjectBinding(() ->
                     FXCollections.observableArrayList(warehouseItemsBinding.get()), warehouseItemsBinding);
