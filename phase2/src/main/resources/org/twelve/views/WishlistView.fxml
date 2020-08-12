@@ -25,8 +25,8 @@
       <Button fx:id="addToWishlistBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addToWishlistClicked" text="%add" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Label fx:id="itemName" text="%itemName" />
-            <Label fx:id="itemDesc" text="%itemDesc" />
+            <Label fx:id="itemName" text="%itemName" wrapText="true" />
+            <Label fx:id="itemDesc" text="%itemDesc" wrapText="true" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

@@ -55,9 +55,12 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="itemNameLabel" text="%itemName" />
-            <Label fx:id="itemDescLabel" text="%itemDesc" />
+            <Label fx:id="itemNameLabel" alignment="TOP_LEFT" text="%itemName" wrapText="true" />
+            <Label fx:id="itemDescLabel" alignment="TOP_LEFT" text="%itemDesc" wrapText="true" />
          </children>
+         <BorderPane.margin>
+            <Insets right="10.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>
