@@ -136,7 +136,6 @@ public class JsonAccountGateway implements AccountGateway {
         json.addProperty("permissions", permissionsString.toString());
         json.addProperty("city", location);
 
-        System.out.println(json.toString());
 
         HttpURLConnection con;
         OutputStream outputStream;

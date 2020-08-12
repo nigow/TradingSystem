@@ -71,7 +71,6 @@ public class InMemoryAccountGateway implements AccountGateway {
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
                         List<String> permissions, String location, boolean newAccount) {
 
-        System.out.println("hi");
         String[] account = new String[5];
         account[0] = username;
         account[1] = password;
