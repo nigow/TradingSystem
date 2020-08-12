@@ -123,7 +123,7 @@ public class TradeManager extends TradeUtility{
         List <Integer> tradesIDs = new ArrayList<>();
         for (Trade t : trades)
             tradesIDs.add(t.getId());
-        int id = (trades.isEmpty() ? 1 : Collections.max(tradesIDs) + 1);
+        int id = (tradesIDs.isEmpty() ? 1 : Collections.max(tradesIDs) + 1);
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
         trades.add(trade);
