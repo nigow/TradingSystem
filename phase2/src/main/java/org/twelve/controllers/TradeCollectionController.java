@@ -68,4 +68,10 @@ public class TradeCollectionController {
         tradeCollectionPresenter.setAllUsers(allUsers);
 
     }
+
+    public void cancelTrade(int selectedIndex) {
+    }
+
+    public void confirmTrade(int selectedIndex) {
+    }
 }
