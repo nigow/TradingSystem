@@ -33,37 +33,45 @@ public class TradeCollectionController {
     }
 
     public void updateLists(String username) {
+        List<String> selectedAccountTrades = new ArrayList<>();
+        List<String> recentOneWays = new ArrayList<>();
+        List<String> recentTwoWays = new ArrayList<>();
+        List<String> topTradingPartners = new ArrayList<>();
         if (username != null) {
-            List<String> selectedAccountTrades = new ArrayList<>();
+            for (String s : tradeManager.getAllTradesAccountString(accountRepository.getIDFromUsername(username))) {
+                selectedAccountTrades.add(s);
+            }
+            for (int recentOneWay : tradeManager.getRecentOneWay(accountRepository.getIDFromUsername(username))) {
+                recentOneWays.add(accountRepository.getUsernameFromID(recentOneWay));
+            }
+            for (int recentTwoWay : tradeManager.getRecentTwoWay(accountRepository.getIDFromUsername(username))) {
+                recentTwoWays.add(accountRepository.getUsernameFromID(recentTwoWay));
+            }
+            for (int topTradingPartner : tradeManager.getTopThreePartnersIds(accountRepository.getIDFromUsername(username))) {
+                topTradingPartners.add(accountRepository.getUsernameFromID(topTradingPartner));
+            }
+        } else {
             for (String s : tradeManager.getAllTradesAccountString(sessionManager.getCurrAccountID())) {
                 selectedAccountTrades.add(s);
             }
-            tradeCollectionPresenter.setAllTrades(selectedAccountTrades);
+            for (int recentOneWay : tradeManager.getRecentOneWay(sessionManager.getCurrAccountID())) {
+                recentOneWays.add(accountRepository.getUsernameFromID(recentOneWay));
+            }
+            for (int recentTwoWay : tradeManager.getRecentTwoWay(sessionManager.getCurrAccountID())) {
+                recentTwoWays.add(accountRepository.getUsernameFromID(recentTwoWay));
+            }
+            for (int topTradingPartner : tradeManager.getTopThreePartnersIds(sessionManager.getCurrAccountID())) {
+                topTradingPartners.add(accountRepository.getUsernameFromID(topTradingPartner));
+            }
         }
-
-        List<String> recentOneWays = new ArrayList<>();
-        for (int recentOneWay : tradeManager.getRecentOneWay(sessionManager.getCurrAccountID())) {
-            recentOneWays.add(accountRepository.getUsernameFromID(recentOneWay));
-        }
+        tradeCollectionPresenter.setAllTrades(selectedAccountTrades);
         tradeCollectionPresenter.setRecentOneWays(recentOneWays);
-
-        List<String> recentTwoWays = new ArrayList<>();
-        for (int recentTwoWay : tradeManager.getRecentTwoWay(sessionManager.getCurrAccountID())) {
-            recentOneWays.add(accountRepository.getUsernameFromID(recentTwoWay));
-        }
         tradeCollectionPresenter.setRecentTwoWays(recentTwoWays);
-
-        List<String> topTradingPartners = new ArrayList<>();
-        for (int topTradingPartner : tradeManager.getTopThreePartnersIds(sessionManager.getCurrAccountID())) {
-            recentOneWays.add(accountRepository.getUsernameFromID(topTradingPartner));
-        }
         tradeCollectionPresenter.setTopTradingPartners(topTradingPartners);
 
         List<String> allUsers = new ArrayList<>();
         for (String s : accountRepository.getAccountStrings()) {
-            if (!s.equals(sessionManager.getCurrAccountUsername())) {
-                allUsers.add(s);
-            }
+            allUsers.add(s);
         }
         tradeCollectionPresenter.setAllUsers(allUsers);
 
@@ -73,5 +81,6 @@ public class TradeCollectionController {
     }
 
     public void confirmTrade(int selectedIndex) {
+
     }
 }
