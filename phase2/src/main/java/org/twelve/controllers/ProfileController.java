@@ -52,6 +52,9 @@ public class ProfileController {
         profilePresenter.setExistingCities(cityManager.getAllCities());
         profilePresenter.setCurrentLocation(cityManager.getLocationOfAccount(sessionManager.getCurrAccountID()));
 
+        profilePresenter.setPasswordError("");
+        profilePresenter.setLocationError("");
+
     }
 
     /**
@@ -103,6 +106,7 @@ public class ProfileController {
         }
 
         cityManager.changeAccountLocation(sessionManager.getCurrAccountID(), newLocation);
+        profilePresenter.setCurrentLocation(cityManager.getLocationOfAccount(sessionManager.getCurrAccountID()));
         return true;
 
     }
