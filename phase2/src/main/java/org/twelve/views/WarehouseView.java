@@ -139,6 +139,10 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
             itemDescLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(warehousePresenter).name("selectedItemDesc").build());
 
+            approveBtn.disableProperty().bind(warehouseItems.getSelectionModel().selectedItemProperty().isNull()
+                    .or(warehouseItems.getSelectionModel().selectedIndexProperty().greaterThanOrEqualTo(Bindings.createIntegerBinding(() ->
+                            pendingItemsBinding.get().size(), pendingItemsBinding))));
+
         } catch (NoSuchMethodException ignored) {} // impossible, im enforcing presence of methods via generics
 
         warehouseItems.setCellFactory(new Callback<>() {
@@ -185,7 +189,6 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
         });
 
-        approveBtn.disableProperty().bind(warehouseItems.getSelectionModel().selectedItemProperty().isNull());
         denyBtn.disableProperty().bind(warehouseItems.getSelectionModel().selectedItemProperty().isNull());
 
     }
