@@ -57,15 +57,7 @@ public class RegistrationController {
      */
     public void updateOptions() {
 
-        if (sessionManager.getCurrAccountID() == -1) {
-            registrationPresenter.setAvailableTypes(Roles.NORMAL);
-
-        } else {
-
-            registrationPresenter.setAvailableTypes(Roles.ADMIN);
-
-        }
-
+        registrationPresenter.setAdminMode(sessionManager.getCurrAccountID() != -1);
         registrationPresenter.setExistingCities(cityManager.getAllCities());
 
     }
