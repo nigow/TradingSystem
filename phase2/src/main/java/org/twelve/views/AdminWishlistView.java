@@ -35,6 +35,9 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
     private ListView<String> allUsers;
     @FXML
     private ListView<String> wishlistOfUser;
+    @FXML
+    private Label itemDescription;
+
 
     public AdminWishlistView(WindowHandler windowHandler, AdminWishlistController adminWishlistController,
                             T adminWishlistPresenter) {
@@ -75,23 +78,19 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
             }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(adminWishlistPresenter).name("wishlistOfUser").build());
             wishlistOfUser.itemsProperty().bind(accountWishlist);
 
-
-            // TODO add a label for item description somewhere and bind it to getitemdescription
-
+            itemDescription.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(adminWishlistPresenter).name("selectedItemDescription").build());
 
         } catch (NoSuchMethodException ignored) {System.out.println("failure");}
 
         allUsers.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue.intValue() != -1) {
-//                allUsers.getSelectionModel().clearSelection();
                 adminWishlistController.changeSelectedUser(newValue.intValue());
-//                adminWishlistController.updateWishlist(allUsers.getSelectionModel().getSelectedItem());
             }
         }));
 
         wishlistOfUser.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue.intValue() != -1) {
-//                wishlistOfUser.getSelectionModel().clearSelection();
                 adminWishlistController.changeSelectedItemToRemove(allUsers.getSelectionModel().getSelectedItem(), newValue.intValue());
             }
         }));

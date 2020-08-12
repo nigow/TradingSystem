@@ -50,6 +50,7 @@ public class AdminWishlistController {
                 wishlistItems.add(itemManager.getItemNameById(id));
             }
         }
+        adminWishlistPresenter.setSelectedItemDescription("");
         adminWishlistPresenter.setWishlistOfUser(wishlistItems);
         adminWishlistPresenter.setAllUsers(accountRepository.getAccountStrings());
     }
@@ -60,6 +61,7 @@ public class AdminWishlistController {
         for (int id : wishlistManager.getWishlistFromID(userID)) {
             wishlistItems.add(itemManager.getItemNameById(id));
         }
+        adminWishlistPresenter.setSelectedItemDescription("");
         adminWishlistPresenter.setWishlistOfUser(wishlistItems);
     }
 }

@@ -58,6 +58,5 @@ public class UIAdminWishlistPresenter extends ObservablePresenter implements Adm
     @Override
     public String getSelectedItemDescription() {
         return selectedItemDescription;
-
     }
 }
