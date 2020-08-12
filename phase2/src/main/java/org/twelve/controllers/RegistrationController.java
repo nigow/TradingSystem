@@ -68,7 +68,8 @@ public class RegistrationController {
      */
     public boolean createAccount(String username, String password, String location) {
         List<Permissions> perms;
-        if (sessionManager.getCurrAccountID() == -1) {
+        // TODO i fixed this, please make sure it's a correct fix  --maryam
+        if (sessionManager.getCurrAccountID() != -1) {
             perms = Arrays.asList(Permissions.LOGIN,
                     Permissions.FREEZE,
                     Permissions.UNFREEZE,
