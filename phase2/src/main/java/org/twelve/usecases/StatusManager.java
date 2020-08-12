@@ -239,6 +239,7 @@ public class StatusManager {
 
     }
 
+    // TODO: A normal account promoted should also be able to CONFIRM_ITEM
     /**
      * Promote an account to a moderator
      * @param accountID The account being promoted.
@@ -251,15 +252,24 @@ public class StatusManager {
 
     }
 
-    public void unmodAccount(int accountID) {
+    /**
+     * Change a moderator to a normal account
+     * @param accountID The ID of the account becoming a moderator.
+     */
+    // TODO: They should become a normal account
+    public void unModAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-        //account.removePermission(Permissions.CAN_BAN);
         account.removePermission(Permissions.FREEZE);
         account.removePermission(Permissions.UNFREEZE);
         accountRepository.updateToAccountGateway(account);
 
     }
 
+    /**
+     * Get the role of the Account with a given ID.
+     * @param accountID The Account ID.
+     * @return The role of the account.
+     */
     public Roles getRoleOfAccount(int accountID) {
         List <Permissions> perms = accountRepository.getAccountFromID(accountID).getPermissions();
         if (!perms.contains(Permissions.LOGIN))

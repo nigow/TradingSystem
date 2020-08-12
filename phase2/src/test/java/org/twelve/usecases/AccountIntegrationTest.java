@@ -17,9 +17,9 @@ public class AccountIntegrationTest extends TestCase {
     private void setUpAccountRepository() {
         List<Permissions> Perm = new ArrayList<>();
 
-        String initial = "demouser<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>hogehoge<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E> <bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>LOGIN ADD_TO_WISHLIST BROWSE_INVENTORY<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>utm>";
-        HashMap<Integer, String> h = new HashMap<>();
-        h.put(0, initial);
+//        String initial = String[];
+        HashMap<Integer, String[]> h = new HashMap<>();
+//        h.put(0, initial);
 
         inMemoryAccountGateway = new InMemoryAccountGateway(h);
         accountRepository = new AccountRepository(inMemoryAccountGateway);

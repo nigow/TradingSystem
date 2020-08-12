@@ -100,7 +100,7 @@ public class FreezingController {
 
     public void unmodAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        statusManager.unmodAccount(chosenUserID);
+        statusManager.unModAccount(chosenUserID);
         updateAccountLists();
     }
 

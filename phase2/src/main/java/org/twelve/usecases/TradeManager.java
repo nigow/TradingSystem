@@ -46,14 +46,18 @@ public class TradeManager extends TradeUtility{
         tradeGateway.populate(this);
     }
 
-    public void switchToDemoMode(TradeGateway tradeGateway) {
+    /**
+     *
+     * @param tradeGateway
+     */
+    void switchToDemoMode(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
         for (Trade trade : trades) {
             updateToGateway(trade, true);
         }
     }
 
-    public void switchToNormalMode(TradeGateway tradeGateway) {
+    void switchToNormalMode(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
         trades.clear();
         timePlaces.clear();
@@ -108,9 +112,11 @@ public class TradeManager extends TradeUtility{
     /**
      * Creates a new Trade object to be edited.
      *
-     * @param time           Time of the Trade
-     * @param place          Location of the Trade
-     * @param isPermanent    Whether the Trade is permanent or not
+     * @param time          Time of the Trade
+     * @param place         Location of the Trade
+     * @param isPermanent   Whether the Trade is permanent or not
+     * @param tradersIds    An ordered list of each trader participating
+     * @param itemsIds      The items involved in this trade.
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List<Integer> itemsIds) {
@@ -129,7 +135,7 @@ public class TradeManager extends TradeUtility{
 
     /**
      * Initiates a reverse Trade.
-     *
+     * @param id The trade id
      */
     public int reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
@@ -146,6 +152,7 @@ public class TradeManager extends TradeUtility{
     /**
      * Changes the TimePlace of the Trade and updates last edit info.
      *
+     * @param tradeID  The ID of the trade being edite.d
      * @param time     New time of the Trade
      * @param place    New place of the Trade
      */
@@ -158,12 +165,20 @@ public class TradeManager extends TradeUtility{
         updateToGateway(trade);
     }
 
+    /**
+     * A method allowing accounts to reject a trade.
+     * @param tradeID The ID of the trade being cancelled.
+     */
     public void rejectTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         trade.setStatus(TradeStatus.REJECTED);
         updateToGateway(trade);
     }
 
+    /**
+     *
+     * @param tradeID
+     */
     public void confirmTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         trade.setStatus(TradeStatus.CONFIRMED);
@@ -202,10 +217,6 @@ public class TradeManager extends TradeUtility{
         trade.setStatus(TradeStatus.ADMIN_CANCELLED);
     }
 
-    /**
-     * Completes the action of making a trade.
-     *
-     */
     public void makeTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         List <Integer> prev_items = itemsTraderOwns(trade.getTraderIds().get(0), trade);
@@ -229,6 +240,10 @@ public class TradeManager extends TradeUtility{
                 thresholdRepository.getNumberOfEdits() * getTradeByID(tradeID).getTraderIds().size();
     }
 
+    /**
+     * An Admin-specific method to undo the creation of a trade
+     * @param tradeID The trade id being undone.
+     */
     public void unmakeTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         int lastID = trade.getTraderIds().get(trade.getTraderIds().size() - 1);
