@@ -161,12 +161,12 @@
             </GridPane>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="confirmBtm" mnemonicParsing="false" onAction="#confirmTrade" text="Confirm">
+                  <Button fx:id="confirmBtn" mnemonicParsing="false" onAction="#confirmClicked" text="Confirm">
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#cancelTrade" prefHeight="25.0" prefWidth="61.0" text="Cancel">
+                  <Button mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="61.0" text="Cancel">
                      <HBox.margin>
                         <Insets left="5.0" top="10.0" />
                      </HBox.margin>
