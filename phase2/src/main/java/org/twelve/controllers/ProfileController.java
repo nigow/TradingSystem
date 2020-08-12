@@ -1,7 +1,6 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Roles;
-import org.twelve.entities.Trade;
 import org.twelve.gateways.CitiesGateway;
 import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.ProfilePresenter;

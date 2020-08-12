@@ -17,13 +17,12 @@ public class StatusManager {
     private final AccountRepository accountRepository;
     private final ThresholdRepository thresholdRepository;
 
-    private TradeUtility tradeUtility;
+    private final TradeUtility tradeUtility;
 
     /**
      * Constructs an instance of StatusManager and stores restrictionsGateway.
      *
      */
-
     public StatusManager(AccountRepository accountRepository, TradeUtility tradeUtility, ThresholdRepository thresholdRepository) {
         this.accountRepository = accountRepository;
         this.tradeUtility = tradeUtility;
@@ -86,146 +85,6 @@ public class StatusManager {
         return accountsToUnfreeze;
     }
 
-//    public List<Account> getAccountsToBan(){
-//        List<Account> accountsToBan = new ArrayList<>();
-//        for(int accountID: accountRepository.getAccountIDs()){
-//            if(hasPermission(accountID, Permissions.LOGIN) && !hasPermission(accountID, Permissions.CAN_BAN)){
-//                accountsToBan.add(accountRepository.getAccountFromID(accountID));
-//            }
-//        }
-//        return accountsToBan;
-//    }
-
-//    public List<Integer> getAccountIDsToBan(){
-//        List<Integer> accountIDsToBan = new ArrayList<>();
-//        for(int accountID: accountRepository.getAccountIDs()){
-//            if(hasPermission(accountID, Permissions.LOGIN) && !hasPermission(accountID, Permissions.CAN_BAN)){
-//                accountIDsToBan.add(accountID);
-//            }
-//        }
-//        return accountIDsToBan;
-//    }
-
-    public List<String> getUsernamesToBan(){
-        List<String> usernamesToBan = new ArrayList<>();
-        for (int accountID : accountRepository.getAccountIDs()){
-            if (canBeBanned(accountID)){
-                usernamesToBan.add(accountRepository.getUsernameFromID(accountID));
-            }
-        }
-        return usernamesToBan;
-    }
-
-//    public List<Account> getAccountsToUnBan(){
-//        List<Account> accountsToUnBan = new ArrayList<>();
-//        for(int accountID: accountRepository.getAccountIDs()){
-//            if(!hasPermission(accountID, Permissions.LOGIN)){
-//                accountsToUnBan.add(accountRepository.getAccountFromID(accountID));
-//            }
-//        }
-//        return accountsToUnBan;
-//    }
-
-//    public List<Integer> getAccountIDsToUnBan(){
-//        List<Integer> accountIDsToUnBan = new ArrayList<>();
-//        for(int accountID: accountRepository.getAccountIDs()){
-//            if(!hasPermission(accountID, Permissions.LOGIN)){
-//                accountIDsToUnBan.add(accountID);
-//            }
-//        }
-//        return accountIDsToUnBan;
-//    }
-
-    public List<String> getUsernamesToUnBan(){
-        List<String> usernamesToUnBan = new ArrayList<>();
-        for(int accountID : accountRepository.getAccountIDs()){
-            if(getRoleOfAccount(accountID) == Roles.BANNED){
-                usernamesToUnBan.add(accountRepository.getUsernameFromID(accountID));
-            }
-        }
-        return usernamesToUnBan;
-    }
-
-//    public List<Integer> getAdminAccountIDs(){
-//        List<Integer> adminAccountIDs = new ArrayList<>();
-//        for(int accountID: accountRepository.getAccountIDs()){
-//            if(hasPermission(accountID, Permissions.ADD_ADMIN)){
-//                adminAccountIDs.add(accountID);
-//            }
-//        }
-//        return adminAccountIDs;
-//    }
-
-    public List<String> getAdminUsernames(){
-        List<String> adminAccountUsernames = new ArrayList<>();
-        for(int accountID: accountRepository.getAccountIDs()){
-            if(getRoleOfAccount(accountID) == Roles.ADMIN){
-                adminAccountUsernames.add(accountRepository.getUsernameFromID(accountID));
-            }
-        }
-        return adminAccountUsernames;
-    }
-
-//    public List<Integer> getVacationAccountIDs(){
-//        List<Integer> vacationAccountIDs = new ArrayList<>();
-//        for(int accountID: accountRepository.getAccountIDs()){
-//            if(isVacationing(accountID)){
-//                vacationAccountIDs.add(accountID);
-//            }
-//        }
-//        return vacationAccountIDs;
-//    }
-
-    public List<String> getVacationUsernames(){
-        List<String> vacationAccountUsernames = new ArrayList<>();
-        for(int accountID: accountRepository.getAccountIDs()){
-            if(getRoleOfAccount(accountID) == Roles.VACATION){
-                vacationAccountUsernames.add(accountRepository.getUsernameFromID(accountID));
-            }
-        }
-        return vacationAccountUsernames;
-    }
-
-//    public List<Integer> getTrustedAccountIDs(){
-//        List<Integer> trustedAccountIDs = new ArrayList<>();
-//        for(int accountID: accountRepository.getAccountIDs()){
-//            if(isTrusted(accountID)){
-//                trustedAccountIDs.add(accountID);
-//            }
-//        }
-//        return trustedAccountIDs;
-//    }
-
-    public List<String> getTrustedUsernames(){
-        List<String> trustedUsernames = new ArrayList<>();
-        for(int accountID: accountRepository.getAccountIDs()){
-            if(getRoleOfAccount(accountID) == Roles.TRUSTED){
-                trustedUsernames.add(accountRepository.getUsernameFromID(accountID));
-            }
-        }
-        return trustedUsernames;
-    }
-
-    public List<String> getModeratorUsernames() {
-        List<String> moderatorUsernames = new ArrayList<>();
-        for (int accountID:accountRepository.getAccountIDs()){
-            if (getRoleOfAccount(accountID) == Roles.MOD){
-                moderatorUsernames.add(accountRepository.getUsernameFromID(accountID));
-            }
-        }
-        return moderatorUsernames;
-    }
-
-    public List<String> getFrozenUsernames() {
-        List<String> frozenUsernames = new ArrayList<>();
-        for (int accountID : accountRepository.getAccountIDs()){
-            if (getRoleOfAccount(accountID) == Roles.FROZEN && !isPending(accountID)){
-                frozenUsernames.add(accountRepository.getUsernameFromID(accountID));
-            }
-        }
-        return frozenUsernames;
-    }
-
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
@@ -260,18 +119,6 @@ public class StatusManager {
         return false;
     }
 
-//    /**
-//     * Determines whether a given account is frozen.
-//     *
-//     * @param accountID Account that is checked if it is frozen
-//     * @return Whether the account is frozen or not
-//     */
-//    public boolean isFrozen(int accountID) {
-//        return !hasPermission(accountID, Permissions.LEND)
-////                && !hasPermission(accountID, Permissions.BORROW)
-//                && hasPermission(accountID, Permissions.REQUEST_VACATION);
-//    }
-
     /**
      * Determines whether a given account has requested to be unfrozen.
      *
@@ -281,11 +128,6 @@ public class StatusManager {
     public boolean isPending(int accountID) {
         return getRoleOfAccount(accountID) == Roles.FROZEN && !hasPermission(accountID, Permissions.REQUEST_UNFREEZE);
     }
-
-//    public boolean canTrade(int accountID){
-//        return hasPermission(accountID, Permissions.LEND);
-////                && hasPermission(accountID, Permissions.BORROW);
-//    }
 
     /**
      * Determines whether a given account should be frozen.
@@ -301,10 +143,11 @@ public class StatusManager {
                 role != Roles.BANNED && role != Roles.FROZEN && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
     }
 
-    private boolean canBeBanned(int accountID) {
-        return !hasPermission(accountID, Permissions.CAN_BAN) && getRoleOfAccount(accountID) != Roles.BANNED;
-    }
-
+    /**
+     * Check if an account is on a vacation
+     * @param accountID An ID of an account.
+     * @return A boolean indicating whether account can go on a vacation.
+     */
     public boolean canVacation(int accountID){
         return !canBeFrozen(accountID) && hasPermission(accountID, Permissions.TRADE) && hasPermission(accountID, Permissions.REQUEST_VACATION);
     }
@@ -320,15 +163,20 @@ public class StatusManager {
         accountRepository.updateToAccountGateway(account);
     }
 
+    /**
+     * Check if an accountID has a certain permission
+     * @param accountID The ID of the account checked.
+     * @param perm A permission being checked
+     * @return Whether the account has the permission.
+     */
     public boolean hasPermission(int accountID, Permissions perm){
         return accountRepository.getAccountFromID(accountID).getPermissions().contains(perm);
     }
 
-//    public boolean isVacationing(int accountID) {
-//        Account account = accountRepository.getAccountFromID(accountID);
-//        return !canTrade(accountID) && !account.getPermissions().contains(Permissions.REQUEST_UNFREEZE);
-//    }
-
+    /**
+     * Change an Account's permissions to move it to vacation state
+     * @param accountID The ID of the account.
+     */
     public void requestVacation(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_VACATION);
@@ -336,6 +184,10 @@ public class StatusManager {
         accountRepository.updateToAccountGateway(account);
     }
 
+    /**
+     * Finish an account's vacation, and return the account to a trading state.
+     * @param accountID The account returning from the vacation.
+     */
     public void completeVacation(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.REQUEST_VACATION);
@@ -343,6 +195,10 @@ public class StatusManager {
         accountRepository.updateToAccountGateway(account);
     }
 
+    /**
+     * Ban an account, undoing the process of account creation.
+     * @param accountID The ID of the account.
+     */
     public void banAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.LOGIN);
@@ -350,13 +206,21 @@ public class StatusManager {
 
     }
 
-    public void unbanAccount(int accountID) {
+    /**
+     * Undo the banning of an account, returning them to their state before being banned.
+     * @param accountID An ID of an account being banned.
+     */
+    public void unBanAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.LOGIN);
         accountRepository.updateToAccountGateway(account);
 
     }
 
+    /**
+     * Promote an account to become a trusted community member
+     * @param accountID The ID of the account being promoted.
+     */
     public void trustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.CONFIRM_ITEM);
@@ -364,6 +228,10 @@ public class StatusManager {
 
     }
 
+    /**
+     * Demote a trusted member to a normal account.
+     * @param accountID The ID of the account being demoted.
+     */
     public void unTrustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CONFIRM_ITEM);
@@ -371,24 +239,37 @@ public class StatusManager {
 
     }
 
+    // TODO: A normal account promoted should also be able to CONFIRM_ITEM
+    /**
+     * Promote an account to a moderator
+     * @param accountID The account being promoted.
+     */
     public void modAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-        //account.addPermission(Permissions.CAN_BAN);
         account.addPermission(Permissions.FREEZE);
         account.addPermission(Permissions.UNFREEZE);
         accountRepository.updateToAccountGateway(account);
 
     }
 
-    public void unmodAccount(int accountID) {
+    /**
+     * Change a moderator to a normal account
+     * @param accountID The ID of the account becoming a moderator.
+     */
+    // TODO: They should become a normal account
+    public void unModAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
-        //account.removePermission(Permissions.CAN_BAN);
         account.removePermission(Permissions.FREEZE);
         account.removePermission(Permissions.UNFREEZE);
         accountRepository.updateToAccountGateway(account);
 
     }
 
+    /**
+     * Get the role of the Account with a given ID.
+     * @param accountID The Account ID.
+     * @return The role of the account.
+     */
     public Roles getRoleOfAccount(int accountID) {
         List <Permissions> perms = accountRepository.getAccountFromID(accountID).getPermissions();
         if (!perms.contains(Permissions.LOGIN))
@@ -397,9 +278,6 @@ public class StatusManager {
             return Roles.VACATION;
         if (!perms.contains(Permissions.TRADE))
             return Roles.FROZEN;
-
-        // TODO add demo accounts
-
         if (perms.contains(Permissions.ADD_ADMIN))
             return Roles.ADMIN;
         if (perms.contains(Permissions.FREEZE))

@@ -1,6 +1,5 @@
 package org.twelve.presenters.ui;
 
-import org.twelve.entities.Roles;
 import org.twelve.presenters.RegistrationPresenter;
 
 import java.util.ArrayList;
@@ -9,14 +8,13 @@ import java.util.ResourceBundle;
 
 public class UIRegistrationPresenter extends ObservablePresenter implements RegistrationPresenter {
 
-    private List<String> availableTypes;
+    private boolean adminMode;
     private List<String> existingCities;
     private final ResourceBundle localizedResources;
     private String errorMsg;
 
     public UIRegistrationPresenter(ResourceBundle localizedResources) {
         this.localizedResources = localizedResources;
-        setAvailableTypes(new ArrayList<>());
         setExistingCities(new ArrayList<>());
         setError("");
     }
@@ -46,18 +44,15 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
     }
 
     @Override
-    public void setAvailableTypes(List<Roles> types) {
-        List<String> oldAvailableTypes = this.availableTypes;
-        this.availableTypes = new ArrayList<>();
-        for (Roles type : types) {
-            availableTypes.add(localizedResources.getString(type.name().toLowerCase()));
-        }
-        propertyChangeSupport.firePropertyChange("availableTypes", oldAvailableTypes, this.availableTypes);
+    public void setAdminMode(boolean adminMode) {
+        boolean oldAdminMode = this.adminMode;
+        this.adminMode = adminMode;
+        propertyChangeSupport.firePropertyChange("adminMode", oldAdminMode, this.adminMode);
     }
 
     @Override
-    public List<String> getAvailableTypes() {
-        return availableTypes;
+    public boolean getAdminMode() {
+        return adminMode;
     }
 
 }

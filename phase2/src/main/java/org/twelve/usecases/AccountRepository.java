@@ -2,6 +2,7 @@ package org.twelve.usecases;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
+import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.AccountGateway;
 
 
@@ -206,5 +207,22 @@ public class AccountRepository {
             }
         }
         return userID;
+    }
+
+    /**
+     * Gets a list of usernames the given account username can trade with
+     * @param username the username of the account
+     * @return A list of username the account can trade with
+     */
+    public List<String> getTradableAccounts(String username) {
+        List<String> tradableAccount = new ArrayList<>();
+        for (Account account: accounts.values()) {
+            if (account.getPermissions().contains(Permissions.TRADE) &&
+                    account.getLocation().equals(getAccountFromUsername(username).getLocation())) {
+                tradableAccount.add(account.getUsername());
+            }
+        }
+        tradableAccount.remove(username);
+        return tradableAccount;
     }
 }

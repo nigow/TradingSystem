@@ -15,17 +15,29 @@ public class ThresholdRepository {
     private Thresholds thresholds;
     private ThresholdsGateway thresholdsGateway;
 
+    /**
+     * Set and get thresholds in the system.
+     * @param thresholdsGateway An instance of a thresholds gateway.
+     */
     public ThresholdRepository(ThresholdsGateway thresholdsGateway) {
         this.thresholdsGateway = thresholdsGateway;
         thresholdsGateway.populate(this);
     }
 
-    public void switchToDemoMode(ThresholdsGateway thresholdsGateway) {
+    /**
+     * Change thresholdsGateway to a demo mode instance
+     * @param thresholdsGateway A new gateway in demo mode
+     */
+    void switchToDemoMode(ThresholdsGateway thresholdsGateway) {
         this.thresholdsGateway = thresholdsGateway;
         updateThresholds();
     }
 
-    public void switchToNormalMode(ThresholdsGateway thresholdsGateway) {
+    /**
+     * Change thresholdsGateway to a normal mode instance
+     * @param thresholdsGateway A new instance
+     */
+    void switchToNormalMode(ThresholdsGateway thresholdsGateway) {
         this.thresholdsGateway = thresholdsGateway;
         thresholds = null;
         thresholdsGateway.populate(this);
@@ -151,7 +163,7 @@ public class ThresholdRepository {
     }
 
     /**
-     * Create the tresholds for this program.
+     * Create the thresholds for this program.
      * @param lendMoreThanBorrow Number of items a user has to lend more than borrow to be able to make a trade
      * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen
      * @param maxWeeklyTrade     Maximum number of trades a user can have in one week

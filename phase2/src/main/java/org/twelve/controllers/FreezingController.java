@@ -1,6 +1,5 @@
 package org.twelve.controllers;
 
-import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.AccountRepository;
@@ -77,7 +76,7 @@ public class FreezingController {
 
     public void unban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        statusManager.unbanAccount(chosenUserID);
+        statusManager.unBanAccount(chosenUserID);
         updateAccountLists();
     }
 
@@ -101,20 +100,16 @@ public class FreezingController {
 
     public void unmodAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        statusManager.unmodAccount(chosenUserID);
+        statusManager.unModAccount(chosenUserID);
         updateAccountLists();
     }
 
     public void updateAccountLists() {
 
-        List<String> bannedAccounts = new ArrayList<>();
-        List<String> unfreezeAccounts = new ArrayList<>();
-        List<String> frozenAccounts = new ArrayList<>();
-        List<String> toFreezeAccounts = new ArrayList<>();
-        List<String> adminAccounts = new ArrayList<>();
-        List<String> modAccounts = new ArrayList<>();
-        List<String> trustedAccounts = new ArrayList<>();
-        List<String> regularAccounts = new ArrayList<>();
+        List<String> bannedAccounts = new ArrayList<>(), unfreezeAccounts = new ArrayList<>(),
+                frozenAccounts = new ArrayList<>(), toFreezeAccounts = new ArrayList<>(),
+                adminAccounts = new ArrayList<>(), modAccounts = new ArrayList<>(),
+                trustedAccounts = new ArrayList<>(), regularAccounts = new ArrayList<>();
 
         for (int id : accountRepository.getAccountIDs()) {
 

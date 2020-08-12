@@ -59,7 +59,7 @@ public class JsonAccountGateway implements AccountGateway {
         HttpURLConnection urlConnection;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
-        //List<Integer> existingAccountIds = accountRepository.getAccountIDs();
+
         try{
             URL url = new URL(getAllAccountsUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -91,7 +91,6 @@ public class JsonAccountGateway implements AccountGateway {
                             Collections.addAll(permissions, json.get("permissions").getAsString().split(" "));
                             String location = json.get("city").getAsString();
 
-                            // todo: add the actual location when server is updated
                             accountRepository.createAccount(accountId, username, password, permissions, wishlist, location);
 
                         }
@@ -137,8 +136,7 @@ public class JsonAccountGateway implements AccountGateway {
         json.addProperty("permissions", permissionsString.toString());
         json.addProperty("city", location);
 
-        // todo: uncomment when server is updated
-        // json.addProperty("city", city);
+        System.out.println(json.toString());
 
         HttpURLConnection con;
         OutputStream outputStream;
@@ -156,11 +154,6 @@ public class JsonAccountGateway implements AccountGateway {
             outputStream = con.getOutputStream();
             outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
 
-
-            /*
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bufferedWriter.write(json.toString());
-            */
 
             con.getInputStream(); // this is needed otherwise the request doesn't go out
 

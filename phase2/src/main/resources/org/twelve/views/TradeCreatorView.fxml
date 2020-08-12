@@ -55,7 +55,7 @@
       </HBox>
       <HBox alignment="BASELINE_RIGHT" prefHeight="6.0" prefWidth="285.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <children>
-            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#saveClicked" text="%save" />
+            <Button fx:id="saveButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#saveClicked" text="%save" />
          </children></HBox>
       <HBox prefWidth="200.0" GridPane.rowIndex="4">
          <children>

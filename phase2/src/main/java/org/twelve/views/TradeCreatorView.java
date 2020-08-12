@@ -34,7 +34,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
     @FXML
     private GridPane graphic;
-
+    @FXML
+    private Button saveButton;
     @FXML
     private ListView<String> yourItems;
     @FXML
@@ -137,7 +138,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
                 tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerItems.getSelectionModel().getSelectedItem());
             }
         }));
-
+        saveButton.disableProperty().bind(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
+                peerItems.getSelectionModel().selectedItemProperty().isNull()));
     }
 
     @FXML

@@ -1,16 +1,14 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -30,6 +28,12 @@ import java.util.ResourceBundle;
 public class RegistrationView<T extends ObservablePresenter & RegistrationPresenter> implements SceneView, Initializable {
 
     @FXML
+    private Label adminLabel;
+
+    @FXML
+    private Label userLabel;
+
+    @FXML
     private GridPane graphic;
 
     @FXML
@@ -42,13 +46,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     private ComboBox<String> locationBox;
 
     @FXML
-    private ComboBox<String> typeBox;
-
-    @FXML
     private Label errorLabel;
-
-    @FXML
-    private Button registerBtn;
 
     private final WindowHandler windowHandler;
     private final RegistrationController registrationController;
@@ -73,7 +71,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     private void registerClicked() {
 
         if (registrationController.createAccount(usernameBox.getText(), passwordBox.getText(),
-                locationBox.getEditor().getText(), typeBox.getSelectionModel().getSelectedIndex())) {
+                locationBox.getEditor().getText())) {
 
             windowHandler.changeScene(Scenes.MENU);
 
@@ -84,10 +82,10 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     @FXML
     private void backClicked() {
 
-        if (typeBox.getItems().size() > 1) {
-            windowHandler.changeScene(Scenes.LANDING);
-        } else {
+        if (adminLabel.isVisible()) {
             windowHandler.changeScene(Scenes.MENU);
+        } else {
+            windowHandler.changeScene(Scenes.LANDING);
         }
 
     }
@@ -116,21 +114,14 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
         try {
 
-            ReadOnlyJavaBeanObjectProperty<List<String>> availableTypesBinding =
-                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("availableTypes").build();
-
-            ObjectBinding<ObservableList<String>> typesBinding = Bindings.createObjectBinding(() ->
-                    FXCollections.observableArrayList(availableTypesBinding.get()), availableTypesBinding);
-
-            typeBox.itemsProperty().bind(typesBinding);
+            adminLabel.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(registrationPresenter).name("adminMode").build());
+            userLabel.visibleProperty().bind(adminLabel.visibleProperty().not());
 
             ReadOnlyJavaBeanObjectProperty<List<String>> existingCitiesBinding =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("existingCities").build();
 
-            ObjectBinding<ObservableList<String>> citiesBinding = Bindings.createObjectBinding(() ->
-                    FXCollections.observableArrayList(existingCitiesBinding.get()), existingCitiesBinding);
-
-            locationBox.itemsProperty().bind(citiesBinding);
+            locationBox.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(existingCitiesBinding.get()), existingCitiesBinding));
 
             errorLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(registrationPresenter).name("error").build());
@@ -139,6 +130,5 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
             e.printStackTrace();
         }
 
-        registerBtn.disableProperty().bind(typeBox.getSelectionModel().selectedItemProperty().isNull());
     }
 }
