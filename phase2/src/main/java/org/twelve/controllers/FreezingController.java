@@ -77,7 +77,7 @@ public class FreezingController {
 
     public void unban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        statusManager.unbanAccount(chosenUserID);
+        statusManager.unBanAccount(chosenUserID);
         updateAccountLists();
     }
 
