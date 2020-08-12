@@ -6,9 +6,6 @@ import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Controller that deals with changing restrictions
  * @author Ethan (follow @ethannomiddlenamelam on instagram)

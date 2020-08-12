@@ -8,8 +8,8 @@ import org.twelve.usecases.UseCasePool;
 
 public class MenuController {
 
-    private SessionManager sessionManager;
-    private StatusManager statusManager;
+    private final SessionManager sessionManager;
+    private final StatusManager statusManager;
     private MenuPresenter menuPresenter;
 
     public MenuController(UseCasePool useCasePool) {
