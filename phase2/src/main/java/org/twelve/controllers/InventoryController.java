@@ -79,7 +79,7 @@ public class InventoryController {
      * @param name The name of the item
      * @param description The description of the item
      */
-    public void createItem(String name, String description) {
+    public boolean createItem(String name, String description) {
 
         if (!name.isBlank() && !description.isBlank()) {
 
@@ -87,10 +87,12 @@ public class InventoryController {
             itemManager.createItem(name, description, sessionManager.getCurrAccountID());
             displayAllYourInventory();
             inventoryPresenter.setError("");
+            return true;
 
         } else {
 
             inventoryPresenter.setError("badItemInfo");
+            return false;
 
         }
 

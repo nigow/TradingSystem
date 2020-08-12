@@ -179,7 +179,10 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
     @FXML
     private void addItemClicked() {
 
-        inventoryController.createItem(itemName.getText(), itemDesc.getText());
+        if (inventoryController.createItem(itemName.getText(), itemDesc.getText())) {
+            itemName.clear();
+            itemDesc.clear();
+        }
 
     }
 
