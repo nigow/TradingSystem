@@ -24,6 +24,10 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
 
     private final ResourceBundle localizedResources;
 
+    /**
+     * Constructor for observable warehouse presenter.
+     * @param localizedResources Pack containing any localized strings.
+     */
     public UIWarehousePresenter(ResourceBundle localizedResources) {
 
         super();
@@ -36,6 +40,9 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPendingItems(List<String> pendingItems) {
         List<String> oldPendingItems = this.pendingItems;
@@ -43,11 +50,17 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
         propertyChangeSupport.firePropertyChange("pendingItems", oldPendingItems, pendingItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getPendingItems() {
         return pendingItems;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setApprovedItems(List<String> approvedItems) {
         List<String> oldApprovedItems = this.approvedItems;
@@ -55,11 +68,17 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
         propertyChangeSupport.firePropertyChange("approvedItems", oldApprovedItems, this.approvedItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getApprovedItems() {
         return approvedItems;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelectedItemName(String name) {
 
@@ -69,11 +88,17 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSelectedItemName() {
         return selectedItemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelectedItemDesc(String desc) {
 
@@ -83,6 +108,9 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSelectedItemDesc() {
         return selectedItemDesc;

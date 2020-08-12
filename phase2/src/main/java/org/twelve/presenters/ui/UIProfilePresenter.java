@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Observable profile presenter.
+ */
 public class UIProfilePresenter extends ObservablePresenter implements ProfilePresenter {
 
     private final ResourceBundle localizedResources;
@@ -19,6 +22,10 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
     private boolean canBecomeTrusted;
     private List<String> existingCities;
 
+    /**
+     * Constructor for observable profile presenter.
+     * @param localizedResources Pack containing any localized strings.
+     */
     public UIProfilePresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
@@ -28,6 +35,9 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         setCurrentLocation("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPasswordError(String errorKey) {
         String oldErrorMsg = this.passwordError;
@@ -35,11 +45,17 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         propertyChangeSupport.firePropertyChange("passwordError", oldErrorMsg, this.passwordError);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getPasswordError() {
         return passwordError;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLocationError(String errorKey) {
         String oldErrorMsg = this.locationError;
@@ -47,11 +63,17 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         propertyChangeSupport.firePropertyChange("locationError", oldErrorMsg, this.locationError);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getLocationError() {
         return locationError;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCurrentLocation(String location) {
         String oldLocation = this.location;
@@ -59,11 +81,17 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         propertyChangeSupport.firePropertyChange("currentLocation", oldLocation, this.location);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCurrentLocation() {
         return location;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setVacationStatus(boolean vacationStatus) {
 
@@ -73,11 +101,17 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getVacationStatus() {
         return vacationStatus;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanVacation(boolean canVacation) {
 
@@ -87,11 +121,17 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanVacation() {
         return canVacation;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanRequestUnfreeze(boolean canRequestUnfreeze) {
         boolean oldCanRequestUnfreeze = this.canRequestUnfreeze;
@@ -99,11 +139,17 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         propertyChangeSupport.firePropertyChange("canRequestUnfreeze", oldCanRequestUnfreeze, this.canRequestUnfreeze);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRequestUnfreeze() {
         return canRequestUnfreeze;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setExistingCities(List<String> existingCities) {
         List<String> oldExistingCities = this.existingCities;
@@ -111,16 +157,25 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         propertyChangeSupport.firePropertyChange("existingCities", oldExistingCities, this.existingCities);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getExistingCities() {
         return existingCities;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanBecomeTrusted() {
         return canBecomeTrusted;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanBecomeTrusted(boolean canBecomeTrusted) {
         boolean oldCanBecomeTrusted = this.canBecomeTrusted;
