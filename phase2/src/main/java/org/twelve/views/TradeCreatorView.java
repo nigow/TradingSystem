@@ -166,9 +166,11 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
     public void saveClicked(ActionEvent actionEvent) {
         LocalDateTime time = LocalDateTime.of(dateBox.getValue(), LocalTime.of(hourChosen.getValue(), minuteChosen.getValue()));
-        tradeCreatorController.createTrade(peerBox.getSelectionModel().getSelectedItem(), yourItems.getSelectionModel().getSelectedIndex(),
-                peerItems.getSelectionModel().getSelectedIndex(), isPermanent.isSelected(), locationBox.getText(), time);
-        windowHandler.changeScene(Scenes.MENU);
+        if (!yourItems.getSelectionModel().isEmpty() || !peerItems.getSelectionModel().isEmpty()) {
+            tradeCreatorController.createTrade(peerBox.getSelectionModel().getSelectedItem(), yourItems.getSelectionModel().getSelectedIndex(),
+                    peerItems.getSelectionModel().getSelectedIndex(), isPermanent.isSelected(), locationBox.getText(), time);
+            windowHandler.changeScene(Scenes.MENU);
+        }
     }
 
 }
