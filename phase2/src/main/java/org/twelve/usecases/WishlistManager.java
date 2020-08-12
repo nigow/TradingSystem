@@ -76,7 +76,7 @@ public class WishlistManager {
      * @param accountID The Account ID to look up for
      * @return Wishlist that this account has
      */
-    public List<Item> getWishlistItems(int accountID) {
+    protected List<Item> getWishlistItems(int accountID) {
         List<Item> wishlist = new ArrayList<>();
         for (int itemID : accountRepository.getAccountFromID(accountID).getWishlist()) {
             Item item = itemUtility.findItemById(itemID);

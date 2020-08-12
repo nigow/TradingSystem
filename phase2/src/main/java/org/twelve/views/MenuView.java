@@ -1,6 +1,7 @@
 package org.twelve.views;
 
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -35,6 +36,8 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     private Button addAdmin;
     @FXML
     private Button approveItems;
+    @FXML
+    private Button adminWishlist;
 
     /**
      * Constructor of view for post login menu.
@@ -66,7 +69,8 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
                     .bean(menuPresenter).name("addAdmin").build());
             approveItems.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("approveItems").build());
-
+            adminWishlist.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("adminWishlist").build());
 
         } catch (NoSuchMethodException ignored) {}
     }
@@ -153,5 +157,10 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     private void manageExistingTradesClicked() {
 
         windowHandler.changeScene(Scenes.TRADE_COLLECTION);
+    }
+
+    @FXML
+    public void adminWishlistClicked() {
+        windowHandler.changeScene(Scenes.ADMIN_WISHLIST);
     }
 }

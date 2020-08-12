@@ -2,6 +2,7 @@ package org.twelve.controllers;
 
 import org.twelve.gateways.GatewayPool;
 import org.twelve.gateways.GatewayPoolFactory;
+import org.twelve.presenters.AdminWishlistPresenter;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.Locale;
@@ -20,6 +21,7 @@ public class ControllerPool {
     private final TradeCreatorController tradeCreatorController;
     private final TradeCollectionController tradeCollectionController;
     private final LandingController landingController;
+    private final AdminWishlistController adminWishlistController;
 
     public ControllerPool(Locale selectedLanguage, boolean demoMode) {
         GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("json");
@@ -41,6 +43,7 @@ public class ControllerPool {
         freezingController = new FreezingController(useCasePool);
         tradeCreatorController = new TradeCreatorController(useCasePool);
         tradeCollectionController = new TradeCollectionController(useCasePool);
+        adminWishlistController = new AdminWishlistController(useCasePool, gatewayPool);
 
     }
 
@@ -86,5 +89,9 @@ public class ControllerPool {
 
     public LandingController getLandingController() {
         return landingController;
+    }
+
+    public AdminWishlistController getAdminWishlistController() {
+        return adminWishlistController;
     }
 }

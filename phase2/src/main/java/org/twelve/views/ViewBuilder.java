@@ -102,6 +102,11 @@ public class ViewBuilder {
 
                 return new TradeCollectionView<>(windowHandler, controllerPool.getTradeCollectionController(),
                         new UITradeCollectionPresenter(localizedResources));
+
+            case ADMIN_WISHLIST:
+
+                return new AdminWishlistView<>(windowHandler, controllerPool.getAdminWishlistController(),
+                        new UIAdminWishlistPresenter(localizedResources));
         }
 
         return null;

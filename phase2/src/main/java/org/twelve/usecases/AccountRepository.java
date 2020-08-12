@@ -119,7 +119,7 @@ public class AccountRepository {
      *
      * @return List of all accounts
      */
-    public List<Account> getAccounts() {
+    protected List<Account> getAccounts() {
         return (List<Account>) accounts.values();
     }
 

@@ -16,7 +16,8 @@ public enum Scenes {
     WISHLIST("Wishlist"),
     INVENTORY("Inventory"),
     ACCOUNTS("Accounts"),
-    TRADE_COLLECTION("TradeCollection");
+    TRADE_COLLECTION("TradeCollection"),
+    ADMIN_WISHLIST("AdminWishlist");
 
     private final String fxml;
 

@@ -15,4 +15,7 @@ public interface MenuPresenter {
 
     void setApproveItems(boolean approveAdmin);
     boolean getApproveItems();
+
+    void setAdminWishlist(boolean adminWishlist);
+    boolean getAdminWishlist();
 }
