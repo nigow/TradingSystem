@@ -55,14 +55,6 @@ public class WishlistController {
 
         }
 
-        List<String> warehouseItems = new ArrayList<>();
-
-        for (int id : itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID())) {
-
-            warehouseItems.add(itemManager.getItemNameById(id));
-
-        }
-
         List<String> localItems = new ArrayList<>();
 
         for (int id : itemManager.getLocalItems(sessionManager.getCurrAccountID())) {
@@ -72,7 +64,6 @@ public class WishlistController {
         }
 
         wishlistPresenter.setWishlistItems(wishlistItems);
-        wishlistPresenter.setWarehouseItems(warehouseItems);
         wishlistPresenter.setLocalItems(localItems);
 
     }
