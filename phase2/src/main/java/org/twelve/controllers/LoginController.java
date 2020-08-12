@@ -25,11 +25,6 @@ public class LoginController {
      */
     private final LoginManager loginManager;
 
-    /**
-     * An instance of ControllerInputValidator to check a user's input is valid.
-     */
-    private final InputHandler inputHandler;
-
     private LoginPresenter loginPresenter;
 
     private final AccountGateway accountGateway;
@@ -45,7 +40,6 @@ public class LoginController {
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
         accountRepository = useCasePool.getAccountRepository();
-        inputHandler = new InputHandler();
         accountGateway = gatewayPool.getAccountGateway();
     }
 
@@ -62,7 +56,7 @@ public class LoginController {
 
         accountGateway.populate(accountRepository);
 
-        if (inputHandler.isValidUserPass(username, password) && loginManager.authenticateLogin(username, password)) {
+        if (loginManager.authenticateLogin(username, password)) {
             loginPresenter.setError("");
             sessionManager.login(username);
             return true;
