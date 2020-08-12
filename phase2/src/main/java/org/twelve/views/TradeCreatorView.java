@@ -135,7 +135,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         peerItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
             if (!twoWay.isSelected()) {
                 yourItems.getSelectionModel().clearSelection();
-                tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerItems.getSelectionModel().getSelectedItem());
+                // TODO i fixed this, please make sure i didn't mess up  --maryam
+                tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerBox.getSelectionModel().getSelectedItem());
             }
         }));
         saveButton.disableProperty().bind(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
