@@ -64,6 +64,7 @@ public class RegistrationController {
      * A method to create an account
      * @param username the username of the account
      * @param password the password of the account
+     * @param location the location of the account
      * @return true if the account has been successfully created.
      */
     public boolean createAccount(String username, String password, String location) {
@@ -126,6 +127,10 @@ public class RegistrationController {
         return true;
     }
 
+    /**
+     * Provides the registration controller with an appropriate presenter.
+     * @param registrationPresenter An instance of a class that implements {@link org.twelve.presenters.RegistrationPresenter}.
+     */
     public void setRegistrationPresenter(RegistrationPresenter registrationPresenter) {
         this.registrationPresenter = registrationPresenter;
     }
