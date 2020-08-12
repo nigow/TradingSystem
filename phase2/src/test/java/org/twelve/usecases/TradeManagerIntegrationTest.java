@@ -24,7 +24,8 @@ public class TradeManagerIntegrationTest extends TestCase {
 
     private void setTradeManager() {
         inMemoryGatewayPool = new InMemoryGatewayPool();
-        accountRepository = new AccountRepository(inMemoryGatewayPool.getAccountGateway());
+        SecurityUtility securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES");
+        accountRepository = new AccountRepository(inMemoryGatewayPool.getAccountGateway(), securityUtility);
         itemManager = new ItemManager(inMemoryGatewayPool.getItemsGateway(), accountRepository);
         wishlistManager = new WishlistManager(accountRepository, itemManager);
 

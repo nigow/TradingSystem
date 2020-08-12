@@ -23,6 +23,10 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
 
     private final ResourceBundle localizedResources;
 
+    /**
+     * Constructor for observable inventory presenter.
+     * @param localizedResources Pack containing any localized strings.
+     */
     public UIInventoryPresenter(ResourceBundle localizedResources) {
 
         super();
@@ -34,6 +38,9 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
         setError("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setError(String errorKey) {
         String oldErrorMsg = this.errorMsg;
@@ -41,11 +48,17 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
         propertyChangeSupport.firePropertyChange("error", oldErrorMsg, this.errorMsg);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getError() {
         return errorMsg;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setApprovedItems(List<String> approvedItems) {
         List<String> oldApprovedItems = this.approvedItems;
@@ -53,11 +66,17 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
         propertyChangeSupport.firePropertyChange("approvedItems", oldApprovedItems, this.approvedItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getApprovedItems() {
         return approvedItems;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPendingItems(List<String> pendingItems) {
         List<String> oldPendingItems = this.pendingItems;
@@ -65,11 +84,17 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
         propertyChangeSupport.firePropertyChange("pendingItems", oldPendingItems, this.pendingItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getPendingItems() {
         return pendingItems;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelectedItemName(String name) {
         String oldSelectedItemName = this.selectedItemName;
@@ -77,11 +102,17 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
         propertyChangeSupport.firePropertyChange("selectedItemName", oldSelectedItemName, this.selectedItemName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSelectedItemName() {
         return selectedItemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelectedItemDesc(String desc) {
         String oldSelectedItemDesc = this.selectedItemDesc;
@@ -89,6 +120,9 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
         propertyChangeSupport.firePropertyChange("selectedItemDesc", oldSelectedItemDesc, this.selectedItemDesc);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSelectedItemDesc() {
         return selectedItemDesc;

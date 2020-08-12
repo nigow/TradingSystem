@@ -135,7 +135,10 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
     @FXML
     private void updatePasswordClicked() {
-        profileController.changePassword(oldPassword.getText(), newPassword.getText());
+        if (profileController.changePassword(oldPassword.getText(), newPassword.getText())) {
+            oldPassword.clear();
+            newPassword.clear();
+        }
     }
 
     @FXML
@@ -145,7 +148,9 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
     @FXML
     private void updateLocationClicked() {
-        profileController.changeLocation(locationBox.getEditor().getText());
+        if (profileController.changeLocation(locationBox.getEditor().getText())) {
+            locationBox.getEditor().clear();
+        }
     }
 
     @FXML

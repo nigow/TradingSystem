@@ -7,26 +7,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Observable wishlist presenter.
+ */
 public class UIWishlistPresenter extends ObservablePresenter implements WishlistPresenter {
 
     private List<String> wishlistItems;
-    private List<String> warehouseItems;
     private List<String> localItems;
     private String selectedItemName;
     private String selectedItemDesc;
 
     private final ResourceBundle localizedResources;
 
+    /**
+     * Constructor for observable wishlist presenter.
+     * @param localizedResources Pack containing any localized strings.
+     */
     public UIWishlistPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
         setWishlistItems(new ArrayList<>());
-        setWarehouseItems(new ArrayList<>());
         setLocalItems(new ArrayList<>());
         setSelectedItemName("");
         setSelectedItemDesc("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setWishlistItems(List<String> wishlistItems) {
         List<String> oldWishlistItems = this.wishlistItems;
@@ -34,23 +42,17 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         propertyChangeSupport.firePropertyChange("wishlistItems", oldWishlistItems, this.wishlistItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getWishlistItems() {
         return wishlistItems;
     }
 
-    @Override
-    public void setWarehouseItems(List<String> warehouseItems) {
-        List<String> oldWarehouseItems = this.warehouseItems;
-        this.warehouseItems = warehouseItems;
-        propertyChangeSupport.firePropertyChange("warehouseItems", oldWarehouseItems, this.warehouseItems);
-    }
-
-    @Override
-    public List<String> getWarehouseItems() {
-        return warehouseItems;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLocalItems(List<String> localItems) {
         List<String> oldLocalItems = this.wishlistItems;
@@ -58,11 +60,17 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         propertyChangeSupport.firePropertyChange("localItems", oldLocalItems, this.localItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getLocalItems() {
         return localItems;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelectedItemName(String name) {
         String oldItemName = this.selectedItemName;
@@ -70,11 +78,17 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         propertyChangeSupport.firePropertyChange("selectedItemName", oldItemName, this.selectedItemName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSelectedItemName() {
         return selectedItemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelectedItemDesc(String desc) {
         String oldItemDesc = this.selectedItemDesc;
@@ -82,6 +96,9 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         propertyChangeSupport.firePropertyChange("selectedItemDesc", oldItemDesc, this.selectedItemDesc);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSelectedItemDesc() {
         return selectedItemDesc;

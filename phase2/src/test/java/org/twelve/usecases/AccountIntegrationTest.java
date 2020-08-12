@@ -22,7 +22,8 @@ public class AccountIntegrationTest extends TestCase {
 //        h.put(0, initial);
 
         inMemoryAccountGateway = new InMemoryAccountGateway(h);
-        accountRepository = new AccountRepository(inMemoryAccountGateway);
+        SecurityUtility securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES");
+        accountRepository = new AccountRepository(inMemoryAccountGateway, securityUtility);
     }
     
     public void testInitialization() {

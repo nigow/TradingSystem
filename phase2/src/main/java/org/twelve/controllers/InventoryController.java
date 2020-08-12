@@ -78,6 +78,7 @@ public class InventoryController {
      *
      * @param name The name of the item
      * @param description The description of the item
+     * @return Whether the item was successfully created or not
      */
     public boolean createItem(String name, String description) {
 
@@ -100,7 +101,7 @@ public class InventoryController {
     }
 
     /**
-     * Removes an item from the inventory
+     * Removes an item from the inventory.
      *
      * @param itemIndex The index in the list of items in this user's
      */
@@ -122,10 +123,18 @@ public class InventoryController {
 
     }
 
+    /**
+     * Provides the inventory controller with an appropriate presenter.
+     * @param inventoryPresenter An instance of a class that implements {@link org.twelve.presenters.InventoryPresenter}.
+     */
     public void setInventoryPresenter(InventoryPresenter inventoryPresenter) {
         this.inventoryPresenter = inventoryPresenter;
     }
 
+    /**
+     * Changes which item the user has selected and updates presenter with new name & desc.
+     * @param itemIndex Index of selected item.
+     */
     public void setSelectedItem(int itemIndex) {
 
         int approvedInvSize = itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).size();

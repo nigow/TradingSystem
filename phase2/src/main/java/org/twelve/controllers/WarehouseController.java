@@ -9,12 +9,20 @@ import org.twelve.usecases.UseCasePool;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for managing the warehouse (all items in the system).
+ */
 public class WarehouseController {
 
     private final ItemManager itemManager;
     private WarehousePresenter warehousePresenter;
     private final ItemsGateway itemsGateway;
 
+    /**
+     * Constructor of controller for managing the warehouse.
+     * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
+     * @param gatewayPool An instance of {@link org.twelve.gateways.GatewayPool}.
+     */
     public WarehouseController(UseCasePool useCasePool, GatewayPool gatewayPool) {
 
         itemManager = useCasePool.getItemManager();
@@ -22,10 +30,18 @@ public class WarehouseController {
 
     }
 
+    /**
+     * Provides the warehouse controller with an appropriate presenter.
+     * @param warehousePresenter An instance of a class that implements {@link org.twelve.presenters.WarehousePresenter}.
+     */
     public void setWarehousePresenter(WarehousePresenter warehousePresenter) {
         this.warehousePresenter = warehousePresenter;
     }
 
+    /**
+     * Approves the item at itemIndex.
+     * @param itemIndex Index of item to approve.
+     */
     public void approveItem(int itemIndex) {
 
         if (itemIndex < itemManager.getDisapprovedIDs().size())
@@ -35,6 +51,10 @@ public class WarehouseController {
 
     }
 
+    /**
+     * Removes the item at itemIndex.
+     * @param itemIndex Index of item to remove.
+     */
     public void denyItem(int itemIndex) {
 
         if (itemIndex < itemManager.getDisapprovedIDs().size()) {
@@ -51,6 +71,10 @@ public class WarehouseController {
 
     }
 
+    /**
+     * Changes which item the user has selected and updates presenter with new name & desc.
+     * @param itemIndex Index of selected item.
+     */
     public void changeSelectedItem(int itemIndex) {
 
         int itemId;
@@ -70,6 +94,9 @@ public class WarehouseController {
 
     }
 
+    /**
+     * Updates items in the warehouse.
+     */
     public void updateWarehouseItems() {
 
         itemsGateway.populate(itemManager);
