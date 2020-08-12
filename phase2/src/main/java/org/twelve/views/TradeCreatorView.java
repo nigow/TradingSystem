@@ -34,7 +34,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
     @FXML
     private GridPane graphic;
-
+    @FXML
+    private Button saveButton;
     @FXML
     private ListView<String> yourItems;
     @FXML
@@ -137,7 +138,8 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
                 tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerItems.getSelectionModel().getSelectedItem());
             }
         }));
-
+        saveButton.disableProperty().bind(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
+                peerItems.getSelectionModel().selectedItemProperty().isNull()));
     }
 
     @FXML
@@ -166,11 +168,9 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
     public void saveClicked(ActionEvent actionEvent) {
         LocalDateTime time = LocalDateTime.of(dateBox.getValue(), LocalTime.of(hourChosen.getValue(), minuteChosen.getValue()));
-        if (!yourItems.getSelectionModel().isEmpty() || !peerItems.getSelectionModel().isEmpty()) {
-            tradeCreatorController.createTrade(peerBox.getSelectionModel().getSelectedItem(), yourItems.getSelectionModel().getSelectedIndex(),
-                    peerItems.getSelectionModel().getSelectedIndex(), isPermanent.isSelected(), locationBox.getText(), time);
-            windowHandler.changeScene(Scenes.MENU);
-        }
+        tradeCreatorController.createTrade(peerBox.getSelectionModel().getSelectedItem(), yourItems.getSelectionModel().getSelectedIndex(),
+                peerItems.getSelectionModel().getSelectedIndex(), isPermanent.isSelected(), locationBox.getText(), time);
+        windowHandler.changeScene(Scenes.MENU);
     }
 
 }
