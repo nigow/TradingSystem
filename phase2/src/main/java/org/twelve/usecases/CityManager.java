@@ -3,10 +3,7 @@ package org.twelve.usecases;
 import org.twelve.entities.Account;
 import org.twelve.gateways.CitiesGateway;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Stores all cities in the program, and provides abilities
@@ -87,7 +84,7 @@ public class CityManager {
      * @param cityName the name of the city
      */
     public void createCity(String cityName){
-        int cityId = cities.size();
+        int cityId = (cities.isEmpty() ? 1 : Collections.max(cities.keySet()) + 1);
         cities.put(cityId, cityName);
         updateToGateway(cityId);
     }

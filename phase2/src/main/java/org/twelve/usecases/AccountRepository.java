@@ -6,10 +6,7 @@ import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.AccountGateway;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Repository for storing all accounts in the system.
@@ -49,7 +46,7 @@ public class AccountRepository {
     public boolean createAccount(String username, String password, List<Permissions> perms, String location) {
         if (getAccountFromUsername(username) == null) {
             List<Permissions> permsToAdd = new ArrayList<>(perms);
-            int accountID = accounts.size();
+            int accountID = (accounts.isEmpty() ? 1 : Collections.max(accounts.keySet()) + 1);
             Account newAccount = new Account(username, password, permsToAdd, accountID, location);
             accounts.put(accountID, newAccount);
             updateCreateAccount(newAccount);

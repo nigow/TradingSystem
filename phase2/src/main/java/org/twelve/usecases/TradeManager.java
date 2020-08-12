@@ -120,7 +120,10 @@ public class TradeManager extends TradeUtility{
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List<Integer> itemsIds) {
-        int id = trades.size() + 1;
+        List <Integer> tradesIDs = new ArrayList<>();
+        for (Trade t : trades)
+            tradesIDs.add(t.getId());
+        int id = (trades.isEmpty() ? 1 : Collections.max(tradesIDs) + 1);
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
         trades.add(trade);

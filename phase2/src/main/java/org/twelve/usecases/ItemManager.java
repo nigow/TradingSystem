@@ -1,9 +1,6 @@
 package org.twelve.usecases;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Item;
@@ -77,7 +74,7 @@ public class ItemManager extends ItemUtility {
      * @param ownerID     The id of the owner of the item
      */
     public void createItem(String name, String description, int ownerID) {
-        int id = items.size();
+        int id = (items.isEmpty() ? 1 : Collections.max(items.keySet()) + 1);
         Item item = new Item(id, name, description, ownerID);
         this.items.put(id, item);
         updateToItemsGateway(item, true);
