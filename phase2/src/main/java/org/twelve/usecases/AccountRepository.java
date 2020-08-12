@@ -15,13 +15,16 @@ public class AccountRepository {
 
     private final Map<Integer, Account> accounts;
     private AccountGateway accountGateway;
+    private SecurityUtility securityUtility;
+
 
     /**
      * Initializes an account repository with a certain gateway.
      * @param accountGateway An instance of an account gateway.
      */
-    public AccountRepository(AccountGateway accountGateway){
+    public AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
         this.accountGateway = accountGateway;
+        this.securityUtility = securityUtility;
         accounts = new HashMap<>();
         accountGateway.populate(this);
     }
@@ -59,7 +62,7 @@ public class AccountRepository {
         if (getAccountFromUsername(username) == null) {
             List<Permissions> permsToAdd = new ArrayList<>(perms);
             int accountID = (accounts.isEmpty() ? 1 : Collections.max(accounts.keySet()) + 1);
-            Account newAccount = new Account(username, password, permsToAdd, accountID, location);
+            Account newAccount = new Account(username, securityUtility.encrypt(password), permsToAdd, accountID, location);
             accounts.put(accountID, newAccount);
             updateCreateAccount(newAccount);
             return true;
