@@ -34,14 +34,14 @@ public class InMemoryItemGateway implements ItemsGateway {
             int ownerId = Integer.parseInt(item[3]);
             itemManager.createItem(itemId, name, desc, ownerId, isApproved);
         }
-        /**
+        /*
         List<Integer> existingIds = itemManager.getAllItemIds();
         for (Item item : this.itemMap.values()) {
             if (!existingIds.contains(item.getItemID())) {
                 itemManager.addToItems(item.getItemID(), item.getName(), item.getDescription(), item.getOwnerID(),
                         item.isApproved());
             }
-        }**/
+        }*/
         return true;
     }
 
@@ -56,10 +56,10 @@ public class InMemoryItemGateway implements ItemsGateway {
         item[2] = String.valueOf(isApproved);
         item[3] = String.valueOf(ownerId);
         itemMap.put(itemId, item);
-        /**
+        /*
         Item item = new Item(itemId, name, description, ownerId, isApproved);
         itemMap.put(item.getItemID(), item);
-         **/
+         */
         return true;
     }
 }
