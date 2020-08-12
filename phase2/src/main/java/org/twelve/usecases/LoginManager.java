@@ -6,9 +6,11 @@ import org.twelve.entities.Permissions;
 public class LoginManager {
 
     private final AccountRepository accountRepository;
+    private final SecurityUtility securityUtility;
 
-    public LoginManager(AccountRepository accountRepository){
+    public LoginManager(AccountRepository accountRepository, SecurityUtility securityUtility){
         this.accountRepository = accountRepository;
+        this.securityUtility = securityUtility;
     }
 
     /**
@@ -23,15 +25,16 @@ public class LoginManager {
         if (storedAccount == null) {
             return false;
         }
-        return storedAccount.getPassword().equals(password) &&
+        return storedAccount.getPassword().equals(securityUtility.encrypt(password)) &&
                 storedAccount.getPermissions().contains(Permissions.LOGIN);
     }
 
     public boolean changePassword(int accountID, String oldPassword, String newPassword){
         Account account = accountRepository.getAccountFromID(accountID);
-        if (!account.getPassword().equals(oldPassword))
+        String temp = securityUtility.encrypt(oldPassword);
+        if (!account.getPassword().equals(securityUtility.encrypt(oldPassword)))
             return false;
-        account.setPassword(newPassword);
+        account.setPassword(securityUtility.encrypt(newPassword));
         accountRepository.updateToAccountGateway(account);
         return true;
     }
