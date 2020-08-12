@@ -1,6 +1,7 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
@@ -31,6 +32,18 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private final WindowHandler windowHandler;
     private final FreezingController freezingController;
     private final T freezingPresenter;
+
+    @FXML
+    private Button banBtn;
+
+    @FXML
+    private Button unbanBtn;
+
+    @FXML
+    private Button trustBtn;
+
+    @FXML
+    private Button untrustBtn;
 
     @FXML
     private BorderPane graphic;
@@ -150,6 +163,18 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+
+        BooleanBinding notSelected = accountsTable.getSelectionModel().selectedItemProperty().isNull();
+
+        // todo: use .or() or .and() and bind to can* properties from presenter as well
+        banBtn.disableProperty().bind(notSelected);
+        unbanBtn.disableProperty().bind(notSelected);
+        trustBtn.disableProperty().bind(notSelected);
+        untrustBtn.disableProperty().bind(notSelected);
+        modButton.disableProperty().bind(notSelected);
+        unmodButton.disableProperty().bind(notSelected);
+        freezeButton.disableProperty().bind(notSelected);
+        unfreezeButton.disableProperty().bind(notSelected);
 
     }
 

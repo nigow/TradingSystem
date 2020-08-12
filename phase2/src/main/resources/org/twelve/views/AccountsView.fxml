@@ -11,10 +11,10 @@
             <Insets top="10.0" />
          </BorderPane.margin>
          <children>
-            <Button mnemonicParsing="false" onAction="#banClicked" text="%ban" />
-            <Button mnemonicParsing="false" onAction="#unbanClicked" text="%unban" />
-            <Button mnemonicParsing="false" onAction="#trustClicked" text="%trust" />
-            <Button mnemonicParsing="false" onAction="#untrustClicked" text="%untrust" />
+            <Button fx:id="banBtn" mnemonicParsing="false" onAction="#banClicked" text="%ban" />
+            <Button fx:id="unbanBtn" mnemonicParsing="false" onAction="#unbanClicked" text="%unban" />
+            <Button fx:id="trustBtn" mnemonicParsing="false" onAction="#trustClicked" text="%trust" />
+            <Button fx:id="untrustBtn" mnemonicParsing="false" onAction="#untrustClicked" text="%untrust" />
             <Button fx:id="freezeButton" mnemonicParsing="false" onAction="#freezeClicked" text="%freeze" />
             <Button fx:id="unfreezeButton" mnemonicParsing="false" onAction="#unfreezeClicked" text="%unfreeze" />
             <Button fx:id="modButton" mnemonicParsing="false" onAction="#modClicked" text="%mod" />
