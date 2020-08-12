@@ -109,6 +109,9 @@ public class ThresholdRepository {
         updateThresholds();
     }
 
+    /**
+     * @return Number of edits that each user can do with a trade.
+     */
     public int getNumberOfEdits() {
         return thresholds.getNumberOfEdits();
     }
@@ -117,8 +120,6 @@ public class ThresholdRepository {
         thresholds.setNumberOfEdits(numberOfEdits);
         updateThresholds();
     }
-
-    // TODO gateways and controllers should be updated to reflect this
 
     /**
      * @return number of trades required to make an account trusted

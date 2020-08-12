@@ -15,30 +15,11 @@ import java.util.stream.Collectors;
  */
 abstract public class TradeUtility {
 
-    /**
-     * The Manager dealing with items
-     */
-    protected ItemManager itemManager;
-
-    /**
-     *  Repository for storing all accounts in the system.
-     */
-    protected AccountRepository accountRepository;
-
-    /**
-     *  Repository for storing all accounts threshold values of the program.
-     */
-    protected ThresholdRepository thresholdRepository;
-
-    /**
-     * List of all trades in the system
-     */
-    protected List<Trade> trades;
-
-    /**
-     * List of all meetings times and places in the system
-     */
-    protected List<TimePlace> timePlaces;
+    ItemManager itemManager;
+    AccountRepository accountRepository;
+    ThresholdRepository thresholdRepository;
+    List<Trade> trades;
+    List<TimePlace> timePlaces;
 
     /**
      * Constructor for TradeUtility
@@ -56,12 +37,12 @@ abstract public class TradeUtility {
     }
 
     /**
-     * Return the timeplace object with the given id
+     * Return the timePlace object with the given id
      *
-     * @param timePlaceID the id of the timeplace object
-     * @return timeplace object with id given id
+     * @param timePlaceID the id of the timePlace object
+     * @return timePlace object with id given id
      */
-    protected TimePlace getTimePlaceByID(int timePlaceID) {
+    TimePlace getTimePlaceByID(int timePlaceID) {
         for (TimePlace timePlace : timePlaces) {
             if (timePlaceID == timePlace.getId())
                 return timePlace;
@@ -125,9 +106,9 @@ abstract public class TradeUtility {
 
         for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int id = trade.getTraderIds().get(i);
-            ans.append("\nUser " + i + ": " + accountRepository.getUsernameFromID(id));
+            ans.append("\nUser ").append(i).append(": ").append(accountRepository.getUsernameFromID(id));
             int j = (i + 1) % trade.getTraderIds().size();
-            ans.append("\nitems being traded to user " + j + ": ");
+            ans.append("\nitems being traded to user ").append(j).append(": ");
             for (int itemID : itemsTraderGives(id, trade)) {
                 ans.append("\n").append(itemManager.findItemByIdString(itemID));
             }

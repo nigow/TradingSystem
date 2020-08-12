@@ -1,15 +1,12 @@
 package org.twelve.usecases;
 
 import org.twelve.entities.*;
-import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-// TODO javadoc is fucked :D
 
 /**
  * Manager responsible for creating and editing trades.
@@ -19,14 +16,7 @@ import java.util.List;
 
 public class TradeManager extends TradeUtility{
 
-    /**
-     * The Manager dealing with the wishlist of a user
-     */
     private final WishlistManager wishlistManager;
-
-    /**
-     * The gateway dealing with trades
-     */
     private TradeGateway tradeGateway;
 
     /**
@@ -47,8 +37,8 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     *
-     * @param tradeGateway
+     * Switch trade changes to reflect in demo mode.
+     * @param tradeGateway An instance of TradeGateway
      */
     void switchToDemoMode(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
@@ -57,6 +47,10 @@ public class TradeManager extends TradeUtility{
         }
     }
 
+    /**
+     * Switch trade changes to reflect in normal mode.
+     * @param tradeGateway An instance of TradeGateway
+     */
     void switchToNormalMode(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
         trades.clear();
@@ -65,9 +59,9 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Adds a new trade and its timeplace to local storage
+     * Adds a new trade and its timePlace to local storage
      *
-     * @param id id of trade and timeplace
+     * @param id id of trade and timePlace
      * @param isPermanent if the trade is permanent
      * @param traderIDs list of all ids of the traders
      * @param itemIDs list of all the ids of the items
@@ -143,10 +137,8 @@ public class TradeManager extends TradeUtility{
     public int reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
         Trade trade = getTradeByID(id);
-        List<Integer> reverseTraders = new ArrayList<>();
-        reverseTraders.addAll(trade.getTraderIds());
-        List<Integer> reverseItems = new ArrayList<>();
-        reverseItems.addAll(trade.getItemsIds());
+        List<Integer> reverseTraders = new ArrayList<>(trade.getTraderIds());
+        List<Integer> reverseItems = new ArrayList<>(trade.getItemsIds());
         Collections.reverse(reverseTraders);
         return createTrade(timePlace.getTime().plusDays(thresholdRepository.getNumberOfDays()),
                 timePlace.getPlace(), true, reverseTraders, reverseItems);
@@ -179,12 +171,23 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     *
-     * @param tradeID
+     * Confirm the creation of a trade with a given ID
+     * @param tradeID The id of the trade being confirmed.
      */
     public void confirmTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         trade.setStatus(TradeStatus.CONFIRMED);
+        cancelInvalidTrades(trade);
+        exchangeItems(tradeID);
+        if (!isPermanent(tradeID)) {
+            int new_id = reverseTrade(tradeID);
+            confirmTrade(new_id);
+        }
+        updateToGateway(trade);
+    }
+
+    // Cancels trades that have the same items with a confirmed trade.
+    private void cancelInvalidTrades(Trade trade) {
         for (Trade t : trades) {
             if (t.getStatus() == TradeStatus.ADMIN_CANCELLED)
                 continue;
@@ -194,12 +197,6 @@ public class TradeManager extends TradeUtility{
                     break;
                 }
         }
-        makeTrade(tradeID);
-        if (!isPermanent(tradeID)) {
-            int new_id = reverseTrade(tradeID);
-            confirmTrade(new_id);
-        }
-        updateToGateway(trade);
     }
 
     /**
@@ -213,14 +210,14 @@ public class TradeManager extends TradeUtility{
         updateToGateway(trade);
     }
 
-    public void adminCancelTrade(int tradeID) {
+    private void adminCancelTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED)
             unmakeTrade(tradeID);
         trade.setStatus(TradeStatus.ADMIN_CANCELLED);
     }
 
-    public void makeTrade(int tradeID) {
+    private void exchangeItems(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         List <Integer> prev_items = itemsTraderOwns(trade.getTraderIds().get(0), trade);
         for (int i = 0; i < trade.getTraderIds().size(); i++) {

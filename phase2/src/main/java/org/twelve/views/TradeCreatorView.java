@@ -1,6 +1,7 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;
@@ -132,15 +133,16 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
             }
         }));
 
+
         peerItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
             if (!twoWay.isSelected()) {
                 yourItems.getSelectionModel().clearSelection();
-                // TODO i fixed this, please make sure i didn't mess up  --maryam
                 tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerBox.getSelectionModel().getSelectedItem());
             }
         }));
-        saveButton.disableProperty().bind(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
-                peerItems.getSelectionModel().selectedItemProperty().isNull()));
+        BooleanBinding isLocationEmpty = Bindings.isEmpty(locationBox.textProperty());
+        saveButton.disableProperty().bind(isLocationEmpty.or(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
+                peerItems.getSelectionModel().selectedItemProperty().isNull())));
     }
 
     @FXML

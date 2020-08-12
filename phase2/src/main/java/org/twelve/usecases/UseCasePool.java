@@ -110,7 +110,6 @@ public class UseCasePool {
      * @param gatewayPool An instance of gateway pool storing all gateways
      * @param demoMode Whether we should be able to switch to demo mode
      */
-    // TODO: Look into strategy pattern for this.
     public void switchMode(GatewayPool gatewayPool, boolean demoMode) {
         this.gatewayPool = gatewayPool;
         if (demoMode) {
