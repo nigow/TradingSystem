@@ -333,8 +333,10 @@ abstract public class ItemUtility {
         String location = accountRepository.getAccountFromID(accountId).getLocation();
         for (Item item : getNotInAccount(accountId)) {
             Account account = accountRepository.getAccountFromID(item.getOwnerID());
-            if (location.equals(account.getLocation())) {
-                localItems.add(item.getItemID());
+            if (account != null) {
+                if (location.equals(account.getLocation())) {
+                    localItems.add(item.getItemID());
+                }
             }
         }
         return localItems;
