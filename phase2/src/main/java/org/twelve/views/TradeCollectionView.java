@@ -112,19 +112,19 @@ public class TradeCollectionView<T extends ObservablePresenter & TradeCollection
 
             //The trading partner label
             tradingPartnerLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(tradeCollectionPresenter).name("selectedItemName").build());
+                    .bean(tradeCollectionPresenter).name("tradingPartner").build());
 
             //The your items label
             yourItemsLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(tradeCollectionPresenter).name("selectedItemName").build());
+                    .bean(tradeCollectionPresenter).name("yourItems").build());
 
             //The their items label
             theirItemsLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(tradeCollectionPresenter).name("selectedItemName").build());
+                    .bean(tradeCollectionPresenter).name("theirItems").build());
 
             //The your top trading partners label
             topTradingPartnersLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(tradeCollectionPresenter).name("selectedItemDesc").build());
+                    .bean(tradeCollectionPresenter).name("topTradingPartners").build());
 
 
 
@@ -162,8 +162,14 @@ public class TradeCollectionView<T extends ObservablePresenter & TradeCollection
     }
 
     @FXML
-    public void cancelTrade(ActionEvent actionEvent) {
-        tradeCollectionController.changeSelectedUser(userBox.getSelectionModel().getSelectedItem());
+    public void confirmClicked(ActionEvent actionEvent) {
+        tradeCollectionController.confirmTrade(allTrades.getSelectionModel().getSelectedIndex());
+        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    public void cancelClicked(ActionEvent actionEvent) {
+        tradeCollectionController.cancelTrade(allTrades.getSelectionModel().getSelectedIndex());
         tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
     }
 }
