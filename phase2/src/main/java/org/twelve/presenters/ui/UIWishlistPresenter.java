@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 public class UIWishlistPresenter extends ObservablePresenter implements WishlistPresenter {
 
     private List<String> wishlistItems;
-    private List<String> warehouseItems;
     private List<String> localItems;
     private String selectedItemName;
     private String selectedItemDesc;
@@ -21,7 +20,6 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         super();
         this.localizedResources = localizedResources;
         setWishlistItems(new ArrayList<>());
-        setWarehouseItems(new ArrayList<>());
         setLocalItems(new ArrayList<>());
         setSelectedItemName("");
         setSelectedItemDesc("");
@@ -37,18 +35,6 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
     @Override
     public List<String> getWishlistItems() {
         return wishlistItems;
-    }
-
-    @Override
-    public void setWarehouseItems(List<String> warehouseItems) {
-        List<String> oldWarehouseItems = this.warehouseItems;
-        this.warehouseItems = warehouseItems;
-        propertyChangeSupport.firePropertyChange("warehouseItems", oldWarehouseItems, this.warehouseItems);
-    }
-
-    @Override
-    public List<String> getWarehouseItems() {
-        return warehouseItems;
     }
 
     @Override
