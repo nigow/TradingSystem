@@ -12,7 +12,6 @@ import org.twelve.gateways.ItemsGateway;
  *
  * @author Isaac
  */
-
 public class ItemManager extends ItemUtility {
 
     private ItemsGateway itemsGateway;
@@ -191,6 +190,10 @@ public class ItemManager extends ItemUtility {
         return stringItems;
     }
 
+    /**
+     * Retrieves all item ids stored in local storage.
+     * @return A list of all item ids.
+     */
     public List<Integer> getAllItemIds(){
         return new ArrayList<>(items.keySet());
     }

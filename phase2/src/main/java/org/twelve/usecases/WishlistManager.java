@@ -12,11 +12,7 @@ import java.util.List;
  * @author Tairi, Andrew
  */
 public class WishlistManager {
-
-
     private AccountRepository accountRepository;
-
-
     private ItemUtility itemUtility;
 
     /**
@@ -88,7 +84,7 @@ public class WishlistManager {
     /**
      * Get the wish lists for all accounts.
      *
-     * @return A list containing wishlists of all users
+     * @return A list containing wish lists of all users
      */
     public List<List<Item>> getAllWishlist() {
         List<List<Item>> all = new ArrayList<>();

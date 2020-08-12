@@ -13,10 +13,15 @@ import java.util.*;
  */
 public class AccountRepository {
 
-    private Map<Integer, Account> accounts;
+    private final Map<Integer, Account> accounts;
     private AccountGateway accountGateway;
     private SecurityUtility securityUtility;
 
+
+    /**
+     * Initializes an account repository with a certain gateway.
+     * @param accountGateway An instance of an account gateway.
+     */
     public AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
         this.accountGateway = accountGateway;
         this.securityUtility = securityUtility;
@@ -24,14 +29,22 @@ public class AccountRepository {
         accountGateway.populate(this);
     }
 
-    public void switchToDemoMode(AccountGateway accountGateway) {
+    /**
+     * Switches the gateway to an demo version.
+     * @param accountGateway A new instance of accountGateway
+     */
+    void switchToDemoMode(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
         for (Account account : accounts.values()) {
             updateCreateAccount(account);
         }
     }
 
-    public void switchToNormalMode(AccountGateway accountGateway) {
+    /**
+     * Switches the gateway to a normal version.
+     * @param accountGateway A new instance of accountGateway
+     */
+    void switchToNormalMode(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
         accounts.clear();
         accountGateway.populate(this);
@@ -73,12 +86,6 @@ public class AccountRepository {
         for(String perm: perms) permsToAdd.add(Permissions.valueOf(perm));
         Account newAccount = new Account(username, password, wishlist, permsToAdd, accountId, location);
         accounts.put(newAccount.getAccountID(), newAccount);
-    }
-    //used by inMemoryAccountGateway
-    // TODO: This needs to be removed.
-    public void addAccount(Account account) {
-        accounts.put(account.getAccountID(), account);
-        updateCreateAccount(account);
     }
 
     /**
@@ -138,11 +145,11 @@ public class AccountRepository {
      * @return List of all accounts as strings
      */
     public List<String> getAccountStrings(){
-        List<String> accountStrins = new ArrayList<>();
+        List<String> accountStrings = new ArrayList<>();
         for (Account account : accounts.values()) {
-            accountStrins.add(account.toString());
+            accountStrings.add(account.toString());
         }
-        return accountStrins;
+        return accountStrings;
     }
 
     /**

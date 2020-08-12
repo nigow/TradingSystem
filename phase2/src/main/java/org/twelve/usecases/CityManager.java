@@ -62,7 +62,7 @@ public class CityManager {
      * @param newCity The new city of the account.
      */
     public void changeAccountLocation(int accountID, String newCity) {
-        if (!cities.values().contains(newCity))
+        if (!cities.containsValue(newCity))
             createCity(newCity);
         Account account = accountRepository.getAccountFromID(accountID);
         account.setLocation(newCity);

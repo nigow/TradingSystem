@@ -17,9 +17,9 @@ import java.util.Map;
 
 abstract public class ItemUtility {
 
-    protected Map<Integer, Item> items;
+    Map<Integer, Item> items;
 
-    protected AccountRepository accountRepository;
+    AccountRepository accountRepository;
 
     /**
      * Constructor for ItemUtility.
@@ -46,7 +46,7 @@ abstract public class ItemUtility {
      *
      * @return List of all approved items in the system
      */
-    protected List<Item> getApproved() {
+    List<Item> getApproved() {
         List<Item> approvedItems = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (items.get(entry.getKey()).isApproved()) {
@@ -91,7 +91,7 @@ abstract public class ItemUtility {
      *
      * @return List of all non-approved items in the system
      */
-    protected List<Item> getDisapproved() {
+    List<Item> getDisapproved() {
         List<Item> disapprovedItems = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (!items.get(entry.getKey()).isApproved()) {
@@ -137,7 +137,7 @@ abstract public class ItemUtility {
      * @param accountID     Account ID which the items are retrieved for
      * @return List of items for account
      */
-    protected List<Item> getAllInventoryOfAccount(int accountID) {
+    List<Item> getAllInventoryOfAccount(int accountID) {
         List<Item> inventory = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (items.get(entry.getKey()).getOwnerID() == accountID)
@@ -333,8 +333,10 @@ abstract public class ItemUtility {
         String location = accountRepository.getAccountFromID(accountId).getLocation();
         for (Item item : getNotInAccount(accountId)) {
             Account account = accountRepository.getAccountFromID(item.getOwnerID());
-            if (location.equals(account.getLocation())) {
-                localItems.add(item.getItemID());
+            if (account != null) {
+                if (location.equals(account.getLocation())) {
+                    localItems.add(item.getItemID());
+                }
             }
         }
         return localItems;

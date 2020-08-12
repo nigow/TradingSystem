@@ -16,7 +16,6 @@ public class StatusManager {
 
     private final AccountRepository accountRepository;
     private final ThresholdRepository thresholdRepository;
-
     private final TradeUtility tradeUtility;
 
     /**

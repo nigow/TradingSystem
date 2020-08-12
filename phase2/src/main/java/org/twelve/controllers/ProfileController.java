@@ -6,6 +6,9 @@ import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.usecases.*;
 
+/**
+ * Controller for managing account settings.
+ */
 public class ProfileController {
 
     private final StatusManager statusManager;
@@ -17,6 +20,11 @@ public class ProfileController {
     private final InputHandler inputHandler;
     private final CitiesGateway citiesGateway;
 
+    /**
+     * Constructor of controller for managing account settings.
+     * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
+     * @param gatewayPool An instance of {@link org.twelve.gateways.GatewayPool}.
+     */
     public ProfileController(UseCasePool useCasePool, GatewayPool gatewayPool) {
 
         statusManager = useCasePool.getStatusManager();
@@ -29,6 +37,9 @@ public class ProfileController {
 
     }
 
+    /**
+     * Updates profile info.
+     */
     public void updateProfile() {
 
         profilePresenter.setVacationStatus(statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.VACATION);
@@ -43,38 +54,63 @@ public class ProfileController {
 
     }
 
+    /**
+     * Provides the profile controller with an appropriate presenter.
+     * @param profilePresenter An instance of a class that implements {@link org.twelve.presenters.ProfilePresenter}.
+     */
     public void setProfilePresenter(ProfilePresenter profilePresenter) {
 
         this.profilePresenter = profilePresenter;
 
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
+    /**
+     * Changes password of currently logged in account if oldPassword is correct and newPassword is valid.
+     * @param oldPassword Old password.
+     * @param newPassword New password.
+     * @return Whether the password was successfully changed.
+     */
+    public boolean changePassword(String oldPassword, String newPassword) {
 
         if (newPassword.isBlank()) {
             profilePresenter.setPasswordError("newPwdError");
+            return false;
         } else if (!loginManager.changePassword(sessionManager.getCurrAccountID(), oldPassword, newPassword)) {
             profilePresenter.setPasswordError("oldPwdError");
+            return false;
         } else {
             profilePresenter.setPasswordError("");
+            return true;
         }
 
     }
 
-    public void changeLocation(String location) {
+    /**
+     * Changes location of currently logged in account if newLocation is valid.
+     * @param newLocation New location.
+     * @return Whether the location was successfully changed.
+     */
+    public boolean changeLocation(String newLocation) {
 
         citiesGateway.populate(cityManager);
-        if (!cityManager.getAllCities().contains(location)) {
-            if (inputHandler.isValidLocation(location)) {
-                cityManager.createCity(location);
-                cityManager.changeAccountLocation(sessionManager.getCurrAccountID(), location);
+        if (!cityManager.getAllCities().contains(newLocation)) {
+            if (inputHandler.isValidLocation(newLocation)) {
+                cityManager.createCity(newLocation);
             } else {
                 profilePresenter.setLocationError("badLocation");
+                return false;
             }
         }
 
+        cityManager.changeAccountLocation(sessionManager.getCurrAccountID(), newLocation);
+        return true;
+
     }
 
+    /**
+     * Changes whether currently logged in account is on vacation or not.
+     * @param vacationStatus New vacation status.
+     */
     public void changeVacationStatus(boolean vacationStatus) {
 
         if (vacationStatus) {
@@ -85,12 +121,18 @@ public class ProfileController {
 
     }
 
+    /**
+     * Requests unfreeze for currently logged in account.
+     */
     public void requestUnfreeze() {
 
         statusManager.requestUnfreeze(sessionManager.getCurrAccountID());
 
     }
 
+    /**
+     * Trusts currently logged in account.
+     */
     public void becomeTrusted() {
         statusManager.trustAccount(sessionManager.getCurrAccountID());
     }
