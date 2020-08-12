@@ -140,7 +140,7 @@ public class TradeCollectionView<T extends ObservablePresenter & TradeCollection
 
     @Override
     public void reload() {
-
+        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
     }
 
     @Override
