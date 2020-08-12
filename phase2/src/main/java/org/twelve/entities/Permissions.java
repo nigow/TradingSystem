@@ -12,6 +12,7 @@ public enum Permissions {
     CREATE_ITEM,
     CONFIRM_ITEM,
     ADD_TO_WISHLIST,
+    REMOVE_WISHLIST,
     TRADE,
     BROWSE_INVENTORY,
     CHANGE_THRESHOLDS,

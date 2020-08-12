@@ -29,7 +29,7 @@ public class MenuController {
         menuPresenter.setManageAccounts(statusManager.hasPermission(accountID, Permissions.FREEZE));
         menuPresenter.setAddAdmin(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
         menuPresenter.setApproveItems(statusManager.hasPermission(accountID, Permissions.CONFIRM_ITEM));
-        menuPresenter.setAdminWishlist(statusManager.hasPermission(accountID, Permissions.FREEZE)); // TODO placeholder for admin permission for removing from others' wishlist
+        menuPresenter.setAdminWishlist(statusManager.hasPermission(accountID, Permissions.REMOVE_WISHLIST));
     }
 
     public void logout() {

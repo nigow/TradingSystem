@@ -247,6 +247,7 @@ public class StatusManager {
         Account account = accountRepository.getAccountFromID(accountID);
         if (!account.getPermissions().contains(Permissions.CONFIRM_ITEM))
             account.addPermission(Permissions.CONFIRM_ITEM);
+        account.addPermission(Permissions.REMOVE_WISHLIST);
         account.addPermission(Permissions.FREEZE);
         account.addPermission(Permissions.UNFREEZE);
         accountRepository.updateToAccountGateway(account);
@@ -260,6 +261,7 @@ public class StatusManager {
     public void unModAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CONFIRM_ITEM);
+        account.removePermission(Permissions.REMOVE_WISHLIST);
         account.removePermission(Permissions.FREEZE);
         account.removePermission(Permissions.UNFREEZE);
         accountRepository.updateToAccountGateway(account);
