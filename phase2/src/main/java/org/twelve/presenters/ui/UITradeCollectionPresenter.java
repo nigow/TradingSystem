@@ -48,7 +48,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setAllTrades(List<String> allTrades) {
-
+        List<String> oldTrades = this.allTrades;
+        this.allTrades = allTrades;
+        propertyChangeSupport.firePropertyChange("allTrades", oldTrades, allTrades);
     }
 
     @Override
@@ -77,7 +79,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setRecentOneWays(List<String> recentOneWays) {
-
+        List<String> oldRecentOneWays = this.recentOneWays;
+        this.recentOneWays = recentOneWays;
+        propertyChangeSupport.firePropertyChange("recentOneWays", oldRecentOneWays, recentOneWays);
     }
 
     @Override
@@ -87,7 +91,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setRecentTwoWays(List<String> recentTwoWays) {
-
+        List<String> oldRecentTwoWays = this.recentTwoWays;
+        this.recentTwoWays = recentTwoWays;
+        propertyChangeSupport.firePropertyChange("recentTwoWays", oldRecentTwoWays, recentTwoWays);
     }
 
     @Override
@@ -97,7 +103,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setSelectedUser(String user) {
-
+        String oldUser = this.selectedUser;
+        this.selectedUser = user;
+        propertyChangeSupport.firePropertyChange("selectedUser", oldUser, selectedUser);
     }
 
     @Override
@@ -107,7 +115,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setTradingPartner(String tradingPartner) {
-
+        String oldTradingPartner = this.tradingPartner;
+        this.tradingPartner = tradingPartner;
+        propertyChangeSupport.firePropertyChange("tradingPartner", oldTradingPartner, tradingPartner);
     }
 
     @Override
@@ -117,7 +127,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setYourItems(List<String> yourItems) {
-
+        String oldYourItems = this.yourItems;
+        this.yourItems = String.join("", yourItems);
+        propertyChangeSupport.firePropertyChange("yourItems", oldYourItems, yourItems);
     }
 
     @Override
@@ -127,7 +139,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setTheirItems(List<String> theirItems) {
-
+        String oldTheirItems = this.theirItems;
+        this.theirItems = String.join("", theirItems);
+        propertyChangeSupport.firePropertyChange("theirItems", oldTheirItems, theirItems);
     }
 
     @Override
@@ -137,6 +151,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setLocationChosen(String location) {
+        String oldLocationChosen = this.locationChosen;
+        this.locationChosen = location;
+        propertyChangeSupport.firePropertyChange("locationChosen", oldLocationChosen, location);
 
     }
 
@@ -147,7 +164,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setDateChosen(String date) {
-
+        String oldDateChosen = this.dateChosen;
+        this.dateChosen = date;
+        propertyChangeSupport.firePropertyChange("dateChosen", oldDateChosen, date);
     }
 
 
@@ -158,7 +177,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setTopTradingPartners(List<String> topTradingPartners) {
-
+        String oldTopTradingPartners = this.topTradingPartners;
+        this.topTradingPartners = String.join(" ", topTradingPartners);
+        propertyChangeSupport.firePropertyChange("", oldTopTradingPartners, topTradingPartners);
     }
 
     @Override
@@ -168,7 +189,9 @@ public class UITradeCollectionPresenter extends ObservablePresenter implements T
 
     @Override
     public void setSelectedTrade(String selectedTrade) {
-
+        String oldSelectedTrade = this.selectedTrade;
+        this.selectedTrade = selectedTrade;
+        propertyChangeSupport.firePropertyChange("", oldSelectedTrade, selectedTrade);
     }
 
     public int getMinuteChosen() {return minuteChosen;}
