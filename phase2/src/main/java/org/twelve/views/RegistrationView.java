@@ -84,11 +84,10 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
     @FXML
     private void backClicked() {
-
-        if (typeBox.getText().equals(Roles.NORMAL.name().toLowerCase())) {
-            windowHandler.changeScene(Scenes.LANDING);
-        } else {
+        if (typeBox.getText().equalsIgnoreCase(Roles.ADMIN.toString())) {
             windowHandler.changeScene(Scenes.MENU);
+        } else {
+            windowHandler.changeScene(Scenes.LANDING);
         }
 
     }
