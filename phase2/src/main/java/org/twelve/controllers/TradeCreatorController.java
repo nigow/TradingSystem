@@ -53,6 +53,8 @@ public class TradeCreatorController {
                 itemsToReceive.add(s);
             }
             tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
+        } else {
+            tradeCreatorPresenter.setItemsToReceive(new ArrayList<>());
         }
         List<String> itemsToGive = new ArrayList<>();
         List<String> allUsers = new ArrayList<>();
@@ -60,10 +62,8 @@ public class TradeCreatorController {
             itemsToGive.add(s);
         }
         tradeCreatorPresenter.setItemsToGive(itemsToGive);
-        for (String s : accountRepository.getAccountStrings()) {
-            if (!s.equals(sessionManager.getCurrAccountUsername())) {
-                allUsers.add(s);
-            }
+        for (String s : accountRepository.getTradableAccounts(sessionManager.getCurrAccountUsername())) {
+            allUsers.add(s);
         }
         tradeCreatorPresenter.setAllUsers(allUsers);
 
