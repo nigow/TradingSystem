@@ -52,8 +52,17 @@ public class WishlistController {
 
         }
 
+        List<String> localItems = new ArrayList<>();
+
+        for (int id : itemManager.getLocalItems(sessionManager.getCurrAccountID())) {
+
+            localItems.add(itemManager.getItemNameById(id));
+
+        }
+
         wishlistPresenter.setWishlistItems(wishlistItems);
         wishlistPresenter.setWarehouseItems(warehouseItems);
+        wishlistPresenter.setLocalItems(localItems);
 
     }
 
@@ -64,7 +73,7 @@ public class WishlistController {
     public void addToWishlist(int itemIndex) {
 
         wishlistManager.addItemToWishlist(sessionManager.getCurrAccountID(),
-                itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex));
+                itemManager.getLocalItems(sessionManager.getCurrAccountID()).get(itemIndex));
 
         updateItems();
 
@@ -90,7 +99,7 @@ public class WishlistController {
 
     public void changeSelectedWarehouseItem(int itemIndex) {
 
-        int itemId = itemManager.getNotInAccountIDs(sessionManager.getCurrAccountID()).get(itemIndex);
+        int itemId = itemManager.getLocalItems(sessionManager.getCurrAccountID()).get(itemIndex);
 
         wishlistPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
         wishlistPresenter.setSelectedItemDesc(itemManager.getItemDescById(itemId));
