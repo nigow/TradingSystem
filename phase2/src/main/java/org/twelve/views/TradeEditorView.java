@@ -87,28 +87,23 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
             }, ReadOnlyJavaBeanObjectPropertyBuilder.<java.util.List<String>>create().bean(tradeEditorPresenter).name("peerItems").build());
             theirItems.itemsProperty().bind(peerItems);
 
-            System.out.println("we got here 1");
-
+            // TODO the following cause exceptions
             peerUsername.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("peerUsername").build());
-            System.out.println("we got here 1.5");
             tradeStatus.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("tradeStatus").build());
 
-            System.out.println("we got here 2");
             isPermanent.selectedProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("isPermanent").build());
 
             confirmButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canConfirm").build().not()); // TODO disable if user changed stuff in the prompt box
 
-            System.out.println("we got here 3");
             completeButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canComplete").build().not());
             cancelButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canCancel").build().not());
 
-            System.out.println("we got here 4");
             locationBox.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canEdit").build().not());
             dateBox.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
@@ -137,7 +132,6 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 //                    .bean(adminWishlistPresenter).name("selectedItemDescription").build());
 
         } catch (NoSuchMethodException ignored) {
-            System.out.println("system view messed up");
             System.out.println("failure");
         }
 
