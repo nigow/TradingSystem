@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import org.twelve.controllers.TradeCancellationController;
 import org.twelve.presenters.TradeCancellationPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -28,7 +29,7 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
     private final T tradeCancellationPresenter;
 
     @FXML
-    private GridPane graphic;
+    private VBox graphic;
     @FXML
     private ListView<String> allTrades;
     @FXML
