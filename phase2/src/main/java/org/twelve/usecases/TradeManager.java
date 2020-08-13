@@ -210,7 +210,7 @@ public class TradeManager extends TradeUtility{
     // Cancels trades that have the same items with a confirmed trade.
     private void cancelInvalidTrades(Trade trade) {
         for (Trade t : trades.values()) {
-            if (t.getStatus() == TradeStatus.ADMIN_CANCELLED)
+            if (t.getStatus() == TradeStatus.ADMIN_CANCELLED || t.getId() == trade.getId())
                 continue;
             for (int item : t.getItemsIds())
                 if (trade.getItemsIds().contains(item)) {
