@@ -131,7 +131,7 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         } catch (NoSuchMethodException ignored) {System.out.println("failure");}
 
         yourItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!twoWay.isSelected()) {
+            if (!twoWay.isSelected() && newValue.intValue() != -1) {
                 peerItems.getSelectionModel().clearSelection();
                 tradeCreatorController.changeSelectedItemToLend(newValue.intValue());
             }
@@ -139,7 +139,7 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
 
         peerItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!twoWay.isSelected()) {
+            if (!twoWay.isSelected() && newValue.intValue() != -1) {
                 yourItems.getSelectionModel().clearSelection();
                 tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerBox.getSelectionModel().getSelectedItem());
             }
@@ -183,7 +183,6 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
             }
         });
 
-        // force recolor every time inventory is updated (doesn't happen by default if the contents are the same)
         peerBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> yourItems.refresh());
 
 
