@@ -1,10 +1,10 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +22,9 @@ import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.awt.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -74,20 +77,15 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         try {
 
             ObjectBinding<ObservableList<String>> userItems = Bindings.createObjectBinding(() -> {
-
                 return FXCollections.observableArrayList(tradeEditorPresenter.getUserItems());
-
             }, ReadOnlyJavaBeanObjectPropertyBuilder.<java.util.List<String>>create().bean(tradeEditorPresenter).name("userItems").build());
             yourItems.itemsProperty().bind(userItems);
 
             ObjectBinding<ObservableList<String>> peerItems = Bindings.createObjectBinding(() -> {
-
                 return FXCollections.observableArrayList(tradeEditorPresenter.getPeerItems());
-
             }, ReadOnlyJavaBeanObjectPropertyBuilder.<java.util.List<String>>create().bean(tradeEditorPresenter).name("peerItems").build());
             theirItems.itemsProperty().bind(peerItems);
 
-            // TODO the following cause exceptions
             peerUsername.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("peerUsername").build());
             tradeStatus.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
@@ -97,7 +95,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
                     .bean(tradeEditorPresenter).name("isPermanent").build());
 
             confirmButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(tradeEditorPresenter).name("canConfirm").build().not()); // TODO disable if user changed stuff in the prompt box
+                    .bean(tradeEditorPresenter).name("canConfirm").build().not());
 
             completeButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canComplete").build().not());
@@ -112,35 +110,57 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
                     .bean(tradeEditorPresenter).name("canEdit").build().not());
             minuteChosen.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canEdit").build().not());
+
+            //The "Hour" Spinner
+            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, tradeEditorPresenter.getHourChosen());
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("hourChosen").build()));
+            //=================
+
+            //The "Minute" Spinner
+            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, tradeEditorPresenter.getMinuteChosen());
+            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("minuteChosen").build()));
+            //=================
+
+            locationBox.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(tradeEditorPresenter).name("locationChosen").build());
+
+            dateBox.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(tradeEditorPresenter).name("dateChosen").build());
+
+            // TODO really bad stuff
+//            ObjectProperty<LocalDate> dateBinding = JavaBeanObjectPropertyBuilder.create().bean(tradeEditorPresenter).name("dateChosen").build();
+//            dateBox.valueProperty().bindBidirectional(dateBinding);
+
+
+            BooleanBinding isValidTimeLocation = Bindings.createBooleanBinding(() -> {
+                if (dateBox.getValue() == null || locationBox.getText() == null)
+                    return false;
+                LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
+                LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
+                return dateTime.isAfter(LocalDateTime.now());
+            }, hourChosen.valueProperty(), minuteChosen.valueProperty(), dateBox.valueProperty());
+
             editButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(tradeEditorPresenter).name("canEdit").build().not()); // TODO disable if the date is before today
+                    .bean(tradeEditorPresenter).name("canEdit").build().and(isValidTimeLocation).not());
 
+            // TODO maybe find a better way
+//            locationBox.textProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
+//            dateBox.valueProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
+//            hourChosen.valueProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
+//            minuteChosen.valueProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
 
-            /**
-             *     private Button editButton;
-             *     private Button cancelButton;
-             *     private Button confirmButton;
-             *     private Button completeButton;
-             *
-             *     private TextField locationBox;
-             *     private DatePicker dateBox;
-             *     private Spinner<Integer> hourChosen;
-             *     private Spinner<Integer> minuteChosen;
-             */
-
-//            itemDescription.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-//                    .bean(adminWishlistPresenter).name("selectedItemDescription").build());
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-
-//        removeButton.disableProperty().bind(wishlistOfUser.getSelectionModel().selectedItemProperty().isNull());
-
     }
 
     @Override
     public void reload() {
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
@@ -158,25 +178,34 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @FXML
     private void cancelClicked() {
         tradeEditorController.cancelTrade();
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void editClicked() {
-        // TODO fix this!!!
-        tradeEditorController.editTrade(null, null);
+        LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
+        LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
+        tradeEditorController.editTrade(locationBox.getText(), dateTime);
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void completeClicked() {
         tradeEditorController.completeTrade();
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void confirmClicked() {
         tradeEditorController.confirmTrade();
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 }

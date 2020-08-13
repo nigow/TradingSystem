@@ -2,6 +2,7 @@ package org.twelve.presenters;
 
 import org.twelve.entities.TradeStatus;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,4 +25,12 @@ public interface TradeEditorPresenter {
     String getTradeStatus();
     void setIsPermanent(boolean isPermanent);
     boolean getIsPermanent();
+    int getHourChosen();
+    int getMinuteChosen();
+    void setHourChosen(int hourChosen);
+    void setMinuteChosen(int minuteChosen);
+    void setDateChosen(LocalDate dateChosen);
+    String getDateChosen();
+    String getLocationChosen();
+    void setLocationChosen(String locationChosen);
 }
