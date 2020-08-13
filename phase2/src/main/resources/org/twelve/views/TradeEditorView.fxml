@@ -76,7 +76,7 @@
         </rowConstraints>
          <children>
             <Label fx:id="tradeStatus" text="%tradeStatus" GridPane.columnIndex="1" />
-            <CheckBox fx:id="isPermanent" mnemonicParsing="false" text="%isPermanent">
+            <CheckBox fx:id="isPermanent" disable="true" mnemonicParsing="false" text="%isPermanent">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
@@ -145,7 +145,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Spinner>
-                  <Spinner fx:id="dateChosen" prefHeight="25.0" prefWidth="106.0">
+                  <Spinner fx:id="minuteChosen" prefHeight="25.0" prefWidth="106.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
