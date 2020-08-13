@@ -17,16 +17,14 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     private List<String> itemsToGive;
     private List<String> allUsers;
     private List<String> peerWishlist;
-    private String selectedUser;
-    private String itemToLend;
-    private String itemToBorrow;
-    private boolean createdTrade;
-    private boolean isPermanent;
     private int hourChosen;
     private int minuteChosen;
-
     private final ResourceBundle localizedResources;
 
+    /**
+     * Constructor for the trade creation presenter.
+     * @param localizedResources Pack containing any localized strings.
+     */
     public UITradeCreatorPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
@@ -34,99 +32,89 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
         setItemsToReceive(new ArrayList<>());
         setItemsToGive(new ArrayList<>());
         setAllUsers(new ArrayList<>());
-        setSelectedUser("");
-        setSelectedItemToBorrow("");
-        setSelectedItemToLend("");
-        setCreatedTrade(true);
-        isPermanent = false;
     }
 
-    public void isPermanent(boolean isPermanent) {
-
-        boolean oldIsPermanent = this.isPermanent;
-        this.isPermanent = isPermanent;
-        propertyChangeSupport.firePropertyChange("isPermanent", oldIsPermanent, isPermanent);
-    }
-
-    public boolean getIsPermanent() {return isPermanent;}
-
-    public void setHourChosen(int i) {
-        int oldHourChosen = hourChosen;
-        hourChosen = i;
-        propertyChangeSupport.firePropertyChange("hourChosen", oldHourChosen, i);
-    }
-
-    public int getHourChosen() {return hourChosen;}
-
-    public void setMinuteChosen(int i) {
-        int oldMinuteChosen = minuteChosen;
-        minuteChosen = i;
-        propertyChangeSupport.firePropertyChange("minuteChosen", oldMinuteChosen, i);
-    }
-
-    public int getMinuteChosen() {return minuteChosen;}
-
+    /**
+     * {@inheritDoc}
+     */
     public void setItemsToReceive(List<String> itemsToReceive) {
         List<String> oldItems = this.itemsToReceive;
         this.itemsToReceive = itemsToReceive;
         propertyChangeSupport.firePropertyChange("itemsToReceive", oldItems, itemsToReceive);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<String> getItemsToReceive() {return itemsToReceive;}
 
+    /**
+     * {@inheritDoc}
+     */
     public void setPeerWishlist(List<String> peerWishlist) {
         List <String> oldPeerWishlist = this.peerWishlist;
         this.peerWishlist = peerWishlist;
         propertyChangeSupport.firePropertyChange("peerWishlist", oldPeerWishlist, peerWishlist);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<String> getPeerWishlist() {return this.peerWishlist;}
 
+    /**
+     * {@inheritDoc}
+     */
     public void setItemsToGive(List<String> itemsToGive) {
         List<String> oldItems = this.itemsToGive;
         this.itemsToGive = itemsToGive;
         propertyChangeSupport.firePropertyChange("itemsToGive", oldItems, itemsToGive);
     }
 
-    public boolean getCreatedTrade() {return createdTrade;}
-
-    public void setCreatedTrade(boolean createdTrade) {
-        boolean oldCreatedTrade = this.createdTrade;
-        this.createdTrade = createdTrade;
-        propertyChangeSupport.firePropertyChange("createdTrade", oldCreatedTrade, this.createdTrade);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public List<String> getItemsToGive() {return itemsToGive;}
 
+    /**
+     * {@inheritDoc}
+     */
     public void setAllUsers(List<String> allUsers) {
         List<String> oldUsers = this.allUsers;
         this.allUsers = allUsers;
         propertyChangeSupport.firePropertyChange("allUsers", oldUsers, allUsers);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<String> getAllUsers() {return allUsers;}
 
-    public void setSelectedUser(String user) {
-        String oldSelectedUser = this.selectedUser;
-        this.selectedUser = user;
-        propertyChangeSupport.firePropertyChange("selectedUser", oldSelectedUser, user);
+    /**
+     * {@inheritDoc}
+     */
+    public void setHourChosen(int i) {
+        int oldHourChosen = hourChosen;
+        hourChosen = i;
+        propertyChangeSupport.firePropertyChange("hourChosen", oldHourChosen, i);
     }
 
-    public String getSelectedUser() {return selectedUser;}
+    /**
+     * {@inheritDoc}
+     */
+    public int getHourChosen() {return hourChosen;}
 
-    public void setSelectedItemToLend(String item) {
-        String oldItemToLend = this.itemToLend;
-        this.itemToLend = item;
-        propertyChangeSupport.firePropertyChange("itemToLend", oldItemToLend, item);
+    /**
+     * {@inheritDoc}
+     */
+    public void setMinuteChosen(int i) {
+        int oldMinuteChosen = minuteChosen;
+        minuteChosen = i;
+        propertyChangeSupport.firePropertyChange("minuteChosen", oldMinuteChosen, i);
     }
 
-    public String getSelectedItemToLend() {return itemToLend;}
-
-    public void setSelectedItemToBorrow(String item) {
-        String oldItemToBorrow = this.itemToBorrow;
-        this.itemToBorrow = item;
-        propertyChangeSupport.firePropertyChange("itemToBorrow", oldItemToBorrow, item);
-
-    }
-    public String getSelectedItemToBorrow() {return itemToBorrow;}
+    /**
+     * {@inheritDoc}
+     */
+    public int getMinuteChosen() {return minuteChosen;}
 }

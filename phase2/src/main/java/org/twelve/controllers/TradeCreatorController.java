@@ -20,7 +20,6 @@ public class TradeCreatorController {
     private final SessionManager sessionManager;
 
     private TradeCreatorPresenter tradeCreatorPresenter;
-    private final int traderOneId;
 
     /**
      * Create a controller for the trade creation screen.
@@ -34,73 +33,57 @@ public class TradeCreatorController {
         this.itemManager = useCasePool.getItemManager();
         this.wishlistManager = useCasePool.getWishlistManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.traderOneId = sessionManager.getCurrAccountID();
     }
 
-
-    public void changePermanentStatus(boolean isPermanent) {
-        tradeCreatorPresenter.isPermanent(isPermanent);
-    }
-
+    /**
+     * Set the presenter for this controller
+     * @param tradeCreatorPresenter the presenter that is set
+     */
     public void setTradeCreatorPresenter(TradeCreatorPresenter tradeCreatorPresenter) {
         this.tradeCreatorPresenter = tradeCreatorPresenter;
     }
 
+    /**
+     * Update all the lists in tradeCreatorPresenter
+     * @param username the username of the account being traded with (null if there's no selected account)
+     */
     public void updateLists(String username) {
         if (username != null) {
-            List<String> itemsToReceive = new ArrayList<>();
-            for (String s : itemManager.getApprovedInventoryOfAccountString(accountRepository.getIDFromUsername(username))) {
-                itemsToReceive.add(s);
-            }
-            List<String> peerWishlist = new ArrayList<>();
-            for (String s : wishlistManager.getWishlistToString(accountRepository.getIDFromUsername(username))) {
-                peerWishlist.add(s);
-            }
+            List<String> itemsToReceive = new ArrayList<>(itemManager.getApprovedInventoryOfAccountString(accountRepository.getIDFromUsername(username)));
+            List<String> peerWishlist = new ArrayList<>(wishlistManager.getWishlistToString(accountRepository.getIDFromUsername(username)));
             tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
             tradeCreatorPresenter.setPeerWishlist(peerWishlist);
         } else {
             tradeCreatorPresenter.setPeerWishlist(new ArrayList<>());
             tradeCreatorPresenter.setItemsToReceive(new ArrayList<>());
         }
-        List<String> itemsToGive = new ArrayList<>();
-        List<String> allUsers = new ArrayList<>();
-        for (String s : itemManager.getApprovedInventoryOfAccountString(sessionManager.getCurrAccountID())) {
-            itemsToGive.add(s);
-        }
+        List<String> itemsToGive = new ArrayList<>(itemManager.getApprovedInventoryOfAccountString(sessionManager.getCurrAccountID()));
         tradeCreatorPresenter.setItemsToGive(itemsToGive);
 
-        for (String s : accountRepository.getTradableAccounts(sessionManager.getCurrAccountUsername())) {
-            allUsers.add(s);
-        }
+        List<String> allUsers = new ArrayList<>(accountRepository.getTradableAccounts(sessionManager.getCurrAccountUsername()));
         tradeCreatorPresenter.setAllUsers(allUsers);
 
     }
 
-
-    public void changeSelectedUser(String username) {
-        if (username != null) {tradeCreatorPresenter.setSelectedUser(username);}
-    }
-
-    public void changeSelectedItemToLend(int itemIndex) {
-        String name = itemIndex >= 0 ? itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID()).get(itemIndex) : "";
-        tradeCreatorPresenter.setSelectedItemToLend(name);
-    }
-
-    public void changeSelectedItemToBorrow(int itemIndex, String username) {
-        String name = itemIndex >= 0 ? itemManager.getAllInventoryOfAccountString(accountRepository.getIDFromUsername(username)).get(itemIndex) : "";
-        tradeCreatorPresenter.setSelectedItemToBorrow(name);
-    }
-
+    /**
+     * Processes the data given and passes it to createTrade in tradeManager.
+     * @param username the username of the trade initiator.
+     * @param itemLendIndex the index of the item to lend in the approved inventory list.
+     * @param itemBorrowIndex the index of the item to borrow in the approved inventory list.
+     * @param isPermanent whether or not the trade is permanent.
+     * @param location the location of the trade.
+     * @param time the time of the trade.
+     */
     public void createTrade(String username, int itemLendIndex, int itemBorrowIndex,
                             boolean isPermanent, String location, LocalDateTime time) {
         List<Integer> itemIDs = new ArrayList<>();
         List<Integer> accountIDs = new ArrayList<>();
         int peerID = accountRepository.getIDFromUsername(username);
         if (itemLendIndex >= 0) {
-            itemIDs.add(itemManager.getAllInventoryOfAccountIDs(sessionManager.getCurrAccountID()).get(itemLendIndex));
+            itemIDs.add(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemLendIndex));
         }
         if (itemBorrowIndex >= 0) {
-            itemIDs.add(itemManager.getAllInventoryOfAccountIDs(peerID).get(itemBorrowIndex));
+            itemIDs.add(itemManager.getApprovedInventoryOfAccount(peerID).get(itemBorrowIndex));
         }
         accountIDs.add(peerID);
         accountIDs.add(sessionManager.getCurrAccountID());
