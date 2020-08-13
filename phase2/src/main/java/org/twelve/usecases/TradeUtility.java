@@ -450,7 +450,8 @@ abstract public class TradeUtility {
     public List<String> getAllTradesString() {
         List<String> stringTrade = new ArrayList<>();
         for (Trade trade : trades.values()) {
-            stringTrade.add(tradeAsString(trade));
+            if (trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
+               stringTrade.add(tradeAsString(trade));
         }
         return stringTrade;
     }
@@ -458,7 +459,8 @@ abstract public class TradeUtility {
     public List<Integer> getAllTradesIds(){
         List<Integer> tradeIds = new ArrayList<>();
         for(Trade trade: trades.values()){
-            tradeIds.add(trade.getId());
+            if (trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
+                tradeIds.add(trade.getId());
         }
         return tradeIds;
     }

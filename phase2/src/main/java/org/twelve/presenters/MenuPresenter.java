@@ -18,4 +18,7 @@ public interface MenuPresenter {
 
     void setAdminWishlist(boolean adminWishlist);
     boolean getAdminWishlist();
+
+    void setCancelTrades(boolean cancelTrades);
+    boolean getCancelTrades();
 }

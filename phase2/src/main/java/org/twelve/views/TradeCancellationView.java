@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import org.twelve.controllers.TradeCancellationController;
@@ -30,6 +31,8 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
     private GridPane graphic;
     @FXML
     private ListView<String> allTrades;
+    @FXML
+    private Button cancelButton;
 
     public TradeCancellationView(WindowHandler windowHandler, TradeCancellationController tradeCancellationController,
                             T tradeCancellationPresenter) {
@@ -43,20 +46,23 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
     public void initialize(URL location, ResourceBundle resources) {
         try {
             //The trades list
-            ObjectBinding<ObservableList<String>> yourItemsBinding = Bindings.createObjectBinding(() -> {
+            ObjectBinding<ObservableList<String>> tradesBinding = Bindings.createObjectBinding(() -> {
 
                 return FXCollections.observableArrayList(tradeCancellationPresenter.getAllTrades());
 
             }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCancellationPresenter).name("allTrades").build());
-            allTrades.itemsProperty().bind(yourItemsBinding);
+            allTrades.itemsProperty().bind(tradesBinding);
 
         } catch (NoSuchMethodException ignored) {
             System.out.println("failure");
         }
+
+        cancelButton.disableProperty().bind(allTrades.getSelectionModel().selectedItemProperty().isNull());
     }
 
     @Override
     public void reload() {
+        allTrades.getSelectionModel().clearSelection();
         tradeCancellationController.updateList();
     }
 
@@ -66,13 +72,14 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
     }
 
     @FXML
-    private void backClicked(ActionEvent actionEvent) {
+    private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
     @FXML
-    private void cancelClicked(ActionEvent actionEvent) {
+    private void cancelClicked() {
         tradeCancellationController.cancelTrade(allTrades.getSelectionModel().getSelectedIndex());
+        allTrades.getSelectionModel().clearSelection();
         tradeCancellationController.updateList();
     }
 }

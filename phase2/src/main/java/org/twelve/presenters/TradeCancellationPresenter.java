@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface TradeCancellationPresenter{
 
-    public List<String> getAllTrades();
+    List<String> getAllTrades();
 
-    public void setAllTrades(List<String> trades);
+    void setAllTrades(List<String> trades);
 }

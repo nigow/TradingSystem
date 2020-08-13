@@ -37,6 +37,8 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     private Button approveItems;
     @FXML
     private Button adminWishlist;
+    @FXML
+    private Button cancelTrades;
 
     /**
      * Constructor of view for post login menu.
@@ -70,6 +72,8 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
                     .bean(menuPresenter).name("approveItems").build());
             adminWishlist.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("adminWishlist").build());
+            cancelTrades.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("cancelTrades").build());
 
         } catch (NoSuchMethodException ignored) {}
     }
