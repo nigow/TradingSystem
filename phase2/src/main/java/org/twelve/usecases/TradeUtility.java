@@ -350,6 +350,15 @@ abstract public class TradeUtility {
     }
 
     /**
+     * Returns the location of this Trade.
+     *
+     * @return location of this trade
+     */
+    public String getLocation(int tradeID) {
+        return getTimePlaceByID(getTradeByID(tradeID).getTimePlaceID()).getPlace();
+    }
+
+    /**
      * Gets the number of times this Trade has been edited.
      *
      * @return The number of times this Trade has been edited.

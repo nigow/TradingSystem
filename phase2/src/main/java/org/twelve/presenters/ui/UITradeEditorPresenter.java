@@ -4,6 +4,8 @@ import org.twelve.entities.TradeStatus;
 import org.twelve.presenters.TradeEditorPresenter;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,6 +26,10 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     private String peerUsername;
     private String tradeStatus;
 
+    private int hourChosen;
+    private int minuteChosen;
+    private LocalDate dateChosen;
+    private String locationChosen;
 
     public UITradeEditorPresenter(ResourceBundle localizedResources) {
         super();
@@ -36,6 +42,9 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         setCanConfirm(false);
         setIsPermanent(false);
         setPeerUsername("");
+        setHourChosen(0);
+        setMinuteChosen(0);
+        setDateChosen(LocalDate.of(2000, 1, 1));
         setTradeStatus(TradeStatus.REJECTED);
     }
 
@@ -114,7 +123,7 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     @Override
     public void setPeerUsername(String username) {
         String old = this.peerUsername;
-        this.peerUsername = username;
+        this.peerUsername = MessageFormat.format(localizedResources.getString("theirItems"), username);
         propertyChangeSupport.firePropertyChange("peerUsername", old, this.peerUsername);
     }
 
@@ -145,5 +154,53 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     @Override
     public boolean getIsPermanent() {
         return isPermanent;
+    }
+
+    @Override
+    public int getHourChosen() {
+        return hourChosen;
+    }
+
+    @Override
+    public int getMinuteChosen() {
+        return minuteChosen;
+    }
+
+    @Override
+    public void setHourChosen(int hourChosen) {
+        int old = this.hourChosen;
+        this.hourChosen = hourChosen;
+        propertyChangeSupport.firePropertyChange("hourChosen", old, this.hourChosen);
+    }
+
+    @Override
+    public void setMinuteChosen(int minuteChosen) {
+        int old = this.minuteChosen;
+        this.minuteChosen = minuteChosen;
+        propertyChangeSupport.firePropertyChange("minuteChosen", old, this.minuteChosen);
+    }
+
+    @Override
+    public void setDateChosen(LocalDate dateChosen) {
+        LocalDate old = this.dateChosen;
+        this.dateChosen = dateChosen;
+        propertyChangeSupport.firePropertyChange("dateChosen", old, this.dateChosen);
+    }
+
+    @Override
+    public String getDateChosen() {
+        return dateChosen.toString();
+    }
+
+    @Override
+    public String getLocationChosen() {
+        return locationChosen;
+    }
+
+    @Override
+    public void setLocationChosen(String locationChosen) {
+        String old = locationChosen;
+        this.locationChosen = locationChosen;
+        propertyChangeSupport.firePropertyChange("locationChosen", old, this.locationChosen);
     }
 }

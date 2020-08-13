@@ -5,6 +5,7 @@ import org.twelve.presenters.TradeEditorPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 import org.twelve.usecases.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,7 @@ public class TradeEditorController {
             if (tradeManager.isEditTurn(sessionManager.getCurrAccountID(), trade)) {
                 if (tradeManager.getDateTime(trade).isAfter(LocalDateTime.now()))
                     canConfirm = true;
-                else if (tradeManager.canBeEdited(trade))
+                if (tradeManager.canBeEdited(trade))
                     canEdit = true;
             }
         } else if (tradeManager.isConfirmed(trade)) {
@@ -92,6 +93,11 @@ public class TradeEditorController {
         tradeEditorPresenter.setCanComplete(canComplete);
         tradeEditorPresenter.setCanCancel(canCancel);
         tradeEditorPresenter.setIsPermanent(tradeManager.isPermanent(trade));
+        LocalDateTime dateTime = tradeManager.getDateTime(trade);
+        tradeEditorPresenter.setHourChosen(dateTime.getHour());
+        tradeEditorPresenter.setMinuteChosen(dateTime.getMinute());
+        tradeEditorPresenter.setDateChosen(LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth()));
+        tradeEditorPresenter.setLocationChosen(tradeManager.getLocation(trade));
     }
 
     public void cancelTrade() {
