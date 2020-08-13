@@ -75,10 +75,7 @@ public class ProfileController {
      */
     public boolean changePassword(String oldPassword, String newPassword) {
 
-        if (newPassword.isBlank()) {
-            profilePresenter.setPasswordError("newPwdError");
-            return false;
-        } else if (!loginManager.changePassword(sessionManager.getCurrAccountID(), oldPassword, newPassword)) {
+        if (!loginManager.changePassword(sessionManager.getCurrAccountID(), oldPassword, newPassword)) {
             profilePresenter.setPasswordError("oldPwdError");
             return false;
         } else {
