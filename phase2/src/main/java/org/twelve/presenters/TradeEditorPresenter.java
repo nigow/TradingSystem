@@ -30,7 +30,7 @@ public interface TradeEditorPresenter {
     void setHourChosen(int hourChosen);
     void setMinuteChosen(int minuteChosen);
     void setDateChosen(LocalDate dateChosen);
-    String getDateChosen();
+    LocalDate getDateChosen();
     String getLocationChosen();
     void setLocationChosen(String locationChosen);
 }

@@ -188,8 +188,8 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     }
 
     @Override
-    public String getDateChosen() {
-        return dateChosen.toString();
+    public LocalDate getDateChosen() {
+        return dateChosen;
     }
 
     @Override
@@ -199,7 +199,7 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
 
     @Override
     public void setLocationChosen(String locationChosen) {
-        String old = locationChosen;
+        String old = this.locationChosen;
         this.locationChosen = locationChosen;
         propertyChangeSupport.firePropertyChange("locationChosen", old, this.locationChosen);
     }
