@@ -29,9 +29,13 @@ public class ItemIntegrationTest extends TestCase {
         AccountGateway accountGateway = new InMemoryAccountGateway(new HashMap<>());
         SecurityUtility securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES");
         accountRepository = new AccountRepository(accountGateway, securityUtility);
-        Item initial = new Item(0, "Potato", "A Vegetable", 10);
-        HashMap<Integer, Item> h = new HashMap<>();
-        h.put(0, initial);
+        String[] initialString = new String[4];
+        initialString[0] = "Potato";
+        initialString[1] = "A Vegetable";
+        initialString[2] = "false";
+        initialString[3] = "10";
+        HashMap<Integer, String[]> h = new HashMap<>();
+        h.put(0, initialString);
 
         itemsGateway = new InMemoryItemGateway(h);
         itemManager = new ItemManager(itemsGateway, accountRepository);
