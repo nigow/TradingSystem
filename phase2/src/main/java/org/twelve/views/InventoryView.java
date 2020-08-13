@@ -75,7 +75,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
     public void reload() {
 
         inventoryController.displayAllYourInventory();
-
+        inventoryPresenter.setError("");
+        itemName.clear();
+        itemDesc.clear();
     }
 
     /**

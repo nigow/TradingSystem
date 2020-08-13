@@ -2,18 +2,15 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
 import org.twelve.controllers.LandingController;
 import org.twelve.presenters.LandingPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -92,6 +89,21 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        languages.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<Locale> call(ListView<Locale> param) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(Locale item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty ? "" : item.getDisplayName(languages.getValue()));
+                    }
+                };
+            }
+        });
+
+        languages.setButtonCell(languages.getCellFactory().call(null)); // workaround for setCellFactory not affecting button cell
+
         try {
 
             ReadOnlyJavaBeanObjectProperty<List<Locale>> availableLanguagesBinding =
@@ -110,6 +122,8 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+
+
 
     }
 

@@ -19,6 +19,7 @@ import org.twelve.presenters.TradeCollectionPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -141,6 +142,13 @@ public class TradeCollectionView<T extends ObservablePresenter & TradeCollection
     @Override
     public void reload() {
         tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
+        locationBox.setText(null);
+        userBox.getSelectionModel().clearSelection();
+        dateBox.setValue(LocalDate.now());
+        hourChosen.getValueFactory().setValue(0);
+        minuteChosen.getValueFactory().setValue(0);
+
+
     }
 
     @Override

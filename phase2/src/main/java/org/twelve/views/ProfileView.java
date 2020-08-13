@@ -69,6 +69,12 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     @Override
     public void reload() {
         profileController.updateProfile();
+        profilePresenter.setLocationError("");
+        profilePresenter.setPasswordError("");
+        oldPassword.clear();
+        newPassword.clear();
+        locationBox.getSelectionModel().clearSelection();
+        locationBox.setValue(null);
     }
 
     /**

@@ -40,6 +40,7 @@ public class ItemManager extends ItemUtility {
         itemsGateway.populate(this);
     }
 
+    //TODO : remove addToItems
     /**
      * Adds a item to the local storage
      *
@@ -66,7 +67,7 @@ public class ItemManager extends ItemUtility {
     }
 
     /**
-     * Creates a new item and stores in local storage.
+     * Creates a new item and stores in local storage .
      *
      * @param name        The name of the item
      * @param description The description of the item
@@ -77,6 +78,21 @@ public class ItemManager extends ItemUtility {
         Item item = new Item(id, name, description, ownerID);
         this.items.put(id, item);
         updateToItemsGateway(item, true);
+    }
+
+    /**
+     * Creates an instance of an item already in database.
+     *
+     * @param id the id of the item
+     * @param name the name of the item
+     * @param description the description of the item
+     * @param ownerID the id of the owner of the item
+     * @param isApproved if the item is approved or not
+     */
+    public void createItem(int id, String name, String description, int ownerID, boolean isApproved) {
+        Item item = new Item(id, name, description, ownerID);
+        if(isApproved) item.approve();
+        this.items.put(id, item);
     }
 
     /**
