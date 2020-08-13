@@ -13,6 +13,7 @@ public enum Permissions {
     CONFIRM_ITEM,
     ADD_TO_WISHLIST,
     REMOVE_WISHLIST,
+    CANCEL_TRADE,
     TRADE,
     BROWSE_INVENTORY,
     CHANGE_THRESHOLDS,

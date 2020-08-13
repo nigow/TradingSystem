@@ -29,7 +29,7 @@
         </rowConstraints>
          <children>
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changePassword" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updatePasswordClicked" text="%updatePassword" GridPane.columnIndex="1" />
+            <Button fx:id="updatePasswordBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updatePasswordClicked" text="%updatePassword" GridPane.columnIndex="1" />
             <PasswordField fx:id="oldPassword" promptText="%oldPassword" GridPane.rowIndex="1" />
             <PasswordField fx:id="newPassword" promptText="%newPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <CheckBox fx:id="onVacation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVacationClicked" text="%onVacation" GridPane.rowIndex="3" />

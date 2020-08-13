@@ -78,6 +78,7 @@ public class RegistrationController {
                     Permissions.CONFIRM_ITEM,
                     Permissions.ADD_TO_WISHLIST,
                     Permissions.REMOVE_WISHLIST,
+                    Permissions.CANCEL_TRADE,
                     Permissions.TRADE,
                     Permissions.BROWSE_INVENTORY,
                     Permissions.CHANGE_THRESHOLDS,
@@ -103,11 +104,6 @@ public class RegistrationController {
         accountGateway.populate(accountRepository);
         if (accountRepository.getIDFromUsername(username) != -1) {
             registrationPresenter.setError("usernameTaken");
-            return false;
-        }
-
-        if (password.isBlank()) {
-            registrationPresenter.setError("badPassword");
             return false;
         }
 

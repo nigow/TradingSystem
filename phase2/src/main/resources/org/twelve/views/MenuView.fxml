@@ -52,5 +52,11 @@
                <Button fx:id="adminWishlist" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#adminWishlistClicked" text="%adminWishlist" />
            </children>
        </StackPane>
+       <StackPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+           <children>
+               <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%accessDenied" />
+               <Button fx:id="cancelTrades" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelTradesClicked" text="%cancelTrades" />
+           </children>
+       </StackPane>
    </children>
 </GridPane>

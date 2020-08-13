@@ -18,9 +18,11 @@ public class ControllerPool {
     private final ThresholdController thresholdController;
     private final FreezingController freezingController;
     private final TradeCreatorController tradeCreatorController;
-    private final TradeCollectionController tradeCollectionController;
+    private final TradeListController tradeListController;
     private final LandingController landingController;
     private final AdminWishlistController adminWishlistController;
+    private final TradeEditorController tradeEditorController;
+    private final TradeCancellationController tradeCancellationController;
 
     public ControllerPool(Locale selectedLanguage, boolean demoMode) {
         GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("json");
@@ -41,8 +43,10 @@ public class ControllerPool {
         thresholdController = new ThresholdController(useCasePool, gatewayPool);
         freezingController = new FreezingController(useCasePool, gatewayPool);
         tradeCreatorController = new TradeCreatorController(useCasePool);
-        tradeCollectionController = new TradeCollectionController(useCasePool);
+        tradeListController = new TradeListController(useCasePool, gatewayPool);
         adminWishlistController = new AdminWishlistController(useCasePool, gatewayPool);
+        tradeEditorController = new TradeEditorController(useCasePool, gatewayPool);
+        tradeCancellationController = new TradeCancellationController(useCasePool, gatewayPool);
 
     }
 
@@ -82,8 +86,8 @@ public class ControllerPool {
 
     public TradeCreatorController getTradeCreatorController() {return tradeCreatorController;}
 
-    public TradeCollectionController getTradeCollectionController() {
-        return tradeCollectionController;
+    public TradeListController getTradeListController() {
+        return tradeListController;
     }
 
     public LandingController getLandingController() {
@@ -92,5 +96,13 @@ public class ControllerPool {
 
     public AdminWishlistController getAdminWishlistController() {
         return adminWishlistController;
+    }
+
+    public TradeEditorController getTradeEditorController() {
+        return tradeEditorController;
+    }
+
+    public TradeCancellationController getTradeCancellationController() {
+        return tradeCancellationController;
     }
 }

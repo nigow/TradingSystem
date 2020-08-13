@@ -8,18 +8,6 @@ import java.util.List;
 public interface InventoryPresenter {
 
     /**
-     * Set item creation error.
-     * @param errorKey Key of item creation error.
-     */
-    void setError(String errorKey);
-
-    /**
-     * Get item creation error.
-     * @return Item creation error.
-     */
-    String getError();
-
-    /**
      * Set approved items.
      * @param approvedItems List of names of approved items.
      */

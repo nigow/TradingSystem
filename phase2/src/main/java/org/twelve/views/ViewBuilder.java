@@ -1,6 +1,7 @@
 package org.twelve.views;
 
 import org.twelve.controllers.ControllerPool;
+import org.twelve.controllers.TradeCancellationController;
 import org.twelve.presenters.ui.*;
 
 import java.util.Locale;
@@ -91,22 +92,33 @@ public class ViewBuilder {
             case INVENTORY:
 
                 return new InventoryView<>(windowHandler, controllerPool.getInventoryController(),
-                        new UIInventoryPresenter(localizedResources));
+                        new UIInventoryPresenter());
 
             case ACCOUNTS:
 
                 return new AccountsView<>(windowHandler, controllerPool.getFreezingController(),
                         new UIFreezingPresenter(localizedResources));
 
-            case TRADE_COLLECTION:
+            case TRADE_LIST:
 
-                return new TradeCollectionView<>(windowHandler, controllerPool.getTradeCollectionController(),
-                        new UITradeCollectionPresenter(localizedResources));
+                return new TradeListView<>(windowHandler, controllerPool.getTradeListController(),
+                        new UITradeListPresenter(localizedResources));
+
+            case TRADE_EDITOR:
+
+                return new TradeEditorView<>(windowHandler, controllerPool.getTradeEditorController(),
+                        new UITradeEditorPresenter(localizedResources));
 
             case ADMIN_WISHLIST:
 
                 return new AdminWishlistView<>(windowHandler, controllerPool.getAdminWishlistController(),
                         new UIAdminWishlistPresenter(localizedResources));
+
+            case TRADE_CANCELLATION:
+
+                return new TradeCancellationView<>(windowHandler, controllerPool.getTradeCancellationController(),
+                        new UITradeCancellationPresenter(localizedResources));
+
         }
 
         return null;

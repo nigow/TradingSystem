@@ -26,10 +26,15 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing creation of trades.
+ * @param <T> Presenter.
+ * @author Ethan follow (@ethannomiddlenamelam)
+ */
 public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView, Initializable {
 
 
-    private WindowHandler windowHandler;
+    private final WindowHandler windowHandler;
 
     private final TradeCreatorController tradeCreatorController;
     private final T tradeCreatorPresenter;
@@ -58,6 +63,12 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     @FXML
     private Spinner<Integer> minuteChosen;
 
+    /**
+     * Constructor for the trade creation view.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param tradeCreatorController controller for creating trades.
+     * @param tradeCreatorPresenter presenter for displaying trades.
+     */
     public TradeCreatorView(WindowHandler windowHandler, TradeCreatorController tradeCreatorController,
                             T tradeCreatorPresenter) {
 
@@ -67,23 +78,32 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         this.tradeCreatorController.setTradeCreatorPresenter(this.tradeCreatorPresenter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         tradeCreatorController.updateLists(peerBox.getSelectionModel().getSelectedItem());
         locationBox.clear();
         twoWay.setSelected(false);
         isPermanent.setSelected(false);
-        hourChosen.getValueFactory().setValue(0);
-        minuteChosen.getValueFactory().setValue(0);
         dateBox.setValue(LocalDate.now());
         peerBox.getSelectionModel().clearSelection();
+        hourChosen.getValueFactory().setValue(0);
+        minuteChosen.getValueFactory().setValue(0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -118,35 +138,42 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
             //The "Hour" Spinner
             hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, tradeCreatorPresenter.getHourChosen());
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
             }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCreatorPresenter).name("hourChosen").build()));
             //=================
 
             //The "Minute" Spinner
             minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, tradeCreatorPresenter.getMinuteChosen());
+                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
             }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCreatorPresenter).name("minuteChosen").build()));
             //=================
 
         } catch (NoSuchMethodException ignored) {System.out.println("failure");}
 
         yourItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!twoWay.isSelected()) {
+            if (!twoWay.isSelected() && newValue.intValue() != -1) {
                 peerItems.getSelectionModel().clearSelection();
-                tradeCreatorController.changeSelectedItemToLend(newValue.intValue());
             }
         }));
 
 
         peerItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!twoWay.isSelected()) {
+            if (!twoWay.isSelected() && newValue.intValue() != -1) {
                 yourItems.getSelectionModel().clearSelection();
-                tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerBox.getSelectionModel().getSelectedItem());
             }
         }));
+
+        dateBox.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(empty || date.compareTo(today) < 0);
+            }
+        });
+
         BooleanBinding isLocationEmpty = Bindings.isEmpty(locationBox.textProperty());
-        saveButton.disableProperty().bind(isLocationEmpty.or(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
-                peerItems.getSelectionModel().selectedItemProperty().isNull())));
+        saveButton.disableProperty().bind(isLocationEmpty.or(peerBox.getSelectionModel().selectedItemProperty().isNull().or(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
+                peerItems.getSelectionModel().selectedItemProperty().isNull()))));
 
         yourItems.setCellFactory(new Callback<>() {
             @Override
@@ -183,37 +210,30 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
             }
         });
 
-        // force recolor every time inventory is updated (doesn't happen by default if the contents are the same)
         peerBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> yourItems.refresh());
 
 
     }
 
     @FXML
-    public void backClicked(ActionEvent actionEvent) {
+    private void backClicked(ActionEvent actionEvent) {
         windowHandler.changeScene(Scenes.MENU);
     }
 
     @FXML
-    public void peerSwitch(ActionEvent actionEvent) {
-        tradeCreatorController.changeSelectedUser(peerBox.getSelectionModel().getSelectedItem());
+    private void peerSwitch(ActionEvent actionEvent) {
         tradeCreatorController.updateLists(peerBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    public void clickTwoWay(ActionEvent actionevent) {
+    private void clickTwoWay(ActionEvent actionevent) {
         if (!twoWay.isSelected()) {
             peerItems.getSelectionModel().clearSelection();
         }
     }
 
     @FXML
-    public void isPermanent(ActionEvent actionEvent) {
-        tradeCreatorController.changePermanentStatus(isPermanent.isSelected());
-    }
-
-
-    public void saveClicked(ActionEvent actionEvent) {
+    private void saveClicked(ActionEvent actionEvent) {
         LocalDateTime time = LocalDateTime.of(dateBox.getValue(), LocalTime.of(hourChosen.getValue(), minuteChosen.getValue()));
         tradeCreatorController.createTrade(peerBox.getSelectionModel().getSelectedItem(), yourItems.getSelectionModel().getSelectedIndex(),
                 peerItems.getSelectionModel().getSelectedIndex(), isPermanent.isSelected(), locationBox.getText(), time);
