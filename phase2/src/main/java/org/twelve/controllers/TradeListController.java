@@ -6,6 +6,7 @@ import org.twelve.presenters.TradeEditorPresenter;
 import org.twelve.presenters.TradeListPresenter;
 import org.twelve.usecases.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TradeListController {
@@ -67,7 +68,7 @@ public class TradeListController {
                 if (tradeManager.getTradeStatus(tradeID) == tradeStatus) {
                     trades.add(accountRepository.getUsernameFromID(tradeManager.getNextTraderID(tradeID,
                             sessionManager.getCurrAccountID())));
-                    trades.add(tradeManager.getDateTime(tradeID).toString());
+                    trades.add(tradeManager.getDateTime(tradeID).format(DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm")));
                 }
             }
         }
