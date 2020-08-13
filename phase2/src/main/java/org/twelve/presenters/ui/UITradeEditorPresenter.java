@@ -3,6 +3,7 @@ package org.twelve.presenters.ui;
 import org.twelve.entities.TradeStatus;
 import org.twelve.presenters.TradeEditorPresenter;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -125,7 +126,7 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     @Override
     public void setTradeStatus(TradeStatus tradeStatus) {
         String old = this.tradeStatus;
-        this.tradeStatus = localizedResources.getString(tradeStatus.name().toLowerCase());
+        this.tradeStatus = MessageFormat.format(localizedResources.getString("tradeStatus"), localizedResources.getString(tradeStatus.name().toLowerCase()));
         propertyChangeSupport.firePropertyChange("tradeStatus", old, this.tradeStatus);
     }
 

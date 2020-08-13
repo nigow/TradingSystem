@@ -152,7 +152,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @FXML
     private void backClicked() {
         tradeEditorController.removeSelectedTrade();
-        windowHandler.changeScene(Scenes.MENU);
+        windowHandler.changeScene(Scenes.TRADE_LIST);
     }
 
     @FXML
