@@ -23,7 +23,7 @@
       <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%accessDenied" />
-            <Button fx:id="modifyRestrictions" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyRestrictionsClicked" text="%modifyRestrictions" />
+            <Button fx:id="modifyThresholds" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyThresholdsClicked" text="%modifyThresholds" />
          </children>
       </StackPane>
       <StackPane GridPane.columnIndex="2" GridPane.rowIndex="1">

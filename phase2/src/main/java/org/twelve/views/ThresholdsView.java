@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * View for managing system threshold values.
  * @param <T> Presenter.
  */
-public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter> implements SceneView, Initializable {
+public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
     private final ThresholdController thresholdController;
@@ -48,7 +48,7 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
      * @param thresholdController Controller for managing system threshold values.
      * @param thresholdPresenter Presenter for displaying current threshold values.
      */
-    public RestrictionsView(WindowHandler windowHandler, ThresholdController thresholdController, T thresholdPresenter) {
+    public ThresholdsView(WindowHandler windowHandler, ThresholdController thresholdController, T thresholdPresenter) {
         this.windowHandler = windowHandler;
         this.thresholdPresenter = thresholdPresenter;
 

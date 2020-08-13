@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.RestrictionsView">
+<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.ThresholdsView">
    <center>
       <GridPane alignment="CENTER" hgap="5.0" vgap="10.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -63,7 +63,7 @@
       </GridPane>
    </bottom>
    <top>
-      <Label text="%restrictions" BorderPane.alignment="TOP_LEFT">
+      <Label text="%thresholds" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets left="10.0" top="10.0" />
          </BorderPane.margin>
