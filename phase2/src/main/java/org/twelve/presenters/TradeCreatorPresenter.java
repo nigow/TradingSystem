@@ -16,6 +16,8 @@ public interface TradeCreatorPresenter {
     int getMinuteChosen();
     void setItemsToReceive(List<String> itemsToReceive);
     List<String> getItemsToReceive();
+    void setPeerWishlist(List<String> wishlist);
+    List<String> getPeerWishlist();
     void setItemsToGive(List<String> itemsToGive);
     List<String> getItemsToGive();
     void setAllUsers(List<String> allUsers);

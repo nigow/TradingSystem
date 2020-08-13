@@ -91,7 +91,7 @@ public class ViewBuilder {
             case INVENTORY:
 
                 return new InventoryView<>(windowHandler, controllerPool.getInventoryController(),
-                        new UIInventoryPresenter(localizedResources));
+                        new UIInventoryPresenter());
 
             case ACCOUNTS:
 

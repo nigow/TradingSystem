@@ -106,11 +106,6 @@ public class RegistrationController {
             return false;
         }
 
-        if (password.isBlank()) {
-            registrationPresenter.setError("badPassword");
-            return false;
-        }
-
         citiesGateway.populate(cityManager);
         if (!cityManager.getAllCities().contains(location)) {
             if (inputHandler.isValidLocation(location)) {

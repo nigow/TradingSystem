@@ -29,9 +29,9 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
     private final T profilePresenter;
 
     @FXML
-    private Label updateLocationError;
+    private Button updatePasswordBtn;
     @FXML
-    private Button updateLocationBtn;
+    private Label updateLocationError;
     @FXML
     private Label updatePasswordError;
     @FXML
@@ -73,8 +73,7 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         profilePresenter.setPasswordError("");
         oldPassword.clear();
         newPassword.clear();
-        locationBox.getSelectionModel().clearSelection();
-        locationBox.setValue(null);
+        locationBox.getEditor().clear();
     }
 
     /**
@@ -129,6 +128,10 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
             locationBox.itemsProperty().bind(citiesBinding);
 
         } catch (NoSuchMethodException ignored) {}
+
+        updatePasswordBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+            return oldPassword.getText().isBlank() || newPassword.getText().isBlank();
+        }, oldPassword.textProperty(), newPassword.textProperty()));
 
     }
 

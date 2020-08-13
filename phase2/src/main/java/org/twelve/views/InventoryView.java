@@ -35,7 +35,7 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
     private final T inventoryPresenter;
 
     @FXML
-    private Label errorLabel;
+    private Button addItemBtn;
 
     @FXML
     private Button removeItemBtn;
@@ -75,7 +75,6 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
     public void reload() {
 
         inventoryController.displayAllYourInventory();
-        inventoryPresenter.setError("");
         itemName.clear();
         itemDesc.clear();
     }
@@ -117,9 +116,6 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
             itemDesc.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(inventoryPresenter).name("selectedItemDesc").build());
-
-            errorLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
-                    .bean(inventoryPresenter).name("error").build());
 
         } catch (NoSuchMethodException ignored) {}
 
@@ -167,6 +163,10 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
         });
 
+        addItemBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+            return itemName.getText().isBlank() || itemDesc.getText().isBlank();
+        }, itemName.textProperty(), itemDesc.textProperty()));
+
         removeItemBtn.disableProperty().bind(inventoryItems.getSelectionModel().selectedItemProperty().isNull());
 
     }
@@ -181,10 +181,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
     @FXML
     private void addItemClicked() {
 
-        if (inventoryController.createItem(itemName.getText(), itemDesc.getText())) {
-            itemName.clear();
-            itemDesc.clear();
-        }
+        inventoryController.createItem(itemName.getText(), itemDesc.getText());
+        itemName.clear();
+        itemDesc.clear();
 
     }
 

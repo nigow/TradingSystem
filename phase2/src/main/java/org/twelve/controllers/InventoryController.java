@@ -78,25 +78,12 @@ public class InventoryController {
      *
      * @param name The name of the item
      * @param description The description of the item
-     * @return Whether the item was successfully created or not
      */
-    public boolean createItem(String name, String description) {
+    public void createItem(String name, String description) {
 
-        if (!name.isBlank() && !description.isBlank()) {
-
-            itemsGateway.populate(itemManager);
-            itemManager.createItem(name, description, sessionManager.getCurrAccountID());
-            displayAllYourInventory();
-            inventoryPresenter.setError("");
-            return true;
-
-        } else {
-
-            inventoryPresenter.setError("badItemInfo");
-            return false;
-
-        }
-
+        itemsGateway.populate(itemManager);
+        itemManager.createItem(name, description, sessionManager.getCurrAccountID());
+        displayAllYourInventory();
 
     }
 

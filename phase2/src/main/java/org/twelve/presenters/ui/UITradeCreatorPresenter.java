@@ -16,6 +16,7 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     private List<String> itemsToReceive;
     private List<String> itemsToGive;
     private List<String> allUsers;
+    private List<String> peerWishlist;
     private String selectedUser;
     private String itemToLend;
     private String itemToBorrow;
@@ -29,7 +30,7 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     public UITradeCreatorPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
-
+        setPeerWishlist(new ArrayList<>());
         setItemsToReceive(new ArrayList<>());
         setItemsToGive(new ArrayList<>());
         setAllUsers(new ArrayList<>());
@@ -72,6 +73,14 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     }
 
     public List<String> getItemsToReceive() {return itemsToReceive;}
+
+    public void setPeerWishlist(List<String> peerWishlist) {
+        List <String> oldPeerWishlist = this.peerWishlist;
+        this.peerWishlist = peerWishlist;
+        propertyChangeSupport.firePropertyChange("peerWishlist", oldPeerWishlist, peerWishlist);
+    }
+
+    public List<String> getPeerWishlist() {return this.peerWishlist;}
 
     public void setItemsToGive(List<String> itemsToGive) {
         List<String> oldItems = this.itemsToGive;

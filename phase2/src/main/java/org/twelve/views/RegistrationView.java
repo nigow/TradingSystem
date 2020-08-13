@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,6 +27,9 @@ import java.util.ResourceBundle;
  * @param <T> Presenter.
  */
 public class RegistrationView<T extends ObservablePresenter & RegistrationPresenter> implements SceneView, Initializable {
+
+    @FXML
+    private Button registerBtn;
 
     @FXML
     private Label adminLabel;
@@ -98,8 +102,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
         registrationController.updateOptions();
         usernameBox.clear();
         passwordBox.clear();
-        locationBox.getSelectionModel().clearSelection();
-        locationBox.setValue(null);
+        locationBox.getEditor().clear();
         registrationPresenter.setError("");
     }
 
@@ -130,6 +133,8 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
             errorLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(registrationPresenter).name("error").build());
+
+            registerBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> passwordBox.getText().isBlank(), passwordBox.textProperty()));
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
