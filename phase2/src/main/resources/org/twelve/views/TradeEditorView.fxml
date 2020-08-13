@@ -49,9 +49,9 @@
          </children></HBox>
       <GridPane GridPane.rowIndex="3">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="442.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="81.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="77.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="352.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="121.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.0" minWidth="10.0" prefWidth="127.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -61,8 +61,8 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></Button>
-            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClicked" prefHeight="25.0" prefWidth="73.0" text="%edit" GridPane.columnIndex="1" />
-            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmClicked" text="%confirm" GridPane.columnIndex="2" />
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClicked" prefHeight="25.0" prefWidth="105.0" text="%edit" GridPane.columnIndex="1" />
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmClicked" prefHeight="25.0" prefWidth="104.0" text="%confirm" GridPane.columnIndex="2" />
          </children>
       </GridPane>
       <GridPane GridPane.rowIndex="1">
@@ -81,14 +81,14 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </CheckBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="completeButton" mnemonicParsing="false" onAction="#completeClicked" text="%complete">
+                  <Button fx:id="completeButton" mnemonicParsing="false" onAction="#completeClicked" prefHeight="25.0" prefWidth="203.0" text="%complete">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="78.0" text="%cancel">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="203.0" text="%cancel">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
