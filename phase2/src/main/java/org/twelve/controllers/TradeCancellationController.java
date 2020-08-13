@@ -28,8 +28,6 @@ public class TradeCancellationController {
 
     public void cancelTrade(int tradeIndex){
         int tradeID = tradeManager.getAllTradesIds().get(tradeIndex);
-        System.out.println("trying to cancel: ");
-        System.out.println(tradeManager.getAllTradesIds().get(tradeIndex));
         tradeManager.adminCancelTrade(tradeID);
     }
 
