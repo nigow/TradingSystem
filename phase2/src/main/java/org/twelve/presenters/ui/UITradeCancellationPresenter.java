@@ -26,6 +26,6 @@ public class UITradeCancellationPresenter extends ObservablePresenter implements
     public void setAllTrades(List<String> allTrades) {
         List <String> oldTrades = this.allTrades;
         this.allTrades = allTrades;
-        propertyChangeSupport.firePropertyChange("peerWishlist", oldTrades, allTrades);
+        propertyChangeSupport.firePropertyChange("allTrades", oldTrades, allTrades);
     }
 }

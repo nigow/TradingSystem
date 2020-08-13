@@ -231,11 +231,17 @@ public class TradeManager extends TradeUtility{
         updateToGateway(trade);
     }
 
-    private void adminCancelTrade(int tradeID) {
+    /**
+     * remove trade from system
+     *
+     * @param tradeID trade id
+     */
+    public void adminCancelTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED)
             unmakeTrade(tradeID);
         trade.setStatus(TradeStatus.ADMIN_CANCELLED);
+        updateToGateway(trade);
     }
 
     private void exchangeItems(int tradeID) {

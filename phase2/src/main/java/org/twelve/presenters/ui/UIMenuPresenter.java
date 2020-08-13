@@ -10,6 +10,7 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     private boolean addAdmin;
     private boolean approveItems;
     private boolean adminWishlist;
+    private boolean cancelTrades;
 
     public void setInitiateTrade(boolean initiateTrade){
         boolean oldInitiateTrade = this.initiateTrade;
@@ -80,5 +81,17 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     @Override
     public boolean getAdminWishlist() {
         return adminWishlist;
+    }
+
+    @Override
+    public void setCancelTrades(boolean cancelTrades) {
+        boolean oldCancelTrades = this.cancelTrades;
+        this.cancelTrades = cancelTrades;
+        propertyChangeSupport.firePropertyChange("cancelTrades", oldCancelTrades, cancelTrades);
+    }
+
+    @Override
+    public boolean getCancelTrades() {
+        return cancelTrades;
     }
 }
