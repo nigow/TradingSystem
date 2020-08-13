@@ -49,19 +49,26 @@ public class TradeCreatorController {
     public void updateLists(String username) {
         if (username != null) {
             List<String> itemsToReceive = new ArrayList<>();
-            for (String s : itemManager.getAllInventoryOfAccountString(accountRepository.getIDFromUsername(username))) {
+            for (String s : itemManager.getApprovedInventoryOfAccountString(accountRepository.getIDFromUsername(username))) {
                 itemsToReceive.add(s);
             }
+            List<String> peerWishlist = new ArrayList<>();
+            for (String s : wishlistManager.getWishlistToString(accountRepository.getIDFromUsername(username))) {
+                peerWishlist.add(s);
+            }
             tradeCreatorPresenter.setItemsToReceive(itemsToReceive);
+            tradeCreatorPresenter.setPeerWishlist(peerWishlist);
         } else {
+            tradeCreatorPresenter.setPeerWishlist(new ArrayList<>());
             tradeCreatorPresenter.setItemsToReceive(new ArrayList<>());
         }
         List<String> itemsToGive = new ArrayList<>();
         List<String> allUsers = new ArrayList<>();
-        for (String s : itemManager.getAllInventoryOfAccountString(sessionManager.getCurrAccountID())) {
+        for (String s : itemManager.getApprovedInventoryOfAccountString(sessionManager.getCurrAccountID())) {
             itemsToGive.add(s);
         }
         tradeCreatorPresenter.setItemsToGive(itemsToGive);
+
         for (String s : accountRepository.getTradableAccounts(sessionManager.getCurrAccountUsername())) {
             allUsers.add(s);
         }

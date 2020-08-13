@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import org.twelve.controllers.TradeCreatorController;
 import org.twelve.presenters.TradeCreatorPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
@@ -129,7 +131,7 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         } catch (NoSuchMethodException ignored) {System.out.println("failure");}
 
         yourItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!twoWay.isSelected()) {
+            if (!twoWay.isSelected() && newValue.intValue() != -1) {
                 peerItems.getSelectionModel().clearSelection();
                 tradeCreatorController.changeSelectedItemToLend(newValue.intValue());
             }
@@ -137,7 +139,7 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
 
         peerItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!twoWay.isSelected()) {
+            if (!twoWay.isSelected() && newValue.intValue() != -1) {
                 yourItems.getSelectionModel().clearSelection();
                 tradeCreatorController.changeSelectedItemToBorrow(newValue.intValue(), peerBox.getSelectionModel().getSelectedItem());
             }
@@ -145,6 +147,45 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         BooleanBinding isLocationEmpty = Bindings.isEmpty(locationBox.textProperty());
         saveButton.disableProperty().bind(isLocationEmpty.or(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
                 peerItems.getSelectionModel().selectedItemProperty().isNull())));
+
+        yourItems.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            for (int i = 0; i < yourItems.getItems().size(); i++) {
+
+                                // comparison by reference is intentional to determine which specific item it is
+                                //noinspection StringEquality
+                                if (yourItems.getItems().get(i) == item) {
+
+                                    if (tradeCreatorPresenter.getPeerWishlist().contains(item)) {
+                                        setTextFill(Color.GREEN);
+                                    } else {
+                                        setTextFill(Color.BLACK);
+                                    }
+
+                                }
+
+
+                            }
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+
+        peerBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> yourItems.refresh());
+
+
     }
 
     @FXML
