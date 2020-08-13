@@ -58,6 +58,7 @@ public class TradeManager extends TradeUtility{
         tradeGateway.populate(this);
     }
 
+    //TODO : remove this
     /**
      * Adds a new trade and its timePlace to local storage
      *
@@ -128,6 +129,29 @@ public class TradeManager extends TradeUtility{
         }
         updateToGateway(trade, true);
         return id;
+    }
+
+    /**
+     * Adds a new trade and its timePlace that exist in the database
+     *
+     * @param id id of trade and timePlace
+     * @param isPermanent if the trade is permanent
+     * @param traderIDs list of all ids of the traders
+     * @param itemIDs list of all the ids of the items
+     * @param editedCounter counter for how many edits were made
+     * @param tradeStatus status of the trade
+     * @param tradeCompletions The Completion status of the trades
+     * @param time the time of the trade
+     * @param location the location of the trade
+     */
+    public void createTrade(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
+                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
+                            String time, String location) {
+        Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
+                TradeStatus.valueOf(tradeStatus), tradeCompletions);
+        TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
+        trades.add(trade);
+        timePlaces.add(timePlace);
     }
 
     /**
