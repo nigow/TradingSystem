@@ -332,6 +332,12 @@ abstract public class TradeUtility {
                 thresholdRepository.getLendMoreThanBorrow();
     }
 
+    /**
+     * return whether this account can be trusted
+     *
+     * @param accountID id of account
+     * @return whether this account can be trusted
+     */
     public boolean canBeTrusted(int accountID) {
         int counter = 0;
         for (Trade trade : getAllTradesAccount(accountID))
