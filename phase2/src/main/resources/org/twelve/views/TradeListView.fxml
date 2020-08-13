@@ -20,9 +20,9 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="selectButton" mnemonicParsing="false" onAction="#selectClicked" text="%select" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Button fx:id="selectButton" mnemonicParsing="false" onAction="#selectClicked" prefHeight="25.0" prefWidth="119.0" text="%select" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
-            <Insets left="230.0" />
+            <Insets left="160.0" />
          </GridPane.margin>
       </Button>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
