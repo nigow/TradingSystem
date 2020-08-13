@@ -351,11 +351,13 @@ abstract public class ItemUtility {
      */
     public List<String> getLocalItemsString(int accountId) {
         List<String> localItems = new ArrayList<>();
-        Account account = accountRepository.getAccountFromID(accountId);
-        for (Item item : items.values()) {
-            Account account2 = accountRepository.getAccountFromID(item.getOwnerID());
-            if (account.getLocation().equals(account2.getLocation())) {
-                localItems.add(item.toString());
+        String location = accountRepository.getAccountFromID(accountId).getLocation();
+        for (Item item : getNotInAccount(accountId)) {
+            Account account = accountRepository.getAccountFromID(item.getOwnerID());
+            if (account != null) {
+                if (location.equals(account.getLocation())) {
+                    localItems.add(item.toString());
+                }
             }
         }
         return localItems;
