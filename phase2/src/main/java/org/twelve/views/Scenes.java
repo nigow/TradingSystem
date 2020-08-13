@@ -9,7 +9,7 @@ public enum Scenes {
     LOGIN("Login"),
     MENU("Menu"),
     WAREHOUSE("Warehouse"),
-    RESTRICTIONS("Restrictions"),
+    THRESHOLDS("Thresholds"),
     PROFILE("Profile"),
     TRADE_CREATOR("TradeCreator"),
     REGISTRATION("Registration"),

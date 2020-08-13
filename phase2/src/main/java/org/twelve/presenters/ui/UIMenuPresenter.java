@@ -5,7 +5,7 @@ import org.twelve.presenters.MenuPresenter;
 public class UIMenuPresenter extends ObservablePresenter implements MenuPresenter {
 
     private boolean initiateTrade;
-    private boolean modifyRestrictions;
+    private boolean modifyThresholds;
     private boolean manageAccounts;
     private boolean addAdmin;
     private boolean approveItems;
@@ -23,15 +23,15 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     }
 
     @Override
-    public void setModifyRestrictions(boolean modifyRestrictions) {
-        boolean oldModifyRestrictions = this.modifyRestrictions;
-        this.modifyRestrictions = modifyRestrictions;
-        propertyChangeSupport.firePropertyChange("modifyRestrictions", oldModifyRestrictions, modifyRestrictions);
+    public void setModifyThresholds(boolean modifyThresholds) {
+        boolean oldModifyThresholds = this.modifyThresholds;
+        this.modifyThresholds = modifyThresholds;
+        propertyChangeSupport.firePropertyChange("modifyThresholds", oldModifyThresholds, modifyThresholds);
     }
 
     @Override
-    public boolean getModifyRestrictions() {
-        return modifyRestrictions;
+    public boolean getModifyThresholds() {
+        return modifyThresholds;
     }
 
     @Override

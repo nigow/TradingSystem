@@ -29,7 +29,7 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     @FXML
     private Button initiateTrade;
     @FXML
-    private Button modifyRestrictions;
+    private Button modifyThresholds;
     @FXML
     private Button manageAccounts;
     @FXML
@@ -61,8 +61,8 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
             initiateTrade.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                 .bean(menuPresenter).name("initiateTrade").build().not());
-            modifyRestrictions.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("modifyRestrictions").build());
+            modifyThresholds.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(menuPresenter).name("modifyThresholds").build());
             manageAccounts.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("manageAccounts").build());
             addAdmin.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
@@ -91,9 +91,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     }
 
     @FXML
-    private void modifyRestrictionsClicked() {
+    private void modifyThresholdsClicked() {
 
-        windowHandler.changeScene(Scenes.RESTRICTIONS);
+        windowHandler.changeScene(Scenes.THRESHOLDS);
 
     }
 
