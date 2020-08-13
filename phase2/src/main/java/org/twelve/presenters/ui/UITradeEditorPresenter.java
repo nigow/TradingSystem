@@ -17,12 +17,11 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     private boolean canCancel;
     private boolean isPermanent;
 
-    List<String> userItems;
-    List<String> peerItems;
+    private List<String> userItems;
+    private List<String> peerItems;
 
-    String peerUsername;
-
-    String tradeStatus;
+    private String peerUsername;
+    private String tradeStatus;
 
 
     public UITradeEditorPresenter(ResourceBundle localizedResources) {
@@ -47,10 +46,20 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     }
 
     @Override
+    public boolean getCanEdit() {
+        return canEdit;
+    }
+
+    @Override
     public void setCanCancel(boolean canCancel) {
         boolean old = this.canCancel;
         this.canCancel = canCancel;
         propertyChangeSupport.firePropertyChange("canCancel", old, this.canCancel);
+    }
+
+    @Override
+    public boolean getCanCancel() {
+        return canCancel;
     }
 
     @Override
@@ -61,10 +70,20 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     }
 
     @Override
+    public boolean getCanConfirm() {
+        return canConfirm;
+    }
+
+    @Override
     public void setCanComplete(boolean canComplete) {
         boolean old = this.canComplete;
         this.canComplete = canComplete;
         propertyChangeSupport.firePropertyChange("canComplete", old, this.canComplete);
+    }
+
+    @Override
+    public boolean getCanComplete() {
+        return canComplete;
     }
 
     @Override
@@ -99,17 +118,20 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     }
 
     @Override
+    public String getPeerUsername() {
+        return peerUsername;
+    }
+
+    @Override
     public void setTradeStatus(TradeStatus tradeStatus) {
-        String newTradeStatus = localizedResources.getString("unconfirmed");
-        if (tradeStatus == TradeStatus.CONFIRMED)
-            newTradeStatus = localizedResources.getString("confirmed");
-        else if (tradeStatus == TradeStatus.REJECTED)
-            newTradeStatus = localizedResources.getString("rejected");
-        else if (tradeStatus == TradeStatus.COMPLETED)
-            newTradeStatus = localizedResources.getString("completed");
         String old = this.tradeStatus;
-        this.tradeStatus = newTradeStatus;
+        this.tradeStatus = localizedResources.getString(tradeStatus.name().toLowerCase());
         propertyChangeSupport.firePropertyChange("tradeStatus", old, this.tradeStatus);
+    }
+
+    @Override
+    public String getTradeStatus() {
+        return tradeStatus;
     }
 
     @Override
@@ -117,5 +139,10 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         boolean old = this.isPermanent;
         this.isPermanent = isPermanent;
         propertyChangeSupport.firePropertyChange("isPermanent", old, this.isPermanent);
+    }
+
+    @Override
+    public boolean getIsPermanent() {
+        return isPermanent;
     }
 }

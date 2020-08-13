@@ -135,8 +135,6 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
             e.printStackTrace();
         }
 
-        isPermanent.setDisable(true);
-
 //        removeButton.disableProperty().bind(wishlistOfUser.getSelectionModel().selectedItemProperty().isNull());
 
     }
