@@ -1,6 +1,8 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
+import org.twelve.gateways.AccountGateway;
+import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.SessionManager;
@@ -35,15 +37,18 @@ public class FreezingController {
 
     private final SessionManager sessionManager;
 
+    private final AccountGateway accountGateway;
+
     /**
      * Initializes constructor with necessary use cases
      *
      * @param useCasePool       An instance of ManualConfig to get use cases
      */
-    public FreezingController(UseCasePool useCasePool) {
+    public FreezingController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         statusManager = useCasePool.getStatusManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager  = useCasePool.getSessionManager();
+        accountGateway = gatewayPool.getAccountGateway();
     }
 
     public void setFreezingPresenter(FreezingPresenter freezingPresenter) {
@@ -105,6 +110,8 @@ public class FreezingController {
     }
 
     public void updateAccountLists() {
+
+        accountGateway.populate(accountRepository);
 
         List<String> bannedAccounts = new ArrayList<>(), unfreezeAccounts = new ArrayList<>(),
                 frozenAccounts = new ArrayList<>(), toFreezeAccounts = new ArrayList<>(),

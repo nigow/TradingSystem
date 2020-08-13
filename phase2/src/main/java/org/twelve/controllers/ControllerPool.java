@@ -2,7 +2,6 @@ package org.twelve.controllers;
 
 import org.twelve.gateways.GatewayPool;
 import org.twelve.gateways.GatewayPoolFactory;
-import org.twelve.presenters.AdminWishlistPresenter;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.Locale;
@@ -40,7 +39,7 @@ public class ControllerPool {
         profileController = new ProfileController(useCasePool, gatewayPool);
         inventoryController = new InventoryController(useCasePool, gatewayPool);
         thresholdController = new ThresholdController(useCasePool, gatewayPool);
-        freezingController = new FreezingController(useCasePool);
+        freezingController = new FreezingController(useCasePool, gatewayPool);
         tradeCreatorController = new TradeCreatorController(useCasePool);
         tradeCollectionController = new TradeCollectionController(useCasePool);
         adminWishlistController = new AdminWishlistController(useCasePool, gatewayPool);
