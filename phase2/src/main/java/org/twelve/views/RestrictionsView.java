@@ -62,6 +62,13 @@ public class RestrictionsView<T extends ObservablePresenter & ThresholdPresenter
     @Override
     public void reload() {
         thresholdController.displayThresholds();
+        lendVsBorrow.getValueFactory().setValue(thresholdPresenter.getLendMoreThanBorrow());
+        maxIncomplete.getValueFactory().setValue(thresholdPresenter.getMaxIncompleteTrade());
+        maxWeekly.getValueFactory().setValue(thresholdPresenter.getMaxWeeklyTrade());
+        numOfDays.getValueFactory().setValue(thresholdPresenter.getNumberOfDays());
+        numOfEdits.getValueFactory().setValue(thresholdPresenter.getNumberOfEdits());
+        numOfStats.getValueFactory().setValue(thresholdPresenter.getNumberOfStats());
+        numForTrusted.getValueFactory().setValue(thresholdPresenter.getNumberOfTradesUntilTrusted());
     }
 
     /**

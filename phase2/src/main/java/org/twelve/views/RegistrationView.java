@@ -96,6 +96,11 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
     @Override
     public void reload() {
         registrationController.updateOptions();
+        usernameBox.clear();
+        passwordBox.clear();
+        locationBox.getSelectionModel().clearSelection();
+        locationBox.setValue(null);
+        registrationPresenter.setError("");
     }
 
     /**

@@ -69,10 +69,12 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     public void reload() {
         tradeCreatorController.updateLists(peerBox.getSelectionModel().getSelectedItem());
         locationBox.clear();
+        twoWay.setSelected(false);
         isPermanent.setSelected(false);
         hourChosen.getValueFactory().setValue(0);
         minuteChosen.getValueFactory().setValue(0);
         dateBox.setValue(LocalDate.now());
+        peerBox.getSelectionModel().clearSelection();
     }
 
     @Override

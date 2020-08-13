@@ -75,6 +75,7 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
     public void reload() {
         usernameBox.clear();
         passwordBox.clear();
+        loginPresenter.setError("");
     }
 
     /**
