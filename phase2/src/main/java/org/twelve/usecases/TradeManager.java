@@ -198,7 +198,7 @@ public class TradeManager extends TradeUtility{
     public void confirmTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
         trade.setStatus(TradeStatus.CONFIRMED);
-        cancelInvalidTrades(trade);
+//        cancelInvalidTrades(trade);
         exchangeItems(tradeID);
         if (!isPermanent(tradeID)) {
             int new_id = reverseTrade(tradeID);
@@ -208,6 +208,7 @@ public class TradeManager extends TradeUtility{
     }
 
     // Cancels trades that have the same items with a confirmed trade.
+    // TODO unused method
     private void cancelInvalidTrades(Trade trade) {
         for (Trade t : trades.values()) {
             if (t.getStatus() == TradeStatus.ADMIN_CANCELLED || t.getId() == trade.getId())
