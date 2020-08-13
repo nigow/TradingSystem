@@ -98,8 +98,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
         registrationController.updateOptions();
         usernameBox.clear();
         passwordBox.clear();
-        locationBox.getSelectionModel().clearSelection();
-        locationBox.setValue(null);
+        locationBox.getEditor().clear();
         registrationPresenter.setError("");
     }
 

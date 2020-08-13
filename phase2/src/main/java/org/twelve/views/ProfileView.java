@@ -73,8 +73,7 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         profilePresenter.setPasswordError("");
         oldPassword.clear();
         newPassword.clear();
-        locationBox.getSelectionModel().clearSelection();
-        locationBox.setValue(null);
+        locationBox.getEditor().clear();
     }
 
     /**
