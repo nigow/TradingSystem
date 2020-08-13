@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresenter> implements SceneView, Initializable {
-    private WindowHandler windowHandler;
 
+    private final WindowHandler windowHandler;
     private final TradeEditorController tradeEditorController;
     private final T tradeEditorPresenter;
 
@@ -131,8 +131,8 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 //            itemDescription.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
 //                    .bean(adminWishlistPresenter).name("selectedItemDescription").build());
 
-        } catch (NoSuchMethodException ignored) {
-            System.out.println("failure");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
 
         isPermanent.setDisable(true);
