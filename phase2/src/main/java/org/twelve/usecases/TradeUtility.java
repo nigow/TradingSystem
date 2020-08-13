@@ -3,6 +3,7 @@ package org.twelve.usecases;
 import org.twelve.entities.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -107,21 +108,27 @@ abstract public class TradeUtility {
         TimePlace timePlace = getTimePlaceByID(trade.getTimePlaceID());
         StringBuilder ans = new StringBuilder();
 
-        for (int i = 0; i < trade.getTraderIds().size(); i++) {
-            int id = trade.getTraderIds().get(i);
-            ans.append("\nUser ").append(i).append(": ").append(accountRepository.getUsernameFromID(id));
-            int j = (i + 1) % trade.getTraderIds().size();
-            ans.append("\nitems being traded to user ").append(j).append(": ");
+        boolean space = false;
+        for (int id : trade.getTraderIds()) {
+            if (space)
+                ans.append("\n");
+            else
+                space = true;
+            ans.append("Items being traded by ").append(accountRepository.getUsernameFromID(id)).append(": ");
+            boolean hasItem = false;
             for (int itemID : itemsTraderGives(id, trade)) {
-                ans.append("\n").append(itemManager.findItemByIdString(itemID));
+                ans.append(itemManager.getItemNameById(itemID));
+                hasItem = true;
             }
+            if (!hasItem)
+                ans.append("-");
         }
 
-        ans.append("\nStatus: ").append(trade.getStatus().toString()).append(" ");
+        ans.append("\nStatus: ").append(trade.getStatus().toString().toLowerCase());
         ans.append("\nType: ");
-        ans.append(trade.isPermanent() ? "Permanent " : "Temporary ");
-        ans.append("\nLocation: ").append(timePlace.getPlace()).append(" ");
-        ans.append("\nTime: ").append(timePlace.getTime()).append(" ");
+        ans.append(trade.isPermanent() ? "permanent" : "temporary");
+        ans.append("\nLocation: ").append(timePlace.getPlace());
+        ans.append("\nTime: ").append(timePlace.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm")));
 
         return ans.toString();
     }
