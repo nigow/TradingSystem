@@ -22,6 +22,7 @@ public class ControllerPool {
     private final LandingController landingController;
     private final AdminWishlistController adminWishlistController;
     private final TradeEditorController tradeEditorController;
+    private final TradeCancellationController tradeCancellationController;
 
     public ControllerPool(Locale selectedLanguage, boolean demoMode) {
         GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("json");
@@ -45,6 +46,7 @@ public class ControllerPool {
         tradeListController = new TradeListController(useCasePool, gatewayPool);
         adminWishlistController = new AdminWishlistController(useCasePool, gatewayPool);
         tradeEditorController = new TradeEditorController(useCasePool, gatewayPool);
+        tradeCancellationController = new TradeCancellationController(useCasePool, gatewayPool);
 
     }
 
@@ -98,5 +100,9 @@ public class ControllerPool {
 
     public TradeEditorController getTradeEditorController() {
         return tradeEditorController;
+    }
+
+    public TradeCancellationController getTradeCancellationController() {
+        return tradeCancellationController;
     }
 }

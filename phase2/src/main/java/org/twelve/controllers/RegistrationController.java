@@ -78,6 +78,7 @@ public class RegistrationController {
                     Permissions.CONFIRM_ITEM,
                     Permissions.ADD_TO_WISHLIST,
                     Permissions.REMOVE_WISHLIST,
+                    Permissions.CANCEL_TRADE,
                     Permissions.TRADE,
                     Permissions.BROWSE_INVENTORY,
                     Permissions.CHANGE_THRESHOLDS,

@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.TradeCancellationPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.TradeManager;
@@ -11,7 +12,7 @@ public class TradeCancellationController {
     private final AccountRepository accountRepository;
     private TradeCancellationPresenter tradeCancellationPresenter;
 
-    public TradeCancellationController(UseCasePool useCasePool){
+    public TradeCancellationController(UseCasePool useCasePool, GatewayPool gatewayPool){
         this.tradeManager = useCasePool.getTradeManager();
         this.accountRepository = useCasePool.getAccountRepository();
     }

@@ -18,7 +18,8 @@ public enum Scenes {
     ACCOUNTS("Accounts"),
     TRADE_LIST("TradeList"),
     TRADE_EDITOR("TradeEditor"),
-    ADMIN_WISHLIST("AdminWishlist");
+    ADMIN_WISHLIST("AdminWishlist"),
+    TRADE_CANCELLATION("TradeCancellation");
 
     private final String fxml;
 

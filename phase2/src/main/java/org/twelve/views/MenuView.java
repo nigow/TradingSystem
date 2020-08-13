@@ -1,7 +1,6 @@
 package org.twelve.views;
 
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -160,7 +159,12 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     }
 
     @FXML
-    public void adminWishlistClicked() {
+    private void adminWishlistClicked() {
         windowHandler.changeScene(Scenes.ADMIN_WISHLIST);
+    }
+
+    @FXML
+    private void cancelTradesClicked() {
+        windowHandler.changeScene(Scenes.TRADE_CANCELLATION);
     }
 }

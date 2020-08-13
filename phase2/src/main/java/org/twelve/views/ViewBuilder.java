@@ -1,6 +1,7 @@
 package org.twelve.views;
 
 import org.twelve.controllers.ControllerPool;
+import org.twelve.controllers.TradeCancellationController;
 import org.twelve.presenters.ui.*;
 
 import java.util.Locale;
@@ -112,6 +113,11 @@ public class ViewBuilder {
 
                 return new AdminWishlistView<>(windowHandler, controllerPool.getAdminWishlistController(),
                         new UIAdminWishlistPresenter(localizedResources));
+
+            case TRADE_CANCELLATION:
+
+                return new TradeCancellationView<>(windowHandler, controllerPool.getTradeCancellationController(),
+                        new UITradeCancellationPresenter(localizedResources));
 
         }
 
