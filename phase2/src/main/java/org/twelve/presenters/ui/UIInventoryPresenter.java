@@ -19,41 +19,17 @@ public class UIInventoryPresenter extends ObservablePresenter implements Invento
 
     private String selectedItemName;
     private String selectedItemDesc;
-    private String errorMsg;
-
-    private final ResourceBundle localizedResources;
 
     /**
      * Constructor for observable inventory presenter.
-     * @param localizedResources Pack containing any localized strings.
      */
-    public UIInventoryPresenter(ResourceBundle localizedResources) {
+    public UIInventoryPresenter() {
 
         super();
-        this.localizedResources = localizedResources;
         setSelectedItemName("");
         setSelectedItemDesc("");
         setApprovedItems(new ArrayList<>());
         setPendingItems(new ArrayList<>());
-        setError("");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setError(String errorKey) {
-        String oldErrorMsg = this.errorMsg;
-        this.errorMsg = localizedResources.containsKey(errorKey) ? localizedResources.getString(errorKey) : "";
-        propertyChangeSupport.firePropertyChange("error", oldErrorMsg, this.errorMsg);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getError() {
-        return errorMsg;
     }
 
     /**
