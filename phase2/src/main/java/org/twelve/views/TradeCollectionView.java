@@ -1,29 +1,21 @@
 package org.twelve.views;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanIntegerPropertyBuilder;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import org.twelve.controllers.TradeCollectionController;
-import org.twelve.presenters.TradeCollectionPresenter;
+import org.twelve.controllers.TradeListController;
+import org.twelve.presenters.TradeListPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class TradeCollectionView<T extends ObservablePresenter & TradeCollectionPresenter> implements SceneView, Initializable {
+public class TradeCollectionView<T extends ObservablePresenter & TradeListPresenter> implements SceneView, Initializable {
 
     @FXML
     private GridPane graphic;
@@ -60,56 +52,56 @@ public class TradeCollectionView<T extends ObservablePresenter & TradeCollection
     private Button cancelBtn;
 
     private WindowHandler windowHandler;
-    private final TradeCollectionController tradeCollectionController;
+    private final TradeListController tradeCollectionController;
     private final T tradeCollectionPresenter;
 
-    public TradeCollectionView(WindowHandler windowHandler, TradeCollectionController tradeCollectionController,
+    public TradeCollectionView(WindowHandler windowHandler, TradeListController tradeCollectionController,
                             T tradeCollectionPresenter) {
 
         this.windowHandler = windowHandler;
         this.tradeCollectionController = tradeCollectionController;
         this.tradeCollectionPresenter = tradeCollectionPresenter;
 
-        this.tradeCollectionController.setTradeCollectionPresenter(this.tradeCollectionPresenter);
+        this.tradeCollectionController.setTradeListPresenter(this.tradeCollectionPresenter);
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            //The drop down
-            ObjectBinding<ObservableList<String>> allAccounts = Bindings.createObjectBinding(() -> {
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getAllUsers());
-                }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("allUsers").build());
-                userBox.itemsProperty().bind(allAccounts);
-
-            //The hour spinner
-            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, tradeCollectionPresenter.getHourChosen());
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCollectionPresenter).name("hourChosen").build()));
-
-            //The minute spinner
-            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, tradeCollectionPresenter.getMinuteChosen());
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCollectionPresenter).name("minuteChosen").build()));
-
-            //The trades list
-            ObjectBinding<ObservableList<String>> allTradesBinding = Bindings.createObjectBinding(() -> {
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getAllTrades());
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("allTrades").build());
-            allTrades.itemsProperty().bind(allTradesBinding);
-
-            //The recent one-ways trades list
-            ObjectBinding<ObservableList<String>> recentOneWaysBinding = Bindings.createObjectBinding(() -> {
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getRecentOneWays());
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("recentOneWays").build());
-            recentOneWays.itemsProperty().bind(recentOneWaysBinding);
-
-            //The recent two-ways trades list
-            ObjectBinding<ObservableList<String>> recentTwoWaysBinding = Bindings.createObjectBinding(() -> {
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getRecentTwoWays());
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("recentTwoWays").build());
-            recentTwoWays.itemsProperty().bind(recentTwoWaysBinding);
+//            //The drop down
+//            ObjectBinding<ObservableList<String>> allAccounts = Bindings.createObjectBinding(() -> {
+//                return FXCollections.observableArrayList(tradeCollectionPresenter.getAllUsers());
+//                }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("allUsers").build());
+//                userBox.itemsProperty().bind(allAccounts);
+//
+//            //The hour spinner
+//            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+//                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, tradeCollectionPresenter.getHourChosen());
+//            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCollectionPresenter).name("hourChosen").build()));
+//
+//            //The minute spinner
+//            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
+//                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, tradeCollectionPresenter.getMinuteChosen());
+//            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCollectionPresenter).name("minuteChosen").build()));
+//
+//            //The trades list
+//            ObjectBinding<ObservableList<String>> allTradesBinding = Bindings.createObjectBinding(() -> {
+//                return FXCollections.observableArrayList(tradeCollectionPresenter.getAllTrades());
+//            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("allTrades").build());
+//            allTrades.itemsProperty().bind(allTradesBinding);
+//
+//            //The recent one-ways trades list
+//            ObjectBinding<ObservableList<String>> recentOneWaysBinding = Bindings.createObjectBinding(() -> {
+//                return FXCollections.observableArrayList(tradeCollectionPresenter.getRecentOneWays());
+//            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("recentOneWays").build());
+//            recentOneWays.itemsProperty().bind(recentOneWaysBinding);
+//
+//            //The recent two-ways trades list
+//            ObjectBinding<ObservableList<String>> recentTwoWaysBinding = Bindings.createObjectBinding(() -> {
+//                return FXCollections.observableArrayList(tradeCollectionPresenter.getRecentTwoWays());
+//            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("recentTwoWays").build());
+//            recentTwoWays.itemsProperty().bind(recentTwoWaysBinding);
 
             //The trading partner label
             tradingPartnerLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
@@ -141,7 +133,7 @@ public class TradeCollectionView<T extends ObservablePresenter & TradeCollection
 
     @Override
     public void reload() {
-        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
+//        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
         locationBox.setText(null);
         userBox.getSelectionModel().clearSelection();
         dateBox.setValue(LocalDate.now());
@@ -163,21 +155,21 @@ public class TradeCollectionView<T extends ObservablePresenter & TradeCollection
 
     }
 
-    @FXML
-    public void userSwitch(ActionEvent actionEvent) {
-        tradeCollectionController.changeSelectedUser(userBox.getSelectionModel().getSelectedItem());
-        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
-    }
-
-    @FXML
-    public void confirmClicked(ActionEvent actionEvent) {
-        tradeCollectionController.confirmTrade(allTrades.getSelectionModel().getSelectedIndex());
-        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
-    }
-
-    @FXML
-    public void cancelClicked(ActionEvent actionEvent) {
-        tradeCollectionController.cancelTrade(allTrades.getSelectionModel().getSelectedIndex());
-        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
-    }
+//    @FXML
+//    public void userSwitch(ActionEvent actionEvent) {
+//        tradeCollectionController.changeSelectedUser(userBox.getSelectionModel().getSelectedItem());
+//        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
+//    }
+//
+//    @FXML
+//    public void confirmClicked(ActionEvent actionEvent) {
+//        tradeCollectionController.confirmTrade(allTrades.getSelectionModel().getSelectedIndex());
+//        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
+//    }
+//
+//    @FXML
+//    public void cancelClicked(ActionEvent actionEvent) {
+//        tradeCollectionController.cancelTrade(allTrades.getSelectionModel().getSelectedIndex());
+//        tradeCollectionController.updateLists(userBox.getSelectionModel().getSelectedItem());
+//    }
 }

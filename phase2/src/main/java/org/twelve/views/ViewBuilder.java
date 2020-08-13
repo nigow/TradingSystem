@@ -98,15 +98,21 @@ public class ViewBuilder {
                 return new AccountsView<>(windowHandler, controllerPool.getFreezingController(),
                         new UIFreezingPresenter(localizedResources));
 
-            case TRADE_COLLECTION:
+            case TRADE_LIST:
 
-                return new TradeCollectionView<>(windowHandler, controllerPool.getTradeCollectionController(),
-                        new UITradeCollectionPresenter(localizedResources));
+                return new TradeListView<>(windowHandler, controllerPool.getTradeListController(),
+                        new UITradeListPresenter(localizedResources));
+
+            case TRADE_EDITOR:
+
+                return new TradeEditorView<>(windowHandler, controllerPool.getTradeEditorController(),
+                        new UITradeEditorPresenter(localizedResources));
 
             case ADMIN_WISHLIST:
 
                 return new AdminWishlistView<>(windowHandler, controllerPool.getAdminWishlistController(),
                         new UIAdminWishlistPresenter(localizedResources));
+
         }
 
         return null;

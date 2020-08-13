@@ -81,6 +81,17 @@ abstract public class TradeUtility {
     }
 
     /**
+     * finds items account traded in this trade
+     *
+     * @param accountID id of account
+     * @param tradeID id of trade
+     * @return list of id of items
+     */
+    public List<Integer> itemsTraderGives(int accountID, int tradeID) {
+        return itemsTraderGives(accountID, getTradeByID(tradeID));
+    }
+
+    /**
      * Retrieves all the trades the current account has.
      *
      * @return List of all of the trades the current account has done
@@ -173,7 +184,7 @@ abstract public class TradeUtility {
     }
 
     /**
-     * Retrieves the three most recent one-way trades the current account
+     * Retrieves the three most recent items given in one-way trades the current account
      * has made.
      *
      * @return List of three most recent one-way trades the current account
@@ -199,16 +210,16 @@ abstract public class TradeUtility {
             allOneWayItems.addAll(itemsTraderGives(accountID, trade));
         }
         int count = 0;
-        for (int tradeId : allOneWayItems) {
+        for (int itemID : allOneWayItems) {
             if (count >= thresholdRepository.getNumberOfStats()) break;
-            threeRecent.add(tradeId);
+            threeRecent.add(itemID);
             count++;
         }
         return threeRecent;
     }
 
     /**
-     * Retrieves the three most recent two-way trades the current account has
+     * Retrieves the three most recent items given in two-way trades the current account has
      * made.
      *
      * @return List of three most recent two-way trades the current account
@@ -234,9 +245,9 @@ abstract public class TradeUtility {
             allTwoWayItems.addAll(itemsTraderGives(accountID, trade));
         }
         int count = 0;
-        for (int tradeId : allTwoWayItems) {
+        for (int itemID : allTwoWayItems) {
             if (count >= thresholdRepository.getNumberOfStats()) break;
-            threeRecent.add(tradeId);
+            threeRecent.add(itemID);
             count++;
         }
         return threeRecent;
@@ -392,6 +403,27 @@ abstract public class TradeUtility {
     }
 
     /**
+     * Returns the status of the trade.
+     *
+     * @param tradeID id of the trade
+     * @return status of the trade
+     */
+    public TradeStatus getTradeStatus(int tradeID) {
+        return getTradeByID(tradeID).getStatus();
+    }
+
+    /**
+     * Returns the next trader in trade after account.
+     *
+     * @param tradeID id of the trade
+     * @param accountID id of the account
+     * @return the next trader after account
+     */
+    public int getNextTraderID(int tradeID, int accountID) {
+        return getTradeByID(tradeID).getNextTraderID(accountID);
+    }
+
+    /**
      * Returns if Trade is completed.
      *
      * @return Whether Trade is completed.
@@ -428,5 +460,18 @@ abstract public class TradeUtility {
             tradeIds.add(trade.getId());
         }
         return tradeIds;
+    }
+
+    /**
+     * return whether this account completed this trade or not
+     *
+     * @param accountID id of account
+     * @param tradeID id of trade
+     * @return whether this account completed trade or not
+     */
+    public boolean accountCompletedTrade(int accountID, int tradeID) {
+        Trade trade = getTradeByID(tradeID);
+        int ind = trade.getTraderIds().indexOf(accountID);
+        return trade.getTradeCompletions().get(ind);
     }
 }

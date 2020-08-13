@@ -99,12 +99,12 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
     }
 
     @FXML
-    public void backClicked() {
+    private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
     @FXML
-    public void removeClicked() {
+    private void removeClicked() {
         adminWishlistController.removeFromWishlist(allUsers.getSelectionModel().getSelectedItem(), wishlistOfUser.getSelectionModel().getSelectedIndex());
     }
 

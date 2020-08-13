@@ -2,6 +2,7 @@ package org.twelve.controllers;
 
 import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.GatewayPool;
+import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.AdminWishlistPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.ItemManager;
@@ -16,6 +17,7 @@ public class AdminWishlistController {
     private final AccountRepository accountRepository;
     private final ItemManager itemManager;
     private final AccountGateway accountGateway;
+    private final ItemsGateway itemsGateway;
 
     private AdminWishlistPresenter adminWishlistPresenter;
 
@@ -24,6 +26,7 @@ public class AdminWishlistController {
         this.accountRepository = useCasePool.getAccountRepository();
         this.itemManager = useCasePool.getItemManager();
         this.accountGateway = gatewayPool.getAccountGateway();
+        this.itemsGateway = gatewayPool.getItemsGateway();
     }
 
     public void setAdminWishlistPresenter(AdminWishlistPresenter adminWishlistPresenter) {
@@ -44,6 +47,7 @@ public class AdminWishlistController {
 
     public void updateWishlist(String selectedUser) {
         accountGateway.populate(accountRepository);
+        itemsGateway.populate(itemManager);
         List<String> wishlistItems = new ArrayList<>();
         if (selectedUser != null) {
             for (int id : wishlistManager.getWishlistFromID(accountRepository.getIDFromUsername(selectedUser))) {

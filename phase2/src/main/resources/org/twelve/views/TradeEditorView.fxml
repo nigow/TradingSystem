@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.TradeEditorView">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -35,7 +35,7 @@
                </children></VBox>
             <VBox prefHeight="128.0" prefWidth="300.0">
                <children>
-                  <Label text="\%theirItems">
+                  <Label fx:id="peerUsername" text="%theirItems">
                      <VBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </VBox.margin>
@@ -88,7 +88,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="78.0" text="\%cancel">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="78.0" text="%cancel">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

@@ -156,7 +156,7 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     @FXML
     private void manageExistingTradesClicked() {
 
-        windowHandler.changeScene(Scenes.TRADE_COLLECTION);
+        windowHandler.changeScene(Scenes.TRADE_LIST);
     }
 
     @FXML
