@@ -4,8 +4,8 @@ public interface MenuPresenter {
     void setInitiateTrade(boolean initiateTrade);
     boolean getInitiateTrade();
 
-    void setModifyRestrictions(boolean modifyRestrictions);
-    boolean getModifyRestrictions();
+    void setModifyThresholds(boolean modifyThresholds);
+    boolean getModifyThresholds();
 
     void setManageAccounts(boolean manageAccounts);
     boolean getManageAccounts();

@@ -139,7 +139,7 @@ public class StatusManager {
         boolean withinWeeklyLimit = tradeUtility.getNumWeeklyTrades(accountID) < thresholdRepository.getMaxWeeklyTrade();
         Roles role = getRoleOfAccount(accountID);
         return !hasPermission(accountID, Permissions.UNFREEZE) &&
-                role != Roles.BANNED && role != Roles.FROZEN && (!withinMaxIncompleteTrades || !withinWeeklyLimit);
+                role != Roles.BANNED && role != Roles.FROZEN && (!withinMaxIncompleteTrades || !withinWeeklyLimit || !tradeUtility.lentMoreThanBorrowed(accountID));
     }
 
     /**

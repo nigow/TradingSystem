@@ -64,9 +64,9 @@ public class ViewBuilder {
                 return new ProfileView<>(windowHandler, controllerPool.getProfileController(),
                         new UIProfilePresenter(localizedResources));
 
-            case RESTRICTIONS:
+            case THRESHOLDS:
 
-                return new RestrictionsView<>(windowHandler, controllerPool.getThresholdController(),
+                return new ThresholdsView<>(windowHandler, controllerPool.getThresholdController(),
                         new UIThresholdsPresenter());
 
             case TRADE_CREATOR:
