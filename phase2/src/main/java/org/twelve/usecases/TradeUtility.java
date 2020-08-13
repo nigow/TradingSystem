@@ -18,8 +18,8 @@ abstract public class TradeUtility {
     ItemManager itemManager;
     AccountRepository accountRepository;
     ThresholdRepository thresholdRepository;
-    List<Trade> trades;
-    List<TimePlace> timePlaces;
+    Map<Integer, Trade> trades;
+    Map<Integer, TimePlace> timePlaces;
 
     /**
      * Constructor for TradeUtility
@@ -29,8 +29,8 @@ abstract public class TradeUtility {
      * @param thresholdRepository Repository for storing all accounts threshold values of the program.
      */
     public TradeUtility(ItemManager itemManager, AccountRepository accountRepository, ThresholdRepository thresholdRepository){
-        trades = new ArrayList<>();
-        timePlaces = new ArrayList<>();
+        trades = new HashMap<>();
+        timePlaces = new HashMap<>();
         this.itemManager = itemManager;
         this.accountRepository = accountRepository;
         this.thresholdRepository = thresholdRepository;
@@ -42,12 +42,8 @@ abstract public class TradeUtility {
      * @param timePlaceID the id of the timePlace object
      * @return timePlace object with id given id
      */
-    TimePlace getTimePlaceByID(int timePlaceID) {
-        for (TimePlace timePlace : timePlaces) {
-            if (timePlaceID == timePlace.getId())
-                return timePlace;
-        }
-        return null;
+    protected TimePlace getTimePlaceByID(int timePlaceID) {
+        return timePlaces.get(timePlaceID);
     }
 
     /**
@@ -57,11 +53,7 @@ abstract public class TradeUtility {
      * @return trade object with given id
      */
     protected Trade getTradeByID(int tradeID) {
-        for (Trade trade : trades) {
-            if (tradeID == trade.getId())
-                return trade;
-        }
-        return null;
+        return trades.get(tradeID);
     }
 
     protected List<Integer> itemsTraderOwns(int accountID, Trade trade) {
@@ -98,7 +90,7 @@ abstract public class TradeUtility {
      */
     protected List<Trade> getAllTradesAccount(int accountID) {
         List<Trade> accountTrades = new ArrayList<>();
-        for (Trade trade : trades) {
+        for (Trade trade : trades.values()) {
             if (trade.getTraderIds().contains(accountID) && trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
                 accountTrades.add(trade);
         }
@@ -448,7 +440,7 @@ abstract public class TradeUtility {
      */
     public List<String> getAllTradesString() {
         List<String> stringTrade = new ArrayList<>();
-        for (Trade trade : trades) {
+        for (Trade trade : trades.values()) {
             stringTrade.add(tradeAsString(trade));
         }
         return stringTrade;
@@ -456,7 +448,7 @@ abstract public class TradeUtility {
 
     public List<Integer> getAllTradesIds(){
         List<Integer> tradeIds = new ArrayList<>();
-        for(Trade trade: trades){
+        for(Trade trade: trades.values()){
             tradeIds.add(trade.getId());
         }
         return tradeIds;

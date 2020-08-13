@@ -42,7 +42,7 @@ public class TradeManager extends TradeUtility{
      */
     void switchToDemoMode(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
-        for (Trade trade : trades) {
+        for (Trade trade : trades.values()) {
             updateToGateway(trade, true);
         }
     }
@@ -78,8 +78,8 @@ public class TradeManager extends TradeUtility{
         Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
                 TradeStatus.valueOf(tradeStatus), tradeCompletions);
         TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
-        trades.add(trade);
-        timePlaces.add(timePlace);
+        trades.put(id, trade);
+        timePlaces.put(id, timePlace);
     }
 
     /**
@@ -115,14 +115,11 @@ public class TradeManager extends TradeUtility{
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List<Integer> itemsIds) {
-        List <Integer> tradesIDs = new ArrayList<>();
-        for (Trade t : trades)
-            tradesIDs.add(t.getId());
-        int id = (tradesIDs.isEmpty() ? 1 : Collections.max(tradesIDs) + 1);
+        int id = (trades.isEmpty() ? 1 : Collections.max(trades.keySet()) + 1);
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
-        trades.add(trade);
-        timePlaces.add(timePlace);
+        trades.put(id, trade);
+        timePlaces.put(id, timePlace);
         for (int accountID : tradersIds) {
             for (int itemID : itemsTraderGives(trade.getNextTraderID(accountID), trade))
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
@@ -150,8 +147,8 @@ public class TradeManager extends TradeUtility{
         Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
                 TradeStatus.valueOf(tradeStatus), tradeCompletions);
         TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
-        trades.add(trade);
-        timePlaces.add(timePlace);
+        trades.put(id, trade);
+        timePlaces.put(id, timePlace);
     }
 
     /**
@@ -212,7 +209,7 @@ public class TradeManager extends TradeUtility{
 
     // Cancels trades that have the same items with a confirmed trade.
     private void cancelInvalidTrades(Trade trade) {
-        for (Trade t : trades) {
+        for (Trade t : trades.values()) {
             if (t.getStatus() == TradeStatus.ADMIN_CANCELLED)
                 continue;
             for (int item : t.getItemsIds())
