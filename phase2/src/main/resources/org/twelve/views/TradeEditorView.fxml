@@ -23,7 +23,7 @@
       <Label fx:id="peerUsername" text="%theirItems" GridPane.columnIndex="1" />
       <ListView fx:id="yourItems" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
       <ListView fx:id="theirItems" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <CheckBox fx:id="isPermanent" mnemonicParsing="false" text="%isPermanent" GridPane.rowIndex="2" />
+      <CheckBox fx:id="isPermanent" disable="true" mnemonicParsing="false" text="%isPermanent" GridPane.rowIndex="2" />
       <Label fx:id="tradeStatus" text="%tradeStatus" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button fx:id="completeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#completeClicked" text="%complete" GridPane.rowIndex="3" />
       <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked" text="%cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
