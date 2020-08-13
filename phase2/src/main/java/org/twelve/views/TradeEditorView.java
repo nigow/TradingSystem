@@ -134,15 +134,16 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 //            dateBox.valueProperty().bindBidirectional(dateBinding);
 
 
-            BooleanBinding isValidTime = Bindings.createBooleanBinding(() -> {
+            BooleanBinding isValidTimeLocation = Bindings.createBooleanBinding(() -> {
+                if (dateBox.getValue() == null || locationBox.getText() == null)
+                    return false;
                 LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
                 LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
                 return dateTime.isAfter(LocalDateTime.now());
             }, hourChosen.valueProperty(), minuteChosen.valueProperty(), dateBox.valueProperty());
 
             editButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(tradeEditorPresenter).name("canEdit").build()/*.and(isValidTime)*/.not()); // TODO fix this
-
+                    .bean(tradeEditorPresenter).name("canEdit").build().and(isValidTimeLocation).not());
 
             // TODO maybe find a better way
 //            locationBox.textProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
@@ -158,6 +159,8 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 
     @Override
     public void reload() {
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
@@ -175,6 +178,8 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @FXML
     private void cancelClicked() {
         tradeEditorController.cancelTrade();
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
@@ -183,18 +188,24 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
         LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
         tradeEditorController.editTrade(locationBox.getText(), dateTime);
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void completeClicked() {
         tradeEditorController.completeTrade();
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void confirmClicked() {
         tradeEditorController.confirmTrade();
+        locationBox.clear();
+        dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 }
