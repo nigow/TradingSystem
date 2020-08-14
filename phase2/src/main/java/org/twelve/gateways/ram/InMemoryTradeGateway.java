@@ -66,11 +66,11 @@ public class InMemoryTradeGateway implements TradeGateway {
                 traderIds.add(Integer.parseInt(traderId));
             }
 
-            String[] itemIdsString = trade[2].split(" ");
+            String[] itemIdsString = trade[2].split(",");
             //TODO fix this
             List<List<Integer>> temp = new ArrayList<>();
             for (String itemId: itemIdsString) {
-                String[] itemIDsString2 = itemId.split(",");
+                String[] itemIDsString2 = itemId.split(" ");
                 List<Integer> itemIds = new ArrayList<>();
                 for (String i: itemIDsString2) {
                     itemIds.add(Integer.parseInt(i));
