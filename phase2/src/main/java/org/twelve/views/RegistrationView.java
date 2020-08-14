@@ -102,7 +102,7 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
         registrationController.updateOptions();
         usernameBox.clear();
         passwordBox.clear();
-        locationBox.getEditor().clear();
+        locationBox.valueProperty().set(null); // this looks weird but fixes a bug related to selecting the same entry
         registrationPresenter.setError("");
     }
 
