@@ -37,8 +37,6 @@ public class FreezingController {
 
     private final SessionManager sessionManager;
 
-    private final AccountGateway accountGateway;
-
     private final UseCasePool useCasePool;
 
     /**
@@ -50,7 +48,6 @@ public class FreezingController {
         statusManager = useCasePool.getStatusManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager  = useCasePool.getSessionManager();
-        accountGateway = gatewayPool.getAccountGateway();
         this.useCasePool = useCasePool;
     }
 

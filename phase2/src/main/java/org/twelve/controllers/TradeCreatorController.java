@@ -18,6 +18,7 @@ public class TradeCreatorController {
     private final ItemManager itemManager;
     private final WishlistManager wishlistManager;
     private final SessionManager sessionManager;
+    private final UseCasePool useCasePool;
 
     private TradeCreatorPresenter tradeCreatorPresenter;
 
@@ -33,6 +34,7 @@ public class TradeCreatorController {
         this.itemManager = useCasePool.getItemManager();
         this.wishlistManager = useCasePool.getWishlistManager();
         this.sessionManager = useCasePool.getSessionManager();
+        this.useCasePool = useCasePool;
     }
 
     /**
@@ -48,6 +50,7 @@ public class TradeCreatorController {
      * @param username the username of the account being traded with (null if there's no selected account)
      */
     public void updateLists(String username) {
+        useCasePool.populateAll();
         if (username != null) {
             List<String> itemsToReceive = new ArrayList<>(itemManager.getApprovedInventoryOfAccountString(accountRepository.getIDFromUsername(username)));
             List<String> peerWishlist = new ArrayList<>(wishlistManager.getWishlistToString(accountRepository.getIDFromUsername(username)));

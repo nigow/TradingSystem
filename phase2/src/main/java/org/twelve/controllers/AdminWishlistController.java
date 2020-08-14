@@ -16,18 +16,14 @@ public class AdminWishlistController {
     private final WishlistManager wishlistManager;
     private final AccountRepository accountRepository;
     private final ItemManager itemManager;
-    private final AccountGateway accountGateway;
-    private final ItemsGateway itemsGateway;
     private final UseCasePool useCasePool;
 
     private AdminWishlistPresenter adminWishlistPresenter;
 
-    public AdminWishlistController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public AdminWishlistController(UseCasePool useCasePool) {
         this.wishlistManager = useCasePool.getWishlistManager();
         this.accountRepository = useCasePool.getAccountRepository();
         this.itemManager = useCasePool.getItemManager();
-        this.accountGateway = gatewayPool.getAccountGateway();
-        this.itemsGateway = gatewayPool.getItemsGateway();
         this.useCasePool = useCasePool;
     }
 

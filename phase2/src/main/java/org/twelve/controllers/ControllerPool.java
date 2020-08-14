@@ -44,7 +44,7 @@ public class ControllerPool {
         freezingController = new FreezingController(useCasePool, gatewayPool);
         tradeCreatorController = new TradeCreatorController(useCasePool);
         tradeListController = new TradeListController(useCasePool, gatewayPool);
-        adminWishlistController = new AdminWishlistController(useCasePool, gatewayPool);
+        adminWishlistController = new AdminWishlistController(useCasePool);
         tradeEditorController = new TradeEditorController(useCasePool, gatewayPool);
         tradeCancellationController = new TradeCancellationController(useCasePool, gatewayPool);
 
