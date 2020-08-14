@@ -10,7 +10,6 @@ public enum Roles {
     TRUSTED,
     FROZEN,
     BANNED,
-    DEMO,
     VACATION,
     NORMAL
 }
