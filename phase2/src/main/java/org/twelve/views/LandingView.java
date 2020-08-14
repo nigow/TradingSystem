@@ -89,21 +89,6 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        languages.setCellFactory(new Callback<>() {
-            @Override
-            public ListCell<Locale> call(ListView<Locale> param) {
-                return new ListCell<>() {
-                    @Override
-                    protected void updateItem(Locale item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty ? "" : item.getDisplayName(languages.getValue()));
-                    }
-                };
-            }
-        });
-
-        languages.setButtonCell(languages.getCellFactory().call(null)); // workaround for setCellFactory not affecting button cell
-
         try {
 
             ReadOnlyJavaBeanObjectProperty<List<Locale>> availableLanguagesBinding =
@@ -117,14 +102,27 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
             demoMode.selectedProperty().bindBidirectional(JavaBeanBooleanPropertyBuilder.create()
                     .bean(landingPresenter).name("demoMode").build());
 
-            demoLogin.disableProperty().bind(demoMode.selectedProperty().not());
-
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
+        languages.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<Locale> call(ListView<Locale> param) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(Locale item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty ? "" : item.getDisplayName(languages.getValue()));
+                    }
+                };
+            }
+        });
 
+        // workaround for setCellFactory not affecting button cell
+        languages.setButtonCell(languages.getCellFactory().call(null));
 
+        demoLogin.disableProperty().bind(demoMode.selectedProperty().not());
     }
 
     @FXML

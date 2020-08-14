@@ -163,9 +163,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
         });
 
-        addItemBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> {
-            return itemName.getText().isBlank() || itemDesc.getText().isBlank();
-        }, itemName.textProperty(), itemDesc.textProperty()));
+        addItemBtn.disableProperty().bind(Bindings.createBooleanBinding(() ->
+                itemName.getText().isBlank() || itemDesc.getText().isBlank(),
+                itemName.textProperty(), itemDesc.textProperty()));
 
         removeItemBtn.disableProperty().bind(inventoryItems.getSelectionModel().selectedItemProperty().isNull());
 

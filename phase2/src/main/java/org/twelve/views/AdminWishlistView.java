@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPresenter> implements SceneView, Initializable {
 
 
-    private WindowHandler windowHandler;
+    private final WindowHandler windowHandler;
 
     private final AdminWishlistController adminWishlistController;
     private final T adminWishlistPresenter;
@@ -64,19 +64,17 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
 
         try {
 
-            ObjectBinding<ObservableList<String>> allAccounts = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> allAccounts =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(adminWishlistPresenter).name("allUsers").build();
 
-                return FXCollections.observableArrayList(adminWishlistPresenter.getAllUsers());
+            allUsers.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(allAccounts.get()), allAccounts));
 
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(adminWishlistPresenter).name("allUsers").build());
-            allUsers.itemsProperty().bind(allAccounts);
+            ReadOnlyJavaBeanObjectProperty<List<String>> accountsWishlist =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(adminWishlistPresenter).name("wishlistOfUser").build();
 
-            ObjectBinding<ObservableList<String>> accountWishlist = Bindings.createObjectBinding(() -> {
-
-                return FXCollections.observableArrayList(adminWishlistPresenter.getWishlistOfUser());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(adminWishlistPresenter).name("wishlistOfUser").build());
-            wishlistOfUser.itemsProperty().bind(accountWishlist);
+            wishlistOfUser.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(accountsWishlist.get()), accountsWishlist));
 
             itemDescription.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(adminWishlistPresenter).name("selectedItemDescription").build());

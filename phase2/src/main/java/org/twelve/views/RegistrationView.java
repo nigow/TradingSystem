@@ -122,8 +122,8 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
         try {
 
-            adminLabel.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(registrationPresenter).name("adminMode").build());
-            userLabel.visibleProperty().bind(adminLabel.visibleProperty().not());
+            adminLabel.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(registrationPresenter).name("adminMode").build());
 
             ReadOnlyJavaBeanObjectProperty<List<String>> existingCitiesBinding =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(registrationPresenter).name("existingCities").build();
@@ -134,11 +134,12 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
             errorLabel.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(registrationPresenter).name("error").build());
 
-            registerBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> passwordBox.getText().isBlank(), passwordBox.textProperty()));
-
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
+        userLabel.visibleProperty().bind(adminLabel.visibleProperty().not());
+        registerBtn.disableProperty().bind(Bindings.createBooleanBinding(()
+                -> passwordBox.getText().isBlank(), passwordBox.textProperty()));
     }
 }

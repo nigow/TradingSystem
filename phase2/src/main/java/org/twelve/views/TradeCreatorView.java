@@ -110,42 +110,37 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         try {
 
             //The PEER dropdown menu vvv
-            ObjectBinding<ObservableList<String>> allAccounts = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> allAccounts =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build();
 
-                return FXCollections.observableArrayList(tradeCreatorPresenter.getAllUsers());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("allUsers").build());
-            peerBox.itemsProperty().bind(allAccounts);
+            peerBox.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(allAccounts.get()), allAccounts));
             //========================
 
             //The "Give" list
-            ObjectBinding<ObservableList<String>> yourItemsBinding = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> yourItemsBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("itemsToGive").build();
 
-                return FXCollections.observableArrayList(tradeCreatorPresenter.getItemsToGive());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("itemsToGive").build());
-            yourItems.itemsProperty().bind(yourItemsBinding);
+            yourItems.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(yourItemsBinding.get()), yourItemsBinding));
             //=================
 
             //The "Receive" list
-            ObjectBinding<ObservableList<String>> peerItemsBinding = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> peerItemsBinding =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("itemsToReceive").build();
 
-                return FXCollections.observableArrayList(tradeCreatorPresenter.getItemsToReceive());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCreatorPresenter).name("itemsToReceive").build());
-            peerItems.itemsProperty().bind(peerItemsBinding);
+            peerItems.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(peerItemsBinding.get()), peerItemsBinding));
             //================
 
             //The "Hour" Spinner
-            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCreatorPresenter).name("hourChosen").build()));
+            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCreatorPresenter).name("hourChosen").build()));
             //=================
 
             //The "Minute" Spinner
-            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCreatorPresenter).name("minuteChosen").build()));
+            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCreatorPresenter).name("minuteChosen").build()));
             //=================
 
         } catch (NoSuchMethodException ignored) {System.out.println("failure");}
@@ -216,24 +211,24 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
     }
 
     @FXML
-    private void backClicked(ActionEvent actionEvent) {
+    private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
     @FXML
-    private void peerSwitch(ActionEvent actionEvent) {
+    private void peerSwitch() {
         tradeCreatorController.updateLists(peerBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void clickTwoWay(ActionEvent actionevent) {
+    private void clickTwoWay() {
         if (!twoWay.isSelected()) {
             peerItems.getSelectionModel().clearSelection();
         }
     }
 
     @FXML
-    private void saveClicked(ActionEvent actionEvent) {
+    private void saveClicked() {
         LocalDateTime time = LocalDateTime.of(dateBox.getValue(), LocalTime.of(hourChosen.getValue(), minuteChosen.getValue()));
         tradeCreatorController.createTrade(peerBox.getSelectionModel().getSelectedItem(), yourItems.getSelectionModel().getSelectedIndex(),
                 peerItems.getSelectionModel().getSelectedIndex(), isPermanent.isSelected(), locationBox.getText(), time);

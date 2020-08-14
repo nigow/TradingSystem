@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class TradeListView<T extends ObservablePresenter & TradeListPresenter> implements SceneView, Initializable {
 
-    private WindowHandler windowHandler;
+    private final WindowHandler windowHandler;
 
     private final TradeListController tradeListController;
     private final T tradeCollectionPresenter;
@@ -51,34 +51,29 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
 
         try {
 
-            ObjectBinding<ObservableList<String>> tradeStatus = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> tradeStatus =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("allTradeStatus").build();
 
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getAllTradeStatus());
+            tradeStatusBox.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(tradeStatus.get()), tradeStatus));
 
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("allTradeStatus").build());
-            tradeStatusBox.itemsProperty().bind(tradeStatus);
+            ReadOnlyJavaBeanObjectProperty<List<String>> statsType =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("statsTypes").build();
 
-            ObjectBinding<ObservableList<String>> statsType = Bindings.createObjectBinding(() -> {
+            statsBox.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(statsType.get()), statsType));
 
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getStatsTypes());
+            ReadOnlyJavaBeanObjectProperty<List<String>> tradesShown =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("tradesShown").build();
 
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("statsTypes").build());
-            statsBox.itemsProperty().bind(statsType);
+            tradesList.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(tradesShown.get()), tradesShown));
 
+            ReadOnlyJavaBeanObjectProperty<List<String>> statsShown =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("statsShown").build();
 
-            ObjectBinding<ObservableList<String>> tradesShown = Bindings.createObjectBinding(() -> {
-
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getTradesShown());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("tradesShown").build());
-            tradesList.itemsProperty().bind(tradesShown);
-
-            ObjectBinding<ObservableList<String>> statsShown = Bindings.createObjectBinding(() -> {
-
-                return FXCollections.observableArrayList(tradeCollectionPresenter.getStatsShown());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCollectionPresenter).name("statsShown").build());
-            statsList.itemsProperty().bind(statsShown);
+            statsList.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(statsShown.get()), statsShown));
 
         } catch (NoSuchMethodException ignored) {System.out.println("failure");}
 

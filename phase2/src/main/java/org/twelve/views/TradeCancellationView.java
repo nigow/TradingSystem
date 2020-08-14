@@ -2,6 +2,7 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,13 +47,13 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+
             //The trades list
-            ObjectBinding<ObservableList<String>> tradesBinding = Bindings.createObjectBinding(() -> {
+            ReadOnlyJavaBeanObjectProperty<List<String>> trades =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCancellationPresenter).name("allTrades").build();
 
-                return FXCollections.observableArrayList(tradeCancellationPresenter.getAllTrades());
-
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<List<String>>create().bean(tradeCancellationPresenter).name("allTrades").build());
-            allTrades.itemsProperty().bind(tradesBinding);
+            allTrades.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(trades.get()), trades));
 
         } catch (NoSuchMethodException ignored) {
             System.out.println("failure");

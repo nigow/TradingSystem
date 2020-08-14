@@ -2,13 +2,10 @@ package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -18,11 +15,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.twelve.controllers.TradeEditorController;
-import org.twelve.controllers.TradeListController;
 import org.twelve.presenters.TradeEditorPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
-import java.awt.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -76,22 +71,22 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         dateProp = new SimpleObjectProperty<>();
     }
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
 
-            ObjectBinding<ObservableList<String>> userItems = Bindings.createObjectBinding(() -> {
-                return FXCollections.observableArrayList(tradeEditorPresenter.getUserItems());
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<java.util.List<String>>create().bean(tradeEditorPresenter).name("userItems").build());
-            yourItems.itemsProperty().bind(userItems);
+            ReadOnlyJavaBeanObjectProperty<List<String>> userItems =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<java.util.List<String>>create().bean(tradeEditorPresenter).name("userItems").build();
 
-            ObjectBinding<ObservableList<String>> peerItems = Bindings.createObjectBinding(() -> {
-                return FXCollections.observableArrayList(tradeEditorPresenter.getPeerItems());
-            }, ReadOnlyJavaBeanObjectPropertyBuilder.<java.util.List<String>>create().bean(tradeEditorPresenter).name("peerItems").build());
-            theirItems.itemsProperty().bind(peerItems);
+            yourItems.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(userItems.get()), userItems));
+
+            ReadOnlyJavaBeanObjectProperty<List<String>> peerItems =
+                    ReadOnlyJavaBeanObjectPropertyBuilder.<java.util.List<String>>create().bean(tradeEditorPresenter).name("peerItems").build();
+
+            theirItems.itemsProperty().bind(Bindings.createObjectBinding(() ->
+                    FXCollections.observableArrayList(peerItems.get()), peerItems));
 
             peerUsername.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("peerUsername").build());
@@ -119,15 +114,13 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
                     .bean(tradeEditorPresenter).name("canEdit").build().not());
 
             //The "Hour" Spinner
-            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, tradeEditorPresenter.getHourChosen());
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("hourChosen").build()));
+            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, tradeEditorPresenter.getHourChosen()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("hourChosen").build()));
             //=================
 
             //The "Minute" Spinner
-            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> {
-                return new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, tradeEditorPresenter.getMinuteChosen());
-            }, ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("minuteChosen").build()));
+            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, tradeEditorPresenter.getMinuteChosen()),
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("minuteChosen").build()));
             //=================
 
             // todo: we can change this but need to also change some other places for consistency

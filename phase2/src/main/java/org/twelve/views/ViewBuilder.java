@@ -1,7 +1,6 @@
 package org.twelve.views;
 
 import org.twelve.controllers.ControllerPool;
-import org.twelve.controllers.TradeCancellationController;
 import org.twelve.presenters.ui.*;
 
 import java.util.Locale;

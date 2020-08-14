@@ -127,9 +127,6 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> toFreeze =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("toFreezeAccounts").build();
 
-            ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> vacationing =
-                    ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("vacationingAccounts").build();
-
             ReadOnlyJavaBeanObjectProperty<List<Map<String, String>>> admin =
                     ReadOnlyJavaBeanObjectPropertyBuilder.<List<Map<String, String>>>create().bean(freezingPresenter).name("adminAccounts").build();
 
@@ -148,7 +145,6 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
                 accounts.addAll(unfreeze.get());
                 accounts.addAll(frozen.get());
                 accounts.addAll(toFreeze.get());
-                accounts.addAll(vacationing.get());
                 accounts.addAll(admin.get());
                 accounts.addAll(mod.get());
                 accounts.addAll(trusted.get());
@@ -156,16 +152,16 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
 
                 return FXCollections.observableArrayList(accounts);
 
-            }, banned, unfreeze, frozen, toFreeze, vacationing, admin, mod, trusted, regular));
+            }, banned, unfreeze, frozen, toFreeze, admin, mod, trusted, regular));
 
-            usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
-            roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
-        BooleanBinding notSelected = accountsTable.getSelectionModel().selectedItemProperty().isNull();
+        usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
+        roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
 
+        BooleanBinding notSelected = accountsTable.getSelectionModel().selectedItemProperty().isNull();
         // todo: use .or() or .and() and bind to can* properties from presenter as well
         banBtn.disableProperty().bind(notSelected);
         unbanBtn.disableProperty().bind(notSelected);
@@ -175,7 +171,6 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         unmodButton.disableProperty().bind(notSelected);
         freezeButton.disableProperty().bind(notSelected);
         unfreezeButton.disableProperty().bind(notSelected);
-
     }
 
     @FXML
