@@ -167,8 +167,15 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         });
 
         BooleanBinding isLocationEmpty = Bindings.isEmpty(locationBox.textProperty());
-        saveButton.disableProperty().bind(isLocationEmpty.or(peerBox.getSelectionModel().selectedItemProperty().isNull().or(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
-                peerItems.getSelectionModel().selectedItemProperty().isNull()))));
+        BooleanBinding isValidTimeLocation = Bindings.createBooleanBinding(() -> {
+            if (dateBox.getValue() == null || locationBox.getText() == null)
+                return false;
+            LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
+            LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
+            return dateTime.isAfter(LocalDateTime.now());
+        }, hourChosen.valueProperty(), minuteChosen.valueProperty(), dateBox.valueProperty());
+        saveButton.disableProperty().bind(isValidTimeLocation.not().or(isLocationEmpty.or(peerBox.getSelectionModel().selectedItemProperty().isNull().or(yourItems.getSelectionModel().selectedItemProperty().isNull().and(
+                peerItems.getSelectionModel().selectedItemProperty().isNull())))));
 
         yourItems.setCellFactory(new Callback<>() {
             @Override
