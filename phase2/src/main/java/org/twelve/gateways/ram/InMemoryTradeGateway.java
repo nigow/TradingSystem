@@ -80,7 +80,10 @@ public class InMemoryTradeGateway implements TradeGateway {
             for (String tradeComp: tradeCompString) {
                 tradeComps.add(Boolean.parseBoolean(tradeComp));
             }
-            tradeManager.createTrade(tradeId, isPerm, traderIds, itemIds, editCounter, tradeStatus,
+
+            //TODO fix this
+            List<List<Integer>> temp = new ArrayList<>();
+            tradeManager.createTrade(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
                     tradeComps, time, location);
         }
         return true;
@@ -117,10 +120,10 @@ public class InMemoryTradeGateway implements TradeGateway {
         }
         else {
             StringBuilder itemIdsString = new StringBuilder();
-            for (int itemId: itemIds) {
-                itemIdsString.append(itemId).append(" ");
-                trade[2] = itemIdsString.toString();
-            }
+//            for (int itemId: itemIds) {
+//                itemIdsString.append(itemId).append(" ");
+//                trade[2] = itemIdsString.toString();
+//            }
         }
         trade[3] = String.valueOf(editedCounter);
         trade[4] = tradeStatus;

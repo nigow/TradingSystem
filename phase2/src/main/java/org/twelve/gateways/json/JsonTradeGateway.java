@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -82,9 +83,14 @@ public class JsonTradeGateway implements TradeGateway {
                             for (String s : json.get("traders_ids").getAsString().split(" ")) {
                                 tradersIds.add(Integer.parseInt(s));
                             }
-                            List<Integer> itemIds = new ArrayList<>();
-                            for (String s : json.get("item_ids").getAsString().split(" ")) {
-                                itemIds.add(Integer.parseInt(s));
+                            List< List<Integer> > itemIds = new ArrayList<>();
+                            for (String outerList : json.get("item_ids").getAsString().split(" ")) {
+                                List<String> temp = Arrays.asList(outerList.split("/"));
+                                List<Integer> tempInt = new ArrayList<>();
+                                for(String item: temp){
+                                    tempInt.add(Integer.parseInt(item));
+                                }
+                                //itemIds.add(Integer.parseInt(s));
                             }
                             String tradeStatus = json.get("trade_status").getAsString();
                             int editCounter = json.get("edit_counter").getAsInt();
@@ -131,8 +137,17 @@ public class JsonTradeGateway implements TradeGateway {
                         String location, boolean newTrade) {
         StringBuilder traderIdsString = new StringBuilder();
         for(Integer i: traderIds) traderIdsString.append(i.toString()).append(" ");
+        //StringBuilder itemIdsString = new StringBuilder();
+        //for(Integer i: itemIds) itemIdsString.append(i.toString()).append(" ");
         StringBuilder itemIdsString = new StringBuilder();
-        for(Integer i: itemIds) itemIdsString.append(i.toString()).append(" ");
+        for(List<Integer> i: itemIds){
+            for(int j : i) {
+                itemIdsString.append(j);
+                itemIdsString.append("/");
+            }
+            itemIdsString.append(" ");
+        }
+        traderIdsString.append(itemIdsString.toString());
         StringBuilder tradeCompletionsString = new StringBuilder();
         for(Boolean b: tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
         JsonObject json = new JsonObject();
