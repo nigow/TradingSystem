@@ -85,14 +85,25 @@ public class JsonTradeGateway implements TradeGateway {
                             }
 
                             List<List<Integer>> itemIds = new ArrayList<>();
-                            for(String outerString: json.get("item_ids").getAsString().split("!")){
-                                List<String> temp = Arrays.asList(outerString.split(" "));
-                                List<Integer> integerList = new ArrayList<>();
-                                for(String number: temp){
-                                    integerList.add(Integer.parseInt(number));
-                                }
-                                itemIds.add(integerList);
+                            String[] itemIdArray = json.get("item_ids").getAsString().split("!");
+                            if(itemIdArray.length == 1){
+                                List<Integer> temp = new ArrayList<>();
+                                temp.add(Integer.parseInt(itemIdArray[0]));
+                                List<Integer> newTemp = new ArrayList<>();
+                                itemIds.add(temp);
+                                itemIds.add(newTemp);
                             }
+                            else{
+                                for(String outerString: itemIdArray){
+                                    List<String> temp = Arrays.asList(outerString.split(" "));
+                                    List<Integer> integerList = new ArrayList<>();
+                                    for(String number: temp){
+                                        integerList.add(Integer.parseInt(number));
+                                    }
+                                    itemIds.add(integerList);
+                                }
+                            }
+
 
                             String tradeStatus = json.get("trade_status").getAsString();
                             int editCounter = json.get("edit_counter").getAsInt();
@@ -139,13 +150,15 @@ public class JsonTradeGateway implements TradeGateway {
                         String location, boolean newTrade) {
         StringBuilder traderIdsString = new StringBuilder();
         for(Integer i: traderIds) traderIdsString.append(i.toString()).append(" ");
+
         String itemIdsString = "";
         for(List<Integer> outerList: itemIds){
             for(int innerInt: outerList){
-                itemIdsString += Integer.toString(innerInt) + " ";
+                itemIdsString += innerInt + " ";
             }
             itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1) + "!";
         }
+
         itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1);
         StringBuilder tradeCompletionsString = new StringBuilder();
         for(Boolean b: tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
