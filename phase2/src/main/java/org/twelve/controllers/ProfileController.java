@@ -1,5 +1,6 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.Permissions;
 import org.twelve.entities.Roles;
 import org.twelve.gateways.CitiesGateway;
 import org.twelve.gateways.GatewayPool;
@@ -56,6 +57,7 @@ public class ProfileController {
 
         profilePresenter.setPasswordError("");
         profilePresenter.setLocationError("");
+        profilePresenter.setIsTrusted(statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.CONFIRM_ITEM));
 
     }
 

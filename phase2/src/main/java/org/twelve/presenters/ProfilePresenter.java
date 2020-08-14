@@ -102,4 +102,12 @@ public interface ProfilePresenter {
      * @return List of existing cities.
      */
     List<String> getExistingCities();
+
+    /**
+     * Get if user is trusted
+     * @return whether user is already trusted
+     */
+    boolean getIsTrusted();
+
+    void setIsTrusted(boolean isTrusted);
 }
