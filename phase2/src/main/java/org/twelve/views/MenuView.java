@@ -66,8 +66,6 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
             initiateTrade.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                 .bean(menuPresenter).name("initiateTrade").build().not());
-            modifyThresholds.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(menuPresenter).name("modifyThresholds").build());
             manageAccounts.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("manageAccounts").build());
             addAdmin.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
