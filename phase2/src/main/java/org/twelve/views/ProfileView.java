@@ -1,6 +1,7 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;
@@ -108,7 +109,8 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
                     .bean(profilePresenter).name("canRequestUnfreeze").build().not());
 
             becomeTrustedBtn.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(profilePresenter).name("canBecomeTrusted").build().not());
+                    .bean(profilePresenter).name("canBecomeTrusted").build().not().or(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                            .bean(profilePresenter).name("isTrusted").build()));
 
             updatePasswordError.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(profilePresenter).name("passwordError").build());
@@ -132,9 +134,7 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         updatePasswordBtn.disableProperty().bind(Bindings.createBooleanBinding(() ->
                 oldPassword.getText().isBlank() || newPassword.getText().isBlank(),
                 oldPassword.textProperty(), newPassword.textProperty()));
-
     }
-
     @FXML
     private void onVacationClicked() {
 

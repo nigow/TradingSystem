@@ -20,6 +20,7 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
     private boolean canVacation;
     private boolean canRequestUnfreeze;
     private boolean canBecomeTrusted;
+    private boolean isTrusted;
     private List<String> existingCities;
 
     /**
@@ -165,6 +166,24 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         return existingCities;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean getIsTrusted() {
+        return isTrusted;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setIsTrusted(boolean isTrusted) {
+        boolean oldIsTrusted = this.isTrusted;
+        this.isTrusted = isTrusted;
+        propertyChangeSupport.firePropertyChange("isTrusted", oldIsTrusted, this.isTrusted);
+
+    }
     /**
      * {@inheritDoc}
      */
