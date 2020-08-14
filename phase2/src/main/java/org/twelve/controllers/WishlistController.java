@@ -110,9 +110,7 @@ public class WishlistController {
     public void changeSelectedWishlistItem(int itemIndex) {
 
         int itemId = wishlistManager.getWishlistFromID(sessionManager.getCurrAccountID()).get(itemIndex);
-
-        wishlistPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
-        wishlistPresenter.setSelectedItemDesc(itemManager.getItemDescById(itemId));
+        changeSelectedItem(itemId);
 
     }
 
@@ -123,9 +121,15 @@ public class WishlistController {
     public void changeSelectedWarehouseItem(int itemIndex) {
 
         int itemId = itemManager.getLocalItems(sessionManager.getCurrAccountID()).get(itemIndex);
+        changeSelectedItem(itemId);
+
+    }
+
+    private void changeSelectedItem(int itemId) {
 
         wishlistPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
         wishlistPresenter.setSelectedItemDesc(itemManager.getItemDescById(itemId));
+        wishlistPresenter.setSelectedItemOwner(accountRepository.getUsernameFromID(itemManager.getOwnerId(itemId)));
 
     }
 

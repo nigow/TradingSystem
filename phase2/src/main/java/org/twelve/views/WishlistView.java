@@ -32,6 +32,9 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
     private final WishlistController wishlistController;
 
     @FXML
+    private Label itemOwner;
+
+    @FXML
     private Button removeFromWishlistBtn;
 
     @FXML
@@ -120,6 +123,9 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
             itemDesc.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(wishlistPresenter).name("selectedItemDesc").build());
+
+            itemOwner.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(wishlistPresenter).name("selectedItemOwner").build());
 
         } catch (NoSuchMethodException ignored) {}
 

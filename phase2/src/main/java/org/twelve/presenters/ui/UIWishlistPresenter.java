@@ -16,6 +16,7 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
     private List<String> localItems;
     private String selectedItemName;
     private String selectedItemDesc;
+    private String selectedItemOwner;
 
     private final ResourceBundle localizedResources;
 
@@ -102,6 +103,24 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
     @Override
     public String getSelectedItemDesc() {
         return selectedItemDesc;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSelectedItemOwner(String owner) {
+        String oldOwner = this.selectedItemOwner;
+        this.selectedItemOwner = MessageFormat.format(localizedResources.getString("itemOwner"), owner);
+        propertyChangeSupport.firePropertyChange("selectedItemOwner", oldOwner, this.selectedItemOwner);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getSelectedItemOwner() {
+        return selectedItemOwner;
     }
 
 }

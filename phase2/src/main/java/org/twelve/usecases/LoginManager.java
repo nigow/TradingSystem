@@ -3,11 +3,21 @@ package org.twelve.usecases;
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
 
+/**
+ * Handles login procedures and keeping sessions
+ *
+ */
 public class LoginManager {
 
     private final AccountRepository accountRepository;
     private final SecurityUtility securityUtility;
 
+    /**
+     * Constructor to set up required use cases
+     *
+     * @param accountRepository an repository dealing with accounts
+     * @param securityUtility use case dealt with encryption
+     */
     public LoginManager(AccountRepository accountRepository, SecurityUtility securityUtility){
         this.accountRepository = accountRepository;
         this.securityUtility = securityUtility;
@@ -29,6 +39,14 @@ public class LoginManager {
                 storedAccount.getPermissions().contains(Permissions.LOGIN);
     }
 
+    /**
+     * Attempts to change password of given user
+     *
+     * @param accountID id of the account which changes password
+     * @param oldPassword password the account holder claims to have in the past
+     * @param newPassword new account this user would like to change to
+     * @return Whether the password change is successful or not
+     */
     public boolean changePassword(int accountID, String oldPassword, String newPassword){
         Account account = accountRepository.getAccountFromID(accountID);
         String temp = securityUtility.encrypt(oldPassword);

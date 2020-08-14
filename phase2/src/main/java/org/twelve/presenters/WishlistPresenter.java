@@ -55,4 +55,15 @@ public interface WishlistPresenter {
      */
     String getSelectedItemDesc();
 
+    /**
+     * Set owner of selected item.
+     * @param owner Owner of selected item.
+     */
+    void setSelectedItemOwner(String owner);
+
+    /**
+     * Get owner of selected item.
+     * @return Owner of selected item.
+     */
+    String getSelectedItemOwner();
 }
