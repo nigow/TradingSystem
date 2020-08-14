@@ -116,7 +116,7 @@ public class InMemoryTradeGateway implements TradeGateway {
         else {
             StringBuilder traderIdsString = new StringBuilder();
             for (int traderId: traderIds) {
-                traderIdsString.append(tradeId).append(" ");
+                traderIdsString.append(traderId).append(" ");
             }
             trade[1] = traderIdsString.toString();
         }
