@@ -25,9 +25,6 @@ public interface FreezingPresenter {
     void setToFreezeAccounts(List<String> toFreezeAccounts);
     List<Map<String, String>> getToFreezeAccounts();
 
-    void setVacationingAccounts(List<String> vacationingAccounts);
-    List<Map<String, String>> getVacationingAccounts();
-
     void setAdminAccounts(List<String> adminAccounts);
     List<Map<String, String>> getAdminAccounts();
 
