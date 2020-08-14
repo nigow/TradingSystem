@@ -17,11 +17,11 @@ public class TradeCancellationController {
     private final TradeRepository tradeRepository;
     private TradeCancellationPresenter tradeCancellationPresenter;
 
-    private final TradeGateway tradeGateway;
+    private final UseCasePool useCasePool;
 
     public TradeCancellationController(UseCasePool useCasePool, GatewayPool gatewayPool){
         this.tradeManager = useCasePool.getTradeManager();
-        this.tradeGateway = gatewayPool.getTradeGateway();
+        this.useCasePool = useCasePool;
         this.tradeRepository = useCasePool.getTradeRepository();
     }
 
@@ -35,7 +35,7 @@ public class TradeCancellationController {
     }
 
     public void updateList(){
-        tradeGateway.populate(tradeRepository);
+        useCasePool.populateAll();
         tradeCancellationPresenter.setAllTrades(tradeRepository.getAllTradesString());
     }
 }
