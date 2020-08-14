@@ -34,7 +34,7 @@ public class ControllerPool {
 
         landingController = new LandingController(selectedLanguage, demoMode, useCasePool);
         loginController = new LoginController(useCasePool, gatewayPool);
-        registrationController = new RegistrationController(useCasePool, gatewayPool);
+        registrationController = new RegistrationController(useCasePool);
         menuController = new MenuController(useCasePool);
         warehouseController = new WarehouseController(useCasePool, gatewayPool);
         wishlistController = new WishlistController(useCasePool, gatewayPool);
