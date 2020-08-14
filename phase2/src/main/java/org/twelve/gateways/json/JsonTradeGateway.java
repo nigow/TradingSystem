@@ -156,7 +156,9 @@ public class JsonTradeGateway implements TradeGateway {
             for(int innerInt: outerList){
                 itemIdsString += innerInt + " ";
             }
-            itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1) + "!";
+            if(itemIdsString.length() > 0){
+                itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1) + "!";
+            }
         }
 
         itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1);
