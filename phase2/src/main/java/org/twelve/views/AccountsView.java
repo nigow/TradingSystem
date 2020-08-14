@@ -221,28 +221,28 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void userSelected() {
         ReadOnlyObjectProperty<Map<String, String>> selectedProp = accountsTable.getSelectionModel().selectedItemProperty();
 
-        modButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
+        modButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getRegularAccounts().contains(selectedProp.get()), selectedProp));
 
-        unmodButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
+        unmodButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getModAccounts().contains(selectedProp.get()), selectedProp));
 
-        freezeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
+        freezeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 (!freezingPresenter.getToFreezeAccounts().contains(selectedProp.get()) || freezingPresenter.getFrozenAccounts().contains(selectedProp.get())), selectedProp));
 
-        unfreezeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
+        unfreezeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getUnfreezeAccounts().contains(selectedProp.get()), selectedProp));
 
-        banBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
-                (freezingPresenter.getBannedAccounts().contains(selectedProp.get()) || freezingPresenter.getAdminAccounts().contains(selectedProp.get())), selectedProp));
+        banBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
+                freezingPresenter.getBannedAccounts().contains(selectedProp.get()) || freezingPresenter.getAdminAccounts().contains(selectedProp.get()), selectedProp));
 
-        unbanBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
+        unbanBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getBannedAccounts().contains(selectedProp.get()), selectedProp));
 
-        trustBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
+        trustBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getRegularAccounts().contains(selectedProp.get()), selectedProp));
 
-        untrustBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp == null ||
+        untrustBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getTrustedAccounts().contains(selectedProp.get()), selectedProp));
     }
 
