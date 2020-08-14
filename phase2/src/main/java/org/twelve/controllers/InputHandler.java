@@ -137,7 +137,7 @@ public class InputHandler {
      */
     public boolean isValidLocation(String location) {
 
-        return location.matches("^[a-zA-Z]+(\\s[a-zA-Z])*$");
+        return location.matches("^[a-zA-Z]+( [a-zA-Z]+)*$");
 
     }
 }

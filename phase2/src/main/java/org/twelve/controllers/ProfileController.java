@@ -105,7 +105,7 @@ public class ProfileController {
         }
 
         cityManager.changeAccountLocation(sessionManager.getCurrAccountID(), newLocation);
-        profilePresenter.setCurrentLocation(cityManager.getLocationOfAccount(sessionManager.getCurrAccountID()));
+        updateProfile();
         return true;
 
     }
@@ -122,6 +122,8 @@ public class ProfileController {
             statusManager.completeVacation(sessionManager.getCurrAccountID());
         }
 
+        updateProfile();
+
     }
 
     /**
@@ -130,6 +132,7 @@ public class ProfileController {
     public void requestUnfreeze() {
 
         statusManager.requestUnfreeze(sessionManager.getCurrAccountID());
+        updateProfile();
 
     }
 
@@ -138,5 +141,6 @@ public class ProfileController {
      */
     public void becomeTrusted() {
         statusManager.trustAccount(sessionManager.getCurrAccountID());
+        updateProfile();
     }
 }
