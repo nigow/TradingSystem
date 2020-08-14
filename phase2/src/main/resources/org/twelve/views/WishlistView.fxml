@@ -27,6 +27,7 @@
          <children>
             <Label fx:id="itemName" text="%itemName" wrapText="true" />
             <Label fx:id="itemDesc" text="%itemDesc" wrapText="true" VBox.vgrow="ALWAYS" />
+            <Label fx:id="itemOwner" text="%itemOwner" wrapText="true" />
          </children>
       </VBox>
    </children>
