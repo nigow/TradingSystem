@@ -21,4 +21,7 @@ public interface MenuPresenter {
 
     void setCancelTrades(boolean cancelTrades);
     boolean getCancelTrades();
+
+    void setCurrentUser(String user);
+    String getCurrentUser();
 }

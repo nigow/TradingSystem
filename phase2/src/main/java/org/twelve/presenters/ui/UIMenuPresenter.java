@@ -2,6 +2,9 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.MenuPresenter;
 
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
 public class UIMenuPresenter extends ObservablePresenter implements MenuPresenter {
 
     private boolean initiateTrade;
@@ -11,6 +14,13 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     private boolean approveItems;
     private boolean adminWishlist;
     private boolean cancelTrades;
+    private String currentUser;
+    private final ResourceBundle localizedResources;
+
+    public UIMenuPresenter(ResourceBundle localizedResources) {
+        this.localizedResources = localizedResources;
+        setCurrentUser("");
+    }
 
     public void setInitiateTrade(boolean initiateTrade){
         boolean oldInitiateTrade = this.initiateTrade;
@@ -93,5 +103,17 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     @Override
     public boolean getCancelTrades() {
         return cancelTrades;
+    }
+
+    @Override
+    public void setCurrentUser(String user) {
+        String oldCurrentUser = this.currentUser;
+        this.currentUser = MessageFormat.format(localizedResources.getString("currentUser"), user);
+        propertyChangeSupport.firePropertyChange("currentUser", oldCurrentUser, this.currentUser);
+    }
+
+    @Override
+    public String getCurrentUser() {
+        return currentUser;
     }
 }

@@ -1,10 +1,12 @@
 package org.twelve.views;
 
 import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import org.twelve.controllers.MenuController;
 import org.twelve.presenters.MenuPresenter;
@@ -23,6 +25,8 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
     private final MenuController menuController;
     private final T menuPresenter;
 
+    @FXML
+    private Label currentUser;
     @FXML
     private GridPane graphic;
     @FXML
@@ -74,6 +78,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
                     .bean(menuPresenter).name("adminWishlist").build());
             cancelTrades.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("cancelTrades").build());
+
+            currentUser.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
+                    .bean(menuPresenter).name("currentUser").build());
 
         } catch (NoSuchMethodException ignored) {}
     }

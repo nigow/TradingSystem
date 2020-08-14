@@ -31,6 +31,7 @@ public class MenuController {
         menuPresenter.setApproveItems(statusManager.hasPermission(accountID, Permissions.CONFIRM_ITEM));
         menuPresenter.setAdminWishlist(statusManager.hasPermission(accountID, Permissions.REMOVE_WISHLIST));
         menuPresenter.setCancelTrades(statusManager.hasPermission(accountID, Permissions.CANCEL_TRADE));
+        menuPresenter.setCurrentUser(sessionManager.getCurrAccountUsername());
     }
 
     public void logout() {

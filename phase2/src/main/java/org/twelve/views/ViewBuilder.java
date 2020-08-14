@@ -57,7 +57,7 @@ public class ViewBuilder {
             case MENU:
 
                 return new MenuView<>(windowHandler, controllerPool.getMenuController(),
-                        new UIMenuPresenter());
+                        new UIMenuPresenter(localizedResources));
 
             case PROFILE:
 
