@@ -67,9 +67,15 @@ public class InMemoryTradeGateway implements TradeGateway {
             }
 
             String[] itemIdsString = trade[2].split(" ");
-            List<Integer> itemIds = new ArrayList<>();
+            //TODO fix this
+            List<List<Integer>> temp = new ArrayList<>();
             for (String itemId: itemIdsString) {
-                itemIds.add(Integer.parseInt(itemId));
+                String[] itemIDsString2 = itemId.split(",");
+                List<Integer> itemIds = new ArrayList<>();
+                for (String i: itemIDsString2) {
+                    itemIds.add(Integer.parseInt(i));
+                }
+                temp.add(itemIds);
             }
 
             int editCounter = Integer.parseInt(trade[3]);
@@ -81,8 +87,7 @@ public class InMemoryTradeGateway implements TradeGateway {
                 tradeComps.add(Boolean.parseBoolean(tradeComp));
             }
 
-            //TODO fix this
-            List<List<Integer>> temp = new ArrayList<>();
+
             tradeManager.createTrade(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
                     tradeComps, time, location);
         }
@@ -112,8 +117,8 @@ public class InMemoryTradeGateway implements TradeGateway {
             StringBuilder traderIdsString = new StringBuilder();
             for (int traderId: traderIds) {
                 traderIdsString.append(tradeId).append(" ");
-                trade[1] = traderIdsString.toString();
             }
+            trade[1] = traderIdsString.toString();
         }
         if (itemIds.size() == 0) {
             trade[2] = " ";
@@ -124,6 +129,13 @@ public class InMemoryTradeGateway implements TradeGateway {
 //                itemIdsString.append(itemId).append(" ");
 //                trade[2] = itemIdsString.toString();
 //            }
+            for (List<Integer> ids: itemIds) {
+                for (int id: ids) {
+                    itemIdsString.append(id).append(" ");
+                }
+                itemIdsString.append(",");
+            }
+            trade[2] = itemIdsString.toString();
         }
         trade[3] = String.valueOf(editedCounter);
         trade[4] = tradeStatus;
@@ -134,8 +146,8 @@ public class InMemoryTradeGateway implements TradeGateway {
             StringBuilder traderString = new StringBuilder();
             for (boolean tradeComps: tradeCompletions) {
                 traderString.append(tradeComps).append(" ");
-                trade[5] = traderString.toString();
             }
+            trade[5] = traderString.toString();
         }
         String[] timePlace = new String[2];
         timePlace[0] = time;
