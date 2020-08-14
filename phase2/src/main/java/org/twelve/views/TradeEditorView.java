@@ -163,7 +163,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 
     @Override
     public void reload() {
-        dateBox.getEditor().clear();
+        if (!dateBox.isDisable()) dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
