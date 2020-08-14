@@ -72,7 +72,7 @@ public class TradeManager extends TradeUtility{
      * @param time the time of the trade
      * @param location the location of the trade
      */
-    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
+    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
                             int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
                             String time, String location) {
         Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
@@ -114,7 +114,7 @@ public class TradeManager extends TradeUtility{
      * @param itemsIds      The items involved in this trade.
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
-                            List<Integer> tradersIds, List<Integer> itemsIds) {
+                            List<Integer> tradersIds, List< List<Integer> > itemsIds) {
         int id = (trades.isEmpty() ? 1 : Collections.max(trades.keySet()) + 1);
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
@@ -141,7 +141,7 @@ public class TradeManager extends TradeUtility{
      * @param time the time of the trade
      * @param location the location of the trade
      */
-    public void createTrade(int id, boolean isPermanent, List<Integer> traderIDs, List<Integer> itemIDs,
+    public void createTrade(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
                             int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
                             String time, String location) {
         Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
@@ -159,7 +159,11 @@ public class TradeManager extends TradeUtility{
         TimePlace timePlace = getTimePlaceByID(id);
         Trade trade = getTradeByID(id);
         List<Integer> reverseTraders = new ArrayList<>(trade.getTraderIds());
-        List<Integer> reverseItems = new ArrayList<>(trade.getItemsIds());
+        List< List<Integer> > reverseItems = new ArrayList<>();
+        int n = trade.getItemsIds().size();
+        for (int i = 0; i < n - 1; i++)
+            reverseItems.add(trade.getItemsIds().get(n - 2 - i)); // TODO copy these instead of aliasing but it should be fine for now
+        reverseItems.add(trade.getItemsIds().get(n - 1));
         Collections.reverse(reverseTraders);
         return createTrade(timePlace.getTime().plusDays(thresholdRepository.getNumberOfDays()),
                 timePlace.getPlace(), true, reverseTraders, reverseItems);
@@ -208,18 +212,17 @@ public class TradeManager extends TradeUtility{
     }
 
     // Cancels trades that have the same items with a confirmed trade.
-    // TODO unused method
-    private void cancelInvalidTrades(Trade trade) {
-        for (Trade t : trades.values()) {
-            if (t.getStatus() == TradeStatus.ADMIN_CANCELLED || t.getId() == trade.getId())
-                continue;
-            for (int item : t.getItemsIds())
-                if (trade.getItemsIds().contains(item)) {
-                    adminCancelTrade(t.getId());
-                    break;
-                }
-        }
-    }
+//    private void cancelInvalidTrades(Trade trade) {
+//        for (Trade t : trades.values()) {
+//            if (t.getStatus() == TradeStatus.ADMIN_CANCELLED || t.getId() == trade.getId())
+//                continue;
+//            for (int item : t.getItemsIds())
+//                if (trade.getItemsIds().contains(item)) {
+//                    adminCancelTrade(t.getId());
+//                    break;
+//                }
+//        }
+//    }
 
     /**
      * Updates the completion status of this Trade according to the user's ID.
@@ -247,15 +250,11 @@ public class TradeManager extends TradeUtility{
 
     private void exchangeItems(int tradeID) {
         Trade trade = getTradeByID(tradeID);
-        List <Integer> prev_items = itemsTraderOwns(trade.getTraderIds().get(0), trade);
         for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int accountID = trade.getTraderIds().get(i);
             int nextAccountID = trade.getNextTraderID(accountID);
-            List<Integer> temp = itemsTraderOwns(nextAccountID, trade);
-            for (int itemID : prev_items) {
+            for (int itemID : trade.getItemsIds().get(i))
                 itemManager.updateOwner(itemID, nextAccountID);
-            }
-            prev_items = temp;
         }
     }
 
@@ -274,16 +273,11 @@ public class TradeManager extends TradeUtility{
      */
     public void unmakeTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
-        int lastID = trade.getTraderIds().get(trade.getTraderIds().size() - 1);
-        List <Integer> prev_items = itemsTraderOwns(lastID, trade);
-        for (int i = trade.getTraderIds().size() - 1; i >= 0; i--) {
+        for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int accountID = trade.getTraderIds().get(i);
             int prevAccountID = trade.getPreviousTraderID(accountID);
-            List<Integer> temp = itemsTraderOwns(prevAccountID, trade);
-            for (int itemID : prev_items) {
+            for (int itemID : trade.getItemsIds().get(i))
                 itemManager.updateOwner(itemID, prevAccountID);
-            }
-            prev_items = temp;
         }
     }
 }

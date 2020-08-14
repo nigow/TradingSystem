@@ -126,7 +126,7 @@ public class JsonTradeGateway implements TradeGateway {
      */
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
-    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > itemIds,
                         int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                         String location, boolean newTrade) {
         StringBuilder traderIdsString = new StringBuilder();

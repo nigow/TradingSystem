@@ -57,20 +57,22 @@ abstract public class TradeUtility {
         return trades.get(tradeID);
     }
 
-    protected List<Integer> itemsTraderOwns(int accountID, Trade trade) {
-        List<Integer> items = new ArrayList<>();
-        for (int id : trade.getItemsIds()) {
-            if (itemManager.getOwnerId(id) == accountID)
-                items.add(id);
-        }
-        return items;
-    }
+//    protected List<Integer> itemsTraderOwns(int accountID, Trade trade) {
+//        List<Integer> items = new ArrayList<>();
+//        for (int id : trade.getItemsIds()) {
+//            if (itemManager.getOwnerId(id) == accountID)
+//                items.add(id);
+//        }
+//        return items;
+//    }
 
     protected List<Integer> itemsTraderGives(int accountID, Trade trade) {
-        if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED) {
-            accountID = trade.getNextTraderID(accountID);
-        }
-        return itemsTraderOwns(accountID, trade);
+        int ind = trade.getTraderIds().indexOf(accountID);
+        return trade.getItemsIds().get(ind);
+//        if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED) {
+//            accountID = trade.getNextTraderID(accountID);
+//        }
+//        return itemsTraderOwns(accountID, trade);
     }
 
     /**

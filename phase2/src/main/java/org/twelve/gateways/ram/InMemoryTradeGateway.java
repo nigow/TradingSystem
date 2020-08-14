@@ -90,7 +90,7 @@ public class InMemoryTradeGateway implements TradeGateway {
      * {@inheritDoc}
      */
     @Override
-    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds,
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > itemIds,
                      int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                      String location, boolean newTrade) {
         /*

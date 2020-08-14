@@ -34,7 +34,7 @@ public interface TradeGateway {
      * @param newTrade true if it is a newly created trade. false if it is meant to update the external information
      * @return whether or not the population was successful
      */
-    boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<Integer> itemIds, int editedCounter,
+    boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > itemIds, int editedCounter,
               String tradeStatus, List<Boolean> tradeCompletions, String time, String location, boolean newTrade);
 
 }
