@@ -1,10 +1,13 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.adapter.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.BorderPane;
@@ -24,6 +27,9 @@ public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> 
     private final WindowHandler windowHandler;
     private final ThresholdController thresholdController;
     private final T thresholdPresenter;
+
+    @FXML
+    public Button saveButton;
 
     @FXML
     private BorderPane graphic;
@@ -131,6 +137,16 @@ public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> 
                     new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfTradesUntilTrusted()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfTradesUntilTrusted").build()));
 
+            BooleanBinding booleanBinding = ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(thresholdPresenter).name("isAdmin").build().not();
+            System.out.println(booleanBinding);
+            lendVsBorrow.disableProperty().bind(booleanBinding);
+            maxIncomplete.disableProperty().bind(booleanBinding);
+            maxWeekly.disableProperty().bind(booleanBinding);
+            numOfDays.disableProperty().bind(booleanBinding);
+            numOfEdits.disableProperty().bind(booleanBinding);
+            numOfStats.disableProperty().bind(booleanBinding);
+            numForTrusted.disableProperty().bind(booleanBinding);
+            saveButton.disableProperty().bind(booleanBinding);
         } catch (NoSuchMethodException ignored) {}
 
     }
