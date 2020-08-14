@@ -76,15 +76,19 @@ public class TradeCreatorController {
      */
     public void createTrade(String username, int itemLendIndex, int itemBorrowIndex,
                             boolean isPermanent, String location, LocalDateTime time) {
-        List<Integer> itemIDs = new ArrayList<>();
+        List<Integer> itemIDs1 = new ArrayList<>();
+        List<Integer> itemIDs2 = new ArrayList<>();
         List<Integer> accountIDs = new ArrayList<>();
         int peerID = accountRepository.getIDFromUsername(username);
         if (itemLendIndex >= 0) {
-            itemIDs.add(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemLendIndex));
+            itemIDs1.add(itemManager.getApprovedInventoryOfAccount(sessionManager.getCurrAccountID()).get(itemLendIndex));
         }
         if (itemBorrowIndex >= 0) {
-            itemIDs.add(itemManager.getApprovedInventoryOfAccount(peerID).get(itemBorrowIndex));
+            itemIDs2.add(itemManager.getApprovedInventoryOfAccount(peerID).get(itemBorrowIndex));
         }
+        List< List<Integer> > itemIDs = new ArrayList<>();
+        itemIDs.add(itemIDs1);
+        itemIDs.add(itemIDs2);
         accountIDs.add(peerID);
         accountIDs.add(sessionManager.getCurrAccountID());
         tradeManager.createTrade(time, location, isPermanent, accountIDs, itemIDs);
