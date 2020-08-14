@@ -13,33 +13,19 @@ public class TradeListController {
 
     private TradeListPresenter tradeListPresenter;
 
-    private final TradeGateway tradeGateway;
-    private final AccountGateway accountGateway;
-    private final ItemsGateway itemsGateway;
-    private final ThresholdsGateway thresholdsGateway;
-    private final CitiesGateway citiesGateway;
-
     private final TradeManager tradeManager;
     private final AccountRepository accountRepository;
     private final SessionManager sessionManager;
     private final ItemManager itemManager;
-    private final CityManager cityManager;
-    private final ThresholdRepository thresholdRepository;
+    private final TradeRepository tradeRepository;
     private final UseCasePool useCasePool;
 
     public TradeListController(UseCasePool useCasePool, GatewayPool gatewayPool){
-        this.tradeGateway = gatewayPool.getTradeGateway();
-        this.accountGateway = gatewayPool.getAccountGateway();
-        this.thresholdsGateway = gatewayPool.getThresholdsGateway();
-        this.citiesGateway = gatewayPool.getCitiesGateway();
-        this.itemsGateway = gatewayPool.getItemsGateway();
-
         tradeManager = useCasePool.getTradeManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager = useCasePool.getSessionManager();
         itemManager = useCasePool.getItemManager();
-        cityManager = useCasePool.getCityManager();
-        thresholdRepository = useCasePool.getThresholdRepository();
+        tradeRepository = useCasePool.getTradeRepository();
         this.useCasePool = useCasePool;
 
     }
@@ -61,11 +47,11 @@ public class TradeListController {
                 tradeStatus = TradeStatus.COMPLETED;
             else if (tradeType == 3)
                 tradeStatus = TradeStatus.REJECTED;
-            for (int tradeID : tradeManager.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
-                if (tradeManager.getTradeStatus(tradeID) == tradeStatus) {
-                    trades.add(accountRepository.getUsernameFromID(tradeManager.getNextTraderID(tradeID,
+            for (int tradeID : tradeRepository.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
+                if (tradeRepository.getTradeStatus(tradeID) == tradeStatus) {
+                    trades.add(accountRepository.getUsernameFromID(tradeRepository.getNextTraderID(tradeID,
                             sessionManager.getCurrAccountID())));
-                    trades.add(tradeManager.getDateTime(tradeID).format(DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm")));
+                    trades.add(tradeRepository.getDateTime(tradeID).format(DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm")));
                 }
             }
         }
@@ -97,8 +83,8 @@ public class TradeListController {
             tradeStatus = TradeStatus.COMPLETED;
         else if (tradeType == 3)
             tradeStatus = TradeStatus.REJECTED;
-        for (int tradeID : tradeManager.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
-            if (tradeManager.getTradeStatus(tradeID) == tradeStatus) {
+        for (int tradeID : tradeRepository.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
+            if (tradeRepository.getTradeStatus(tradeID) == tradeStatus) {
                 trades.add(tradeID);
             }
         }

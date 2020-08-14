@@ -17,91 +17,19 @@ import java.util.List;
 public class TradeManager extends TradeUtility{
 
     private final WishlistManager wishlistManager;
-    private TradeGateway tradeGateway;
+    private final ItemManager itemManager;
 
     /**
      * The Constructor for TradeManager
      *
      * @param tradeGateway the gateway dealing with trades
      * @param thresholdRepository Repository for storing all threshold values of the program.
-     * @param accountRepository Repository for storing all accounts in the system.
-     * @param itemManager the manager dealing with items
      * @param wishlistManager the manager dealing with the wishlist of a user
      */
-    public TradeManager(TradeGateway tradeGateway, ThresholdRepository thresholdRepository, AccountRepository accountRepository,
-                             ItemManager itemManager, WishlistManager wishlistManager) {
-        super(itemManager, accountRepository, thresholdRepository);
+    public TradeManager(TradeGateway tradeGateway, ThresholdRepository thresholdRepository, WishlistManager wishlistManager, TradeRepository tradeRepository, ItemManager itemManager) {
+        super(thresholdRepository, tradeRepository);
         this.wishlistManager = wishlistManager;
-        this.tradeGateway = tradeGateway;
-        tradeGateway.populate(this);
-    }
-
-    /**
-     * Switch trade changes to reflect in demo mode.
-     * @param tradeGateway An instance of TradeGateway
-     */
-    void switchToDemoMode(TradeGateway tradeGateway) {
-        this.tradeGateway = tradeGateway;
-        for (Trade trade : trades.values()) {
-            updateToGateway(trade, true);
-        }
-    }
-
-    /**
-     * Switch trade changes to reflect in normal mode.
-     * @param tradeGateway An instance of TradeGateway
-     */
-    void switchToNormalMode(TradeGateway tradeGateway) {
-        this.tradeGateway = tradeGateway;
-        trades.clear();
-        timePlaces.clear();
-        tradeGateway.populate(this);
-    }
-
-    //TODO : remove this
-    /**
-     * Adds a new trade and its timePlace to local storage
-     *
-     * @param id id of trade and timePlace
-     * @param isPermanent if the trade is permanent
-     * @param traderIDs list of all ids of the traders
-     * @param itemIDs list of all the ids of the items
-     * @param editedCounter counter for how many edits were made
-     * @param tradeStatus status of the trade
-     * @param tradeCompletions The Completion status of the trades
-     * @param time the time of the trade
-     * @param location the location of the trade
-     */
-    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
-                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
-                            String time, String location) {
-        Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
-                TradeStatus.valueOf(tradeStatus), tradeCompletions);
-        TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
-        trades.put(id, trade);
-        timePlaces.put(id, timePlace);
-    }
-
-    /**
-     * Updates the given trade to the tradeGateway as an old trade
-     *
-     * @param trade the object representing a trade
-     */
-    private void updateToGateway(Trade trade) {
-        updateToGateway(trade, false);
-    }
-
-    /**
-     * Updates the given trade and if it is a new trade to the tradeGateway
-     *
-     * @param trade the object representing a trade
-     * @param newTrade if the trade is a new trade
-     */
-    private void updateToGateway(Trade trade, boolean newTrade) {
-        TimePlace timePlace = getTimePlaceByID(trade.getId());
-        tradeGateway.save(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds(),
-                trade.getEditedCounter(), trade.getStatus().toString(), trade.getTradeCompletions(),
-                timePlace.getTime().toString(), timePlace.getPlace(), newTrade);
+        this.itemManager = itemManager;
     }
 
     /**
@@ -115,49 +43,23 @@ public class TradeManager extends TradeUtility{
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List< List<Integer> > itemsIds) {
-        int id = (trades.isEmpty() ? 1 : Collections.max(trades.keySet()) + 1);
-        TimePlace timePlace = new TimePlace(id, time, place);
-        Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
-        trades.put(id, trade);
-        timePlaces.put(id, timePlace);
+        int id = tradeRepository.createTrade(time, place, isPermanent, tradersIds, itemsIds);
+        Trade trade = tradeRepository.getTradeByID(id);
         for (int accountID : tradersIds) {
-            for (int itemID : itemsTraderGives(trade.getNextTraderID(accountID), trade))
+            for (int itemID : tradeRepository.itemsTraderGives(trade.getNextTraderID(accountID), id))
                 wishlistManager.removeItemFromWishlist(accountID, itemID);
         }
-        updateToGateway(trade, true);
         return id;
     }
 
-    /**
-     * Adds a new trade and its timePlace that exist in the database
-     *
-     * @param id id of trade and timePlace
-     * @param isPermanent if the trade is permanent
-     * @param traderIDs list of all ids of the traders
-     * @param itemIDs list of all the ids of the items
-     * @param editedCounter counter for how many edits were made
-     * @param tradeStatus status of the trade
-     * @param tradeCompletions The Completion status of the trades
-     * @param time the time of the trade
-     * @param location the location of the trade
-     */
-    public void createTrade(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
-                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
-                            String time, String location) {
-        Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
-                TradeStatus.valueOf(tradeStatus), tradeCompletions);
-        TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
-        trades.put(id, trade);
-        timePlaces.put(id, timePlace);
-    }
 
     /**
      * Initiates a reverse Trade.
      * @param id The trade id
      */
     public int reverseTrade(int id) {
-        TimePlace timePlace = getTimePlaceByID(id);
-        Trade trade = getTradeByID(id);
+        TimePlace timePlace = tradeRepository.getTimePlaceByID(id);
+        Trade trade = tradeRepository.getTradeByID(id);
         List<Integer> reverseTraders = new ArrayList<>(trade.getTraderIds());
         List< List<Integer> > reverseItems = new ArrayList<>();
         int n = trade.getItemsIds().size();
@@ -177,12 +79,12 @@ public class TradeManager extends TradeUtility{
      * @param place    New place of the Trade
      */
     public void editTimePlace(int tradeID, LocalDateTime time, String place) {
-        TimePlace timePlace = getTimePlaceByID(tradeID);
-        Trade trade = getTradeByID(tradeID);
+        TimePlace timePlace = tradeRepository.getTimePlaceByID(tradeID);
+        Trade trade = tradeRepository.getTradeByID(tradeID);
         timePlace.setTime(time);
         timePlace.setPlace(place);
         trade.incrementEditedCounter();
-        updateToGateway(trade);
+        tradeRepository.updateToGateway(trade, false);
     }
 
     /**
@@ -190,9 +92,9 @@ public class TradeManager extends TradeUtility{
      * @param tradeID The ID of the trade being cancelled.
      */
     public void rejectTrade(int tradeID) {
-        Trade trade = getTradeByID(tradeID);
+        Trade trade = tradeRepository.getTradeByID(tradeID);
         trade.setStatus(TradeStatus.REJECTED);
-        updateToGateway(trade);
+        tradeRepository.updateToGateway(trade, false);
     }
 
     /**
@@ -200,29 +102,16 @@ public class TradeManager extends TradeUtility{
      * @param tradeID The id of the trade being confirmed.
      */
     public void confirmTrade(int tradeID) {
-        Trade trade = getTradeByID(tradeID);
+        Trade trade = tradeRepository.getTradeByID(tradeID);
         trade.setStatus(TradeStatus.CONFIRMED);
 //        cancelInvalidTrades(trade);
         exchangeItems(tradeID);
-        if (!isPermanent(tradeID)) {
+        if (!tradeRepository.isPermanent(tradeID)) {
             int new_id = reverseTrade(tradeID);
             confirmTrade(new_id);
         }
-        updateToGateway(trade);
+        tradeRepository.updateToGateway(trade, false);
     }
-
-    // Cancels trades that have the same items with a confirmed trade.
-//    private void cancelInvalidTrades(Trade trade) {
-//        for (Trade t : trades.values()) {
-//            if (t.getStatus() == TradeStatus.ADMIN_CANCELLED || t.getId() == trade.getId())
-//                continue;
-//            for (int item : t.getItemsIds())
-//                if (trade.getItemsIds().contains(item)) {
-//                    adminCancelTrade(t.getId());
-//                    break;
-//                }
-//        }
-//    }
 
     /**
      * Updates the completion status of this Trade according to the user's ID.
@@ -230,9 +119,9 @@ public class TradeManager extends TradeUtility{
      * @param accountID The ID of the account who marked this Trade as complete
      */
     public void completeTrade(int accountID, int tradeID) {
-        Trade trade = getTradeByID(tradeID);
+        Trade trade = tradeRepository.getTradeByID(tradeID);
         trade.setCompletedOfTrader(accountID);
-        updateToGateway(trade);
+        tradeRepository.updateToGateway(trade, false);
     }
 
     /**
@@ -241,15 +130,15 @@ public class TradeManager extends TradeUtility{
      * @param tradeID trade id
      */
     public void adminCancelTrade(int tradeID) {
-        Trade trade = getTradeByID(tradeID);
+        Trade trade = tradeRepository.getTradeByID(tradeID);
         if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED)
             unmakeTrade(tradeID);
         trade.setStatus(TradeStatus.ADMIN_CANCELLED);
-        updateToGateway(trade);
+        tradeRepository.updateToGateway(trade, false);
     }
 
     private void exchangeItems(int tradeID) {
-        Trade trade = getTradeByID(tradeID);
+        Trade trade = tradeRepository.getTradeByID(tradeID);
         for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int accountID = trade.getTraderIds().get(i);
             int nextAccountID = trade.getNextTraderID(accountID);
@@ -263,8 +152,8 @@ public class TradeManager extends TradeUtility{
      * @param tradeID ID of the trade.
      */
     public boolean canBeEdited(int tradeID) {
-        return getEditedCounter(tradeID) <
-                thresholdRepository.getNumberOfEdits() * getTradeByID(tradeID).getTraderIds().size();
+        return tradeRepository.getEditedCounter(tradeID) <
+                thresholdRepository.getNumberOfEdits() * tradeRepository.getTradeByID(tradeID).getTraderIds().size();
     }
 
     /**
@@ -272,7 +161,7 @@ public class TradeManager extends TradeUtility{
      * @param tradeID The trade id being undone.
      */
     public void unmakeTrade(int tradeID) {
-        Trade trade = getTradeByID(tradeID);
+        Trade trade = tradeRepository.getTradeByID(tradeID);
         for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int accountID = trade.getTraderIds().get(i);
             int prevAccountID = trade.getPreviousTraderID(accountID);
