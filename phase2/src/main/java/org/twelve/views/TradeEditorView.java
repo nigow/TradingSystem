@@ -156,7 +156,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 
     @Override
     public void reload() {
-        if (!dateBox.isDisable()) dateBox.getEditor().clear();
+        // if (!dateBox.isDisable()) dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
@@ -174,7 +174,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @FXML
     private void cancelClicked() {
         tradeEditorController.cancelTrade();
-        dateBox.getEditor().clear();
+        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
@@ -183,21 +183,21 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
         LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
         tradeEditorController.editTrade(locationBox.getText(), dateTime);
-        dateBox.getEditor().clear();
+        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void completeClicked() {
         tradeEditorController.completeTrade();
-        dateBox.getEditor().clear();
+        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void confirmClicked() {
         tradeEditorController.confirmTrade();
-        dateBox.getEditor().clear();
+        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 }
