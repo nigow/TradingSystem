@@ -161,12 +161,8 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
             usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
             roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
 
-            ObservableList<TablePosition> observableList = accountsTable.getSelectionModel().getSelectedCells();
-            observableList.addListener(new ListChangeListener<TablePosition>() {
-                @Override
-                public void onChanged(Change<? extends TablePosition> c) {
-                    userSelected();
-                }
+            accountsTable.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue.intValue() != -1) userSelected();
             });
 
         } catch (NoSuchMethodException e) {
