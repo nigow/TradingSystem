@@ -7,11 +7,14 @@ import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanPropertyBuilder;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
 import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import org.twelve.controllers.FreezingController;
@@ -32,6 +35,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private final WindowHandler windowHandler;
     private final FreezingController freezingController;
     private final T freezingPresenter;
+    private ObservableList<TablePosition> observableList;
 
     @FXML
     private Button banBtn;
@@ -154,14 +158,23 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
 
             }, banned, unfreeze, frozen, toFreeze, admin, mod, trusted, regular));
 
+            usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
+            roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
+
+            ObservableList<TablePosition> observableList = accountsTable.getSelectionModel().getSelectedCells();
+            observableList.addListener(new ListChangeListener<TablePosition>() {
+                @Override
+                public void onChanged(Change<? extends TablePosition> c) {
+                    userSelected();
+                }
+            });
+
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
-        usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
-        roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
-
         BooleanBinding notSelected = accountsTable.getSelectionModel().selectedItemProperty().isNull();
+
         // todo: use .or() or .and() and bind to can* properties from presenter as well
         banBtn.disableProperty().bind(notSelected);
         unbanBtn.disableProperty().bind(notSelected);
@@ -221,4 +234,19 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         String trusted = selected.get("username");
         freezingController.unban(trusted);
     }
+
+    private void userSelected() {
+        Map<String, String> selectedAccount = accountsTable.getSelectionModel().getSelectedItem();
+        modButton.disableProperty().bind(Bindings.createBooleanBinding(() -> !freezingPresenter.getRegularAccounts().contains(selectedAccount)));
+        unmodButton.disableProperty().bind(Bindings.createBooleanBinding(() -> !freezingPresenter.getModAccounts().contains(selectedAccount)));
+        freezeButton.disableProperty().bind(Bindings.createBooleanBinding(() ->
+                !freezingPresenter.getToFreezeAccounts().contains(selectedAccount)).or(Bindings.createBooleanBinding(() -> freezingPresenter.getFrozenAccounts().contains(selectedAccount))));
+        unfreezeButton.disableProperty().bind(Bindings.createBooleanBinding(() -> !freezingPresenter.getUnfreezeAccounts().contains(selectedAccount)));
+        banBtn.disableProperty().bind(Bindings.createBooleanBinding(() ->
+                freezingPresenter.getBannedAccounts().contains(selectedAccount)).or(Bindings.createBooleanBinding(() -> freezingPresenter.getAdminAccounts().contains(selectedAccount))));
+        unbanBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> !freezingPresenter.getBannedAccounts().contains(selectedAccount)));
+        trustBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> !freezingPresenter.getRegularAccounts().contains(selectedAccount)));
+        untrustBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> !freezingPresenter.getTrustedAccounts().contains(selectedAccount)));
+    }
+
 }
