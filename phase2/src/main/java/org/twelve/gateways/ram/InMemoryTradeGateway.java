@@ -131,8 +131,10 @@ public class InMemoryTradeGateway implements TradeGateway {
 //                trade[2] = itemIdsString.toString();
 //            }
             for (List<Integer> ids: itemIds) {
-                for (int id: ids) {
-                    itemIdsString.append(id).append(" ");
+                if (ids.size() != 0) {
+                    for (int id : ids) {
+                        itemIdsString.append(id).append(" ");
+                    }
                 }
                 itemIdsString.append(",");
             }
