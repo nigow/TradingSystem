@@ -54,7 +54,7 @@ public class JsonTradeGateway implements TradeGateway {
      * {@inheritDoc}
      */
     @Override
-    public boolean populate(TradeManager tradeManager) {
+    public boolean populate(TradeRepository tradeRepository) {
         HttpURLConnection urlConnection;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
@@ -114,7 +114,7 @@ public class JsonTradeGateway implements TradeGateway {
                             String location = json.get("location").getAsString();
                             String time = json.get("time").getAsString();
 
-                            tradeManager.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, time, location);
+                            tradeRepository.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, time, location);
                         }
 
 

@@ -5,6 +5,7 @@ import org.twelve.entities.Trade;
 import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
 import org.twelve.usecases.TradeManager;
+import org.twelve.usecases.TradeRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +40,7 @@ public class InMemoryTradeGateway implements TradeGateway {
      * {@inheritDoc}
      */
     @Override
-    public boolean populate(TradeManager tradeManager) {
+    public boolean populate(TradeRepository tradeRepository) {
         /*
         List<Integer> existingIds = tradeManager.getAllTradesIds();
         for (Trade trade : tradeMap.values()) {
@@ -88,7 +89,7 @@ public class InMemoryTradeGateway implements TradeGateway {
             }
 
 
-            tradeManager.createTrade(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
+            tradeRepository.createTrade(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
                     tradeComps, time, location);
         }
         return true;

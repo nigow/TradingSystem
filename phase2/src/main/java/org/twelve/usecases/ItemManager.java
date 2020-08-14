@@ -123,46 +123,6 @@ public class ItemManager extends ItemUtility {
     }
 
     /**
-     * Get the string of item with the id entered.
-     *
-     * @param itemID    ID of the item with info being returned
-     * @return String of item with the entered ID
-     */
-    public String getItemStringById(int itemID) {
-        return findItemById(itemID).toString();
-    }
-
-    /**
-     * Get the name of item with the id entered.
-     *
-     * @param itemID    ID of the item with info being returned
-     * @return Name of item with the entered ID
-     */
-    public String getItemNameById(int itemID) {
-        return findItemById(itemID).getName();
-    }
-
-    /**
-     * Get the desc of item with the id entered.
-     *
-     * @param itemID    ID of the item with info being returned
-     * @return Desc of item with the entered ID
-     */
-    public String getItemDescById(int itemID) {
-        return findItemById(itemID).getDescription();
-    }
-
-    /**
-     * Gets the approval status of the item.
-     *
-     * @param itemId    Id of the item with info being returned
-     * @return approval status of the item
-     */
-    public boolean isApproved(int itemId) {
-        return items.get(itemId).isApproved();
-    }
-
-    /**
      * Update the owner of the item.
      *
      * @param itemId    Id of the item with info being returned
@@ -187,41 +147,4 @@ public class ItemManager extends ItemUtility {
         }
         updateToItemsGateway(items.get(itemId), false);
     }
-
-    /**
-     * Retrieves all items stored in local storage.
-     *
-     * @return List of all items
-     */
-    protected List<Item> getAllItems() {
-        List<Item> items = new ArrayList<>();
-        for (Map.Entry<Integer, Item> entry : this.items.entrySet()) {
-            if (this.items.get(entry.getKey()).getOwnerID() != -1) {
-                items.add(this.items.get(entry.getKey()));
-            }
-        }
-        return items;
-    }
-
-    /**
-     * Retrieves all items stored in local storage in string format.
-     *
-     * @return List of all items in string format
-     */
-    public List<String> getAllItemsString() {
-        List<String> stringItems = new ArrayList<>();
-        for (Item item : getAllItems()) {
-            stringItems.add(item.toString());
-        }
-        return stringItems;
-    }
-
-    /**
-     * Retrieves all item ids stored in local storage.
-     * @return A list of all item ids.
-     */
-    public List<Integer> getAllItemIds(){
-        return new ArrayList<>(items.keySet());
-    }
-
 }

@@ -18,7 +18,6 @@ import java.util.Map;
 abstract public class ItemUtility {
 
     Map<Integer, Item> items;
-
     AccountRepository accountRepository;
 
     /**
@@ -72,21 +71,6 @@ abstract public class ItemUtility {
     }
 
     /**
-     * Retrieves a string representation of all approved items in the system.
-     *
-     * @return List of all approved items in the system in string format
-     */
-    public List<String> getApprovedString() {
-        List<String> approvedItems = new ArrayList<>();
-        for (Item item : getApproved()) {
-            if (item.isApproved()) {
-                approvedItems.add(item.toString());
-            }
-        }
-        return approvedItems;
-    }
-
-    /**
      * Retrieves all non-approved items in the system.
      *
      * @return List of all non-approved items in the system
@@ -114,66 +98,6 @@ abstract public class ItemUtility {
             }
         }
         return disapprovedItems;
-    }
-
-    /**
-     * Retrieves a string representation of all non-approved items in the system.
-     *
-     * @return List of all non-approved items in the system in string format
-     */
-    public List<String> getDisapprovedString() {
-        List<String> disapprovedItems = new ArrayList<>();
-        for (Item item : getDisapproved()) {
-            if (!item.isApproved()) {
-                disapprovedItems.add(item.toString());
-            }
-        }
-        return disapprovedItems;
-    }
-
-    /**
-     * Retrieves all items for a certain account.
-     *
-     * @param accountID     Account ID which the items are retrieved for
-     * @return List of items for account
-     */
-    List<Item> getAllInventoryOfAccount(int accountID) {
-        List<Item> inventory = new ArrayList<>();
-        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
-            if (items.get(entry.getKey()).getOwnerID() == accountID)
-                inventory.add(items.get(entry.getKey()));
-        }
-        return inventory;
-    }
-
-    /**
-     * Retrieves IDs of all items for a certain account.
-     *
-     * @param accountID     Account ID which the items are retrieved for
-     * @return List of IDs of items for account
-     */
-    public List<Integer> getAllInventoryOfAccountIDs(int accountID) {
-        List<Integer> inventory = new ArrayList<>();
-        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
-            if (items.get(entry.getKey()).getOwnerID() == accountID)
-                inventory.add(items.get(entry.getKey()).getItemID());
-        }
-        return inventory;
-    }
-
-    /**
-     * Retrieves all items for a certain account.
-     *
-     * @param accountID     Account ID which the items are retrieved for
-     * @return List of items for account
-     */
-    public List<String> getAllInventoryOfAccountString(int accountID) {
-        List<String> inventory = new ArrayList<>();
-        for (Item item : getAllInventoryOfAccount(accountID)) {
-            if (item.getOwnerID() == accountID)
-                inventory.add(item.toString());
-        }
-        return inventory;
     }
 
     /**
@@ -208,23 +132,6 @@ abstract public class ItemUtility {
         return inventory;
     }
 
-    //TODO to be deleted cause never used? idk
-    /**
-     * Retrieves all items for a certain account.
-     *
-     * @param accountID     Account ID which the items are retrieved for
-     * @return List of items for account
-     */
-    protected List<Item> getDisprovedItemInventoryOfAccount(int accountID) {
-        List<Item> inventory = new ArrayList<>();
-        for (Item item : getDisapproved()) {
-            if (item.getOwnerID() == accountID) {
-                inventory.add(item);
-            }
-        }
-        return inventory;
-    }
-
     /**
      * Retrieves all items for a certain account.
      *
@@ -242,22 +149,6 @@ abstract public class ItemUtility {
     }
 
     /**
-     * Retrieves all items for a certain account in string format.
-     *
-     * @param accountID     Account ID which the items are retrieved for
-     * @return List of items for account in string format
-     */
-    public List<String> getDisprovedInventoryOfAccountString(int accountID) {
-        List<String> items = new ArrayList<>();
-        for (Item item : getDisapproved()) {
-            if (item.getOwnerID() == accountID) {
-                items.add(item.toString());
-            }
-        }
-        return items;
-    }
-
-    /**
      * Retrieves all items not in a certain account/the account's wishlist.
      *
      * @param accountID       Account ID which the items are not retrieved from
@@ -269,40 +160,6 @@ abstract public class ItemUtility {
         for (Item item : getApproved()) {
             if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
                 items.add(item);
-            }
-        }
-        return items;
-    }
-
-    /**
-     * Retrieves IDs of all items not in a certain account/the account's wishlist.
-     *
-     * @param accountID       Account ID which the items are not retrieved from
-     * @return List of IDs of all items not in a certain account
-     */
-    public List<Integer> getNotInAccountIDs(int accountID) {
-        List<Integer> currentWishlist = accountRepository.getAccountFromID(accountID).getWishlist();
-        List<Integer> items = new ArrayList<>();
-        for (Item item : getApproved()) {
-            if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
-                items.add(item.getItemID());
-            }
-        }
-        return items;
-    }
-
-    /**
-     * Retrieves all items not in a certain account in string format.
-     *
-     * @param accountID       Account ID which the items are not retrieved from
-     * @return List of all items not in a certain account string format
-     */
-    public List<String> getNotInAccountString(int accountID) {
-        List<Integer> currentWishlist = accountRepository.getAccountFromID(accountID).getWishlist();
-        List<String> items = new ArrayList<>();
-        for (Item item : getApproved()) {
-            if (item.getOwnerID() != accountID && !currentWishlist.contains(item.getItemID())) {
-                items.add(item.toString());
             }
         }
         return items;
@@ -343,34 +200,50 @@ abstract public class ItemUtility {
     }
 
     /**
-     * Retrieves all items with the same home location as the account with the id entered in
-     * String format
+     * Retrieves all items stored in local storage.
      *
-     * @param accountId The Id of the account
-     * @return A list of all item Ids in the same location
+     * @return List of all items
      */
-    public List<String> getLocalItemsString(int accountId) {
-        List<String> localItems = new ArrayList<>();
-        String location = accountRepository.getAccountFromID(accountId).getLocation();
-        for (Item item : getNotInAccount(accountId)) {
-            Account account = accountRepository.getAccountFromID(item.getOwnerID());
-            if (account != null) {
-                if (location.equals(account.getLocation())) {
-                    localItems.add(item.toString());
-                }
+    protected List<Item> getAllItems() {
+        List<Item> items = new ArrayList<>();
+        for (Map.Entry<Integer, Item> entry : this.items.entrySet()) {
+            if (this.items.get(entry.getKey()).getOwnerID() != -1) {
+                items.add(this.items.get(entry.getKey()));
             }
         }
-        return localItems;
+        return items;
     }
 
     /**
-     * Retrieves an item with a certain id in string format, if item does not
-     * exist return null
-     * @param itemId    Id of item to be retrieved
-     * @return The item with the id in question
+     * Retrieves all items stored in local storage in string format.
+     *
+     * @return List of all items in string format
      */
-    public String findItemByIdString(int itemId) {
-        return findItemById(itemId).toString();
+    public List<String> getAllItemsString() {
+        List<String> stringItems = new ArrayList<>();
+        for (Item item : getAllItems()) {
+            stringItems.add(item.toString());
+        }
+        return stringItems;
     }
 
+    /**
+     * Get the name of item with the id entered.
+     *
+     * @param itemID    ID of the item with info being returned
+     * @return Name of item with the entered ID
+     */
+    public String getItemNameById(int itemID) {
+        return findItemById(itemID).getName();
+    }
+
+    /**
+     * Get the desc of item with the id entered.
+     *
+     * @param itemID    ID of the item with info being returned
+     * @return Desc of item with the entered ID
+     */
+    public String getItemDescById(int itemID) {
+        return findItemById(itemID).getDescription();
+    }
 }

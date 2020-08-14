@@ -1,6 +1,7 @@
 package org.twelve.gateways;
 
 import org.twelve.usecases.TradeManager;
+import org.twelve.usecases.TradeRepository;
 import org.twelve.usecases.TradeUtility;
 
 import java.util.List;
@@ -14,10 +15,10 @@ public interface TradeGateway {
     /**
      * Method that syncs the external storage information into the in-memory trades repository.
      *
-     * @param tradeManager local trades repository to populate
+     * @param tradeRepository local trades repository to populate
      * @return whether or not the population was successful
      */
-    boolean populate(TradeManager tradeManager);
+    boolean populate(TradeRepository tradeRepository);
 
     /**
      * Method that syncs a local trade update to the external storage
