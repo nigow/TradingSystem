@@ -83,15 +83,17 @@ public class JsonTradeGateway implements TradeGateway {
                             for (String s : json.get("traders_ids").getAsString().split(" ")) {
                                 tradersIds.add(Integer.parseInt(s));
                             }
-                            List< List<Integer> > itemIds = new ArrayList<>();
-                            for (String outerList : json.get("item_ids").getAsString().split(" ")) {
-                                List<String> temp = Arrays.asList(outerList.split("/"));
-                                List<Integer> tempInt = new ArrayList<>();
-                                for(String item: temp){
-                                    tempInt.add(Integer.parseInt(item));
+
+                            List<List<Integer>> itemIds = new ArrayList<>();
+                            for(String outerString: json.get("item_ids").getAsString().split("!")){
+                                List<String> temp = Arrays.asList(outerString.split(" "));
+                                List<Integer> integerList = new ArrayList<>();
+                                for(String number: temp){
+                                    integerList.add(Integer.parseInt(number));
                                 }
-                                //itemIds.add(Integer.parseInt(s));
+                                itemIds.add(integerList);
                             }
+
                             String tradeStatus = json.get("trade_status").getAsString();
                             int editCounter = json.get("edit_counter").getAsInt();
                             List<Boolean> tradeCompletions = new ArrayList<>();
@@ -137,17 +139,14 @@ public class JsonTradeGateway implements TradeGateway {
                         String location, boolean newTrade) {
         StringBuilder traderIdsString = new StringBuilder();
         for(Integer i: traderIds) traderIdsString.append(i.toString()).append(" ");
-        //StringBuilder itemIdsString = new StringBuilder();
-        //for(Integer i: itemIds) itemIdsString.append(i.toString()).append(" ");
-        StringBuilder itemIdsString = new StringBuilder();
-        for(List<Integer> i: itemIds){
-            for(int j : i) {
-                itemIdsString.append(j);
-                itemIdsString.append("/");
+        String itemIdsString = "";
+        for(List<Integer> outerList: itemIds){
+            for(int innerInt: outerList){
+                itemIdsString += Integer.toString(innerInt) + " ";
             }
-            itemIdsString.append(" ");
+            itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1) + "!";
         }
-        traderIdsString.append(itemIdsString.toString());
+        itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1);
         StringBuilder tradeCompletionsString = new StringBuilder();
         for(Boolean b: tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
         JsonObject json = new JsonObject();
@@ -155,7 +154,7 @@ public class JsonTradeGateway implements TradeGateway {
         json.addProperty("trade_id", tradeId);
         json.addProperty("is_permanent", isPermanent);
         json.addProperty("traders_ids", traderIdsString.toString());
-        json.addProperty("item_ids", itemIdsString.toString());
+        json.addProperty("item_ids", itemIdsString);
         json.addProperty("edit_counter", editedCounter);
         json.addProperty("trade_status", tradeStatus);
         json.addProperty("trade_completions", tradeCompletionsString.toString());
