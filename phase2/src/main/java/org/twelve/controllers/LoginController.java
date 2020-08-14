@@ -31,6 +31,8 @@ public class LoginController {
 
     private final AccountRepository accountRepository;
 
+    private final UseCasePool useCasePool;
+
     /**
      * Initializes LoginController with the necessary presenter and use cases.
      *
@@ -41,6 +43,7 @@ public class LoginController {
         loginManager = useCasePool.getLoginManager();
         accountRepository = useCasePool.getAccountRepository();
         accountGateway = gatewayPool.getAccountGateway();
+        this.useCasePool = useCasePool;
     }
 
     public void setLoginPresenter(LoginPresenter loginPresenter) {
@@ -54,7 +57,7 @@ public class LoginController {
      */
     public boolean logIn(String username, String password) {
 
-        accountGateway.populate(accountRepository);
+        useCasePool.populateAll();
 
         if (loginManager.authenticateLogin(username, password)) {
             loginPresenter.setError("");

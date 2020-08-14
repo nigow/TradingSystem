@@ -18,6 +18,7 @@ public class AdminWishlistController {
     private final ItemManager itemManager;
     private final AccountGateway accountGateway;
     private final ItemsGateway itemsGateway;
+    private final UseCasePool useCasePool;
 
     private AdminWishlistPresenter adminWishlistPresenter;
 
@@ -27,6 +28,7 @@ public class AdminWishlistController {
         this.itemManager = useCasePool.getItemManager();
         this.accountGateway = gatewayPool.getAccountGateway();
         this.itemsGateway = gatewayPool.getItemsGateway();
+        this.useCasePool = useCasePool;
     }
 
     public void setAdminWishlistPresenter(AdminWishlistPresenter adminWishlistPresenter) {
@@ -46,8 +48,7 @@ public class AdminWishlistController {
     }
 
     public void updateWishlist(String selectedUser) {
-        accountGateway.populate(accountRepository);
-        itemsGateway.populate(itemManager);
+        useCasePool.populateAll();
         List<String> wishlistItems = new ArrayList<>();
         if (selectedUser != null) {
             for (int id : wishlistManager.getWishlistFromID(accountRepository.getIDFromUsername(selectedUser))) {

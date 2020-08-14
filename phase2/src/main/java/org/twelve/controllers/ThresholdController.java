@@ -21,6 +21,8 @@ public class ThresholdController {
 
     private ThresholdPresenter thresholdPresenter;
 
+    private final UseCasePool useCasePool;
+
     /**
      * Initializes the class with thresholdRepository from useCasePool
      * @param useCasePool the useCasePool for getting thresholdRepository
@@ -28,6 +30,7 @@ public class ThresholdController {
     public ThresholdController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         thresholdRepository = useCasePool.getThresholdRepository();
         this.thresholdsGateway = gatewayPool.getThresholdsGateway();
+        this.useCasePool = useCasePool;
     }
 
     /**
@@ -83,7 +86,7 @@ public class ThresholdController {
 
     public void displayThresholds() {
 
-        thresholdsGateway.populate(thresholdRepository);
+        useCasePool.populateAll();
 
         thresholdPresenter.setThresholds(thresholdRepository.getLendMoreThanBorrow(),
                 thresholdRepository.getMaxIncompleteTrade(), thresholdRepository.getMaxWeeklyTrade(),

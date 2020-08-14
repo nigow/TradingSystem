@@ -22,6 +22,7 @@ public class WishlistController {
 
     private final AccountGateway accountGateway;
     private final ItemsGateway itemsGateway;
+    private final UseCasePool useCasePool;
 
     /**
      * Constructor of controller for managing personal wishlist.
@@ -36,6 +37,7 @@ public class WishlistController {
         this.accountRepository = useCasePool.getAccountRepository();
         this.accountGateway = gatewayPool.getAccountGateway();
         this.itemsGateway = gatewayPool.getItemsGateway();
+        this.useCasePool = useCasePool;
 
     }
 
@@ -44,8 +46,7 @@ public class WishlistController {
      */
     public void updateItems() {
 
-        accountGateway.populate(accountRepository);
-        itemsGateway.populate(itemManager);
+        useCasePool.populateAll();
 
         List<String> wishlistItems = new ArrayList<>();
 

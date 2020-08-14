@@ -25,6 +25,7 @@ public class TradeEditorController {
     private final ItemManager itemManager;
     private final CityManager cityManager;
     private final ThresholdRepository thresholdRepository;
+    private final UseCasePool useCasePool;
 
     public TradeEditorController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         this.tradeGateway = gatewayPool.getTradeGateway();
@@ -39,14 +40,7 @@ public class TradeEditorController {
         itemManager = useCasePool.getItemManager();
         cityManager = useCasePool.getCityManager();
         thresholdRepository = useCasePool.getThresholdRepository();
-    }
-
-    public void populateGateways() {
-        tradeGateway.populate(tradeManager);
-        accountGateway.populate(accountRepository);
-        itemsGateway.populate(itemManager);
-        citiesGateway.populate(cityManager);
-        thresholdsGateway.populate(thresholdRepository);
+        this.useCasePool = useCasePool;
     }
 
     public void setTradeEditorPresenter(TradeEditorPresenter tradeEditorPresenter) {
@@ -58,7 +52,7 @@ public class TradeEditorController {
     }
 
     public void setTradeProperties() {
-        populateGateways();
+        useCasePool.populateAll();
         int trade = sessionManager.getWorkingTrade();
         List<Integer> userItemIDs = tradeManager.itemsTraderGives(sessionManager.getCurrAccountID(), trade);
         List<Integer> peerItemIDs = tradeManager.itemsTraderGives(tradeManager.getNextTraderID(trade, sessionManager.getCurrAccountID()), trade);

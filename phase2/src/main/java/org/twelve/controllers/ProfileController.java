@@ -19,6 +19,7 @@ public class ProfileController {
     private final TradeManager tradeManager;
     private final InputHandler inputHandler;
     private final CitiesGateway citiesGateway;
+    private final UseCasePool useCasePool;
 
     /**
      * Constructor of controller for managing account settings.
@@ -34,6 +35,7 @@ public class ProfileController {
         cityManager = useCasePool.getCityManager();
         inputHandler = new InputHandler();
         citiesGateway = gatewayPool.getCitiesGateway();
+        this.useCasePool = useCasePool;
 
     }
 
@@ -48,7 +50,7 @@ public class ProfileController {
         profilePresenter.setCanRequestUnfreeze(!statusManager.isPending(sessionManager.getCurrAccountID())
                 && statusManager.getRoleOfAccount(sessionManager.getCurrAccountID()) == Roles.FROZEN);
 
-        citiesGateway.populate(cityManager);
+        useCasePool.populateAll();
         profilePresenter.setExistingCities(cityManager.getAllCities());
         profilePresenter.setCurrentLocation(cityManager.getLocationOfAccount(sessionManager.getCurrAccountID()));
 

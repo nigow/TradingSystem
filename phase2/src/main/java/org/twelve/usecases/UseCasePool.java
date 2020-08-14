@@ -146,4 +146,15 @@ public class UseCasePool {
         tradeManager.switchToNormalMode(gatewayPool.getTradeGateway());
     }
 
+    /**
+     * Populate gateway data into all use case methods.
+     */
+    public void populateAll() {
+        gatewayPool.getAccountGateway().populate(accountRepository);
+        gatewayPool.getCitiesGateway().populate(cityManager);
+        gatewayPool.getItemsGateway().populate(itemManager);
+        gatewayPool.getThresholdsGateway().populate(thresholdRepository);
+        gatewayPool.getTradeGateway().populate(tradeManager);
+    }
+
 }

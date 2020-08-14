@@ -36,6 +36,8 @@ public class RegistrationController {
 
     private final CitiesGateway citiesGateway;
 
+    private final UseCasePool useCasePool;
+
     /**
      * Initializer for RegistrationController
      * @param useCasePool used to get all the use cases.
@@ -46,7 +48,7 @@ public class RegistrationController {
         this.cityManager = useCasePool.getCityManager();
         this.accountGateway = gatewayPool.getAccountGateway();
         this.citiesGateway = gatewayPool.getCitiesGateway();
-
+        this.useCasePool = useCasePool;
         inputHandler = new InputHandler();
     }
 
@@ -100,14 +102,14 @@ public class RegistrationController {
             registrationPresenter.setError("badUsername");
             return false;
         }
-
+        // TODO: I'm populating here separately in the case of errors, someone double check
         accountGateway.populate(accountRepository);
         if (accountRepository.getIDFromUsername(username) != -1) {
             registrationPresenter.setError("usernameTaken");
             return false;
         }
 
-        citiesGateway.populate(cityManager);
+        useCasePool.populateAll();
         if (!cityManager.getAllCities().contains(location)) {
             if (inputHandler.isValidLocation(location)) {
                 cityManager.createCity(location);

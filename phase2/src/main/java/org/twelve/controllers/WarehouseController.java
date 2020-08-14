@@ -17,6 +17,7 @@ public class WarehouseController {
     private final ItemManager itemManager;
     private WarehousePresenter warehousePresenter;
     private final ItemsGateway itemsGateway;
+    private final UseCasePool useCasePool;
 
     /**
      * Constructor of controller for managing the warehouse.
@@ -27,6 +28,8 @@ public class WarehouseController {
 
         itemManager = useCasePool.getItemManager();
         this.itemsGateway = gatewayPool.getItemsGateway();
+        this.useCasePool = useCasePool;
+
 
     }
 
@@ -99,7 +102,7 @@ public class WarehouseController {
      */
     public void updateWarehouseItems() {
 
-        itemsGateway.populate(itemManager);
+        useCasePool.populateAll();
 
         List<String> pendingItems = new ArrayList<>();
         List<String> approvedItems = new ArrayList<>();

@@ -34,6 +34,8 @@ public class InventoryController {
 
     private final ItemsGateway itemsGateway;
 
+    private final UseCasePool useCasePool;
+
     /**
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
@@ -44,6 +46,7 @@ public class InventoryController {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.itemsGateway = gatewayPool.getItemsGateway();
+        this.useCasePool = useCasePool;
     }
 
     /**
@@ -51,7 +54,7 @@ public class InventoryController {
      */
     public void displayAllYourInventory() {
 
-        itemsGateway.populate(itemManager);
+        useCasePool.populateAll();
 
         List<String> approvedItems = new ArrayList<>();
 
@@ -81,7 +84,7 @@ public class InventoryController {
      */
     public void createItem(String name, String description) {
 
-        itemsGateway.populate(itemManager);
+        useCasePool.populateAll();
         itemManager.createItem(name, description, sessionManager.getCurrAccountID());
         displayAllYourInventory();
 

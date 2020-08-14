@@ -25,6 +25,7 @@ public class TradeListController {
     private final ItemManager itemManager;
     private final CityManager cityManager;
     private final ThresholdRepository thresholdRepository;
+    private final UseCasePool useCasePool;
 
     public TradeListController(UseCasePool useCasePool, GatewayPool gatewayPool){
         this.tradeGateway = gatewayPool.getTradeGateway();
@@ -39,22 +40,18 @@ public class TradeListController {
         itemManager = useCasePool.getItemManager();
         cityManager = useCasePool.getCityManager();
         thresholdRepository = useCasePool.getThresholdRepository();
+        this.useCasePool = useCasePool;
+
     }
 
-    public void populateGateways() {
-        tradeGateway.populate(tradeManager);
-        accountGateway.populate(accountRepository);
-        itemsGateway.populate(itemManager);
-        citiesGateway.populate(cityManager);
-        thresholdsGateway.populate(thresholdRepository);
-    }
+
 
     public void setTradeListPresenter(TradeListPresenter tradeListPresenter) {
         this.tradeListPresenter = tradeListPresenter;
     }
 
     public void updateTradeList(int tradeType) {
-        populateGateways();
+        useCasePool.populateAll();
         ArrayList<String> trades = new ArrayList<>();
         if (tradeType != -1) {
             TradeStatus tradeStatus = TradeStatus.UNCONFIRMED;
@@ -76,7 +73,7 @@ public class TradeListController {
     }
 
     public void updateStatsList(int statsIndex) {
-        populateGateways();
+        useCasePool.populateAll();
         ArrayList<String> stat = new ArrayList<>();
         if (statsIndex == 0) {
             for (int id : tradeManager.getTopThreePartnersIds(sessionManager.getCurrAccountID()))

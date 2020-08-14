@@ -39,6 +39,8 @@ public class FreezingController {
 
     private final AccountGateway accountGateway;
 
+    private final UseCasePool useCasePool;
+
     /**
      * Initializes constructor with necessary use cases
      *
@@ -49,6 +51,7 @@ public class FreezingController {
         accountRepository = useCasePool.getAccountRepository();
         sessionManager  = useCasePool.getSessionManager();
         accountGateway = gatewayPool.getAccountGateway();
+        this.useCasePool = useCasePool;
     }
 
     public void setFreezingPresenter(FreezingPresenter freezingPresenter) {
@@ -111,7 +114,7 @@ public class FreezingController {
 
     public void updateAccountLists() {
 
-        accountGateway.populate(accountRepository);
+        useCasePool.populateAll();
 
         List<String> bannedAccounts = new ArrayList<>(), unfreezeAccounts = new ArrayList<>(),
                 frozenAccounts = new ArrayList<>(), toFreezeAccounts = new ArrayList<>(),
