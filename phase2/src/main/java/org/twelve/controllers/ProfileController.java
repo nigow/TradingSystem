@@ -58,7 +58,6 @@ public class ProfileController {
         profilePresenter.setPasswordError("");
         profilePresenter.setLocationError("");
         profilePresenter.setIsTrusted(statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.CONFIRM_ITEM));
-        System.out.println(statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.CONFIRM_ITEM));
 
     }
 
