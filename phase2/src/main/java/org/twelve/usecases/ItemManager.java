@@ -27,6 +27,11 @@ public class ItemManager extends ItemUtility {
         itemsGateway.populate(this);
     }
 
+    /**
+     * Update to item gateway with demo mode
+     *
+     * @param itemsGateway The gateway for interacting with the persistent storage of items
+     */
     public void switchToDemoMode(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
         for (Item item : items.values()) {
@@ -34,6 +39,11 @@ public class ItemManager extends ItemUtility {
         }
     }
 
+    /**
+     * Update to item gateway with normal mode
+     *
+     * @param itemsGateway The gateway for interacting with the persistent storage of items
+     */
     public void switchToNormalMode(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
         items.clear();
