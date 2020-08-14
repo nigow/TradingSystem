@@ -63,7 +63,7 @@ public class LandingController {
                 Permissions.TRADE, Permissions.BROWSE_INVENTORY, Permissions.REQUEST_VACATION);
 
         int counter = 1;
-        while (!accountRepository.createAccount("demo" + counter, "12345", perms, "UTM"))
+        while (!accountRepository.createAccount("demo" + counter, "12345", perms, "Toronto"))
             counter++;
         sessionManager.login("demo" + counter);
 

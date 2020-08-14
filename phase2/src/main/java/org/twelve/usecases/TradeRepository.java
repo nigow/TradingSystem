@@ -295,7 +295,7 @@ public class TradeRepository {
         ans.append("\nType: ");
         ans.append(trade.isPermanent() ? "permanent" : "temporary");
         ans.append("\nLocation: ").append(timePlace.getPlace());
-        ans.append("\nTime: ").append(timePlace.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm")));
+        ans.append("\nTime: ").append(timePlace.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm")));
 
         return ans.toString();
     }

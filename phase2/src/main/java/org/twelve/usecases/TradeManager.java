@@ -164,9 +164,8 @@ public class TradeManager extends TradeUtility{
         Trade trade = tradeRepository.getTradeByID(tradeID);
         for (int i = 0; i < trade.getTraderIds().size(); i++) {
             int accountID = trade.getTraderIds().get(i);
-            int prevAccountID = trade.getPreviousTraderID(accountID);
             for (int itemID : trade.getItemsIds().get(i))
-                itemManager.updateOwner(itemID, prevAccountID);
+                itemManager.updateOwner(itemID, accountID);
         }
     }
 }
