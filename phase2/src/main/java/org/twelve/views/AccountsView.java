@@ -92,6 +92,8 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     @Override
     public void reload() {
         freezingController.updateAccountLists();
+        accountsTable.getSelectionModel().clearSelection();
+        setNull();
     }
 
     /**
@@ -161,11 +163,12 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
             usernameCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("username")));
             roleCol.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().get("role")));
 
+            setNull();
+
+            accountsTable.getSelectionModel().getSelectedCells().addListener((ListChangeListener<Object>) c -> userSelected());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-
-        userSelected();
     }
 
     @FXML
@@ -243,6 +246,18 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
 
         untrustBtn.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp != null &&
                 !freezingPresenter.getTrustedAccounts().contains(selectedProp.get()), selectedProp));
+    }
+
+    public void setNull() {
+        BooleanBinding nullBinding = accountsTable.getSelectionModel().selectedItemProperty().isNull();
+        banBtn.disableProperty().bind(nullBinding);
+        unbanBtn.disableProperty().bind(nullBinding);
+        trustBtn.disableProperty().bind(nullBinding);
+        untrustBtn.disableProperty().bind(nullBinding);
+        modButton.disableProperty().bind(nullBinding);
+        unmodButton.disableProperty().bind(nullBinding);
+        freezeButton.disableProperty().bind(nullBinding);
+        unfreezeButton.disableProperty().bind(nullBinding);
     }
 
 }
