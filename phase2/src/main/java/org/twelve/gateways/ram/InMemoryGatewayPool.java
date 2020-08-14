@@ -15,7 +15,6 @@ public class InMemoryGatewayPool implements GatewayPool {
     private final TradeGateway tradeGateway;
     private final CitiesGateway citiesGateway;
 
-    // TODO: maybe i'll look into factory pattern for this
     /**
      * Initialize all in-memory gateways
      */
