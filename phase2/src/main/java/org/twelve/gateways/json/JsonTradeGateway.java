@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A gateway for Trades that interacts with a Postgres database using a JSON object
@@ -84,14 +85,27 @@ public class JsonTradeGateway implements TradeGateway {
                                 tradersIds.add(Integer.parseInt(s));
                             }
 
-                            List<List<Integer>> itemIds = new ArrayList<>();
-                            String[] itemIdArray = json.get("item_ids").getAsString().split("!");
+                            List<List<Integer>> allItemIds = new ArrayList<>();
+                            String[] itemIdArray = json.get("item_ids").getAsString().split(" ");
+                            for (String itemIds : itemIdArray) {
+
+                                List<Integer> ids = new ArrayList<>();
+
+                                if (!itemIds.equals("*")) {
+                                    ids.addAll(Arrays.stream(itemIds.split(",")).map(Integer::parseInt).collect(Collectors.toList()));
+                                }
+
+                                allItemIds.add(ids);
+
+                            }
+
+                            /*
                             if(itemIdArray.length == 1){
                                 List<Integer> temp = new ArrayList<>();
                                 temp.add(Integer.parseInt(itemIdArray[0]));
                                 List<Integer> newTemp = new ArrayList<>();
-                                itemIds.add(temp);
-                                itemIds.add(newTemp);
+                                allItemIds.add(temp);
+                                allItemIds.add(newTemp);
                             }
                             else{
                                 for(String outerString: itemIdArray){
@@ -100,10 +114,10 @@ public class JsonTradeGateway implements TradeGateway {
                                     for(String number: temp){
                                         integerList.add(Integer.parseInt(number));
                                     }
-                                    itemIds.add(integerList);
+                                    allItemIds.add(integerList);
                                 }
                             }
-
+                            */
 
                             String tradeStatus = json.get("trade_status").getAsString();
                             int editCounter = json.get("edit_counter").getAsInt();
@@ -114,7 +128,7 @@ public class JsonTradeGateway implements TradeGateway {
                             String location = json.get("location").getAsString();
                             String time = json.get("time").getAsString();
 
-                            tradeRepository.addToTrades(tradeId, isPermanent, tradersIds, itemIds, editCounter, tradeStatus, tradeCompletions, time, location);
+                            tradeRepository.addToTrades(tradeId, isPermanent, tradersIds, allItemIds, editCounter, tradeStatus, tradeCompletions, time, location);
                         }
 
 
@@ -145,14 +159,30 @@ public class JsonTradeGateway implements TradeGateway {
      */
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
-    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > itemIds,
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > allItemIds,
                         int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                         String location, boolean newTrade) {
         StringBuilder traderIdsString = new StringBuilder();
         for(Integer i: traderIds) traderIdsString.append(i.toString()).append(" ");
 
+        List<String> allItemIdsStr = new ArrayList<>();
+        for (List<Integer> itemIds : allItemIds) {
+
+            if (itemIds.isEmpty()) {
+
+                allItemIdsStr.add("*");
+
+            } else {
+
+                allItemIdsStr.add(itemIds.stream().map(String::valueOf).collect(Collectors.joining(",")));
+
+            }
+
+        }
+
+        /*
         String itemIdsString = "";
-        for(List<Integer> outerList: itemIds){
+        for(List<Integer> outerList: allItemIds){
             for(int innerInt: outerList){
                 itemIdsString += innerInt + " ";
             }
@@ -162,6 +192,8 @@ public class JsonTradeGateway implements TradeGateway {
         }
 
         itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1);
+
+         */
         StringBuilder tradeCompletionsString = new StringBuilder();
         for(Boolean b: tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
         JsonObject json = new JsonObject();
@@ -169,7 +201,7 @@ public class JsonTradeGateway implements TradeGateway {
         json.addProperty("trade_id", tradeId);
         json.addProperty("is_permanent", isPermanent);
         json.addProperty("traders_ids", traderIdsString.toString());
-        json.addProperty("item_ids", itemIdsString);
+        json.addProperty("item_ids", String.join(" ", allItemIdsStr));
         json.addProperty("edit_counter", editedCounter);
         json.addProperty("trade_status", tradeStatus);
         json.addProperty("trade_completions", tradeCompletionsString.toString());
