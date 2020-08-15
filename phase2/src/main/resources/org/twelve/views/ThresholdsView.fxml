@@ -52,7 +52,7 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></Button>
-            <Button mnemonicParsing="false" onAction="#saveClicked" text="%save" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" text="%save" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></Button>

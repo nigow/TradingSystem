@@ -1,6 +1,11 @@
 package org.twelve.controllers;
 
+import org.twelve.entities.Permissions;
+import org.twelve.gateways.GatewayPool;
+import org.twelve.gateways.ThresholdsGateway;
 import org.twelve.presenters.ThresholdPresenter;
+import org.twelve.usecases.SessionManager;
+import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;
 
@@ -15,17 +20,26 @@ public class ThresholdController {
      */
     private final ThresholdRepository thresholdRepository;
 
+    private final ThresholdsGateway thresholdsGateway;
+
     private ThresholdPresenter thresholdPresenter;
 
     private final UseCasePool useCasePool;
+
+    private final StatusManager statusManager;
+
+    private final SessionManager sessionManager;
 
     /**
      * Initializes the class with thresholdRepository from useCasePool
      * @param useCasePool the useCasePool for getting thresholdRepository
      */
-    public ThresholdController(UseCasePool useCasePool) {
+    public ThresholdController(UseCasePool useCasePool, GatewayPool gatewayPool) {
         thresholdRepository = useCasePool.getThresholdRepository();
+        this.thresholdsGateway = gatewayPool.getThresholdsGateway();
         this.useCasePool = useCasePool;
+        this.statusManager = useCasePool.getStatusManager();
+        this.sessionManager = useCasePool.getSessionManager();
     }
 
     /**
@@ -87,6 +101,8 @@ public class ThresholdController {
                 thresholdRepository.getMaxIncompleteTrade(), thresholdRepository.getMaxWeeklyTrade(),
                 thresholdRepository.getNumberOfDays(), thresholdRepository.getNumberOfStats(),
                 thresholdRepository.getNumberOfEdits(), thresholdRepository.getRequiredTradesForTrusted());
+
+        thresholdPresenter.setIsAdmin(statusManager.hasPermission(sessionManager.getCurrAccountID(), Permissions.CHANGE_THRESHOLDS));
 
     }
 }

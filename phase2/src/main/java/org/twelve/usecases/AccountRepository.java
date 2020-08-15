@@ -11,14 +11,26 @@ import java.util.*;
  */
 public class AccountRepository {
 
+    /**
+     * Map storing all accountIds mapping to their respective account objects.
+     */
     private final Map<Integer, Account> accounts;
+
+    /**
+     * A gateway for Accounts that interacts with external storage.
+     */
     private AccountGateway accountGateway;
+
+    /**
+     * A utility class for dealing with encryption and decryption.
+     */
     private SecurityUtility securityUtility;
 
 
     /**
      * Initializes an account repository with a certain gateway.
      * @param accountGateway An instance of an account gateway.
+     * @param securityUtility An instance of a securityUtility class.
      */
     public AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
         this.accountGateway = accountGateway;
@@ -50,10 +62,10 @@ public class AccountRepository {
 
     /**
      * Creates a new account using username and password if username is not already taken.
-     *
      * @param username Username of the new account
      * @param password Password of the new account
      * @param perms List of permissions for the new account
+     * @param location Location of the new account
      * @return Whether the new account is created successfully
      */
     public boolean createAccount(String username, String password, List<Permissions> perms, String location) {
@@ -75,7 +87,7 @@ public class AccountRepository {
      * @param password The account's password
      * @param perms The account's permissions
      * @param wishlist The account's wishlist
-     * @param location The account's location.
+     * @param location The account's location
      */
     public void createAccount(int accountId, String username, String password, List<String> perms,
                               List<Integer> wishlist, String location) {
@@ -88,7 +100,6 @@ public class AccountRepository {
 
     /**
      * Gets the account corresponding to the accountID provided.
-     *
      * @param accountID Unique identifier of account
      * @return Account corresponding to the accountID
      */
@@ -98,7 +109,6 @@ public class AccountRepository {
 
     /**
      * Gets the account corresponding to the username provided.
-     *
      * @param username Username of an account
      * @return Account corresponding to the username
      */
@@ -113,7 +123,6 @@ public class AccountRepository {
 
     /**
      * Gets the username of an account corresponding to the given unique identifier.
-     *
      * @param accountID Unique identifier of account
      * @return Username corresponding to the unique identifier of an account
      */
@@ -123,7 +132,6 @@ public class AccountRepository {
 
     /**
      * Retrieves all accounts stored in the system.
-     *
      * @return List of all accounts
      */
     protected List<Account> getAccounts() {
@@ -131,15 +139,15 @@ public class AccountRepository {
     }
 
     /**
-     * Retrieves the ids of all accounts in the system
-     *
-     * @return A list of account ids in the system.
+     * Retrieves the ids of all accounts in the system.
+     * @return A list of account ids in the system
      */
     public List<Integer> getAccountIDs(){
         return new ArrayList<>(accounts.keySet());
     }
 
     /**
+     * Retrieves the ids of all accounts in the system in string format.
      * @return List of all accounts as strings
      */
     public List<String> getAccountStrings(){
@@ -152,7 +160,6 @@ public class AccountRepository {
 
     /**
      * Retrieves a formatted string of an account from the given accountID.
-     *
      * @param accountID Unique identifier of account
      * @return Formatted String of account
      */
@@ -162,7 +169,6 @@ public class AccountRepository {
 
     /**
      * Retrieves the ID of a given account.
-     *
      * @param account Account to get from ID
      * @return ID associated with the account
      */

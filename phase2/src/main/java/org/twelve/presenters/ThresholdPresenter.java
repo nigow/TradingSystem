@@ -16,4 +16,6 @@ public interface ThresholdPresenter {
     int getNumberOfStats();
     int getNumberOfEdits();
     int getNumberOfTradesUntilTrusted();
+    boolean getIsAdmin();
+    void setIsAdmin(boolean isAdmin);
 }

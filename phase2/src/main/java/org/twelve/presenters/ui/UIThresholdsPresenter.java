@@ -11,6 +11,7 @@ public class UIThresholdsPresenter extends ObservablePresenter implements Thresh
     private int numberOfStats;
     private int numberOfEdits;
     private int numberOfTradesUntilTrusted;
+    boolean isAdmin;
 
     @Override
     public void setThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
@@ -77,6 +78,18 @@ public class UIThresholdsPresenter extends ObservablePresenter implements Thresh
     @Override
     public int getNumberOfTradesUntilTrusted() {
         return numberOfTradesUntilTrusted;
+    }
+
+    @Override
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    @Override
+    public void setIsAdmin(boolean isAdmin) {
+        boolean oldIsAdmin = this.isAdmin;
+        this.isAdmin = isAdmin;
+        propertyChangeSupport.firePropertyChange("isAdmin", oldIsAdmin, this.isAdmin);
     }
 
 }

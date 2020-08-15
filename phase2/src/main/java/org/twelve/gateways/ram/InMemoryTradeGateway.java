@@ -1,11 +1,17 @@
 package org.twelve.gateways.ram;
 
+import org.twelve.entities.TimePlace;
+import org.twelve.entities.Trade;
+import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
+import org.twelve.usecases.AccountRepository;
+import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.TradeManager;
 import org.twelve.usecases.TradeRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class InMemoryTradeGateway implements TradeGateway {
 
@@ -61,16 +67,21 @@ public class InMemoryTradeGateway implements TradeGateway {
                 traderIds.add(Integer.parseInt(traderId));
             }
 
-            String[] itemIdsString = trade[2].split(",");
+            String[] itemIdsString = trade[2].split(";");
             //TODO fix this
             List<List<Integer>> temp = new ArrayList<>();
             for (String itemId: itemIdsString) {
                 String[] itemIDsString2 = itemId.split(" ");
-                List<Integer> itemIds = new ArrayList<>();
-                for (String i: itemIDsString2) {
-                    itemIds.add(Integer.parseInt(i));
+                if (itemIDsString2.length == 0) {
+                    temp.add(new ArrayList<>());
                 }
-                temp.add(itemIds);
+                else {
+                    List<Integer> itemIds = new ArrayList<>();
+                    for (String i: itemIDsString2) {
+                        itemIds.add(Integer.parseInt(i));
+                    }
+                    temp.add(itemIds);
+                }
             }
 
             int editCounter = Integer.parseInt(trade[3]);
@@ -130,7 +141,10 @@ public class InMemoryTradeGateway implements TradeGateway {
                         itemIdsString.append(id).append(" ");
                     }
                 }
-                itemIdsString.append(",");
+                else {
+                    itemIdsString.append(" ");
+                }
+                itemIdsString.append(";");
             }
             trade[2] = itemIdsString.toString();
         }
@@ -153,4 +167,34 @@ public class InMemoryTradeGateway implements TradeGateway {
         timePlaceMap.put(tradeId, timePlace);
         return true;
     }
+
+    //TODO : delete
+    /**
+    public static void main(String[] args) {
+        InMemoryTradeGateway test = new InMemoryTradeGateway(new HashMap<Integer, String[]>(), new HashMap<Integer, String[]>());
+        test.save(1, true, new ArrayList<Integer>(), Collections.singletonList(new ArrayList<Integer>()),
+                1, "UNCONFIRMED", new ArrayList<Boolean>(),"2014-04-08 12:30",
+                "Home", true);
+        String[] list = test.tradeMap.get(1);
+
+        String[] itemIdsString = list[2].split(";");
+        System.out.println(Arrays.toString(itemIdsString));
+        List<List<Integer>> temp = new ArrayList<>();
+        for (String itemId: itemIdsString) {
+            String[] itemIDsString2 = itemId.split(" ");
+            System.out.println(Arrays.toString(itemIDsString2));
+            if (itemIDsString2.length == 0) {
+                temp.add(new ArrayList<>());
+            }
+            else {
+                List<Integer> itemIds = new ArrayList<>();
+                for (String i: itemIDsString2) {
+                    itemIds.add(Integer.parseInt(i));
+                }
+                temp.add(itemIds);
+            }
+        }
+
+    }
+     **/
 }

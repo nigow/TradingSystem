@@ -34,18 +34,6 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
     }
 
     @Override
-    public void setModifyThresholds(boolean modifyThresholds) {
-        boolean oldModifyThresholds = this.modifyThresholds;
-        this.modifyThresholds = modifyThresholds;
-        propertyChangeSupport.firePropertyChange("modifyThresholds", oldModifyThresholds, modifyThresholds);
-    }
-
-    @Override
-    public boolean getModifyThresholds() {
-        return modifyThresholds;
-    }
-
-    @Override
     public void setManageAccounts(boolean manageAccounts) {
         boolean oldManageAccounts = this.manageAccounts;
         this.manageAccounts = manageAccounts;
