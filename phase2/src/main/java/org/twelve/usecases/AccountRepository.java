@@ -13,7 +13,7 @@ public class AccountRepository {
 
     private final Map<Integer, Account> accounts;
     private AccountGateway accountGateway;
-    private SecurityUtility securityUtility;
+    private final SecurityUtility securityUtility;
 
 
     /**
@@ -149,24 +149,6 @@ public class AccountRepository {
             accountStrings.add(account.toString());
         }
         return accountStrings;
-    }
-
-    /**
-     * Retrieves a formatted string of an account from the given accountID.
-     * @param accountID Unique identifier of account
-     * @return Formatted String of account
-     */
-    public String getAccountStringFromID(int accountID) {
-        return getAccountFromID(accountID).toString();
-    }
-
-    /**
-     * Retrieves the ID of a given account.
-     * @param account Account to get from ID
-     * @return ID associated with the account
-     */
-    public int getAccountID(Account account) {
-        return account.getAccountID();
     }
 
     /**
