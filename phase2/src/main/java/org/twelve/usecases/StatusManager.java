@@ -56,33 +56,33 @@ public class StatusManager {
         return accountsToFreeze;
     }
 
-    /**
-     * Gets a list of accounts that have been frozen and have requested to be unfrozen.
-     *
-     * @return List of accounts to freeze
-     */
-    public List<Integer> getAccountIDsToUnfreeze() {
-        List<Integer> accountIDsToUnfreeze = new ArrayList<>();
-        for (int accountID : accountRepository.getAccountIDs()) {
-            if (isPending(accountID)) {
-                accountIDsToUnfreeze.add(accountID);
-            }
-        }
-        return accountIDsToUnfreeze;
-    }
+//    /**
+//     * Gets a list of accounts that have been frozen and have requested to be unfrozen.
+//     *
+//     * @return List of accounts to freeze
+//     */
+//    public List<Integer> getAccountIDsToUnfreeze() {
+//        List<Integer> accountIDsToUnfreeze = new ArrayList<>();
+//        for (int accountID : accountRepository.getAccountIDs()) {
+//            if (isPending(accountID)) {
+//                accountIDsToUnfreeze.add(accountID);
+//            }
+//        }
+//        return accountIDsToUnfreeze;
+//    }
 
-    /**
-     * Gets a list of account usernames that have been frozen and have requested to be unfrozen.
-     *
-     * @return List of account usernames to freeze
-     */
-    public List<String> getUsernamesToUnfreeze() {
-        List<String> accountsToUnfreeze = new ArrayList<>();
-        for (int accountID : getAccountIDsToUnfreeze()) {
-            accountsToUnfreeze.add(accountRepository.getUsernameFromID(accountID));
-        }
-        return accountsToUnfreeze;
-    }
+//    /**
+//     * Gets a list of account usernames that have been frozen and have requested to be unfrozen.
+//     *
+//     * @return List of account usernames to freeze
+//     */
+//    public List<String> getUsernamesToUnfreeze() {
+//        List<String> accountsToUnfreeze = new ArrayList<>();
+//        for (int accountID : getAccountIDsToUnfreeze()) {
+//            accountsToUnfreeze.add(accountRepository.getUsernameFromID(accountID));
+//        }
+//        return accountsToUnfreeze;
+//    }
 
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
