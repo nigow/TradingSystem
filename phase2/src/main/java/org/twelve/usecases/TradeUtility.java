@@ -40,8 +40,6 @@ abstract public class TradeUtility extends TradeRepository {
         for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
-            if (!trade.isTwoPersonTrade())
-                continue;
             tradeFrequency.compute(trade.getNextTraderID(accountID), (k, v) -> v == null ? 1 : v + 1);
         }
         Map<Integer, Integer> sorted = tradeFrequency.entrySet().stream()
@@ -71,8 +69,6 @@ abstract public class TradeUtility extends TradeRepository {
         List<Integer> allOneWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
-                continue;
-            if (!trade.isTwoPersonTrade())
                 continue;
             if (!itemsTraderGives(accountID, trade.getId()).isEmpty() &&
                     itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty()) {
@@ -107,8 +103,6 @@ abstract public class TradeUtility extends TradeRepository {
         List<Integer> allTwoWayItems = new ArrayList<>();
         for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
-                continue;
-            if (!trade.isTwoPersonTrade())
                 continue;
             if (!itemsTraderGives(accountID, trade.getId()).isEmpty() &&
                     !itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty()) {
@@ -180,8 +174,6 @@ abstract public class TradeUtility extends TradeRepository {
         for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
-            if (!trade.isTwoPersonTrade())
-                continue;
             if (!itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty() &&
                     itemsTraderGives(accountID, trade.getId()).isEmpty())
                 timesBorrowed++;
@@ -199,8 +191,6 @@ abstract public class TradeUtility extends TradeRepository {
         int timesLent = 0;
         for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
-                continue;
-            if (!trade.isTwoPersonTrade())
                 continue;
             if (itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty() &&
                     !itemsTraderGives(accountID, trade.getId()).isEmpty())
