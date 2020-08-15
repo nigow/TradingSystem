@@ -18,6 +18,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing trade cancellations
+ * @param <T> Presenter.
+ */
 public class TradeCancellationView <T extends ObservablePresenter & TradeCancellationPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -32,6 +36,12 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
     @FXML
     private Button cancelButton;
 
+    /**
+     * Constructor of view for managing trade cancellations.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param tradeCancellationController Controller for managing trade cancellations.
+     * @param tradeCancellationPresenter Presenter for displaying trade cancellations.
+     */
     public TradeCancellationView(WindowHandler windowHandler, TradeCancellationController tradeCancellationController,
                             T tradeCancellationPresenter) {
         this.windowHandler = windowHandler;
@@ -40,6 +50,9 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
         this.tradeCancellationController.setTradeCancellationPresenter(this.tradeCancellationPresenter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -58,12 +71,18 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
         cancelButton.disableProperty().bind(allTrades.getSelectionModel().selectedItemProperty().isNull());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         allTrades.getSelectionModel().clearSelection();
         tradeCancellationController.updateList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
