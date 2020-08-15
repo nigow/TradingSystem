@@ -25,11 +25,13 @@ public class TradeManager extends TradeUtility{
 
 
     /**
-     * The Constructor for TradeManager
+     * The Constructor for TradeManager.
      *
-     * @param accountRepository the gateway dealing with trades
-     * @param thresholdRepository Repository for storing all threshold values of the program.
+     * @param accountRepository Repository for storing all accounts of the program
+     * @param thresholdRepository Repository for storing all threshold values of the program
      * @param wishlistManager the manager dealing with the wishlist of a user
+     * @param tradeGateway the gateway dealing with trades
+     * @param itemManager the manager dealing with items
      */
     public TradeManager(AccountRepository accountRepository, ThresholdRepository thresholdRepository,
                         WishlistManager wishlistManager, TradeGateway tradeGateway, ItemManager itemManager) {
@@ -42,11 +44,12 @@ public class TradeManager extends TradeUtility{
     /**
      * Creates a new Trade object to be edited.
      *
-     * @param time          Time of the Trade
-     * @param place         Location of the Trade
-     * @param isPermanent   Whether the Trade is permanent or not
-     * @param tradersIds    An ordered list of each trader participating
-     * @param itemsIds      The items involved in this trade.
+     * @param time Time of the Trade
+     * @param place Location of the Trade
+     * @param isPermanent Whether the Trade is permanent or not
+     * @param tradersIds An ordered list of each trader participating
+     * @param itemsIds The items involved in this trade.
+     * @return the id of the trade
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List< List<Integer> > itemsIds) {
@@ -62,7 +65,9 @@ public class TradeManager extends TradeUtility{
 
     /**
      * Initiates a reverse Trade.
+     *
      * @param id The trade id
+     * @return the object representing the reverse trade
      */
     public int reverseTrade(int id) {
         TimePlace timePlace = getTimePlaceByID(id);
@@ -81,9 +86,9 @@ public class TradeManager extends TradeUtility{
     /**
      * Changes the TimePlace of the Trade and updates last edit info.
      *
-     * @param tradeID  The ID of the trade being edite.d
-     * @param time     New time of the Trade
-     * @param place    New place of the Trade
+     * @param tradeID The ID of the trade being edited
+     * @param time New time of the Trade
+     * @param place New place of the Trade
      */
     public void editTimePlace(int tradeID, LocalDateTime time, String place) {
         TimePlace timePlace = getTimePlaceByID(tradeID);
@@ -96,7 +101,8 @@ public class TradeManager extends TradeUtility{
 
     /**
      * A method allowing accounts to reject a trade.
-     * @param tradeID The ID of the trade being cancelled.
+     *
+     * @param tradeID The ID of the trade being cancelled
      */
     public void rejectTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
@@ -105,8 +111,9 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * Confirm the creation of a trade with a given ID
-     * @param tradeID The id of the trade being confirmed.
+     * Confirm the creation of a trade with a given ID.
+     *
+     * @param tradeID The id of the trade being confirmed
      */
     public void confirmTrade(int tradeID) {
         Trade trade = getTradeByID(tradeID);
@@ -124,6 +131,7 @@ public class TradeManager extends TradeUtility{
      * Updates the completion status of this Trade according to the user's ID.
      *
      * @param accountID The ID of the account who marked this Trade as complete
+     * @param tradeID The of the trade being marked as complete
      */
     public void completeTrade(int accountID, int tradeID) {
         Trade trade = getTradeByID(tradeID);
@@ -132,7 +140,7 @@ public class TradeManager extends TradeUtility{
     }
 
     /**
-     * remove trade from system
+     * remove trade from system.
      *
      * @param tradeIndex An index of the trade counting cancelled & unconfirmed trades.
      */
@@ -157,7 +165,9 @@ public class TradeManager extends TradeUtility{
 
     /**
      * Compares the number of edits done to the trade vs. the restriction limit.
+     *
      * @param tradeID ID of the trade.
+     * @return if the edits done is under the limit
      */
     public boolean canBeEdited(int tradeID) {
         return getEditedCounter(tradeID) <
@@ -166,6 +176,7 @@ public class TradeManager extends TradeUtility{
 
     /**
      * An Admin-specific method to undo the creation of a trade
+     *
      * @param tradeID The trade id being undone.
      */
     public void unmakeTrade(int tradeID) {

@@ -23,6 +23,8 @@ public class UseCasePool {
 
     /**
      * Creates all the required use cases for the program.
+     *
+     * @param gatewayPool A pool of gateways which contains all gateways
      */
     public UseCasePool(GatewayPool gatewayPool) {
         this.gatewayPool = gatewayPool;
@@ -115,6 +117,8 @@ public class UseCasePool {
     }
 
     /**
+     * Switches the mode of all the use cases
+     *
      * @param gatewayPool An instance of gateway pool storing all gateways
      * @param demoMode Whether we should be able to switch to demo mode
      */

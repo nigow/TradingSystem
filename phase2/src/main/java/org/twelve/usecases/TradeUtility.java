@@ -19,9 +19,10 @@ abstract public class TradeUtility extends TradeRepository {
     final ThresholdRepository thresholdRepository;
 
     /**
-     * Constructor for TradeUtility
+     * Constructor for TradeUtility.
      *
-     * @param thresholdRepository Repository for storing all accounts threshold values of the program.
+     * @param thresholdRepository Repository for storing all accounts threshold values of the program
+     * @param tradeGateway the gateway dealing with trades
      */
     public TradeUtility(ThresholdRepository thresholdRepository, TradeGateway tradeGateway){
         super(tradeGateway);
@@ -31,8 +32,8 @@ abstract public class TradeUtility extends TradeRepository {
     /**
      * Retrieves the Ids of the top three trade partners of the current account.
      *
-     * @return List of top three trade partners, if less than three list size is
-     * adjusted
+     * @param accountID Unique identifier of the account
+     * @return List of top three trade partners, if less than three list size is adjusted
      */
     public List<Integer> getTopThreePartnersIds(int accountID) {
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
@@ -60,6 +61,7 @@ abstract public class TradeUtility extends TradeRepository {
      * Retrieves the three most recent items given in one-way trades the current account
      * has made.
      *
+     * @param accountID Unique identifier of the account
      * @return List of three most recent one-way trades the current account
      * has made, if less than three list size is adjusted
      */
@@ -93,9 +95,9 @@ abstract public class TradeUtility extends TradeRepository {
     }
 
     /**
-     * Retrieves the three most recent items given in two-way trades the current account has
-     * made.
+     * Retrieves the three most recent items given in two-way trades the current account has made.
      *
+     * @param accountID Unique identifier of the account
      * @return List of three most recent two-way trades the current account
      * has made, if less than three list size is adjusted
      */
@@ -131,6 +133,7 @@ abstract public class TradeUtility extends TradeRepository {
     /**
      * Retrieves the number of trades the current account has made in the past week.
      *
+     * @param accountID Unique identifier of the account
      * @return Number of trades user has made in the past week
      */
     public int getNumWeeklyTrades(int accountID) {
@@ -150,9 +153,9 @@ abstract public class TradeUtility extends TradeRepository {
     }
 
     /**
-     * Retrieves the number of times the current user has failed to complete
-     * a trade.
+     * Retrieves the number of times the current user has failed to complete a trade.
      *
+     * @param accountID Unique identifier of the account
      * @return Number of times the current user has failed to complete a trade
      */
     public int getTimesIncomplete(int accountID) {
@@ -169,6 +172,7 @@ abstract public class TradeUtility extends TradeRepository {
     /**
      * Retrieves the number of times the current user has borrowed items.
      *
+     * @param accountID Unique identifier of the account
      * @return Number of times the current user has borrowed items
      */
     public int getTimesBorrowed(int accountID) {
@@ -188,6 +192,7 @@ abstract public class TradeUtility extends TradeRepository {
     /**
      * Retrieves the number of times the current user has lent items.
      *
+     * @param accountID Unique identifier of the account
      * @return Number of times the current user has lent items
      */
     public int getTimesLent(int accountID) {
@@ -208,6 +213,7 @@ abstract public class TradeUtility extends TradeRepository {
     /**
      * Determines whether the current account has lent more than borrowed.
      *
+     * @param accountID Unique identifier of the account
      * @return Whether the current account has lent more than borrowed
      */
     public boolean lentMoreThanBorrowed(int accountID) {
@@ -216,9 +222,9 @@ abstract public class TradeUtility extends TradeRepository {
     }
 
     /**
-     * return whether this account can be trusted
+     * return whether this account can be trusted.
      *
-     * @param accountID id of account
+     * @param accountID Unique identifier of the account
      * @return whether this account can be trusted
      */
     public boolean canBeTrusted(int accountID) {
@@ -233,14 +239,16 @@ abstract public class TradeUtility extends TradeRepository {
     /**
      * Returns if it is a accounts turn to edit.
      *
-     * @return Whether it's the account's turn to edit.
+     * @param accountID Unique identifier of the account
+     * @param tradeID Unique identifier of the trade
+     * @return Whether it's the account's turn to edit
      */
     public boolean isEditTurn(int accountID, int tradeID) {
         return getTradeByID(tradeID).isEditTurn(accountID);
     }
 
     /**
-     * return whether this account completed this trade or not
+     * return whether this account completed this trade or not.
      *
      * @param accountID id of account
      * @param tradeID id of trade

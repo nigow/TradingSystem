@@ -12,7 +12,7 @@ import java.util.List;
  * @author Tairi, Andrew
  */
 public class WishlistManager {
-    
+
     private AccountRepository accountRepository;
     private ItemUtility itemUtility;
 
@@ -42,6 +42,7 @@ public class WishlistManager {
     /**
      * Removes an itemID from the given account's wishlist.
      *
+     * @param accountID Unique identifier of the account
      * @param itemID Unique identifier of the item
      */
     public void removeItemFromWishlist(int accountID, int itemID) {
@@ -53,6 +54,7 @@ public class WishlistManager {
     /**
      * Gets the wishlist of item ids for the given account.
      *
+     * @param accountID Unique identifier of the account
      * @return Wishlist of the given account
      */
     public List<Integer> getWishlistFromID(int accountID) {
@@ -62,6 +64,7 @@ public class WishlistManager {
     /**
      * Determines if item corresponding to the itemID is in the current account's wishlist.
      *
+     * @param accountID Unique identifier of the account
      * @param itemID Unique identifier of the item
      * @return Whether the item corresponding to the itemID is in the current account's wishlist
      */
