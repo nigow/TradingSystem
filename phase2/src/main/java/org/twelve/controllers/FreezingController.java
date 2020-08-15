@@ -54,8 +54,9 @@ public class FreezingController {
      */
     public void freeze(String chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        statusManager.freezeAccount(chosenUserID);
-        updateAccountLists();
+        if(statusManager.freezeAccount(chosenUserID)) {
+            updateAccountLists();
+        }
     }
 
     /**
@@ -64,8 +65,9 @@ public class FreezingController {
      */
     public void unfreeze(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        statusManager.unfreezeAccount(chosenUserID);
-        updateAccountLists();
+        if(statusManager.unfreezeAccount(chosenUserID)){
+            updateAccountLists();
+        }
     }
 
     /**
