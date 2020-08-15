@@ -74,7 +74,7 @@ public class WarehouseController {
     }
 
     /**
-     * Changes which item the user has selected and updates presenter with new name & desc.
+     * Changes which item the user has selected and updates presenter with new name and description.
      *
      * @param itemIndex Index of selected item.
      */

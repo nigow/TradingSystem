@@ -94,14 +94,14 @@ public class UseCasePool {
     }
 
     /**
-     * {@return} An instance of SessionManager use case.
+     * @return An instance of SessionManager use case.
      */
     public SessionManager getSessionManager() {
         return sessionManager;
     }
 
     /**
-     * {@return} An instance of ThresholdRepository use case.
+     * @return An instance of ThresholdRepository use case.
      */
     public ThresholdRepository getThresholdRepository() {
         return thresholdRepository;

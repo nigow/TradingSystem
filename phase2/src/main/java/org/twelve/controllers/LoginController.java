@@ -45,6 +45,7 @@ public class LoginController {
      *
      * @param username the username the user enters
      * @param password the password the user enters
+     * @return whether login was successful
      */
     public boolean logIn(String username, String password) {
 
