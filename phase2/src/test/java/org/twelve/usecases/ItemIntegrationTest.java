@@ -18,12 +18,11 @@ import java.util.HashMap;
 public class ItemIntegrationTest extends TestCase {
     private ItemManager itemManager;
     private ItemsGateway itemsGateway;
-    private AccountRepository accountRepository;
 
     private void setUpItemManager() {
         AccountGateway accountGateway = new InMemoryAccountGateway(new HashMap<>());
         SecurityUtility securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES");
-        accountRepository = new AccountRepository(accountGateway, securityUtility);
+        AccountRepository accountRepository = new AccountRepository(accountGateway, securityUtility);
         String[] initialString = new String[4];
         initialString[0] = "Potato";
         initialString[1] = "A Vegetable";
