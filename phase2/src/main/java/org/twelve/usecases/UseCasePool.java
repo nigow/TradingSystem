@@ -37,8 +37,8 @@ public class UseCasePool {
         thresholdRepository = new ThresholdRepository(gatewayPool.getThresholdsGateway());
         itemManager = new ItemManager(gatewayPool.getItemsGateway(), accountRepository);
         wishlistManager = new WishlistManager(accountRepository, itemManager);
-        tradeRepository = new TradeRepository(gatewayPool.getTradeGateway(), accountRepository, itemManager);
-        tradeManager = new TradeManager(gatewayPool.getTradeGateway(), thresholdRepository, wishlistManager, tradeRepository, itemManager);
+        tradeRepository = new TradeRepository(gatewayPool.getTradeGateway());
+        tradeManager = new TradeManager(accountRepository, thresholdRepository, wishlistManager, tradeRepository, itemManager);
         statusManager = new StatusManager(accountRepository, tradeManager, thresholdRepository);
         loginManager = new LoginManager(accountRepository, securityUtility);
         sessionManager = new SessionManager(accountRepository);

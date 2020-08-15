@@ -6,6 +6,7 @@ import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,18 +21,22 @@ public class TradeManager extends TradeUtility{
 
     private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
+    private final AccountRepository accountRepository;
+
 
     /**
      * The Constructor for TradeManager
      *
-     * @param tradeGateway the gateway dealing with trades
+     * @param accountRepository the gateway dealing with trades
      * @param thresholdRepository Repository for storing all threshold values of the program.
      * @param wishlistManager the manager dealing with the wishlist of a user
      */
-    public TradeManager(TradeGateway tradeGateway, ThresholdRepository thresholdRepository, WishlistManager wishlistManager, TradeRepository tradeRepository, ItemManager itemManager) {
+    public TradeManager(AccountRepository accountRepository, ThresholdRepository thresholdRepository,
+                        WishlistManager wishlistManager, TradeRepository tradeRepository, ItemManager itemManager) {
         super(thresholdRepository, tradeRepository);
         this.wishlistManager = wishlistManager;
         this.itemManager = itemManager;
+        this.accountRepository = accountRepository;
     }
 
     /**
@@ -129,9 +134,10 @@ public class TradeManager extends TradeUtility{
     /**
      * remove trade from system
      *
-     * @param tradeID trade id
+     * @param tradeIndex An index of the trade counting cancelled & unconfirmed trades.
      */
-    public void adminCancelTrade(int tradeID) {
+    public void adminCancelTrade(int tradeIndex) {
+        int tradeID = tradeRepository.getAllTradesIds().get(tradeIndex);
         Trade trade = tradeRepository.getTradeByID(tradeID);
         if (trade.getStatus() == TradeStatus.CONFIRMED || trade.getStatus() == TradeStatus.COMPLETED)
             unmakeTrade(tradeID);
@@ -170,4 +176,54 @@ public class TradeManager extends TradeUtility{
                 itemManager.updateOwner(itemID, accountID);
         }
     }
+
+    /**
+     * Retrieves all trades stored in persistent storage in string format.
+     *
+     * @return List of trades in string format
+     */
+    public List<String> getAllTradesString() {
+        List<String> stringTrade = new ArrayList<>();
+        for (Trade trade : tradeRepository.trades.values()) {
+            if (trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
+                stringTrade.add(tradeAsString(trade));
+        }
+        return stringTrade;
+    }
+
+    /**
+     * Returns a user-friendly string representation of a trade.
+     *
+     * @param trade The Trade whose representation is being returned
+     * @return An user-friendly representation of a trade
+     */
+    public String tradeAsString(Trade trade) {
+        TimePlace timePlace = tradeRepository.getTimePlaceByID(trade.getTimePlaceID());
+        StringBuilder ans = new StringBuilder();
+
+        boolean space = false;
+        for (int id : trade.getTraderIds()) {
+            if (space)
+                ans.append("\n");
+            else
+                space = true;
+            ans.append("Items being traded by ").append(accountRepository.getUsernameFromID(id)).append(": ");
+            boolean hasItem = false;
+            for (int itemID : tradeRepository.itemsTraderGives(id, trade.getId())) {
+                ans.append(itemManager.getItemNameById(itemID));
+                hasItem = true;
+            }
+            if (!hasItem)
+                ans.append("-");
+        }
+
+        ans.append("\nStatus: ").append(trade.getStatus().toString().toLowerCase());
+        ans.append("\nType: ");
+        ans.append(trade.isPermanent() ? "permanent" : "temporary");
+        ans.append("\nLocation: ").append(timePlace.getPlace());
+        ans.append("\nTime: ").append(timePlace.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm")));
+
+        return ans.toString();
+    }
+
 }

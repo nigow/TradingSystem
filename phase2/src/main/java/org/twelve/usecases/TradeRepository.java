@@ -13,16 +13,11 @@ public class TradeRepository {
     Map<Integer, Trade> trades;
     Map<Integer, TimePlace> timePlaces;
     private TradeGateway tradeGateway;
-    private final ItemManager itemManager;
 
-    private final AccountRepository accountRepository;
-
-    public TradeRepository(TradeGateway tradeGateway, AccountRepository accountRepository, ItemManager itemManager) {
+    public TradeRepository(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
         trades = new HashMap<>();
         timePlaces = new HashMap<>();
-        this.accountRepository = accountRepository;
-        this.itemManager = itemManager;
         tradeGateway.populate(this);
     }
 
@@ -172,20 +167,6 @@ public class TradeRepository {
         return accountTrades;
     }
 
-    /**
-     * Retrieves all trades stored in persistent storage in string format.
-     *
-     * @return List of trades in string format
-     */
-    public List<String> getAllTradesString() {
-        List<String> stringTrade = new ArrayList<>();
-        for (Trade trade : trades.values()) {
-            if (trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
-                stringTrade.add(tradeAsString(trade));
-        }
-        return stringTrade;
-    }
-
     public List<Integer> getAllTradesIds(){
         List<Integer> tradeIds = new ArrayList<>();
         for(Trade trade: trades.values()){
@@ -263,40 +244,5 @@ public class TradeRepository {
         Trade trade = getTradeByID(tradeID);
         int ind = trade.getTraderIds().indexOf(accountID);
         return trade.getItemsIds().get(ind);
-    }
-
-    /**
-     * Returns a user-friendly string representation of a trade.
-     *
-     * @param trade The Trade whose representation is being returned
-     * @return An user-friendly representation of a trade
-     */
-    public String tradeAsString(Trade trade) {
-        TimePlace timePlace = getTimePlaceByID(trade.getTimePlaceID());
-        StringBuilder ans = new StringBuilder();
-
-        boolean space = false;
-        for (int id : trade.getTraderIds()) {
-            if (space)
-                ans.append("\n");
-            else
-                space = true;
-            ans.append("Items being traded by ").append(accountRepository.getUsernameFromID(id)).append(": ");
-            boolean hasItem = false;
-            for (int itemID : itemsTraderGives(id, trade.getId())) {
-                ans.append(itemManager.getItemNameById(itemID));
-                hasItem = true;
-            }
-            if (!hasItem)
-                ans.append("-");
-        }
-
-        ans.append("\nStatus: ").append(trade.getStatus().toString().toLowerCase());
-        ans.append("\nType: ");
-        ans.append(trade.isPermanent() ? "permanent" : "temporary");
-        ans.append("\nLocation: ").append(timePlace.getPlace());
-        ans.append("\nTime: ").append(timePlace.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm")));
-
-        return ans.toString();
     }
 }

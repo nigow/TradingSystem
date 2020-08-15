@@ -36,11 +36,13 @@ public class TradeEditorController {
         sessionManager.removeWorkingTrade();
     }
 
+
+
     public void setTradeProperties() {
         useCasePool.populateAll();
-        int trade = sessionManager.getWorkingTrade();
-        List<Integer> userItemIDs = tradeRepository.itemsTraderGives(sessionManager.getCurrAccountID(), trade);
-        List<Integer> peerItemIDs = tradeRepository.itemsTraderGives(tradeRepository.getNextTraderID(trade, sessionManager.getCurrAccountID()), trade);
+        int tradeID = sessionManager.getWorkingTrade();
+        List<Integer> userItemIDs = tradeRepository.itemsTraderGives(sessionManager.getCurrAccountID(), tradeID);
+        List<Integer> peerItemIDs = tradeRepository.itemsTraderGives(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID()), tradeID);
         List<String> userItems = new ArrayList<>();
         for (int id : userItemIDs)
             userItems.add(itemManager.getItemNameById(id));
@@ -49,34 +51,34 @@ public class TradeEditorController {
             peerItems.add(itemManager.getItemNameById(id));
         tradeEditorPresenter.setUserItems(userItems);
         tradeEditorPresenter.setPeerItems(peerItems);
-        tradeEditorPresenter.setPeerUsername(accountRepository.getUsernameFromID(tradeRepository.getNextTraderID(trade, sessionManager.getCurrAccountID())));
-        tradeEditorPresenter.setTradeStatus(tradeRepository.getTradeStatus(trade));
+        tradeEditorPresenter.setPeerUsername(accountRepository.getUsernameFromID(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID())));
+        tradeEditorPresenter.setTradeStatus(tradeRepository.getTradeStatus(tradeID));
         boolean canEdit = false;
         boolean canConfirm = false;
         boolean canComplete = false;
         boolean canCancel = false;
-        if (tradeRepository.getTradeStatus(trade) == TradeStatus.UNCONFIRMED) {
+        if (tradeRepository.getTradeStatus(tradeID) == TradeStatus.UNCONFIRMED) {
             canCancel = true;
-            if (tradeManager.isEditTurn(sessionManager.getCurrAccountID(), trade)) {
-                if (tradeRepository.getDateTime(trade).isAfter(LocalDateTime.now()))
+            if (tradeManager.isEditTurn(sessionManager.getCurrAccountID(), tradeID)) {
+                if (tradeRepository.getDateTime(tradeID).isAfter(LocalDateTime.now()))
                     canConfirm = true;
-                if (tradeManager.canBeEdited(trade))
+                if (tradeManager.canBeEdited(tradeID))
                     canEdit = true;
             }
-        } else if (tradeRepository.getTradeStatus(trade) == TradeStatus.CONFIRMED) {
-            if (tradeRepository.getDateTime(trade).isBefore(LocalDateTime.now()) && !tradeManager.accountCompletedTrade(sessionManager.getCurrAccountID(), trade))
+        } else if (tradeRepository.getTradeStatus(tradeID) == TradeStatus.CONFIRMED) {
+            if (tradeRepository.getDateTime(tradeID).isBefore(LocalDateTime.now()) && !tradeManager.accountCompletedTrade(sessionManager.getCurrAccountID(), tradeID))
                 canComplete = true;
         }
         tradeEditorPresenter.setCanEdit(canEdit);
         tradeEditorPresenter.setCanConfirm(canConfirm);
         tradeEditorPresenter.setCanComplete(canComplete);
         tradeEditorPresenter.setCanCancel(canCancel);
-        tradeEditorPresenter.setIsPermanent(tradeRepository.isPermanent(trade));
-        LocalDateTime dateTime = tradeRepository.getDateTime(trade);
+        tradeEditorPresenter.setIsPermanent(tradeRepository.isPermanent(tradeID));
+        LocalDateTime dateTime = tradeRepository.getDateTime(tradeID);
         tradeEditorPresenter.setHourChosen(dateTime.getHour());
         tradeEditorPresenter.setMinuteChosen(dateTime.getMinute());
         tradeEditorPresenter.setDateChosen(LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth()));
-        tradeEditorPresenter.setLocationChosen(tradeRepository.getLocation(trade));
+        tradeEditorPresenter.setLocationChosen(tradeRepository.getLocation(tradeID));
     }
 
     public void cancelTrade() {
