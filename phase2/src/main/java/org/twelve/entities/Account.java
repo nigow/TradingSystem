@@ -18,7 +18,7 @@ public class Account {
     private String location;
 
     /**
-     * Creates a new account with the given username, password, and rolesID.
+     * Creates a new account to the system.
      * The wishlist is initialized as an empty Arraylist.
      *
      * @param username    Username of this account
@@ -38,13 +38,14 @@ public class Account {
 
     /**
      * An overloaded constructor.
-     * Creates a new account with the given username, password, wishlist, and rolesID.
+     * Used to create accounts that already exist in the system.
      *
      * @param username    Username of this account
      * @param password    Password for this account
      * @param wishlist    Wishlist that this account should be initialized with
      * @param permissions What this account is allowed to do
      * @param accountID   Unique identifier of this account
+     * @param location    The location of this account
      */
     public Account(String username, String password, List<Integer> wishlist, List<Permissions> permissions,
                    int accountID, String location) {
