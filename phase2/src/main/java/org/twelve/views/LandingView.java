@@ -51,6 +51,7 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
         this.landingController = landingController;
         this.landingController.setLandingPresenter(this.landingPresenter);
+
     }
 
     @FXML
@@ -72,7 +73,7 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
      */
     @Override
     public void reload() {
-
+        landingController.displaySettings();
     }
 
     /**
@@ -82,6 +83,9 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
     public Parent getGraphic() {
         return graphic;
     }
+
+    @SuppressWarnings("FieldCanBeLocal") // have to be global to prevent garbage collection while in use
+    private ReadOnlyJavaBeanObjectProperty<Locale> selectedLanguageBinding;
 
     /**
      * {@inheritDoc}
@@ -97,7 +101,8 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
             languages.itemsProperty().bind(Bindings.createObjectBinding(() ->
                     FXCollections.observableArrayList(availableLanguagesBinding.get()), availableLanguagesBinding));
 
-            languages.getSelectionModel().select(landingPresenter.getSelectedLanguage());
+            selectedLanguageBinding = ReadOnlyJavaBeanObjectPropertyBuilder.<Locale>create().bean(landingPresenter).name("selectedLanguage").build();
+            selectedLanguageBinding.addListener((observable, oldValue, newValue) -> languages.getSelectionModel().select(newValue));
 
             demoMode.selectedProperty().bindBidirectional(JavaBeanBooleanPropertyBuilder.create()
                     .bean(landingPresenter).name("demoMode").build());
@@ -112,8 +117,17 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
                 return new ListCell<>() {
                     @Override
                     protected void updateItem(Locale item, boolean empty) {
+
                         super.updateItem(item, empty);
-                        setText(empty ? "" : item.getDisplayName(languages.getValue()));
+
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+
+                            setText(item.getDisplayName(languages.getValue()));
+                        }
+
                     }
                 };
             }

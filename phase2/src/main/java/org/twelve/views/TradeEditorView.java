@@ -5,14 +5,13 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.adapter.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.twelve.controllers.TradeEditorController;
 import org.twelve.presenters.TradeEditorPresenter;
@@ -60,16 +59,15 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @FXML
     private Label peerUsername;
 
-    // need to be class vars so they don't end up garbage collected
-    private final ObjectProperty<LocalDate> dateProp;
-
     public TradeEditorView(WindowHandler windowHandler, TradeEditorController tradeEditorController, T tradeEditorPresenter) {
         this.windowHandler = windowHandler;
         this.tradeEditorController = tradeEditorController;
         this.tradeEditorPresenter = tradeEditorPresenter;
         this.tradeEditorController.setTradeEditorPresenter(this.tradeEditorPresenter);
-        dateProp = new SimpleObjectProperty<>();
     }
+
+    @SuppressWarnings("FieldCanBeLocal") // have to be global to prevent garbage collection while in use
+    private ReadOnlyJavaBeanObjectProperty<LocalDate> dateChosenBinding;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -123,13 +121,12 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("minuteChosen").build()));
             //=================
 
-            // todo: we can change this but need to also change some other places for consistency
             locationBox.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("locationChosen").build());
 
             // workaround loss of generic info with JavaBeanObjectPropertyBuilder (JDK bug ticket: https://bugs.openjdk.java.net/browse/JDK-8152399)
-            dateProp.bind(ReadOnlyJavaBeanObjectPropertyBuilder.<LocalDate>create().bean(tradeEditorPresenter).name("dateChosen").build());
-            dateBox.valueProperty().bindBidirectional(dateProp);
+            dateChosenBinding = ReadOnlyJavaBeanObjectPropertyBuilder.<LocalDate>create().bean(tradeEditorPresenter).name("dateChosen").build();
+            dateChosenBinding.addListener((observable, oldValue, newValue) -> dateBox.setValue(newValue));
 
             BooleanBinding isValidTimeLocation = Bindings.createBooleanBinding(() -> {
                 if (dateBox.getValue() == null || locationBox.getText() == null)
@@ -156,7 +153,6 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 
     @Override
     public void reload() {
-        // if (!dateBox.isDisable()) dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
@@ -174,7 +170,6 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @FXML
     private void cancelClicked() {
         tradeEditorController.cancelTrade();
-        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
@@ -183,21 +178,18 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
         LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
         tradeEditorController.editTrade(locationBox.getText(), dateTime);
-        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void completeClicked() {
         tradeEditorController.completeTrade();
-        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 
     @FXML
     private void confirmClicked() {
         tradeEditorController.confirmTrade();
-        // dateBox.getEditor().clear();
         tradeEditorController.setTradeProperties();
     }
 }

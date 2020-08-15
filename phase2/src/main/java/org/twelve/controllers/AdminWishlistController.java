@@ -1,8 +1,5 @@
 package org.twelve.controllers;
 
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.AdminWishlistPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.ItemManager;

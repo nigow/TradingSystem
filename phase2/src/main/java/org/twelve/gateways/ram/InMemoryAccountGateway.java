@@ -3,7 +3,10 @@ package org.twelve.gateways.ram;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.usecases.AccountRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * pseudo-external storage of accounts and gateway
@@ -81,7 +84,7 @@ public class InMemoryAccountGateway implements AccountGateway {
         else{
             StringBuilder wishlistString = new StringBuilder();
             for(int wishlistId: wishlist) wishlistString.append(wishlistId).append(" ");
-            account[2] = wishlistString.toString().substring(0, wishlistString.toString().length() - 1);
+            account[2] = wishlistString.substring(0, wishlistString.toString().length() - 1);
         }
 
 
@@ -91,7 +94,7 @@ public class InMemoryAccountGateway implements AccountGateway {
         else{
             StringBuilder permString = new StringBuilder();
             for(String permission: permissions) permString.append(permission).append(" ");
-            account[3] = permString.toString().substring(0, permString.toString().length() - 1);
+            account[3] = permString.substring(0, permString.toString().length() - 1);
         }
         account[4] = location;
         accounts.put(accountId, account);

@@ -1,11 +1,9 @@
 package org.twelve.usecases;
 
-import java.util.*;
-
-import org.twelve.entities.Account;
 import org.twelve.entities.Item;
-import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ItemsGateway;
+
+import java.util.Collections;
 
 /**
  * Manager for items which edits items in the system.

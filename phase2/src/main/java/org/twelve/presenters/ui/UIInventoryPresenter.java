@@ -5,7 +5,6 @@ import org.twelve.presenters.InventoryPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Presenter for displaying your inventory

@@ -25,6 +25,8 @@ public class LandingController {
     private final SessionManager sessionManager;
     private final ThresholdRepository thresholdRepository;
 
+    private LandingPresenter landingPresenter;
+
     /**
      * Constructor of controller for managing runtime preferences.
      * @param selectedLanguage Current display language.
@@ -51,11 +53,16 @@ public class LandingController {
      * @param landingPresenter An instance of a class that implements {@link org.twelve.presenters.LandingPresenter}.
      */
     public void setLandingPresenter(LandingPresenter landingPresenter) {
+        this.landingPresenter = landingPresenter;
+    }
+
+    public void displaySettings() {
+
         landingPresenter.setDemoMode(demoMode);
         landingPresenter.setAvailableLanguages(availableLanguages);
         landingPresenter.setSelectedLanguage(selectedLanguage);
-    }
 
+    }
 
     // todo: whoever made this should provide its JavaDoc.
     public void createDemoAccount() {

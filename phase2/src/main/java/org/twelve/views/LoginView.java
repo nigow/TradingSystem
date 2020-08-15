@@ -1,15 +1,14 @@
 package org.twelve.views;
 
 import javafx.beans.property.adapter.ReadOnlyJavaBeanStringPropertyBuilder;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.layout.GridPane;
-import org.twelve.controllers.LoginController;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import org.twelve.controllers.LoginController;
 import org.twelve.presenters.LoginPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 

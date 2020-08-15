@@ -2,12 +2,9 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.WarehousePresenter;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**

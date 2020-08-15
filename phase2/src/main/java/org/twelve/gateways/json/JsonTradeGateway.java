@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.TradeGateway;
-import org.twelve.usecases.*;
+import org.twelve.usecases.TradeRepository;
 
 import java.io.*;
 import java.net.HttpURLConnection;

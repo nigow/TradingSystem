@@ -1,9 +1,10 @@
 package org.twelve.usecases;
 
-import org.twelve.entities.*;
+import org.twelve.entities.TimePlace;
+import org.twelve.entities.Trade;
+import org.twelve.entities.TradeStatus;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 

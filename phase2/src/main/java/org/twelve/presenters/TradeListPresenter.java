@@ -1,7 +1,6 @@
 package org.twelve.presenters;
 
 
-import javax.swing.text.html.ListView;
 import java.util.List;
 
 public interface TradeListPresenter {

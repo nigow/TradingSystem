@@ -1,8 +1,6 @@
 package org.twelve.usecases;
 
-import org.twelve.entities.Account;
 import org.twelve.entities.Thresholds;
-import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ThresholdsGateway;
 
 // TODO javadoc

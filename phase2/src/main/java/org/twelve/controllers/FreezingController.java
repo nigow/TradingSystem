@@ -1,14 +1,11 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.FreezingPresenter;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +41,7 @@ public class FreezingController {
      *
      * @param useCasePool       An instance of ManualConfig to get use cases
      */
-    public FreezingController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public FreezingController(UseCasePool useCasePool) {
         statusManager = useCasePool.getStatusManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager  = useCasePool.getSessionManager();

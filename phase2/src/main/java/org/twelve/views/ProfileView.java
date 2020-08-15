@@ -1,7 +1,6 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;

@@ -1,6 +1,5 @@
 package org.twelve.controllers;
 
-
 import org.twelve.presenters.TradeCreatorPresenter;
 import org.twelve.usecases.*;
 

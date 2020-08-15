@@ -1,7 +1,6 @@
 package org.twelve.presenters.ui;
 
 import org.twelve.presenters.AdminWishlistPresenter;
-import org.twelve.presenters.WishlistPresenter;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

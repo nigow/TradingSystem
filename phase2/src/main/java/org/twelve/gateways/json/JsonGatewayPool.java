@@ -1,7 +1,6 @@
 package org.twelve.gateways.json;
 
 import org.twelve.gateways.*;
-import org.twelve.gateways.ThresholdsGateway;
 
 /**
  * Pool of JSON gateways

@@ -1,14 +1,8 @@
 package org.twelve.gateways.ram;
 
-import org.twelve.entities.TimePlace;
-import org.twelve.entities.Trade;
-import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
-import org.twelve.usecases.TradeManager;
 import org.twelve.usecases.TradeRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

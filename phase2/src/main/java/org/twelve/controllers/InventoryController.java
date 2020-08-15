@@ -1,7 +1,5 @@
 package org.twelve.controllers;
 
-import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.InventoryPresenter;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.SessionManager;
@@ -32,8 +30,6 @@ public class InventoryController {
      */
     private final SessionManager sessionManager;
 
-    private final ItemsGateway itemsGateway;
-
     private final UseCasePool useCasePool;
 
     /**
@@ -42,10 +38,9 @@ public class InventoryController {
      *
      * @param useCasePool       the configuration for the program
      */
-    public InventoryController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public InventoryController(UseCasePool useCasePool) {
         this.itemManager = useCasePool.getItemManager();
         this.sessionManager = useCasePool.getSessionManager();
-        this.itemsGateway = gatewayPool.getItemsGateway();
         this.useCasePool = useCasePool;
     }
 

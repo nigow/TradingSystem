@@ -1,6 +1,6 @@
 package org.twelve.entities;
 
-import java.time.*;
+import java.time.LocalDateTime;
 
 /**
  * Represents the time and place of a meetup.

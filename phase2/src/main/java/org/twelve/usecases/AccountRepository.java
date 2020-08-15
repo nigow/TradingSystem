@@ -2,9 +2,7 @@ package org.twelve.usecases;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
-import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.AccountGateway;
-
 
 import java.util.*;
 

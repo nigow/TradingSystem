@@ -1,8 +1,6 @@
 package org.twelve.gateways;
 
-import org.twelve.usecases.TradeManager;
 import org.twelve.usecases.TradeRepository;
-import org.twelve.usecases.TradeUtility;
 
 import java.util.List;
 

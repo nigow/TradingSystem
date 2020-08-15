@@ -1,7 +1,7 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.adapter.*;
+import javafx.beans.property.adapter.ReadOnlyJavaBeanIntegerPropertyBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;

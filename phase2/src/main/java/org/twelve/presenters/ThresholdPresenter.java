@@ -1,9 +1,5 @@
 package org.twelve.presenters;
 
-import org.twelve.entities.Thresholds;
-
-import java.util.List;
-
 /**
  * Interface for managing thresholds.
  *

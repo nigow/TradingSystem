@@ -1,7 +1,5 @@
 package org.twelve.controllers;
 
-import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.WarehousePresenter;
 import org.twelve.usecases.ItemManager;
 import org.twelve.usecases.UseCasePool;
@@ -16,18 +14,15 @@ public class WarehouseController {
 
     private final ItemManager itemManager;
     private WarehousePresenter warehousePresenter;
-    private final ItemsGateway itemsGateway;
     private final UseCasePool useCasePool;
 
     /**
      * Constructor of controller for managing the warehouse.
      * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
-     * @param gatewayPool An instance of {@link org.twelve.gateways.GatewayPool}.
      */
-    public WarehouseController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public WarehouseController(UseCasePool useCasePool) {
 
         itemManager = useCasePool.getItemManager();
-        this.itemsGateway = gatewayPool.getItemsGateway();
         this.useCasePool = useCasePool;
 
 

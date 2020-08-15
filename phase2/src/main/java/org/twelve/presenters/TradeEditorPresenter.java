@@ -3,7 +3,6 @@ package org.twelve.presenters;
 import org.twelve.entities.TradeStatus;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 
 public interface TradeEditorPresenter {

@@ -1,6 +1,8 @@
 package org.twelve.usecases;
 
-import org.twelve.entities.*;
+import org.twelve.entities.TimePlace;
+import org.twelve.entities.Trade;
+import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;

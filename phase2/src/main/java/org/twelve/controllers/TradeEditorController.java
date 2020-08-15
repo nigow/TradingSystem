@@ -1,9 +1,7 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.TradeStatus;
-import org.twelve.gateways.*;
 import org.twelve.presenters.TradeEditorPresenter;
-import org.twelve.presenters.ui.ObservablePresenter;
 import org.twelve.usecases.*;
 
 import java.time.LocalDate;
@@ -21,7 +19,7 @@ public class TradeEditorController {
     private final TradeRepository tradeRepository;
     private final UseCasePool useCasePool;
 
-    public TradeEditorController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public TradeEditorController(UseCasePool useCasePool) {
         tradeManager = useCasePool.getTradeManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager = useCasePool.getSessionManager();

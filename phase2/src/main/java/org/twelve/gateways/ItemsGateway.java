@@ -1,7 +1,6 @@
 package org.twelve.gateways;
 
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.ItemUtility;
 
 /**
  * A gateway for Items that interacts with external storage.

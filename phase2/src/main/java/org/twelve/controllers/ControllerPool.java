@@ -33,20 +33,20 @@ public class ControllerPool {
         }
 
         landingController = new LandingController(selectedLanguage, demoMode, useCasePool);
-        loginController = new LoginController(useCasePool, gatewayPool);
+        loginController = new LoginController(useCasePool);
         registrationController = new RegistrationController(useCasePool);
         menuController = new MenuController(useCasePool);
-        warehouseController = new WarehouseController(useCasePool, gatewayPool);
-        wishlistController = new WishlistController(useCasePool, gatewayPool);
-        profileController = new ProfileController(useCasePool, gatewayPool);
-        inventoryController = new InventoryController(useCasePool, gatewayPool);
-        thresholdController = new ThresholdController(useCasePool, gatewayPool);
-        freezingController = new FreezingController(useCasePool, gatewayPool);
+        warehouseController = new WarehouseController(useCasePool);
+        wishlistController = new WishlistController(useCasePool);
+        profileController = new ProfileController(useCasePool);
+        inventoryController = new InventoryController(useCasePool);
+        thresholdController = new ThresholdController(useCasePool);
+        freezingController = new FreezingController(useCasePool);
         tradeCreatorController = new TradeCreatorController(useCasePool);
-        tradeListController = new TradeListController(useCasePool, gatewayPool);
+        tradeListController = new TradeListController(useCasePool);
         adminWishlistController = new AdminWishlistController(useCasePool);
-        tradeEditorController = new TradeEditorController(useCasePool, gatewayPool);
-        tradeCancellationController = new TradeCancellationController(useCasePool, gatewayPool);
+        tradeEditorController = new TradeEditorController(useCasePool);
+        tradeCancellationController = new TradeCancellationController(useCasePool);
 
     }
 

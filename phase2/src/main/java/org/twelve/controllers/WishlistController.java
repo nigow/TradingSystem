@@ -19,24 +19,18 @@ public class WishlistController {
     private final ItemManager itemManager;
     private WishlistPresenter wishlistPresenter;
     private final AccountRepository accountRepository;
-
-    private final AccountGateway accountGateway;
-    private final ItemsGateway itemsGateway;
     private final UseCasePool useCasePool;
 
     /**
      * Constructor of controller for managing personal wishlist.
      * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
-     * @param gatewayPool An instance of {@link org.twelve.gateways.GatewayPool}.
      */
-    public WishlistController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public WishlistController(UseCasePool useCasePool) {
 
         this.wishlistManager = useCasePool.getWishlistManager();
         this.sessionManager = useCasePool.getSessionManager();
         this.itemManager = useCasePool.getItemManager();
         this.accountRepository = useCasePool.getAccountRepository();
-        this.accountGateway = gatewayPool.getAccountGateway();
-        this.itemsGateway = gatewayPool.getItemsGateway();
         this.useCasePool = useCasePool;
 
     }

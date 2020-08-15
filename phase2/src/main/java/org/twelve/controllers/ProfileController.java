@@ -2,7 +2,6 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
 import org.twelve.entities.Roles;
-import org.twelve.gateways.CitiesGateway;
 import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.usecases.*;
@@ -19,15 +18,13 @@ public class ProfileController {
     private final CityManager cityManager;
     private final TradeManager tradeManager;
     private final InputHandler inputHandler;
-    private final CitiesGateway citiesGateway;
     private final UseCasePool useCasePool;
 
     /**
      * Constructor of controller for managing account settings.
      * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
-     * @param gatewayPool An instance of {@link org.twelve.gateways.GatewayPool}.
      */
-    public ProfileController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public ProfileController(UseCasePool useCasePool) {
 
         statusManager = useCasePool.getStatusManager();
         sessionManager = useCasePool.getSessionManager();
@@ -35,7 +32,6 @@ public class ProfileController {
         tradeManager = useCasePool.getTradeManager();
         cityManager = useCasePool.getCityManager();
         inputHandler = new InputHandler();
-        citiesGateway = gatewayPool.getCitiesGateway();
         this.useCasePool = useCasePool;
 
     }
@@ -96,7 +92,7 @@ public class ProfileController {
      */
     public boolean changeLocation(String newLocation) {
 
-        citiesGateway.populate(cityManager);
+        useCasePool.populateAll();
         if (!cityManager.getAllCities().contains(newLocation)) {
             if (inputHandler.isValidLocation(newLocation)) {
                 cityManager.createCity(newLocation);

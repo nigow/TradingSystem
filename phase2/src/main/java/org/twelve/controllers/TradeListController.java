@@ -1,8 +1,6 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.TradeStatus;
-import org.twelve.gateways.*;
-import org.twelve.presenters.TradeEditorPresenter;
 import org.twelve.presenters.TradeListPresenter;
 import org.twelve.usecases.*;
 
@@ -20,7 +18,7 @@ public class TradeListController {
     private final TradeRepository tradeRepository;
     private final UseCasePool useCasePool;
 
-    public TradeListController(UseCasePool useCasePool, GatewayPool gatewayPool){
+    public TradeListController(UseCasePool useCasePool){
         tradeManager = useCasePool.getTradeManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager = useCasePool.getSessionManager();

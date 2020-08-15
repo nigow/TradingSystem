@@ -1,11 +1,11 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.CitiesGateway;
-import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.RegistrationPresenter;
-import org.twelve.usecases.*;
+import org.twelve.usecases.AccountRepository;
+import org.twelve.usecases.CityManager;
+import org.twelve.usecases.SessionManager;
+import org.twelve.usecases.UseCasePool;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,9 +1,6 @@
 package org.twelve.controllers;
 
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.LoginPresenter;
-import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.LoginManager;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.UseCasePool;
@@ -27,10 +24,6 @@ public class LoginController {
 
     private LoginPresenter loginPresenter;
 
-    private final AccountGateway accountGateway;
-
-    private final AccountRepository accountRepository;
-
     private final UseCasePool useCasePool;
 
     /**
@@ -38,11 +31,9 @@ public class LoginController {
      *
      * @param useCasePool   An instance of UseCasePool to get the necessary use cases
      */
-    public LoginController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public LoginController(UseCasePool useCasePool) {
         sessionManager = useCasePool.getSessionManager();
         loginManager = useCasePool.getLoginManager();
-        accountRepository = useCasePool.getAccountRepository();
-        accountGateway = gatewayPool.getAccountGateway();
         this.useCasePool = useCasePool;
     }
 
