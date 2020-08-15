@@ -98,13 +98,6 @@ public class InMemoryTradeGateway implements TradeGateway {
     public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > itemIds,
                      int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                      String location, boolean newTrade) {
-        /*
-        Trade trade = new Trade(tradeId, isPermanent, traderIds,
-                itemIds, editedCounter, TradeStatus.valueOf(tradeStatus),
-                tradeCompletions);
-        TimePlace timePlace = new TimePlace(tradeId, LocalDateTime.parse(time), location);
-        tradeMap.put(tradeId, trade);
-        timePlaceMap.put(tradeId, timePlace);*/
         String[] trade = new String[6];
         trade[0] = String.valueOf(isPermanent);
         if (traderIds.size() == 0) {
@@ -122,10 +115,6 @@ public class InMemoryTradeGateway implements TradeGateway {
         }
         else {
             StringBuilder itemIdsString = new StringBuilder();
-//            for (int itemId: itemIds) {
-//                itemIdsString.append(itemId).append(" ");
-//                trade[2] = itemIdsString.toString();
-//            }
             for (List<Integer> ids: itemIds) {
                 if (ids.size() != 0) {
                     for (int id : ids) {
