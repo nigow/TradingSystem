@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller to deal with editing trades
+ */
 public class TradeEditorController {
     private TradeEditorPresenter tradeEditorPresenter;
 
@@ -19,6 +22,10 @@ public class TradeEditorController {
     private final TradeRepository tradeRepository;
     private final UseCasePool useCasePool;
 
+    /**
+     * Constructor for the controller to deal with editing trades
+     * @param useCasePool an instance of useCasePool to get all the use cases
+     */
     public TradeEditorController(UseCasePool useCasePool) {
         tradeManager = useCasePool.getTradeManager();
         accountRepository = useCasePool.getAccountRepository();
@@ -27,11 +34,16 @@ public class TradeEditorController {
         tradeRepository = useCasePool.getTradeRepository();
         this.useCasePool = useCasePool;
     }
-
+    /**
+     * Set the presenter for this controller
+     * @param tradeEditorPresenter an instance of a class that implements {@link org.twelve.presenters.TradeEditorPresenter}
+     */
     public void setTradeEditorPresenter(TradeEditorPresenter tradeEditorPresenter) {
         this.tradeEditorPresenter = tradeEditorPresenter;
     }
-
+    /**
+     * Remove the selected trade from the system
+     */
     public void removeSelectedTrade() {
         sessionManager.removeWorkingTrade();
     }
@@ -74,6 +86,9 @@ public class TradeEditorController {
         tradeEditorPresenter.setPeerItems(peerItems);
     }
 
+    /**
+     * Populate the data in the presenter with the correct properties of the given trade
+     */
     public void setTradeProperties() {
         useCasePool.populateAll();
         int tradeID = sessionManager.getWorkingTrade();
@@ -88,11 +103,18 @@ public class TradeEditorController {
         tradeEditorPresenter.setDateChosen(LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth()));
         tradeEditorPresenter.setLocationChosen(tradeRepository.getLocation(tradeID));
     }
-
+    /**
+     * Cancel the trade that is currently being worked on
+     */
     public void cancelTrade() {
         tradeManager.rejectTrade(sessionManager.getWorkingTrade());
     }
 
+    /**
+     * Edit the trade that is corrently being worked on
+     * @param location the new location of the trade
+     * @param dateTime the new dateTime of the trade
+     */
     public void editTrade(String location, LocalDateTime dateTime) {
         int trade = sessionManager.getWorkingTrade();
         tradeManager.editTimePlace(trade, dateTime, location);
@@ -101,10 +123,16 @@ public class TradeEditorController {
         }
     }
 
+    /**
+     * Complete the trade that is current being worked on
+     */
     public void completeTrade() {
         tradeManager.completeTrade(sessionManager.getCurrAccountID(), sessionManager.getWorkingTrade());
     }
 
+    /**
+     * Confirm that the trade being worked on is has happened
+     */
     public void confirmTrade() {
         tradeManager.confirmTrade(sessionManager.getWorkingTrade());
     }
