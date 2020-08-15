@@ -33,7 +33,7 @@ public class UseCasePool {
 
 
     private void initializeUseCases() {
-        securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES"); //TODO: add this as env variable
+        securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES"); //=> env variable
         accountRepository = new AccountRepository(gatewayPool.getAccountGateway(), securityUtility);
         thresholdRepository = new ThresholdRepository(gatewayPool.getThresholdsGateway());
         itemManager = new ItemManager(gatewayPool.getItemsGateway(), accountRepository);

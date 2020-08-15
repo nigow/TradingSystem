@@ -96,7 +96,6 @@ public class JsonCitiesGateway implements CitiesGateway {
     /**
      * {@inheritDoc}
      */
-    //Todo Make error log on the server side
     @Override
     public boolean save(int cityId, String cityName) {
         JsonObject json = new JsonObject();

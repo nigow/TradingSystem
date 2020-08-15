@@ -152,24 +152,6 @@ public class AccountRepository {
     }
 
     /**
-     * Retrieves a formatted string of an account from the given accountID.
-     * @param accountID Unique identifier of account
-     * @return Formatted String of account
-     */
-    public String getAccountStringFromID(int accountID) {
-        return getAccountFromID(accountID).toString();
-    }
-
-    /**
-     * Retrieves the ID of a given account.
-     * @param account Account to get from ID
-     * @return ID associated with the account
-     */
-    public int getAccountID(Account account) {
-        return account.getAccountID();
-    }
-
-    /**
      * Save program changes with an account instance to an account gateway.
      * @param account An account instance that is being changed.
      * @param isNew whether this is a new account or not
