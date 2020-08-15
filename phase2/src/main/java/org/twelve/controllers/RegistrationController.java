@@ -16,14 +16,8 @@ import java.util.List;
  */
 public class RegistrationController {
 
-    /**
-     * An instance of AccountRepository to deal with creating accounts
-     */
     private final AccountRepository accountRepository;
 
-    /**
-     * An instance of SessionManager to deal with the current session
-     */
     private final SessionManager sessionManager;
 
     private RegistrationPresenter registrationPresenter;

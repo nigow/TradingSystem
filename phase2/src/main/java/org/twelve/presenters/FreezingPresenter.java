@@ -10,9 +10,22 @@ import java.util.Map;
  */
 public interface FreezingPresenter {
 
+    /**
+     * Setter for the list of regular accounts
+     * @param regularAccounts the list of regular accounts
+     */
     void setRegularAccounts(List<String> regularAccounts);
+
+    /**
+     * Getter for the list of the regular accounts
+     * @return all regular accounts
+     */
     List<Map<String, String>> getRegularAccounts();
 
+    /**
+     *
+     * @param bannedAccounts
+     */
     void setBannedAccounts(List<String> bannedAccounts);
     List<Map<String, String>> getBannedAccounts();
 

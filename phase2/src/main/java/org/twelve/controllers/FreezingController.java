@@ -17,19 +17,11 @@ import java.util.List;
  * @author Catherine
  */
 public class FreezingController {
-    /**
-     * An instance of StatusManager to get qualifying accounts.
-     */
+
     private final StatusManager statusManager;
 
-    /**
-     * An instance of InputValidator to check if input is valid.
-     */
     private FreezingPresenter freezingPresenter;
 
-    /**
-     * An instance of AccountRepository to check accounts
-     */
     private final AccountRepository accountRepository;
 
     private final SessionManager sessionManager;
@@ -50,7 +42,7 @@ public class FreezingController {
 
     /**
      * Set the presenter for this controller
-     * @param freezingPresenter an instance of FreezingPresenter
+     * @param freezingPresenter an instance of a class that implements {@link org.twelve.presenters.FreezingPresenter}
      */
     public void setFreezingPresenter(FreezingPresenter freezingPresenter) {
         this.freezingPresenter = freezingPresenter;

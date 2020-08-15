@@ -37,7 +37,7 @@ public class TradeListController {
 
     /**
      * Set the presenter for this controller
-     * @param tradeListPresenter an instance of TradeListPresenter
+     * @param tradeListPresenter an instance of a class that implements {@link org.twelve.presenters.TradeListPresenter}
      */
     public void setTradeListPresenter(TradeListPresenter tradeListPresenter) {
         this.tradeListPresenter = tradeListPresenter;

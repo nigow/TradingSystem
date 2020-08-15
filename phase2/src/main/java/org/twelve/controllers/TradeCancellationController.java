@@ -28,7 +28,7 @@ public class TradeCancellationController {
 
     /**
      * Set the presenter for this controller
-     * @param tradeCancellationPresenter an instance of TradeCancellationPresenter
+     * @param tradeCancellationPresenter an instance of a class that implements {@link org.twelve.presenters.TradeCancellationPresenter}
      */
     public void setTradeCancellationPresenter(TradeCancellationPresenter tradeCancellationPresenter) {
         this.tradeCancellationPresenter = tradeCancellationPresenter;

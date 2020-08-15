@@ -37,7 +37,7 @@ public class TradeEditorController {
 
     /**
      * Set the presenter for this controller
-     * @param tradeEditorPresenter an instance of TradeEditorPresenter
+     * @param tradeEditorPresenter an instance of a class that implements {@link org.twelve.presenters.TradeEditorPresenter}
      */
     public void setTradeEditorPresenter(TradeEditorPresenter tradeEditorPresenter) {
         this.tradeEditorPresenter = tradeEditorPresenter;

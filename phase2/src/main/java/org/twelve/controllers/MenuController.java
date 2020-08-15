@@ -27,7 +27,7 @@ public class MenuController {
 
     /**
      * Set the presenter for this controller
-     * @param menuPresenter an instance of MenuPresenter
+     * @param menuPresenter an instance of a class that implements {@link org.twelve.presenters.MenuPresenter}
      */
     public void setMenuPresenter(MenuPresenter menuPresenter) {
         this.menuPresenter = menuPresenter;

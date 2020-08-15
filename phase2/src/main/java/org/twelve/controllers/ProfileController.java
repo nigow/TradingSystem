@@ -22,7 +22,7 @@ public class ProfileController {
 
     /**
      * Constructor of controller for managing account settings.
-     * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
+     * @param useCasePool An instance of a class that implements {@link org.twelve.usecases.UseCasePool}.
      */
     public ProfileController(UseCasePool useCasePool) {
 

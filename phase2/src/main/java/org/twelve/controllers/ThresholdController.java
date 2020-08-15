@@ -13,9 +13,6 @@ import org.twelve.usecases.UseCasePool;
  */
 public class ThresholdController {
 
-    /**
-     * An instance of ThresholdRepository to set new limits
-     */
     private final ThresholdRepository thresholdRepository;
 
     private ThresholdPresenter thresholdPresenter;
@@ -101,7 +98,7 @@ public class ThresholdController {
 
     /**
      * Set the presenter for this controller
-     * @param thresholdPresenter an instance of ThresholdController
+     * @param thresholdPresenter an instance of a class that implements {@link org.twelve.presenters.ThresholdPresenter}
      */
     public void setThresholdPresenter(ThresholdPresenter thresholdPresenter) {
         this.thresholdPresenter = thresholdPresenter;

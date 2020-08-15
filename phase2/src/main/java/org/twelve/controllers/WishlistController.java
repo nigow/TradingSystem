@@ -119,10 +119,7 @@ public class WishlistController {
 
     }
 
-    /**
-     * Change the selected item in WishlistPresenter
-     * @param itemId the id of the given item
-     */
+
     private void changeSelectedItem(int itemId) {
 
         wishlistPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));
