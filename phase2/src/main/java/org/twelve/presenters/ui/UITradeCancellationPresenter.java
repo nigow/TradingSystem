@@ -4,7 +4,6 @@ import org.twelve.presenters.TradeCancellationPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Presenter for the trade cancellation view

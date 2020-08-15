@@ -17,6 +17,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -90,9 +91,6 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
             isPermanent.selectedProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("isPermanent").build());
 
-            confirmButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                    .bean(tradeEditorPresenter).name("canConfirm").build().not());
-
             completeButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canComplete").build().not());
             cancelButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
@@ -108,13 +106,19 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
                     .bean(tradeEditorPresenter).name("canEdit").build().not());
 
             //The "Hour" Spinner
-            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, tradeEditorPresenter.getHourChosen()),
-                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("hourChosen").build()));
+            ReadOnlyJavaBeanIntegerProperty hourChosenBinding =
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("hourChosen").build();
+
+            hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, hourChosenBinding.get()), hourChosenBinding));
             //=================
 
             //The "Minute" Spinner
-            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() -> new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, tradeEditorPresenter.getMinuteChosen()),
-                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("minuteChosen").build()));
+            ReadOnlyJavaBeanIntegerProperty minuteChosenBinding =
+                    ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("minuteChosen").build();
+
+            minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, minuteChosenBinding.get()), minuteChosenBinding));
             //=================
 
             locationBox.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
@@ -125,8 +129,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
             dateChosenBinding.addListener((observable, oldValue, newValue) -> dateBox.setValue(newValue));
 
             BooleanBinding isValidTimeLocation = Bindings.createBooleanBinding(() -> {
-                if (dateBox.getValue() == null || locationBox.getText() == null)
-                    return false;
+                if (dateBox.getValue() == null) return false;
                 LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
                 LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
                 return dateTime.isAfter(LocalDateTime.now());
@@ -134,6 +137,20 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 
             editButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canEdit").build().and(isValidTimeLocation).not());
+
+            BooleanBinding edited = Bindings.createBooleanBinding(() -> {
+
+                boolean locationEdited = !Arrays.asList("", locationBox.getPromptText()).contains(locationBox.getText());
+                boolean dateBoxEdited = !dateChosenBinding.get().equals(dateBox.getValue());
+                boolean hourChosenEdited = !hourChosen.getValue().equals(hourChosenBinding.get());
+                boolean minuteChosenEdited = !minuteChosen.getValue().equals(minuteChosenBinding.get());
+
+                return locationEdited || dateBoxEdited || hourChosenEdited || minuteChosenEdited;
+
+            }, locationBox.textProperty(), dateBox.valueProperty(), hourChosen.valueProperty(), minuteChosen.valueProperty());
+
+            confirmButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
+                    .bean(tradeEditorPresenter).name("canConfirm").build().not().or(edited));
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -143,6 +160,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @Override
     public void reload() {
         tradeEditorController.setTradeProperties();
+        locationBox.clear();
     }
 
     @Override
@@ -166,8 +184,8 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     private void editClicked() {
         LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
         LocalDateTime dateTime = LocalDateTime.of(dateBox.getValue(), time);
-        tradeEditorController.editTrade(locationBox.getText(), dateTime);
-        tradeEditorController.setTradeProperties();
+        tradeEditorController.editTrade(locationBox.getText().isBlank() ? locationBox.getPromptText() : locationBox.getText(), dateTime);
+        reload();
     }
 
     @FXML

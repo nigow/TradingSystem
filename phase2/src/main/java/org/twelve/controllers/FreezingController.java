@@ -175,9 +175,9 @@ public class FreezingController {
                 case TRUSTED:
                     trustedAccounts.add(username);
                     break;
-                // there's like no point in displaying these
+                // there's like no point in displaying this
                 case VACATION:
-
+                    break;
             }
 
         }

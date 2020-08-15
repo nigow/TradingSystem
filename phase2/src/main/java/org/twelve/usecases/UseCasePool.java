@@ -19,6 +19,7 @@ public class UseCasePool {
     private LoginManager loginManager;
     private SessionManager sessionManager;
     private GatewayPool gatewayPool;
+    private SecurityUtility securityUtility;
 
     /**
      * Creates all the required use cases for the program.
@@ -32,7 +33,7 @@ public class UseCasePool {
 
 
     private void initializeUseCases() {
-        SecurityUtility securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES"); //=> env variable
+        securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES"); //=> env variable
         accountRepository = new AccountRepository(gatewayPool.getAccountGateway(), securityUtility);
         thresholdRepository = new ThresholdRepository(gatewayPool.getThresholdsGateway());
         itemManager = new ItemManager(gatewayPool.getItemsGateway(), accountRepository);
@@ -150,5 +151,4 @@ public class UseCasePool {
         gatewayPool.getThresholdsGateway().populate(thresholdRepository);
         gatewayPool.getTradeGateway().populate(tradeManager);
     }
-
 }

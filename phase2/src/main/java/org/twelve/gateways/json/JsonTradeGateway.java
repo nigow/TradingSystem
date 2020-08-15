@@ -99,26 +99,6 @@ public class JsonTradeGateway implements TradeGateway {
 
                             }
 
-                            /*
-                            if(itemIdArray.length == 1){
-                                List<Integer> temp = new ArrayList<>();
-                                temp.add(Integer.parseInt(itemIdArray[0]));
-                                List<Integer> newTemp = new ArrayList<>();
-                                allItemIds.add(temp);
-                                allItemIds.add(newTemp);
-                            }
-                            else{
-                                for(String outerString: itemIdArray){
-                                    List<String> temp = Arrays.asList(outerString.split(" "));
-                                    List<Integer> integerList = new ArrayList<>();
-                                    for(String number: temp){
-                                        integerList.add(Integer.parseInt(number));
-                                    }
-                                    allItemIds.add(integerList);
-                                }
-                            }
-                            */
-
                             String tradeStatus = json.get("trade_status").getAsString();
                             int editCounter = json.get("edit_counter").getAsInt();
                             List<Boolean> tradeCompletions = new ArrayList<>();
@@ -180,20 +160,6 @@ public class JsonTradeGateway implements TradeGateway {
 
         }
 
-        /*
-        String itemIdsString = "";
-        for(List<Integer> outerList: allItemIds){
-            for(int innerInt: outerList){
-                itemIdsString += innerInt + " ";
-            }
-            if(itemIdsString.length() > 0){
-                itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1) + "!";
-            }
-        }
-
-        itemIdsString = itemIdsString.substring(0, itemIdsString.length() - 1);
-
-         */
         StringBuilder tradeCompletionsString = new StringBuilder();
         for(Boolean b: tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
         JsonObject json = new JsonObject();
