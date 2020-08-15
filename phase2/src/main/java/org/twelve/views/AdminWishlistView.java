@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * View for admin's wishlist.
+ * View for admins to manage everyone's wishlist.
  * @param <T> Presenter.
  */
 public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPresenter> implements SceneView, Initializable {
@@ -45,7 +45,7 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
     private Label itemDescription;
 
     /**
-     * Constructor of view for managing wishlist.
+     * Constructor of view for managing everyone's wishlist.
      * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
      * @param adminWishlistController Controller for managing wishlist.
      * @param adminWishlistPresenter Presenter for displaying wishlist.
