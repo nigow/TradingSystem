@@ -12,12 +12,15 @@ import java.util.List;
  * @author Tairi, Andrew
  */
 public class WishlistManager {
+    
     private AccountRepository accountRepository;
     private ItemUtility itemUtility;
 
     /**
-     * Constructor for WishlistUtility.
+     * Constructor for WishlistManager.
      *
+     * @param accountRepository the repository for storing accounts
+     * @param itemUtility utility class for items
      */
     public WishlistManager(AccountRepository accountRepository, ItemUtility itemUtility) {
         this.accountRepository = accountRepository;

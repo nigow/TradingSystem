@@ -15,7 +15,7 @@ public class LoginManager {
     /**
      * Constructor to set up required use cases
      *
-     * @param accountRepository an repository dealing with accounts
+     * @param accountRepository a repository dealing with accounts
      * @param securityUtility use case dealt with encryption
      */
     public LoginManager(AccountRepository accountRepository, SecurityUtility securityUtility){
