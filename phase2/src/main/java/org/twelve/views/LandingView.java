@@ -1,9 +1,7 @@
 package org.twelve.views;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.adapter.JavaBeanBooleanPropertyBuilder;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectProperty;
-import javafx.beans.property.adapter.ReadOnlyJavaBeanObjectPropertyBuilder;
+import javafx.beans.property.adapter.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -84,8 +82,11 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
         return graphic;
     }
 
-    @SuppressWarnings("FieldCanBeLocal") // have to be global to prevent garbage collection while in use
+    // have to be global to prevent garbage collection while in use
+    @SuppressWarnings("FieldCanBeLocal")
     private ReadOnlyJavaBeanObjectProperty<Locale> selectedLanguageBinding;
+    @SuppressWarnings("FieldCanBeLocal")
+    private JavaBeanBooleanProperty demoModeBinding;
 
     /**
      * {@inheritDoc}
@@ -104,8 +105,8 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
             selectedLanguageBinding = ReadOnlyJavaBeanObjectPropertyBuilder.<Locale>create().bean(landingPresenter).name("selectedLanguage").build();
             selectedLanguageBinding.addListener((observable, oldValue, newValue) -> languages.getSelectionModel().select(newValue));
 
-            demoMode.selectedProperty().bindBidirectional(JavaBeanBooleanPropertyBuilder.create()
-                    .bean(landingPresenter).name("demoMode").build());
+            demoModeBinding = JavaBeanBooleanPropertyBuilder.create().bean(landingPresenter).name("demoMode").build();
+            demoMode.selectedProperty().bindBidirectional(demoModeBinding);
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
