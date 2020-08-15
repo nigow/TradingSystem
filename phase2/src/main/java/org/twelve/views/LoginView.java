@@ -53,6 +53,9 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
         this.loginController.setLoginPresenter(this.loginPresenter);
     }
 
+    /**
+     * Lets user know if their log in attempt was successful.
+     */
     @FXML
     private void loginAttempted() {
 
@@ -62,6 +65,9 @@ public class LoginView<T extends ObservablePresenter & LoginPresenter> implement
 
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
 

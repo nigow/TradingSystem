@@ -177,6 +177,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
 
@@ -184,6 +187,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     }
 
+    /**
+     * Add selected item with the name and description to the inventory.
+     */
     @FXML
     private void addItemClicked() {
 
@@ -193,6 +199,9 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     }
 
+    /**
+     * Removes selected item from inventory.
+     */
     @FXML
     private void removeItemClicked() {
 

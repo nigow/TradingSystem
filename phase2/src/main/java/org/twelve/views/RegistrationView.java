@@ -73,6 +73,9 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
     }
 
+    /**
+     * Attempts to make a new account with given information.
+     */
     @FXML
     private void registerClicked() {
 
@@ -85,6 +88,9 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
     }
 
+    /**
+     * Brings user back to the menu if logged in and back to landing otherwise.
+     */
     @FXML
     private void backClicked() {
 

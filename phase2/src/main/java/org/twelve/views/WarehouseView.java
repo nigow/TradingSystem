@@ -90,6 +90,9 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
         return graphic;
     }
 
+    /**
+     * Approves selected item.
+     */
     @FXML
     private void approveClicked() {
 
@@ -97,6 +100,9 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
     }
 
+    /**
+     * Deny (dissaprove) of selected item.
+     */
     @FXML
     private void denyClicked() {
 
@@ -104,6 +110,9 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
 

@@ -120,11 +120,17 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
         removeButton.disableProperty().bind(wishlistOfUser.getSelectionModel().selectedItemProperty().isNull());
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    /**
+     * Removes selected item from the wishlist.
+     */
     @FXML
     private void removeClicked() {
         adminWishlistController.removeFromWishlist(allUsers.getSelectionModel().getSelectedItem(), wishlistOfUser.getSelectionModel().getSelectedIndex());

@@ -119,22 +119,34 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
         return graphic;
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    /**
+     * Brings user to scene with information of the selected trade.
+     */
     @FXML
     private void selectClicked() {
         tradeListController.setSelectedTrade(tradeStatusBox.getSelectionModel().getSelectedIndex(), tradesList.getSelectionModel().getSelectedIndex());
         windowHandler.changeScene(Scenes.TRADE_EDITOR);
     }
 
+    /**
+     * Displays trades with chosen status.
+     */
     @FXML
     private void tradeStatusSwitch() {
         tradeListController.updateTradeList(tradeStatusBox.getSelectionModel().getSelectedIndex());
     }
 
+    /**
+     * Displays statistics of trades.
+     */
     @FXML
     private void statsSwitch() {
         tradeListController.updateStatsList(statsBox.getSelectionModel().getSelectedIndex());

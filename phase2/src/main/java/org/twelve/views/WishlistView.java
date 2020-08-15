@@ -73,6 +73,9 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
         this.wishlistController.setWishlistPresenter(this.wishlistPresenter);
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
@@ -155,6 +158,9 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
     }
 
+    /**
+     * Adds selected item to wishlist.
+     */
     @FXML
     private void addToWishlistClicked() {
 
@@ -162,6 +168,9 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
     }
 
+    /**
+     * Removes selected item from wishlist.
+     */
     @FXML
     private void removeFromWishlistClicked() {
 

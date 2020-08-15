@@ -216,16 +216,25 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    /**
+     * Changes information to match list of chosen trading peer.
+     */
     @FXML
     private void peerSwitch() {
         tradeCreatorController.updateLists(peerBox.getSelectionModel().getSelectedItem());
     }
 
+    /**
+     * User wants to make a two-way trade.
+     */
     @FXML
     private void clickTwoWay() {
         if (!twoWay.isSelected()) {
@@ -233,6 +242,9 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
         }
     }
 
+    /**
+     * User creates trade with given information.
+     */
     @FXML
     private void saveClicked() {
         LocalDateTime time = LocalDateTime.of(dateBox.getValue(), LocalTime.of(hourChosen.getValue(), minuteChosen.getValue()));

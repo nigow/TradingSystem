@@ -54,6 +54,9 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
     }
 
+    /**
+     * Lets user log in.
+     */
     @FXML
     private void loginClicked() {
 
@@ -61,6 +64,9 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
     }
 
+    /**
+     * Lets user register with a new account.
+     */
     @FXML
     private void registerClicked() {
 
@@ -142,6 +148,9 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
         demoLogin.disableProperty().bind(demoMode.selectedProperty().not());
     }
 
+    /**
+     * Changes text to selected language.
+     */
     @FXML
     private void languageChanged() {
 
@@ -149,6 +158,9 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
     }
 
+    /**
+     * Changes program into demo mode.
+     */
     @FXML
     private void demoModeChanged() {
 
@@ -156,6 +168,9 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
     }
 
+    /**
+     * Changes program into demo mode in a speciied account.
+     */
     @FXML
     public void demoLoginClicked() {
         landingController.createDemoAccount();

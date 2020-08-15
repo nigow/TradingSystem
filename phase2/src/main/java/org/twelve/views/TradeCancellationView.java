@@ -90,11 +90,17 @@ public class TradeCancellationView<T extends ObservablePresenter & TradeCancella
         return graphic;
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    /**
+     * Cancels selected trade.
+     */
     @FXML
     private void cancelClicked() {
         tradeCancellationController.cancelTrade(allTrades.getSelectionModel().getSelectedIndex());

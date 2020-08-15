@@ -26,7 +26,6 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing accounts.
- *
  * @param <T> Presenter.
  */
 public class AccountsView<T extends ObservablePresenter & FreezingPresenter> implements SceneView, Initializable {
@@ -73,9 +72,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     /**
      * Constructor of view for managing accounts.
      *
-     * @param windowHandler      An instance of {@link org.twelve.views.WindowHandler}.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
      * @param freezingController Controller for managing accounts.
-     * @param freezingPresenter  Presenter for displaying existing accounts.
+     * @param freezingPresenter Presenter for displaying existing accounts.
      */
     public AccountsView(WindowHandler windowHandler, FreezingController freezingController, T freezingPresenter) {
         this.windowHandler = windowHandler;
@@ -101,6 +100,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         return graphic;
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
@@ -167,6 +169,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         userSelected();
     }
 
+    /**
+     * Selected user becomes trusted.
+     */
     @FXML
     private void trustClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -174,6 +179,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.trust(trusted);
     }
 
+    /**
+     * Selected user gets banned.
+     */
     @FXML
     private void banClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -181,6 +189,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.ban(trusted);
     }
 
+    /**
+     * Selected user gets untrusted.
+     */
     @FXML
     private void untrustClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -188,6 +199,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.untrustAccount(trusted);
     }
 
+    /**
+     * Selected user becomes a mod.
+     */
     @FXML
     private void modClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -195,6 +209,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.modAccount(trusted);
     }
 
+    /**
+     * Selected user loses mod responsibilities.
+     */
     @FXML
     private void unmodClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -202,6 +219,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.unmodAccount(trusted);
     }
 
+    /**
+     * Selected user gets frozen.
+     */
     @FXML
     private void freezeClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -209,6 +229,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.freeze(trusted);
     }
 
+    /**
+     * Selected user gets unfrozen.
+     */
     @FXML
     private void unfreezeClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -216,6 +239,9 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.unfreeze(trusted);
     }
 
+    /**
+     * Selected user gets unbanned.
+     */
     @FXML
     private void unbanClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
@@ -223,12 +249,15 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         freezingController.unban(trusted);
     }
 
+    /**
+     * Lets user know what actions can be done to a selected account.
+     */
     private void userSelected() {
         ReadOnlyObjectProperty<Map<String, String>> selectedProp = accountsTable.getSelectionModel().selectedItemProperty();
 
         modButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !(freezingPresenter.getRegularAccounts().contains(selectedProp.get()) ||
-                        freezingPresenter.getTrustedAccounts().contains(selectedProp.get())), selectedProp));
+                freezingPresenter.getTrustedAccounts().contains(selectedProp.get())), selectedProp));
 
         unmodButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getModAccounts().contains(selectedProp.get()), selectedProp));

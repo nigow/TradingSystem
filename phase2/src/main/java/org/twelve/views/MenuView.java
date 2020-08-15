@@ -86,6 +86,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
         }
     }
 
+    /**
+     * Logs user out from their account.
+     */
     @FXML
     private void logoutClicked() {
 
@@ -94,6 +97,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     }
 
+    /**
+     * Brings user to scene that lets them manage pending items.
+     */
     @FXML
     private void approveItemsClicked() {
 
@@ -101,6 +107,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     }
 
+    /**
+     * Brings user to scene that lets them view and change thresholds.
+     */
     @FXML
     private void modifyThresholdsClicked() {
 
@@ -108,6 +117,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     }
 
+    /**
+     * Brings user to scene that lets them make a new trade.
+     */
     @FXML
     private void initiateTradeClicked() {
 
@@ -115,6 +127,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     }
 
+    /**
+     * Brings user to scene that lets them make a new admin account.
+     */
     @FXML
     private void addAdminClicked() {
 
@@ -138,6 +153,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
         return graphic;
     }
 
+    /**
+     * Brings user to a scene letting them manage their wishlist.
+     */
     @FXML
     private void manageWishlistClicked() {
 
@@ -145,6 +163,9 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     }
 
+    /**
+     * Brings user to a scene that lets them manage their inventory.
+     */
     @FXML
     private void manageInventoryClicked() {
 
@@ -152,29 +173,44 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     }
 
+    /**
+     * Brings user to a scene that lets them modify responsibilities of accounts.
+     */
     public void manageAccountsClicked() {
 
         windowHandler.changeScene(Scenes.ACCOUNTS);
 
     }
 
+    /**
+     * Brings user to a scene that lets them manage their account settings.
+     */
     @FXML
     private void accountSettingsClicked() {
 
         windowHandler.changeScene(Scenes.PROFILE);
     }
 
+    /**
+     * Brings user to a scene that lets them manage trades they're involved in.
+     */
     @FXML
     private void manageExistingTradesClicked() {
 
         windowHandler.changeScene(Scenes.TRADE_LIST);
     }
 
+    /**
+     * Brings user to a scene reserved to admins that lets them manage others wishlists.
+     */
     @FXML
     private void adminWishlistClicked() {
         windowHandler.changeScene(Scenes.ADMIN_WISHLIST);
     }
 
+    /**
+     * Brings user to a scene that lets them cancel trades.
+     */
     @FXML
     private void cancelTradesClicked() {
         windowHandler.changeScene(Scenes.TRADE_CANCELLATION);

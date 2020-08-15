@@ -189,18 +189,27 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         return graphic;
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         tradeEditorController.removeSelectedTrade();
         windowHandler.changeScene(Scenes.TRADE_LIST);
     }
 
+    /**
+     * Cancels selected trade.
+     */
     @FXML
     private void cancelClicked() {
         tradeEditorController.cancelTrade();
         tradeEditorController.setTradeProperties();
     }
 
+    /**
+     * Edits selected trade with given information.
+     */
     @FXML
     private void editClicked() {
         LocalTime time = LocalTime.of(hourChosen.getValue(), minuteChosen.getValue());
@@ -209,12 +218,18 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         reload();
     }
 
+    /**
+     * Lets user confirm that the trade has been completed.
+     */
     @FXML
     private void completeClicked() {
         tradeEditorController.completeTrade();
         tradeEditorController.setTradeProperties();
     }
 
+    /**
+     * Lets user confirm that the trade information.
+     */
     @FXML
     private void confirmClicked() {
         tradeEditorController.confirmTrade();

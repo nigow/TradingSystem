@@ -86,11 +86,17 @@ public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> 
         return graphic;
     }
 
+    /**
+     * Brings user back to the menu.
+     */
     @FXML
     private void backClicked() {
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    /**
+     * Updates thresholds with new values in the spinner.
+     */
     @FXML
     private void saveClicked() {
         thresholdController.lendMoreThanBorrow(lendVsBorrow.getValue());

@@ -52,10 +52,9 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
     /**
      * Constructor of view for managing personal account.
-     *
-     * @param windowHandler     An instance of {@link org.twelve.views.WindowHandler}.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
      * @param profileController Controller for managing account settings.
-     * @param profilePresenter  Presenter for displaying account status and current settings.
+     * @param profilePresenter Presenter for displaying account status and current settings.
      */
     public ProfileView(WindowHandler windowHandler, ProfileController profileController, T profilePresenter) {
         this.windowHandler = windowHandler;
@@ -133,14 +132,16 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
             locationBox.itemsProperty().bind(citiesBinding);
 
-        } catch (NoSuchMethodException ignored) {
-        }
+        } catch (NoSuchMethodException ignored) {}
 
         updatePasswordBtn.disableProperty().bind(Bindings.createBooleanBinding(() ->
-                        oldPassword.getText().isBlank() || newPassword.getText().isBlank(),
+                oldPassword.getText().isBlank() || newPassword.getText().isBlank(),
                 oldPassword.textProperty(), newPassword.textProperty()));
     }
 
+    /**
+     * User clicks button that changes their status to "on vacation".
+     */
     @FXML
     private void onVacationClicked() {
 
@@ -148,6 +149,9 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
     }
 
+    /**
+     * Updates password if input is valid.
+     */
     @FXML
     private void updatePasswordClicked() {
         if (profileController.changePassword(oldPassword.getText(), newPassword.getText())) {
@@ -156,11 +160,17 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         }
     }
 
+    /**
+     * Lets a frozen account request to be unfrozen.
+     */
     @FXML
     private void requestUnfreezeClicked() {
         profileController.requestUnfreeze();
     }
 
+    /**
+     * Lets a user update their location.
+     */
     @FXML
     private void updateLocationClicked() {
         if (profileController.changeLocation(locationBox.getEditor().getText())) {
@@ -168,6 +178,9 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         }
     }
 
+    /**
+     * Lets a user that meets requirements become trusted.
+     */
     @FXML
     public void becomeTrustedClicked() {
         profileController.becomeTrusted();
