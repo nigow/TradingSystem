@@ -21,7 +21,7 @@ public class CityManager {
      * @param citiesGateway the gateway dealing with cities
      * @param accountRepository the repository for storing all accounts in the system
      */
-    public CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository){
+    CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository){
         this.cities = new HashMap<>();
         this.citiesGateway = citiesGateway;
         this.accountRepository = accountRepository;
@@ -62,7 +62,8 @@ public class CityManager {
     }
 
     /**
-     * Change the location of an account.
+     * Change the location of an account. If the city does not exist
+     * in the system, create a new city.
      *
      * @param accountID An account id
      * @param newCity The new city of the account
