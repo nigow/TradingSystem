@@ -19,6 +19,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing the trade and stats.
+ * @param <T> Presenter.
+ */
 public class TradeListView<T extends ObservablePresenter & TradeListPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -39,6 +43,12 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
     @FXML
     private Button selectButton;
 
+    /**
+     * Constructor of view for managing the trade and stats.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param tradeCollectionPresenter Presenter for managing trade and stats.
+     * @param tradeListController Controller for displaying trade and stats.
+     */
     public TradeListView(WindowHandler windowHandler, TradeListController tradeListController, T tradeCollectionPresenter) {
         this.windowHandler = windowHandler;
         this.tradeListController = tradeListController;
@@ -47,6 +57,9 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -81,6 +94,9 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
         selectButton.disableProperty().bind(tradesList.getSelectionModel().selectedItemProperty().isNull());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         tradeStatusBox.getSelectionModel().select(0);
@@ -91,6 +107,9 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
         statsList.getSelectionModel().clearSelection();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
