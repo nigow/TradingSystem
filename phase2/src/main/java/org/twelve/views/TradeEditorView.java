@@ -21,6 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for managing editing trades.
+ * @param <T> Presenter.
+ */
 public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
@@ -56,6 +60,12 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @FXML
     private Label peerUsername;
 
+    /**
+     * Constructor of view for managing trade edits.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param tradeEditorController Controller for managing trade edits.
+     * @param tradeEditorPresenter Presenter for displaying trade edits.
+     */
     public TradeEditorView(WindowHandler windowHandler, TradeEditorController tradeEditorController, T tradeEditorPresenter) {
         this.windowHandler = windowHandler;
         this.tradeEditorController = tradeEditorController;
@@ -66,6 +76,9 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
     @SuppressWarnings("FieldCanBeLocal") // have to be global to prevent garbage collection while in use
     private ReadOnlyJavaBeanObjectProperty<LocalDate> dateChosenBinding;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -157,12 +170,18 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         tradeEditorController.setTradeProperties();
         locationBox.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
