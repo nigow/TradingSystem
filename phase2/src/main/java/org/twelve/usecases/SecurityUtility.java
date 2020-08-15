@@ -57,23 +57,4 @@ public class SecurityUtility {
         }
         return encryptedString;
     }
-
-    /**
-     * Decrypt Base64 encrypted password
-     *
-     * @param password encrypted text in Base64
-     * @return initial raw representation of text in a String representation
-     */
-    public String decrypt(String password){
-        String decryptedString = "";
-        try{
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decryptedByte = cipher.doFinal(Base64.getDecoder().decode(password.getBytes()));
-            decryptedString = new String(decryptedByte);
-        } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException e) {
-            e.printStackTrace();
-        }
-        return decryptedString;
-    }
-
 }
