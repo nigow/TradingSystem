@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a one-way or two-way transaction between two users.
+ * Represents a trade between users.
  *
  * @author Maryam
  */
@@ -14,6 +14,7 @@ public class Trade {
     private final boolean isPermanent;
     // Accounts are ordered by Account id, Account2 id, etc.
     private final List<Integer> tradersIds;
+    // Items are order by a list of trader 1 items, list of trader 2 items, etc
     private final List< List<Integer> >itemsIds;
     private TradeStatus tradeStatus;
     private int editedCounter;
@@ -162,8 +163,8 @@ public class Trade {
 
     /**
      * Mark that an account confirmed completion of a trade, and if all
-     * accounts marked completion
-     * @param accountID An if reference to an account confirming completion.
+     * accounts marked completion, mark the trade as COMPLETED.
+     * @param accountID An id reference to the account confirming trade completion.
      */
     public void setCompletedOfTrader(int accountID) {
         int index = tradersIds.indexOf(accountID);
