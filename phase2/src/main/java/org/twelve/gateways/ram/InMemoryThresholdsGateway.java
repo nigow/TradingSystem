@@ -8,7 +8,6 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
     /**
      * pseudo-external storage of thresholds
      */
-    //private final Thresholds thresholds;
     private int lendMoreThanBorrow;
     private int maxIncompleteTrade;
     private int maxWeeklyTrade;
@@ -18,13 +17,6 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
     private int tradesForTrusted;
 
 
-//    /**
-//     * Initialize the gateway
-//     * @param thresholds thresholds to define
-//     */
-//    public InMemoryThresholdsGateway(Thresholds thresholds) {
-//        this.thresholds = thresholds;
-//    }
     /**
      * Initialize pseudo-external storage of thresholds
      *
@@ -55,9 +47,6 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
     public boolean populate(ThresholdRepository thresholdRepository) {
         thresholdRepository.createThresholds(lendMoreThanBorrow, maxIncompleteTrade, maxWeeklyTrade, numberOfDays,
                 numberOfEdits, numberOfStats, tradesForTrusted);
-//        thresholdRepository.createThresholds(thresholds.getLendMoreThanBorrow(), thresholds.getMaxIncompleteTrade(),
-//                thresholds.getLendMoreThanBorrow(), thresholds.getNumberOfDays(), thresholds.getNumberOfEdits(),
-//                thresholds.getNumberOfStats(), thresholds.getRequiredTradesForTrusted());
         return true;
     }
 
@@ -65,14 +54,8 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
      * {@inheritDoc}
      */
     @Override
-    public boolean save(int lendMoreThanBorrowNew, int maxIncompleteTradeNew, int maxWeeklyTradeNew, int numberOfDaysNew, int numberOfEditsNew, int numberOfStatsNew, int tradesForTrustedNew) {
-//        thresholds.setLendMoreThanBorrow(lendMoreThanBorrow);
-//        thresholds.setMaxIncompleteTrade(maxIncompleteTrade);
-//        thresholds.setMaxWeeklyTrade(maxWeeklyTrade);
-//        thresholds.setNumberOfDays(numberOfDays);
-//        thresholds.setNumberOfEdits(numberOfEdits);
-//        thresholds.setNumberOfStats(numberOfStats);
-//        thresholds.setRequiredTradesForTrusted(requiredTradesForTrusted);
+    public boolean save(int lendMoreThanBorrowNew, int maxIncompleteTradeNew, int maxWeeklyTradeNew,
+                        int numberOfDaysNew, int numberOfEditsNew, int numberOfStatsNew, int tradesForTrustedNew) {
         lendMoreThanBorrow = lendMoreThanBorrowNew;
         maxIncompleteTrade = maxIncompleteTradeNew;
         maxWeeklyTrade = maxIncompleteTradeNew;
