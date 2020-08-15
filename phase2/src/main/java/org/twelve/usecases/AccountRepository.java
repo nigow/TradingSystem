@@ -11,26 +11,16 @@ import java.util.*;
  */
 public class AccountRepository {
 
-    /**
-     * Map storing all accountIds mapping to their respective account objects.
-     */
     private final Map<Integer, Account> accounts;
-
-    /**
-     * A gateway for Accounts that interacts with external storage.
-     */
     private AccountGateway accountGateway;
-
-    /**
-     * A utility class for dealing with encryption and decryption.
-     */
-    private SecurityUtility securityUtility;
+    private final SecurityUtility securityUtility;
 
 
     /**
      * Initializes an account repository with a certain gateway.
-     * @param accountGateway An instance of an account gateway.
-     * @param securityUtility An instance of a securityUtility class.
+     *
+     * @param accountGateway An instance of an account gateway
+     * @param securityUtility An instance of a securityUtility class
      */
     public AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
         this.accountGateway = accountGateway;
@@ -41,17 +31,19 @@ public class AccountRepository {
 
     /**
      * Switches the gateway to an demo version.
+     *
      * @param accountGateway A new instance of accountGateway
      */
     void switchToDemoMode(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
         for (Account account : accounts.values()) {
-            updateCreateAccount(account);
+            updateToAccountGateway(account, true);
         }
     }
 
     /**
      * Switches the gateway to a normal version.
+     *
      * @param accountGateway A new instance of accountGateway
      */
     void switchToNormalMode(AccountGateway accountGateway) {
@@ -62,6 +54,7 @@ public class AccountRepository {
 
     /**
      * Creates a new account using username and password if username is not already taken.
+     *
      * @param username Username of the new account
      * @param password Password of the new account
      * @param perms List of permissions for the new account
@@ -74,7 +67,7 @@ public class AccountRepository {
             int accountID = (accounts.isEmpty() ? 1 : Collections.max(accounts.keySet()) + 1);
             Account newAccount = new Account(username, securityUtility.encrypt(password), permsToAdd, accountID, location);
             accounts.put(accountID, newAccount);
-            updateCreateAccount(newAccount);
+            updateToAccountGateway(newAccount, true);
             return true;
         }
         return false;
@@ -159,49 +152,17 @@ public class AccountRepository {
     }
 
     /**
-     * Retrieves a formatted string of an account from the given accountID.
-     * @param accountID Unique identifier of account
-     * @return Formatted String of account
-     */
-    public String getAccountStringFromID(int accountID) {
-        return getAccountFromID(accountID).toString();
-    }
-
-    /**
-     * Retrieves the ID of a given account.
-     * @param account Account to get from ID
-     * @return ID associated with the account
-     */
-    public int getAccountID(Account account) {
-        return account.getAccountID();
-    }
-
-    // TODO merge these two methods  --maryam
-
-    /**
      * Save program changes with an account instance to an account gateway.
      * @param account An account instance that is being changed.
+     * @param isNew whether this is a new account or not
      */
-    void updateToAccountGateway(Account account){
+    void updateToAccountGateway(Account account, boolean isNew){
         List<String> permsAsStrings = new ArrayList<>();
         for (Permissions perms: account.getPermissions()){
             permsAsStrings.add(perms.name());
         }
         accountGateway.save(account.getAccountID(), account.getUsername(),
-                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), false);
-    }
-
-    /**
-     * Update an account in accountGateway. Used for both new accounts/updated accounts.
-     * @param account An account to update.
-     */
-    void updateCreateAccount(Account account){
-        List<String> permsAsStrings = new ArrayList<>();
-        for (Permissions perms: account.getPermissions()){
-            permsAsStrings.add(perms.name());
-        }
-        accountGateway.save(account.getAccountID(), account.getUsername(),
-                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), true);
+                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), isNew);
     }
 
     /**

@@ -11,7 +11,7 @@ public abstract class ObservablePresenter {
     /**
      * Observability support module used to fire events.
      */
-    protected PropertyChangeSupport propertyChangeSupport;
+    protected final PropertyChangeSupport propertyChangeSupport;
 
     /**
      * Constructor for abstract class that enables observability.

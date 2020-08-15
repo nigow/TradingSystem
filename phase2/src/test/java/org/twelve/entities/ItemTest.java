@@ -2,8 +2,6 @@ package org.twelve.entities;
 
 import junit.framework.TestCase;
 
-import java.util.ArrayList;
-
 public class ItemTest extends TestCase{
 
     public void testCreate() {

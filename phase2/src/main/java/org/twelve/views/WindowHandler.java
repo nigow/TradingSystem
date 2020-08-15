@@ -74,7 +74,7 @@ public class WindowHandler extends Application {
                 loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
-                System.exit(-1); // don't let ppl run the program if views can't be found
+                System.exit(-1); // don't let the program run if views can't be found
             }
 
             views.put(scene, loader.getController());

@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 public class UIMenuPresenter extends ObservablePresenter implements MenuPresenter {
 
     private boolean initiateTrade;
-    private boolean modifyThresholds;
     private boolean manageAccounts;
     private boolean addAdmin;
     private boolean approveItems;

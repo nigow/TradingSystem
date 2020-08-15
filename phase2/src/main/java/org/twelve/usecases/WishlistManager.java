@@ -12,9 +12,9 @@ import java.util.List;
  * @author Tairi, Andrew
  */
 public class WishlistManager {
-    
-    private AccountRepository accountRepository;
-    private ItemUtility itemUtility;
+
+    private final AccountRepository accountRepository;
+    private final ItemUtility itemUtility;
 
     /**
      * Constructor for WishlistManager.
@@ -36,37 +36,29 @@ public class WishlistManager {
     public void addItemToWishlist(int accountID, int itemID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addToWishlist(itemID);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
      * Removes an itemID from the given account's wishlist.
      *
+     * @param accountID Unique identifier of the account
      * @param itemID Unique identifier of the item
      */
     public void removeItemFromWishlist(int accountID, int itemID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removeFromWishList(itemID);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
      * Gets the wishlist of item ids for the given account.
      *
+     * @param accountID Unique identifier of the account
      * @return Wishlist of the given account
      */
     public List<Integer> getWishlistFromID(int accountID) {
         return accountRepository.getAccountFromID(accountID).getWishlist();
-    }
-
-    /**
-     * Determines if item corresponding to the itemID is in the current account's wishlist.
-     *
-     * @param itemID Unique identifier of the item
-     * @return Whether the item corresponding to the itemID is in the current account's wishlist
-     */
-    public boolean isInWishlist(int accountID, int itemID) {
-        return accountRepository.getAccountFromID(accountID).getWishlist().contains(itemID);
     }
 
     /**
@@ -85,20 +77,6 @@ public class WishlistManager {
     }
 
     /**
-     * Get the wish lists for all accounts.
-     *
-     * @return A list containing wish lists of all users
-     */
-    public List<List<Item>> getAllWishlist() {
-        List<List<Item>> all = new ArrayList<>();
-        for (Account account : accountRepository.getAccounts()) {
-            all.add(getWishlistItems(account.getAccountID()));
-        }
-        return all;
-    }
-
-
-    /**
      * String representation of all wishlist items for a specific account.
      *
      * @param accountID Unique identifier of account
@@ -109,6 +87,4 @@ public class WishlistManager {
         for (Item item : getWishlistItems(accountID)) rep.add(item.toString());
         return rep;
     }
-
-
 }

@@ -1,7 +1,5 @@
 package org.twelve.usecases;
 
-import org.junit.Test;
-import org.twelve.entities.Account;
 import org.twelve.entities.Item;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ram.InMemoryAccountGateway;
@@ -10,11 +8,8 @@ import org.twelve.gateways.ItemsGateway;
 import junit.framework.TestCase;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.ItemUtility;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * An integration test to verify integration of usecases, gateways, and entities is successful.
@@ -23,12 +18,11 @@ import java.util.List;
 public class ItemIntegrationTest extends TestCase {
     private ItemManager itemManager;
     private ItemsGateway itemsGateway;
-    private AccountRepository accountRepository;
 
     private void setUpItemManager() {
         AccountGateway accountGateway = new InMemoryAccountGateway(new HashMap<>());
         SecurityUtility securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES");
-        accountRepository = new AccountRepository(accountGateway, securityUtility);
+        AccountRepository accountRepository = new AccountRepository(accountGateway, securityUtility);
         String[] initialString = new String[4];
         initialString[0] = "Potato";
         initialString[1] = "A Vegetable";

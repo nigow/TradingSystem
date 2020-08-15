@@ -71,7 +71,7 @@ public class ViewBuilder {
             case TRADE_CREATOR:
 
                 return new TradeCreatorView<>(windowHandler, controllerPool.getTradeCreatorController(),
-                        new UITradeCreatorPresenter(localizedResources));
+                        new UITradeCreatorPresenter());
 
             case WAREHOUSE:
 
@@ -116,7 +116,7 @@ public class ViewBuilder {
             case TRADE_CANCELLATION:
 
                 return new TradeCancellationView<>(windowHandler, controllerPool.getTradeCancellationController(),
-                        new UITradeCancellationPresenter(localizedResources));
+                        new UITradeCancellationPresenter());
 
         }
 

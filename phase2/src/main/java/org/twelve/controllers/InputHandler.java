@@ -8,28 +8,6 @@ import java.util.regex.Pattern;
  * Handler that contains helper methods for verifying input.
  */
 public class InputHandler {
-
-    private final String TRUE = "y";
-    private final String FALSE = "n";
-
-    /**
-     * Returns the TRUE string.
-     *
-     * @return the TRUE string
-     */
-    public String getTrue() {
-        return TRUE;
-    }
-
-    /**
-     * Returns the FALSE string.
-     *
-     * @return the FALSE string
-     */
-    public String getFalse() {
-        return FALSE;
-    }
-
     /**
      * Check if a string is a non-negative integer.
      *
@@ -74,50 +52,6 @@ public class InputHandler {
 
         // citation: https://stackoverflow.com/questions/7536755/regular-expression-for-matching-hhmm-time-format
         return Pattern.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", input);
-
-    }
-
-    /**
-     * Check if a string is a boolean/decision in the form of "y" or "n".
-     *
-     * @param input Input string
-     * @return Whether given string is a boolean/decision in the form of "y" or "n"
-     */
-    public boolean isBool(String input) {
-
-        return isTrue(input) || isFalse(input);
-
-    }
-
-    /**
-     * Check if a string is a boolean/decision in the form of "y".
-     *
-     * @param input Input string.
-     * @return Whether given string is a boolean/decision in the form of "y".
-     */
-    public boolean isTrue(String input) {
-        return input.equals(TRUE);
-    }
-
-    /**
-     * Check if a string is a boolean/decision in the form of "n".
-     *
-     * @param input Input string.
-     * @return Whether given string is a boolean/decision in the form of "n".
-     */
-    public boolean isFalse(String input) {
-        return input.equals(FALSE);
-    }
-
-    /**
-     * Check if a string is the program standard exit string (-1).
-     *
-     * @param input Input string
-     * @return Whether given string is the program standard exit string (-1)
-     */
-    public boolean isExitStr(String input) {
-
-        return input.equals("-1");
 
     }
 

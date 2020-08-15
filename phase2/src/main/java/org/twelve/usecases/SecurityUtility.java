@@ -12,6 +12,7 @@ import java.util.Base64;
 
 /**
  * Class dealt with encryption and decryption
+ *
  * Idea of converting string to byte arrays stemmed from: https://bit.ly/2Cq8RII
  */
 public class SecurityUtility {
@@ -21,7 +22,8 @@ public class SecurityUtility {
 
     /**
      * initialize the key and cipher algorithms.
-     * Note: if algotirhm is "AES", keyString must be a lenght of 16 characters.
+     * Note: if algorithm is "AES", keyString must be a length of 16 characters.
+     *
      * @param keyString raw String representation of key of encryption/decryption
      * @param algorithm name of algorithm
      */
@@ -40,6 +42,7 @@ public class SecurityUtility {
 
     /**
      * Encrypt password
+     *
      * @param password a raw String representation of password
      * @return Base64 encrypted password in a String format
      */
@@ -54,22 +57,4 @@ public class SecurityUtility {
         }
         return encryptedString;
     }
-
-    /**
-     * Decrypt Base64 encrypted password
-     * @param password encrypted text in Base64
-     * @return initial raw representation of text in a String representation
-     */
-    public String decrypt(String password){
-        String decryptedString = "";
-        try{
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decryptedByte = cipher.doFinal(Base64.getDecoder().decode(password.getBytes()));
-            decryptedString = new String(decryptedByte);
-        } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException e) {
-            e.printStackTrace();
-        }
-        return decryptedString;
-    }
-
 }

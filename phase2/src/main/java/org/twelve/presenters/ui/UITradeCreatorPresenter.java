@@ -4,7 +4,6 @@ import org.twelve.presenters.TradeCreatorPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 /**
@@ -19,15 +18,12 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     private List<String> peerWishlist;
     private int hourChosen;
     private int minuteChosen;
-    private final ResourceBundle localizedResources;
 
     /**
      * Constructor for the trade creation presenter.
-     * @param localizedResources Pack containing any localized strings.
      */
-    public UITradeCreatorPresenter(ResourceBundle localizedResources) {
+    public UITradeCreatorPresenter() {
         super();
-        this.localizedResources = localizedResources;
         setPeerWishlist(new ArrayList<>());
         setItemsToReceive(new ArrayList<>());
         setItemsToGive(new ArrayList<>());

@@ -41,21 +41,4 @@ public class InputHandlerTest {
         Assert.assertFalse(inputHandler.isTime("10 : 59"));
         Assert.assertFalse(inputHandler.isTime("-3:45"));
     }
-
-    @Test
-    public void isBool() {
-        InputHandler inputHandler = new InputHandler();
-        Assert.assertTrue(inputHandler.isBool("y"));
-        Assert.assertTrue(inputHandler.isBool("n"));
-        Assert.assertFalse(inputHandler.isBool("yes"));
-        Assert.assertFalse(inputHandler.isBool("fjf"));
-    }
-
-    @Test
-    public void isExitStr() {
-        InputHandler inputHandler = new InputHandler();
-        Assert.assertTrue(inputHandler.isExitStr("-1"));
-        Assert.assertFalse(inputHandler.isExitStr("-2"));
-        Assert.assertFalse(inputHandler.isExitStr("+1"));
-    }
 }

@@ -57,37 +57,9 @@ public class StatusManager {
     }
 
     /**
-     * Gets a list of accounts that have been frozen and have requested to be unfrozen.
-     *
-     * @return List of accounts to freeze
-     */
-    public List<Integer> getAccountIDsToUnfreeze() {
-        List<Integer> accountIDsToUnfreeze = new ArrayList<>();
-        for (int accountID : accountRepository.getAccountIDs()) {
-            if (isPending(accountID)) {
-                accountIDsToUnfreeze.add(accountID);
-            }
-        }
-        return accountIDsToUnfreeze;
-    }
-
-    /**
-     * Gets a list of account usernames that have been frozen and have requested to be unfrozen.
-     *
-     * @return List of account usernames to freeze
-     */
-    public List<String> getUsernamesToUnfreeze() {
-        List<String> accountsToUnfreeze = new ArrayList<>();
-        for (int accountID : getAccountIDsToUnfreeze()) {
-            accountsToUnfreeze.add(accountRepository.getUsernameFromID(accountID));
-        }
-        return accountsToUnfreeze;
-    }
-
-    /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
-     * @param accountID      Account to freeze
+     * @param accountID Account to freeze
      * @return Whether the given account is successfully frozen or not
      */
     public boolean freezeAccount(int accountID) {
@@ -95,7 +67,7 @@ public class StatusManager {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.TRADE);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
-            accountRepository.updateToAccountGateway(account);
+            accountRepository.updateToAccountGateway(account, false);
             return true;
         }
         return false;
@@ -104,7 +76,7 @@ public class StatusManager {
     /**
      * Unfreezes an account that requested to be unfrozen by adding the ability to borrow.
      *
-     * @param accountID     Account to unfreeze
+     * @param accountID Account to unfreeze
      * @return Whether the given account is successfully frozen or not
      */
     public boolean unfreezeAccount(int accountID) {
@@ -112,7 +84,7 @@ public class StatusManager {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.REQUEST_UNFREEZE);
             account.addPermission(Permissions.TRADE);
-            accountRepository.updateToAccountGateway(account);
+            accountRepository.updateToAccountGateway(account, false);
             return true;
         }
         return false;
@@ -131,7 +103,7 @@ public class StatusManager {
     /**
      * Determines whether a given account should be frozen.
      *
-     * @param accountID    Unique identifier of an account that is checked if it can be frozen
+     * @param accountID Unique identifier of an account that is checked if it can be frozen
      * @return Whether the account can be frozen or not
      */
     private boolean canBeFrozen(int accountID) {
@@ -143,9 +115,10 @@ public class StatusManager {
     }
 
     /**
-     * Check if an account is on a vacation
-     * @param accountID An ID of an account.
-     * @return A boolean indicating whether account can go on a vacation.
+     * Check if an account is on a vacation.
+     *
+     * @param accountID An ID of an account
+     * @return A boolean indicating whether account can go on a vacation
      */
     public boolean canVacation(int accountID){
         return !canBeFrozen(accountID) && hasPermission(accountID, Permissions.TRADE) && hasPermission(accountID, Permissions.REQUEST_VACATION);
@@ -159,12 +132,13 @@ public class StatusManager {
     public void requestUnfreeze(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_UNFREEZE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
-     * Check if an accountID has a certain permission
-     * @param accountID The ID of the account checked.
+     * Check if an accountID has a certain permission.
+     *
+     * @param accountID The ID of the account checked
      * @param perm A permission being checked
      * @return Whether the account has the permission.
      */
@@ -173,74 +147,81 @@ public class StatusManager {
     }
 
     /**
-     * Change an Account's permissions to move it to vacation state
-     * @param accountID The ID of the account.
+     * Change an Account's permissions to move it to vacation state.
+     *
+     * @param accountID The ID of the account
      */
     public void requestVacation(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_VACATION);
         account.removePermission(Permissions.TRADE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
      * Finish an account's vacation, and return the account to a trading state.
-     * @param accountID The account returning from the vacation.
+     *
+     * @param accountID The account returning from the vacation
      */
     public void completeVacation(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.REQUEST_VACATION);
         account.addPermission(Permissions.TRADE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
      * Ban an account, undoing the process of account creation.
-     * @param accountID The ID of the account.
+     *
+     * @param accountID The ID of the account
      */
     public void banAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.LOGIN);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
     /**
      * Undo the banning of an account, returning them to their state before being banned.
+     *
      * @param accountID An ID of an account being banned.
      */
     public void unBanAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.LOGIN);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
     /**
-     * Promote an account to become a trusted community member
-     * @param accountID The ID of the account being promoted.
+     * Promote an account to become a trusted community member.
+     *
+     * @param accountID The ID of the account being promoted
      */
     public void trustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.CONFIRM_ITEM);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
     /**
      * Demote a trusted member to a normal account.
-     * @param accountID The ID of the account being demoted.
+     *
+     * @param accountID The ID of the account being demoted
      */
     public void unTrustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CONFIRM_ITEM);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
     /**
-     * Promote an account to a moderator
-     * @param accountID The account being promoted.
+     * Promote an account to a moderator.
+     *
+     * @param accountID The account being promoted
      */
     public void modAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
@@ -249,13 +230,14 @@ public class StatusManager {
         account.addPermission(Permissions.REMOVE_WISHLIST);
         account.addPermission(Permissions.FREEZE);
         account.addPermission(Permissions.UNFREEZE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
     /**
-     * Change a moderator to a normal account
-     * @param accountID The ID of the account becoming a moderator.
+     * Change a moderator to a normal account.
+     *
+     * @param accountID The ID of the account becoming a moderator
      */
     public void unModAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
@@ -263,14 +245,15 @@ public class StatusManager {
         account.removePermission(Permissions.REMOVE_WISHLIST);
         account.removePermission(Permissions.FREEZE);
         account.removePermission(Permissions.UNFREEZE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
     /**
      * Get the role of the Account with a given ID.
-     * @param accountID The Account ID.
-     * @return The role of the account.
+     *
+     * @param accountID The Account ID
+     * @return The role of the account
      */
     public Roles getRoleOfAccount(int accountID) {
         List <Permissions> perms = accountRepository.getAccountFromID(accountID).getPermissions();

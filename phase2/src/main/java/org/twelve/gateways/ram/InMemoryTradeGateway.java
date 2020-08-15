@@ -1,16 +1,8 @@
 package org.twelve.gateways.ram;
 
-import org.twelve.entities.TimePlace;
-import org.twelve.entities.Trade;
-import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.TradeManager;
 import org.twelve.usecases.TradeRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class InMemoryTradeGateway implements TradeGateway {
@@ -41,17 +33,6 @@ public class InMemoryTradeGateway implements TradeGateway {
      */
     @Override
     public boolean populate(TradeRepository tradeRepository) {
-        /*
-        List<Integer> existingIds = tradeManager.getAllTradesIds();
-        for (Trade trade : tradeMap.values()) {
-            if (!existingIds.contains(trade.getId())) {
-                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-                tradeManager.addToTrades(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds()
-                        , trade.getEditedCounter(), trade.getStatus().name(),
-                        trade.getTradeCompletions(), timePlaceMap.get(trade.getId()).getTime().format(formatter),
-                        timePlaceMap.get(trade.getId()).getPlace());
-            }
-        }*/
         for (int tradeId: tradeMap.keySet()) {
             String[] trade = tradeMap.get(tradeId);
             String[] timePlace = timePlaceMap.get(tradeId);
@@ -68,7 +49,6 @@ public class InMemoryTradeGateway implements TradeGateway {
             }
 
             String[] itemIdsString = trade[2].split(";");
-            //TODO fix this
             List<List<Integer>> temp = new ArrayList<>();
             for (String itemId: itemIdsString) {
                 String[] itemIDsString2 = itemId.split(" ");
@@ -94,7 +74,7 @@ public class InMemoryTradeGateway implements TradeGateway {
             }
 
 
-            tradeRepository.createTrade(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
+            tradeRepository.addToTrades(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
                     tradeComps, time, location);
         }
         return true;
@@ -107,13 +87,6 @@ public class InMemoryTradeGateway implements TradeGateway {
     public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > itemIds,
                      int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                      String location, boolean newTrade) {
-        /*
-        Trade trade = new Trade(tradeId, isPermanent, traderIds,
-                itemIds, editedCounter, TradeStatus.valueOf(tradeStatus),
-                tradeCompletions);
-        TimePlace timePlace = new TimePlace(tradeId, LocalDateTime.parse(time), location);
-        tradeMap.put(tradeId, trade);
-        timePlaceMap.put(tradeId, timePlace);*/
         String[] trade = new String[6];
         trade[0] = String.valueOf(isPermanent);
         if (traderIds.size() == 0) {
@@ -131,10 +104,6 @@ public class InMemoryTradeGateway implements TradeGateway {
         }
         else {
             StringBuilder itemIdsString = new StringBuilder();
-//            for (int itemId: itemIds) {
-//                itemIdsString.append(itemId).append(" ");
-//                trade[2] = itemIdsString.toString();
-//            }
             for (List<Integer> ids: itemIds) {
                 if (ids.size() != 0) {
                     for (int id : ids) {
@@ -167,34 +136,4 @@ public class InMemoryTradeGateway implements TradeGateway {
         timePlaceMap.put(tradeId, timePlace);
         return true;
     }
-
-    //TODO : delete
-    /**
-    public static void main(String[] args) {
-        InMemoryTradeGateway test = new InMemoryTradeGateway(new HashMap<Integer, String[]>(), new HashMap<Integer, String[]>());
-        test.save(1, true, new ArrayList<Integer>(), Collections.singletonList(new ArrayList<Integer>()),
-                1, "UNCONFIRMED", new ArrayList<Boolean>(),"2014-04-08 12:30",
-                "Home", true);
-        String[] list = test.tradeMap.get(1);
-
-        String[] itemIdsString = list[2].split(";");
-        System.out.println(Arrays.toString(itemIdsString));
-        List<List<Integer>> temp = new ArrayList<>();
-        for (String itemId: itemIdsString) {
-            String[] itemIDsString2 = itemId.split(" ");
-            System.out.println(Arrays.toString(itemIDsString2));
-            if (itemIDsString2.length == 0) {
-                temp.add(new ArrayList<>());
-            }
-            else {
-                List<Integer> itemIds = new ArrayList<>();
-                for (String i: itemIDsString2) {
-                    itemIds.add(Integer.parseInt(i));
-                }
-                temp.add(itemIds);
-            }
-        }
-
-    }
-     **/
 }

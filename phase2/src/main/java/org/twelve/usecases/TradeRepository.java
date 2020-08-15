@@ -6,14 +6,21 @@ import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Repository for storing all trades in the system.
+ */
 abstract public class TradeRepository {
-    Map<Integer, Trade> trades;
-    Map<Integer, TimePlace> timePlaces;
+    final Map<Integer, Trade> trades;
+    final Map<Integer, TimePlace> timePlaces;
     private TradeGateway tradeGateway;
 
+    /**
+     * Constructor for Trade Repository
+     *
+     * @param tradeGateway the gateway dealing with trades.
+     */
     public TradeRepository(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
         trades = new HashMap<>();
@@ -42,9 +49,8 @@ abstract public class TradeRepository {
         return id;
     }
 
-    //TODO : remove this
     /**
-     * Adds a new trade and its timePlace to local storage
+     * Adds a new trade and its timePlace that exist in the database
      *
      * @param id id of trade and timePlace
      * @param isPermanent if the trade is permanent
@@ -66,32 +72,8 @@ abstract public class TradeRepository {
         timePlaces.put(id, timePlace);
     }
 
-    // TODO difference between this and above?
     /**
-     * Adds a new trade and its timePlace that exist in the database
-     *
-     * @param id id of trade and timePlace
-     * @param isPermanent if the trade is permanent
-     * @param traderIDs list of all ids of the traders
-     * @param itemIDs list of all the ids of the items
-     * @param editedCounter counter for how many edits were made
-     * @param tradeStatus status of the trade
-     * @param tradeCompletions The Completion status of the trades
-     * @param time the time of the trade
-     * @param location the location of the trade
-     */
-    public void createTrade(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
-                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
-                            String time, String location) {
-        Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
-                TradeStatus.valueOf(tradeStatus), tradeCompletions);
-        TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
-        trades.put(id, trade);
-        timePlaces.put(id, timePlace);
-    }
-
-    /**
-     * Updates the given trade and if it is a new trade to the tradeGateway
+     * Updates the given trade and if it is a new trade to the tradeGateway.
      *
      * @param trade the object representing a trade
      * @param newTrade if the trade is a new trade
@@ -105,6 +87,7 @@ abstract public class TradeRepository {
 
     /**
      * Switch trade changes to reflect in demo mode.
+     *
      * @param tradeGateway An instance of TradeGateway
      */
     void switchToDemoMode(TradeGateway tradeGateway) {
@@ -116,6 +99,7 @@ abstract public class TradeRepository {
 
     /**
      * Switch trade changes to reflect in normal mode.
+     *
      * @param tradeGateway An instance of TradeGateway
      */
     void switchToNormalMode(TradeGateway tradeGateway) {
@@ -148,6 +132,7 @@ abstract public class TradeRepository {
     /**
      * Retrieves all the trades the current account has.
      *
+     * @param accountID the id of the account with info being retrieved from
      * @return List of all of the trades the current account has done
      */
      List<Trade> getAllTradesAccount(int accountID) {
@@ -159,6 +144,12 @@ abstract public class TradeRepository {
         return accountTrades;
     }
 
+    /**
+     * Retrieves a list of all trade ids of an account.
+     *
+     * @param accountID the id of the account with info being retrieved from
+     * @return  a list of all trade ids of an account
+     */
     public List<Integer> getAllTradesAccountID(int accountID) {
         List<Integer> accountTrades = new ArrayList<>();
         for (Trade trade : getAllTradesAccount(accountID)) {
@@ -167,6 +158,11 @@ abstract public class TradeRepository {
         return accountTrades;
     }
 
+    /**
+     * Returns a list of all the trade ids in the system.
+     *
+     * @return a list of all the trade ids in the system
+     */
     public List<Integer> getAllTradesIds(){
         List<Integer> tradeIds = new ArrayList<>();
         for(Trade trade: trades.values()){
@@ -179,6 +175,7 @@ abstract public class TradeRepository {
     /**
      * Returns the date and time of this Trade.
      *
+     * @param tradeID id of the trade
      * @return Date and time of this Trade
      */
     public LocalDateTime getDateTime(int tradeID) {
@@ -188,6 +185,7 @@ abstract public class TradeRepository {
     /**
      * Returns the location of this Trade.
      *
+     * @param tradeID id of the trade
      * @return location of this trade
      */
     public String getLocation(int tradeID) {
@@ -197,7 +195,8 @@ abstract public class TradeRepository {
     /**
      * Gets the number of times this Trade has been edited.
      *
-     * @return The number of times this Trade has been edited.
+     * @param tradeID id of the trade
+     * @return The number of times this Trade has been edited
      */
     public int getEditedCounter(int tradeID) {
         return getTradeByID(tradeID).getEditedCounter();
@@ -206,6 +205,7 @@ abstract public class TradeRepository {
     /**
      * Returns whether this Trade is temporary or permanent.
      *
+     * @param tradeID id of the trade
      * @return Whether this Trade is temporary or permanent
      */
     public boolean isPermanent(int tradeID) {
@@ -234,7 +234,7 @@ abstract public class TradeRepository {
     }
 
     /**
-     * finds items account traded in this trade
+     * Finds items account traded in this trade.
      *
      * @param accountID id of account
      * @param tradeID id of trade

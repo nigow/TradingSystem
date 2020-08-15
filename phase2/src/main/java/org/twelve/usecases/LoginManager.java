@@ -4,7 +4,7 @@ import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
 
 /**
- * Handles login procedures and keeping sessions
+ * Handles login procedure
  *
  */
 public class LoginManager {
@@ -49,11 +49,10 @@ public class LoginManager {
      */
     public boolean changePassword(int accountID, String oldPassword, String newPassword){
         Account account = accountRepository.getAccountFromID(accountID);
-        String temp = securityUtility.encrypt(oldPassword);
         if (!account.getPassword().equals(securityUtility.encrypt(oldPassword)))
             return false;
         account.setPassword(securityUtility.encrypt(newPassword));
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
         return true;
     }
 }

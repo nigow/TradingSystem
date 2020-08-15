@@ -1,8 +1,5 @@
 package org.twelve.controllers;
 
-import org.twelve.gateways.AccountGateway;
-import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.ItemsGateway;
 import org.twelve.presenters.WishlistPresenter;
 import org.twelve.usecases.*;
 
@@ -86,7 +83,7 @@ public class WishlistController {
 
     /**
      * Remove item at itemIndex from the wishlist.
-     * @param itemIndex Index of item to rmeove from the wishlist.
+     * @param itemIndex Index of item to remove from the wishlist.
      */
     public void removeFromWishlist(int itemIndex) {
 

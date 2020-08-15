@@ -23,6 +23,8 @@ public class UseCasePool {
 
     /**
      * Creates all the required use cases for the program.
+     *
+     * @param gatewayPool A pool of gateways which contains all gateways
      */
     public UseCasePool(GatewayPool gatewayPool) {
         this.gatewayPool = gatewayPool;
@@ -31,7 +33,7 @@ public class UseCasePool {
 
 
     private void initializeUseCases() {
-        securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES"); //TODO: add this as env variable
+        securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES"); //=> env variable
         accountRepository = new AccountRepository(gatewayPool.getAccountGateway(), securityUtility);
         thresholdRepository = new ThresholdRepository(gatewayPool.getThresholdsGateway());
         itemManager = new ItemManager(gatewayPool.getItemsGateway(), accountRepository);
@@ -108,13 +110,8 @@ public class UseCasePool {
     }
 
     /**
-     * @return An instance of CityManager use case.
-     */
-    public SecurityUtility getSecurityUtility() {
-        return securityUtility;
-    }
-
-    /**
+     * Switches the mode of all the use cases
+     *
      * @param gatewayPool An instance of gateway pool storing all gateways
      * @param demoMode Whether we should be able to switch to demo mode
      */
@@ -154,5 +151,4 @@ public class UseCasePool {
         gatewayPool.getThresholdsGateway().populate(thresholdRepository);
         gatewayPool.getTradeGateway().populate(tradeManager);
     }
-
 }
