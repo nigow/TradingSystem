@@ -89,6 +89,10 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
         windowHandler.changeScene(Scenes.MENU);
     }
 
+    // have to be global to prevent garbage collection while in use
+    @SuppressWarnings("FieldCanBeLocal")
+    private JavaBeanBooleanProperty vacationProp;
+
     /**
      * {@inheritDoc}
      */
@@ -97,10 +101,9 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
         try {
 
-            JavaBeanBooleanProperty vacationProp = JavaBeanBooleanPropertyBuilder.create()
-                    .bean(profilePresenter).name("vacationStatus").build();
-
+            vacationProp = JavaBeanBooleanPropertyBuilder.create().bean(profilePresenter).name("vacationStatus").build();
             onVacation.selectedProperty().bindBidirectional(vacationProp);
+
             onVacation.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(profilePresenter).name("canVacation").build().not().and(vacationProp.not()));
 
