@@ -123,13 +123,13 @@ public class AccountRepository {
         return accounts.get(accountID).getUsername();
     }
 
-    /**
-     * Retrieves all accounts stored in the system.
-     * @return List of all accounts
-     */
-    protected List<Account> getAccounts() {
-        return (List<Account>) accounts.values();
-    }
+//    /**
+//     * Retrieves all accounts stored in the system.
+//     * @return List of all accounts
+//     */
+//    protected List<Account> getAccounts() {
+//        return (List<Account>) accounts.values();
+//    }
 
     /**
      * Retrieves the ids of all accounts in the system.
