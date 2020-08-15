@@ -3,7 +3,7 @@ package org.twelve.presenters;
 import java.util.List;
 
 /**
- * Presenter for the admin wishlist menu
+ * Interface for the admin wishlist menu
  */
 public interface AdminWishlistPresenter {
     /**

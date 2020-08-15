@@ -31,6 +31,7 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
         setLocalItems(new ArrayList<>());
         setSelectedItemName("");
         setSelectedItemDesc("");
+        setSelectedItemOwner("");
     }
 
     /**

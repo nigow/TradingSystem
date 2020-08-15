@@ -4,11 +4,18 @@ import org.twelve.presenters.LoginPresenter;
 
 import java.util.ResourceBundle;
 
+/**
+ * Presenter for the login view
+ */
 public class UILoginPresenter extends ObservablePresenter implements LoginPresenter {
 
     private final ResourceBundle localizedResources;
     private String errorMsg;
 
+    /**
+     * Constructor for the presenter for the login view
+     * @param localizedResources Pack containing any localized strings
+     */
     public UILoginPresenter(ResourceBundle localizedResources) {
 
         this.localizedResources = localizedResources;
@@ -16,6 +23,9 @@ public class UILoginPresenter extends ObservablePresenter implements LoginPresen
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setError(String errorKey) {
 
@@ -25,6 +35,9 @@ public class UILoginPresenter extends ObservablePresenter implements LoginPresen
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getError() {
         return errorMsg;

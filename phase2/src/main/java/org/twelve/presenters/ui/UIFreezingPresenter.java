@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Presenter for dealing with the status of users
+ */
 public class UIFreezingPresenter extends ObservablePresenter implements FreezingPresenter {
 
     private List<Map<String, String>> bannedAccounts;
@@ -25,6 +28,10 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
     private final ResourceBundle localizedResources;
 
+    /**
+     * Constructor for the presenter for dealign with the status of users
+     * @param localizedResources pack containing any localized strings
+     */
     public UIFreezingPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
@@ -42,6 +49,9 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         setCanUnmod(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setRegularAccounts(List<String> regularAccounts) {
         List<Map<String, String>> oldRegularAccounts = this.regularAccounts;
@@ -54,11 +64,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("regularAccounts", oldRegularAccounts, this.regularAccounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Map<String, String>> getRegularAccounts() {
         return regularAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setBannedAccounts(List<String> bannedAccounts) {
         List<Map<String, String>> oldBannedAccounts = this.bannedAccounts;
@@ -71,11 +87,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("bannedAccounts", oldBannedAccounts, this.bannedAccounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Map<String, String>> getBannedAccounts() {
         return bannedAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setFrozenAccounts(List<String> frozenAccounts) {
         List<Map<String, String>> oldFrozenAccounts = this.frozenAccounts;
@@ -93,6 +115,9 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         return frozenAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setUnfreezeAccounts(List<String> unfreezeAccounts) {
         List<Map<String, String>> oldUnfreezeAccounts = this.unfreezeAccounts;
@@ -106,11 +131,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("unfreezeAccounts", oldUnfreezeAccounts, this.unfreezeAccounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Map<String, String>> getUnfreezeAccounts() {
         return unfreezeAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setToFreezeAccounts(List<String> toFreezeAccounts) {
         List<Map<String, String>> oldToFreezeAccounts = this.toFreezeAccounts;
@@ -123,11 +154,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("toFreezeAccounts", oldToFreezeAccounts, this.toFreezeAccounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Map<String, String>> getToFreezeAccounts() {
         return toFreezeAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setAdminAccounts(List<String> adminAccounts) {
         List<Map<String, String>> oldAdminAccounts = this.adminAccounts;
@@ -140,11 +177,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("adminAccounts", oldAdminAccounts, this.adminAccounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Map<String, String>> getAdminAccounts() {
         return adminAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setTrustedAccounts(List<String> trustedAccounts) {
         List<Map<String, String>> oldTrustedAccounts = this.trustedAccounts;
@@ -156,11 +199,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("trustedAccounts", oldTrustedAccounts, this.trustedAccounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Map<String, String>> getTrustedAccounts() {
         return trustedAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setModAccounts(List<String> modAccounts) {
         List<Map<String, String>> oldModAccounts = this.modAccounts;
@@ -172,11 +221,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("modAccounts", oldModAccounts, this.modAccounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Map<String, String>> getModAccounts() {
         return modAccounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanMod(boolean canMod) {
         boolean oldMod = this.canMod;
@@ -184,11 +239,17 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("canMod", oldMod, this.canMod);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanMod() {
         return canMod;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanUnmod(boolean canUnmod) {
         boolean oldUnmod = this.canUnmod;
@@ -196,6 +257,9 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
         propertyChangeSupport.firePropertyChange("canUnmod", oldUnmod, this.canUnmod);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanUnmod() {
         return canUnmod;

@@ -3,7 +3,7 @@ package org.twelve.presenters;
 import java.util.List;
 
 /**
- * Presenter for inventory.
+ * Interface for presenters for inventory.
  */
 public interface InventoryPresenter {
 

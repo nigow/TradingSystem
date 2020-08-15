@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controller that allows user to freeze/unfreeze users
+ * Controller that allows user to change an account's status
  *
  * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  * @author Catherine

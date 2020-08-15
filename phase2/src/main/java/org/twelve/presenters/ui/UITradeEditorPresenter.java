@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Presenter for the trade editor view
+ */
 public class UITradeEditorPresenter extends ObservablePresenter implements TradeEditorPresenter {
 
     private final ResourceBundle localizedResources;
@@ -30,6 +33,10 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
     private LocalDate dateChosen;
     private String locationChosen;
 
+    /**
+     * Constructor for the presenter for the trade editor view
+     * @param localizedResources
+     */
     public UITradeEditorPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
@@ -47,6 +54,9 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         setTradeStatus(TradeStatus.REJECTED);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanEdit(boolean canEdit) {
         boolean old = this.canEdit;
@@ -54,11 +64,17 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("canEdit", old, this.canEdit);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanEdit() {
         return canEdit;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanCancel(boolean canCancel) {
         boolean old = this.canCancel;
@@ -66,11 +82,17 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("canCancel", old, this.canCancel);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanCancel() {
         return canCancel;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanConfirm(boolean canConfirm) {
         boolean old = this.canConfirm;
@@ -78,11 +100,17 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("canConfirm", old, this.canConfirm);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanConfirm() {
         return canConfirm;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCanComplete(boolean canComplete) {
         boolean old = this.canComplete;
@@ -90,21 +118,33 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("canComplete", old, this.canComplete);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanComplete() {
         return canComplete;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getUserItems() {
         return userItems;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getPeerItems() {
         return peerItems;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setUserItems(List<String> userItems) {
         List<String> old = this.userItems;
@@ -112,6 +152,9 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("userItems", old, this.userItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPeerItems(List<String> peerItems) {
         List<String> old = this.peerItems;
@@ -119,6 +162,9 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("peerItems", old, this.peerItems);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPeerUsername(String username) {
         String old = this.peerUsername;
@@ -126,11 +172,17 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("peerUsername", old, this.peerUsername);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getPeerUsername() {
         return peerUsername;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setTradeStatus(TradeStatus tradeStatus) {
         String old = this.tradeStatus;
@@ -138,11 +190,17 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("tradeStatus", old, this.tradeStatus);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTradeStatus() {
         return tradeStatus;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIsPermanent(boolean isPermanent) {
         boolean old = this.isPermanent;
@@ -150,21 +208,33 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("isPermanent", old, this.isPermanent);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getIsPermanent() {
         return isPermanent;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHourChosen() {
         return hourChosen;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMinuteChosen() {
         return minuteChosen;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setHourChosen(int hourChosen) {
         int old = this.hourChosen;
@@ -172,6 +242,9 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("hourChosen", old, this.hourChosen);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMinuteChosen(int minuteChosen) {
         int old = this.minuteChosen;
@@ -179,6 +252,9 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("minuteChosen", old, this.minuteChosen);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDateChosen(LocalDate dateChosen) {
         LocalDate old = this.dateChosen;
@@ -186,16 +262,25 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
         propertyChangeSupport.firePropertyChange("dateChosen", old, this.dateChosen);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalDate getDateChosen() {
         return dateChosen;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getLocationChosen() {
         return locationChosen;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLocationChosen(String locationChosen) {
         String old = this.locationChosen;
