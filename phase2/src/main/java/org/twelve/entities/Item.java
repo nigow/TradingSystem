@@ -8,15 +8,14 @@ package org.twelve.entities;
 public class Item {
 
     private final int itemID;
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private boolean isApproved;
     private int ownerID;
 
     /**
      * Creates a new item with the given itemID, name, description, and ownerID.
      * isApproved is set to false by default (items have to be manually approved by an admin).
-     * accountsWithItemInWishlist is empty by default until an account adds the item to their wishlist.
      *
      * @param itemID      Unique identifier of the item
      * @param name        Name of the item
@@ -27,8 +26,8 @@ public class Item {
         this.itemID = itemID;
         this.name = name;
         this.description = description;
-        this.isApproved = false;
         this.ownerID = ownerID;
+        this.isApproved = false;
     }
 
     /**
@@ -91,24 +90,6 @@ public class Item {
      */
     public int getOwnerID() {
         return ownerID;
-    }
-
-    /**
-     * Set the name of this item.
-     *
-     * @param name New name of the item
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Set the description of this item.
-     *
-     * @param description New description of the item
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**

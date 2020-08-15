@@ -33,18 +33,6 @@ public class ItemTest extends TestCase{
         TestCase.assertEquals(item.getOwnerID(), 2);
     }
 
-    public void testSetName() {
-        Item item = new Item(1, "Harry Potter", "a book", 2);
-        item.setName("1984");
-        TestCase.assertEquals(item.getName(), "1984");
-    }
-
-    public void testSetDescription() {
-        Item item = new Item(1, "Harry Potter", "a book", 2);
-        item.setDescription("not a book");
-        TestCase.assertEquals(item.getDescription(), "not a book");
-    }
-
     public void testApproval() {
         Item item = new Item(1, "Harry Potter", "a book", 2);
         TestCase.assertFalse(item.isApproved());
