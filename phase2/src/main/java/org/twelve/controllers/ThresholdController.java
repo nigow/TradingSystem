@@ -1,8 +1,6 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
-import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.ThresholdsGateway;
 import org.twelve.presenters.ThresholdPresenter;
 import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
@@ -20,8 +18,6 @@ public class ThresholdController {
      */
     private final ThresholdRepository thresholdRepository;
 
-    private final ThresholdsGateway thresholdsGateway;
-
     private ThresholdPresenter thresholdPresenter;
 
     private final UseCasePool useCasePool;
@@ -34,9 +30,8 @@ public class ThresholdController {
      * Initializes the class with thresholdRepository from useCasePool
      * @param useCasePool the useCasePool for getting thresholdRepository
      */
-    public ThresholdController(UseCasePool useCasePool, GatewayPool gatewayPool) {
+    public ThresholdController(UseCasePool useCasePool) {
         thresholdRepository = useCasePool.getThresholdRepository();
-        this.thresholdsGateway = gatewayPool.getThresholdsGateway();
         this.useCasePool = useCasePool;
         this.statusManager = useCasePool.getStatusManager();
         this.sessionManager = useCasePool.getSessionManager();
