@@ -10,6 +10,7 @@ public class SessionManager {
     private Account account;
     private int tradeID;
     private final AccountRepository accountRepository;
+    private final int FAKE_ID = -1;
 
     /**
      * Constructor for session manager
@@ -17,7 +18,7 @@ public class SessionManager {
      * @param accountRepository A repository storing all account entities in the system.
      */
     public SessionManager(AccountRepository accountRepository) {
-        tradeID = -1;
+        tradeID = FAKE_ID;
         account = null;
         this.accountRepository = accountRepository;
     }
@@ -47,7 +48,7 @@ public class SessionManager {
         if (account != null)
             return account.getAccountID();
 
-        return -1;
+        return FAKE_ID;
     }
 
     /**
@@ -60,7 +61,7 @@ public class SessionManager {
     }
 
     /**
-     * set the trade being currently worked on
+     * Set the trade being currently worked on
      *
      * @param tradeID id of trade
      */
@@ -69,7 +70,7 @@ public class SessionManager {
     }
 
     /**
-     * returns the trade currently being worked on
+     * Returns the trade currently being worked on
      *
      * @return the id of trade
      */
@@ -81,6 +82,6 @@ public class SessionManager {
      * removes the current trade being worked on
      */
     public void removeWorkingTrade() {
-        tradeID = -1;
+        tradeID = FAKE_ID;
     }
 }
