@@ -48,12 +48,17 @@ public class FreezingController {
         this.useCasePool = useCasePool;
     }
 
+    /**
+     * Set the presenter for this controller
+     * @param freezingPresenter an instance of FreezingPresenter
+     */
     public void setFreezingPresenter(FreezingPresenter freezingPresenter) {
         this.freezingPresenter = freezingPresenter;
     }
 
     /**
-     * Freezes an account that should be frozen.
+     * Freeze the chosen user
+     * @param chosenUser the username of the chosen user
      */
     public void freeze(String chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
@@ -62,7 +67,8 @@ public class FreezingController {
     }
 
     /**
-     * Unfreeze an account that has requested to be unfrozen
+     * Unfreeze the chosen user
+     * @param chosenUser the username of the chosen user
      */
     public void unfreeze(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
@@ -70,42 +76,69 @@ public class FreezingController {
         updateAccountLists();
     }
 
+    /**
+     * Ban the chosen user
+     * @param chosenUser the username of the chosen user
+     */
     public void ban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.banAccount(chosenUserID);
         updateAccountLists();
     }
 
+    /**
+     * Unban the chosen user
+     * @param chosenUser the username of the chosen user
+     */
     public void unban(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unBanAccount(chosenUserID);
         updateAccountLists();
     }
 
+    /**
+     * Set the chosen user's status to Trusted
+     * @param chosenUser the username of the chosen user
+     */
     public void trust(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.trustAccount(chosenUserID);
         updateAccountLists();
     }
-    
+
+    /**
+     * Take away the chosen user's trusted status
+     * @param chosenUser the username of the chosen user
+     */
     public void untrustAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unTrustAccount(chosenUserID);
         updateAccountLists();
     }
 
+    /**
+     * Make the chosen user a moderator
+     * @param chosenUser the username of the chosen user
+     */
     public void modAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.modAccount(chosenUserID);
         updateAccountLists();
     }
 
+    /**
+     * Tale away the chosen user's moderator status
+     * @param chosenUser the username of the chosen user
+     */
     public void unmodAccount(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
         statusManager.unModAccount(chosenUserID);
         updateAccountLists();
     }
 
+    /**
+     * Update all the lists in FreezingPresenter
+     */
     public void updateAccountLists() {
 
         useCasePool.populateAll();

@@ -64,7 +64,10 @@ public class LandingController {
 
     }
 
-    // todo: whoever made this should provide its JavaDoc.
+    /**
+     * Create a demo account, set all their permissions, and loosen the permissions of the program for that specific
+     * account so they can try out features without getting frozen
+     */
     public void createDemoAccount() {
         List<Permissions> perms = Arrays.asList(Permissions.LOGIN, Permissions.CREATE_ITEM, Permissions.ADD_TO_WISHLIST,
                 Permissions.TRADE, Permissions.BROWSE_INVENTORY, Permissions.REQUEST_VACATION);
