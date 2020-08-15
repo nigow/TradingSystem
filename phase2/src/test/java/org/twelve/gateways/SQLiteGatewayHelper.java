@@ -12,7 +12,6 @@ public class SQLiteGatewayHelper {
         this.DBUri = DBUri;
     }
 
-    /* TODO update when there's already an existing item/account/trade*/
     protected boolean updateTable(String query){
         Connection connection = null;
         Statement statement = null;

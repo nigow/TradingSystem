@@ -60,7 +60,6 @@ public class InMemoryTradeGateway implements TradeGateway {
             }
 
             String[] itemIdsString = trade[2].split(";");
-            //TODO fix this
             List<List<Integer>> temp = new ArrayList<>();
             for (String itemId: itemIdsString) {
                 String[] itemIDsString2 = itemId.split(" ");

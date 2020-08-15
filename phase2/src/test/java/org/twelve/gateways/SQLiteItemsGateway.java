@@ -51,7 +51,6 @@ public class SQLiteItemsGateway {
             connection = DriverManager.getConnection(DBUri);
 
             resultSet = connection.createStatement().executeQuery("SELECT * FROM items WHERE item_id = " + Integer.toString(id));
-            /* TODO handle the case where an item with the given ID doesn't exist */
 
             while(resultSet.next()){
                 item = new Item(id, resultSet.getString(2), resultSet.getString(3),
@@ -85,7 +84,6 @@ public class SQLiteItemsGateway {
         String owner_id = Integer.toString(item.getOwnerID());
         String query = "INSERT INTO items VALUES(" + item_id + ", \'" + name + "\', \'" + description + "\', \'" + is_approved + "\', " + owner_id + ");";
         System.out.println(query);
-        //TODO when the item ID already exists -> delete the row
 
         return updateTable(query);
     }
@@ -122,7 +120,6 @@ public class SQLiteItemsGateway {
     }
 
     public int generateValidId() {
-        //TODO when theres no items in the database
         return getAllItems().size();
     }
 

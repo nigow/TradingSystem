@@ -25,7 +25,6 @@ public class SQLiteAccountGateway {
             connection = DriverManager.getConnection(DBUri);
 
             resultSet = connection.createStatement().executeQuery(query);
-            /* TODO handle the case where an account with the given ID doesn't exist */
 
             while(resultSet.next()){
                 String username = resultSet.getString(2);
@@ -87,7 +86,6 @@ public class SQLiteAccountGateway {
             connection = DriverManager.getConnection(DBUri);
 
             resultSet = connection.createStatement().executeQuery("SELECT * FROM accounts");
-            /* TODO handle the case where an account with the given ID doesn't exist */
 
             while(resultSet.next()){
                 String username = resultSet.getString(2);
