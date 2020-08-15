@@ -10,14 +10,26 @@ import java.util.*;
  * to get city info, add cities, and change cities for an account.
  */
 public class CityManager {
+
+    /**
+     * Map storing all cityIds mapping to their respective city.
+     */
     private final Map<Integer, String> cities;
+
+    /**
+     * A gateway for Cities that interacts with external storage.
+     */
     private CitiesGateway citiesGateway;
+
+    /**
+     * Repository for storing all accounts in the system.
+     */
     private final AccountRepository accountRepository;
 
     /**
      * Constructor for cityManager which stores a cityGateway.
-     *
-     * @param citiesGateway the gateway dealing with cities.
+     * @param citiesGateway the gateway dealing with cities
+     * @param accountRepository the repository for storing all accounts in the system
      */
     public CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository){
         this.cities = new HashMap<>();
@@ -28,7 +40,7 @@ public class CityManager {
 
     /**
      * Switch cities gateway to a demo mode gateway.
-     * @param citiesGateway A new CitiesGateway.
+     * @param citiesGateway A new CitiesGateway
      */
     void switchToDemoMode(CitiesGateway citiesGateway) {
         this.citiesGateway = citiesGateway;
@@ -39,7 +51,7 @@ public class CityManager {
 
     /**
      * Switch cities gateway to a normal gateway.
-     * @param citiesGateway A new CitiesGateway.
+     * @param citiesGateway A new CitiesGateway
      */
     void switchToNormalMode(CitiesGateway citiesGateway) {
         this.citiesGateway = citiesGateway;
@@ -49,8 +61,8 @@ public class CityManager {
 
     /**
      * Get the location where an account is located.
-     * @param accountID The account id.
-     * @return An account's location.
+     * @param accountID The account id
+     * @return An account's location
      */
     public String getLocationOfAccount(int accountID) {
         return accountRepository.getAccountFromID(accountID).getLocation();
@@ -58,8 +70,8 @@ public class CityManager {
 
     /**
      * Change the location of an account.
-     * @param accountID An account id.
-     * @param newCity The new city of the account.
+     * @param accountID An account id
+     * @param newCity The new city of the account
      */
     public void changeAccountLocation(int accountID, String newCity) {
         if (!cities.containsValue(newCity))
@@ -70,8 +82,7 @@ public class CityManager {
     }
 
     /**
-     * Updates the city with the given id to the gateway for cities
-     *
+     * Updates the city with the given id to the gateway for cities.
      * @param cityId the id of the city to be updated
      */
     private void updateToGateway(int cityId) {
@@ -79,8 +90,7 @@ public class CityManager {
     }
 
     /**
-     * Creates a city with the given city name and updates it to the gateway and local storage
-     *
+     * Creates a city with the given city name and updates it to the gateway and local storage.
      * @param cityName the name of the city
      */
     public void createCity(String cityName){
@@ -90,8 +100,7 @@ public class CityManager {
     }
 
     /**
-     * Adds the given city and city id to local storage
-     *
+     * Adds the given city and city id to local storage.
      * @param cityId the id of the city
      * @param cityName the name of the city
      */
@@ -100,8 +109,7 @@ public class CityManager {
     }
 
     /**
-     * Returns a list of all the cities
-     *
+     * Returns a list of all the cities.
      * @return an arraylist of all the cities in local storage
      */
     public List<String> getAllCities() {
