@@ -19,3 +19,16 @@ Click `Download`, and once IntelliJ has finished downloading files, it should au
 
 ## Running the Program
 Most of the program functionality is shown off in [this video here](https://www.youtube.com/watch?v=4jqZGfEbrw4&feature=youtu.be).
+
+## Authors
+
+**Name - "Git Name"**
+
+* Catherine Tianlin Xia - "xiaca"
+* Ethan Lam - "Ethan Lam" & "TLELam"
+* Hai Yang Tang - "mio"
+* Isaac Tse - "Isaac"
+* Longyu Li (Andrew) - "Andrew Li*"
+* Maryam Gohargani - "Maryam Gohargani"
+* Michael Sheinman Orenstrakh - "Michael Sheinman Orenstrakh"
+* Tairi Goto - "Tairi"
