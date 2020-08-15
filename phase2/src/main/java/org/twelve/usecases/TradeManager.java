@@ -66,7 +66,7 @@ public class TradeManager extends TradeUtility{
         List< List<Integer> > reverseItems = new ArrayList<>();
         int n = trade.getItemsIds().size();
         for (int i = 0; i < n - 1; i++)
-            reverseItems.add(trade.getItemsIds().get(n - 2 - i)); // TODO copy these instead of aliasing but it should be fine for now
+            reverseItems.add(trade.getItemsIds().get(n - 2 - i));
         reverseItems.add(trade.getItemsIds().get(n - 1));
         Collections.reverse(reverseTraders);
         return createTrade(timePlace.getTime().plusDays(thresholdRepository.getNumberOfDays()),

@@ -71,7 +71,7 @@ public class TradeRepository {
         timePlaces.put(id, timePlace);
     }
 
-    // TODO difference between this and above?
+    // TODO difference between this and above?  --maryam
     /**
      * Adds a new trade and its timePlace that exist in the database
      *

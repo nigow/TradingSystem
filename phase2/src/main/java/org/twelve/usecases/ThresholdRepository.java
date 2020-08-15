@@ -3,8 +3,6 @@ package org.twelve.usecases;
 import org.twelve.entities.Thresholds;
 import org.twelve.gateways.ThresholdsGateway;
 
-// TODO javadoc
-
 /**
  * A class to store threshold values of the program.
  * @author Maryam

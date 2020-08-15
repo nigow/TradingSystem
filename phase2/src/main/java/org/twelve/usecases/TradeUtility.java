@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// TODO javadoc is fucked
-
 /**
  * Utility class for accessing certain types of trades and information on trades.
  *
@@ -130,7 +128,6 @@ abstract public class TradeUtility {
         return threeRecent;
     }
 
-    // TODO: fix the logic behind this
     /**
      * Retrieves the number of trades the current account has made in the past week.
      *
@@ -169,7 +166,6 @@ abstract public class TradeUtility {
         return timesIncomplete;
     }
 
-    // TODO only checks trades with two people
     /**
      * Retrieves the number of times the current user has borrowed items.
      *
