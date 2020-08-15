@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TradeManagerIntegrationTest extends TestCase {
@@ -22,13 +23,11 @@ public class TradeManagerIntegrationTest extends TestCase {
         itemManager = new ItemManager(inMemoryGatewayPool.getItemsGateway(), accountRepository);
         wishlistManager = new WishlistManager(accountRepository, itemManager);
 
-        tradeManager = new TradeManager(
-                inMemoryGatewayPool.getTradeGateway(),
+        tradeManager = new TradeManager(accountRepository,
                 new ThresholdRepository(inMemoryGatewayPool.getThresholdsGateway()),
-                accountRepository,
-                new ItemManager(inMemoryGatewayPool.getItemsGateway(),accountRepository),
-                wishlistManager
-        );
+                wishlistManager,
+                inMemoryGatewayPool.getTradeGateway(),
+                new ItemManager(inMemoryGatewayPool.getItemsGateway(),accountRepository));
 
 
     }
@@ -43,12 +42,15 @@ public class TradeManagerIntegrationTest extends TestCase {
         accountRepository.createAccount("test2", "12345", new ArrayList<>(), "placeholder");
         itemManager.createItem("chess", "A chess board", 1);
 
-        ArrayList<Integer> tradeIds = new ArrayList<>();
+        List<Integer> tradeIds = new ArrayList<>();
         tradeIds.add(accountRepository.getAccountFromUsername("test").getAccountID());
         tradeIds.add(accountRepository.getAccountFromUsername("test2").getAccountID());
 
-        ArrayList<Integer> itemIds = new ArrayList<>();
-        itemIds.add(itemManager.getAllItems().get(0).getItemID());
+        List<List<Integer>> itemIds = new ArrayList<>();
+        List<Integer> itemID = new ArrayList<>();
+        itemID.add(itemManager.getAllItems().get(0).getItemID());
+        itemIds.add(itemID);
+        itemIds.add(new ArrayList<>());
         tradeManager.createTrade(LocalDateTime.now(), "UTM", true, tradeIds, itemIds);
 
 
