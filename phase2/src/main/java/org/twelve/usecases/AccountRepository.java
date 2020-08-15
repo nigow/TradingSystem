@@ -11,26 +11,16 @@ import java.util.*;
  */
 public class AccountRepository {
 
-    /**
-     * Map storing all accountIds mapping to their respective account objects.
-     */
     private final Map<Integer, Account> accounts;
-
-    /**
-     * A gateway for Accounts that interacts with external storage.
-     */
     private AccountGateway accountGateway;
-
-    /**
-     * A utility class for dealing with encryption and decryption.
-     */
     private SecurityUtility securityUtility;
 
 
     /**
      * Initializes an account repository with a certain gateway.
-     * @param accountGateway An instance of an account gateway.
-     * @param securityUtility An instance of a securityUtility class.
+     *
+     * @param accountGateway An instance of an account gateway
+     * @param securityUtility An instance of a securityUtility class
      */
     public AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
         this.accountGateway = accountGateway;
@@ -41,6 +31,7 @@ public class AccountRepository {
 
     /**
      * Switches the gateway to an demo version.
+     *
      * @param accountGateway A new instance of accountGateway
      */
     void switchToDemoMode(AccountGateway accountGateway) {
@@ -52,6 +43,7 @@ public class AccountRepository {
 
     /**
      * Switches the gateway to a normal version.
+     *
      * @param accountGateway A new instance of accountGateway
      */
     void switchToNormalMode(AccountGateway accountGateway) {
@@ -62,6 +54,7 @@ public class AccountRepository {
 
     /**
      * Creates a new account using username and password if username is not already taken.
+     *
      * @param username Username of the new account
      * @param password Password of the new account
      * @param perms List of permissions for the new account
