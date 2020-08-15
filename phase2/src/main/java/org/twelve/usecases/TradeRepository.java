@@ -30,7 +30,7 @@ abstract public class TradeRepository {
      * @param tradersIds    An ordered list of each trader participating
      * @param itemsIds      The items involved in this trade.
      */
-    public int createTrade(LocalDateTime time, String place, boolean isPermanent,
+    public int createTradeEntity(LocalDateTime time, String place, boolean isPermanent,
                            List<Integer> tradersIds, List< List<Integer> > itemsIds) {
         int id = (trades.isEmpty() ? 1 : Collections.max(trades.keySet()) + 1);
         TimePlace timePlace = new TimePlace(id, time, place);

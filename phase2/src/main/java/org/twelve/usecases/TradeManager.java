@@ -50,7 +50,7 @@ public class TradeManager extends TradeUtility{
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
                             List<Integer> tradersIds, List< List<Integer> > itemsIds) {
-        int id = createTrade(time, place, isPermanent, tradersIds, itemsIds);
+        int id = createTradeEntity(time, place, isPermanent, tradersIds, itemsIds);
         Trade trade = getTradeByID(id);
         for (int accountID : tradersIds) {
             for (int itemID : itemsTraderGives(trade.getNextTraderID(accountID), id))
