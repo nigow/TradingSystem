@@ -212,7 +212,7 @@ abstract public class TradeUtility extends TradeRepository {
      */
     public boolean lentMoreThanBorrowed(int accountID) {
         return getTimesLent(accountID) - getTimesBorrowed(accountID) >=
-                thresholdRepository.getLendMoreThanBorrow();
+                thresholdRepository.getLendMoreThanBorrow() || getTimesBorrowed(accountID) == 0;
     }
 
     /**
