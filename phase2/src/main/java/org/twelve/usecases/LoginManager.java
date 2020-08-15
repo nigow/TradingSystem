@@ -4,7 +4,7 @@ import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
 
 /**
- * Handles login procedures and keeping sessions
+ * Handles login procedure
  *
  */
 public class LoginManager {
