@@ -128,7 +128,7 @@ public class JsonTradeGateway implements TradeGateway {
                             String location = json.get("location").getAsString();
                             String time = json.get("time").getAsString();
 
-                            tradeRepository.addToTrades(tradeId, isPermanent, tradersIds, allItemIds, editCounter, tradeStatus, tradeCompletions, time, location);
+                            tradeRepository.createTrade(tradeId, isPermanent, tradersIds, allItemIds, editCounter, tradeStatus, tradeCompletions, time, location);
                         }
 
 
