@@ -40,6 +40,18 @@ public class TradeListController {
         this.tradeListPresenter = tradeListPresenter;
     }
 
+    private TradeStatus getTradeStatus(int tradeType) {
+        if (tradeType == 0)
+            return TradeStatus.UNCONFIRMED;
+        if (tradeType == 1)
+            return TradeStatus.CONFIRMED;
+        if (tradeType == 2)
+            return TradeStatus.COMPLETED;
+        if (tradeType == 3)
+            return TradeStatus.REJECTED;
+        return null;
+    }
+
     /**
      * Update the list of trades shown in TradeListPresenter
      * @param tradeType the type of trade to be shown
@@ -48,13 +60,7 @@ public class TradeListController {
         useCasePool.populateAll();
         ArrayList<String> trades = new ArrayList<>();
         if (tradeType != -1) {
-            TradeStatus tradeStatus = TradeStatus.UNCONFIRMED;
-            if (tradeType == 1)
-                tradeStatus = TradeStatus.CONFIRMED;
-            else if (tradeType == 2)
-                tradeStatus = TradeStatus.COMPLETED;
-            else if (tradeType == 3)
-                tradeStatus = TradeStatus.REJECTED;
+            TradeStatus tradeStatus = getTradeStatus(tradeType);
             for (int tradeID : tradeManager.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
                 if (tradeManager.getTradeStatus(tradeID) == tradeStatus) {
                     trades.add(accountRepository.getUsernameFromID(tradeManager.getNextTraderID(tradeID,

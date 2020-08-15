@@ -87,6 +87,4 @@ public class WishlistManager {
         for (Item item : getWishlistItems(accountID)) rep.add(item.toString());
         return rep;
     }
-
-
 }

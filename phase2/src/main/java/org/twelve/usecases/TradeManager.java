@@ -23,7 +23,6 @@ public class TradeManager extends TradeUtility{
     private final ItemManager itemManager;
     private final AccountRepository accountRepository;
 
-
     /**
      * The Constructor for TradeManager.
      *
@@ -236,5 +235,4 @@ public class TradeManager extends TradeUtility{
 
         return ans.toString();
     }
-
 }

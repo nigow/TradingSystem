@@ -33,17 +33,6 @@ public class InMemoryTradeGateway implements TradeGateway {
      */
     @Override
     public boolean populate(TradeRepository tradeRepository) {
-        /*
-        List<Integer> existingIds = tradeManager.getAllTradesIds();
-        for (Trade trade : tradeMap.values()) {
-            if (!existingIds.contains(trade.getId())) {
-                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-                tradeManager.addToTrades(trade.getId(), trade.isPermanent(), trade.getTraderIds(), trade.getItemsIds()
-                        , trade.getEditedCounter(), trade.getStatus().name(),
-                        trade.getTradeCompletions(), timePlaceMap.get(trade.getId()).getTime().format(formatter),
-                        timePlaceMap.get(trade.getId()).getPlace());
-            }
-        }*/
         for (int tradeId: tradeMap.keySet()) {
             String[] trade = tradeMap.get(tradeId);
             String[] timePlace = timePlaceMap.get(tradeId);

@@ -137,7 +137,6 @@ public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> 
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfTradesUntilTrusted").build()));
 
             BooleanBinding booleanBinding = ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(thresholdPresenter).name("isAdmin").build().not();
-            // System.out.println(booleanBinding);
             lendVsBorrow.disableProperty().bind(booleanBinding);
             maxIncomplete.disableProperty().bind(booleanBinding);
             maxWeekly.disableProperty().bind(booleanBinding);
