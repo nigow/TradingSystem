@@ -3,6 +3,7 @@ package org.twelve.usecases;
 import org.twelve.entities.TimePlace;
 import org.twelve.entities.Trade;
 import org.twelve.entities.TradeStatus;
+import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -13,19 +14,18 @@ import java.util.stream.Collectors;
  *
  * @author Isaac
  */
-abstract public class TradeUtility {
+abstract public class TradeUtility extends TradeRepository {
 
     final ThresholdRepository thresholdRepository;
-    final TradeRepository tradeRepository;
 
     /**
      * Constructor for TradeUtility
      *
      * @param thresholdRepository Repository for storing all accounts threshold values of the program.
      */
-    public TradeUtility(ThresholdRepository thresholdRepository, TradeRepository tradeRepository){
+    public TradeUtility(ThresholdRepository thresholdRepository, TradeGateway tradeGateway){
+        super(tradeGateway);
         this.thresholdRepository = thresholdRepository;
-        this.tradeRepository = tradeRepository;
     }
 
     /**
@@ -36,7 +36,7 @@ abstract public class TradeUtility {
      */
     public List<Integer> getTopThreePartnersIds(int accountID) {
         Map<Integer, Integer> tradeFrequency = new HashMap<>();
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID)) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!trade.isTwoPersonTrade())
@@ -67,21 +67,21 @@ abstract public class TradeUtility {
         List<TimePlace> allOneWay = new ArrayList<>();
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allOneWayItems = new ArrayList<>();
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID)) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (!tradeRepository.itemsTraderGives(accountID, trade.getId()).isEmpty() &&
-                    tradeRepository.itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty()) {
-                TimePlace timePlace = tradeRepository.getTimePlaceByID(trade.getId());
+            if (!itemsTraderGives(accountID, trade.getId()).isEmpty() &&
+                    itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty()) {
+                TimePlace timePlace = getTimePlaceByID(trade.getId());
                 allOneWay.add(timePlace);
             }
         }
         Collections.sort(allOneWay);
         for (TimePlace tp : allOneWay) {
-            Trade trade = tradeRepository.getTradeByID(tp.getId());
-            allOneWayItems.addAll(tradeRepository.itemsTraderGives(accountID, trade.getId()));
+            Trade trade = getTradeByID(tp.getId());
+            allOneWayItems.addAll(itemsTraderGives(accountID, trade.getId()));
         }
         int count = 0;
         for (int itemID : allOneWayItems) {
@@ -103,21 +103,21 @@ abstract public class TradeUtility {
         List<TimePlace> allTwoWay = new ArrayList<>();
         List<Integer> threeRecent = new ArrayList<>();
         List<Integer> allTwoWayItems = new ArrayList<>();
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID)) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (!tradeRepository.itemsTraderGives(accountID, trade.getId()).isEmpty() &&
-                    !tradeRepository.itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty()) {
-                TimePlace timePlace = tradeRepository.getTimePlaceByID(trade.getId());
+            if (!itemsTraderGives(accountID, trade.getId()).isEmpty() &&
+                    !itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty()) {
+                TimePlace timePlace = getTimePlaceByID(trade.getId());
                 allTwoWay.add(timePlace);
             }
         }
         Collections.sort(allTwoWay);
         for (TimePlace tp : allTwoWay) {
-            Trade trade = tradeRepository.getTradeByID(tp.getId());
-            allTwoWayItems.addAll(tradeRepository.itemsTraderGives(accountID, trade.getId()));
+            Trade trade = getTradeByID(tp.getId());
+            allTwoWayItems.addAll(itemsTraderGives(accountID, trade.getId()));
         }
         int count = 0;
         for (int itemID : allTwoWayItems) {
@@ -137,8 +137,8 @@ abstract public class TradeUtility {
         int weeklyTrades = 0;
         LocalDateTime currDate = LocalDateTime.now();
         LocalDateTime weekAgo = LocalDateTime.now().minusDays(7);
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID)) {
-            TimePlace timePlace = tradeRepository.getTimePlaceByID(trade.getId());
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            TimePlace timePlace = getTimePlaceByID(trade.getId());
             if (timePlace.getTime().isBefore(currDate) && timePlace.getTime().isAfter(weekAgo)) {
                 weeklyTrades++;
             }
@@ -157,8 +157,8 @@ abstract public class TradeUtility {
      */
     public int getTimesIncomplete(int accountID) {
         int timesIncomplete = 0;
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID)) {
-            LocalDateTime tradeTime = tradeRepository.getTimePlaceByID(trade.getId()).getTime();
+        for (Trade trade : getAllTradesAccount(accountID)) {
+            LocalDateTime tradeTime = getTimePlaceByID(trade.getId()).getTime();
             if (tradeTime.isBefore(LocalDateTime.now()) && trade.getStatus().equals(TradeStatus.CONFIRMED)) {
                 timesIncomplete++;
             }
@@ -173,13 +173,13 @@ abstract public class TradeUtility {
      */
     public int getTimesBorrowed(int accountID) {
         int timesBorrowed = 0;
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID)) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (!tradeRepository.itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty() &&
-                    tradeRepository.itemsTraderGives(accountID, trade.getId()).isEmpty())
+            if (!itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty() &&
+                    itemsTraderGives(accountID, trade.getId()).isEmpty())
                 timesBorrowed++;
         }
         return timesBorrowed;
@@ -192,13 +192,13 @@ abstract public class TradeUtility {
      */
     public int getTimesLent(int accountID) {
         int timesLent = 0;
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID)) {
+        for (Trade trade : getAllTradesAccount(accountID)) {
             if (trade.getStatus() != TradeStatus.CONFIRMED && trade.getStatus() != TradeStatus.COMPLETED)
                 continue;
             if (!trade.isTwoPersonTrade())
                 continue;
-            if (tradeRepository.itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty() &&
-                    !tradeRepository.itemsTraderGives(accountID, trade.getId()).isEmpty())
+            if (itemsTraderGives(trade.getNextTraderID(accountID), trade.getId()).isEmpty() &&
+                    !itemsTraderGives(accountID, trade.getId()).isEmpty())
                 timesLent++;
         }
         return timesLent;
@@ -223,7 +223,7 @@ abstract public class TradeUtility {
      */
     public boolean canBeTrusted(int accountID) {
         int counter = 0;
-        for (Trade trade : tradeRepository.getAllTradesAccount(accountID))
+        for (Trade trade : getAllTradesAccount(accountID))
             if (trade.getStatus() == TradeStatus.COMPLETED)
                 counter++;
         return counter >= thresholdRepository.getRequiredTradesForTrusted();
@@ -236,7 +236,7 @@ abstract public class TradeUtility {
      * @return Whether it's the account's turn to edit.
      */
     public boolean isEditTurn(int accountID, int tradeID) {
-        return tradeRepository.getTradeByID(tradeID).isEditTurn(accountID);
+        return getTradeByID(tradeID).isEditTurn(accountID);
     }
 
     /**
@@ -247,7 +247,7 @@ abstract public class TradeUtility {
      * @return whether this account completed trade or not
      */
     public boolean accountCompletedTrade(int accountID, int tradeID) {
-        Trade trade = tradeRepository.getTradeByID(tradeID);
+        Trade trade = getTradeByID(tradeID);
         int ind = trade.getTraderIds().indexOf(accountID);
         return trade.getTradeCompletions().get(ind);
     }

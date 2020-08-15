@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class TradeRepository {
+abstract public class TradeRepository {
     Map<Integer, Trade> trades;
     Map<Integer, TimePlace> timePlaces;
     private TradeGateway tradeGateway;

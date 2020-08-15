@@ -20,7 +20,6 @@ public class UseCasePool {
     private SessionManager sessionManager;
     private GatewayPool gatewayPool;
     private SecurityUtility securityUtility;
-    private TradeRepository tradeRepository;
 
     /**
      * Creates all the required use cases for the program.
@@ -37,8 +36,7 @@ public class UseCasePool {
         thresholdRepository = new ThresholdRepository(gatewayPool.getThresholdsGateway());
         itemManager = new ItemManager(gatewayPool.getItemsGateway(), accountRepository);
         wishlistManager = new WishlistManager(accountRepository, itemManager);
-        tradeRepository = new TradeRepository(gatewayPool.getTradeGateway());
-        tradeManager = new TradeManager(accountRepository, thresholdRepository, wishlistManager, tradeRepository, itemManager);
+        tradeManager = new TradeManager(accountRepository, thresholdRepository, wishlistManager, gatewayPool.getTradeGateway(), itemManager);
         statusManager = new StatusManager(accountRepository, tradeManager, thresholdRepository);
         loginManager = new LoginManager(accountRepository, securityUtility);
         sessionManager = new SessionManager(accountRepository);
@@ -110,13 +108,6 @@ public class UseCasePool {
     }
 
     /**
-     * @return An instance of TradeRepository use case.
-     */
-    public TradeRepository getTradeRepository() {
-        return tradeRepository;
-    }
-
-    /**
      * @return An instance of CityManager use case.
      */
     public SecurityUtility getSecurityUtility() {
@@ -142,7 +133,7 @@ public class UseCasePool {
         cityManager.switchToDemoMode(gatewayPool.getCitiesGateway());
         accountRepository.switchToDemoMode(gatewayPool.getAccountGateway());
         thresholdRepository.switchToDemoMode(gatewayPool.getThresholdsGateway());
-        tradeRepository.switchToDemoMode(gatewayPool.getTradeGateway());
+        tradeManager.switchToDemoMode(gatewayPool.getTradeGateway());
     }
 
     private void switchToNormalMode() {
@@ -150,7 +141,7 @@ public class UseCasePool {
         cityManager.switchToNormalMode(gatewayPool.getCitiesGateway());
         accountRepository.switchToNormalMode(gatewayPool.getAccountGateway());
         thresholdRepository.switchToNormalMode(gatewayPool.getThresholdsGateway());
-        tradeRepository.switchToNormalMode(gatewayPool.getTradeGateway());
+        tradeManager.switchToNormalMode(gatewayPool.getTradeGateway());
     }
 
     /**
@@ -161,7 +152,7 @@ public class UseCasePool {
         gatewayPool.getCitiesGateway().populate(cityManager);
         gatewayPool.getItemsGateway().populate(itemManager);
         gatewayPool.getThresholdsGateway().populate(thresholdRepository);
-        gatewayPool.getTradeGateway().populate(tradeRepository);
+        gatewayPool.getTradeGateway().populate(tradeManager);
     }
 
 }

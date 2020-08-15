@@ -18,7 +18,6 @@ public class TradeListController {
     private final AccountRepository accountRepository;
     private final SessionManager sessionManager;
     private final ItemManager itemManager;
-    private final TradeRepository tradeRepository;
     private final UseCasePool useCasePool;
 
     /**
@@ -30,9 +29,7 @@ public class TradeListController {
         accountRepository = useCasePool.getAccountRepository();
         sessionManager = useCasePool.getSessionManager();
         itemManager = useCasePool.getItemManager();
-        tradeRepository = useCasePool.getTradeRepository();
         this.useCasePool = useCasePool;
-
     }
 
     /**
@@ -58,11 +55,11 @@ public class TradeListController {
                 tradeStatus = TradeStatus.COMPLETED;
             else if (tradeType == 3)
                 tradeStatus = TradeStatus.REJECTED;
-            for (int tradeID : tradeRepository.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
-                if (tradeRepository.getTradeStatus(tradeID) == tradeStatus) {
-                    trades.add(accountRepository.getUsernameFromID(tradeRepository.getNextTraderID(tradeID,
+            for (int tradeID : tradeManager.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
+                if (tradeManager.getTradeStatus(tradeID) == tradeStatus) {
+                    trades.add(accountRepository.getUsernameFromID(tradeManager.getNextTraderID(tradeID,
                             sessionManager.getCurrAccountID())));
-                    trades.add(tradeRepository.getDateTime(tradeID).format(DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm")));
+                    trades.add(tradeManager.getDateTime(tradeID).format(DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm")));
                 }
             }
         }
@@ -103,8 +100,8 @@ public class TradeListController {
             tradeStatus = TradeStatus.COMPLETED;
         else if (tradeType == 3)
             tradeStatus = TradeStatus.REJECTED;
-        for (int tradeID : tradeRepository.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
-            if (tradeRepository.getTradeStatus(tradeID) == tradeStatus) {
+        for (int tradeID : tradeManager.getAllTradesAccountID(sessionManager.getCurrAccountID())) {
+            if (tradeManager.getTradeStatus(tradeID) == tradeStatus) {
                 trades.add(tradeID);
             }
         }

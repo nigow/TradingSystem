@@ -19,7 +19,6 @@ public class TradeEditorController {
     private final AccountRepository accountRepository;
     private final SessionManager sessionManager;
     private final ItemManager itemManager;
-    private final TradeRepository tradeRepository;
     private final UseCasePool useCasePool;
 
     /**
@@ -31,7 +30,6 @@ public class TradeEditorController {
         accountRepository = useCasePool.getAccountRepository();
         sessionManager = useCasePool.getSessionManager();
         itemManager = useCasePool.getItemManager();
-        tradeRepository = useCasePool.getTradeRepository();
         this.useCasePool = useCasePool;
     }
     /**
@@ -54,16 +52,16 @@ public class TradeEditorController {
         boolean canConfirm = false;
         boolean canComplete = false;
         boolean canCancel = false;
-        if (tradeRepository.getTradeStatus(tradeID) == TradeStatus.UNCONFIRMED) {
+        if (tradeManager.getTradeStatus(tradeID) == TradeStatus.UNCONFIRMED) {
             canCancel = true;
             if (tradeManager.isEditTurn(sessionManager.getCurrAccountID(), tradeID)) {
-                if (tradeRepository.getDateTime(tradeID).isAfter(LocalDateTime.now()))
+                if (tradeManager.getDateTime(tradeID).isAfter(LocalDateTime.now()))
                     canConfirm = true;
                 if (tradeManager.canBeEdited(tradeID))
                     canEdit = true;
             }
-        } else if (tradeRepository.getTradeStatus(tradeID) == TradeStatus.CONFIRMED) {
-            if (tradeRepository.getDateTime(tradeID).isBefore(LocalDateTime.now()) && !tradeManager.accountCompletedTrade(sessionManager.getCurrAccountID(), tradeID))
+        } else if (tradeManager.getTradeStatus(tradeID) == TradeStatus.CONFIRMED) {
+            if (tradeManager.getDateTime(tradeID).isBefore(LocalDateTime.now()) && !tradeManager.accountCompletedTrade(sessionManager.getCurrAccountID(), tradeID))
                 canComplete = true;
         }
         tradeEditorPresenter.setCanEdit(canEdit);
@@ -74,8 +72,8 @@ public class TradeEditorController {
 
     private void setTradeItems() {
         int tradeID = sessionManager.getWorkingTrade();
-        List<Integer> userItemIDs = tradeRepository.itemsTraderGives(sessionManager.getCurrAccountID(), tradeID);
-        List<Integer> peerItemIDs = tradeRepository.itemsTraderGives(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID()), tradeID);
+        List<Integer> userItemIDs = tradeManager.itemsTraderGives(sessionManager.getCurrAccountID(), tradeID);
+        List<Integer> peerItemIDs = tradeManager.itemsTraderGives(tradeManager.getNextTraderID(tradeID, sessionManager.getCurrAccountID()), tradeID);
         List<String> userItems = new ArrayList<>();
         for (int id : userItemIDs)
             userItems.add(itemManager.getItemNameById(id));
@@ -93,15 +91,15 @@ public class TradeEditorController {
         useCasePool.populateAll();
         int tradeID = sessionManager.getWorkingTrade();
         setTradeItems();
-        tradeEditorPresenter.setPeerUsername(accountRepository.getUsernameFromID(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID())));
-        tradeEditorPresenter.setTradeStatus(tradeRepository.getTradeStatus(tradeID));
+        tradeEditorPresenter.setPeerUsername(accountRepository.getUsernameFromID(tradeManager.getNextTraderID(tradeID, sessionManager.getCurrAccountID())));
+        tradeEditorPresenter.setTradeStatus(tradeManager.getTradeStatus(tradeID));
         setTradeActions();
-        tradeEditorPresenter.setIsPermanent(tradeRepository.isPermanent(tradeID));
-        LocalDateTime dateTime = tradeRepository.getDateTime(tradeID);
+        tradeEditorPresenter.setIsPermanent(tradeManager.isPermanent(tradeID));
+        LocalDateTime dateTime = tradeManager.getDateTime(tradeID);
         tradeEditorPresenter.setHourChosen(dateTime.getHour());
         tradeEditorPresenter.setMinuteChosen(dateTime.getMinute());
         tradeEditorPresenter.setDateChosen(LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth()));
-        tradeEditorPresenter.setLocationChosen(tradeRepository.getLocation(tradeID));
+        tradeEditorPresenter.setLocationChosen(tradeManager.getLocation(tradeID));
     }
     /**
      * Cancel the trade that is currently being worked on
