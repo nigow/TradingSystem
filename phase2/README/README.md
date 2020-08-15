@@ -17,3 +17,5 @@ Click on the box next to `Gradle JVM`, and click `Download JDK`. Select `AdoptOp
 
 Click `Download`, and once IntelliJ has finished downloading files, it should automatically apply the new changes. If not, just restart IntelliJ. From there, click on the gradle tab in the top right, and click on `phase2/Tasks/Application/run`, which will run the program.
 
+## Running the Program
+Most of the program functionality is shown off in [this video here](https://www.youtube.com/watch?v=4jqZGfEbrw4&feature=youtu.be).
