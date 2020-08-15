@@ -13,9 +13,6 @@ import org.twelve.usecases.UseCasePool;
  */
 public class ThresholdController {
 
-    /**
-     * An instance of ThresholdRepository to set new limits
-     */
     private final ThresholdRepository thresholdRepository;
 
     private ThresholdPresenter thresholdPresenter;
@@ -64,30 +61,52 @@ public class ThresholdController {
             thresholdRepository.setMaxWeeklyTrade(newNumber);
     }
 
+    /**
+     * Calls thresholdRepository and sets numberOfDays to the newNumber
+     * @param newNumber the new number of max weekly trades you can have
+     */
     public void numberOfDays(int newNumber) {
         if (newNumber != thresholdRepository.getNumberOfDays())
             thresholdRepository.setNumberOfDays(newNumber);
     }
 
+    /**
+     * Calls thresholdRepository and sets numberOfStats to the newNumber
+     * @param newNumber the new number of max weekly trades you can have
+     */
     public void numberOfStats(int newNumber) {
         if (newNumber != thresholdRepository.getNumberOfStats())
             thresholdRepository.setNumberOfStats(newNumber);
     }
 
+    /**
+     * Calls thresholdRepository and sets numberOfEdits to the newNumber
+     * @param newNumber the new number of max weekly trades you can have
+     */
     public void numberOfEdits(int newNumber) {
         if (newNumber != thresholdRepository.getNumberOfEdits())
             thresholdRepository.setNumberOfEdits(newNumber);
     }
-
+    /**
+     * Calls thresholdRepository and sets numberOfTradesUntilTrusted to the newNumber
+     * @param newNumber the new number of max weekly trades you can have
+     */
     public void numberOfTradesUntilTrusted(int newNumber) {
         if (newNumber != thresholdRepository.getNumberOfEdits())
             thresholdRepository.setRequiredTradesForTrusted(newNumber);
     }
 
+    /**
+     * Set the presenter for this controller
+     * @param thresholdPresenter an instance of a class that implements {@link org.twelve.presenters.ThresholdPresenter}
+     */
     public void setThresholdPresenter(ThresholdPresenter thresholdPresenter) {
         this.thresholdPresenter = thresholdPresenter;
     }
 
+    /**
+     * Re-populate the threshold values in the presenter
+     */
     public void displayThresholds() {
 
         useCasePool.populateAll();

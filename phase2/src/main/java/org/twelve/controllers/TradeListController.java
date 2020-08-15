@@ -7,6 +7,9 @@ import org.twelve.usecases.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Controller for trades and stats
+ */
 public class TradeListController {
 
     private TradeListPresenter tradeListPresenter;
@@ -18,6 +21,10 @@ public class TradeListController {
     private final TradeRepository tradeRepository;
     private final UseCasePool useCasePool;
 
+    /**
+     * Constructor for the controller for trades and stats
+     * @param useCasePool an instance of UseCasePool
+     */
     public TradeListController(UseCasePool useCasePool){
         tradeManager = useCasePool.getTradeManager();
         accountRepository = useCasePool.getAccountRepository();
@@ -28,10 +35,18 @@ public class TradeListController {
 
     }
 
+    /**
+     * Set the presenter for this controller
+     * @param tradeListPresenter an instance of a class that implements {@link org.twelve.presenters.TradeListPresenter}
+     */
     public void setTradeListPresenter(TradeListPresenter tradeListPresenter) {
         this.tradeListPresenter = tradeListPresenter;
     }
 
+    /**
+     * Update the list of trades shown in TradeListPresenter
+     * @param tradeType the type of trade to be shown
+     */
     public void updateTradeList(int tradeType) {
         useCasePool.populateAll();
         ArrayList<String> trades = new ArrayList<>();
@@ -54,6 +69,10 @@ public class TradeListController {
         tradeListPresenter.setTradesShown(trades);
     }
 
+    /**
+     * Update the list of stats in TradeListPresenter
+     * @param statsIndex The index of the type of stats to show
+     */
     public void updateStatsList(int statsIndex) {
         useCasePool.populateAll();
         ArrayList<String> stat = new ArrayList<>();
@@ -70,6 +89,11 @@ public class TradeListController {
         tradeListPresenter.setStatsShown(stat);
     }
 
+    /**
+     * Set the selected trade in TradeListPresenter
+     * @param tradeType the type of trade that is selected
+     * @param index the index of the selected trade
+     */
     public void setSelectedTrade(int tradeType, int index) {
         ArrayList<Integer> trades = new ArrayList<>();
         TradeStatus tradeStatus = TradeStatus.UNCONFIRMED;

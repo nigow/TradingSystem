@@ -119,6 +119,7 @@ public class WishlistController {
 
     }
 
+
     private void changeSelectedItem(int itemId) {
 
         wishlistPresenter.setSelectedItemName(itemManager.getItemNameById(itemId));

@@ -139,13 +139,6 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
             editButton.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(tradeEditorPresenter).name("canEdit").build().and(isValidTimeLocation).not());
 
-            // TODO maybe find a better way
-//            locationBox.textProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
-//            dateBox.valueProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
-//            hourChosen.valueProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
-//            minuteChosen.valueProperty().addListener((observable, oldValue, newValue) -> tradeEditorPresenter.setCanConfirm(false));
-
-
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }

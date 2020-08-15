@@ -12,14 +12,8 @@ import org.twelve.usecases.UseCasePool;
  */
 public class LoginController {
 
-    /**
-     * An instance of SessionManager to create an account or get information about an account.
-     */
     private final SessionManager sessionManager;
 
-    /**
-     * An instance of LoginManager to check login information or permissions.
-     */
     private final LoginManager loginManager;
 
     private LoginPresenter loginPresenter;
@@ -37,6 +31,10 @@ public class LoginController {
         this.useCasePool = useCasePool;
     }
 
+    /**
+     * Set the presenter for this controller
+     * @param loginPresenter An instance of a class that implements {@link org.twelve.presenters.LoginPresenter}
+     */
     public void setLoginPresenter(LoginPresenter loginPresenter) {
         this.loginPresenter = loginPresenter;
     }

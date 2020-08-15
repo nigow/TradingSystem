@@ -6,6 +6,9 @@ import org.twelve.usecases.UseCasePool;
 
 import java.util.Locale;
 
+/**
+ * Initializes controllers and provides a pool for accessing them
+ */
 public class ControllerPool {
 
     private final LoginController loginController;
@@ -24,6 +27,11 @@ public class ControllerPool {
     private final TradeEditorController tradeEditorController;
     private final TradeCancellationController tradeCancellationController;
 
+    /**
+     * Creates all the required controllers for the program
+     * @param selectedLanguage the selected language the controllers should use
+     * @param demoMode whether or not the program should run in demo mode
+     */
     public ControllerPool(Locale selectedLanguage, boolean demoMode) {
         GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("json");
         UseCasePool useCasePool = new UseCasePool(gatewayPool);
@@ -50,58 +58,118 @@ public class ControllerPool {
 
     }
 
+    /**
+     * Getter for LoginController
+     * @return LoginController
+     */
     public LoginController getLoginController() {
         return loginController;
     }
 
+    /**
+     * Getter for RegistrationController
+     * @return RegistrationController
+     */
     public RegistrationController getRegistrationController() {
         return registrationController;
     }
 
+    /**
+     * Getter for MenuController
+     * @return MenuController
+     */
     public MenuController getMenuController() {
         return menuController;
     }
 
+    /**
+     * Getter for WarehouseController
+     * @return WarehouseController
+     */
     public WarehouseController getWarehouseController() {
         return warehouseController;
     }
 
+    /**
+     * Getter for WishlistController
+     * @return WishlistController
+     */
     public WishlistController getWishlistController() {
         return wishlistController;
     }
 
+    /**
+     * Getter for ProfileController
+     * @return ProfileController
+     */
     public ProfileController getProfileController() {
         return profileController;
     }
 
+    /**
+     * Getter for InventoryController
+     * @return InventoryController
+     */
     public InventoryController getInventoryController() {
         return inventoryController;
     }
 
+    /**
+     * Getter for ThresholdController
+     * @return ThreasholdController
+     */
     public ThresholdController getThresholdController() {return thresholdController;}
 
+    /**
+     * Getter for FreezingController
+     * @return FreezingController
+     */
     public FreezingController getFreezingController() {
         return freezingController;
     }
 
+    /**
+     * Getter for TradeCreatorController
+     * @return TradeCreatorController
+     */
     public TradeCreatorController getTradeCreatorController() {return tradeCreatorController;}
 
+    /**
+     * Getter for TradeListController
+     * @return TradeListController
+     */
     public TradeListController getTradeListController() {
         return tradeListController;
     }
 
+    /**
+     * Getter for LandingController
+     * @return LandingController
+     */
     public LandingController getLandingController() {
         return landingController;
     }
 
+    /**
+     * Getter for AdminWishlistController
+     * @return AdminWishlistController
+     */
     public AdminWishlistController getAdminWishlistController() {
         return adminWishlistController;
     }
 
+    /**
+     * Getter for TradeEditorController
+     * @return TradeEditorController
+     */
     public TradeEditorController getTradeEditorController() {
         return tradeEditorController;
     }
 
+    /**
+     * Getter for TradeCancellationController
+     * @return TradeCancellationController
+     */
     public TradeCancellationController getTradeCancellationController() {
         return tradeCancellationController;
     }

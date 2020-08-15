@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Presenter for the admins wishlist menu
+ */
 public class UIAdminWishlistPresenter extends ObservablePresenter implements AdminWishlistPresenter {
 
     private List<String> allUsers;
@@ -15,6 +18,10 @@ public class UIAdminWishlistPresenter extends ObservablePresenter implements Adm
 
     private final ResourceBundle localizedResources;
 
+    /**
+     * Constructor for the presenter
+     * @param localizedResources pack containing any localized strings.
+     */
     public UIAdminWishlistPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
@@ -23,6 +30,9 @@ public class UIAdminWishlistPresenter extends ObservablePresenter implements Adm
         setSelectedItemDescription("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setWishlistOfUser(List<String> wishlistItems) {
         List<String> oldWishlistItems = this.wishlistOfUser;
@@ -30,11 +40,17 @@ public class UIAdminWishlistPresenter extends ObservablePresenter implements Adm
         propertyChangeSupport.firePropertyChange("wishlistOfUser", oldWishlistItems, this.wishlistOfUser);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getWishlistOfUser() {
         return wishlistOfUser;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setAllUsers(List<String> allUsers) {
         List<String> oldUsers = this.allUsers;
@@ -42,11 +58,17 @@ public class UIAdminWishlistPresenter extends ObservablePresenter implements Adm
         propertyChangeSupport.firePropertyChange("allUsers", oldUsers, this.allUsers);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getAllUsers() {
         return allUsers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelectedItemDescription(String desc) {
         String oldItemDesc = this.selectedItemDescription;
@@ -54,6 +76,9 @@ public class UIAdminWishlistPresenter extends ObservablePresenter implements Adm
         propertyChangeSupport.firePropertyChange("selectedItemDescription", oldItemDesc, this.selectedItemDescription);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSelectedItemDescription() {
         return selectedItemDescription;

@@ -3,8 +3,6 @@ package org.twelve.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO jacadoc should be fixed
-
 /**
  * Represents a one-way or two-way transaction between two users.
  *

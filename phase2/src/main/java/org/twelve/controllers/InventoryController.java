@@ -15,19 +15,10 @@ import java.util.List;
  */
 public class InventoryController {
 
-    /**
-     * The presenter counterpart to this class
-     */
     private InventoryPresenter inventoryPresenter;
 
-    /**
-     * An instance of ItemManager to access items
-     */
     private final ItemManager itemManager;
 
-    /**
-     * An instance of SessionManager to access accounts
-     */
     private final SessionManager sessionManager;
 
     private final UseCasePool useCasePool;

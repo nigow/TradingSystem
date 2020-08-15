@@ -6,22 +6,36 @@ import org.twelve.usecases.SessionManager;
 import org.twelve.usecases.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
+/**
+ * Controller for the menu
+ */
 public class MenuController {
 
     private final SessionManager sessionManager;
     private final StatusManager statusManager;
     private MenuPresenter menuPresenter;
 
+    /**
+     * Initializer for the controller for the menu
+     * @param useCasePool an instance of UseCasePool to get all the use cases
+     */
     public MenuController(UseCasePool useCasePool) {
         this.sessionManager = useCasePool.getSessionManager();
         statusManager = useCasePool.getStatusManager();
 
     }
 
+    /**
+     * Set the presenter for this controller
+     * @param menuPresenter an instance of a class that implements {@link org.twelve.presenters.MenuPresenter}
+     */
     public void setMenuPresenter(MenuPresenter menuPresenter) {
         this.menuPresenter = menuPresenter;
     }
 
+    /**
+     * Set the presenters to display the correct buttons depending on the user's permissions
+     */
     public void displayButtons() {
         int accountID = sessionManager.getCurrAccountID();
         menuPresenter.setInitiateTrade(statusManager.hasPermission(accountID, Permissions.TRADE));
@@ -33,6 +47,9 @@ public class MenuController {
         menuPresenter.setCurrentUser(sessionManager.getCurrAccountUsername());
     }
 
+    /**
+     * Log out of the current session
+     */
     public void logout() {
         sessionManager.logout();
     }

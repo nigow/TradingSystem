@@ -17,11 +17,19 @@ import java.util.Map;
 
 abstract public class ItemUtility {
 
+    /**
+     * Map storing all itemIds mapping to their respective item objects.
+     */
     Map<Integer, Item> items;
+
+    /**
+     * Repository for storing all accounts in the system.
+     */
     AccountRepository accountRepository;
 
     /**
      * Constructor for ItemUtility.
+     * @param accountRepository The repository for storing all accounts in the system.
      */
     public ItemUtility(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
@@ -31,7 +39,7 @@ abstract public class ItemUtility {
     /**
      * Gets the ID of the owner of the item.
      *
-     * @param itemID    ID of the item which information is being returned about
+     * @param itemID ID of the item which information is being returned about
      * @return ID of the owner of the item (-1 if no item can be found).
      */
     public int getOwnerId(int itemID) {
@@ -42,7 +50,6 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all approved items in the system.
-     *
      * @return List of all approved items in the system
      */
     List<Item> getApproved() {
@@ -57,7 +64,6 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all approved item ids in the system.
-     *
      * @return List of all approved item ids in the system.
      */
     public List<Integer> getApprovedIDs() {
@@ -72,7 +78,6 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all non-approved items in the system.
-     *
      * @return List of all non-approved items in the system
      */
     List<Item> getDisapproved() {
@@ -87,7 +92,6 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves IDs of all non-approved items in the system.
-     *
      * @return List of IDs of all non-approved items in the system
      */
     public List<Integer> getDisapprovedIDs() {
@@ -102,8 +106,7 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all approved items for a certain account.
-     *
-     * @param accountID     Account ID which the items are retrieved for
+     * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
     public List<Integer> getApprovedInventoryOfAccount(int accountID) {
@@ -118,8 +121,7 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account in string format.
-     *
-     * @param accountID     Account ID which the items are retrieved for
+     * @param accountID Account ID which the items are retrieved for
      * @return List of items for account in string format
      */
     public List<String> getApprovedInventoryOfAccountString(int accountID) {
@@ -134,8 +136,7 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all items for a certain account.
-     *
-     * @param accountID     Account ID which the items are retrieved for
+     * @param accountID Account ID which the items are retrieved for
      * @return List of items for account
      */
     public List<Integer> getDisprovedInventoryOfAccount(int accountID) {
@@ -150,8 +151,7 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all items not in a certain account/the account's wishlist.
-     *
-     * @param accountID       Account ID which the items are not retrieved from
+     * @param accountID Account ID which the items are not retrieved from
      * @return List of all items not in a certain account
      */
     protected List<Item> getNotInAccount(int accountID) {
@@ -167,7 +167,7 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves an item with a certain id, if item does not exist return null
-     * @param itemId    Id of item to be retrieved
+     * @param itemId Id of item to be retrieved
      * @return The item with the id in question
      */
     protected Item findItemById(int itemId) {
@@ -181,7 +181,6 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all items with the same home location as the account with the id entered
-     *
      * @param accountId The Id of the account
      * @return A list of all item Ids in the same location
      */
@@ -201,7 +200,6 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all items stored in local storage.
-     *
      * @return List of all items
      */
     protected List<Item> getAllItems() {
@@ -216,7 +214,6 @@ abstract public class ItemUtility {
 
     /**
      * Retrieves all items stored in local storage in string format.
-     *
      * @return List of all items in string format
      */
     public List<String> getAllItemsString() {
@@ -229,8 +226,7 @@ abstract public class ItemUtility {
 
     /**
      * Get the name of item with the id entered.
-     *
-     * @param itemID    ID of the item with info being returned
+     * @param itemID ID of the item with info being returned
      * @return Name of item with the entered ID
      */
     public String getItemNameById(int itemID) {
@@ -239,8 +235,7 @@ abstract public class ItemUtility {
 
     /**
      * Get the desc of item with the id entered.
-     *
-     * @param itemID    ID of the item with info being returned
+     * @param itemID ID of the item with info being returned
      * @return Desc of item with the entered ID
      */
     public String getItemDescById(int itemID) {
