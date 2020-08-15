@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.AccountGateway;
-import org.twelve.usecases.AccountRepository;
+import org.twelve.usecases.account.AccountRepository;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -44,7 +44,7 @@ public class JsonAccountGateway implements AccountGateway {
     /**
      * Define the endpoints and the JSON objects to interact with the database
      */
-    public JsonAccountGateway(){
+    public JsonAccountGateway() {
         gson = new Gson();
         getAllAccountsUrl = "http://csc207phase2.herokuapp.com/accounts/get_all_accounts";
         updateAccountUrl = "http://csc207phase2.herokuapp.com/accounts/update_account";
@@ -60,23 +60,23 @@ public class JsonAccountGateway implements AccountGateway {
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
 
-        try{
+        try {
             URL url = new URL(getAllAccountsUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             int status = urlConnection.getResponseCode();
 
-            if(status==200){
+            if (status == 200) {
                 inputStream = urlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 JsonObject json;
                 JsonArray jsonArray;
 
-                while((line = bufferedReader.readLine())!=null){
-                    try{
+                while ((line = bufferedReader.readLine()) != null) {
+                    try {
                         jsonArray = gson.fromJson(line, JsonObject.class).get("accounts").getAsJsonArray();
-                        for(JsonElement jsonElement: jsonArray){
+                        for (JsonElement jsonElement : jsonArray) {
                             json = jsonElement.getAsJsonObject();
                             int accountId = json.get("account_id").getAsInt();
                             String username = json.get("username").getAsString();
@@ -84,7 +84,7 @@ public class JsonAccountGateway implements AccountGateway {
                             List<Integer> wishlist = new ArrayList<>();
 
 
-                            for(String s: json.get("wishlist").getAsString().split(" ")){
+                            for (String s : json.get("wishlist").getAsString().split(" ")) {
                                 wishlist.add(Integer.parseInt(s));
                             }
                             List<String> permissions = new ArrayList<>();
@@ -96,23 +96,22 @@ public class JsonAccountGateway implements AccountGateway {
                         }
 
 
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         return false;
                     }
                 }
             }
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        try{
+        try {
             assert inputStream != null;
             inputStream.close();
             bufferedReader.close();
             return true;
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -123,11 +122,11 @@ public class JsonAccountGateway implements AccountGateway {
      */
     @Override
     public boolean save(int accountId, String username, String password, List<Integer> wishlist,
-                     List<String> permissions, String location, boolean newAccount) {
+                        List<String> permissions, String location, boolean newAccount) {
         StringBuilder wishlistString = new StringBuilder(wishlist.isEmpty() ? " " : "");
-        for(Integer i: wishlist) wishlistString.append(i.toString()).append(" ");
+        for (Integer i : wishlist) wishlistString.append(i.toString()).append(" ");
         StringBuilder permissionsString = new StringBuilder(permissions.isEmpty() ? " " : "");
-        for(String s: permissions) permissionsString.append(s).append(" ");
+        for (String s : permissions) permissionsString.append(s).append(" ");
         JsonObject json = new JsonObject();
         json.addProperty("account_id", accountId);
         json.addProperty("username", username);
@@ -140,8 +139,8 @@ public class JsonAccountGateway implements AccountGateway {
         HttpURLConnection con;
         OutputStream outputStream;
         URL url;
-        try{
-            if(newAccount) url = new URL(createAccountUrl);
+        try {
+            if (newAccount) url = new URL(createAccountUrl);
             else url = new URL(updateAccountUrl);
             con = (HttpURLConnection) url.openConnection();
 
@@ -156,14 +155,14 @@ public class JsonAccountGateway implements AccountGateway {
 
             con.getInputStream(); // this is needed otherwise the request doesn't go out
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        try{
+        try {
             outputStream.close();
             return true;
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }

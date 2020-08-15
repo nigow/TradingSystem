@@ -19,7 +19,8 @@ public class UITradeListPresenter extends ObservablePresenter implements TradeLi
 
     /**
      * Constructor for the presenter that deals with the trade list view
-     * @param localizedResources
+     *
+     * @param localizedResources Pack containing any localized strings.
      */
     public UITradeListPresenter(ResourceBundle localizedResources) {
         super();

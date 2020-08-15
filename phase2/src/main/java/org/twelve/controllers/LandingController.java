@@ -2,9 +2,9 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.LandingPresenter;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.SessionManager;
-import org.twelve.usecases.ThresholdRepository;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.system.SessionManager;
+import org.twelve.usecases.system.ThresholdRepository;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.ArrayList;
@@ -29,9 +29,10 @@ public class LandingController {
 
     /**
      * Constructor of controller for managing runtime preferences.
+     *
      * @param selectedLanguage Current display language.
-     * @param demoMode Whether demo mode is active.
-     * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
+     * @param demoMode         Whether demo mode is active.
+     * @param useCasePool      An instance of {@link org.twelve.usecases.UseCasePool}.
      */
     public LandingController(Locale selectedLanguage, boolean demoMode, UseCasePool useCasePool) {
 
@@ -50,6 +51,7 @@ public class LandingController {
 
     /**
      * Provides the landing controller with an appropriate presenter.
+     *
      * @param landingPresenter An instance of a class that implements {@link org.twelve.presenters.LandingPresenter}.
      */
     public void setLandingPresenter(LandingPresenter landingPresenter) {

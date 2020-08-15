@@ -20,6 +20,7 @@ public class UIAdminWishlistPresenter extends ObservablePresenter implements Adm
 
     /**
      * Constructor for the presenter
+     *
      * @param localizedResources pack containing any localized strings.
      */
     public UIAdminWishlistPresenter(ResourceBundle localizedResources) {

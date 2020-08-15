@@ -33,7 +33,7 @@ public class UITradeCancellationPresenter extends ObservablePresenter implements
      */
     @Override
     public void setAllTrades(List<String> allTrades) {
-        List <String> oldTrades = this.allTrades;
+        List<String> oldTrades = this.allTrades;
         this.allTrades = allTrades;
         propertyChangeSupport.firePropertyChange("allTrades", oldTrades, allTrades);
     }

@@ -22,6 +22,7 @@ public abstract class ObservablePresenter {
 
     /**
      * Add listener to observable class.
+     *
      * @param listener An instance of a class that implements {@link java.beans.PropertyChangeListener}.
      */
     @SuppressWarnings("unused") // required according to PropertyChangeSupport documentation
@@ -33,6 +34,7 @@ public abstract class ObservablePresenter {
 
     /**
      * Remove listener from observable class.
+     *
      * @param listener An instance of a class that implements {@link java.beans.PropertyChangeListener}.
      */
     @SuppressWarnings("unused") // required according to PropertyChangeSupport documentation

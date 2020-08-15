@@ -20,9 +20,10 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing trade cancellations
+ *
  * @param <T> Presenter.
  */
-public class TradeCancellationView <T extends ObservablePresenter & TradeCancellationPresenter> implements SceneView, Initializable {
+public class TradeCancellationView<T extends ObservablePresenter & TradeCancellationPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
 
@@ -38,12 +39,13 @@ public class TradeCancellationView <T extends ObservablePresenter & TradeCancell
 
     /**
      * Constructor of view for managing trade cancellations.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler               An instance of {@link org.twelve.views.WindowHandler}.
      * @param tradeCancellationController Controller for managing trade cancellations.
-     * @param tradeCancellationPresenter Presenter for displaying trade cancellations.
+     * @param tradeCancellationPresenter  Presenter for displaying trade cancellations.
      */
     public TradeCancellationView(WindowHandler windowHandler, TradeCancellationController tradeCancellationController,
-                            T tradeCancellationPresenter) {
+                                 T tradeCancellationPresenter) {
         this.windowHandler = windowHandler;
         this.tradeCancellationController = tradeCancellationController;
         this.tradeCancellationPresenter = tradeCancellationPresenter;

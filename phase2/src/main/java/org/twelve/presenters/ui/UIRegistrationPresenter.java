@@ -18,6 +18,7 @@ public class UIRegistrationPresenter extends ObservablePresenter implements Regi
 
     /**
      * Constructor for observable registration presenter.
+     *
      * @param localizedResources Pack containing any localized strings.
      */
     public UIRegistrationPresenter(ResourceBundle localizedResources) {

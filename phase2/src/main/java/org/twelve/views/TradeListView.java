@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing the trade and stats.
+ *
  * @param <T> Presenter.
  */
 public class TradeListView<T extends ObservablePresenter & TradeListPresenter> implements SceneView, Initializable {
@@ -45,9 +46,10 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
 
     /**
      * Constructor of view for managing the trade and stats.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler            An instance of {@link org.twelve.views.WindowHandler}.
      * @param tradeCollectionPresenter Presenter for managing trade and stats.
-     * @param tradeListController Controller for displaying trade and stats.
+     * @param tradeListController      Controller for displaying trade and stats.
      */
     public TradeListView(WindowHandler windowHandler, TradeListController tradeListController, T tradeCollectionPresenter) {
         this.windowHandler = windowHandler;
@@ -89,7 +91,9 @@ public class TradeListView<T extends ObservablePresenter & TradeListPresenter> i
             statsList.itemsProperty().bind(Bindings.createObjectBinding(() ->
                     FXCollections.observableArrayList(statsShown.get()), statsShown));
 
-        } catch (NoSuchMethodException ignored) {System.out.println("failure");}
+        } catch (NoSuchMethodException ignored) {
+            System.out.println("failure");
+        }
 
         selectButton.disableProperty().bind(tradesList.getSelectionModel().selectedItemProperty().isNull());
     }

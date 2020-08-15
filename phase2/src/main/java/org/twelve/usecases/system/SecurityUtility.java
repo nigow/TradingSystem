@@ -1,4 +1,4 @@
-package org.twelve.usecases;
+package org.twelve.usecases.system;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -12,7 +12,7 @@ import java.util.Base64;
 
 /**
  * Class dealt with encryption and decryption
- *
+ * <p>
  * Idea of converting string to byte arrays stemmed from: https://bit.ly/2Cq8RII
  */
 public class SecurityUtility {
@@ -46,9 +46,9 @@ public class SecurityUtility {
      * @param password a raw String representation of password
      * @return Base64 encrypted password in a String format
      */
-    public String encrypt(String password){
+    public String encrypt(String password) {
         String encryptedString = "";
-        try{
+        try {
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] encryptedBytes = cipher.doFinal(password.getBytes());
             encryptedString = Base64.getEncoder().encodeToString(encryptedBytes);  //new String(encryptedBytes);

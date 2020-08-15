@@ -25,7 +25,6 @@ public class Thresholds {
      * @param numberOfEdits      Number of edits an account can do with a Trade
      * @param numberOfStats      Number of trading statistics an account should see
      * @param TradesForTrusted   The number of trades required to make an account trusted.
-     *
      */
     public Thresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade,
                       int numberOfDays, int numberOfEdits, int numberOfStats, int TradesForTrusted) {
@@ -110,7 +109,8 @@ public class Thresholds {
         this.numberOfDays = numberOfDays;
     }
 
-    /** Get the number of statistics an account should see.
+    /**
+     * Get the number of statistics an account should see.
      * This includes two-way trades, one-way trades, top-trading partners.
      *
      * @return The number of stats that an account should see
@@ -130,6 +130,7 @@ public class Thresholds {
 
     /**
      * Get the number of edits accounts can perform before a trade is cancelled.
+     *
      * @return The number of edits an account can do with a Trade.
      */
     public int getNumberOfEdits() {

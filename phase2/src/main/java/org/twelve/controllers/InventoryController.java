@@ -1,8 +1,8 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.InventoryPresenter;
-import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.SessionManager;
+import org.twelve.usecases.item.ItemManager;
+import org.twelve.usecases.system.SessionManager;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class InventoryController {
      * Constructor to initialize all the instances, from ManualConfig,
      * and add options to actions depending on the user's permissions
      *
-     * @param useCasePool       the configuration for the program
+     * @param useCasePool the configuration for the program
      */
     public InventoryController(UseCasePool useCasePool) {
         this.itemManager = useCasePool.getItemManager();
@@ -65,7 +65,7 @@ public class InventoryController {
     /**
      * Creates an item
      *
-     * @param name The name of the item
+     * @param name        The name of the item
      * @param description The description of the item
      */
     public void createItem(String name, String description) {
@@ -101,6 +101,7 @@ public class InventoryController {
 
     /**
      * Provides the inventory controller with an appropriate presenter.
+     *
      * @param inventoryPresenter An instance of a class that implements {@link org.twelve.presenters.InventoryPresenter}.
      */
     public void setInventoryPresenter(InventoryPresenter inventoryPresenter) {
@@ -109,6 +110,7 @@ public class InventoryController {
 
     /**
      * Changes which item the user has selected and updates presenter with new name & desc.
+     *
      * @param itemIndex Index of selected item.
      */
     public void setSelectedItem(int itemIndex) {

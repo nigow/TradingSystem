@@ -4,57 +4,65 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.TradeEditorView">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Label text="%yourItems" />
-      <Label fx:id="peerUsername" text="%theirItems" GridPane.columnIndex="1" />
-      <ListView fx:id="yourItems" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-      <ListView fx:id="theirItems" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <CheckBox fx:id="isPermanent" disable="true" mnemonicParsing="false" text="%isPermanent" GridPane.rowIndex="2" />
-      <Label fx:id="tradeStatus" text="%tradeStatus" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="completeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#completeClicked" text="%complete" GridPane.rowIndex="3" />
-      <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked" text="%cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <HBox spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" text="%location" />
-            <TextField fx:id="locationBox" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-      <HBox spacing="10.0" GridPane.rowIndex="5">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" text="%date" />
-            <DatePicker fx:id="dateBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-      <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="%time" />
-            <Spinner fx:id="hourChosen" />
-            <Spinner fx:id="minuteChosen" />
-         </children></HBox>
-      <HBox spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
-         <children>
-            <Button mnemonicParsing="false" onAction="#backClicked" text="%back" />
-            <Separator maxHeight="1.7976931348623157E308" visible="false" HBox.hgrow="ALWAYS" />
-            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClicked" text="%edit" />
-            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmClicked" text="%confirm" />
-         </children>
-      </HBox>
-   </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.TradeEditorView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <Label text="%yourItems"/>
+        <Label fx:id="peerUsername" text="%theirItems" GridPane.columnIndex="1"/>
+        <ListView fx:id="yourItems" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1"/>
+        <ListView fx:id="theirItems" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
+                  GridPane.rowIndex="1"/>
+        <CheckBox fx:id="isPermanent" disable="true" mnemonicParsing="false" text="%isPermanent" GridPane.rowIndex="2"/>
+        <Label fx:id="tradeStatus" text="%tradeStatus" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Button fx:id="completeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                onAction="#completeClicked" text="%complete" GridPane.rowIndex="3"/>
+        <Button fx:id="cancelButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked"
+                text="%cancel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <HBox spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" text="%location"/>
+                <TextField fx:id="locationBox" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+            </children>
+        </HBox>
+        <HBox spacing="10.0" GridPane.rowIndex="5">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" text="%date"/>
+                <DatePicker fx:id="dateBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
+                            HBox.hgrow="ALWAYS"/>
+            </children>
+        </HBox>
+        <HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+                       text="%time"/>
+                <Spinner fx:id="hourChosen"/>
+                <Spinner fx:id="minuteChosen"/>
+            </children>
+        </HBox>
+        <HBox spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <children>
+                <Button mnemonicParsing="false" onAction="#backClicked" text="%back"/>
+                <Separator maxHeight="1.7976931348623157E308" visible="false" HBox.hgrow="ALWAYS"/>
+                <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClicked" text="%edit"/>
+                <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmClicked" text="%confirm"/>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
 </GridPane>

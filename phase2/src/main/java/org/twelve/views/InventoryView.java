@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing personal inventory.
+ *
  * @param <T> Presenter.
  */
 public class InventoryView<T extends ObservablePresenter & InventoryPresenter> implements SceneView, Initializable {
@@ -57,9 +58,10 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
 
     /**
      * Constructor of view for managing personal inventory.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler       An instance of {@link org.twelve.views.WindowHandler}.
      * @param inventoryController Controller for managing personal inventory.
-     * @param inventoryPresenter Presenter for displaying inventory items.
+     * @param inventoryPresenter  Presenter for displaying inventory items.
      */
     public InventoryView(WindowHandler windowHandler, InventoryController inventoryController, T inventoryPresenter) {
 
@@ -120,7 +122,8 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
             itemDesc.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(inventoryPresenter).name("selectedItemDesc").build());
 
-        } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) {
+        }
 
         inventoryItems.setCellFactory(new Callback<>() {
             @Override
@@ -167,7 +170,7 @@ public class InventoryView<T extends ObservablePresenter & InventoryPresenter> i
         });
 
         addItemBtn.disableProperty().bind(Bindings.createBooleanBinding(() ->
-                itemName.getText().isBlank() || itemDesc.getText().isBlank(),
+                        itemName.getText().isBlank() || itemDesc.getText().isBlank(),
                 itemName.textProperty(), itemDesc.textProperty()));
 
         removeItemBtn.disableProperty().bind(inventoryItems.getSelectionModel().selectedItemProperty().isNull());

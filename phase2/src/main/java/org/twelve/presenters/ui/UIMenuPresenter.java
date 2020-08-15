@@ -21,6 +21,7 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
 
     /**
      * Constructor for the presenter for the main menu view
+     *
      * @param localizedResources pack containing any localized strings
      */
     public UIMenuPresenter(ResourceBundle localizedResources) {
@@ -32,7 +33,7 @@ public class UIMenuPresenter extends ObservablePresenter implements MenuPresente
      * {@inheritDoc}
      */
     @Override
-    public void setInitiateTrade(boolean initiateTrade){
+    public void setInitiateTrade(boolean initiateTrade) {
         boolean oldInitiateTrade = this.initiateTrade;
         this.initiateTrade = initiateTrade;
         propertyChangeSupport.firePropertyChange("initiateTrade", oldInitiateTrade, initiateTrade);

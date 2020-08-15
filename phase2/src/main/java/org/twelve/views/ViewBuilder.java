@@ -16,6 +16,7 @@ public class ViewBuilder {
 
     /**
      * Constructor of builder responsible for constructing views.
+     *
      * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
      */
     public ViewBuilder(WindowHandler windowHandler) {
@@ -24,8 +25,9 @@ public class ViewBuilder {
 
     /**
      * Builds controllers that views depend on.
+     *
      * @param selectedLanguage Language views should be in.
-     * @param demoMode Whether demo mode is active.
+     * @param demoMode         Whether demo mode is active.
      */
     public void buildControllers(Locale selectedLanguage, boolean demoMode) {
 
@@ -35,7 +37,8 @@ public class ViewBuilder {
 
     /**
      * Builds individual views.
-     * @param scene Scene the view belongs to.
+     *
+     * @param scene              Scene the view belongs to.
      * @param localizedResources Any localized resources.
      * @return View for the given scene.
      */

@@ -15,7 +15,7 @@ public class Trade {
     // Accounts are ordered by Account id, Account2 id, etc.
     private final List<Integer> tradersIds;
     // Items are order by a list of trader 1 items, list of trader 2 items, etc
-    private final List< List<Integer> >itemsIds;
+    private final List<List<Integer>> itemsIds;
     private TradeStatus tradeStatus;
     private int editedCounter;
     private final List<Boolean> tradeCompletions;
@@ -24,12 +24,12 @@ public class Trade {
      * Creates a new Trade object. The status is set to unconfirmed.
      * The trade is uncompleted.
      *
-     * @param id            ID of this trade
-     * @param isPermanent   Whether this is a permanent or temporary trade
-     * @param tradersIds    A collection of integer storing the ids of all traders.
-     * @param itemsIds      A collection of ids for the items in this trade.
+     * @param id          ID of this trade
+     * @param isPermanent Whether this is a permanent or temporary trade
+     * @param tradersIds  A collection of integer storing the ids of all traders.
+     * @param itemsIds    A collection of ids for the items in this trade.
      */
-    public Trade(int id, boolean isPermanent, List<Integer> tradersIds, List< List<Integer> > itemsIds) {
+    public Trade(int id, boolean isPermanent, List<Integer> tradersIds, List<List<Integer>> itemsIds) {
         this.id = id;
         this.isPermanent = isPermanent;
         this.tradersIds = tradersIds;
@@ -37,7 +37,7 @@ public class Trade {
         tradeStatus = TradeStatus.UNCONFIRMED;
         editedCounter = 0;
         tradeCompletions = new ArrayList<>();
-        for(int i = 0; i < tradersIds.size(); i++) {
+        for (int i = 0; i < tradersIds.size(); i++) {
             tradeCompletions.add(false);
         }
     }
@@ -45,16 +45,16 @@ public class Trade {
     /**
      * Initializes a Trade object which already exists in the system.
      *
-     * @param id            ID of this trade
-     * @param isPermanent   Whether this is a permanent or temporary trade
-     * @param tradersIds    A collection of integer storing the ids of all traders.
-     * @param itemsIds      A collection of ids for the items in this trade.
-     * @param editedCounter Number of times this trade's TimePlace has been edited
-     * @param tradeStatus   The status of the trade.
+     * @param id               ID of this trade
+     * @param isPermanent      Whether this is a permanent or temporary trade
+     * @param tradersIds       A collection of integer storing the ids of all traders.
+     * @param itemsIds         A collection of ids for the items in this trade.
+     * @param editedCounter    Number of times this trade's TimePlace has been edited
+     * @param tradeStatus      The status of the trade.
      * @param tradeCompletions The completions of this trade.
      */
     public Trade(int id, boolean isPermanent, List<Integer> tradersIds,
-                 List< List<Integer> > itemsIds, int editedCounter, TradeStatus tradeStatus,
+                 List<List<Integer>> itemsIds, int editedCounter, TradeStatus tradeStatus,
                  List<Boolean> tradeCompletions) {
         this.id = id;
         this.isPermanent = isPermanent;
@@ -98,7 +98,7 @@ public class Trade {
      *
      * @return A collection of item ids for this trade.
      */
-    public List< List<Integer> > getItemsIds() {
+    public List<List<Integer>> getItemsIds() {
         return itemsIds;
     }
 
@@ -164,6 +164,7 @@ public class Trade {
     /**
      * Mark that an account confirmed completion of a trade, and if all
      * accounts marked completion, mark the trade as COMPLETED.
+     *
      * @param accountID An id reference to the account confirming trade completion.
      */
     public void setCompletedOfTrader(int accountID) {
@@ -175,6 +176,7 @@ public class Trade {
 
     /**
      * Check if it's the turn of a given account to edit a trade.
+     *
      * @param accountID An id reference to the account.
      * @return Whether the account is able to edit the trade right now.
      */

@@ -1,7 +1,7 @@
 package org.twelve.gateways.ram;
 
 import org.twelve.gateways.ItemsGateway;
-import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.item.ItemManager;
 
 import java.util.Map;
 
@@ -14,6 +14,7 @@ public class InMemoryItemGateway implements ItemsGateway {
 
     /**
      * Initialize the gateway
+     *
      * @param itemMap a key-pair set of an item id and item object
      */
     public InMemoryItemGateway(Map<Integer, String[]> itemMap) {
@@ -25,7 +26,7 @@ public class InMemoryItemGateway implements ItemsGateway {
      */
     @Override
     public boolean populate(ItemManager itemManager) {
-        for(Integer itemId: this.itemMap.keySet()) {
+        for (Integer itemId : this.itemMap.keySet()) {
             String[] item = itemMap.get(itemId);
             String name = item[0];
             String desc = item[1];

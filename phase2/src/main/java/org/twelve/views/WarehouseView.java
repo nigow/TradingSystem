@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing the warehouse.
+ *
  * @param <T> Presenter.
  */
 public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> implements SceneView, Initializable {
@@ -56,9 +57,10 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
 
     /**
      * Constructor of view for managing the warehouse.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler       An instance of {@link org.twelve.views.WindowHandler}.
      * @param warehouseController Controller for managing items inside the system.
-     * @param warehousePresenter Presenter for displaying item info.
+     * @param warehousePresenter  Presenter for displaying item info.
      */
     public WarehouseView(WindowHandler windowHandler, WarehouseController warehouseController, T warehousePresenter) {
 
@@ -143,7 +145,8 @@ public class WarehouseView<T extends ObservablePresenter & WarehousePresenter> i
                     .or(warehouseItems.getSelectionModel().selectedIndexProperty().greaterThanOrEqualTo(Bindings.createIntegerBinding(() ->
                             pendingItemsBinding.get().size(), pendingItemsBinding))));
 
-        } catch (NoSuchMethodException ignored) {} // impossible, im enforcing presence of methods via generics
+        } catch (NoSuchMethodException ignored) {
+        } // impossible, im enforcing presence of methods via generics
 
         warehouseItems.setCellFactory(new Callback<>() {
             @Override

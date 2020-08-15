@@ -1,7 +1,8 @@
-package org.twelve.usecases;
+package org.twelve.usecases.item;
 
 import org.twelve.entities.Item;
 import org.twelve.gateways.ItemsGateway;
+import org.twelve.usecases.account.AccountRepository;
 
 import java.util.Collections;
 
@@ -17,7 +18,7 @@ public class ItemManager extends ItemUtility {
     /**
      * Constructor for ItemManager which stores an ItemsGateway.
      *
-     * @param itemsGateway The gateway for interacting with the persistent storage of items
+     * @param itemsGateway      The gateway for interacting with the persistent storage of items
      * @param accountRepository Repository for storing all accounts in the system
      */
     public ItemManager(ItemsGateway itemsGateway, AccountRepository accountRepository) {
@@ -31,7 +32,7 @@ public class ItemManager extends ItemUtility {
      *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
-    void switchToDemoMode(ItemsGateway itemsGateway) {
+    public void switchToDemoMode(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
         for (Item item : items.values()) {
             updateToItemsGateway(item, true);
@@ -43,7 +44,7 @@ public class ItemManager extends ItemUtility {
      *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
-    void switchToNormalMode(ItemsGateway itemsGateway) {
+    public void switchToNormalMode(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
         items.clear();
         itemsGateway.populate(this);
@@ -71,9 +72,9 @@ public class ItemManager extends ItemUtility {
     /**
      * Creates a new item and stores in local storage.
      *
-     * @param name The name of the item
+     * @param name        The name of the item
      * @param description The description of the item
-     * @param ownerID The id of the owner of the item
+     * @param ownerID     The id of the owner of the item
      */
     public void createItem(String name, String description, int ownerID) {
         int id = (items.isEmpty() ? 1 : Collections.max(items.keySet()) + 1);
@@ -98,7 +99,7 @@ public class ItemManager extends ItemUtility {
     /**
      * Update the owner of the item.
      *
-     * @param itemId Id of the item with info being returned
+     * @param itemId  Id of the item with info being returned
      * @param ownerID ID of the new owner of the item
      */
     public void updateOwner(int itemId, int ownerID) {
@@ -109,7 +110,7 @@ public class ItemManager extends ItemUtility {
     /**
      * Update the approval status of the item.
      *
-     * @param itemId Id of the item with info being returned
+     * @param itemId   Id of the item with info being returned
      * @param approval new approval status of the item
      */
     public void updateApproval(int itemId, boolean approval) {

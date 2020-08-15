@@ -35,7 +35,8 @@ public class UITradeEditorPresenter extends ObservablePresenter implements Trade
 
     /**
      * Constructor for the presenter for the trade editor view
-     * @param localizedResources
+     *
+     * @param localizedResources Pack containing any localized strings.
      */
     public UITradeEditorPresenter(ResourceBundle localizedResources) {
         super();

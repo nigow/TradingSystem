@@ -60,5 +60,7 @@ public class JsonGatewayPool implements GatewayPool {
      * {@inheritDoc}
      */
     @Override
-    public CitiesGateway getCitiesGateway() { return citiesGateway; }
+    public CitiesGateway getCitiesGateway() {
+        return citiesGateway;
+    }
 }

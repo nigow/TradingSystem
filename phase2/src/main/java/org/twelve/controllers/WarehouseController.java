@@ -1,7 +1,7 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.WarehousePresenter;
-import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.item.ItemManager;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ public class WarehouseController {
 
     /**
      * Constructor of controller for managing the warehouse.
+     *
      * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
      */
     public WarehouseController(UseCasePool useCasePool) {
@@ -30,6 +31,7 @@ public class WarehouseController {
 
     /**
      * Provides the warehouse controller with an appropriate presenter.
+     *
      * @param warehousePresenter An instance of a class that implements {@link org.twelve.presenters.WarehousePresenter}.
      */
     public void setWarehousePresenter(WarehousePresenter warehousePresenter) {
@@ -38,6 +40,7 @@ public class WarehouseController {
 
     /**
      * Approves the item at itemIndex.
+     *
      * @param itemIndex Index of item to approve.
      */
     public void approveItem(int itemIndex) {
@@ -51,6 +54,7 @@ public class WarehouseController {
 
     /**
      * Removes the item at itemIndex.
+     *
      * @param itemIndex Index of item to remove.
      */
     public void denyItem(int itemIndex) {
@@ -71,6 +75,7 @@ public class WarehouseController {
 
     /**
      * Changes which item the user has selected and updates presenter with new name & desc.
+     *
      * @param itemIndex Index of selected item.
      */
     public void changeSelectedItem(int itemIndex) {

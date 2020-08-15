@@ -2,6 +2,10 @@ package org.twelve.controllers;
 
 import org.twelve.presenters.WishlistPresenter;
 import org.twelve.usecases.*;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.account.WishlistManager;
+import org.twelve.usecases.item.ItemManager;
+import org.twelve.usecases.system.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +24,7 @@ public class WishlistController {
 
     /**
      * Constructor of controller for managing personal wishlist.
+     *
      * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
      */
     public WishlistController(UseCasePool useCasePool) {
@@ -62,6 +67,7 @@ public class WishlistController {
 
     /**
      * Provides the wishlist controller with an appropriate presenter.
+     *
      * @param wishlistPresenter An instance of a class that implements {@link org.twelve.presenters.WishlistPresenter}.
      */
     public void setWishlistPresenter(WishlistPresenter wishlistPresenter) {
@@ -70,6 +76,7 @@ public class WishlistController {
 
     /**
      * Add item at itemIndex to the wishlist.
+     *
      * @param itemIndex Index of item to add to the wishlist.
      */
     public void addToWishlist(int itemIndex) {
@@ -83,6 +90,7 @@ public class WishlistController {
 
     /**
      * Remove item at itemIndex from the wishlist.
+     *
      * @param itemIndex Index of item to remove from the wishlist.
      */
     public void removeFromWishlist(int itemIndex) {
@@ -96,6 +104,7 @@ public class WishlistController {
 
     /**
      * Changes which item the user has selected from the wishlist and updates presenter with new name & desc.
+     *
      * @param itemIndex Index of selected wishlist item.
      */
     public void changeSelectedWishlistItem(int itemIndex) {
@@ -107,6 +116,7 @@ public class WishlistController {
 
     /**
      * Changes which item the user has selected from the warehouse and updates presenter with new name & desc.
+     *
      * @param itemIndex Index of selected warehouse item.
      */
     public void changeSelectedWarehouseItem(int itemIndex) {

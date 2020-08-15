@@ -4,62 +4,65 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.TradeListView">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-      <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Button mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="selectButton" mnemonicParsing="false" onAction="#selectClicked" text="%select" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-      </Button>
-      <VBox GridPane.rowIndex="1">
-         <children>
-            <ComboBox fx:id="tradeStatusBox" maxWidth="1.7976931348623157E308" onAction="#tradeStatusSwitch">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </ComboBox>
-            <ListView fx:id="tradesList" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </ListView>
-         </children>
-      </VBox>
-      <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <ComboBox fx:id="statsBox" maxWidth="1.7976931348623157E308" onAction="#statsSwitch">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </ComboBox>
-            <ListView fx:id="statsList" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </ListView>
-         </children>
-      </VBox>
-      <Label text="Trade List">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-      </Label>
-   </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.TradeListView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS"/>
+        <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <Button mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets/>
+            </GridPane.margin>
+        </Button>
+        <Button fx:id="selectButton" mnemonicParsing="false" onAction="#selectClicked" text="%select"
+                GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets/>
+            </GridPane.margin>
+        </Button>
+        <VBox GridPane.rowIndex="1">
+            <children>
+                <ComboBox fx:id="tradeStatusBox" maxWidth="1.7976931348623157E308" onAction="#tradeStatusSwitch">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </ComboBox>
+                <ListView fx:id="tradesList" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </ListView>
+            </children>
+        </VBox>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <ComboBox fx:id="statsBox" maxWidth="1.7976931348623157E308" onAction="#statsSwitch">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </ComboBox>
+                <ListView fx:id="statsList" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </ListView>
+            </children>
+        </VBox>
+        <Label text="Trade List">
+            <GridPane.margin>
+                <Insets/>
+            </GridPane.margin>
+        </Label>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
 </GridPane>

@@ -3,6 +3,10 @@ package org.twelve.controllers;
 import org.twelve.entities.TradeStatus;
 import org.twelve.presenters.TradeEditorPresenter;
 import org.twelve.usecases.*;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.item.ItemManager;
+import org.twelve.usecases.system.SessionManager;
+import org.twelve.usecases.trade.TradeManager;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +27,7 @@ public class TradeEditorController {
 
     /**
      * Constructor for the controller to deal with editing trades
+     *
      * @param useCasePool an instance of useCasePool to get all the use cases
      */
     public TradeEditorController(UseCasePool useCasePool) {
@@ -32,13 +37,16 @@ public class TradeEditorController {
         itemManager = useCasePool.getItemManager();
         this.useCasePool = useCasePool;
     }
+
     /**
      * Set the presenter for this controller
+     *
      * @param tradeEditorPresenter an instance of a class that implements {@link org.twelve.presenters.TradeEditorPresenter}
      */
     public void setTradeEditorPresenter(TradeEditorPresenter tradeEditorPresenter) {
         this.tradeEditorPresenter = tradeEditorPresenter;
     }
+
     /**
      * Remove the selected trade from the system
      */
@@ -101,6 +109,7 @@ public class TradeEditorController {
         tradeEditorPresenter.setDateChosen(LocalDate.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDayOfMonth()));
         tradeEditorPresenter.setLocationChosen(tradeManager.getLocation(tradeID));
     }
+
     /**
      * Cancel the trade that is currently being worked on
      */
@@ -110,6 +119,7 @@ public class TradeEditorController {
 
     /**
      * Edit the trade that is currently being worked on
+     *
      * @param location the new location of the trade
      * @param dateTime the new dateTime of the trade
      */

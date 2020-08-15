@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.TradeGateway;
-import org.twelve.usecases.TradeRepository;
+import org.twelve.usecases.trade.TradeRepository;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -44,7 +44,7 @@ public class JsonTradeGateway implements TradeGateway {
     /**
      * Define the endpoints and the JSON objects to interact with the database
      */
-    public JsonTradeGateway(){
+    public JsonTradeGateway() {
         gson = new Gson();
         getAllTradeUrl = "http://csc207phase2.herokuapp.com/trades/get_all_trades";
         updateTradeUrl = "http://csc207phase2.herokuapp.com/trades/update_trade";
@@ -59,20 +59,20 @@ public class JsonTradeGateway implements TradeGateway {
         HttpURLConnection urlConnection;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
-        try{
+        try {
             URL url = new URL(getAllTradeUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             int status = urlConnection.getResponseCode();
 
-            if(status==200){
+            if (status == 200) {
                 inputStream = urlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 JsonObject jsonObj;
                 JsonArray jsonArray;
 
-                while((line = bufferedReader.readLine())!=null){
+                while ((line = bufferedReader.readLine()) != null) {
                     try {
                         jsonObj = gson.fromJson(line, JsonObject.class);
                         jsonArray = jsonObj.get("trades").getAsJsonArray();
@@ -118,17 +118,17 @@ public class JsonTradeGateway implements TradeGateway {
                     }
                 }
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
 
         }
-        try{
+        try {
             assert inputStream != null;
             inputStream.close();
             bufferedReader.close();
             return true;
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -139,11 +139,11 @@ public class JsonTradeGateway implements TradeGateway {
      */
     //memo: learnt from this https://qiita.com/QiitaD/items/289dd82ba3ce03a915a0
     @Override
-    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > allItemIds,
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<List<Integer>> allItemIds,
                         int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
                         String location, boolean newTrade) {
         StringBuilder traderIdsString = new StringBuilder();
-        for(Integer i: traderIds) traderIdsString.append(i.toString()).append(" ");
+        for (Integer i : traderIds) traderIdsString.append(i.toString()).append(" ");
 
         List<String> allItemIdsStr = new ArrayList<>();
         for (List<Integer> itemIds : allItemIds) {
@@ -161,7 +161,7 @@ public class JsonTradeGateway implements TradeGateway {
         }
 
         StringBuilder tradeCompletionsString = new StringBuilder();
-        for(Boolean b: tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
+        for (Boolean b : tradeCompletions) tradeCompletionsString.append(b.toString()).append(" ");
         JsonObject json = new JsonObject();
 
         json.addProperty("trade_id", tradeId);
@@ -177,7 +177,7 @@ public class JsonTradeGateway implements TradeGateway {
         OutputStream outputStream;
         URL url;
         HttpURLConnection con;
-        try{
+        try {
             if (newTrade) url = new URL(createTradeUrl);
             else url = new URL(updateTradeUrl);
 
@@ -190,19 +190,18 @@ public class JsonTradeGateway implements TradeGateway {
             outputStream = con.getOutputStream();
             outputStream.write(json.toString().getBytes(StandardCharsets.UTF_8));
             con.getInputStream();
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        try{
+        try {
             outputStream.close();
             return true;
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
-
 
 
 }

@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing editing trades.
+ *
  * @param <T> Presenter.
  */
 public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresenter> implements SceneView, Initializable {
@@ -62,9 +63,10 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
 
     /**
      * Constructor of view for managing trade edits.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler         An instance of {@link org.twelve.views.WindowHandler}.
      * @param tradeEditorController Controller for managing trade edits.
-     * @param tradeEditorPresenter Presenter for displaying trade edits.
+     * @param tradeEditorPresenter  Presenter for displaying trade edits.
      */
     public TradeEditorView(WindowHandler windowHandler, TradeEditorController tradeEditorController, T tradeEditorPresenter) {
         this.windowHandler = windowHandler;
@@ -123,7 +125,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("hourChosen").build();
 
             hourChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, hourChosenBinding.get()), hourChosenBinding));
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, hourChosenBinding.get()), hourChosenBinding));
             //=================
 
             //The "Minute" Spinner
@@ -131,7 +133,7 @@ public class TradeEditorView<T extends ObservablePresenter & TradeEditorPresente
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeEditorPresenter).name("minuteChosen").build();
 
             minuteChosen.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, minuteChosenBinding.get()), minuteChosenBinding));
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, minuteChosenBinding.get()), minuteChosenBinding));
             //=================
 
             locationBox.promptTextProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()

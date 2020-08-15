@@ -6,13 +6,15 @@ import org.twelve.gateways.ram.InMemoryAccountGateway;
 import org.twelve.gateways.ram.InMemoryItemGateway;
 import org.twelve.gateways.ItemsGateway;
 import junit.framework.TestCase;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.item.ItemManager;
+import org.twelve.usecases.system.SecurityUtility;
 
 import java.util.HashMap;
 
 /**
  * An integration test to verify integration of usecases, gateways, and entities is successful.
+ *
  * @author Isaac
  */
 public class ItemIntegrationTest extends TestCase {
@@ -44,7 +46,6 @@ public class ItemIntegrationTest extends TestCase {
         assertNotNull(this.itemManager);
     }
 
-
     public void testSavingItems() {
         setUpItemManager();
         Item item = new Item(1, "Jacket", "A Cool Jacket", 11);
@@ -55,63 +56,4 @@ public class ItemIntegrationTest extends TestCase {
         assertEquals(itemManager.findItemById(1).getName(), item.getName());
         assertNull(itemManager.findItemById(2));
     }
-
-
-
-    /**
-     * Verifies Items can be properly retrieved from a users inventory
-     */
-    /**
-    public void testInventory() {
-        Account initial = new Account("admin", "1234", new ArrayList<>(), 10, "M");
-        Account initial1 = new Account("admin2", "1234", new ArrayList<>(), 11, "M");
-        Account initial2 = new Account("admin3", "1234", new ArrayList<>(), 12, "M");
-        Account initial3 = new Account("admin4", "1234", new ArrayList<>(), 14, "M");
-        HashMap<Integer, Account> h = new HashMap<>();
-        AccountGateway accountGateway = new InMemoryAccountGateway(h);
-        h.put(10, initial);
-        h.put(11, initial1);
-        h.put(12, initial2);
-        h.put(14, initial3);
-        AccountRepository accountRepository = new AccountRepository(accountGateway);
-        WishlistManager wishlistManager = new WishlistManager(accountRepository, itemManager);
-        setUpItemManager();
-        itemManager.createItem("Tomato", "A Fruit", 11);
-        itemManager.createItem("Book", "A Good book", 12);
-        itemManager.createItem("Test", "Testing", 11);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(11).size(), 2);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(12).size(), 1);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(10).size(), 1);
-
-        assertEquals(itemManager.getAllItemsString().size(), 4);
-        itemManager.createItem("Jacket", "A Cool Jacket", 12);
-        itemManager.createItem("CS Hoodie", "A Cool Hoodie", 12);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(12).size(), 3);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(14).size(), 0);
-        itemManager.updateOwner(itemManager.getAllItems().get(5).getItemID(), 11);
-        itemManager.updateOwner(itemManager.getAllItems().get(4).getItemID(), 11);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(12).size(), 1);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(11).size(), 4);
-        assertEquals(itemManager.getDisprovedInventoryOfAccount(10).size(), 1);
-        for (Item item: itemManager.getAllItems()) {
-            itemManager.updateApproval(item.getItemID(), true);
-        }
-        assertEquals(itemManager.getApprovedInventoryOfAccount(12).size(), 1);
-        assertEquals(itemManager.getApprovedInventoryOfAccount(11).size(), 4);
-        assertEquals(itemManager.getApprovedInventoryOfAccount(10).size(), 1);
-        assertEquals(itemManager.getNotInAccount(10).size()
-                , 5);
-        assertEquals(itemManager.getNotInAccount(11).size()
-                , 2);
-        assertEquals(itemManager.getNotInAccount(12).size()
-                , 5);
-        assertEquals(itemManager.getNotInAccount(14).size()
-                , 6);
-        assertEquals(itemManager.getNotInAccount(10).size(), 3);
-        assertEquals(itemManager.getNotInAccount(11).size(), 1);
-        assertEquals(itemManager.getNotInAccount(12).size(), 4);
-        assertEquals(itemManager.getNotInAccount(14).size(), 4);
-    }
-     **/
 }
-

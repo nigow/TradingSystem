@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Presenter that deals with the trade creation view.
+ *
  * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class UITradeCreatorPresenter extends ObservablePresenter implements TradeCreatorPresenter {
@@ -42,13 +43,15 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     /**
      * {@inheritDoc}
      */
-    public List<String> getItemsToReceive() {return itemsToReceive;}
+    public List<String> getItemsToReceive() {
+        return itemsToReceive;
+    }
 
     /**
      * {@inheritDoc}
      */
     public void setPeerWishlist(List<String> peerWishlist) {
-        List <String> oldPeerWishlist = this.peerWishlist;
+        List<String> oldPeerWishlist = this.peerWishlist;
         this.peerWishlist = peerWishlist;
         propertyChangeSupport.firePropertyChange("peerWishlist", oldPeerWishlist, peerWishlist);
     }
@@ -56,7 +59,9 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     /**
      * {@inheritDoc}
      */
-    public List<String> getPeerWishlist() {return this.peerWishlist;}
+    public List<String> getPeerWishlist() {
+        return this.peerWishlist;
+    }
 
     /**
      * {@inheritDoc}
@@ -70,7 +75,9 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     /**
      * {@inheritDoc}
      */
-    public List<String> getItemsToGive() {return itemsToGive;}
+    public List<String> getItemsToGive() {
+        return itemsToGive;
+    }
 
     /**
      * {@inheritDoc}
@@ -84,7 +91,9 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     /**
      * {@inheritDoc}
      */
-    public List<String> getAllUsers() {return allUsers;}
+    public List<String> getAllUsers() {
+        return allUsers;
+    }
 
     /**
      * {@inheritDoc}
@@ -98,7 +107,9 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     /**
      * {@inheritDoc}
      */
-    public int getHourChosen() {return hourChosen;}
+    public int getHourChosen() {
+        return hourChosen;
+    }
 
     /**
      * {@inheritDoc}
@@ -112,5 +123,7 @@ public class UITradeCreatorPresenter extends ObservablePresenter implements Trad
     /**
      * {@inheritDoc}
      */
-    public int getMinuteChosen() {return minuteChosen;}
+    public int getMinuteChosen() {
+        return minuteChosen;
+    }
 }

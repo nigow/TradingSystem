@@ -1,6 +1,12 @@
 package org.twelve.usecases;
 
 import org.twelve.gateways.GatewayPool;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.account.StatusManager;
+import org.twelve.usecases.account.WishlistManager;
+import org.twelve.usecases.item.ItemManager;
+import org.twelve.usecases.system.*;
+import org.twelve.usecases.trade.TradeManager;
 
 /**
  * Initializes use cases and provides a pool for accessing them.
@@ -112,14 +118,13 @@ public class UseCasePool {
      * Switches the mode of all the use cases
      *
      * @param gatewayPool An instance of gateway pool storing all gateways
-     * @param demoMode Whether we should be able to switch to demo mode
+     * @param demoMode    Whether we should be able to switch to demo mode
      */
     public void switchMode(GatewayPool gatewayPool, boolean demoMode) {
         this.gatewayPool = gatewayPool;
         if (demoMode) {
             switchToDemoMode();
-        }
-        else {
+        } else {
             switchToNormalMode();
         }
     }

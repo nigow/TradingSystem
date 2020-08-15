@@ -57,6 +57,7 @@ public class InputHandler {
 
     /**
      * Determines if username contains only acceptable characters.
+     *
      * @param username Username of an account.
      * @return Whether given username contains only acceptable characters.
      */
@@ -66,6 +67,7 @@ public class InputHandler {
 
     /**
      * Determines if location contains only acceptable characters.
+     *
      * @param location String of a location.
      * @return Whether given location contains only acceptable characters.
      */

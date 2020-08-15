@@ -5,6 +5,8 @@ import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ram.InMemoryAccountGateway;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.system.SecurityUtility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +27,7 @@ public class AccountIntegrationTest extends TestCase {
         SecurityUtility securityUtility = new SecurityUtility("lBhBaINFEvv7hzsI", "AES");
         accountRepository = new AccountRepository(inMemoryAccountGateway, securityUtility);
     }
-    
+
     public void testInitialization() {
         setUpAccountRepository();
         assertNotNull(accountRepository);
@@ -36,7 +38,7 @@ public class AccountIntegrationTest extends TestCase {
         List<Permissions> Perm = new ArrayList<>();
         Account account = new Account("User2", "12345", Perm, 1, "UTM");
         List<String> permsAsStrings = new ArrayList<>();
-        for (Permissions perms: account.getPermissions()){
+        for (Permissions perms : account.getPermissions()) {
             permsAsStrings.add(perms.name());
         }
         inMemoryAccountGateway.save(account.getAccountID(), account.getUsername(), account.getPassword(),

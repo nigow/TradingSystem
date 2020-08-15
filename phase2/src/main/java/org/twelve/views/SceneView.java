@@ -14,6 +14,7 @@ public interface SceneView {
 
     /**
      * Gets the scene's layout for loading into a JavaFX window.
+     *
      * @return The scene's layout.
      */
     Parent getGraphic();

@@ -1,9 +1,10 @@
 package org.twelve.entities;
 
 import junit.framework.TestCase;
+
 import java.time.LocalDateTime;
 
-public class TimePlaceTest extends TestCase{
+public class TimePlaceTest extends TestCase {
 
     public void testTimePlaceExists() {
         new TimePlace(1, LocalDateTime.now(), "UTM");

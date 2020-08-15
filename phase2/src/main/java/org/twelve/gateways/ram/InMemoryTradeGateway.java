@@ -1,7 +1,7 @@
 package org.twelve.gateways.ram;
 
 import org.twelve.gateways.TradeGateway;
-import org.twelve.usecases.TradeRepository;
+import org.twelve.usecases.trade.TradeRepository;
 
 import java.util.*;
 
@@ -19,8 +19,9 @@ public class InMemoryTradeGateway implements TradeGateway {
 
     /**
      * Initialize the gateway
+     *
      * @param timePlace a key-pair set of a timePlace id and timePlace object
-     * @param trades a key-pair set of a trade id and trade object
+     * @param trades    a key-pair set of a trade id and trade object
      */
     public InMemoryTradeGateway(Map<Integer, String[]> trades,
                                 Map<Integer, String[]> timePlace) {
@@ -33,7 +34,7 @@ public class InMemoryTradeGateway implements TradeGateway {
      */
     @Override
     public boolean populate(TradeRepository tradeRepository) {
-        for (int tradeId: tradeMap.keySet()) {
+        for (int tradeId : tradeMap.keySet()) {
             String[] trade = tradeMap.get(tradeId);
             String[] timePlace = timePlaceMap.get(tradeId);
 
@@ -44,20 +45,19 @@ public class InMemoryTradeGateway implements TradeGateway {
 
             String[] traderIdsString = trade[1].split(" ");
             List<Integer> traderIds = new ArrayList<>();
-            for (String traderId: traderIdsString) {
+            for (String traderId : traderIdsString) {
                 traderIds.add(Integer.parseInt(traderId));
             }
 
             String[] itemIdsString = trade[2].split(";");
             List<List<Integer>> temp = new ArrayList<>();
-            for (String itemId: itemIdsString) {
+            for (String itemId : itemIdsString) {
                 String[] itemIDsString2 = itemId.split(" ");
                 if (itemIDsString2.length == 0) {
                     temp.add(new ArrayList<>());
-                }
-                else {
+                } else {
                     List<Integer> itemIds = new ArrayList<>();
-                    for (String i: itemIDsString2) {
+                    for (String i : itemIDsString2) {
                         itemIds.add(Integer.parseInt(i));
                     }
                     temp.add(itemIds);
@@ -69,7 +69,7 @@ public class InMemoryTradeGateway implements TradeGateway {
 
             String[] tradeCompString = trade[5].split(" ");
             List<Boolean> tradeComps = new ArrayList<>();
-            for (String tradeComp: tradeCompString) {
+            for (String tradeComp : tradeCompString) {
                 tradeComps.add(Boolean.parseBoolean(tradeComp));
             }
 
@@ -84,33 +84,30 @@ public class InMemoryTradeGateway implements TradeGateway {
      * {@inheritDoc}
      */
     @Override
-    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List< List<Integer> > itemIds,
-                     int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
-                     String location, boolean newTrade) {
+    public boolean save(int tradeId, boolean isPermanent, List<Integer> traderIds, List<List<Integer>> itemIds,
+                        int editedCounter, String tradeStatus, List<Boolean> tradeCompletions, String time,
+                        String location, boolean newTrade) {
         String[] trade = new String[6];
         trade[0] = String.valueOf(isPermanent);
         if (traderIds.size() == 0) {
             trade[1] = " ";
-        }
-        else {
+        } else {
             StringBuilder traderIdsString = new StringBuilder();
-            for (int traderId: traderIds) {
+            for (int traderId : traderIds) {
                 traderIdsString.append(traderId).append(" ");
             }
             trade[1] = traderIdsString.toString();
         }
         if (itemIds.size() == 0) {
             trade[2] = " ";
-        }
-        else {
+        } else {
             StringBuilder itemIdsString = new StringBuilder();
-            for (List<Integer> ids: itemIds) {
+            for (List<Integer> ids : itemIds) {
                 if (ids.size() != 0) {
                     for (int id : ids) {
                         itemIdsString.append(id).append(" ");
                     }
-                }
-                else {
+                } else {
                     itemIdsString.append(" ");
                 }
                 itemIdsString.append(";");
@@ -121,10 +118,9 @@ public class InMemoryTradeGateway implements TradeGateway {
         trade[4] = tradeStatus;
         if (tradeCompletions.size() == 0) {
             trade[5] = " ";
-        }
-        else {
+        } else {
             StringBuilder traderString = new StringBuilder();
-            for (boolean tradeComps: tradeCompletions) {
+            for (boolean tradeComps : tradeCompletions) {
                 traderString.append(tradeComps).append(" ");
             }
             trade[5] = traderString.toString();

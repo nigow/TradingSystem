@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for admins to manage everyone's wishlist.
+ *
  * @param <T> Presenter.
  */
 public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPresenter> implements SceneView, Initializable {
@@ -46,12 +47,13 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
 
     /**
      * Constructor of view for managing everyone's wishlist.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler           An instance of {@link org.twelve.views.WindowHandler}.
      * @param adminWishlistController Controller for managing wishlist.
-     * @param adminWishlistPresenter Presenter for displaying wishlist.
+     * @param adminWishlistPresenter  Presenter for displaying wishlist.
      */
     public AdminWishlistView(WindowHandler windowHandler, AdminWishlistController adminWishlistController,
-                            T adminWishlistPresenter) {
+                             T adminWishlistPresenter) {
 
         this.windowHandler = windowHandler;
         this.adminWishlistController = adminWishlistController;
@@ -99,7 +101,9 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
             itemDescription.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(adminWishlistPresenter).name("selectedItemDescription").build());
 
-        } catch (NoSuchMethodException ignored) {System.out.println("failure");}
+        } catch (NoSuchMethodException ignored) {
+            System.out.println("failure");
+        }
 
         allUsers.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue.intValue() != -1) {

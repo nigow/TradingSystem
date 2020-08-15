@@ -2,9 +2,9 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.RegistrationPresenter;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.CityManager;
-import org.twelve.usecases.SessionManager;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.system.CityManager;
+import org.twelve.usecases.system.SessionManager;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.Arrays;
@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Controller for registering an account
+ *
  * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  */
 public class RegistrationController {
@@ -30,6 +31,7 @@ public class RegistrationController {
 
     /**
      * Initializer for RegistrationController
+     *
      * @param useCasePool used to get all the use cases.
      */
     public RegistrationController(UseCasePool useCasePool) {
@@ -52,6 +54,7 @@ public class RegistrationController {
 
     /**
      * A method to create an account
+     *
      * @param username the username of the account
      * @param password the password of the account
      * @param location the location of the account
@@ -75,8 +78,7 @@ public class RegistrationController {
                     Permissions.REQUEST_VACATION,
                     Permissions.CAN_BAN,
                     Permissions.MAKE_TRUSTED);
-        }
-        else {
+        } else {
             perms = Arrays.asList(Permissions.LOGIN,
                     Permissions.CREATE_ITEM,
                     Permissions.ADD_TO_WISHLIST,
@@ -113,6 +115,7 @@ public class RegistrationController {
 
     /**
      * Provides the registration controller with an appropriate presenter.
+     *
      * @param registrationPresenter An instance of a class that implements {@link org.twelve.presenters.RegistrationPresenter}.
      */
     public void setRegistrationPresenter(RegistrationPresenter registrationPresenter) {

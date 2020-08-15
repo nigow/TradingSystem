@@ -1,7 +1,8 @@
-package org.twelve.usecases;
+package org.twelve.usecases.system;
 
 import org.twelve.entities.Account;
 import org.twelve.gateways.CitiesGateway;
+import org.twelve.usecases.account.AccountRepository;
 
 import java.util.*;
 
@@ -18,10 +19,10 @@ public class CityManager {
     /**
      * Constructor for cityManager which stores a cityGateway.
      *
-     * @param citiesGateway the gateway dealing with cities
+     * @param citiesGateway     the gateway dealing with cities
      * @param accountRepository the repository for storing all accounts in the system
      */
-    public CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository){
+    public CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository) {
         this.cities = new HashMap<>();
         this.citiesGateway = citiesGateway;
         this.accountRepository = accountRepository;
@@ -33,7 +34,7 @@ public class CityManager {
      *
      * @param citiesGateway A new CitiesGateway
      */
-    void switchToDemoMode(CitiesGateway citiesGateway) {
+    public void switchToDemoMode(CitiesGateway citiesGateway) {
         this.citiesGateway = citiesGateway;
         for (int city : cities.keySet()) {
             updateToGateway(city);
@@ -45,7 +46,7 @@ public class CityManager {
      *
      * @param citiesGateway A new CitiesGateway
      */
-    void switchToNormalMode(CitiesGateway citiesGateway) {
+    public void switchToNormalMode(CitiesGateway citiesGateway) {
         this.citiesGateway = citiesGateway;
         cities.clear();
         citiesGateway.populate(this);
@@ -66,7 +67,7 @@ public class CityManager {
      * in the system, create a new city.
      *
      * @param accountID An account id
-     * @param newCity The new city of the account
+     * @param newCity   The new city of the account
      */
     public void changeAccountLocation(int accountID, String newCity) {
         if (!cities.containsValue(newCity))
@@ -90,7 +91,7 @@ public class CityManager {
      *
      * @param cityName the name of the city
      */
-    public void createCity(String cityName){
+    public void createCity(String cityName) {
         int cityId = (cities.isEmpty() ? 1 : Collections.max(cities.keySet()) + 1);
         cities.put(cityId, cityName);
         updateToGateway(cityId);
@@ -99,7 +100,7 @@ public class CityManager {
     /**
      * Adds the given city and city id to local storage.
      *
-     * @param cityId the id of the city
+     * @param cityId   the id of the city
      * @param cityName the name of the city
      */
     public void addToCities(int cityId, String cityName) {

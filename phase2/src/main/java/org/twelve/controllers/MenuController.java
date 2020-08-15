@@ -2,8 +2,8 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.MenuPresenter;
-import org.twelve.usecases.SessionManager;
-import org.twelve.usecases.StatusManager;
+import org.twelve.usecases.system.SessionManager;
+import org.twelve.usecases.account.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
 /**
@@ -17,6 +17,7 @@ public class MenuController {
 
     /**
      * Initializer for the controller for the menu
+     *
      * @param useCasePool an instance of UseCasePool to get all the use cases
      */
     public MenuController(UseCasePool useCasePool) {
@@ -27,6 +28,7 @@ public class MenuController {
 
     /**
      * Set the presenter for this controller
+     *
      * @param menuPresenter an instance of a class that implements {@link org.twelve.presenters.MenuPresenter}
      */
     public void setMenuPresenter(MenuPresenter menuPresenter) {

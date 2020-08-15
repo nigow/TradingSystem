@@ -1,7 +1,7 @@
 package org.twelve.gateways.ram;
 
 import org.twelve.gateways.ThresholdsGateway;
-import org.twelve.usecases.ThresholdRepository;
+import org.twelve.usecases.system.ThresholdRepository;
 
 public class InMemoryThresholdsGateway implements ThresholdsGateway {
 
@@ -27,10 +27,9 @@ public class InMemoryThresholdsGateway implements ThresholdsGateway {
      * @param numberOfEdits      Number of edits an account can do with a Trade
      * @param numberOfStats      Number of trading statistics an account should see
      * @param tradesForTrusted   The number of trades required to make an account trusted.
-     *
      */
     public InMemoryThresholdsGateway(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade,
-                      int numberOfDays, int numberOfEdits, int numberOfStats, int tradesForTrusted) {
+                                     int numberOfDays, int numberOfEdits, int numberOfStats, int tradesForTrusted) {
         this.lendMoreThanBorrow = lendMoreThanBorrow;
         this.maxIncompleteTrade = maxIncompleteTrade;
         this.maxWeeklyTrade = maxWeeklyTrade;

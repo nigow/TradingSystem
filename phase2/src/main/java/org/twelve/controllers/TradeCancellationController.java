@@ -1,7 +1,7 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.TradeCancellationPresenter;
-import org.twelve.usecases.TradeManager;
+import org.twelve.usecases.trade.TradeManager;
 import org.twelve.usecases.UseCasePool;
 
 /**
@@ -16,15 +16,17 @@ public class TradeCancellationController {
 
     /**
      * Constructor for the controller dealing with the cancellation of trades
+     *
      * @param useCasePool an instance of UseCasePool to get all the use cases
      */
-    public TradeCancellationController(UseCasePool useCasePool){
+    public TradeCancellationController(UseCasePool useCasePool) {
         this.tradeManager = useCasePool.getTradeManager();
         this.useCasePool = useCasePool;
     }
 
     /**
      * Set the presenter for this controller
+     *
      * @param tradeCancellationPresenter an instance of a class that implements {@link org.twelve.presenters.TradeCancellationPresenter}
      */
     public void setTradeCancellationPresenter(TradeCancellationPresenter tradeCancellationPresenter) {
@@ -33,16 +35,17 @@ public class TradeCancellationController {
 
     /**
      * Cancel the trade at the given tradeIndex
+     *
      * @param tradeIndex the index of the trade
      */
-    public void cancelTrade(int tradeIndex){
+    public void cancelTrade(int tradeIndex) {
         tradeManager.adminCancelTrade(tradeIndex);
     }
 
     /**
      * Update the trades in tradeCancellationPresenter
      */
-    public void updateList(){
+    public void updateList() {
         useCasePool.populateAll();
         tradeCancellationPresenter.setAllTrades(tradeManager.getAllTradesString());
     }

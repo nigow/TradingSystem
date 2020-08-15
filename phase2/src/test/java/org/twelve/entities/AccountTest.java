@@ -17,7 +17,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
-        
+
         ArrayList<Integer> wishlist = new ArrayList<>();
         wishlist.add(1);
         wishlist.add(2);
@@ -51,7 +51,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
-        
+
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1,
                 "placeholder");
@@ -66,7 +66,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
-        
+
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1, "Mississauga");
         user.setPassword("4321");
@@ -81,7 +81,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
-        
+
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1, "placeholder");
         ArrayList<Integer> lst = new ArrayList<>();
@@ -96,7 +96,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
-        
+
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1,
                 "placeholder");
@@ -111,7 +111,7 @@ public class AccountTest extends TestCase {
         permissions.add(Permissions.TRADE);
         permissions.add(Permissions.BROWSE_INVENTORY);
         permissions.add(Permissions.REQUEST_UNFREEZE);
-        
+
         Account user = new Account("Ethan", "1234",
                 (ArrayList<Permissions>) permissions.clone(), 1,
                 "placeholder");

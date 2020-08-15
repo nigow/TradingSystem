@@ -2,7 +2,7 @@ package org.twelve.entities;
 
 import junit.framework.TestCase;
 
-public class ItemTest extends TestCase{
+public class ItemTest extends TestCase {
 
     public void testCreate() {
         new Item(1, "Harry Potter", "a book", 2);
@@ -28,7 +28,7 @@ public class ItemTest extends TestCase{
         TestCase.assertFalse(item.isApproved());
     }
 
-    public void testGetUserID(){
+    public void testGetUserID() {
         Item item = new Item(1, "Harry Potter", "a book", 2);
         TestCase.assertEquals(item.getOwnerID(), 2);
     }

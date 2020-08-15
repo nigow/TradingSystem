@@ -3,7 +3,7 @@ package org.twelve.gateways.json;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.ThresholdsGateway;
-import org.twelve.usecases.ThresholdRepository;
+import org.twelve.usecases.system.ThresholdRepository;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,7 +19,7 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
     /**
      * HTTP Client object that handles HTTP requests
      */
-    private final  HttpClient httpClient;
+    private final HttpClient httpClient;
 
     /**
      * GSON object that handles JSON objects between the client and the endpoints
@@ -76,7 +76,7 @@ public class JsonThresholdsGateway implements ThresholdsGateway {
      */
     @Override
     public boolean save(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
-                     int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
+                        int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {
 
         JsonObject json = new JsonObject();
         json.addProperty("lend_limit", lendMoreThanBorrow);

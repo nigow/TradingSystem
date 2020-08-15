@@ -25,6 +25,7 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
 
     /**
      * Constructor for observable profile presenter.
+     *
      * @param localizedResources Pack containing any localized strings.
      */
     public UIProfilePresenter(ResourceBundle localizedResources) {
@@ -184,6 +185,7 @@ public class UIProfilePresenter extends ObservablePresenter implements ProfilePr
         propertyChangeSupport.firePropertyChange("isTrusted", oldIsTrusted, this.isTrusted);
 
     }
+
     /**
      * {@inheritDoc}
      */

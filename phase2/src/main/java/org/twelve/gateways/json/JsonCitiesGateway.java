@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.CitiesGateway;
-import org.twelve.usecases.CityManager;
+import org.twelve.usecases.system.CityManager;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -35,7 +35,7 @@ public class JsonCitiesGateway implements CitiesGateway {
     /**
      * Define the endpoints and the JSON objects to interact with the database
      */
-    public JsonCitiesGateway(){
+    public JsonCitiesGateway() {
         gson = new Gson();
         getAllCitiesUrl = "http://csc207phase2.herokuapp.com/cities/get_all_cities";
         updateCityUrl = "http://csc207phase2.herokuapp.com/cities/update_city";
@@ -50,43 +50,43 @@ public class JsonCitiesGateway implements CitiesGateway {
         HttpURLConnection urlConnection;
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
-        try{
+        try {
             URL url = new URL(getAllCitiesUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             int status = urlConnection.getResponseCode();
-            if(status==200){
+            if (status == 200) {
                 inputStream = urlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 JsonObject json;
                 JsonArray jsonArray;
 
-                while((line = bufferedReader.readLine())!=null){
-                    try{
+                while ((line = bufferedReader.readLine()) != null) {
+                    try {
                         jsonArray = gson.fromJson(line, JsonObject.class).get("cities").getAsJsonArray();
-                        for(JsonElement jsonElement: jsonArray){
+                        for (JsonElement jsonElement : jsonArray) {
                             json = jsonElement.getAsJsonObject();
                             int cityId = json.get("city_id").getAsInt();
                             String cityName = json.get("city_name").getAsString();
                             cityManager.addToCities(cityId, cityName);
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-            }else{
+            } else {
                 return false;
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        try{
+        try {
             assert inputStream != null;
             inputStream.close();
             bufferedReader.close();
             return true;
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -104,7 +104,7 @@ public class JsonCitiesGateway implements CitiesGateway {
         HttpURLConnection con;
         OutputStream outputStream;
         URL url;
-        try{
+        try {
             url = new URL(updateCityUrl);
             con = (HttpURLConnection) url.openConnection();
 
@@ -119,15 +119,15 @@ public class JsonCitiesGateway implements CitiesGateway {
             con.getInputStream();
 
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
 
-        try{
+        try {
             outputStream.close();
             return true;
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }

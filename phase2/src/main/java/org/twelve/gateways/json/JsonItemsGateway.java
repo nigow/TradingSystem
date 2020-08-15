@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.twelve.gateways.ItemsGateway;
-import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.item.ItemManager;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -40,7 +40,7 @@ public class JsonItemsGateway implements ItemsGateway {
     /**
      * Define the endpoints and the JSON objects to interact with the database
      */
-    public JsonItemsGateway(){
+    public JsonItemsGateway() {
         getAllItemsUrl = "http://csc207phase2.herokuapp.com/items/get_all_items";
         updateItemUrl = "http://csc207phase2.herokuapp.com/items/update_item";
         createItemUrl = "http://csc207phase2.herokuapp.com/items/create_item";
@@ -56,51 +56,51 @@ public class JsonItemsGateway implements ItemsGateway {
         InputStream inputStream = null;
         BufferedReader bufferedReader = null;
         //List<Integer> existingItemIds = itemManager.getAllItemIds();
-        try{
+        try {
             URL url = new URL(getAllItemsUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             int status = urlConnection.getResponseCode();
 
-            if(status==200){
+            if (status == 200) {
                 inputStream = urlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 JsonObject json;
                 JsonArray jsonArray;
 
-                while((line = bufferedReader.readLine())!=null){
-                    try{
+                while ((line = bufferedReader.readLine()) != null) {
+                    try {
                         jsonArray = gson.fromJson(line, JsonObject.class).get("items").getAsJsonArray();
-                        for(JsonElement jsonElement: jsonArray){
+                        for (JsonElement jsonElement : jsonArray) {
                             json = jsonElement.getAsJsonObject();
                             int itemId = json.get("item_id").getAsInt();
                             //if(!existingItemIds.contains(itemId)){
-                                String name = json.get("name").getAsString();
-                                String description = json.get("description").getAsString();
-                                boolean isApproved = json.get("is_approved").getAsBoolean();
-                                int ownerID = json.get("owner_id").getAsInt();
-                                itemManager.addToItems(itemId, name, description, ownerID, isApproved);
+                            String name = json.get("name").getAsString();
+                            String description = json.get("description").getAsString();
+                            boolean isApproved = json.get("is_approved").getAsBoolean();
+                            int ownerID = json.get("owner_id").getAsInt();
+                            itemManager.addToItems(itemId, name, description, ownerID, isApproved);
                             //}
 
                         }
 
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        try{
+        try {
             assert inputStream != null;
             inputStream.close();
             bufferedReader.close();
             return true;
-        }catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -122,9 +122,9 @@ public class JsonItemsGateway implements ItemsGateway {
         HttpURLConnection con;
         OutputStream outputStream;
         URL url;
-        try{
+        try {
 
-            if(newItem) url = new URL(createItemUrl);
+            if (newItem) url = new URL(createItemUrl);
             else url = new URL(updateItemUrl);
             con = (HttpURLConnection) url.openConnection();
 
@@ -138,14 +138,14 @@ public class JsonItemsGateway implements ItemsGateway {
             con.getInputStream();
 
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        try{
+        try {
             outputStream.close();
             return true;
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }

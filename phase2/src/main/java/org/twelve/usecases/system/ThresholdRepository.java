@@ -1,4 +1,4 @@
-package org.twelve.usecases;
+package org.twelve.usecases.system;
 
 import org.twelve.entities.Thresholds;
 import org.twelve.gateways.ThresholdsGateway;
@@ -27,7 +27,7 @@ public class ThresholdRepository {
      *
      * @param thresholdsGateway A new gateway in demo mode
      */
-    void switchToDemoMode(ThresholdsGateway thresholdsGateway) {
+    public void switchToDemoMode(ThresholdsGateway thresholdsGateway) {
         this.thresholdsGateway = thresholdsGateway;
         updateThresholds();
     }
@@ -37,7 +37,7 @@ public class ThresholdRepository {
      *
      * @param thresholdsGateway A new instance
      */
-    void switchToNormalMode(ThresholdsGateway thresholdsGateway) {
+    public void switchToNormalMode(ThresholdsGateway thresholdsGateway) {
         this.thresholdsGateway = thresholdsGateway;
         thresholds = null;
         thresholdsGateway.populate(this);
@@ -181,13 +181,13 @@ public class ThresholdRepository {
     /**
      * Create the thresholds for this program.
      *
-     * @param lendMoreThanBorrow Number of items a user has to lend more than borrow to be able to make a trade
-     * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen
-     * @param maxWeeklyTrade     Maximum number of trades a user can have in one week
-     * @param numberOfDays       Number of days for when a reverse trade is set up after a temporary trade
-     * @param numberOfEdits      Number of edits an account can do with a Trade
-     * @param numberOfStats      Number of trading statistics an account should see
-     * @param requiredTradesForTrusted   The number of trades required to make an account trusted.
+     * @param lendMoreThanBorrow       Number of items a user has to lend more than borrow to be able to make a trade
+     * @param maxIncompleteTrade       Maximum number of incomplete trades before a user's account is frozen
+     * @param maxWeeklyTrade           Maximum number of trades a user can have in one week
+     * @param numberOfDays             Number of days for when a reverse trade is set up after a temporary trade
+     * @param numberOfEdits            Number of edits an account can do with a Trade
+     * @param numberOfStats            Number of trading statistics an account should see
+     * @param requiredTradesForTrusted The number of trades required to make an account trusted.
      */
     public void createThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
                                  int numberOfEdits, int numberOfStats, int requiredTradesForTrusted) {

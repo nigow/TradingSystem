@@ -17,9 +17,10 @@ import java.util.ResourceBundle;
 
 /**
  * View for post login menu.
+ *
  * @param <T> Presenter.
  */
-public class MenuView<T extends ObservablePresenter & MenuPresenter> implements SceneView, Initializable{
+public class MenuView<T extends ObservablePresenter & MenuPresenter> implements SceneView, Initializable {
 
     private final WindowHandler windowHandler;
     private final MenuController menuController;
@@ -46,9 +47,10 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
 
     /**
      * Constructor of view for post login menu.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler  An instance of {@link org.twelve.views.WindowHandler}.
      * @param menuController Controller for managing access to further features.
-     * @param menuPresenter Presenter for displaying access errors.
+     * @param menuPresenter  Presenter for displaying access errors.
      */
     public MenuView(WindowHandler windowHandler, MenuController menuController, T menuPresenter) {
         this.windowHandler = windowHandler;
@@ -65,7 +67,7 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
         try {
 
             initiateTrade.disableProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
-                .bean(menuPresenter).name("initiateTrade").build().not());
+                    .bean(menuPresenter).name("initiateTrade").build().not());
             manageAccounts.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
                     .bean(menuPresenter).name("manageAccounts").build());
             addAdmin.visibleProperty().bind(ReadOnlyJavaBeanBooleanPropertyBuilder.create()
@@ -80,7 +82,8 @@ public class MenuView<T extends ObservablePresenter & MenuPresenter> implements 
             currentUser.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(menuPresenter).name("currentUser").build());
 
-        } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) {
+        }
     }
 
     @FXML

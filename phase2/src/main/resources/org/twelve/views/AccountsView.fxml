@@ -4,45 +4,47 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.AccountsView">
-   <bottom>
-      <HBox spacing="10.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin>
-         <children>
-            <Button fx:id="banBtn" mnemonicParsing="false" onAction="#banClicked" text="%ban" />
-            <Button fx:id="unbanBtn" mnemonicParsing="false" onAction="#unbanClicked" text="%unban" />
-            <Button fx:id="trustBtn" mnemonicParsing="false" onAction="#trustClicked" text="%trust" />
-            <Button fx:id="untrustBtn" mnemonicParsing="false" onAction="#untrustClicked" text="%untrust" />
-            <Button fx:id="freezeButton" mnemonicParsing="false" onAction="#freezeClicked" text="%freeze" />
-            <Button fx:id="unfreezeButton" mnemonicParsing="false" onAction="#unfreezeClicked" text="%unfreeze" />
-            <Button fx:id="modButton" mnemonicParsing="false" onAction="#modClicked" text="%mod" />
-            <Button fx:id="unmodButton" mnemonicParsing="false" onAction="#unmodClicked" text="%unmod" />
-         </children>
-      </HBox>
-   </bottom>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
-   <center>
-      <TableView fx:id="accountsTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="usernameCol" prefWidth="75.0" text="%username" />
-          <TableColumn fx:id="roleCol" prefWidth="75.0" text="%role" />
-        </columns>
-      </TableView>
-   </center>
-   <top>
-      <HBox prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" text="%accounts" />
-            <Separator maxHeight="1.7976931348623157E308" visible="false" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#backClicked" text="%back" />
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" />
-         </BorderPane.margin>
-      </HBox>
-   </top>
+<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.AccountsView">
+    <bottom>
+        <HBox spacing="10.0" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="10.0"/>
+            </BorderPane.margin>
+            <children>
+                <Button fx:id="banBtn" mnemonicParsing="false" onAction="#banClicked" text="%ban"/>
+                <Button fx:id="unbanBtn" mnemonicParsing="false" onAction="#unbanClicked" text="%unban"/>
+                <Button fx:id="trustBtn" mnemonicParsing="false" onAction="#trustClicked" text="%trust"/>
+                <Button fx:id="untrustBtn" mnemonicParsing="false" onAction="#untrustClicked" text="%untrust"/>
+                <Button fx:id="freezeButton" mnemonicParsing="false" onAction="#freezeClicked" text="%freeze"/>
+                <Button fx:id="unfreezeButton" mnemonicParsing="false" onAction="#unfreezeClicked" text="%unfreeze"/>
+                <Button fx:id="modButton" mnemonicParsing="false" onAction="#modClicked" text="%mod"/>
+                <Button fx:id="unmodButton" mnemonicParsing="false" onAction="#unmodClicked" text="%unmod"/>
+            </children>
+        </HBox>
+    </bottom>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+    <center>
+        <TableView fx:id="accountsTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="usernameCol" prefWidth="75.0" text="%username"/>
+                <TableColumn fx:id="roleCol" prefWidth="75.0" text="%role"/>
+            </columns>
+        </TableView>
+    </center>
+    <top>
+        <HBox prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" text="%accounts"/>
+                <Separator maxHeight="1.7976931348623157E308" visible="false" HBox.hgrow="ALWAYS"/>
+                <Button mnemonicParsing="false" onAction="#backClicked" text="%back"/>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0"/>
+            </BorderPane.margin>
+        </HBox>
+    </top>
 </BorderPane>

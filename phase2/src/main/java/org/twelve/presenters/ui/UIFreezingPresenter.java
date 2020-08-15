@@ -30,6 +30,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
 
     /**
      * Constructor for the presenter for dealign with the status of users
+     *
      * @param localizedResources pack containing any localized strings
      */
     public UIFreezingPresenter(ResourceBundle localizedResources) {
@@ -146,7 +147,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
     public void setToFreezeAccounts(List<String> toFreezeAccounts) {
         List<Map<String, String>> oldToFreezeAccounts = this.toFreezeAccounts;
         this.toFreezeAccounts = new ArrayList<>();
-        for (String toFreezeAccount: toFreezeAccounts) {
+        for (String toFreezeAccount : toFreezeAccounts) {
 
             this.toFreezeAccounts.add(Map.of("username", toFreezeAccount, "role", localizedResources.getString("pending")));
 
@@ -192,7 +193,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
     public void setTrustedAccounts(List<String> trustedAccounts) {
         List<Map<String, String>> oldTrustedAccounts = this.trustedAccounts;
         this.trustedAccounts = new ArrayList<>();
-        for (String trustedAccount: trustedAccounts) {
+        for (String trustedAccount : trustedAccounts) {
             this.trustedAccounts.add(Map.of("username", trustedAccount, "role", localizedResources.getString("trusted")));
 
         }
@@ -214,7 +215,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
     public void setModAccounts(List<String> modAccounts) {
         List<Map<String, String>> oldModAccounts = this.modAccounts;
         this.modAccounts = new ArrayList<>();
-        for (String modAccount: modAccounts) {
+        for (String modAccount : modAccounts) {
             this.modAccounts.add(Map.of("username", modAccount, "role", localizedResources.getString("mod")));
 
         }

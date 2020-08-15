@@ -1,10 +1,10 @@
 package org.twelve.controllers;
 
 import org.twelve.presenters.AdminWishlistPresenter;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.ItemManager;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.item.ItemManager;
 import org.twelve.usecases.UseCasePool;
-import org.twelve.usecases.WishlistManager;
+import org.twelve.usecases.account.WishlistManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ public class AdminWishlistController {
 
     /**
      * Constructor for controller for admins to manage everyone's wishlists
+     *
      * @param useCasePool An instance of {@link org.twelve.usecases.UseCasePool}.
      */
     public AdminWishlistController(UseCasePool useCasePool) {
@@ -33,6 +34,7 @@ public class AdminWishlistController {
 
     /**
      * Set the presenter for this controller
+     *
      * @param adminWishlistPresenter An instance of a class that implements {@link org.twelve.presenters.AdminWishlistPresenter}
      */
     public void setAdminWishlistPresenter(AdminWishlistPresenter adminWishlistPresenter) {
@@ -41,8 +43,9 @@ public class AdminWishlistController {
 
     /**
      * Change the selected item to remove in the presenter
+     *
      * @param selectedUser the username of the new selected user
-     * @param itemIndex the index of the new selected item in the user's wishlist
+     * @param itemIndex    the index of the new selected item in the user's wishlist
      */
     public void changeSelectedItemToRemove(String selectedUser, int itemIndex) {
         int itemID = wishlistManager.getWishlistFromID(accountRepository.getIDFromUsername(selectedUser)).get(itemIndex);
@@ -51,8 +54,9 @@ public class AdminWishlistController {
 
     /**
      * Remove the selected item from the user's wishlist
+     *
      * @param selectedUser the username of the selected user
-     * @param itemIndex the index of the selected item in the user's wishlist
+     * @param itemIndex    the index of the selected item in the user's wishlist
      */
     public void removeFromWishlist(String selectedUser, int itemIndex) {
         int accountID = accountRepository.getIDFromUsername(selectedUser);
@@ -63,6 +67,7 @@ public class AdminWishlistController {
 
     /**
      * Update the data in the presenter
+     *
      * @param selectedUser the current selected user
      */
     public void updateWishlist(String selectedUser) {
@@ -80,6 +85,7 @@ public class AdminWishlistController {
 
     /**
      * Change the selected user
+     *
      * @param index the index of the user selected
      */
     public void changeSelectedUser(int index) {

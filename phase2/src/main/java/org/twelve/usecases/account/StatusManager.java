@@ -1,8 +1,11 @@
-package org.twelve.usecases;
+package org.twelve.usecases.account;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
 import org.twelve.entities.Roles;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.system.ThresholdRepository;
+import org.twelve.usecases.trade.TradeUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +23,9 @@ public class StatusManager {
 
     /**
      * Constructs an instance of StatusManager.
-     * @param accountRepository An instance of accountRepository
-     * @param tradeUtility An instance of trade utility
+     *
+     * @param accountRepository   An instance of accountRepository
+     * @param tradeUtility        An instance of trade utility
      * @param thresholdRepository An instance of thresholdRepository
      */
     public StatusManager(AccountRepository accountRepository, TradeUtility tradeUtility,
@@ -123,7 +127,7 @@ public class StatusManager {
      * @param accountID An ID of an account
      * @return A boolean indicating whether account can go on a vacation
      */
-    public boolean canVacation(int accountID){
+    public boolean canVacation(int accountID) {
         return !canBeFrozen(accountID) && hasPermission(accountID, Permissions.TRADE) && hasPermission(accountID, Permissions.REQUEST_VACATION);
     }
 
@@ -142,10 +146,10 @@ public class StatusManager {
      * Check if an accountID has a certain permission.
      *
      * @param accountID The ID of the account checked
-     * @param perm A permission being checked
+     * @param perm      A permission being checked
      * @return Whether the account has the permission.
      */
-    public boolean hasPermission(int accountID, Permissions perm){
+    public boolean hasPermission(int accountID, Permissions perm) {
         return accountRepository.getAccountFromID(accountID).getPermissions().contains(perm);
     }
 
@@ -259,7 +263,7 @@ public class StatusManager {
      * @return The role of the account
      */
     public Roles getRoleOfAccount(int accountID) {
-        List <Permissions> perms = accountRepository.getAccountFromID(accountID).getPermissions();
+        List<Permissions> perms = accountRepository.getAccountFromID(accountID).getPermissions();
         if (!perms.contains(Permissions.LOGIN))
             return Roles.BANNED;
         if (!perms.contains(Permissions.REQUEST_VACATION))

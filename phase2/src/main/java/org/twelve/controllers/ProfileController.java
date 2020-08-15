@@ -4,6 +4,11 @@ import org.twelve.entities.Permissions;
 import org.twelve.entities.Roles;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.usecases.*;
+import org.twelve.usecases.account.StatusManager;
+import org.twelve.usecases.system.CityManager;
+import org.twelve.usecases.system.LoginManager;
+import org.twelve.usecases.system.SessionManager;
+import org.twelve.usecases.trade.TradeManager;
 
 /**
  * Controller for managing account settings.
@@ -21,6 +26,7 @@ public class ProfileController {
 
     /**
      * Constructor of controller for managing account settings.
+     *
      * @param useCasePool An instance of a class that implements {@link org.twelve.usecases.UseCasePool}.
      */
     public ProfileController(UseCasePool useCasePool) {
@@ -58,6 +64,7 @@ public class ProfileController {
 
     /**
      * Provides the profile controller with an appropriate presenter.
+     *
      * @param profilePresenter An instance of a class that implements {@link org.twelve.presenters.ProfilePresenter}.
      */
     public void setProfilePresenter(ProfilePresenter profilePresenter) {
@@ -68,6 +75,7 @@ public class ProfileController {
 
     /**
      * Changes password of currently logged in account if oldPassword is correct and newPassword is valid.
+     *
      * @param oldPassword Old password.
      * @param newPassword New password.
      * @return Whether the password was successfully changed.
@@ -86,6 +94,7 @@ public class ProfileController {
 
     /**
      * Changes location of currently logged in account if newLocation is valid.
+     *
      * @param newLocation New location.
      * @return Whether the location was successfully changed.
      */
@@ -109,6 +118,7 @@ public class ProfileController {
 
     /**
      * Changes whether currently logged in account is on vacation or not.
+     *
      * @param vacationStatus New vacation status.
      */
     public void changeVacationStatus(boolean vacationStatus) {

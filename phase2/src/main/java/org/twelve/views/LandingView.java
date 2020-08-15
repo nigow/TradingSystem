@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for landing page.
+ *
  * @param <T> Presenter.
  */
 public class LandingView<T extends ObservablePresenter & LandingPresenter> implements SceneView, Initializable {
@@ -39,9 +40,10 @@ public class LandingView<T extends ObservablePresenter & LandingPresenter> imple
 
     /**
      * Constructor of view for landing page.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler     An instance of {@link org.twelve.views.WindowHandler}.
      * @param landingController Controller for managing local preferences such as display language.
-     * @param landingPresenter Presenter for displaying current local preferences.
+     * @param landingPresenter  Presenter for displaying current local preferences.
      */
     public LandingView(WindowHandler windowHandler, LandingController landingController, T landingPresenter) {
         this.windowHandler = windowHandler;

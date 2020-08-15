@@ -1,4 +1,4 @@
-package org.twelve.usecases;
+package org.twelve.usecases.trade;
 
 import org.twelve.entities.TimePlace;
 import org.twelve.entities.Trade;
@@ -31,14 +31,14 @@ abstract public class TradeRepository {
     /**
      * Creates a new Trade object to be edited.
      *
-     * @param time          Time of the Trade
-     * @param place         Location of the Trade
-     * @param isPermanent   Whether the Trade is permanent or not
-     * @param tradersIds    An ordered list of each trader participating
-     * @param itemsIds      The items involved in this trade.
+     * @param time        Time of the Trade
+     * @param place       Location of the Trade
+     * @param isPermanent Whether the Trade is permanent or not
+     * @param tradersIds  An ordered list of each trader participating
+     * @param itemsIds    The items involved in this trade.
      */
     public int createTradeEntity(LocalDateTime time, String place, boolean isPermanent,
-                           List<Integer> tradersIds, List< List<Integer> > itemsIds) {
+                                 List<Integer> tradersIds, List<List<Integer>> itemsIds) {
         int id = (trades.isEmpty() ? 1 : Collections.max(trades.keySet()) + 1);
         TimePlace timePlace = new TimePlace(id, time, place);
         Trade trade = new Trade(id, isPermanent, tradersIds, itemsIds);
@@ -52,17 +52,17 @@ abstract public class TradeRepository {
     /**
      * Adds a new trade and its timePlace that exist in the database
      *
-     * @param id id of trade and timePlace
-     * @param isPermanent if the trade is permanent
-     * @param traderIDs list of all ids of the traders
-     * @param itemIDs list of all the ids of the items
-     * @param editedCounter counter for how many edits were made
-     * @param tradeStatus status of the trade
+     * @param id               id of trade and timePlace
+     * @param isPermanent      if the trade is permanent
+     * @param traderIDs        list of all ids of the traders
+     * @param itemIDs          list of all the ids of the items
+     * @param editedCounter    counter for how many edits were made
+     * @param tradeStatus      status of the trade
      * @param tradeCompletions The Completion status of the trades
-     * @param time the time of the trade
-     * @param location the location of the trade
+     * @param time             the time of the trade
+     * @param location         the location of the trade
      */
-    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
+    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List<List<Integer>> itemIDs,
                             int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
                             String time, String location) {
         Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
@@ -75,7 +75,7 @@ abstract public class TradeRepository {
     /**
      * Updates the given trade and if it is a new trade to the tradeGateway.
      *
-     * @param trade the object representing a trade
+     * @param trade    the object representing a trade
      * @param newTrade if the trade is a new trade
      */
     public void updateToGateway(Trade trade, boolean newTrade) {
@@ -90,7 +90,7 @@ abstract public class TradeRepository {
      *
      * @param tradeGateway An instance of TradeGateway
      */
-    void switchToDemoMode(TradeGateway tradeGateway) {
+    public void switchToDemoMode(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
         for (Trade trade : trades.values()) {
             updateToGateway(trade, true);
@@ -102,7 +102,7 @@ abstract public class TradeRepository {
      *
      * @param tradeGateway An instance of TradeGateway
      */
-    void switchToNormalMode(TradeGateway tradeGateway) {
+    public void switchToNormalMode(TradeGateway tradeGateway) {
         this.tradeGateway = tradeGateway;
         trades.clear();
         timePlaces.clear();
@@ -135,7 +135,7 @@ abstract public class TradeRepository {
      * @param accountID the id of the account with info being retrieved from
      * @return List of all of the trades the current account has done
      */
-     List<Trade> getAllTradesAccount(int accountID) {
+    List<Trade> getAllTradesAccount(int accountID) {
         List<Trade> accountTrades = new ArrayList<>();
         for (Trade trade : trades.values()) {
             if (trade.getTraderIds().contains(accountID) && trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
@@ -148,7 +148,7 @@ abstract public class TradeRepository {
      * Retrieves a list of all trade ids of an account.
      *
      * @param accountID the id of the account with info being retrieved from
-     * @return  a list of all trade ids of an account
+     * @return a list of all trade ids of an account
      */
     public List<Integer> getAllTradesAccountID(int accountID) {
         List<Integer> accountTrades = new ArrayList<>();
@@ -163,9 +163,9 @@ abstract public class TradeRepository {
      *
      * @return a list of all the trade ids in the system
      */
-    public List<Integer> getAllTradesIds(){
+    public List<Integer> getAllTradesIds() {
         List<Integer> tradeIds = new ArrayList<>();
-        for(Trade trade: trades.values()){
+        for (Trade trade : trades.values()) {
             if (trade.getStatus() != TradeStatus.ADMIN_CANCELLED)
                 tradeIds.add(trade.getId());
         }
@@ -225,7 +225,7 @@ abstract public class TradeRepository {
     /**
      * Returns the next trader in trade after account.
      *
-     * @param tradeID id of the trade
+     * @param tradeID   id of the trade
      * @param accountID id of the account
      * @return the next trader after account
      */
@@ -237,7 +237,7 @@ abstract public class TradeRepository {
      * Finds items account traded in this trade.
      *
      * @param accountID id of account
-     * @param tradeID id of trade
+     * @param tradeID   id of trade
      * @return list of id of items
      */
     public List<Integer> itemsTraderGives(int accountID, int tradeID) {

@@ -4,46 +4,61 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.ProfileView">
-   <bottom>
-      <Button mnemonicParsing="false" onAction="#backClicked" text="Back" BorderPane.alignment="CENTER_LEFT" />
-   </bottom>
-   <top>
-      <Label text="Profile" BorderPane.alignment="CENTER_LEFT" />
-   </top>
-   <center>
-      <GridPane alignment="CENTER" hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changePassword" />
-            <Button fx:id="updatePasswordBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updatePasswordClicked" text="%updatePassword" GridPane.columnIndex="1" />
-            <PasswordField fx:id="oldPassword" promptText="%oldPassword" GridPane.rowIndex="1" />
-            <PasswordField fx:id="newPassword" promptText="%newPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <CheckBox fx:id="onVacation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onVacationClicked" text="%onVacation" GridPane.rowIndex="3" />
-            <Button fx:id="becomeTrustedBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#becomeTrustedClicked" text="%becomeTrusted" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button fx:id="requestUnfreezeBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#requestUnfreezeClicked" text="%requestUnfreeze" GridPane.rowIndex="4" />
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changeLocation" GridPane.rowIndex="5" />
-            <Button fx:id="updateLocationBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateLocationClicked" text="%updateLocation" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox fx:id="locationBox" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-            <Label fx:id="updatePasswordError" alignment="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Label fx:id="updateLocationError" alignment="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-         </children>
-      </GridPane>
-   </center>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.ProfileView">
+    <bottom>
+        <Button mnemonicParsing="false" onAction="#backClicked" text="Back" BorderPane.alignment="CENTER_LEFT"/>
+    </bottom>
+    <top>
+        <Label text="Profile" BorderPane.alignment="CENTER_LEFT"/>
+    </top>
+    <center>
+        <GridPane alignment="CENTER" hgap="10.0" vgap="10.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changePassword"/>
+                <Button fx:id="updatePasswordBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#updatePasswordClicked" text="%updatePassword" GridPane.columnIndex="1"/>
+                <PasswordField fx:id="oldPassword" promptText="%oldPassword" GridPane.rowIndex="1"/>
+                <PasswordField fx:id="newPassword" promptText="%newPassword" GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
+                <CheckBox fx:id="onVacation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                          mnemonicParsing="false" onAction="#onVacationClicked" text="%onVacation"
+                          GridPane.rowIndex="3"/>
+                <Button fx:id="becomeTrustedBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                        mnemonicParsing="false" onAction="#becomeTrustedClicked" text="%becomeTrusted"
+                        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Button fx:id="requestUnfreezeBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#requestUnfreezeClicked" text="%requestUnfreeze" GridPane.rowIndex="4"/>
+                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%changeLocation"
+                       GridPane.rowIndex="5"/>
+                <Button fx:id="updateLocationBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#updateLocationClicked" text="%updateLocation" GridPane.columnIndex="1"
+                        GridPane.rowIndex="5"/>
+                <ComboBox fx:id="locationBox" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2"
+                          GridPane.rowIndex="6"/>
+                <Label fx:id="updatePasswordError" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                       GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+                <Label fx:id="updateLocationError" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                       GridPane.columnSpan="2" GridPane.rowIndex="7"/>
+            </children>
+        </GridPane>
+    </center>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
 </BorderPane>

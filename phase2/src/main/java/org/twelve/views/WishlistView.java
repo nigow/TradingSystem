@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing personal wishlist.
+ *
  * @param <T> Presenter.
  */
 public class WishlistView<T extends ObservablePresenter & WishlistPresenter> implements SceneView, Initializable {
@@ -59,9 +60,10 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
 
     /**
      * Constructor of view for managing personal wishlist.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler      An instance of {@link org.twelve.views.WindowHandler}.
      * @param wishlistController Controller for adding/removing items from personal wishlist.
-     * @param wishlistPresenter Presenter for displaying wishlist and system items.
+     * @param wishlistPresenter  Presenter for displaying wishlist and system items.
      */
     public WishlistView(WindowHandler windowHandler, WishlistController wishlistController, T wishlistPresenter) {
         this.windowHandler = windowHandler;
@@ -127,7 +129,8 @@ public class WishlistView<T extends ObservablePresenter & WishlistPresenter> imp
             itemOwner.textProperty().bind(ReadOnlyJavaBeanStringPropertyBuilder.create()
                     .bean(wishlistPresenter).name("selectedItemOwner").build());
 
-        } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) {
+        }
 
         wishlistItems.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
 

@@ -1,7 +1,9 @@
-package org.twelve.usecases;
+package org.twelve.usecases.account;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Item;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.item.ItemUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class WishlistManager {
      * Constructor for WishlistManager.
      *
      * @param accountRepository the repository for storing accounts
-     * @param itemUtility utility class for items
+     * @param itemUtility       utility class for items
      */
     public WishlistManager(AccountRepository accountRepository, ItemUtility itemUtility) {
         this.accountRepository = accountRepository;
@@ -31,7 +33,7 @@ public class WishlistManager {
      * Adds an itemID to the given account's wishlist.
      *
      * @param accountID Unique identifier of the account
-     * @param itemID Unique identifier of the item
+     * @param itemID    Unique identifier of the item
      */
     public void addItemToWishlist(int accountID, int itemID) {
         Account account = accountRepository.getAccountFromID(accountID);
@@ -43,7 +45,7 @@ public class WishlistManager {
      * Removes an itemID from the given account's wishlist.
      *
      * @param accountID Unique identifier of the account
-     * @param itemID Unique identifier of the item
+     * @param itemID    Unique identifier of the item
      */
     public void removeItemFromWishlist(int accountID, int itemID) {
         Account account = accountRepository.getAccountFromID(accountID);

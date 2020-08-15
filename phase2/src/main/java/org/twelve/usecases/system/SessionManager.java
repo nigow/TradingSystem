@@ -1,9 +1,11 @@
-package org.twelve.usecases;
+package org.twelve.usecases.system;
 
 import org.twelve.entities.Account;
+import org.twelve.usecases.account.AccountRepository;
 
 /**
  * A class for managing the current session.
+ *
  * @author Maryam
  */
 public class SessionManager {

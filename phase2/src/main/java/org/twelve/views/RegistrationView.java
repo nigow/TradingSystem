@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for registering accounts.
+ *
  * @param <T> Presenter.
  */
 public class RegistrationView<T extends ObservablePresenter & RegistrationPresenter> implements SceneView, Initializable {
@@ -58,9 +59,10 @@ public class RegistrationView<T extends ObservablePresenter & RegistrationPresen
 
     /**
      * Constructor of view for registering accounts.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler          An instance of {@link org.twelve.views.WindowHandler}.
      * @param registrationController Controller for orchestrating registration of accounts.
-     * @param registrationPresenter Presenter for displaying registration errors.
+     * @param registrationPresenter  Presenter for displaying registration errors.
      */
     public RegistrationView(WindowHandler windowHandler, RegistrationController registrationController, T registrationPresenter) {
         this.windowHandler = windowHandler;

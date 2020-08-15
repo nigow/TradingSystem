@@ -4,69 +4,74 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.ThresholdsView">
-   <center>
-      <GridPane alignment="CENTER" hgap="5.0" vgap="10.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-        </rowConstraints>
-         <children>
-            <Label text="%lendVsBorrow" />
-            <Label text="%maxIncomplete" GridPane.rowIndex="1" />
-            <Label text="%maxWeekly" GridPane.rowIndex="2" />
-             <Label text="%numOfDays" GridPane.rowIndex="3" />
-             <Label text="%numOfEdits" GridPane.rowIndex="4" />
-             <Label text="%numOfStats" GridPane.rowIndex="5" />
-             <Label text="%numForTrusted" GridPane.rowIndex="6" />
-             <Spinner fx:id="lendVsBorrow" GridPane.columnIndex="1" />
-            <Spinner fx:id="maxIncomplete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Spinner fx:id="maxWeekly" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Spinner fx:id="numOfDays" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Spinner fx:id="numOfEdits" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Spinner fx:id="numOfStats" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-             <Spinner fx:id="numForTrusted" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-         </children>
-      </GridPane>
-   </center>
-   <bottom>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button mnemonicParsing="false" onAction="#backClicked" text="%back">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></Button>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" text="%save" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></Button>
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" />
-         </BorderPane.margin>
-      </GridPane>
-   </bottom>
-   <top>
-      <Label text="%thresholds" BorderPane.alignment="TOP_LEFT">
-         <BorderPane.margin>
-            <Insets left="10.0" top="10.0" />
-         </BorderPane.margin>
-      </Label>
-   </top>
+<BorderPane fx:id="graphic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.ThresholdsView">
+    <center>
+        <GridPane alignment="CENTER" hgap="5.0" vgap="10.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+            <children>
+                <Label text="%lendVsBorrow"/>
+                <Label text="%maxIncomplete" GridPane.rowIndex="1"/>
+                <Label text="%maxWeekly" GridPane.rowIndex="2"/>
+                <Label text="%numOfDays" GridPane.rowIndex="3"/>
+                <Label text="%numOfEdits" GridPane.rowIndex="4"/>
+                <Label text="%numOfStats" GridPane.rowIndex="5"/>
+                <Label text="%numForTrusted" GridPane.rowIndex="6"/>
+                <Spinner fx:id="lendVsBorrow" GridPane.columnIndex="1"/>
+                <Spinner fx:id="maxIncomplete" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Spinner fx:id="maxWeekly" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Spinner fx:id="numOfDays" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Spinner fx:id="numOfEdits" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Spinner fx:id="numOfStats" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <Spinner fx:id="numForTrusted" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Button mnemonicParsing="false" onAction="#backClicked" text="%back">
+                    <GridPane.margin>
+                        <Insets/>
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" text="%save"
+                        GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                    <GridPane.margin>
+                        <Insets/>
+                    </GridPane.margin>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0"/>
+            </BorderPane.margin>
+        </GridPane>
+    </bottom>
+    <top>
+        <Label text="%thresholds" BorderPane.alignment="TOP_LEFT">
+            <BorderPane.margin>
+                <Insets left="10.0" top="10.0"/>
+            </BorderPane.margin>
+        </Label>
+    </top>
 </BorderPane>

@@ -1,9 +1,10 @@
-package org.twelve.usecases;
+package org.twelve.usecases.trade;
 
 import org.twelve.entities.TimePlace;
 import org.twelve.entities.Trade;
 import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
+import org.twelve.usecases.system.ThresholdRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -22,9 +23,9 @@ abstract public class TradeUtility extends TradeRepository {
      * Constructor for TradeUtility.
      *
      * @param thresholdRepository Repository for storing all accounts threshold values of the program
-     * @param tradeGateway the gateway dealing with trades
+     * @param tradeGateway        the gateway dealing with trades
      */
-    public TradeUtility(ThresholdRepository thresholdRepository, TradeGateway tradeGateway){
+    public TradeUtility(ThresholdRepository thresholdRepository, TradeGateway tradeGateway) {
         super(tradeGateway);
         this.thresholdRepository = thresholdRepository;
     }
@@ -230,7 +231,7 @@ abstract public class TradeUtility extends TradeRepository {
      * Returns if it is a accounts turn to edit.
      *
      * @param accountID Unique identifier of the account
-     * @param tradeID Unique identifier of the trade
+     * @param tradeID   Unique identifier of the trade
      * @return Whether it's the account's turn to edit
      */
     public boolean isEditTurn(int accountID, int tradeID) {
@@ -241,7 +242,7 @@ abstract public class TradeUtility extends TradeRepository {
      * return whether this account completed this trade or not.
      *
      * @param accountID id of account
-     * @param tradeID id of trade
+     * @param tradeID   id of trade
      * @return whether this account completed trade or not
      */
     public boolean accountCompletedTrade(int accountID, int tradeID) {

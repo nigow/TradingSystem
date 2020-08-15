@@ -10,6 +10,7 @@ public class FxMain {
 
     /**
      * Launches the window handler of the application
+     *
      * @param args Commandline arguments
      */
     public static void main(String[] args) {

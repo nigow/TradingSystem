@@ -38,6 +38,7 @@ public class WindowHandler extends Application {
 
     /**
      * Changes currently displayed scene.
+     *
      * @param scene Scene to change to.
      */
     public void changeScene(Scenes scene) {
@@ -55,6 +56,7 @@ public class WindowHandler extends Application {
 
     /**
      * Restarts the program based on given local preferences.
+     *
      * @param language Language program should be in.
      * @param demoMode Whether demo mode is active.
      */

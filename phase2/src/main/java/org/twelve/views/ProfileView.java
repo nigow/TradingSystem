@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing personal account.
+ *
  * @param <T> Presenter.
  */
 public class ProfileView<T extends ObservablePresenter & ProfilePresenter> implements SceneView, Initializable {
@@ -51,9 +52,10 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
     /**
      * Constructor of view for managing personal account.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler     An instance of {@link org.twelve.views.WindowHandler}.
      * @param profileController Controller for managing account settings.
-     * @param profilePresenter Presenter for displaying account status and current settings.
+     * @param profilePresenter  Presenter for displaying account status and current settings.
      */
     public ProfileView(WindowHandler windowHandler, ProfileController profileController, T profilePresenter) {
         this.windowHandler = windowHandler;
@@ -131,12 +133,14 @@ public class ProfileView<T extends ObservablePresenter & ProfilePresenter> imple
 
             locationBox.itemsProperty().bind(citiesBinding);
 
-        } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) {
+        }
 
         updatePasswordBtn.disableProperty().bind(Bindings.createBooleanBinding(() ->
-                oldPassword.getText().isBlank() || newPassword.getText().isBlank(),
+                        oldPassword.getText().isBlank() || newPassword.getText().isBlank(),
                 oldPassword.textProperty(), newPassword.textProperty()));
     }
+
     @FXML
     private void onVacationClicked() {
 

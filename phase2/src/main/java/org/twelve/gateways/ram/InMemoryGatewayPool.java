@@ -64,5 +64,7 @@ public class InMemoryGatewayPool implements GatewayPool {
      * {@inheritDoc}
      */
     @Override
-    public CitiesGateway getCitiesGateway() { return citiesGateway; }
+    public CitiesGateway getCitiesGateway() {
+        return citiesGateway;
+    }
 }

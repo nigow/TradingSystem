@@ -22,6 +22,7 @@ public class UIWishlistPresenter extends ObservablePresenter implements Wishlist
 
     /**
      * Constructor for observable wishlist presenter.
+     *
      * @param localizedResources Pack containing any localized strings.
      */
     public UIWishlistPresenter(ResourceBundle localizedResources) {

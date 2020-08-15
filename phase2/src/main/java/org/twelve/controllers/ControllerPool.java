@@ -29,8 +29,9 @@ public class ControllerPool {
 
     /**
      * Creates all the required controllers for the program
+     *
      * @param selectedLanguage the selected language the controllers should use
-     * @param demoMode whether or not the program should run in demo mode
+     * @param demoMode         whether or not the program should run in demo mode
      */
     public ControllerPool(Locale selectedLanguage, boolean demoMode) {
         GatewayPool gatewayPool = new GatewayPoolFactory().getGatewayPool("json");
@@ -60,6 +61,7 @@ public class ControllerPool {
 
     /**
      * Getter for LoginController
+     *
      * @return LoginController
      */
     public LoginController getLoginController() {
@@ -68,6 +70,7 @@ public class ControllerPool {
 
     /**
      * Getter for RegistrationController
+     *
      * @return RegistrationController
      */
     public RegistrationController getRegistrationController() {
@@ -76,6 +79,7 @@ public class ControllerPool {
 
     /**
      * Getter for MenuController
+     *
      * @return MenuController
      */
     public MenuController getMenuController() {
@@ -84,6 +88,7 @@ public class ControllerPool {
 
     /**
      * Getter for WarehouseController
+     *
      * @return WarehouseController
      */
     public WarehouseController getWarehouseController() {
@@ -92,6 +97,7 @@ public class ControllerPool {
 
     /**
      * Getter for WishlistController
+     *
      * @return WishlistController
      */
     public WishlistController getWishlistController() {
@@ -100,6 +106,7 @@ public class ControllerPool {
 
     /**
      * Getter for ProfileController
+     *
      * @return ProfileController
      */
     public ProfileController getProfileController() {
@@ -108,6 +115,7 @@ public class ControllerPool {
 
     /**
      * Getter for InventoryController
+     *
      * @return InventoryController
      */
     public InventoryController getInventoryController() {
@@ -116,12 +124,16 @@ public class ControllerPool {
 
     /**
      * Getter for ThresholdController
+     *
      * @return ThresholdController
      */
-    public ThresholdController getThresholdController() {return thresholdController;}
+    public ThresholdController getThresholdController() {
+        return thresholdController;
+    }
 
     /**
      * Getter for FreezingController
+     *
      * @return FreezingController
      */
     public FreezingController getFreezingController() {
@@ -130,12 +142,16 @@ public class ControllerPool {
 
     /**
      * Getter for TradeCreatorController
+     *
      * @return TradeCreatorController
      */
-    public TradeCreatorController getTradeCreatorController() {return tradeCreatorController;}
+    public TradeCreatorController getTradeCreatorController() {
+        return tradeCreatorController;
+    }
 
     /**
      * Getter for TradeListController
+     *
      * @return TradeListController
      */
     public TradeListController getTradeListController() {
@@ -144,6 +160,7 @@ public class ControllerPool {
 
     /**
      * Getter for LandingController
+     *
      * @return LandingController
      */
     public LandingController getLandingController() {
@@ -152,6 +169,7 @@ public class ControllerPool {
 
     /**
      * Getter for AdminWishlistController
+     *
      * @return AdminWishlistController
      */
     public AdminWishlistController getAdminWishlistController() {
@@ -160,6 +178,7 @@ public class ControllerPool {
 
     /**
      * Getter for TradeEditorController
+     *
      * @return TradeEditorController
      */
     public TradeEditorController getTradeEditorController() {
@@ -168,6 +187,7 @@ public class ControllerPool {
 
     /**
      * Getter for TradeCancellationController
+     *
      * @return TradeCancellationController
      */
     public TradeCancellationController getTradeCancellationController() {

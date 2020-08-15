@@ -3,8 +3,13 @@ package org.twelve.usecases;
 import org.twelve.gateways.GatewayPool;
 import org.twelve.gateways.ram.InMemoryGatewayPool;
 import junit.framework.TestCase;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.account.WishlistManager;
+import org.twelve.usecases.item.ItemManager;
+import org.twelve.usecases.system.SecurityUtility;
+import org.twelve.usecases.system.ThresholdRepository;
+import org.twelve.usecases.trade.TradeManager;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +32,7 @@ public class TradeManagerIntegrationTest extends TestCase {
                 new ThresholdRepository(inMemoryGatewayPool.getThresholdsGateway()),
                 wishlistManager,
                 inMemoryGatewayPool.getTradeGateway(),
-                new ItemManager(inMemoryGatewayPool.getItemsGateway(),accountRepository));
+                new ItemManager(inMemoryGatewayPool.getItemsGateway(), accountRepository));
 
 
     }

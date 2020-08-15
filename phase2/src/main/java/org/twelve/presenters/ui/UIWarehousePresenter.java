@@ -23,6 +23,7 @@ public class UIWarehousePresenter extends ObservablePresenter implements Warehou
 
     /**
      * Constructor for observable warehouse presenter.
+     *
      * @param localizedResources Pack containing any localized strings.
      */
     public UIWarehousePresenter(ResourceBundle localizedResources) {

@@ -4,89 +4,100 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.TradeCreatorView">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Label fx:id="initiatorLabel" maxHeight="1.7976931348623157E308" />
-      <HBox prefWidth="200.0" GridPane.columnIndex="1">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" text="%peer">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin></Label>
-            <ComboBox fx:id="peerBox" onAction="#peerSwitch" prefWidth="150.0" />
-         </children>
-      </HBox>
-      <CheckBox fx:id="twoWay" mnemonicParsing="false" onAction="#clickTwoWay" text="%twoWay" GridPane.rowIndex="1" />
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
-         <children>
-            <Label text="%give">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Label>
-            <ListView fx:id="yourItems" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
-            <Label text="%receive" />
-            <ListView fx:id="peerItems" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-      <HBox prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" text="%location">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin></Label>
-            <TextField fx:id="locationBox" prefHeight="27.0" prefWidth="470.0" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-      <HBox alignment="BASELINE_RIGHT" prefHeight="6.0" prefWidth="285.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-         <children>
-            <Button fx:id="saveButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#saveClicked" text="%save" />
-         </children></HBox>
-      <HBox prefWidth="200.0" GridPane.rowIndex="4">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" text="%date">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin></Label>
-            <DatePicker fx:id="dateBox" editable="false" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-      <CheckBox fx:id="isPermanent" mnemonicParsing="false" text="%permanent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.rowIndex="5" />
-      <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <children>
-            <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="%time">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin></Label>
-            <Spinner fx:id="hourChosen">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-            </Spinner>
-            <Spinner fx:id="minuteChosen">
-            </Spinner>
-         </children>
-      </HBox>
-      <Label maxHeight="1.7976931348623157E308" text="%createTrade" />
+<GridPane fx:id="graphic" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.twelve.views.TradeCreatorView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <Label fx:id="initiatorLabel" maxHeight="1.7976931348623157E308"/>
+        <HBox prefWidth="200.0" GridPane.columnIndex="1">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" text="%peer">
+                    <HBox.margin>
+                        <Insets right="5.0"/>
+                    </HBox.margin>
+                </Label>
+                <ComboBox fx:id="peerBox" onAction="#peerSwitch" prefWidth="150.0"/>
+            </children>
+        </HBox>
+        <CheckBox fx:id="twoWay" mnemonicParsing="false" onAction="#clickTwoWay" text="%twoWay" GridPane.rowIndex="1"/>
+        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+            <children>
+                <Label text="%give">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </Label>
+                <ListView fx:id="yourItems" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+            </children>
+        </VBox>
+        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <children>
+                <Label text="%receive"/>
+                <ListView fx:id="peerItems" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+            </children>
+        </VBox>
+        <HBox prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" text="%location">
+                    <HBox.margin>
+                        <Insets right="5.0"/>
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="locationBox" prefHeight="27.0" prefWidth="470.0" HBox.hgrow="ALWAYS"/>
+            </children>
+        </HBox>
+        <HBox alignment="BASELINE_RIGHT" prefHeight="6.0" prefWidth="285.0" GridPane.columnIndex="1"
+              GridPane.rowIndex="5">
+            <children>
+                <Button fx:id="saveButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#saveClicked"
+                        text="%save"/>
+            </children>
+        </HBox>
+        <HBox prefWidth="200.0" GridPane.rowIndex="4">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" text="%date">
+                    <HBox.margin>
+                        <Insets right="5.0"/>
+                    </HBox.margin>
+                </Label>
+                <DatePicker fx:id="dateBox" editable="false" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+            </children>
+        </HBox>
+        <CheckBox fx:id="isPermanent" mnemonicParsing="false" text="%permanent" GridPane.columnIndex="1"
+                  GridPane.rowIndex="1"/>
+        <Button mnemonicParsing="false" onAction="#backClicked" text="%back" GridPane.rowIndex="5"/>
+        <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="%time">
+                    <HBox.margin>
+                        <Insets right="5.0"/>
+                    </HBox.margin>
+                </Label>
+                <Spinner fx:id="hourChosen">
+                    <HBox.margin>
+                        <Insets right="10.0"/>
+                    </HBox.margin>
+                </Spinner>
+                <Spinner fx:id="minuteChosen">
+                </Spinner>
+            </children>
+        </HBox>
+        <Label maxHeight="1.7976931348623157E308" text="%createTrade"/>
 
-   </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
 </GridPane>

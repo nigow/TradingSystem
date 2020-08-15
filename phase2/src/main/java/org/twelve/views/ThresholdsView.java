@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing system threshold values.
+ *
  * @param <T> Presenter.
  */
 public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> implements SceneView, Initializable {
@@ -49,9 +50,10 @@ public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> 
 
     /**
      * Constructor of view for managing system threshold values.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler       An instance of {@link org.twelve.views.WindowHandler}.
      * @param thresholdController Controller for managing system threshold values.
-     * @param thresholdPresenter Presenter for displaying current threshold values.
+     * @param thresholdPresenter  Presenter for displaying current threshold values.
      */
     public ThresholdsView(WindowHandler windowHandler, ThresholdController thresholdController, T thresholdPresenter) {
         this.windowHandler = windowHandler;
@@ -109,31 +111,31 @@ public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> 
         try {
 
             lendVsBorrow.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE, thresholdPresenter.getLendMoreThanBorrow()),
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE, thresholdPresenter.getLendMoreThanBorrow()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("lendMoreThanBorrow").build()));
 
             maxIncomplete.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxIncompleteTrade()),
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxIncompleteTrade()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxIncompleteTrade").build()));
 
             maxWeekly.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxWeeklyTrade()),
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getMaxWeeklyTrade()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("maxWeeklyTrade").build()));
 
             numOfDays.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfDays()),
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfDays()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfDays").build()));
 
             numOfEdits.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfEdits()),
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfEdits()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfEdits").build()));
 
             numOfStats.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfStats()),
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfStats()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfStats").build()));
 
             numForTrusted.valueFactoryProperty().bind(Bindings.createObjectBinding(() ->
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfTradesUntilTrusted()),
+                            new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, thresholdPresenter.getNumberOfTradesUntilTrusted()),
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(thresholdPresenter).name("numberOfTradesUntilTrusted").build()));
 
             BooleanBinding booleanBinding = ReadOnlyJavaBeanBooleanPropertyBuilder.create().bean(thresholdPresenter).name("isAdmin").build().not();
@@ -145,7 +147,8 @@ public class ThresholdsView<T extends ObservablePresenter & ThresholdPresenter> 
             numOfStats.disableProperty().bind(booleanBinding);
             numForTrusted.disableProperty().bind(booleanBinding);
             saveButton.disableProperty().bind(booleanBinding);
-        } catch (NoSuchMethodException ignored) {}
+        } catch (NoSuchMethodException ignored) {
+        }
 
     }
 }

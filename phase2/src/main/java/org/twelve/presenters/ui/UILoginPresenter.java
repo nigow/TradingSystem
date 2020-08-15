@@ -14,6 +14,7 @@ public class UILoginPresenter extends ObservablePresenter implements LoginPresen
 
     /**
      * Constructor for the presenter for the login view
+     *
      * @param localizedResources Pack containing any localized strings
      */
     public UILoginPresenter(ResourceBundle localizedResources) {

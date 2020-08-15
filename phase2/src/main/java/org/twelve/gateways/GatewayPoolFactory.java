@@ -10,6 +10,7 @@ public class GatewayPoolFactory {
 
     /**
      * Decide implementation
+     *
      * @param implementation "json" or "ram" which represents a type of implementation
      * @return a desired pool of gateways
      */

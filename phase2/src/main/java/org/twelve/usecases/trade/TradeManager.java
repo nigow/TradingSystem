@@ -1,9 +1,13 @@
-package org.twelve.usecases;
+package org.twelve.usecases.trade;
 
 import org.twelve.entities.TimePlace;
 import org.twelve.entities.Trade;
 import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
+import org.twelve.usecases.system.ThresholdRepository;
+import org.twelve.usecases.account.WishlistManager;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.item.ItemManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +21,7 @@ import java.util.List;
  * @author Isaac
  */
 
-public class TradeManager extends TradeUtility{
+public class TradeManager extends TradeUtility {
 
     private final WishlistManager wishlistManager;
     private final ItemManager itemManager;
@@ -26,11 +30,11 @@ public class TradeManager extends TradeUtility{
     /**
      * The Constructor for TradeManager.
      *
-     * @param accountRepository Repository for storing all accounts of the program
+     * @param accountRepository   Repository for storing all accounts of the program
      * @param thresholdRepository Repository for storing all threshold values of the program
-     * @param wishlistManager the manager dealing with the wishlist of a user
-     * @param tradeGateway the gateway dealing with trades
-     * @param itemManager the manager dealing with items
+     * @param wishlistManager     the manager dealing with the wishlist of a user
+     * @param tradeGateway        the gateway dealing with trades
+     * @param itemManager         the manager dealing with items
      */
     public TradeManager(AccountRepository accountRepository, ThresholdRepository thresholdRepository,
                         WishlistManager wishlistManager, TradeGateway tradeGateway, ItemManager itemManager) {
@@ -43,15 +47,15 @@ public class TradeManager extends TradeUtility{
     /**
      * Creates a new Trade object to be edited.
      *
-     * @param time Time of the Trade
-     * @param place Location of the Trade
+     * @param time        Time of the Trade
+     * @param place       Location of the Trade
      * @param isPermanent Whether the Trade is permanent or not
-     * @param tradersIds An ordered list of each trader participating
-     * @param itemsIds The items involved in this trade.
+     * @param tradersIds  An ordered list of each trader participating
+     * @param itemsIds    The items involved in this trade.
      * @return the id of the trade
      */
     public int createTrade(LocalDateTime time, String place, boolean isPermanent,
-                            List<Integer> tradersIds, List< List<Integer> > itemsIds) {
+                           List<Integer> tradersIds, List<List<Integer>> itemsIds) {
         int id = createTradeEntity(time, place, isPermanent, tradersIds, itemsIds);
         Trade trade = getTradeByID(id);
         for (int accountID : tradersIds) {
@@ -72,7 +76,7 @@ public class TradeManager extends TradeUtility{
         TimePlace timePlace = getTimePlaceByID(id);
         Trade trade = getTradeByID(id);
         List<Integer> reverseTraders = new ArrayList<>(trade.getTraderIds());
-        List< List<Integer> > reverseItems = new ArrayList<>();
+        List<List<Integer>> reverseItems = new ArrayList<>();
         int n = trade.getItemsIds().size();
         for (int i = 0; i < n - 1; i++)
             reverseItems.add(trade.getItemsIds().get(n - 2 - i));
@@ -86,8 +90,8 @@ public class TradeManager extends TradeUtility{
      * Changes the TimePlace of the Trade and updates last edit info.
      *
      * @param tradeID The ID of the trade being edited
-     * @param time New time of the Trade
-     * @param place New place of the Trade
+     * @param time    New time of the Trade
+     * @param place   New place of the Trade
      */
     public void editTimePlace(int tradeID, LocalDateTime time, String place) {
         TimePlace timePlace = getTimePlaceByID(tradeID);
@@ -130,7 +134,7 @@ public class TradeManager extends TradeUtility{
      * Updates the completion status of this Trade according to the user's ID.
      *
      * @param accountID The ID of the account who marked this Trade as complete
-     * @param tradeID The of the trade being marked as complete
+     * @param tradeID   The of the trade being marked as complete
      */
     public void completeTrade(int accountID, int tradeID) {
         Trade trade = getTradeByID(tradeID);

@@ -2,9 +2,9 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
 import org.twelve.presenters.FreezingPresenter;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.SessionManager;
-import org.twelve.usecases.StatusManager;
+import org.twelve.usecases.account.AccountRepository;
+import org.twelve.usecases.system.SessionManager;
+import org.twelve.usecases.account.StatusManager;
 import org.twelve.usecases.UseCasePool;
 
 import java.util.ArrayList;
@@ -31,17 +31,18 @@ public class FreezingController {
     /**
      * Initializes constructor with necessary use cases
      *
-     * @param useCasePool       An instance of ManualConfig to get use cases
+     * @param useCasePool An instance of ManualConfig to get use cases
      */
     public FreezingController(UseCasePool useCasePool) {
         statusManager = useCasePool.getStatusManager();
         accountRepository = useCasePool.getAccountRepository();
-        sessionManager  = useCasePool.getSessionManager();
+        sessionManager = useCasePool.getSessionManager();
         this.useCasePool = useCasePool;
     }
 
     /**
      * Set the presenter for this controller
+     *
      * @param freezingPresenter an instance of a class that implements {@link org.twelve.presenters.FreezingPresenter}
      */
     public void setFreezingPresenter(FreezingPresenter freezingPresenter) {
@@ -50,28 +51,31 @@ public class FreezingController {
 
     /**
      * Freeze the chosen user
+     *
      * @param chosenUser the username of the chosen user
      */
     public void freeze(String chosenUser) { //Assume that the list we're given of accountIDs is the same given to the view/presenter
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        if(statusManager.freezeAccount(chosenUserID)) {
+        if (statusManager.freezeAccount(chosenUserID)) {
             updateAccountLists();
         }
     }
 
     /**
      * Unfreeze the chosen user
+     *
      * @param chosenUser the username of the chosen user
      */
     public void unfreeze(String chosenUser) {
         int chosenUserID = accountRepository.getIDFromUsername(chosenUser);
-        if(statusManager.unfreezeAccount(chosenUserID)){
+        if (statusManager.unfreezeAccount(chosenUserID)) {
             updateAccountLists();
         }
     }
 
     /**
      * Ban the chosen user
+     *
      * @param chosenUser the username of the chosen user
      */
     public void ban(String chosenUser) {
@@ -82,6 +86,7 @@ public class FreezingController {
 
     /**
      * Unban the chosen user
+     *
      * @param chosenUser the username of the chosen user
      */
     public void unban(String chosenUser) {
@@ -92,6 +97,7 @@ public class FreezingController {
 
     /**
      * Set the chosen user's status to Trusted
+     *
      * @param chosenUser the username of the chosen user
      */
     public void trust(String chosenUser) {
@@ -102,6 +108,7 @@ public class FreezingController {
 
     /**
      * Take away the chosen user's trusted status
+     *
      * @param chosenUser the username of the chosen user
      */
     public void untrustAccount(String chosenUser) {
@@ -112,6 +119,7 @@ public class FreezingController {
 
     /**
      * Make the chosen user a moderator
+     *
      * @param chosenUser the username of the chosen user
      */
     public void modAccount(String chosenUser) {
@@ -122,6 +130,7 @@ public class FreezingController {
 
     /**
      * Tale away the chosen user's moderator status
+     *
      * @param chosenUser the username of the chosen user
      */
     public void unmodAccount(String chosenUser) {

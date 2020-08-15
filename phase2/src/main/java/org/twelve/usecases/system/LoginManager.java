@@ -1,11 +1,11 @@
-package org.twelve.usecases;
+package org.twelve.usecases.system;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Permissions;
+import org.twelve.usecases.account.AccountRepository;
 
 /**
  * Handles login procedure
- *
  */
 public class LoginManager {
 
@@ -16,9 +16,9 @@ public class LoginManager {
      * Constructor to set up required use cases
      *
      * @param accountRepository a repository dealing with accounts
-     * @param securityUtility use case dealt with encryption
+     * @param securityUtility   use case dealt with encryption
      */
-    public LoginManager(AccountRepository accountRepository, SecurityUtility securityUtility){
+    public LoginManager(AccountRepository accountRepository, SecurityUtility securityUtility) {
         this.accountRepository = accountRepository;
         this.securityUtility = securityUtility;
     }
@@ -42,12 +42,12 @@ public class LoginManager {
     /**
      * Attempts to change password of given user
      *
-     * @param accountID id of the account which changes password
+     * @param accountID   id of the account which changes password
      * @param oldPassword password the account holder claims to have in the past
      * @param newPassword new account this user would like to change to
      * @return Whether the password change is successful or not
      */
-    public boolean changePassword(int accountID, String oldPassword, String newPassword){
+    public boolean changePassword(int accountID, String oldPassword, String newPassword) {
         Account account = accountRepository.getAccountFromID(accountID);
         if (!account.getPassword().equals(securityUtility.encrypt(oldPassword)))
             return false;

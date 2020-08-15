@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 
 /**
  * View for managing creation of trades.
+ *
  * @param <T> Presenter.
  * @author Ethan follow (@ethannomiddlenamelam)
  */
@@ -60,9 +61,10 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
 
     /**
      * Constructor for the trade creation view.
-     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     *
+     * @param windowHandler          An instance of {@link org.twelve.views.WindowHandler}.
      * @param tradeCreatorController controller for creating trades.
-     * @param tradeCreatorPresenter presenter for displaying trades.
+     * @param tradeCreatorPresenter  presenter for displaying trades.
      */
     public TradeCreatorView(WindowHandler windowHandler, TradeCreatorController tradeCreatorController,
                             T tradeCreatorPresenter) {
@@ -138,7 +140,9 @@ public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresen
                     ReadOnlyJavaBeanIntegerPropertyBuilder.create().bean(tradeCreatorPresenter).name("minuteChosen").build()));
             //=================
 
-        } catch (NoSuchMethodException ignored) {System.out.println("failure");}
+        } catch (NoSuchMethodException ignored) {
+            System.out.println("failure");
+        }
 
         yourItems.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newValue) -> {
             if (!twoWay.isSelected() && newValue.intValue() != -1) {

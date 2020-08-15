@@ -1,7 +1,8 @@
-package org.twelve.usecases;
+package org.twelve.usecases.item;
 
 import org.twelve.entities.Account;
 import org.twelve.entities.Item;
+import org.twelve.usecases.account.AccountRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -175,7 +176,7 @@ abstract public class ItemUtility {
      * @param itemId Id of item to be retrieved
      * @return The item with the id in question
      */
-    Item findItemById(int itemId) {
+    public Item findItemById(int itemId) {
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (items.get(entry.getKey()).getItemID() == itemId) {
                 return entry.getValue();
