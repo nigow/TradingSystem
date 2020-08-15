@@ -9,14 +9,24 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * A class to store all trades and timeplaces
+ */
 public class TradeRepository {
-    Map<Integer, Trade> trades;
-    Map<Integer, TimePlace> timePlaces;
+    private Map<Integer, Trade> trades;
+    private Map<Integer, TimePlace> timePlaces;
     private TradeGateway tradeGateway;
     private final ItemManager itemManager;
 
     private final AccountRepository accountRepository;
 
+    /**
+     * sets up the trade repository
+     *
+     * @param tradeGateway an instance of TradeGateway
+     * @param accountRepository an instance of AccounRepository
+     * @param itemManager and instance of ItemManager
+     */
     public TradeRepository(TradeGateway tradeGateway, AccountRepository accountRepository, ItemManager itemManager) {
         this.tradeGateway = tradeGateway;
         trades = new HashMap<>();
