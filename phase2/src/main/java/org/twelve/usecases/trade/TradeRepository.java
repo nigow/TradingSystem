@@ -36,6 +36,7 @@ abstract public class TradeRepository {
      * @param isPermanent Whether the Trade is permanent or not
      * @param tradersIds  An ordered list of each trader participating
      * @param itemsIds    The items involved in this trade.
+     * @return the id of the created trade
      */
     public int createTradeEntity(LocalDateTime time, String place, boolean isPermanent,
                                  List<Integer> tradersIds, List<List<Integer>> itemsIds) {

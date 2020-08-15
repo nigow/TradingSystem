@@ -145,7 +145,7 @@ public class TradeManager extends TradeUtility {
     /**
      * remove trade from system.
      *
-     * @param tradeIndex An index of the trade counting cancelled & unconfirmed trades.
+     * @param tradeIndex An index of the trade counting cancelled and unconfirmed trades.
      */
     public void adminCancelTrade(int tradeIndex) {
         int tradeID = getAllTradesIds().get(tradeIndex);

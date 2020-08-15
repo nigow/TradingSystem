@@ -103,7 +103,7 @@ public class WishlistController {
     }
 
     /**
-     * Changes which item the user has selected from the wishlist and updates presenter with new name & desc.
+     * Changes which item the user has selected from the wishlist and updates presenter with new name and description.
      *
      * @param itemIndex Index of selected wishlist item.
      */
@@ -115,7 +115,7 @@ public class WishlistController {
     }
 
     /**
-     * Changes which item the user has selected from the warehouse and updates presenter with new name & desc.
+     * Changes which item the user has selected from the warehouse and updates presenter with new name and description.
      *
      * @param itemIndex Index of selected warehouse item.
      */
