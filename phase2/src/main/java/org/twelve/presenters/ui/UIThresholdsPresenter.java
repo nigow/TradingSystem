@@ -2,6 +2,9 @@ package org.twelve.presenters.ui;
 
 import org.twelve.presenters.ThresholdPresenter;
 
+/**
+ * Class for dealing with the threshold view
+ */
 public class UIThresholdsPresenter extends ObservablePresenter implements ThresholdPresenter {
 
     private int lendMoreThanBorrow;
@@ -13,6 +16,9 @@ public class UIThresholdsPresenter extends ObservablePresenter implements Thresh
     private int numberOfTradesUntilTrusted;
     boolean isAdmin;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setThresholds(int lendMoreThanBorrow, int maxIncompleteTrade, int maxWeeklyTrade, int numberOfDays,
                               int numberOfStats, int numberOfEdits, int numberOfTradesUntilTrusted) {
@@ -45,46 +51,73 @@ public class UIThresholdsPresenter extends ObservablePresenter implements Thresh
         propertyChangeSupport.firePropertyChange("numberOfTradesUntilTrusted", oldNumberOfTradesUntilTrusted, this.numberOfTradesUntilTrusted);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getLendMoreThanBorrow() {
         return lendMoreThanBorrow;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaxIncompleteTrade() {
         return maxIncompleteTrade;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaxWeeklyTrade() {
         return maxWeeklyTrade;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfDays() {
         return numberOfDays;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfStats() {
         return numberOfStats;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfEdits() {
         return numberOfEdits;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfTradesUntilTrusted() {
         return numberOfTradesUntilTrusted;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getIsAdmin() {
         return isAdmin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIsAdmin(boolean isAdmin) {
         boolean oldIsAdmin = this.isAdmin;

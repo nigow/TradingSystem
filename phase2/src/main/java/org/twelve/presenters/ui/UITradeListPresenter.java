@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Presenter that deals with the trade list view
+ */
 public class UITradeListPresenter extends ObservablePresenter implements TradeListPresenter {
 
     private final ResourceBundle localizedResources;
@@ -14,6 +17,10 @@ public class UITradeListPresenter extends ObservablePresenter implements TradeLi
     private List<String> tradesShown;
     private List<String> statsShown;
 
+    /**
+     * Constructor for the presenter that deals with the trade list view
+     * @param localizedResources
+     */
     public UITradeListPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
@@ -28,35 +35,43 @@ public class UITradeListPresenter extends ObservablePresenter implements TradeLi
         allTradeStatus.add(localizedResources.getString("rejected"));
         setStatsShown(new ArrayList<>());
         setTradesShown(new ArrayList<>());
-//        setAllUsers(new ArrayList<>());
-//        setAllTrades(new ArrayList<>());
-//        setRecentOneWays(new ArrayList<>());
-//        setRecentTwoWays(new ArrayList<>());
-//        setSelectedUser("");
-//        setSelectedTrade("");
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getAllTradeStatus() {
         return allTradeStatus;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getStatsTypes() {
         return statsTypes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getTradesShown() {
         return tradesShown;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getStatsShown() {
         return statsShown;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setStatsShown(List<String> statsShown) {
         List<String> old = this.statsShown;
@@ -64,6 +79,9 @@ public class UITradeListPresenter extends ObservablePresenter implements TradeLi
         propertyChangeSupport.firePropertyChange("statsShown", old, this.statsShown);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setTradesShown(List<String> tradesShown) {
         List<String> trades = new ArrayList<>();
