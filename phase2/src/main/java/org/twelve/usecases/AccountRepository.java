@@ -17,12 +17,12 @@ public class AccountRepository {
 
 
     /**
-     * Initializes an account repository with a certain gateway.
+     * Initializes an account repository with an account gateway.
      *
      * @param accountGateway An instance of an account gateway
      * @param securityUtility An instance of a securityUtility class
      */
-    public AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
+    AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
         this.accountGateway = accountGateway;
         this.securityUtility = securityUtility;
         accounts = new HashMap<>();
@@ -123,14 +123,6 @@ public class AccountRepository {
         return accounts.get(accountID).getUsername();
     }
 
-//    /**
-//     * Retrieves all accounts stored in the system.
-//     * @return List of all accounts
-//     */
-//    protected List<Account> getAccounts() {
-//        return (List<Account>) accounts.values();
-//    }
-
     /**
      * Retrieves the ids of all accounts in the system.
      * @return A list of account ids in the system
@@ -183,7 +175,7 @@ public class AccountRepository {
     /**
      * Gets a list of usernames the given account username can trade with
      * @param username the username of the account
-     * @return A list of username the account can trade with
+     * @return A list of usernames the account can trade with
      */
     public List<String> getTradableAccounts(String username) {
         List<String> tradableAccount = new ArrayList<>();
