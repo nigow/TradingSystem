@@ -36,23 +36,8 @@ public class TradeEditorController {
         sessionManager.removeWorkingTrade();
     }
 
-
-
-    public void setTradeProperties() {
-        useCasePool.populateAll();
+    private void setTradeActions() {
         int tradeID = sessionManager.getWorkingTrade();
-        List<Integer> userItemIDs = tradeRepository.itemsTraderGives(sessionManager.getCurrAccountID(), tradeID);
-        List<Integer> peerItemIDs = tradeRepository.itemsTraderGives(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID()), tradeID);
-        List<String> userItems = new ArrayList<>();
-        for (int id : userItemIDs)
-            userItems.add(itemManager.getItemNameById(id));
-        List<String> peerItems = new ArrayList<>();
-        for (int id : peerItemIDs)
-            peerItems.add(itemManager.getItemNameById(id));
-        tradeEditorPresenter.setUserItems(userItems);
-        tradeEditorPresenter.setPeerItems(peerItems);
-        tradeEditorPresenter.setPeerUsername(accountRepository.getUsernameFromID(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID())));
-        tradeEditorPresenter.setTradeStatus(tradeRepository.getTradeStatus(tradeID));
         boolean canEdit = false;
         boolean canConfirm = false;
         boolean canComplete = false;
@@ -73,6 +58,29 @@ public class TradeEditorController {
         tradeEditorPresenter.setCanConfirm(canConfirm);
         tradeEditorPresenter.setCanComplete(canComplete);
         tradeEditorPresenter.setCanCancel(canCancel);
+    }
+
+    private void setTradeItems() {
+        int tradeID = sessionManager.getWorkingTrade();
+        List<Integer> userItemIDs = tradeRepository.itemsTraderGives(sessionManager.getCurrAccountID(), tradeID);
+        List<Integer> peerItemIDs = tradeRepository.itemsTraderGives(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID()), tradeID);
+        List<String> userItems = new ArrayList<>();
+        for (int id : userItemIDs)
+            userItems.add(itemManager.getItemNameById(id));
+        List<String> peerItems = new ArrayList<>();
+        for (int id : peerItemIDs)
+            peerItems.add(itemManager.getItemNameById(id));
+        tradeEditorPresenter.setUserItems(userItems);
+        tradeEditorPresenter.setPeerItems(peerItems);
+    }
+
+    public void setTradeProperties() {
+        useCasePool.populateAll();
+        int tradeID = sessionManager.getWorkingTrade();
+        setTradeItems();
+        tradeEditorPresenter.setPeerUsername(accountRepository.getUsernameFromID(tradeRepository.getNextTraderID(tradeID, sessionManager.getCurrAccountID())));
+        tradeEditorPresenter.setTradeStatus(tradeRepository.getTradeStatus(tradeID));
+        setTradeActions();
         tradeEditorPresenter.setIsPermanent(tradeRepository.isPermanent(tradeID));
         LocalDateTime dateTime = tradeRepository.getDateTime(tradeID);
         tradeEditorPresenter.setHourChosen(dateTime.getHour());
