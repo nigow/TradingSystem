@@ -20,6 +20,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * View for admin's wishlist.
+ * @param <T> Presenter.
+ */
 public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPresenter> implements SceneView, Initializable {
 
 
@@ -40,7 +44,12 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
     @FXML
     private Label itemDescription;
 
-
+    /**
+     * Constructor of view for managing wishlist.
+     * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
+     * @param adminWishlistController Controller for managing wishlist.
+     * @param adminWishlistPresenter Presenter for displaying wishlist.
+     */
     public AdminWishlistView(WindowHandler windowHandler, AdminWishlistController adminWishlistController,
                             T adminWishlistPresenter) {
 
@@ -50,17 +59,26 @@ public class AdminWishlistView<T extends ObservablePresenter & AdminWishlistPres
         this.adminWishlistController.setAdminWishlistPresenter(this.adminWishlistPresenter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reload() {
         allUsers.getSelectionModel().clearSelection();
         adminWishlistController.updateWishlist(allUsers.getSelectionModel().getSelectedItem());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getGraphic() {
         return graphic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
