@@ -5,6 +5,7 @@ import org.twelve.gateways.ThresholdsGateway;
 
 /**
  * A class to store threshold values of the program.
+ *
  * @author Maryam
  */
 public class ThresholdRepository {
@@ -13,6 +14,7 @@ public class ThresholdRepository {
 
     /**
      * Set and get thresholds in the system.
+     *
      * @param thresholdsGateway An instance of a thresholds gateway.
      */
     public ThresholdRepository(ThresholdsGateway thresholdsGateway) {
@@ -21,7 +23,8 @@ public class ThresholdRepository {
     }
 
     /**
-     * Change thresholdsGateway to a demo mode instance
+     * Change thresholdsGateway to a demo mode instance.
+     *
      * @param thresholdsGateway A new gateway in demo mode
      */
     void switchToDemoMode(ThresholdsGateway thresholdsGateway) {
@@ -30,7 +33,8 @@ public class ThresholdRepository {
     }
 
     /**
-     * Change thresholdsGateway to a normal mode instance
+     * Change thresholdsGateway to a normal mode instance.
+     *
      * @param thresholdsGateway A new instance
      */
     void switchToNormalMode(ThresholdsGateway thresholdsGateway) {
@@ -71,15 +75,17 @@ public class ThresholdRepository {
 
     /**
      * Get the number of days for when a reverse trade is set up after a temporary trade.
-     * @return number of days for when a reverse trade is set up after a temporary trade.
+     *
+     * @return number of days for when a reverse trade is set up after a temporary trade
      */
     public int getNumberOfDays() {
         return thresholds.getNumberOfDays();
     }
 
     /**
-     * Set number of days for when a reverse trade is set up after a temporary trade
-     * @param numberOfDays New number of days for when a reverse trade is set after a temporary trade.
+     * Set number of days for when a reverse trade is set up after a temporary trade.
+     *
+     * @param numberOfDays New number of days for when a reverse trade is set after a temporary trade
      */
     public void setNumberOfDays(int numberOfDays) {
         thresholds.setNumberOfDays(numberOfDays);
@@ -89,7 +95,8 @@ public class ThresholdRepository {
     /**
      * Get the number of one-way trades, two-way trades, and top-trading partners that
      * an account should see in their trading dashboard.
-     * @return Number of trading statistics an account should see.
+     *
+     * @return Number of trading statistics an account should see
      */
     public int getNumberOfStats() {
         return thresholds.getNumberOfStats();
@@ -98,7 +105,8 @@ public class ThresholdRepository {
     /**
      * Set the number of one-way trades, two-way trades, and top-trading partners that
      * an account should see in their trading dashboard.
-     * @param numberOfStats The new number of trading statistics an account should see.
+     *
+     * @param numberOfStats The new number of trading statistics an account should see
      */
     public void setNumberOfStats(int numberOfStats) {
         thresholds.setNumberOfStats(numberOfStats);
@@ -106,18 +114,27 @@ public class ThresholdRepository {
     }
 
     /**
-     * @return Number of edits that each user can do with a trade.
+     * Gets the number of edits that each user can do with a trade.
+     *
+     * @return Number of edits that each user can do with a trade
      */
     public int getNumberOfEdits() {
         return thresholds.getNumberOfEdits();
     }
 
+    /**
+     * Sets the number of edits that each user can do with a trade.
+     *
+     * @param numberOfEdits New number of edits that each user can do with a trade
+     */
     public void setNumberOfEdits(int numberOfEdits) {
         thresholds.setNumberOfEdits(numberOfEdits);
         updateThresholds();
     }
 
     /**
+     * Get number of trades required to make an account trusted.
+     *
      * @return number of trades required to make an account trusted
      */
     public int getRequiredTradesForTrusted() {
@@ -125,6 +142,8 @@ public class ThresholdRepository {
     }
 
     /**
+     * Set number of trades required to make an account trusted.
+     *
      * @param requiredTradesForTrusted number of trades required to make an account trusted
      */
     public void setRequiredTradesForTrusted(int requiredTradesForTrusted) {
@@ -161,6 +180,7 @@ public class ThresholdRepository {
 
     /**
      * Create the thresholds for this program.
+     *
      * @param lendMoreThanBorrow Number of items a user has to lend more than borrow to be able to make a trade
      * @param maxIncompleteTrade Maximum number of incomplete trades before a user's account is frozen
      * @param maxWeeklyTrade     Maximum number of trades a user can have in one week
