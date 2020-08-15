@@ -48,11 +48,6 @@ public class TradeManagerIntegrationTest extends TestCase {
 
         List<List<Integer>> itemIds = new ArrayList<>();
         List<Integer> itemID = new ArrayList<>();
-        itemID.add(itemManager.getAllItems().get(0).getItemID());
-        itemIds.add(itemID);
-        itemIds.add(new ArrayList<>());
-        tradeManager.createTrade(LocalDateTime.now(), "UTM", true, tradeIds, itemIds);
-
 
     }
 }

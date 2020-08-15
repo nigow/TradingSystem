@@ -21,7 +21,7 @@ public class CityManager {
      * @param citiesGateway the gateway dealing with cities
      * @param accountRepository the repository for storing all accounts in the system
      */
-    CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository){
+    public CityManager(CitiesGateway citiesGateway, AccountRepository accountRepository){
         this.cities = new HashMap<>();
         this.citiesGateway = citiesGateway;
         this.accountRepository = accountRepository;

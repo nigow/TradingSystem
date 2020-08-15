@@ -56,68 +56,7 @@ public class ItemIntegrationTest extends TestCase {
         assertNull(itemManager.findItemById(2));
     }
 
-    /**
-     * Verifies Items can be properly added and removed from the system
-     */
-    public void testRemoveItems() {
-        setUpItemManager();
-        itemManager.createItem("Tomato", "A Fruit", 11);
-        itemManager.createItem("Book", "A Good book", 12);
-        itemManager.createItem("Test", "Testing", 11);
-        itemManager.createItem("Jacket", "A Cool Jacket", 12);
-        itemManager.createItem("CS Hoodie", "A Cool Hoodie", 12);
-        assertEquals(itemManager.getAllItemsString().size(), 6);
-        Item item = new Item(10, "Shirt", "A small shirt", 11);
-        assertTrue(itemManager.removeItem(itemManager.getAllItems().get(0).getItemID()));
-        assertTrue(itemManager.removeItem(itemManager.getAllItems().get(1).getItemID()));
-        assertFalse(itemManager.removeItem(item.getItemID()));
-        assertEquals(itemManager.getAllItemsString().size(), 4);
-        itemsGateway.save(item.getItemID(), item.getName(), item.getDescription(),
-                item.isApproved(), item.getOwnerID(), true);
-        itemsGateway.populate(itemManager);
-        assertEquals(itemManager.getAllItemsString().size(), 5);
-        assertTrue(itemManager.removeItem(item.getItemID()));
-        assertEquals(itemManager.getAllItemsString().size(), 4);
-    }
 
-    /**
-     * Verifies Items can be properly be retrieved from the system
-     */
-    public void testGetAllItems() {
-        setUpItemManager();
-        assertEquals(itemManager.getAllItemsString().size(), 1);
-        assertEquals(itemManager.getAllItems().get(0).getItemID(), 0);
-        assertEquals(itemManager.getAllItems().get(0).getOwnerID(), 10);
-        assertEquals(itemManager.getAllItems().get(0).getName(), "Potato");
-        assertEquals(itemManager.getAllItems().get(0).getDescription(), "A Vegetable");
-        assertFalse(itemManager.getAllItems().get(0).isApproved());
-        itemManager.createItem("Tomato", "A Fruit", 11);
-        assertEquals(itemManager.getAllItemsString().size(), 2);
-        itemManager.createItem("Book", "A Good book", 12);
-        itemManager.createItem("Test", "Testing", 11);
-        assertEquals(itemManager.getAllItemsString().size(), 4);
-        assertEquals(itemManager.getAllItems().get(3).getName(), "Test");
-    }
-
-    /**
-     * Verifies Items can be approved and disproved and they can be retrieved
-     * based on approval
-     */
-    public void testApproveItems() {
-        setUpItemManager();
-        itemManager.createItem("Tomato", "A Fruit", 11);
-        itemManager.createItem("Book", "A Good book", 12);
-        itemManager.createItem("Test", "Testing", 11);
-        assertEquals(itemManager.getDisapproved().size(), 4);
-        assertEquals(itemManager.getApproved().size(), 0);
-        itemManager.updateApproval(itemManager.getAllItems().get(0).getItemID(),true);
-        itemManager.updateApproval(itemManager.getAllItems().get(2).getItemID(),true);
-        assertEquals(itemManager.getDisapproved().size(), 2);
-        assertEquals(itemManager.getApproved().size(), 2);
-        itemManager.updateApproval(itemManager.getAllItems().get(2).getItemID(),false);
-        assertEquals(itemManager.getDisapproved().size(), 3);
-        assertEquals(itemManager.getApproved().size(), 1);
-    }
 
     /**
      * Verifies Items can be properly retrieved from a users inventory

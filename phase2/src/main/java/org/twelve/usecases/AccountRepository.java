@@ -22,7 +22,7 @@ public class AccountRepository {
      * @param accountGateway An instance of an account gateway
      * @param securityUtility An instance of a securityUtility class
      */
-    AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
+    public AccountRepository(AccountGateway accountGateway, SecurityUtility securityUtility){
         this.accountGateway = accountGateway;
         this.securityUtility = securityUtility;
         accounts = new HashMap<>();

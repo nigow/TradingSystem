@@ -19,13 +19,14 @@ abstract public class ItemUtility {
 
     final Map<Integer, Item> items;
     final AccountRepository accountRepository;
+    private final int FAKE_ACCOUNT_ID = -1;
 
     /**
      * Constructor for ItemUtility.
      *
      * @param accountRepository The repository for storing all accounts in the system.
      */
-    public ItemUtility(AccountRepository accountRepository) {
+    ItemUtility(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
         items = new HashMap<>();
     }
@@ -34,12 +35,13 @@ abstract public class ItemUtility {
      * Gets the ID of the owner of the item.
      *
      * @param itemID ID of the item which information is being returned about
-     * @return ID of the owner of the item (-1 if no item can be found).
+     * @return ID of the owner of the item (or a fake id if the item is not found).
      */
     public int getOwnerId(int itemID) {
         Item item = findItemById(itemID);
-        if (item != null) return item.getOwnerID();
-        return -1;
+        if (item != null)
+            return item.getOwnerID();
+        return FAKE_ACCOUNT_ID;
     }
 
     /**
@@ -65,7 +67,7 @@ abstract public class ItemUtility {
     public List<Integer> getApprovedIDs() {
         List<Integer> approvedItems = new ArrayList<>();
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
-            if (items.get(entry.getKey()).isApproved() && items.get(entry.getKey()).getOwnerID() != -1) {
+            if (items.get(entry.getKey()).isApproved() && items.get(entry.getKey()).getOwnerID() != FAKE_ACCOUNT_ID) {
                 approvedItems.add(items.get(entry.getKey()).getItemID());
             }
         }
@@ -156,7 +158,7 @@ abstract public class ItemUtility {
      * @param accountID Account ID which the items are not retrieved from
      * @return List of all items not in a certain account
      */
-    protected List<Item> getNotInAccount(int accountID) {
+    List<Item> getNotInAccount(int accountID) {
         List<Integer> currentWishlist = accountRepository.getAccountFromID(accountID).getWishlist();
         List<Item> items = new ArrayList<>();
         for (Item item : getApproved()) {
@@ -173,7 +175,7 @@ abstract public class ItemUtility {
      * @param itemId Id of item to be retrieved
      * @return The item with the id in question
      */
-    protected Item findItemById(int itemId) {
+    Item findItemById(int itemId) {
         for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             if (items.get(entry.getKey()).getItemID() == itemId) {
                 return entry.getValue();
@@ -200,34 +202,6 @@ abstract public class ItemUtility {
             }
         }
         return localItems;
-    }
-
-    /**
-     * Retrieves all items stored in local storage.
-     *
-     * @return List of all items
-     */
-    protected List<Item> getAllItems() {
-        List<Item> items = new ArrayList<>();
-        for (Map.Entry<Integer, Item> entry : this.items.entrySet()) {
-            if (this.items.get(entry.getKey()).getOwnerID() != -1) {
-                items.add(this.items.get(entry.getKey()));
-            }
-        }
-        return items;
-    }
-
-    /**
-     * Retrieves all items stored in local storage in string format.
-     *
-     * @return List of all items in string format
-     */
-    public List<String> getAllItemsString() {
-        List<String> stringItems = new ArrayList<>();
-        for (Item item : getAllItems()) {
-            stringItems.add(item.toString());
-        }
-        return stringItems;
     }
 
     /**

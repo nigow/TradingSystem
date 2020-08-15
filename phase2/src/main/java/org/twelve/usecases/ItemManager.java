@@ -31,7 +31,7 @@ public class ItemManager extends ItemUtility {
      *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
-    public void switchToDemoMode(ItemsGateway itemsGateway) {
+    void switchToDemoMode(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
         for (Item item : items.values()) {
             updateToItemsGateway(item, true);
@@ -43,14 +43,14 @@ public class ItemManager extends ItemUtility {
      *
      * @param itemsGateway The gateway for interacting with the persistent storage of items
      */
-    public void switchToNormalMode(ItemsGateway itemsGateway) {
+    void switchToNormalMode(ItemsGateway itemsGateway) {
         this.itemsGateway = itemsGateway;
         items.clear();
         itemsGateway.populate(this);
     }
 
     /**
-     * Adds a item to the local storage.
+     * Adds an item that exists in the DB to local storage.
      *
      * @param id          the id of the item to be added
      * @param name        the name of the item to be added
@@ -83,20 +83,16 @@ public class ItemManager extends ItemUtility {
     }
 
     /**
-     * Deletes an item in the system and returns if item was successfully deleted.
+     * Deletes an item in the system, if possible.
      *
      * @param itemId The item to be deleted
-     * @return Whether the deletion was successful
      */
-    public boolean removeItem(int itemId) {
-        boolean result = false;
+    public void removeItem(int itemId) {
         if (items.containsKey(itemId)) {
             items.get(itemId).setOwnerID(-1);
-            result = true;
             updateToItemsGateway(items.get(itemId), false);
             this.items.remove(itemId);
         }
-        return result;
     }
 
     /**
