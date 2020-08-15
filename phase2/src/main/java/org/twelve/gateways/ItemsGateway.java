@@ -9,7 +9,7 @@ import org.twelve.usecases.ItemManager;
 public interface ItemsGateway {
 
     /**
-     * Method that syncs the external storage information into the in-memory item repoistory.
+     * Method that syncs the external storage information into the in-memory item repository.
      *
      * @param itemManager local item storage to populate
      * @return whether or not the population was successful

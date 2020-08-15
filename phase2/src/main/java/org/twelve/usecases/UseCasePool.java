@@ -110,13 +110,6 @@ public class UseCasePool {
     }
 
     /**
-     * @return An instance of CityManager use case.
-     */
-    public SecurityUtility getSecurityUtility() {
-        return securityUtility;
-    }
-
-    /**
      * Switches the mode of all the use cases
      *
      * @param gatewayPool An instance of gateway pool storing all gateways

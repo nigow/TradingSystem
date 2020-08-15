@@ -49,7 +49,6 @@ public class LoginManager {
      */
     public boolean changePassword(int accountID, String oldPassword, String newPassword){
         Account account = accountRepository.getAccountFromID(accountID);
-        String temp = securityUtility.encrypt(oldPassword);
         if (!account.getPassword().equals(securityUtility.encrypt(oldPassword)))
             return false;
         account.setPassword(securityUtility.encrypt(newPassword));

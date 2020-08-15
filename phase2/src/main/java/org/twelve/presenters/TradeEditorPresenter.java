@@ -107,7 +107,7 @@ public interface TradeEditorPresenter {
 
     /**
      * Setter for if the trade is permanent
-     * @param isPermanent if the trade is permanet
+     * @param isPermanent if the trade is permanent
      */
     void setIsPermanent(boolean isPermanent);
 

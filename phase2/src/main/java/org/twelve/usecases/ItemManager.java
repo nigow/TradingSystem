@@ -59,8 +59,7 @@ public class ItemManager extends ItemUtility {
      * @param isApproved  whether this item was approved by an admin
      */
     public void addToItems(int id, String name, String description, int ownerId, boolean isApproved) {
-        Item item = new Item(id, name, description, ownerId);
-        if(isApproved) item.approve();
+        Item item = new Item(id, name, description, ownerId, isApproved);
         items.put(id, item);
     }
 

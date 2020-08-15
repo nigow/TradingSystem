@@ -116,7 +116,7 @@ public class ControllerPool {
 
     /**
      * Getter for ThresholdController
-     * @return ThreasholdController
+     * @return ThresholdController
      */
     public ThresholdController getThresholdController() {return thresholdController;}
 

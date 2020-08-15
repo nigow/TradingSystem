@@ -11,7 +11,7 @@ import java.util.List;
 public interface AccountGateway {
 
     /**
-     * Method that syncs the external storage information into the in-memory account repoistory.
+     * Method that syncs the external storage information into the in-memory account repository.
      *
      * @param accountRepository an account repository to store
      * @return whether or not the population was successful

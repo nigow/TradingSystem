@@ -161,18 +161,6 @@ public class Trade {
     }
 
     /**
-     * Gets the trader before the trader with an accountID.
-     * @param accountID An account participating in this trade.
-     * @return The previous account in this trade, based on the ordering.
-     */
-    public int getPreviousTraderID(int accountID) {
-        // Using + size because the 0th trader's previous trader is the last trader.
-        int index = (tradersIds.indexOf(accountID) - 1 + tradersIds.size()) % tradersIds.size();
-        return tradersIds.get(index);
-    }
-
-
-    /**
      * Mark that an account confirmed completion of a trade, and if all
      * accounts marked completion
      * @param accountID An if reference to an account confirming completion.

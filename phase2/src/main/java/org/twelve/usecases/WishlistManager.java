@@ -62,17 +62,6 @@ public class WishlistManager {
     }
 
     /**
-     * Determines if item corresponding to the itemID is in the current account's wishlist.
-     *
-     * @param accountID Unique identifier of the account
-     * @param itemID Unique identifier of the item
-     * @return Whether the item corresponding to the itemID is in the current account's wishlist
-     */
-    public boolean isInWishlist(int accountID, int itemID) {
-        return accountRepository.getAccountFromID(accountID).getWishlist().contains(itemID);
-    }
-
-    /**
      * Get all wishlist items for a specific account.
      *
      * @param accountID The Account ID to look up for
@@ -86,20 +75,6 @@ public class WishlistManager {
         }
         return wishlist;
     }
-
-    /**
-     * Get the wish lists for all accounts.
-     *
-     * @return A list containing wish lists of all users
-     */
-    public List<List<Item>> getAllWishlist() {
-        List<List<Item>> all = new ArrayList<>();
-        for (Account account : accountRepository.getAccounts()) {
-            all.add(getWishlistItems(account.getAccountID()));
-        }
-        return all;
-    }
-
 
     /**
      * String representation of all wishlist items for a specific account.

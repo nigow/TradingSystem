@@ -109,7 +109,7 @@ public class TradeEditorController {
     }
 
     /**
-     * Edit the trade that is corrently being worked on
+     * Edit the trade that is currently being worked on
      * @param location the new location of the trade
      * @param dateTime the new dateTime of the trade
      */

@@ -83,7 +83,7 @@ public class WishlistController {
 
     /**
      * Remove item at itemIndex from the wishlist.
-     * @param itemIndex Index of item to rmeove from the wishlist.
+     * @param itemIndex Index of item to remove from the wishlist.
      */
     public void removeFromWishlist(int itemIndex) {
 

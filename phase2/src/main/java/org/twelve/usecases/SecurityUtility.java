@@ -22,7 +22,7 @@ public class SecurityUtility {
 
     /**
      * initialize the key and cipher algorithms.
-     * Note: if algotirhm is "AES", keyString must be a lenght of 16 characters.
+     * Note: if algorithm is "AES", keyString must be a length of 16 characters.
      *
      * @param keyString raw String representation of key of encryption/decryption
      * @param algorithm name of algorithm

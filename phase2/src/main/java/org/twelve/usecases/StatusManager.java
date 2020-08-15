@@ -56,60 +56,38 @@ public class StatusManager {
         return accountsToFreeze;
     }
 
-//    /**
-//     * Gets a list of accounts that have been frozen and have requested to be unfrozen.
-//     *
-//     * @return List of accounts to freeze
-//     */
-//    public List<Integer> getAccountIDsToUnfreeze() {
-//        List<Integer> accountIDsToUnfreeze = new ArrayList<>();
-//        for (int accountID : accountRepository.getAccountIDs()) {
-//            if (isPending(accountID)) {
-//                accountIDsToUnfreeze.add(accountID);
-//            }
-//        }
-//        return accountIDsToUnfreeze;
-//    }
-
-//    /**
-//     * Gets a list of account usernames that have been frozen and have requested to be unfrozen.
-//     *
-//     * @return List of account usernames to freeze
-//     */
-//    public List<String> getUsernamesToUnfreeze() {
-//        List<String> accountsToUnfreeze = new ArrayList<>();
-//        for (int accountID : getAccountIDsToUnfreeze()) {
-//            accountsToUnfreeze.add(accountRepository.getUsernameFromID(accountID));
-//        }
-//        return accountsToUnfreeze;
-//    }
-
     /**
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
      * @param accountID Account to freeze
+     * @return Whether the given account is successfully frozen or not
      */
-    public void freezeAccount(int accountID) {
+    public boolean freezeAccount(int accountID) {
         if (canBeFrozen(accountID)) {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.TRADE);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
             accountRepository.updateToAccountGateway(account, false);
+            return true;
         }
+        return false;
     }
 
     /**
      * Unfreezes an account that requested to be unfrozen by adding the ability to borrow.
      *
      * @param accountID Account to unfreeze
+     * @return Whether the given account is successfully frozen or not
      */
-    public void unfreezeAccount(int accountID) {
+    public boolean unfreezeAccount(int accountID) {
         if (isPending(accountID)) {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.REQUEST_UNFREEZE);
             account.addPermission(Permissions.TRADE);
             accountRepository.updateToAccountGateway(account, false);
+            return true;
         }
+        return false;
     }
 
     /**
