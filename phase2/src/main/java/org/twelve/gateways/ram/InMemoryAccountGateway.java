@@ -14,11 +14,6 @@ import java.util.Map;
  */
 public class InMemoryAccountGateway implements AccountGateway {
 
-//    /**
-//     * pseudo-external storage of accounts
-//     */
-    //private final Map<Integer, Account> accountMap;
-
     /**
      * Initialize the external storage
      * @param accounts pseudo-external storage of accounts
@@ -27,12 +22,6 @@ public class InMemoryAccountGateway implements AccountGateway {
         this.accounts = accounts;
 
     }
-
-//    Account properties are stored as a String representation.
-//    String separated by a random string <bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>
-//    example:
-//    1: "demouser<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>hogehoge<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E> <bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>LOGIN ADD_TO_WISHLIST BROWSE_INVENTORY<bLaq2MF3WsRYdC4zkI56mGnXChO6k9eP9QjTnY1E>utm"
-    //private final Map<Integer, String> accounts;
 
     private final Map<Integer, String[]> accounts;
 
@@ -57,13 +46,6 @@ public class InMemoryAccountGateway implements AccountGateway {
             accountRepository.createAccount(accountId, username,password,perms,wishlist,city);
 
         }
-//        for(Account account: accountMap.values()){
-//            List<String> permissions = new ArrayList<>();
-//            for(Permissions permission: account.getPermissions()){
-//                permissions.add(permission.toString());
-//            }
-//            accountRepository.createAccount(account.getAccountID(), account.getUsername(),account.getPassword(),permissions,account.getWishlist(), account.getLocation());
-//        }
         return true;
     }
 
