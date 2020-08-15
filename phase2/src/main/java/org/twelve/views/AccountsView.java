@@ -218,7 +218,8 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
         ReadOnlyObjectProperty<Map<String, String>> selectedProp = accountsTable.getSelectionModel().selectedItemProperty();
 
         modButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
-                !freezingPresenter.getRegularAccounts().contains(selectedProp.get()), selectedProp));
+                !(freezingPresenter.getRegularAccounts().contains(selectedProp.get()) ||
+                freezingPresenter.getTrustedAccounts().contains(selectedProp.get())), selectedProp));
 
         unmodButton.disableProperty().bind(Bindings.createBooleanBinding(() -> selectedProp.isNull().get() ||
                 !freezingPresenter.getModAccounts().contains(selectedProp.get()), selectedProp));
