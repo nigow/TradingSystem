@@ -13,7 +13,7 @@ public class AccountRepository {
 
     private final Map<Integer, Account> accounts;
     private AccountGateway accountGateway;
-    private SecurityUtility securityUtility;
+    private final SecurityUtility securityUtility;
 
 
     /**

@@ -17,8 +17,8 @@ import java.util.Map;
 
 abstract public class ItemUtility {
 
-    Map<Integer, Item> items;
-    AccountRepository accountRepository;
+    final Map<Integer, Item> items;
+    final AccountRepository accountRepository;
 
     /**
      * Constructor for ItemUtility.

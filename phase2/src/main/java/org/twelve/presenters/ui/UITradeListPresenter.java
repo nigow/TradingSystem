@@ -12,8 +12,8 @@ import java.util.ResourceBundle;
 public class UITradeListPresenter extends ObservablePresenter implements TradeListPresenter {
 
     private final ResourceBundle localizedResources;
-    private List<String> allTradeStatus;
-    private List<String> statsTypes;
+    private final List<String> allTradeStatus;
+    private final List<String> statsTypes;
     private List<String> tradesShown;
     private List<String> statsShown;
 

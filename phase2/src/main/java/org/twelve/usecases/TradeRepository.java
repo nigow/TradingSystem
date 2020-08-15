@@ -6,15 +6,14 @@ import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
  * Repository for storing all trades in the system.
  */
 abstract public class TradeRepository {
-    Map<Integer, Trade> trades;
-    Map<Integer, TimePlace> timePlaces;
+    final Map<Integer, Trade> trades;
+    final Map<Integer, TimePlace> timePlaces;
     private TradeGateway tradeGateway;
 
     /**

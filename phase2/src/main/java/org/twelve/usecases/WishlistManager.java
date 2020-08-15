@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class WishlistManager {
 
-    private AccountRepository accountRepository;
-    private ItemUtility itemUtility;
+    private final AccountRepository accountRepository;
+    private final ItemUtility itemUtility;
 
     /**
      * Constructor for WishlistManager.

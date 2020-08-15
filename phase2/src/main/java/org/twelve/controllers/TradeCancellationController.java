@@ -2,7 +2,6 @@ package org.twelve.controllers;
 
 import org.twelve.presenters.TradeCancellationPresenter;
 import org.twelve.usecases.TradeManager;
-import org.twelve.usecases.TradeRepository;
 import org.twelve.usecases.UseCasePool;
 
 /**

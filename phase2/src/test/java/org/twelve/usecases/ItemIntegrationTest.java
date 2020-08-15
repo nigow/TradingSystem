@@ -1,7 +1,5 @@
 package org.twelve.usecases;
 
-import org.junit.Test;
-import org.twelve.entities.Account;
 import org.twelve.entities.Item;
 import org.twelve.gateways.AccountGateway;
 import org.twelve.gateways.ram.InMemoryAccountGateway;
@@ -10,11 +8,8 @@ import org.twelve.gateways.ItemsGateway;
 import junit.framework.TestCase;
 import org.twelve.usecases.AccountRepository;
 import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.ItemUtility;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * An integration test to verify integration of usecases, gateways, and entities is successful.

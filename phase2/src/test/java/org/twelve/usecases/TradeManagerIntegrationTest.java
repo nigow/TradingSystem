@@ -1,18 +1,11 @@
 package org.twelve.usecases;
 
-import junit.framework.TestCase;
-import org.twelve.entities.Account;
-import org.twelve.entities.Item;
-import org.twelve.entities.Trade;
 import org.twelve.gateways.GatewayPool;
-import org.twelve.gateways.TradeGateway;
-import org.twelve.gateways.ram.InMemoryTradeGateway;
 import org.twelve.gateways.ram.InMemoryGatewayPool;
 import junit.framework.TestCase;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class TradeManagerIntegrationTest extends TestCase {

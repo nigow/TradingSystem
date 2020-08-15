@@ -2,7 +2,6 @@ package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
 import org.twelve.entities.Roles;
-import org.twelve.gateways.GatewayPool;
 import org.twelve.presenters.ProfilePresenter;
 import org.twelve.usecases.*;
 

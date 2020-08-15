@@ -88,34 +88,28 @@ public class StatusManager {
      * Freezes an account by changing the removing the ability to borrow but adding a way to request to be unfrozen.
      *
      * @param accountID Account to freeze
-     * @return Whether the given account is successfully frozen or not
      */
-    public boolean freezeAccount(int accountID) {
+    public void freezeAccount(int accountID) {
         if (canBeFrozen(accountID)) {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.TRADE);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
             accountRepository.updateToAccountGateway(account, false);
-            return true;
         }
-        return false;
     }
 
     /**
      * Unfreezes an account that requested to be unfrozen by adding the ability to borrow.
      *
      * @param accountID Account to unfreeze
-     * @return Whether the given account is successfully frozen or not
      */
-    public boolean unfreezeAccount(int accountID) {
+    public void unfreezeAccount(int accountID) {
         if (isPending(accountID)) {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.REQUEST_UNFREEZE);
             account.addPermission(Permissions.TRADE);
             accountRepository.updateToAccountGateway(account, false);
-            return true;
         }
-        return false;
     }
 
     /**
