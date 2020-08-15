@@ -53,7 +53,7 @@ public class LoginManager {
         if (!account.getPassword().equals(securityUtility.encrypt(oldPassword)))
             return false;
         account.setPassword(securityUtility.encrypt(newPassword));
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
         return true;
     }
 }

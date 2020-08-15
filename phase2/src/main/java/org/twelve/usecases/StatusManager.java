@@ -95,7 +95,7 @@ public class StatusManager {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.TRADE);
             account.addPermission(Permissions.REQUEST_UNFREEZE);
-            accountRepository.updateToAccountGateway(account);
+            accountRepository.updateToAccountGateway(account, false);
             return true;
         }
         return false;
@@ -112,7 +112,7 @@ public class StatusManager {
             Account account = accountRepository.getAccountFromID(accountID);
             account.removePermission(Permissions.REQUEST_UNFREEZE);
             account.addPermission(Permissions.TRADE);
-            accountRepository.updateToAccountGateway(account);
+            accountRepository.updateToAccountGateway(account, false);
             return true;
         }
         return false;
@@ -160,7 +160,7 @@ public class StatusManager {
     public void requestUnfreeze(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_UNFREEZE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
@@ -183,7 +183,7 @@ public class StatusManager {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.REQUEST_VACATION);
         account.removePermission(Permissions.TRADE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
@@ -195,7 +195,7 @@ public class StatusManager {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.REQUEST_VACATION);
         account.addPermission(Permissions.TRADE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**
@@ -206,7 +206,7 @@ public class StatusManager {
     public void banAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.LOGIN);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
@@ -218,7 +218,7 @@ public class StatusManager {
     public void unBanAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.LOGIN);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
@@ -230,7 +230,7 @@ public class StatusManager {
     public void trustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.addPermission(Permissions.CONFIRM_ITEM);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
@@ -242,7 +242,7 @@ public class StatusManager {
     public void unTrustAccount(int accountID) {
         Account account = accountRepository.getAccountFromID(accountID);
         account.removePermission(Permissions.CONFIRM_ITEM);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
@@ -258,7 +258,7 @@ public class StatusManager {
         account.addPermission(Permissions.REMOVE_WISHLIST);
         account.addPermission(Permissions.FREEZE);
         account.addPermission(Permissions.UNFREEZE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 
@@ -273,7 +273,7 @@ public class StatusManager {
         account.removePermission(Permissions.REMOVE_WISHLIST);
         account.removePermission(Permissions.FREEZE);
         account.removePermission(Permissions.UNFREEZE);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
 
     }
 

@@ -72,7 +72,7 @@ public class CityManager {
             createCity(newCity);
         Account account = accountRepository.getAccountFromID(accountID);
         account.setLocation(newCity);
-        accountRepository.updateToAccountGateway(account);
+        accountRepository.updateToAccountGateway(account, false);
     }
 
     /**

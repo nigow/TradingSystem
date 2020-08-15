@@ -37,7 +37,7 @@ public class AccountRepository {
     void switchToDemoMode(AccountGateway accountGateway) {
         this.accountGateway = accountGateway;
         for (Account account : accounts.values()) {
-            updateCreateAccount(account);
+            updateToAccountGateway(account, true);
         }
     }
 
@@ -67,7 +67,7 @@ public class AccountRepository {
             int accountID = (accounts.isEmpty() ? 1 : Collections.max(accounts.keySet()) + 1);
             Account newAccount = new Account(username, securityUtility.encrypt(password), permsToAdd, accountID, location);
             accounts.put(accountID, newAccount);
-            updateCreateAccount(newAccount);
+            updateToAccountGateway(newAccount, true);
             return true;
         }
         return false;
@@ -169,32 +169,18 @@ public class AccountRepository {
         return account.getAccountID();
     }
 
-    // TODO merge these two methods  --maryam
-
     /**
      * Save program changes with an account instance to an account gateway.
      * @param account An account instance that is being changed.
+     * @param isNew whether this is a new account or not
      */
-    void updateToAccountGateway(Account account){
+    void updateToAccountGateway(Account account, boolean isNew){
         List<String> permsAsStrings = new ArrayList<>();
         for (Permissions perms: account.getPermissions()){
             permsAsStrings.add(perms.name());
         }
         accountGateway.save(account.getAccountID(), account.getUsername(),
-                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), false);
-    }
-
-    /**
-     * Update an account in accountGateway. Used for both new accounts/updated accounts.
-     * @param account An account to update.
-     */
-    void updateCreateAccount(Account account){
-        List<String> permsAsStrings = new ArrayList<>();
-        for (Permissions perms: account.getPermissions()){
-            permsAsStrings.add(perms.name());
-        }
-        accountGateway.save(account.getAccountID(), account.getUsername(),
-                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), true);
+                account.getPassword(), account.getWishlist(), permsAsStrings, account.getLocation(), isNew);
     }
 
     /**

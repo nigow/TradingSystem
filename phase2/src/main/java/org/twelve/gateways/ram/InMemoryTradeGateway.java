@@ -1,16 +1,8 @@
 package org.twelve.gateways.ram;
 
-import org.twelve.entities.TimePlace;
-import org.twelve.entities.Trade;
-import org.twelve.entities.TradeStatus;
 import org.twelve.gateways.TradeGateway;
-import org.twelve.usecases.AccountRepository;
-import org.twelve.usecases.ItemManager;
-import org.twelve.usecases.TradeManager;
 import org.twelve.usecases.TradeRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class InMemoryTradeGateway implements TradeGateway {
@@ -94,7 +86,7 @@ public class InMemoryTradeGateway implements TradeGateway {
             }
 
 
-            tradeRepository.createTrade(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
+            tradeRepository.addToTrades(tradeId, isPerm, traderIds, temp, editCounter, tradeStatus,
                     tradeComps, time, location);
         }
         return true;
@@ -167,34 +159,4 @@ public class InMemoryTradeGateway implements TradeGateway {
         timePlaceMap.put(tradeId, timePlace);
         return true;
     }
-
-    //TODO : delete
-    /**
-    public static void main(String[] args) {
-        InMemoryTradeGateway test = new InMemoryTradeGateway(new HashMap<Integer, String[]>(), new HashMap<Integer, String[]>());
-        test.save(1, true, new ArrayList<Integer>(), Collections.singletonList(new ArrayList<Integer>()),
-                1, "UNCONFIRMED", new ArrayList<Boolean>(),"2014-04-08 12:30",
-                "Home", true);
-        String[] list = test.tradeMap.get(1);
-
-        String[] itemIdsString = list[2].split(";");
-        System.out.println(Arrays.toString(itemIdsString));
-        List<List<Integer>> temp = new ArrayList<>();
-        for (String itemId: itemIdsString) {
-            String[] itemIDsString2 = itemId.split(" ");
-            System.out.println(Arrays.toString(itemIDsString2));
-            if (itemIDsString2.length == 0) {
-                temp.add(new ArrayList<>());
-            }
-            else {
-                List<Integer> itemIds = new ArrayList<>();
-                for (String i: itemIDsString2) {
-                    itemIds.add(Integer.parseInt(i));
-                }
-                temp.add(itemIds);
-            }
-        }
-
-    }
-     **/
 }

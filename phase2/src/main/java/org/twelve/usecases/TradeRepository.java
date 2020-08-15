@@ -50,31 +50,6 @@ abstract public class TradeRepository {
         return id;
     }
 
-//    //TODO : remove this
-//    /**
-//     * Adds a new trade and its timePlace to local storage
-//     *
-//     * @param id id of trade and timePlace
-//     * @param isPermanent if the trade is permanent
-//     * @param traderIDs list of all ids of the traders
-//     * @param itemIDs list of all the ids of the items
-//     * @param editedCounter counter for how many edits were made
-//     * @param tradeStatus status of the trade
-//     * @param tradeCompletions The Completion status of the trades
-//     * @param time the time of the trade
-//     * @param location the location of the trade
-//     */
-//    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
-//                            int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
-//                            String time, String location) {
-//        Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,
-//                TradeStatus.valueOf(tradeStatus), tradeCompletions);
-//        TimePlace timePlace = new TimePlace(id, LocalDateTime.parse(time), location);
-//        trades.put(id, trade);
-//        timePlaces.put(id, timePlace);
-//    }
-
-    // TODO difference between this and above?
     /**
      * Adds a new trade and its timePlace that exist in the database
      *
@@ -88,7 +63,7 @@ abstract public class TradeRepository {
      * @param time the time of the trade
      * @param location the location of the trade
      */
-    public void createTrade(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
+    public void addToTrades(int id, boolean isPermanent, List<Integer> traderIDs, List< List<Integer> > itemIDs,
                             int editedCounter, String tradeStatus, List<Boolean> tradeCompletions,
                             String time, String location) {
         Trade trade = new Trade(id, isPermanent, traderIDs, itemIDs, editedCounter,

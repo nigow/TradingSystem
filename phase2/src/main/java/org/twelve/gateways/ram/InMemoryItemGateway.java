@@ -31,7 +31,7 @@ public class InMemoryItemGateway implements ItemsGateway {
             String desc = item[1];
             boolean isApproved = Boolean.parseBoolean(item[2]);
             int ownerId = Integer.parseInt(item[3]);
-            itemManager.createItem(itemId, name, desc, ownerId, isApproved);
+            itemManager.addToItems(itemId, name, desc, ownerId, isApproved);
         }
         /*
         List<Integer> existingIds = itemManager.getAllItemIds();
