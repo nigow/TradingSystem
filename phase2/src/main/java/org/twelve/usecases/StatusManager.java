@@ -19,10 +19,13 @@ public class StatusManager {
     private final TradeUtility tradeUtility;
 
     /**
-     * Constructs an instance of StatusManager and stores restrictionsGateway.
-     *
+     * Constructs an instance of StatusManager.
+     * @param accountRepository An instance of accountRepository
+     * @param tradeUtility An instance of trade utility
+     * @param thresholdRepository An instance of thresholdRepository
      */
-    public StatusManager(AccountRepository accountRepository, TradeUtility tradeUtility, ThresholdRepository thresholdRepository) {
+    public StatusManager(AccountRepository accountRepository, TradeUtility tradeUtility,
+                         ThresholdRepository thresholdRepository) {
         this.accountRepository = accountRepository;
         this.tradeUtility = tradeUtility;
         this.thresholdRepository = thresholdRepository;
