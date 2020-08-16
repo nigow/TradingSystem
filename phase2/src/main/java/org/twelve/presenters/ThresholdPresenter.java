@@ -2,8 +2,6 @@ package org.twelve.presenters;
 
 /**
  * Interface for managing thresholds.
- *
- * @author Catherine
  */
 public interface ThresholdPresenter {
 

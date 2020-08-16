@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * Represents an account.
- *
- * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Account {
 

@@ -7,8 +7,6 @@ import org.twelve.usecases.UseCasePool;
 
 /**
  * A controller to handle logins
- *
- * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  */
 public class LoginController {
 

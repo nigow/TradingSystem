@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * Represents a trade between users.
- *
- * @author Maryam
  */
 public class Trade {
 

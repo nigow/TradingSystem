@@ -5,16 +5,12 @@ import org.twelve.usecases.trade.TradeRepository;
 
 import java.util.*;
 
+/**
+ * Pseudo-external storage of trade data.
+ */
 public class InMemoryTradeGateway implements TradeGateway {
 
-    /**
-     * pseudo-external storage of trades
-     */
     private final Map<Integer, String[]> tradeMap;
-
-    /**
-     * pseudo-external storage of timePlace objects
-     */
     private final Map<Integer, String[]> timePlaceMap;
 
     /**

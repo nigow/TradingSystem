@@ -3,11 +3,11 @@ package org.twelve.gateways.ram;
 import org.twelve.gateways.ThresholdsGateway;
 import org.twelve.usecases.system.ThresholdRepository;
 
+/**
+ * Pseudo-external storage of thresholds.
+ */
 public class InMemoryThresholdsGateway implements ThresholdsGateway {
 
-    /**
-     * pseudo-external storage of thresholds
-     */
     private int lendMoreThanBorrow;
     private int maxIncompleteTrade;
     private int maxWeeklyTrade;

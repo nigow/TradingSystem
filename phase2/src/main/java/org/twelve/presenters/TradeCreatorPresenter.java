@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * Interface for presenter that deals with the trade creation view.
- *
- * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public interface TradeCreatorPresenter {
 

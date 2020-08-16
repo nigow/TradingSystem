@@ -10,8 +10,6 @@ import java.util.Map;
 
 /**
  * pseudo-external storage of accounts and gateway
- *
- * @author Tairi
  */
 public class InMemoryAccountGateway implements AccountGateway {
 

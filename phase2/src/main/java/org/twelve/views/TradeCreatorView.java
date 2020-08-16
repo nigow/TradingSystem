@@ -28,7 +28,6 @@ import java.util.ResourceBundle;
  * View for managing creation of trades.
  *
  * @param <T> Presenter.
- * @author Ethan follow (@ethannomiddlenamelam)
  */
 public class TradeCreatorView<T extends ObservablePresenter & TradeCreatorPresenter> implements SceneView, Initializable {
 

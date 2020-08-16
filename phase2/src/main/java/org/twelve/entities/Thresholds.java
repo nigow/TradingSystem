@@ -2,8 +2,6 @@ package org.twelve.entities;
 
 /**
  * Represents restrictions for a user's trades.
- *
- * @author Maryam
  */
 public class Thresholds {
 

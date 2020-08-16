@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 /**
  * Represents the time and place of a meetup.
- *
- * @author Maryam
  */
 public class TimePlace implements Comparable<TimePlace> {
 

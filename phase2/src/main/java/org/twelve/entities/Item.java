@@ -2,8 +2,6 @@ package org.twelve.entities;
 
 /**
  * Represents an item.
- *
- * @author Ethan Lam follow him on instagram @ethannomiddlenamelam
  */
 public class Item {
 

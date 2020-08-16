@@ -12,8 +12,6 @@ import java.util.List;
 
 /**
  * Controller for registering an account
- *
- * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  */
 public class RegistrationController {
 

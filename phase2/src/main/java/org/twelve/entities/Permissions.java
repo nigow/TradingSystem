@@ -2,8 +2,6 @@ package org.twelve.entities;
 
 /**
  * Different permissions an account can have.
- *
- * @author Michael
  */
 public enum Permissions {
     LOGIN,

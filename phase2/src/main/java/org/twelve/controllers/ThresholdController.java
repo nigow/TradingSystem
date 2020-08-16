@@ -9,8 +9,6 @@ import org.twelve.usecases.UseCasePool;
 
 /**
  * Controller that deals with changing restrictions
- *
- * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class ThresholdController {
 

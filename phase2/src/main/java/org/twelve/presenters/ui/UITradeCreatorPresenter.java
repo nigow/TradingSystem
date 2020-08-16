@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * Presenter that deals with the trade creation view.
- *
- * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class UITradeCreatorPresenter extends ObservablePresenter implements TradeCreatorPresenter {
 

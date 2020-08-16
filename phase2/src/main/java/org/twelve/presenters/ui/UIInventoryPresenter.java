@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * Presenter for displaying your inventory
- *
- * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class UIInventoryPresenter extends ObservablePresenter implements InventoryPresenter {
 

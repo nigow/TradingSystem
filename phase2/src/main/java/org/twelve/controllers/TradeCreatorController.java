@@ -14,8 +14,6 @@ import java.util.List;
 
 /**
  * Controller that deals with the trade creation view.
- *
- * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class TradeCreatorController {
     private final TradeManager tradeManager;

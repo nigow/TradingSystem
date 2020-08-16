@@ -6,9 +6,7 @@ import org.twelve.usecases.system.CityManager;
 import java.util.Map;
 
 /**
- * pseudo-external storage of cities and gateway
- *
- * @author Tairi
+ * Pseudo-external storage of cities and gateway
  */
 public class InMemoryCitiesGateway implements CitiesGateway {
 

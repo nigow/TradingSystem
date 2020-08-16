@@ -5,11 +5,13 @@ import org.twelve.usecases.item.ItemManager;
 
 import java.util.Map;
 
+/**
+ * A gateway for storing item details
+ */
 public class InMemoryItemGateway implements ItemsGateway {
 
-    /**
-     * pseudo-external storage of items
-     */
+
+    // pseudo-external storage of items
     private final Map<Integer, String[]> itemMap;
 
     /**

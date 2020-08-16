@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 
 /**
  * Presenter for displaying pending items.
- *
- * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class UIWarehousePresenter extends ObservablePresenter implements WarehousePresenter {
 

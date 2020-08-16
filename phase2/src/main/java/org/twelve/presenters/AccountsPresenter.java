@@ -5,8 +5,6 @@ import java.util.Map;
 
 /**
  * Interface for statuses of accounts
- *
- * @author Ethan
  */
 public interface AccountsPresenter {
 

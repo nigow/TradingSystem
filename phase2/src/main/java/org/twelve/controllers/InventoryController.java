@@ -10,8 +10,6 @@ import java.util.List;
 
 /**
  * Controller that deals with your inventory.
- *
- * @author Ethan (follow @ethannomiddlenamelam on instagram)
  */
 public class InventoryController {
 
