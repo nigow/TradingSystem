@@ -12,8 +12,6 @@ import java.util.Map;
 
 /**
  * Utility class for items to access certain types of items.
- *
- * @author Isaac
  */
 
 abstract public class ItemUtility {

@@ -5,8 +5,6 @@ import org.twelve.usecases.account.AccountRepository;
 
 /**
  * A class for managing the current session.
- *
- * @author Maryam
  */
 public class SessionManager {
     private Account account;

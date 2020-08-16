@@ -12,8 +12,6 @@ import java.util.List;
 
 /**
  * Manager responsible for dealing with frozen accounts and managing restrictions.
- *
- * @author Andrew
  */
 public class StatusManager {
 

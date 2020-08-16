@@ -10,8 +10,6 @@ import java.util.List;
 
 /**
  * Utility class of useful services for wishlist.
- *
- * @author Tairi, Andrew
  */
 public class WishlistManager {
 
