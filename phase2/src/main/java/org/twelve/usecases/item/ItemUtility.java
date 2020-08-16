@@ -107,7 +107,7 @@ abstract public class ItemUtility {
      * Retrieves all approved items for a certain account.
      *
      * @param accountID Account ID which the items are retrieved for
-     * @return List of items for account
+     * @return List of item ids for the account
      */
     public List<Integer> getApprovedInventoryOfAccount(int accountID) {
         List<Integer> inventory = new ArrayList<>();
@@ -123,7 +123,7 @@ abstract public class ItemUtility {
      * Retrieves all items for a certain account in string format.
      *
      * @param accountID Account ID which the items are retrieved for
-     * @return List of items for account in string format
+     * @return List of item ids for account in string format
      */
     public List<String> getApprovedInventoryOfAccountString(int accountID) {
         List<String> inventory = new ArrayList<>();
@@ -214,10 +214,10 @@ abstract public class ItemUtility {
     }
 
     /**
-     * Get the desc of item with the id entered.
+     * Get the description of item with the id entered.
      *
      * @param itemID ID of the item with info being returned
-     * @return Desc of item with the entered ID
+     * @return Description of item with the entered ID
      */
     public String getItemDescById(int itemID) {
         return findItemById(itemID).getDescription();
