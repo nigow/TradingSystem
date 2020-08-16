@@ -102,7 +102,7 @@ public class Account {
     /**
      * Get all permissions that this account has.
      *
-     * @return permissions
+     * @return list of permissions this account has
      */
     public List<Permissions> getPermissions() {
         return permissions;
@@ -150,7 +150,7 @@ public class Account {
     /**
      * Get the location of the account user
      *
-     * @return location
+     * @return location of user
      */
     public String getLocation() {
         return this.location;
