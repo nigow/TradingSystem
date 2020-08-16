@@ -10,8 +10,6 @@ import org.twelve.usecases.trade.TradeManager;
 
 /**
  * Initializes use cases and provides a pool for accessing them.
- *
- * @author Michael
  */
 
 public class UseCasePool {

@@ -17,8 +17,6 @@ import java.util.List;
 
 /**
  * Manager responsible for creating and editing trades.
- *
- * @author Isaac
  */
 
 public class TradeManager extends TradeUtility {

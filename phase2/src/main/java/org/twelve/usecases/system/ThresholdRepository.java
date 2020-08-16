@@ -5,8 +5,6 @@ import org.twelve.gateways.ThresholdsGateway;
 
 /**
  * A class to store threshold values of the program.
- *
- * @author Maryam
  */
 public class ThresholdRepository {
     private Thresholds thresholds;

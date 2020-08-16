@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 /**
  * Utility class for accessing certain types of trades and information on trades.
- *
- * @author Isaac
  */
 abstract public class TradeUtility extends TradeRepository {
 

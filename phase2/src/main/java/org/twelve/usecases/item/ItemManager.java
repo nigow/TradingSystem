@@ -8,8 +8,6 @@ import java.util.Collections;
 
 /**
  * Manager for items which edits items in the system.
- *
- * @author Isaac
  */
 public class ItemManager extends ItemUtility {
 
