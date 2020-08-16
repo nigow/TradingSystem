@@ -1,7 +1,7 @@
 package org.twelve.controllers;
 
 import org.twelve.entities.Permissions;
-import org.twelve.presenters.FreezingPresenter;
+import org.twelve.presenters.AccountsPresenter;
 import org.twelve.usecases.account.AccountRepository;
 import org.twelve.usecases.system.SessionManager;
 import org.twelve.usecases.account.StatusManager;
@@ -16,11 +16,11 @@ import java.util.List;
  * @author Ethan (follow him on instagram @ethannomiddlenamelam)
  * @author Catherine
  */
-public class FreezingController {
+public class AccountsController {
 
     private final StatusManager statusManager;
 
-    private FreezingPresenter freezingPresenter;
+    private AccountsPresenter accountsPresenter;
 
     private final AccountRepository accountRepository;
 
@@ -33,7 +33,7 @@ public class FreezingController {
      *
      * @param useCasePool An instance of ManualConfig to get use cases
      */
-    public FreezingController(UseCasePool useCasePool) {
+    public AccountsController(UseCasePool useCasePool) {
         statusManager = useCasePool.getStatusManager();
         accountRepository = useCasePool.getAccountRepository();
         sessionManager = useCasePool.getSessionManager();
@@ -43,10 +43,10 @@ public class FreezingController {
     /**
      * Set the presenter for this controller
      *
-     * @param freezingPresenter an instance of a class that implements {@link org.twelve.presenters.FreezingPresenter}
+     * @param accountsPresenter an instance of a class that implements {@link AccountsPresenter}
      */
-    public void setFreezingPresenter(FreezingPresenter freezingPresenter) {
-        this.freezingPresenter = freezingPresenter;
+    public void setAccountsPresenter(AccountsPresenter accountsPresenter) {
+        this.accountsPresenter = accountsPresenter;
     }
 
     /**
@@ -140,7 +140,7 @@ public class FreezingController {
     }
 
     /**
-     * Update all the lists in FreezingPresenter
+     * Update all the lists in AccountsPresenter
      */
     public void updateAccountLists() {
 
@@ -191,17 +191,17 @@ public class FreezingController {
 
         }
 
-        freezingPresenter.setModAccounts(modAccounts);
-        freezingPresenter.setRegularAccounts(regularAccounts);
-        freezingPresenter.setFrozenAccounts(frozenAccounts);
-        freezingPresenter.setToFreezeAccounts(toFreezeAccounts);
-        freezingPresenter.setUnfreezeAccounts(unfreezeAccounts);
-        freezingPresenter.setBannedAccounts(bannedAccounts);
-        freezingPresenter.setAdminAccounts(adminAccounts);
-        freezingPresenter.setTrustedAccounts(trustedAccounts);
+        accountsPresenter.setModAccounts(modAccounts);
+        accountsPresenter.setRegularAccounts(regularAccounts);
+        accountsPresenter.setFrozenAccounts(frozenAccounts);
+        accountsPresenter.setToFreezeAccounts(toFreezeAccounts);
+        accountsPresenter.setUnfreezeAccounts(unfreezeAccounts);
+        accountsPresenter.setBannedAccounts(bannedAccounts);
+        accountsPresenter.setAdminAccounts(adminAccounts);
+        accountsPresenter.setTrustedAccounts(trustedAccounts);
 
         int accountID = sessionManager.getCurrAccountID();
-        freezingPresenter.setCanMod(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
-        freezingPresenter.setCanUnmod(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
+        accountsPresenter.setCanMod(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
+        accountsPresenter.setCanUnmod(statusManager.hasPermission(accountID, Permissions.ADD_ADMIN));
     }
 }

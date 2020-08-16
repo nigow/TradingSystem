@@ -98,8 +98,8 @@ public class ViewBuilder {
 
             case ACCOUNTS:
 
-                return new AccountsView<>(windowHandler, controllerPool.getFreezingController(),
-                        new UIFreezingPresenter(localizedResources));
+                return new AccountsView<>(windowHandler, controllerPool.getAccountsController(),
+                        new UIAccountsPresenter(localizedResources));
 
             case TRADE_LIST:
 

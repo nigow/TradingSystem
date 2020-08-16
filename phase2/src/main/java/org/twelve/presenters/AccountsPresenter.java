@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * @author Ethan
  */
-public interface FreezingPresenter {
+public interface AccountsPresenter {
 
     /**
      * Setter for the list of regular accounts

@@ -14,8 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
-import org.twelve.controllers.FreezingController;
-import org.twelve.presenters.FreezingPresenter;
+import org.twelve.controllers.AccountsController;
+import org.twelve.presenters.AccountsPresenter;
 import org.twelve.presenters.ui.ObservablePresenter;
 
 import java.net.URL;
@@ -28,9 +28,9 @@ import java.util.ResourceBundle;
  * View for managing accounts.
  * @param <T> Presenter.
  */
-public class AccountsView<T extends ObservablePresenter & FreezingPresenter> implements SceneView, Initializable {
+public class AccountsView<T extends ObservablePresenter & AccountsPresenter> implements SceneView, Initializable {
     private final WindowHandler windowHandler;
-    private final FreezingController freezingController;
+    private final AccountsController accountsController;
     private final T freezingPresenter;
 
     @FXML
@@ -73,14 +73,14 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
      * Constructor of view for managing accounts.
      *
      * @param windowHandler An instance of {@link org.twelve.views.WindowHandler}.
-     * @param freezingController Controller for managing accounts.
+     * @param accountsController Controller for managing accounts.
      * @param freezingPresenter Presenter for displaying existing accounts.
      */
-    public AccountsView(WindowHandler windowHandler, FreezingController freezingController, T freezingPresenter) {
+    public AccountsView(WindowHandler windowHandler, AccountsController accountsController, T freezingPresenter) {
         this.windowHandler = windowHandler;
         this.freezingPresenter = freezingPresenter;
-        this.freezingController = freezingController;
-        this.freezingController.setFreezingPresenter(this.freezingPresenter);
+        this.accountsController = accountsController;
+        this.accountsController.setAccountsPresenter(this.freezingPresenter);
     }
 
     /**
@@ -88,7 +88,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
      */
     @Override
     public void reload() {
-        freezingController.updateAccountLists();
+        accountsController.updateAccountLists();
         accountsTable.getSelectionModel().clearSelection();
     }
 
@@ -176,7 +176,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void trustClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.trust(trusted);
+        accountsController.trust(trusted);
     }
 
     /**
@@ -186,7 +186,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void banClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.ban(trusted);
+        accountsController.ban(trusted);
     }
 
     /**
@@ -196,7 +196,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void untrustClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.untrustAccount(trusted);
+        accountsController.untrustAccount(trusted);
     }
 
     /**
@@ -206,7 +206,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void modClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.modAccount(trusted);
+        accountsController.modAccount(trusted);
     }
 
     /**
@@ -216,7 +216,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void unmodClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.unmodAccount(trusted);
+        accountsController.unmodAccount(trusted);
     }
 
     /**
@@ -226,7 +226,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void freezeClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.freeze(trusted);
+        accountsController.freeze(trusted);
     }
 
     /**
@@ -236,7 +236,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void unfreezeClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.unfreeze(trusted);
+        accountsController.unfreeze(trusted);
     }
 
     /**
@@ -246,7 +246,7 @@ public class AccountsView<T extends ObservablePresenter & FreezingPresenter> imp
     private void unbanClicked() {
         Map<String, String> selected = accountsTable.getSelectionModel().getSelectedItem();
         String trusted = selected.get("username");
-        freezingController.unban(trusted);
+        accountsController.unban(trusted);
     }
 
     /**

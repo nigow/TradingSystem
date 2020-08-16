@@ -19,7 +19,7 @@ public class ControllerPool {
     private final ProfileController profileController;
     private final InventoryController inventoryController;
     private final ThresholdController thresholdController;
-    private final FreezingController freezingController;
+    private final AccountsController accountsController;
     private final TradeCreatorController tradeCreatorController;
     private final TradeListController tradeListController;
     private final LandingController landingController;
@@ -50,7 +50,7 @@ public class ControllerPool {
         profileController = new ProfileController(useCasePool);
         inventoryController = new InventoryController(useCasePool);
         thresholdController = new ThresholdController(useCasePool);
-        freezingController = new FreezingController(useCasePool);
+        accountsController = new AccountsController(useCasePool);
         tradeCreatorController = new TradeCreatorController(useCasePool);
         tradeListController = new TradeListController(useCasePool);
         adminWishlistController = new AdminWishlistController(useCasePool);
@@ -132,12 +132,12 @@ public class ControllerPool {
     }
 
     /**
-     * Getter for FreezingController
+     * Getter for AccountsController
      *
-     * @return FreezingController
+     * @return AccountsController
      */
-    public FreezingController getFreezingController() {
-        return freezingController;
+    public AccountsController getAccountsController() {
+        return accountsController;
     }
 
     /**

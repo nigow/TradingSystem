@@ -1,6 +1,6 @@
 package org.twelve.presenters.ui;
 
-import org.twelve.presenters.FreezingPresenter;
+import org.twelve.presenters.AccountsPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 /**
  * Presenter for dealing with the status of users
  */
-public class UIFreezingPresenter extends ObservablePresenter implements FreezingPresenter {
+public class UIAccountsPresenter extends ObservablePresenter implements AccountsPresenter {
 
     private List<Map<String, String>> bannedAccounts;
     private List<Map<String, String>> frozenAccounts;
@@ -33,7 +33,7 @@ public class UIFreezingPresenter extends ObservablePresenter implements Freezing
      *
      * @param localizedResources pack containing any localized strings
      */
-    public UIFreezingPresenter(ResourceBundle localizedResources) {
+    public UIAccountsPresenter(ResourceBundle localizedResources) {
         super();
         this.localizedResources = localizedResources;
 
