@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MenuView">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageExistingTrades" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageInventory" GridPane.columnIndex="1" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%manageWishlist" GridPane.columnIndex="2" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#initiateTradeClicked" text="%initiateTrade" GridPane.rowIndex="1" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modifyRestrictionsClicked" text="%modifyRestrictions" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageFrozenAccounts" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%addAdmin" GridPane.rowIndex="2" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%manageAccount" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#logoutClicked" text="%logout" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#approveItemsClicked" text="%approveItems" GridPane.rowIndex="3" />
+   </children>
+</GridPane>

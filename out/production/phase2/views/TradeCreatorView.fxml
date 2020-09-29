@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.TradeCreatorView">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label maxHeight="1.7976931348623157E308" text="Initiator" />
+      <HBox prefWidth="200.0" GridPane.columnIndex="1">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" text="Peer">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></Label>
+            <ComboBox prefWidth="150.0" />
+         </children>
+      </HBox>
+      <CheckBox mnemonicParsing="false" text="Two Way" GridPane.rowIndex="1" />
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+         <children>
+            <Label text="Give">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Label>
+            <ListView prefWidth="200.0" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <Label text="Receive" />
+            <ListView prefWidth="200.0" />
+         </children>
+      </VBox>
+      <HBox prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" text="Location">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></Label>
+            <TextField HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+      <HBox prefWidth="200.0" GridPane.rowIndex="4">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" text="Date">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></Label>
+            <DatePicker editable="false" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+      <CheckBox mnemonicParsing="false" text="Permanent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button mnemonicParsing="false" text="Back" GridPane.rowIndex="5" />
+      <Button mnemonicParsing="false" text="Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+      <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" minWidth="-Infinity" text="Time">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin></Label>
+            <Spinner>
+                <valueFactory>
+                    <SpinnerValueFactory.IntegerSpinnerValueFactory max="23" min="0" />
+                </valueFactory>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Spinner>
+            <Spinner>
+                 <valueFactory>
+                     <SpinnerValueFactory.IntegerSpinnerValueFactory max="59" min="0" />
+                 </valueFactory>
+            </Spinner>
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>
