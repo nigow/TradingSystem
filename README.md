@@ -2,7 +2,7 @@
 
 ## SETTING UP
 
-To set up the program, first download the Phase2 folder. If you do not have the correct version of gradle installed, you'll run into an error. To resolve this issue, you'll need to go to your IntelliJ settings:
+To set up the program, first download the TradingSystem folder. If you do not have the correct version of gradle installed, you'll run into an error. To resolve this issue, you'll need to go to your IntelliJ settings:
 
 Mac:  `IntelliJ IDEA -> Preferences -> Build, Execution, Deployment -> Build Tools -> Gradle`
 
