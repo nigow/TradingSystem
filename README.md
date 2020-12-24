@@ -6,7 +6,7 @@ To set up the program, first download the TradingSystem folder. If you do not ha
 
 Mac:  `IntelliJ IDEA -> Preferences -> Build, Execution, Deployment -> Build Tools -> Gradle`
 
- Windows: `Files -> Settings -> Build, Execution, Deployment -> Build Tools -> Gradle`
+Windows: `Files -> Settings -> Build, Execution, Deployment -> Build Tools -> Gradle`
 
 You should get to this screen:
 ![the intelliJ window to get to](images/pic3.png)
