@@ -28,7 +28,7 @@ Most of the program functionality is shown off in [this video here](https://www.
 * Ethan Lam - "Ethan Lam" & "TLELam"
 * Hai Yang Tang - "mio"
 * Isaac Tse - "Isaac"
-* Longyu Li (Andrew) - "Andrew Li*"
+* Longyu Li - "Andrew Li*"
 * Maryam Gohargani - "Maryam Gohargani"
 * Michael Sheinman Orenstrakh - "Michael Sheinman Orenstrakh"
 * Tairi Goto - "Tairi"
